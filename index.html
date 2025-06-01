@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saw Ye Htet - 3D Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="loader">
+        <div class="loading-animation">
+          <div class="loading-sphere"></div>
+          <div class="loading-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+          <div class="progress-info">
+            <span class="progress-text">Initializing 3D engine...</span>
+            <span class="progress-percentage">0%</span>
+          </div>
+        </div>
+        <div class="loading-tips">
+          <p>
+            <i class="fas fa-lightbulb"></i> Tip: Use mouse to rotate the 3D
+            scene
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Help Overlay -->
+    <div id="help-overlay" class="help-overlay">
+      <div class="help-content">
+        <button class="help-close" onclick="hideHelp()">
+          <i class="fas fa-times"></i>
+        </button>
+        <h2><i class="fas fa-mouse-pointer"></i> Interactive Features</h2>
+        <div class="help-grid">
+          <div class="help-item">
+            <i class="fas fa-cube"></i>
+            <h3>Floating Objects</h3>
+            <p>
+              Click on floating cubes to explore projects and skills in detail
+            </p>
+          </div>
+          <div class="help-item">
+            <i class="fas fa-eye"></i>
+            <h3>Hover Effects</h3>
+            <p>Hover over objects to see enhanced animations and tooltips</p>
+          </div>
+          <div class="help-item">
+            <i class="fas fa-sphere"></i>
+            <h3>Central Sphere</h3>
+            <p>Click the main sphere to return to the about section</p>
+          </div>
+          <div class="help-item">
+            <i class="fas fa-keyboard"></i>
+            <h3>Keyboard Controls</h3>
+            <p>Use arrow keys or numbers 1-4 to navigate sections</p>
+          </div>
+          <div class="help-item">
+            <i class="fas fa-expand"></i>
+            <h3>Project Showcase</h3>
+            <p>Click projects for detailed view. Press ESC to exit</p>
+          </div>
+          <div class="help-item">
+            <i class="fas fa-mouse"></i>
+            <h3>Camera Controls</h3>
+            <p>Drag to rotate, scroll to zoom, smooth section transitions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Button -->
+    <button id="help-button" class="help-button" onclick="showHelp()">
+      <i class="fas fa-question-circle"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <h2>Saw Ye Htet</h2>
+      </div>
+      <div class="nav-links">
+        <a href="#" data-section="about">About</a>
+        <a href="#" data-section="skills">Skills</a>
+        <a href="#" data-section="projects">Projects</a>
+        <a href="#" data-section="contact">Contact</a>
+      </div>
+      <div class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div id="container">
+      <!-- Three.js Canvas -->
+      <canvas id="three-canvas"></canvas>
+
+      <!-- UI Overlay -->
+      <div class="ui-overlay">
+        <!-- Section Indicators -->
+        <div class="section-indicators">
+          <div class="indicator active" data-section="about">
+            <i class="fas fa-user"></i>
+            <span>About</span>
+          </div>
+          <div class="indicator" data-section="skills">
+            <i class="fas fa-code"></i>
+            <span>Skills</span>
+          </div>
+          <div class="indicator" data-section="projects">
+            <i class="fas fa-project-diagram"></i>
+            <span>Projects</span>
+          </div>
+          <div class="indicator" data-section="contact">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+          </div>
+        </div>
+
+        <!-- Content Panels -->
+        <div class="content-panel active" id="about-panel">
+          <div class="panel-content">
+            <h2>About Me</h2>
+            <div class="profile-image">
+              <img
+                src="https://via.placeholder.com/150x150/4f46e5/ffffff?text=SYH"
+                alt="Saw Ye Htet Profile"
+              />
+            </div>
+            <p>
+              Skilled developer for applications and passionate about science
+              and a bit more of technology. Seeking for the opportunity to
+              connect the dots of technological innovations.
+            </p>
+            <div class="stats">
+              <div class="stat">
+                <h3>2020</h3>
+                <p>Graduate Year</p>
+              </div>
+              <div class="stat">
+                <h3>0</h3>
+                <p>Projects Built</p>
+              </div>
+              <div class="stat">
+                <h3>0</h3>
+                <p>Technologies</p>
+              </div>
+            </div>
+            <div class="education-section">
+              <h3
+                style="
+                  color: var(--text-light);
+                  margin-top: 2rem;
+                  margin-bottom: 1rem;
+                "
+              >
+                Education
+              </h3>
+              <div class="education-item">
+                <div class="education-year">2025</div>
+                <div class="education-details">
+                  <h4>Diploma in Information Technology</h4>
+                  <p>Singapore Polytechnic</p>
+                  <p>CGPA: 3.36</p>
+                </div>
+              </div>
+              <div class="education-item">
+                <div class="education-year">2020</div>
+                <div class="education-details">
+                  <h4>High School Diploma</h4>
+                  <p>Family Private High School</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-panel" id="skills-panel">
+          <div class="panel-content">
+            <h2>Skills & Technologies</h2>
+            <div class="skills-grid">
+              <div class="skill-category">
+                <h3>Core Expertise</h3>
+                <div class="skill-items">
+                  <span class="skill-tag">Responsive Web Design</span>
+                  <span class="skill-tag">Database Management</span>
+                  <span class="skill-tag">Problem Solving</span>
+                  <span class="skill-tag">Graphic Design</span>
+                </div>
+              </div>
+              <div class="skill-category">
+                <h3>Programming & Development</h3>
+                <div class="skill-items">
+                  <span class="skill-tag">HTML5</span>
+                  <span class="skill-tag">CSS3</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">SQL</span>
+                </div>
+              </div>
+              <div class="skill-category">
+                <h3>AI & Machine Learning</h3>
+                <div class="skill-items">
+                  <span class="skill-tag">AI Application Development</span>
+                  <span class="skill-tag">Mendix Platform</span>
+                  <span class="skill-tag">Low-Code Development</span>
+                  <span class="skill-tag">Video Generation AI</span>
+                </div>
+              </div>
+              <div class="skill-category">
+                <h3>Tools & Platforms</h3>
+                <div class="skill-items">
+                  <span class="skill-tag">Git</span>
+                  <span class="skill-tag">VS Code</span>
+                  <span class="skill-tag">Figma</span>
+                  <span class="skill-tag">Adobe Creative Suite</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-panel" id="projects-panel">
+          <div class="panel-content">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+              <div class="project-card">
+                <div class="project-image">
+                  <img
+                    src="https://via.placeholder.com/300x200/4f46e5/ffffff?text=AutoVid+AI"
+                    alt="AutoVid Project"
+                  />
+                </div>
+                <div class="project-info">
+                  <h3>AutoVid - AI Video Generator</h3>
+                  <p>
+                    Developed an AI application as a group project with Mendix
+                    low code platform for auto video generation based on user
+                    prompts. Features intelligent content creation and automated
+                    video production.
+                  </p>
+                  <div class="project-tags">
+                    <span>Mendix</span>
+                    <span>AI/ML</span>
+                    <span>Low-Code</span>
+                    <span>Video Generation</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-link">View Demo</a>
+                    <a href="#" class="btn-link">GitHub</a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-card">
+                <div class="project-image">
+                  <img
+                    src="https://via.placeholder.com/300x200/10b981/ffffff?text=Portfolio+3D"
+                    alt="3D Portfolio"
+                  />
+                </div>
+                <div class="project-info">
+                  <h3>Interactive 3D Portfolio</h3>
+                  <p>
+                    Modern portfolio website built with Three.js featuring
+                    immersive 3D graphics, smooth animations, and responsive
+                    design. Showcases technical skills through interactive web
+                    experiences.
+                  </p>
+                  <div class="project-tags">
+                    <span>Three.js</span>
+                    <span>WebGL</span>
+                    <span>JavaScript</span>
+                    <span>Responsive Design</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-link">Live Demo</a>
+                    <a href="#" class="btn-link">GitHub</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="experience-section">
+              <h3
+                style="
+                  color: var(--text-light);
+                  margin-top: 2rem;
+                  margin-bottom: 1rem;
+                "
+              >
+                Work Experience
+              </h3>
+              <div class="experience-item">
+                <div class="experience-year">2024</div>
+                <div class="experience-details">
+                  <h4>Food Runner (Part-time)</h4>
+                  <p>Capella Hotel</p>
+                  <p>
+                    Learnt communication and interaction manners with other
+                    people.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-section">
+              <h3
+                style="
+                  color: var(--text-light);
+                  margin-top: 2rem;
+                  margin-bottom: 1rem;
+                "
+              >
+                Activities
+              </h3>
+              <div class="activity-item">
+                <div class="activity-year">2023</div>
+                <div class="activity-details">
+                  <h4>SEEDs Club Member</h4>
+                  <p>
+                    A proud member of the SEEDS CCA club. We actively organize
+                    events, such as training new members on the modules they are
+                    currently learning.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-panel" id="contact-panel">
+          <div class="panel-content">
+            <h2>Get In Touch</h2>
+            <p>Let's work together to bring innovative ideas to life!</p>
+            <div class="contact-info">
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>minwn2244@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>+65 80299573</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Singapore</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Singapore Polytechnic</span>
+              </div>
+            </div>
+            <div class="social-links">
+              <a href="#" class="social-link" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#" class="social-link" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#" class="social-link" title="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="#" class="social-link" title="Portfolio">
+                <i class="fas fa-globe"></i>
+              </a>
+            </div>
+            <form class="contact-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <textarea
+                  name="message"
+                  placeholder="Your Message"
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls Info -->
+      <div class="controls-info">
+        <p>
+          <i class="fas fa-mouse"></i> Drag to rotate •
+          <i class="fas fa-scroll"></i> Scroll to zoom
+        </p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Post-processing effects -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/FilmPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/FXAAShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/FilmShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
