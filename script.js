@@ -918,32 +918,70 @@ function animate() {
       (child) => child.userData.type === "central"
     );
     if (centralMesh) {
-      // Debug: Check if central mesh is visible
+      // ULTRA AGGRESSIVE SAFEGUARD: Continuously ensure central mesh is stable
       if (!centralMesh.visible) {
         console.log("Central mesh was invisible, making it visible");
         centralMesh.visible = true;
       }
 
-      // Ensure minimum scale
-      if (centralMesh.scale.x < 0.1) {
-        console.log("Central mesh scale too small, resetting");
-        centralMesh.scale.setScalar(centralMesh.userData.originalScale || 1);
+      // If protection is active, force restore every frame
+      if (centralSphereProtected) {
+        forceCentralSphereRestore(centralMesh);
       }
 
-      // Ensure minimum opacity
-      if (centralMesh.material.opacity < 0.5) {
+      // Ensure minimum scale - more aggressive checking
+      if (centralMesh.scale.x < 0.5 || centralMesh.scale.x > 3) {
+        console.log("Central mesh scale out of bounds, resetting");
+        centralMesh.scale.set(1, 1, 1);
+      }
+
+      // Ensure minimum opacity - more aggressive checking
+      if (centralMesh.material.opacity < 0.8) {
         console.log("Central mesh opacity too low, resetting");
         centralMesh.material.opacity = 1.0;
+        centralMesh.material.transparent = false;
       }
 
-      const breathingScale = 1 + Math.sin(time * 1.5) * 0.15;
-      const pulseScale = 1 + Math.sin(time * 3) * 0.05;
-      const finalScale =
-        breathingScale * pulseScale * (centralMesh.userData.originalScale || 1);
-      centralMesh.scale.setScalar(finalScale);
+      // ADDITIONAL SAFEGUARD: Ensure material exists and is properly configured
+      if (!centralMesh.material || centralMesh.material.disposed) {
+        console.log("Central mesh material missing or disposed, recreating");
+        centralMesh.material = new THREE.MeshPhysicalMaterial({
+          color: 0x4f46e5,
+          metalness: 0.8,
+          roughness: 0.1,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.05,
+          transparent: false,
+          opacity: 1.0,
+          emissive: 0x1a1a3a,
+          emissiveIntensity: 0.5,
+          envMapIntensity: 1.0,
+        });
+      }
 
-      // Color pulsing
-      centralMesh.material.emissiveIntensity = 0.5 + Math.sin(time * 2) * 0.2;
+      // Ensure material color is correct - check every frame
+      if (
+        centralMesh.material.color &&
+        centralMesh.material.color.getHex() !== 0x4f46e5 &&
+        !centralMesh.userData.isHovered
+      ) {
+        centralMesh.material.color.setHex(0x4f46e5);
+      }
+
+      // Only apply breathing animation if not in protection mode
+      if (!centralSphereProtected) {
+        const breathingScale = 1 + Math.sin(time * 1.5) * 0.15;
+        const pulseScale = 1 + Math.sin(time * 3) * 0.05;
+        const finalScale = breathingScale * pulseScale;
+        centralMesh.scale.setScalar(finalScale);
+
+        // Color pulsing
+        centralMesh.material.emissiveIntensity = 0.5 + Math.sin(time * 2) * 0.2;
+      } else {
+        // In protection mode, keep scale and intensity stable
+        centralMesh.scale.set(1, 1, 1);
+        centralMesh.material.emissiveIntensity = 0.5;
+      }
     } else {
       console.log("Central mesh not found in mainObject children");
     }
@@ -1773,11 +1811,22 @@ function onMouseClick(event) {
 function applyHoverEffect(object) {
   if (!object.material) return;
 
+  // Skip hover effects for central sphere if it's protected
+  if (
+    object.userData &&
+    object.userData.type === "central" &&
+    centralSphereProtected
+  ) {
+    console.log("Hover effect blocked - central sphere protected");
+    return;
+  }
+
   // Store original properties if not already stored
   if (!object.userData.originalEmissiveIntensity) {
     object.userData.originalEmissiveIntensity =
       object.material.emissiveIntensity;
     object.userData.originalScale = object.scale.clone();
+    object.userData.originalOpacity = object.material.opacity;
   }
 
   // Enhanced hover effects
@@ -1786,18 +1835,39 @@ function applyHoverEffect(object) {
     1.0
   );
 
-  // Scale up slightly
-  const hoverScale = object.userData.originalScale.clone().multiplyScalar(1.2);
-  object.scale.copy(hoverScale);
+  // Scale up slightly - but be careful with central sphere
+  if (object.userData.type === "central") {
+    // For central sphere, only apply very subtle hover effect
+    const hoverScale = object.userData.originalScale
+      .clone()
+      .multiplyScalar(1.02);
+    object.scale.copy(hoverScale);
+  } else {
+    // For other objects, normal hover effect
+    const hoverScale = object.userData.originalScale
+      .clone()
+      .multiplyScalar(1.2);
+    object.scale.copy(hoverScale);
+  }
 
   // Add rotation animation
   object.userData.isHovered = true;
 
   // Special effect for central sphere
   if (object.userData.type === "central") {
-    // Change color on hover
-    object.material.color.setHex(0x10b981);
-    object.material.emissive.setHex(0x064e3b);
+    // SAFE color change - store original color first
+    if (!object.userData.originalColor) {
+      object.userData.originalColor = object.material.color.getHex();
+    }
+    if (!object.userData.originalEmissiveColor) {
+      object.userData.originalEmissiveColor = object.material.emissive.getHex();
+    }
+
+    // Only change color if not protected
+    if (!centralSphereProtected) {
+      object.material.color.setHex(0x10b981);
+      object.material.emissive.setHex(0x064e3b);
+    }
   }
 
   // Show tooltip for orbiting objects
@@ -1810,21 +1880,104 @@ function applyHoverEffect(object) {
 function resetHoverEffect(object) {
   if (!object.material || !object.userData.originalEmissiveIntensity) return;
 
+  // Skip reset for central sphere if it's protected (let protection handle it)
+  if (
+    object.userData &&
+    object.userData.type === "central" &&
+    centralSphereProtected
+  ) {
+    object.userData.isHovered = false;
+    return;
+  }
+
   object.material.emissiveIntensity = object.userData.originalEmissiveIntensity;
   object.scale.copy(object.userData.originalScale);
   object.userData.isHovered = false;
 
-  // Reset central sphere color
+  // Reset central sphere color SAFELY
   if (object.userData.type === "central") {
-    object.material.color.setHex(0x4f46e5);
-    object.material.emissive.setHex(0x1a1a3a);
+    // Restore original colors if they were stored
+    if (object.userData.originalColor !== undefined) {
+      object.material.color.setHex(object.userData.originalColor);
+    } else {
+      // Fallback to default color
+      object.material.color.setHex(0x4f46e5);
+    }
+
+    if (object.userData.originalEmissiveColor !== undefined) {
+      object.material.emissive.setHex(object.userData.originalEmissiveColor);
+    } else {
+      // Fallback to default emissive color
+      object.material.emissive.setHex(0x1a1a3a);
+    }
+
+    // Ensure opacity is restored
+    if (object.userData.originalOpacity !== undefined) {
+      object.material.opacity = object.userData.originalOpacity;
+    } else {
+      object.material.opacity = 1.0;
+    }
+
+    // Ensure visibility
+    object.visible = true;
   }
 
   hideTooltip();
 }
 
+// Global click protection for central sphere
+let centralSphereProtected = false;
+let centralSphereClickCount = 0;
+let centralSphereResetTimeout = null;
+
 // Handle object clicks
 function handleObjectClick(object) {
+  // Enhanced protection against rapid clicking
+  const now = Date.now();
+  const timeSinceLastClick = now - (window.lastClickTime || 0);
+
+  // If clicking too rapidly, ignore clicks
+  if (timeSinceLastClick < 200) {
+    console.log("Click ignored - too rapid");
+    return;
+  }
+  window.lastClickTime = now;
+
+  // Special protection for central sphere
+  if (object.userData && object.userData.type === "central") {
+    centralSphereClickCount++;
+
+    // If too many clicks in short time, activate protection mode
+    if (centralSphereClickCount > 5) {
+      centralSphereProtected = true;
+      console.log("Central sphere protection activated");
+      updateStabilityCheckFrequency(); // Increase check frequency
+
+      // Reset protection after 3 seconds
+      if (centralSphereResetTimeout) {
+        clearTimeout(centralSphereResetTimeout);
+      }
+      centralSphereResetTimeout = setTimeout(() => {
+        centralSphereProtected = false;
+        centralSphereClickCount = 0;
+        updateStabilityCheckFrequency(); // Decrease check frequency
+        console.log("Central sphere protection deactivated");
+      }, 3000);
+
+      // Force restore sphere immediately
+      forceCentralSphereRestore(object);
+      return;
+    }
+
+    // Reset click count after 2 seconds of no clicks
+    if (centralSphereResetTimeout) {
+      clearTimeout(centralSphereResetTimeout);
+    }
+    centralSphereResetTimeout = setTimeout(() => {
+      centralSphereClickCount = 0;
+    }, 2000);
+  }
+
   // Handle section indicator clicks
   if (object.userData && object.userData.section) {
     switchSection(object.userData.section);
@@ -1862,10 +2015,11 @@ function handleObjectClick(object) {
       // It's a skill category - show skill details
       showSkillDetails(skillCategories[objectIndex]);
     }
+    return;
   }
 
-  // Handle central sphere click
-  if (object.userData.type === "central") {
+  // Handle central sphere click - ULTRA PROTECTED
+  if (object.userData && object.userData.type === "central") {
     console.log("Central sphere clicked!");
 
     // Safeguard: Don't handle click if in project showcase mode
@@ -1874,18 +2028,72 @@ function handleObjectClick(object) {
       return;
     }
 
-    // Ensure sphere is visible and properly scaled
-    if (!object.visible || object.scale.x < 0.1) {
-      console.log("Central sphere not properly visible, restoring...");
-      object.visible = true;
-      object.scale.setScalar(object.userData.originalScale || 1);
-      object.material.opacity = object.userData.originalOpacity || 1.0;
-    }
+    // Force restore sphere properties before any action
+    forceCentralSphereRestore(object);
 
     // Return to about section with special animation
     switchSection("about");
     animateSpherePulse();
   }
+}
+
+// Force restore central sphere to perfect state
+function forceCentralSphereRestore(centralMesh) {
+  if (
+    !centralMesh ||
+    !centralMesh.userData ||
+    centralMesh.userData.type !== "central"
+  ) {
+    return;
+  }
+
+  console.log("Force restoring central sphere");
+
+  // Lock all properties to safe values
+  centralMesh.visible = true;
+  centralMesh.scale.set(1, 1, 1);
+
+  // Ensure material exists and is correct
+  if (!centralMesh.material || centralMesh.material.disposed) {
+    centralMesh.material = new THREE.MeshPhysicalMaterial({
+      color: 0x4f46e5,
+      metalness: 0.8,
+      roughness: 0.1,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.05,
+      transparent: false,
+      opacity: 1.0,
+      emissive: 0x1a1a3a,
+      emissiveIntensity: 0.5,
+      envMapIntensity: 1.0,
+    });
+  }
+
+  // Force correct material properties
+  centralMesh.material.opacity = 1.0;
+  centralMesh.material.transparent = false;
+  centralMesh.material.visible = true;
+
+  if (centralMesh.material.color) {
+    centralMesh.material.color.setHex(0x4f46e5);
+  }
+  if (centralMesh.material.emissive) {
+    centralMesh.material.emissive.setHex(0x1a1a3a);
+  }
+
+  // Reset user data to safe values
+  centralMesh.userData.originalScale = 1;
+  centralMesh.userData.originalOpacity = 1.0;
+  centralMesh.userData.originalColor = 0x4f46e5;
+  centralMesh.userData.originalEmissiveColor = 0x1a1a3a;
+  centralMesh.userData.isHovered = false;
+
+  console.log("Central sphere force restored:", {
+    visible: centralMesh.visible,
+    scale: centralMesh.scale.x,
+    opacity: centralMesh.material.opacity,
+    color: centralMesh.material.color.getHex(),
+  });
 }
 
 // Enter project showcase mode
@@ -2733,6 +2941,121 @@ function debugSceneState() {
   }
   console.log("=== END DEBUG ===");
 }
+
+// Make debug function globally available
+window.debugSceneState = debugSceneState;
+
+// Periodic check to ensure central sphere stability
+function ensureCentralSphereStability() {
+  if (!mainObject) return;
+
+  const centralMesh = mainObject.children.find(
+    (child) => child.userData && child.userData.type === "central"
+  );
+
+  if (!centralMesh) {
+    console.log("Central sphere missing, recreating...");
+    createFallbackCentralSphere();
+    return;
+  }
+
+  // Check and fix common issues
+  let needsUpdate = false;
+
+  if (!centralMesh.visible) {
+    centralMesh.visible = true;
+    needsUpdate = true;
+  }
+
+  if (centralMesh.scale.x < 0.1 || centralMesh.scale.x > 5) {
+    centralMesh.scale.set(1, 1, 1);
+    needsUpdate = true;
+  }
+
+  if (centralMesh.material.opacity < 0.5) {
+    centralMesh.material.opacity = 1.0;
+    centralMesh.material.transparent = false;
+    needsUpdate = true;
+  }
+
+  // Force restore if protection is active
+  if (centralSphereProtected) {
+    forceCentralSphereRestore(centralMesh);
+    needsUpdate = true;
+  }
+
+  if (needsUpdate) {
+    console.log("Central sphere stability restored");
+  }
+}
+
+// Variable interval checking - more frequent when protected
+let stabilityCheckInterval = null;
+
+function startStabilityChecking() {
+  if (stabilityCheckInterval) {
+    clearInterval(stabilityCheckInterval);
+  }
+
+  // Check more frequently if protected, less frequently if not
+  const interval = centralSphereProtected ? 100 : 2000; // 100ms vs 2s
+  stabilityCheckInterval = setInterval(ensureCentralSphereStability, interval);
+}
+
+// Start initial checking
+startStabilityChecking();
+
+// Update checking frequency when protection status changes
+function updateStabilityCheckFrequency() {
+  startStabilityChecking();
+}
+
+// Create fallback central sphere if the original is lost
+function createFallbackCentralSphere() {
+  if (!mainObject) return;
+
+  console.log("Creating fallback central sphere");
+
+  // Remove any existing central mesh
+  const existingCentral = mainObject.children.find(
+    (child) => child.userData && child.userData.type === "central"
+  );
+  if (existingCentral) {
+    mainObject.remove(existingCentral);
+  }
+
+  // Create new central sphere
+  const fallbackGeometry = new THREE.IcosahedronGeometry(2.5, 2);
+  const fallbackMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0x4f46e5,
+    metalness: 0.8,
+    roughness: 0.1,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.05,
+    transparent: false,
+    opacity: 1.0,
+  });
+
+  const fallbackSphere = new THREE.Mesh(fallbackGeometry, fallbackMaterial);
+  fallbackSphere.userData = {
+    type: "central",
+    originalScale: 1,
+    originalOpacity: 1.0,
+  };
+  fallbackSphere.visible = true;
+  fallbackSphere.scale.setScalar(1);
+
+  // Remove any existing central mesh
+  if (existingCentral) {
+    mainObject.remove(existingCentral);
+  }
+
+  mainObject.add(fallbackSphere);
+  console.log("Fallback central sphere created and added");
+}
+
+// Call stability check periodically
+setInterval(ensureCentralSphereStability, 5000); // Check every 5 seconds
 
 // Make debug function globally available
 window.debugSceneState = debugSceneState;
