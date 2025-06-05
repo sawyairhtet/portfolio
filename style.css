@@ -597,6 +597,23 @@ body {
   transform: translateY(-50%) translateX(-50px);
 }
 
+/* Specific positioning for About panel */
+#about-panel {
+  top: 15%;
+}
+
+/* Hide About panel completely during initial load */
+#about-panel.initial-load {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: none !important;
+}
+
+/* Ensure Skills panel stays at proper middle position */
+#skills-panel {
+  top: 50%;
+}
+
 .panel-content h2 {
   color: var(--text-light);
   font-size: 2rem;

@@ -1523,6 +1523,16 @@ function startLoadingSequence() {
     const loadingScreen = document.getElementById("loading-screen");
     loadingScreen.classList.add("hidden");
 
+    // Show About panel after loading sequence completes
+    const aboutPanel = document.getElementById("about-panel");
+    if (aboutPanel) {
+      setTimeout(() => {
+        aboutPanel.classList.remove("initial-load");
+        // Add smooth fade-in effect
+        aboutPanel.style.transition = "opacity 0.8s ease, visibility 0.8s ease";
+      }, 3000); // Show after 3 seconds to ensure all animations are complete
+    }
+
     // Enhanced entrance animation sequence
     if (mainObject) {
       mainObject.scale.set(0, 0, 0);
@@ -1656,7 +1666,7 @@ function startLoadingSequence() {
     // Animate UI elements with enhanced timing
     setTimeout(() => {
       document
-        .querySelectorAll(".indicator, .content-panel.active")
+        .querySelectorAll(".indicator, .content-panel.active:not(#about-panel)")
         .forEach((el, index) => {
           setTimeout(() => {
             el.classList.add("fade-in");
@@ -1672,6 +1682,13 @@ function startLoadingSequence() {
             }, 50);
           }, index * 150);
         });
+
+      // Handle About panel separately without the translateY animation
+      const aboutPanel = document.getElementById("about-panel");
+      if (aboutPanel) {
+        aboutPanel.classList.add("fade-in");
+        aboutPanel.style.opacity = "1";
+      }
     }, 2000);
   }, 1200); // Slightly longer initial delay
 }
