@@ -1,6 +1,6 @@
 # 3D Portfolio Website
 
-A modern, interactive 3D portfolio website built with Three.js, featuring smooth animations, responsive design, and an immersive user experience.
+A modern, interactive 3D portfolio website built with Three.js, featuring smooth animations, responsive design, and an immersive user experience. Now completely restructured with professional development practices, modular architecture, and modern build tools.
 
 ## 🚀 Features
 
@@ -8,27 +8,78 @@ A modern, interactive 3D portfolio website built with Three.js, featuring smooth
 - **Smooth Navigation**: Seamless transitions between different sections (About, Skills, Projects, Contact)
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **Modern UI/UX**: Clean, professional design with glassmorphism effects
-- **Loading Animation**: Engaging 3D cube loading screen
+- **Loading Animation**: Engaging 3D sphere loading screen with progress tracking
 - **Keyboard Navigation**: Arrow keys and number keys for quick section switching
 - **Contact Form**: Functional contact form with validation
 - **Performance Optimized**: Efficient rendering and adaptive quality
+- **Modular Architecture**: Clean separation of concerns with ES6 modules
+- **Professional Build System**: Webpack-powered development and production builds
+- **Code Quality**: ESLint and Prettier for consistent code standards
+- **Comprehensive Testing**: Unit, integration, and E2E testing setup
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+ Modules)
 - **3D Graphics**: Three.js
-- **Styling**: CSS Custom Properties, Flexbox, Grid
+- **Build Tools**: Webpack, Babel, PostCSS
+- **Styling**: CSS Custom Properties, Flexbox, Grid, Modular CSS
+- **Code Quality**: ESLint, Prettier
+- **Testing**: Jest, Playwright
 - **Icons**: Font Awesome
 - **Fonts**: Google Fonts (Inter)
 
 ## 📁 Project Structure
 
 ```
-Portfolio/
-├── index.html          # Main HTML file
-├── style.css           # Stylesheet with responsive design
-├── script.js           # JavaScript with Three.js implementation
-└── README.md           # Project documentation
+portfolio-website/
+├── .git/                          # Version control
+├── .github/                       # GitHub workflows
+│   └── workflows/
+│       └── deploy.yml             # CI/CD pipeline
+├── docs/                          # Documentation
+│   ├── CHANGELOG.md
+│   ├── CONTRIBUTING.md
+│   └── DEPLOYMENT.md
+├── src/                           # Source code
+│   ├── assets/                    # Static assets
+│   │   ├── images/
+│   │   ├── models/                # 3D models
+│   │   ├── textures/
+│   │   └── fonts/
+│   ├── components/                # Reusable components
+│   │   ├── three/                 # Three.js components
+│   │   ├── ui/                    # UI components
+│   │   └── forms/
+│   ├── styles/                    # Stylesheets
+│   │   ├── base/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   └── utilities/
+│   ├── scripts/                   # JavaScript modules
+│   │   ├── three/
+│   │   ├── utils/
+│   │   └── animations/
+│   ├── data/                      # Static data
+│   │   ├── projects.json
+│   │   ├── skills.json
+│   │   └── personal-info.json
+│   └── index.html
+├── dist/                          # Build output (gitignored)
+├── tests/                         # Test files
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+├── tools/                         # Build tools
+│   ├── webpack.config.js
+│   ├── postcss.config.js
+│   └── babel.config.js
+├── .env.example                   # Environment variables template
+├── .gitignore
+├── .eslintrc.js                   # Linting configuration
+├── .prettierrc                    # Code formatting
+├── package.json                   # Dependencies & scripts
+├── README.md
+└── LICENSE
 ```
 
 ## 🔧 Recent Fixes Applied
@@ -59,37 +110,46 @@ Portfolio/
 
 ### Prerequisites
 
+- Node.js >= 16.0.0
+- npm >= 8.0.0
 - A modern web browser (Chrome, Firefox, Safari, Edge)
-- Python 3.x (for local development server)
 
 ### Installation & Running
 
-1. **Clone or download** the project files to your local machine
-
-2. **Navigate** to the project directory:
+1. **Clone the repository:**
 
    ```bash
-   cd Portfolio
+   git clone https://github.com/sawyehtet/3d-portfolio-website.git
+   cd 3d-portfolio-website
    ```
 
-3. **Start a local server**:
-
-   **Using Python:**
+2. **Install dependencies:**
 
    ```bash
-   python -m http.server 8000
+   npm install
    ```
 
-   **Using Node.js (if you have it installed):**
+3. **Start development server:**
 
    ```bash
-   npx http-server -p 8000
+   npm run dev
    ```
 
 4. **Open your browser** and navigate to:
    ```
-   http://localhost:8000
+   http://localhost:3000
    ```
+
+### Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Create production build
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint and fix issues
+- `npm run format` - Format code with Prettier
+- `npm run test` - Run unit tests
+- `npm run test:e2e` - Run end-to-end tests
+- `npm run deploy` - Deploy to GitHub Pages
 
 ## 🎮 Usage
 

@@ -1,0 +1,126 @@
+{
+  "skillCategories": [
+    {
+      "id": "programming",
+      "name": "Programming Languages",
+      "icon": "fas fa-code",
+      "skills": [
+        {
+          "name": "JavaScript",
+          "level": 90,
+          "description": "Advanced proficiency in modern JavaScript (ES6+), including async/await, modules, and functional programming"
+        },
+        {
+          "name": "Python",
+          "level": 85,
+          "description": "Strong experience in Python for web development, data analysis, and automation scripts"
+        },
+        {
+          "name": "Java",
+          "level": 80,
+          "description": "Solid understanding of object-oriented programming principles and Java ecosystem"
+        },
+        {
+          "name": "C++",
+          "level": 75,
+          "description": "Experience with system programming and algorithm implementation"
+        }
+      ]
+    },
+    {
+      "id": "frontend",
+      "name": "Frontend Development",
+      "icon": "fas fa-paint-brush",
+      "skills": [
+        {
+          "name": "HTML5",
+          "level": 95,
+          "description": "Expert-level knowledge of semantic HTML and modern web standards"
+        },
+        {
+          "name": "CSS3",
+          "level": 90,
+          "description": "Advanced CSS including Flexbox, Grid, animations, and responsive design"
+        },
+        {
+          "name": "Three.js",
+          "level": 85,
+          "description": "Experience creating interactive 3D graphics and WebGL applications"
+        },
+        {
+          "name": "React",
+          "level": 80,
+          "description": "Component-based development with hooks, state management, and modern patterns"
+        }
+      ]
+    },
+    {
+      "id": "backend",
+      "name": "Backend & Database",
+      "icon": "fas fa-server",
+      "skills": [
+        {
+          "name": "Node.js",
+          "level": 85,
+          "description": "Server-side JavaScript development with Express.js and REST APIs"
+        },
+        {
+          "name": "SQL",
+          "level": 90,
+          "description": "Database design, optimization, and complex query writing"
+        },
+        {
+          "name": "MongoDB",
+          "level": 80,
+          "description": "NoSQL database design and aggregation pipelines"
+        },
+        {
+          "name": "API Development",
+          "level": 85,
+          "description": "RESTful API design and implementation with proper authentication"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "name": "Tools & Platforms",
+      "icon": "fas fa-tools",
+      "skills": [
+        {
+          "name": "Git",
+          "level": 90,
+          "description": "Version control, branching strategies, and collaborative development"
+        },
+        {
+          "name": "Mendix",
+          "level": 85,
+          "description": "Low-code platform development and AI application creation"
+        },
+        {
+          "name": "Webpack",
+          "level": 80,
+          "description": "Build tools, bundling, and optimization for modern web applications"
+        },
+        {
+          "name": "VS Code",
+          "level": 95,
+          "description": "Advanced IDE usage with extensions, debugging, and productivity tools"
+        }
+      ]
+    }
+  ],
+  "additionalSkills": [
+    "Problem Solving",
+    "Graphic Design",
+    "AI Development",
+    "Web Technologies",
+    "Database Systems",
+    "Low-Code Platforms",
+    "Version Control",
+    "UI/UX Design",
+    "Responsive Design",
+    "Performance Optimization",
+    "Testing & Debugging",
+    "Agile Development"
+  ]
+} 

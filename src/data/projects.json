@@ -1,0 +1,92 @@
+{
+  "projects": [
+    {
+      "id": 0,
+      "title": "AutoVid - AI Video Generator",
+      "description": "Developed an AI application as a group project with Mendix low code platform for auto video generation based on user prompts. Features intelligent content creation and automated video production.",
+      "technologies": ["Mendix", "AI/ML", "Low-Code", "Video Generation"],
+      "category": "AI Project",
+      "status": "completed",
+      "year": 2024,
+      "featured": true,
+      "links": {
+        "demo": "#",
+        "github": "#",
+        "documentation": "#"
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/autovid-thumbnail.jpg",
+        "screenshots": [
+          "/assets/images/projects/autovid-1.jpg",
+          "/assets/images/projects/autovid-2.jpg"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "title": "Interactive 3D Portfolio",
+      "description": "Modern portfolio website built with Three.js featuring immersive 3D graphics, smooth animations, and responsive design. Showcases technical skills through interactive web experiences.",
+      "technologies": ["Three.js", "WebGL", "JavaScript", "Responsive Design"],
+      "category": "Web Development",
+      "status": "completed",
+      "year": 2024,
+      "featured": true,
+      "links": {
+        "demo": "https://sawyehtet.github.io/3d-portfolio-website",
+        "github": "https://github.com/sawyehtet/3d-portfolio-website",
+        "documentation": "#"
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/portfolio-thumbnail.jpg",
+        "screenshots": [
+          "/assets/images/projects/portfolio-1.jpg",
+          "/assets/images/projects/portfolio-2.jpg"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "title": "Database Management System",
+      "description": "Comprehensive database solution with optimized queries and data visualization. Implemented efficient data structures and user-friendly interfaces.",
+      "technologies": ["SQL", "Database Design", "Data Visualization"],
+      "category": "Backend",
+      "status": "completed",
+      "year": 2023,
+      "featured": true,
+      "links": {
+        "demo": "#",
+        "github": "#",
+        "documentation": "#"
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/database-thumbnail.jpg",
+        "screenshots": [
+          "/assets/images/projects/database-1.jpg",
+          "/assets/images/projects/database-2.jpg"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "title": "Responsive Web Design",
+      "description": "Modern, mobile-first web applications with clean UI/UX design. Focus on accessibility and cross-platform compatibility.",
+      "technologies": ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
+      "category": "Frontend",
+      "status": "completed",
+      "year": 2023,
+      "featured": false,
+      "links": {
+        "demo": "#",
+        "github": "#",
+        "documentation": "#"
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/responsive-thumbnail.jpg",
+        "screenshots": [
+          "/assets/images/projects/responsive-1.jpg",
+          "/assets/images/projects/responsive-2.jpg"
+        ]
+      }
+    }
+  ]
+} 
