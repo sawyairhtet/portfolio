@@ -97,28 +97,22 @@
 }
 
 .content-panel.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(-50%) translateX(0);
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
 }
 
 .content-panel:not(.active) {
-  transform: translateY(-50%) translateX(-50px);
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-50%) translateX(-50px) !important;
 }
 
-#about-panel {
-  z-index: 151;
-}
-
-#about-panel.initial-load {
+#about-panel.initial-load.active {
   opacity: 1;
   visibility: visible;
   transform: translateY(-50%) translateX(0);
   animation: slideInLeft 0.8s ease-out;
-}
-
-#skills-panel {
-  z-index: 152;
 }
 
 /* Controls Info */

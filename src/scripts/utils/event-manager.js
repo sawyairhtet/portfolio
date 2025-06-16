@@ -4,7 +4,7 @@ export class EventManager {
     this.sceneSetup = sceneSetup;
     this.animationManager = animationManager;
     this.uiManager = uiManager;
-    
+
     // Binding methods
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -14,12 +14,12 @@ export class EventManager {
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
-    
+
     // Touch interaction state
     this.touchStartTime = 0;
     this.touchStartPosition = { x: 0, y: 0 };
     this.isTouchDevice = 'ontouchstart' in window;
-    
+
     this.init();
   }
 
@@ -30,30 +30,30 @@ export class EventManager {
       window.addEventListener('mousemove', this.handleMouseMove);
       window.addEventListener('click', this.handleClick);
     }
-    
+
     // Touch events
     if (this.isTouchDevice) {
       window.addEventListener('touchstart', this.handleTouchStart, { passive: false });
       window.addEventListener('touchmove', this.handleTouchMove, { passive: false });
       window.addEventListener('touchend', this.handleTouchEnd, { passive: false });
     }
-    
+
     // Keyboard events
     window.addEventListener('keydown', this.handleKeydown);
-    
+
     // Window events
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('wheel', this.handleWheel, { passive: false });
-    
+
     // Prevent context menu on right click
     window.addEventListener('contextmenu', (e) => e.preventDefault());
-    
+
     // Form submission events
     this.setupFormEvents();
-    
+
     // Navigation events
     this.setupNavigationEvents();
-    
+
     // Help overlay events
     this.setupHelpEvents();
   }
@@ -70,17 +70,17 @@ export class EventManager {
 
     // Input focus animations
     const inputs = document.querySelectorAll('.contact-form input, .contact-form textarea');
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       input.addEventListener('focus', () => {
         input.parentElement.classList.add('focused');
       });
-      
+
       input.addEventListener('blur', () => {
         if (!input.value) {
           input.parentElement.classList.remove('focused');
         }
       });
-      
+
       // Check for pre-filled values
       if (input.value) {
         input.parentElement.classList.add('focused');
@@ -91,7 +91,7 @@ export class EventManager {
   // Setup navigation events
   setupNavigationEvents() {
     const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
+    navLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const section = link.getAttribute('data-section');
@@ -102,7 +102,7 @@ export class EventManager {
     // Mobile menu toggle
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
-    
+
     if (mobileMenuToggle && navMenu) {
       mobileMenuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
@@ -116,19 +116,19 @@ export class EventManager {
     const helpButton = document.querySelector('.help-button');
     const helpOverlay = document.querySelector('.help-overlay');
     const closeHelpButton = document.querySelector('.close-help');
-    
+
     if (helpButton && helpOverlay) {
       helpButton.addEventListener('click', () => {
         helpOverlay.classList.add('active');
       });
     }
-    
+
     if (closeHelpButton && helpOverlay) {
       closeHelpButton.addEventListener('click', () => {
         helpOverlay.classList.remove('active');
       });
     }
-    
+
     // Close help when clicking outside
     if (helpOverlay) {
       helpOverlay.addEventListener('click', (e) => {
@@ -144,7 +144,7 @@ export class EventManager {
     if (this.animationManager && this.animationManager.onMouseMove) {
       this.animationManager.onMouseMove(event);
     }
-    
+
     // Update UI manager for any mouse-based interactions
     if (this.uiManager && this.uiManager.onMouseMove) {
       this.uiManager.onMouseMove(event);
@@ -156,7 +156,7 @@ export class EventManager {
     if (this.animationManager && this.animationManager.onClick) {
       this.animationManager.onClick(event);
     }
-    
+
     // Handle UI clicks
     if (this.uiManager && this.uiManager.onClick) {
       this.uiManager.onClick(event);
@@ -169,7 +169,7 @@ export class EventManager {
     if (event.key === 'Escape') {
       this.uiManager.closeAllOverlays();
     }
-    
+
     // Arrow keys - navigate sections
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
       event.preventDefault();
@@ -178,20 +178,20 @@ export class EventManager {
       event.preventDefault();
       this.uiManager.navigatePrevious();
     }
-    
+
     // Number keys - direct section navigation
     const sectionKeys = {
-      '1': 'about',
-      '2': 'skills', 
-      '3': 'projects',
-      '4': 'contact'
+      1: 'about',
+      2: 'skills',
+      3: 'projects',
+      4: 'contact',
     };
-    
+
     if (sectionKeys[event.key]) {
       event.preventDefault();
       this.uiManager.switchSection(sectionKeys[event.key]);
     }
-    
+
     // Help key
     if (event.key === 'h' || event.key === 'H') {
       const helpOverlay = document.querySelector('.help-overlay');
@@ -199,7 +199,7 @@ export class EventManager {
         helpOverlay.classList.toggle('active');
       }
     }
-    
+
     // Spacebar - pause/resume animations (development feature)
     if (event.key === ' ' && event.ctrlKey) {
       event.preventDefault();
@@ -212,7 +212,7 @@ export class EventManager {
     if (this.sceneSetup) {
       this.sceneSetup.onWindowResize();
     }
-    
+
     if (this.uiManager) {
       this.uiManager.onResize();
     }
@@ -227,12 +227,12 @@ export class EventManager {
   // Handle touch start
   handleTouchStart(event) {
     this.touchStartTime = Date.now();
-    
+
     if (event.touches.length === 1) {
       const touch = event.touches[0];
       this.touchStartPosition = {
         x: touch.clientX,
-        y: touch.clientY
+        y: touch.clientY,
       };
     }
   }
@@ -249,22 +249,22 @@ export class EventManager {
   handleTouchEnd(event) {
     const touchEndTime = Date.now();
     const touchDuration = touchEndTime - this.touchStartTime;
-    
+
     // If it's a quick tap (less than 200ms), treat as click
     if (touchDuration < 200 && event.changedTouches.length === 1) {
       const touch = event.changedTouches[0];
       const deltaX = Math.abs(touch.clientX - this.touchStartPosition.x);
       const deltaY = Math.abs(touch.clientY - this.touchStartPosition.y);
-      
+
       // If touch didn't move much, simulate a click
       if (deltaX < 10 && deltaY < 10) {
         const clickEvent = new MouseEvent('click', {
           clientX: touch.clientX,
           clientY: touch.clientY,
           bubbles: true,
-          cancelable: true
+          cancelable: true,
         });
-        
+
         touch.target.dispatchEvent(clickEvent);
       }
     }
@@ -312,12 +312,12 @@ export class EventManager {
     if (event.touches && event.touches.length > 0) {
       return {
         x: event.touches[0].clientX,
-        y: event.touches[0].clientY
+        y: event.touches[0].clientY,
       };
     } else {
       return {
         x: event.clientX,
-        y: event.clientY
+        y: event.clientY,
       };
     }
   }
@@ -343,14 +343,14 @@ export class EventManager {
   // Throttle function for performance
   throttle(func, limit) {
     let inThrottle;
-    return function() {
+    return function () {
       const args = arguments;
       const context = this;
       if (!inThrottle) {
         func.apply(context, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
     };
   }
-} 
+}

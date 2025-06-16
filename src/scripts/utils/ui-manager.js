@@ -18,7 +18,7 @@ export class UIManager {
   setupNavigationHandlers() {
     // Section indicators
     const indicators = document.querySelectorAll('.indicator');
-    indicators.forEach(indicator => {
+    indicators.forEach((indicator) => {
       indicator.addEventListener('click', (e) => {
         const section = e.currentTarget.dataset.section;
         this.switchSection(section);
@@ -27,7 +27,7 @@ export class UIManager {
 
     // Navigation links
     const navLinks = document.querySelectorAll('.nav-links a');
-    navLinks.forEach(link => {
+    navLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const section = e.currentTarget.dataset.section;
@@ -38,7 +38,7 @@ export class UIManager {
     // Mobile navigation toggle
     const navToggle = document.querySelector('.nav-toggle');
     const navLinksContainer = document.querySelector('.nav-links');
-    
+
     if (navToggle && navLinksContainer) {
       navToggle.addEventListener('click', () => {
         navToggle.classList.toggle('active');
@@ -56,20 +56,31 @@ export class UIManager {
   switchSection(section) {
     if (section === this.currentSection) return;
 
+    console.log(`Switching from ${this.currentSection} to ${section}`);
+
     // Update indicators
-    document.querySelectorAll('.indicator').forEach(indicator => {
+    document.querySelectorAll('.indicator').forEach((indicator) => {
       indicator.classList.remove('active');
     });
     document.querySelector(`.indicator[data-section="${section}"]`)?.classList.add('active');
 
-    // Update panels
-    document.querySelectorAll('.content-panel').forEach(panel => {
-      panel.classList.remove('active');
+    // Update panels - use a cleaner approach
+    document.querySelectorAll('.content-panel').forEach((panel) => {
+      panel.classList.remove('active', 'initial-load');
+      console.log(`Hiding panel: ${panel.id}`);
     });
-    document.getElementById(`${section}-panel`)?.classList.add('active');
+
+    // Small delay to ensure CSS transitions work properly
+    setTimeout(() => {
+      const targetPanel = document.getElementById(`${section}-panel`);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+        console.log(`Showing panel: ${targetPanel.id}`);
+      }
+    }, 10); // Very small delay to allow DOM updates
 
     // Update navigation links
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    document.querySelectorAll('.nav-links a').forEach((link) => {
       link.classList.remove('active');
     });
     document.querySelector(`.nav-links a[data-section="${section}"]`)?.classList.add('active');
@@ -129,12 +140,12 @@ export class UIManager {
   // Handle contact form submission
   handleFormSubmit(e) {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target);
     const data = {
       name: formData.get('name'),
       email: formData.get('email'),
-      message: formData.get('message')
+      message: formData.get('message'),
     };
 
     // Show loading state
@@ -146,7 +157,7 @@ export class UIManager {
     // Simulate form submission (replace with actual implementation)
     setTimeout(() => {
       submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-      
+
       setTimeout(() => {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
@@ -209,7 +220,7 @@ export class UIManager {
         <div class="project-technologies">
           <h3>Technologies Used</h3>
           <div class="tech-tags">
-            ${projectData.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+            ${projectData.technologies.map((tech) => `<span class="tech-tag">${tech}</span>`).join('')}
           </div>
         </div>
         <div class="project-actions">
@@ -256,7 +267,7 @@ export class UIManager {
       const target = parseInt(stat.textContent);
       let current = 0;
       const increment = target / 100;
-      
+
       setTimeout(() => {
         const timer = setInterval(() => {
           current += increment;
@@ -293,7 +304,7 @@ export class UIManager {
   onSectionChange(section) {
     // This will be called by the event manager to handle 3D scene changes
     console.log(`Switched to section: ${section}`);
-    
+
     // Notify animation manager of section change
     if (window.animationManager) {
       window.animationManager.onSectionChange(section);
@@ -351,4 +362,4 @@ export class UIManager {
   onResize() {
     // Handle UI adjustments on window resize
   }
-} 
+}
