@@ -4,8 +4,8 @@
   "description": "A modern, interactive 3D portfolio website built with Three.js, featuring smooth animations, responsive design, and an immersive user experience.",
   "main": "dist/index.html",
   "scripts": {
-    "dev": "webpack serve --mode development --open",
-    "build": "webpack --mode production",
+    "dev": "webpack serve --mode development --open --config tools/webpack.config.js",
+    "build": "webpack --mode production --config tools/webpack.config.js",
     "build:analyze": "webpack --mode production --analyze",
     "preview": "http-server dist -p 8080 -o",
     "lint": "eslint src --ext .js,.ts --fix",
