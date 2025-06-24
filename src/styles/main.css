@@ -1,21 +1,51 @@
 /* Main Stylesheet - Import all components */
 
 /* Base Styles */
-@import "base/reset.css";
+@import 'base/reset.css';
 
 /* Layout Styles */
-@import "layouts/ui-layout.css";
+@import 'layouts/ui-layout.css';
 
 /* Component Styles */
-@import "components/loading.css";
-@import "components/navigation.css";
-@import "components/content-panels.css";
+@import 'components/loading.css';
+@import 'components/navigation.css';
+@import 'components/content-panels.css';
+@import 'components/keyboard-shortcuts.css';
+@import 'components/progress-indicator.css';
 
 /* Utility Classes */
-@import "utilities/animations.css";
-@import "utilities/responsive.css";
+@import 'utilities/animations.css';
+@import 'utilities/responsive.css';
 
 /* Global overrides and custom styles can be added below */
+
+/* Base color variables - fixed dark theme */
+:root {
+  --primary-color: #4f46e5;
+  --primary-dark: #3730a3;
+  --secondary-color: #7c3aed;
+  --accent-color: #06b6d4;
+
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-overlay: rgba(15, 23, 42, 0.9);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+
+  --border-color: #475569;
+  --hover-color: rgba(79, 70, 229, 0.1);
+
+  --shadow-light: rgba(255, 255, 255, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.3);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
 
 /* Force CSS update - Help overlay fix */
 .help-overlay {

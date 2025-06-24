@@ -4,6 +4,9 @@ import { SceneSetup } from './three/scene-setup.js';
 import { AnimationManager } from './animations/animation-manager.js';
 import { UIManager } from './utils/ui-manager.js';
 import { EventManager } from './utils/event-manager.js';
+import { KeyboardShortcuts } from '../components/ui/keyboard-shortcuts.js';
+import { LocalStorageManager } from '../components/ui/local-storage-manager.js';
+import { ProgressIndicator } from '../components/ui/progress-indicator.js';
 
 // Application class to manage the entire portfolio
 class PortfolioApp {
@@ -12,6 +15,9 @@ class PortfolioApp {
     this.animationManager = null;
     this.uiManager = null;
     this.eventManager = null;
+    this.keyboardShortcuts = null;
+    this.localStorageManager = null;
+    this.progressIndicator = null;
     this.isLoading = true;
     this.currentSection = 'about';
   }
@@ -21,20 +27,40 @@ class PortfolioApp {
     try {
       console.log('Initializing 3D Portfolio Application...');
 
+      // Initialize core managers first
+      this.localStorageManager = new LocalStorageManager();
+      window.localStorageManager = this.localStorageManager;
+
       // Initialize UI Manager first (works without Three.js)
       this.uiManager = new UIManager();
       window.uiManager = this.uiManager;
 
+      // Initialize keyboard shortcuts
+      this.keyboardShortcuts = new KeyboardShortcuts(this.uiManager);
+      window.keyboardShortcuts = this.keyboardShortcuts;
+
+      // Initialize progress indicator
+      this.progressIndicator = new ProgressIndicator();
+      window.progressIndicator = this.progressIndicator;
+
+      // Load last visited section
+      const lastSection = this.localStorageManager.getLastSection();
+      this.currentSection = lastSection;
+
       // Try to initialize 3D scene
       this.sceneSetup = new SceneSetup();
       this.sceneSetup.initResponsiveSettings();
-      
+
       if (this.sceneSetup.initThreeJS()) {
         // Three.js loaded successfully - full 3D mode
         this.animationManager = new AnimationManager(this.sceneSetup);
-        this.eventManager = new EventManager(this.sceneSetup, this.animationManager, this.uiManager);
+        this.eventManager = new EventManager(
+          this.sceneSetup,
+          this.animationManager,
+          this.uiManager
+        );
         window.animationManager = this.animationManager;
-        
+
         await this.setupScene();
         this.setupEventListeners();
         this.startApplication();
@@ -97,16 +123,16 @@ class PortfolioApp {
   start2DMode() {
     // Hide loading screen immediately
     this.hideLoadingScreen();
-    
+
     // Initialize basic UI
     this.uiManager.initializeUI();
-    
+
     // Set a background color to the canvas area
     const canvas = document.getElementById('three-canvas');
     if (canvas) {
       canvas.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
     }
-    
+
     this.isLoading = false;
     console.log('Running in 2D mode - portfolio is still fully functional!');
   }
@@ -118,7 +144,7 @@ class PortfolioApp {
     if (!this.isLoading) {
       // Update scene
       this.sceneSetup.update();
-      
+
       // Update animations
       this.animationManager.update();
 
@@ -196,4 +222,4 @@ window.addEventListener('beforeunload', () => {
 });
 
 // Export for testing purposes
-export default PortfolioApp; 
+export default PortfolioApp;

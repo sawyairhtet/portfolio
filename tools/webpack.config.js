@@ -15,18 +15,18 @@ module.exports = (env, argv) => {
     entry: {
       main: './src/scripts/main.js',
     },
-    
+
     output: {
       path: path.resolve(__dirname, '../dist'),
       filename: isProduction ? 'js/[name].[contenthash].js' : 'js/[name].js',
       chunkFilename: isProduction ? 'js/[name].[contenthash].chunk.js' : 'js/[name].chunk.js',
       assetModuleFilename: 'assets/[name].[contenthash][ext]',
       clean: true,
-      publicPath: '/'
+      publicPath: '/',
     },
 
     mode: isProduction ? 'production' : 'development',
-    
+
     devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',
 
     resolve: {
@@ -37,8 +37,8 @@ module.exports = (env, argv) => {
         '@scripts': path.resolve(__dirname, '../src/scripts'),
         '@assets': path.resolve(__dirname, '../src/assets'),
         '@components': path.resolve(__dirname, '../src/components'),
-        '@data': path.resolve(__dirname, '../src/data')
-      }
+        '@data': path.resolve(__dirname, '../src/data'),
+      },
     },
 
     module: {
@@ -51,16 +51,19 @@ module.exports = (env, argv) => {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['@babel/preset-env', {
-                  targets: {
-                    browsers: ['defaults', 'not IE 11']
+                [
+                  '@babel/preset-env',
+                  {
+                    targets: {
+                      browsers: ['defaults', 'not IE 11'],
+                    },
+                    useBuiltIns: 'usage',
+                    corejs: 3,
                   },
-                  useBuiltIns: 'usage',
-                  corejs: 3
-                }]
-              ]
-            }
-          }
+                ],
+              ],
+            },
+          },
         },
 
         // CSS
@@ -72,16 +75,16 @@ module.exports = (env, argv) => {
               loader: 'css-loader',
               options: {
                 importLoaders: 1,
-                sourceMap: true
-              }
+                sourceMap: true,
+              },
             },
             {
               loader: 'postcss-loader',
               options: {
-                sourceMap: true
-              }
-            }
-          ]
+                sourceMap: true,
+              },
+            },
+          ],
         },
 
         // Images
@@ -90,12 +93,12 @@ module.exports = (env, argv) => {
           type: 'asset',
           parser: {
             dataUrlCondition: {
-              maxSize: 8 * 1024 // 8kb
-            }
+              maxSize: 8 * 1024, // 8kb
+            },
           },
           generator: {
-            filename: 'assets/images/[name].[contenthash][ext]'
-          }
+            filename: 'assets/images/[name].[contenthash][ext]',
+          },
         },
 
         // Fonts
@@ -103,8 +106,8 @@ module.exports = (env, argv) => {
           test: /\.(woff|woff2|eot|ttf|otf)$/i,
           type: 'asset/resource',
           generator: {
-            filename: 'assets/fonts/[name].[contenthash][ext]'
-          }
+            filename: 'assets/fonts/[name].[contenthash][ext]',
+          },
         },
 
         // 3D Models
@@ -112,8 +115,8 @@ module.exports = (env, argv) => {
           test: /\.(gltf|glb|obj|fbx)$/i,
           type: 'asset/resource',
           generator: {
-            filename: 'assets/models/[name].[contenthash][ext]'
-          }
+            filename: 'assets/models/[name].[contenthash][ext]',
+          },
         },
 
         // Audio/Video
@@ -121,10 +124,10 @@ module.exports = (env, argv) => {
           test: /\.(mp3|mp4|wav|ogg|avi|mov)$/i,
           type: 'asset/resource',
           generator: {
-            filename: 'assets/media/[name].[contenthash][ext]'
-          }
-        }
-      ]
+            filename: 'assets/media/[name].[contenthash][ext]',
+          },
+        },
+      ],
     },
 
     plugins: [
@@ -136,27 +139,31 @@ module.exports = (env, argv) => {
         template: './src/index.html',
         filename: 'index.html',
         inject: 'body',
-        minify: isProduction ? {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash: true,
-          minifyJS: true,
-          minifyCSS: true,
-          minifyURLs: true,
-        } : false
+        minify: isProduction
+          ? {
+              removeComments: true,
+              collapseWhitespace: true,
+              removeRedundantAttributes: true,
+              useShortDoctype: true,
+              removeEmptyAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              keepClosingSlash: true,
+              minifyJS: true,
+              minifyCSS: true,
+              minifyURLs: true,
+            }
+          : false,
       }),
 
       // Extract CSS
-      ...(isProduction ? [
-        new MiniCssExtractPlugin({
-          filename: 'css/[name].[contenthash].css',
-          chunkFilename: 'css/[name].[contenthash].chunk.css'
-        })
-      ] : []),
+      ...(isProduction
+        ? [
+            new MiniCssExtractPlugin({
+              filename: 'css/[name].[contenthash].css',
+              chunkFilename: 'css/[name].[contenthash].chunk.css',
+            }),
+          ]
+        : []),
 
       // Copy static assets
       new CopyWebpackPlugin({
@@ -164,18 +171,18 @@ module.exports = (env, argv) => {
           {
             from: 'src/assets',
             to: 'assets',
-            noErrorOnMissing: true
+            noErrorOnMissing: true,
           },
           {
             from: 'src/data',
             to: 'data',
-            noErrorOnMissing: true
-          }
-        ]
+            noErrorOnMissing: true,
+          },
+        ],
       }),
 
       // Bundle analyzer (only when requested)
-      ...(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : [])
+      ...(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : []),
     ],
 
     optimization: {
@@ -185,45 +192,85 @@ module.exports = (env, argv) => {
           terserOptions: {
             compress: {
               drop_console: isProduction,
-              drop_debugger: isProduction
+              drop_debugger: isProduction,
             },
             format: {
-              comments: false
-            }
+              comments: false,
+            },
           },
-          extractComments: false
+          extractComments: false,
         }),
-        new CssMinimizerPlugin()
+        new CssMinimizerPlugin(),
       ],
 
       splitChunks: {
         chunks: 'all',
+        minSize: 20000,
+        minRemainingSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        enforceSizeThreshold: 50000,
         cacheGroups: {
+          // Vendor libraries
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
-            priority: 10
+            priority: 10,
+            enforce: true,
           },
+          // Three.js specific
           three: {
             test: /[\\/]node_modules[\\/]three[\\/]/,
             name: 'three',
             chunks: 'all',
-            priority: 20
+            priority: 20,
+            enforce: true,
           },
+          // UI components
+          uiComponents: {
+            test: /[\\/]src[\\/]components[\\/]ui[\\/]/,
+            name: 'ui-components',
+            chunks: 'all',
+            priority: 15,
+            minChunks: 2,
+          },
+          // Three.js related components
+          threeComponents: {
+            test: /[\\/]src[\\/](components[\\/]three|scripts[\\/]three)[\\/]/,
+            name: 'three-components',
+            chunks: 'async',
+            priority: 18,
+          },
+          // Animations
+          animations: {
+            test: /[\\/]src[\\/]scripts[\\/]animations[\\/]/,
+            name: 'animations',
+            chunks: 'async',
+            priority: 12,
+          },
+          // Common utilities
           common: {
             name: 'common',
             minChunks: 2,
             chunks: 'all',
             priority: 5,
-            reuseExistingChunk: true
-          }
-        }
+            reuseExistingChunk: true,
+            enforce: false,
+          },
+          // Default group
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
       },
 
       runtimeChunk: {
-        name: 'runtime'
-      }
+        name: 'runtime',
+      },
     },
 
     devServer: {
@@ -238,21 +285,21 @@ module.exports = (env, argv) => {
       client: {
         overlay: {
           errors: true,
-          warnings: false
-        }
-      }
+          warnings: false,
+        },
+      },
     },
 
     performance: {
       hints: isProduction ? 'warning' : false,
       maxEntrypointSize: 512000,
-      maxAssetSize: 512000
+      maxAssetSize: 512000,
     },
 
     stats: {
       preset: 'minimal',
       moduleTrace: true,
-      errorDetails: true
-    }
+      errorDetails: true,
+    },
   };
-}; 
+};
