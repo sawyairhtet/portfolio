@@ -1,266 +1,224 @@
-# 3D Portfolio Website
+# 🏰 Sky Castle Portfolio
 
-A modern, interactive 3D portfolio website built with Three.js, featuring smooth animations, responsive design, and an immersive user experience. Now completely restructured with professional development practices, modular architecture, and modern build tools.
+A magical, Ghibli-inspired portfolio website featuring floating islands, Three.js 3D graphics, and enchanting animations. Experience your projects like never before in a world where creativity floats among the clouds.
 
-## 🚀 Features
+## ✨ Features
 
-- **Interactive 3D Scene**: Built with Three.js featuring geometric shapes, particles, and dynamic lighting
-- **Smooth Navigation**: Seamless transitions between different sections (About, Skills, Projects, Contact)
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Modern UI/UX**: Clean, professional design with glassmorphism effects
-- **Loading Animation**: Engaging 3D sphere loading screen with progress tracking
-- **Keyboard Navigation**: Arrow keys and number keys for quick section switching
-- **Contact Form**: Functional contact form with validation
-- **Performance Optimized**: Efficient rendering and adaptive quality
-- **Modular Architecture**: Clean separation of concerns with ES6 modules
-- **Professional Build System**: Webpack-powered development and production builds
-- **Code Quality**: ESLint and Prettier for consistent code standards
-- **Comprehensive Testing**: Unit, integration, and E2E testing setup
+### 🌟 Magical Experience
 
-## 🛠️ Technologies Used
+- **Floating Islands**: Each project lives on its own magical floating island
+- **3D Environment**: Built with Three.js for immersive 3D interactions
+- **Ghibli-Inspired Design**: Soft colors, gentle animations, and whimsical elements
+- **Interactive Elements**: Hover, click, and explore with magical feedback
 
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+ Modules)
-- **3D Graphics**: Three.js
-- **Build Tools**: Webpack, Babel, PostCSS
-- **Styling**: CSS Custom Properties, Flexbox, Grid, Modular CSS
-- **Code Quality**: ESLint, Prettier
-- **Testing**: Jest, Playwright
-- **Icons**: Font Awesome
-- **Fonts**: Google Fonts (Inter)
+### 🎮 Interactive Navigation
+
+- **Mouse Controls**: Drag to explore the sky, scroll to zoom
+- **Touch Support**: Full mobile and tablet compatibility
+- **Keyboard Shortcuts**:
+  - `1-4`: Focus on specific projects
+  - `R`: Reset camera view
+  - `Space`: Create magical sparkles
+  - `Escape`: Return to overview
+
+### 🎨 Visual Magic
+
+- **Particle Systems**: Floating magical particles around each island
+- **Dynamic Lighting**: Warm, cinematic lighting like Ghibli films
+- **Smooth Animations**: Gentle floating motion and transitions
+- **Atmospheric Effects**: Clouds, sparkles, and ambient elements
+
+### 📱 Responsive Design
+
+- **Mobile Optimized**: Touch-friendly interactions and responsive layouts
+- **Performance Adaptive**: Automatic quality adjustment based on device performance
+- **Cross-Browser**: Compatible with modern browsers
+
+## 🚀 Quick Start
+
+1. **Clone or Download**: Get the portfolio files
+2. **Open in Browser**: Simply open `index.html` in your web browser
+3. **Customize Content**: Edit the project data in `js/projects-data.js`
+4. **Personalize Pages**: Update `pages/about.html` and `pages/contact.html`
 
 ## 📁 Project Structure
 
 ```
-portfolio-website/
-├── .git/                          # Version control
-├── .github/                       # GitHub workflows
-│   └── workflows/
-│       └── deploy.yml             # CI/CD pipeline
-├── docs/                          # Documentation
-│   ├── CHANGELOG.md
-│   ├── CONTRIBUTING.md
-│   └── DEPLOYMENT.md
-├── src/                           # Source code
-│   ├── assets/                    # Static assets
-│   │   ├── images/
-│   │   ├── models/                # 3D models
-│   │   ├── textures/
-│   │   └── fonts/
-│   ├── components/                # Reusable components
-│   │   ├── three/                 # Three.js components
-│   │   ├── ui/                    # UI components
-│   │   └── forms/
-│   ├── styles/                    # Stylesheets
-│   │   ├── base/
-│   │   ├── components/
-│   │   ├── layouts/
-│   │   └── utilities/
-│   ├── scripts/                   # JavaScript modules
-│   │   ├── three/
-│   │   ├── utils/
-│   │   └── animations/
-│   ├── data/                      # Static data
-│   │   ├── projects.json
-│   │   ├── skills.json
-│   │   └── personal-info.json
-│   └── index.html
-├── dist/                          # Build output (gitignored)
-├── tests/                         # Test files
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-├── tools/                         # Build tools
-│   ├── webpack.config.js
-│   ├── postcss.config.js
-│   └── babel.config.js
-├── .env.example                   # Environment variables template
-├── .gitignore
-├── .eslintrc.js                   # Linting configuration
-├── .prettierrc                    # Code formatting
-├── package.json                   # Dependencies & scripts
-├── README.md
-└── LICENSE
+portfolio/
+├── index.html              # Main portfolio page
+├── css/
+│   ├── main.css            # Main styles for 3D portfolio
+│   └── pages.css           # Styles for about/contact pages
+├── js/
+│   ├── projects-data.js    # Project information and data
+│   ├── scene-setup.js      # Three.js scene initialization
+│   ├── interactions.js     # Mouse/touch interactions
+│   ├── animations.js       # Animation systems
+│   ├── main.js            # Main initialization
+│   ├── page-animations.js  # Page-specific animations
+│   └── contact-form.js     # Contact form handling
+├── pages/
+│   ├── about.html         # About page
+│   └── contact.html       # Contact page
+├── assets/                # Images and static assets
+└── README.md             # This file
 ```
 
-## 🔧 Recent Fixes Applied
+## 🛠 Customization
 
-### JavaScript Issues Fixed:
+### Adding Your Projects
 
-1. **Syntax Errors**: Corrected broken lines and incomplete code blocks
-2. **Three.js Integration**: Fixed OrbitControls import and implementation
-3. **Function Completeness**: Completed all incomplete functions
-4. **Event Handling**: Fixed navigation and form submission handlers
-5. **Animation Loop**: Corrected the render loop and object animations
-6. **Camera Controls**: Fixed camera movement and section transitions
+Edit `js/projects-data.js` to add your own projects:
 
-### HTML Issues Fixed:
+```javascript
+const projects = [
+  {
+    title: "Your Amazing Project",
+    description: "A magical description of what you built",
+    tech: ["React", "Node.js", "MongoDB"],
+    color: 0x90ee90,
+    position: { x: -12, y: 3, z: 0 },
+    shape: "sphere",
+    links: [
+      { text: "🌐 Live Demo", url: "https://your-demo.com" },
+      { text: "💻 GitHub", url: "https://github.com/you/project" },
+    ],
+  },
+  // ... add more projects
+];
+```
 
-1. **CDN Links**: Updated Three.js CDN links to reliable sources
-2. **Form Attributes**: Added proper name attributes to form fields
-3. **Script Loading**: Fixed script loading order and dependencies
+### Customizing Colors and Themes
 
-### CSS Issues Fixed:
-
-1. **Mobile Navigation**: Added hamburger menu functionality
-2. **Responsive Design**: Enhanced mobile and tablet layouts
-3. **Animation Classes**: Completed fade-in and slide-up animations
-4. **Scrollbar Styling**: Added custom scrollbar for content panels
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js >= 16.0.0
-- npm >= 8.0.0
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-
-### Installation & Running
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/sawyehtet/3d-portfolio-website.git
-   cd 3d-portfolio-website
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Start development server:**
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Open your browser** and navigate to:
-   ```
-   http://localhost:3000
-   ```
-
-### Available Scripts
-
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Create production build
-- `npm run preview` - Preview production build locally
-- `npm run lint` - Run ESLint and fix issues
-- `npm run format` - Format code with Prettier
-- `npm run test` - Run unit tests
-- `npm run test:e2e` - Run end-to-end tests
-- `npm run deploy` - Deploy to GitHub Pages
-
-## 🎮 Usage
-
-### Navigation
-
-- **Mouse**: Drag to rotate the 3D scene, scroll to zoom
-- **Section Indicators**: Click the right-side indicators to switch sections
-- **Navigation Bar**: Click navigation links to jump to sections
-- **Keyboard Shortcuts**:
-  - Arrow keys: Navigate between sections
-  - Number keys (1-4): Jump directly to sections
-  - Mouse wheel: Zoom in/out
-
-### Sections
-
-1. **About**: Personal introduction and statistics
-2. **Skills**: Technical skills and technologies
-3. **Projects**: Featured project showcase
-4. **Contact**: Contact information and form
-
-## 📱 Responsive Design
-
-The website is fully responsive and optimized for:
-
-- **Desktop**: Full 3D experience with all features
-- **Tablet**: Adapted layout with touch-friendly controls
-- **Mobile**: Simplified navigation with hamburger menu
-
-## 🎨 Customization
-
-### Colors
-
-Edit the CSS custom properties in `style.css`:
+Update the color palette in `css/main.css`:
 
 ```css
-:root {
-  --primary-color: #4f46e5;
-  --secondary-color: #10b981;
-  --accent-color: #f59e0b;
-  /* ... other colors */
+body {
+  background: linear-gradient(
+    180deg,
+    #87ceeb 0%,
+    /* Sky blue - change these */ #98d8e8 25%,
+    /* Light blue */ #f0e68c 75%,
+    /* Pale yellow */ #ffb6c1 100% /* Light pink */
+  );
 }
 ```
 
-### Content
+### Adding New Page Sections
 
-Update the content in `index.html`:
+Follow the existing pattern in the about/contact pages:
 
-- Personal information in the About section
-- Skills and technologies
-- Project details and links
-- Contact information
+1. Add HTML structure with appropriate classes
+2. Include magical elements like floating leaves
+3. Use the established color scheme and animations
 
-### 3D Scene
+### Modifying 3D Elements
 
-Modify the Three.js scene in `script.js`:
+Customize the floating islands in `js/scene-setup.js`:
 
-- Adjust lighting, materials, and geometries
-- Change animation speeds and effects
-- Add new 3D objects or particles
+- Change island shapes: `sphere`, `crystal`, `octahedron`, `dodecahedron`
+- Adjust positions: `{ x, y, z }` coordinates
+- Modify colors: Hex color values
+- Add new shapes: Extend the geometry creation logic
 
-## 🔧 Browser Compatibility
+## 🎮 Interactive Features
 
-- **Chrome**: ✅ Full support
-- **Firefox**: ✅ Full support
-- **Safari**: ✅ Full support
-- **Edge**: ✅ Full support
-- **Mobile browsers**: ✅ Responsive support
+### Navigation Controls
 
-## 📈 Performance
+- **Mouse Movement**: Gentle camera following
+- **Click Islands**: Focus on specific projects
+- **Scroll Wheel**: Zoom in/out
+- **Touch Gestures**: Mobile-friendly interactions
 
-The website includes several performance optimizations:
+### Magical Effects
 
-- Efficient Three.js rendering
-- Optimized particle systems
-- Responsive image loading
-- CSS animations with hardware acceleration
-- Adaptive quality based on device capabilities
+- **Hover Sparkles**: Projects glow when hovered
+- **Click Bursts**: Magical particle explosions
+- **Ambient Particles**: Floating elements around islands
+- **Page Transitions**: Smooth, animated navigation
 
-## 🐛 Troubleshooting
+## 🎨 Design Philosophy
 
-### Common Issues:
+This portfolio embodies the wonder and magic of Studio Ghibli films:
 
-1. **3D scene not loading**:
+- **Gentle Motion**: Nothing moves harshly or suddenly
+- **Warm Colors**: Soft, inviting color palette
+- **Natural Elements**: Clouds, sparkles, and organic shapes
+- **Peaceful Atmosphere**: Calming and welcoming experience
+- **Attention to Detail**: Every interaction feels special
 
-   - Check browser console for JavaScript errors
-   - Ensure Three.js CDN is accessible
-   - Try refreshing the page
+## 📱 Mobile Experience
 
-2. **Performance issues**:
+The portfolio is fully optimized for mobile devices:
 
-   - The website automatically adapts quality based on performance
-   - Try closing other browser tabs
-   - Update your graphics drivers
+- Touch-friendly navigation
+- Responsive layouts
+- Performance optimizations
+- Simplified interactions for smaller screens
 
-3. **Mobile navigation not working**:
-   - Ensure JavaScript is enabled
-   - Try refreshing the page
-   - Check for console errors
+## 🔧 Technical Details
 
-## 📄 License
+### Built With
 
-This project is open source and available under the [MIT License](LICENSE).
+- **Three.js**: 3D graphics and animations
+- **Vanilla JavaScript**: No framework dependencies
+- **CSS3**: Modern styling and animations
+- **HTML5**: Semantic structure
+
+### Performance Features
+
+- **Automatic Quality Adjustment**: Reduces quality on slower devices
+- **Efficient Particle Systems**: Optimized for smooth animations
+- **Lazy Loading**: Resources loaded as needed
+- **Memory Management**: Cleanup of unused objects
+
+### Browser Support
+
+- Chrome 70+
+- Firefox 65+
+- Safari 12+
+- Edge 79+
+
+## 🌟 Inspiration
+
+This portfolio draws inspiration from:
+
+- **Studio Ghibli Films**: Especially "Castle in the Sky" and "Spirited Away"
+- **Japanese Aesthetics**: Gentle, nature-inspired design
+- **Interactive Art**: Playful, exploratory experiences
+- **Modern Web Tech**: Pushing the boundaries of web experiences
+
+## 💡 Tips for Best Experience
+
+1. **Use a Mouse**: While touch works, mouse interactions are more magical
+2. **Good Internet**: Loads Three.js library from CDN
+3. **Modern Browser**: Best performance on recent browser versions
+4. **Take Your Time**: Explore slowly and enjoy the magical details
+
+## 🚀 Deployment
+
+To deploy your portfolio:
+
+1. **Static Hosting**: Upload files to any static host (Netlify, Vercel, GitHub Pages)
+2. **No Build Process**: Works directly without compilation
+3. **CDN Dependencies**: Uses Three.js from CDN for easy deployment
 
 ## 🤝 Contributing
 
-Feel free to fork this project and submit pull requests for any improvements.
+Want to add more magic? Feel free to:
 
-## 📞 Support
+- Suggest new magical effects
+- Improve mobile experience
+- Add accessibility features
+- Create new island shapes
+- Enhance animations
 
-If you encounter any issues or have questions, please check the troubleshooting section above or create an issue in the project repository.
+## 📄 License
+
+Feel free to use this as inspiration for your own magical portfolio! No restrictions - create something wonderful.
 
 ---
 
-**Enjoy exploring your new 3D portfolio website!** 🚀
+**Made with 💖 and a sprinkle of magic**
+
+_May your portfolio float among the clouds and inspire wonder in all who visit_ ✨

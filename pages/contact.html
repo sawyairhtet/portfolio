@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Sky Castle Portfolio</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="page-body">
+    <!-- Floating magical elements -->
+    <div class="floating-leaves">
+      <div class="leaf leaf-1">✉️</div>
+      <div class="leaf leaf-2">🕊️</div>
+      <div class="leaf leaf-3">💌</div>
+      <div class="leaf leaf-4">🌟</div>
+      <div class="leaf leaf-5">💫</div>
+    </div>
+
+    <div class="page-container">
+      <!-- Navigation -->
+      <nav class="page-nav">
+        <a href="../index.html" class="nav-back">🏰 Back to Sky Castle</a>
+        <div class="nav-links">
+          <a href="about.html" class="nav-link">🌟 About</a>
+          <a href="contact.html" class="nav-link active">📮 Contact</a>
+        </div>
+      </nav>
+
+      <!-- Contact Content -->
+      <main class="page-content">
+        <div class="content-wrapper">
+          <header class="page-header">
+            <h1 class="page-title">Send a Message to the Sky Castle</h1>
+            <p class="page-subtitle">
+              Let's create something magical together ✨
+            </p>
+          </header>
+
+          <section class="contact-hero">
+            <div class="contact-illustration">
+              <div class="message-bird">
+                <span class="bird-emoji">🕊️</span>
+                <div class="message-trail">
+                  <span>💌</span>
+                  <span>✨</span>
+                  <span>💫</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-intro">
+              <h2>Ready to Begin Our Adventure?</h2>
+              <p>
+                Whether you have a project that needs a touch of magic, want to
+                collaborate on something wonderful, or just want to say hello
+                from your own floating island, I'd love to hear from you!
+              </p>
+            </div>
+          </section>
+
+          <div class="contact-content">
+            <!-- Contact Form -->
+            <section class="contact-form-section">
+              <div class="form-container">
+                <h3>📝 Send Your Message</h3>
+                <form class="contact-form" id="contactForm">
+                  <div class="form-group">
+                    <label for="name" class="form-label">✨ Your Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      class="form-input"
+                      required
+                    />
+                    <span class="form-magic"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email" class="form-label">📧 Your Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      class="form-input"
+                      required
+                    />
+                    <span class="form-magic"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="subject" class="form-label"
+                      >🎯 What's This About?</label
+                    >
+                    <select
+                      id="subject"
+                      name="subject"
+                      class="form-select"
+                      required
+                    >
+                      <option value="">Choose your adventure...</option>
+                      <option value="project">
+                        🚀 New Project Collaboration
+                      </option>
+                      <option value="freelance">
+                        💼 Freelance Opportunity
+                      </option>
+                      <option value="question">
+                        ❓ Question About My Work
+                      </option>
+                      <option value="feedback">
+                        💭 Feedback & Suggestions
+                      </option>
+                      <option value="other">🌟 Something Else Magical</option>
+                    </select>
+                    <span class="form-magic"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="message" class="form-label"
+                      >💌 Your Message</label
+                    >
+                    <textarea
+                      id="message"
+                      name="message"
+                      class="form-textarea"
+                      rows="6"
+                      placeholder="Tell me about your project, ideas, or just say hello! What kind of magic are we creating together?"
+                      required
+                    ></textarea>
+                    <span class="form-magic"></span>
+                  </div>
+
+                  <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                      <input
+                        type="checkbox"
+                        id="newsletter"
+                        name="newsletter"
+                        class="form-checkbox"
+                      />
+                      <span class="checkbox-custom"></span>
+                      ✨ Send me updates about new magical projects
+                    </label>
+                  </div>
+
+                  <button type="submit" class="submit-button">
+                    <span class="button-text">🕊️ Send My Message</span>
+                    <div class="button-magic"></div>
+                  </button>
+                </form>
+
+                <div
+                  class="form-success"
+                  id="formSuccess"
+                  style="display: none"
+                >
+                  <div class="success-content">
+                    <span class="success-icon">🎉</span>
+                    <h4>Message Sent Successfully!</h4>
+                    <p>
+                      Your message has been delivered to the Sky Castle. I'll
+                      get back to you soon!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Alternative Contact Methods -->
+            <section class="contact-alternatives">
+              <h3>🌈 Other Ways to Connect</h3>
+
+              <div class="contact-methods">
+                <div class="contact-method">
+                  <div class="method-icon">📧</div>
+                  <h4>Direct Email</h4>
+                  <p>For urgent matters or detailed discussions</p>
+                  <a href="mailto:hello@skycastle.dev" class="method-link"
+                    >hello@skycastle.dev</a
+                  >
+                </div>
+
+                <div class="contact-method">
+                  <div class="method-icon">💼</div>
+                  <h4>LinkedIn</h4>
+                  <p>Let's connect professionally</p>
+                  <a href="#" class="method-link" target="_blank"
+                    >View Profile</a
+                  >
+                </div>
+
+                <div class="contact-method">
+                  <div class="method-icon">💻</div>
+                  <h4>GitHub</h4>
+                  <p>Explore my code and projects</p>
+                  <a href="#" class="method-link" target="_blank"
+                    >@skycastle-dev</a
+                  >
+                </div>
+
+                <div class="contact-method">
+                  <div class="method-icon">🎨</div>
+                  <h4>Behance</h4>
+                  <p>See my design portfolio</p>
+                  <a href="#" class="method-link" target="_blank"
+                    >Design Works</a
+                  >
+                </div>
+              </div>
+            </section>
+
+            <!-- Project Timeline -->
+            <section class="timeline-section">
+              <h3>⏰ Project Timeline</h3>
+              <div class="timeline-info">
+                <div class="timeline-item">
+                  <div class="timeline-icon">💌</div>
+                  <h4>Response Time</h4>
+                  <p>I typically respond within 24-48 hours</p>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-icon">☕</div>
+                  <h4>Initial Discussion</h4>
+                  <p>Let's chat about your project over virtual coffee</p>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-icon">📋</div>
+                  <h4>Proposal & Planning</h4>
+                  <p>Detailed project proposal and timeline</p>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="timeline-icon">✨</div>
+                  <h4>Magic Creation</h4>
+                  <p>Bringing your vision to life with regular updates</p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- FAQ Section -->
+          <section class="faq-section">
+            <h2>🤔 Frequently Asked Questions</h2>
+            <div class="faq-grid">
+              <div class="faq-item">
+                <h4>What types of projects do you work on?</h4>
+                <p>
+                  I love working on web applications, mobile apps, interactive
+                  experiences, and anything that needs a touch of creativity and
+                  technical magic!
+                </p>
+              </div>
+
+              <div class="faq-item">
+                <h4>How do you approach new projects?</h4>
+                <p>
+                  Every project starts with understanding your vision and users'
+                  needs. Then we create something beautiful, functional, and
+                  magical together.
+                </p>
+              </div>
+
+              <div class="faq-item">
+                <h4>What's your development process like?</h4>
+                <p>
+                  I believe in collaborative development with regular check-ins,
+                  transparent communication, and iterative improvements based on
+                  feedback.
+                </p>
+              </div>
+
+              <div class="faq-item">
+                <h4>Do you work with teams or solo?</h4>
+                <p>
+                  Both! I enjoy collaborating with teams and also work
+                  independently on projects that need focused attention.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="page-footer">
+        <p>Made with 💖 and a sprinkle of magic</p>
+      </footer>
+    </div>
+
+    <script src="../js/page-animations.js"></script>
+    <script src="../js/contact-form.js"></script>
+  </body>
+</html>
