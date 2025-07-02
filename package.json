@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
-    "dev": "npx live-server --port=3000 --open",
+    "dev": "npx live-server --port=3000",
     "deploy": "echo 'Upload files to your static hosting provider'",
     "build": "echo 'No build step required - pure HTML/CSS/JS'"
   },

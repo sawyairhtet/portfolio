@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact - Sky Castle Portfolio</title>
+    <title>Photography - Sky Castle Portfolio</title>
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/pages.css" />
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
   </head>
-  <body class="page-body">
-    <!-- Floating magical elements -->
+  <body class="page-body photography-page">
+    <!-- Floating camera elements -->
     <div class="floating-leaves">
-      <div class="leaf leaf-1">✉️</div>
-      <div class="leaf leaf-2">🕊️</div>
-      <div class="leaf leaf-3">💌</div>
-      <div class="leaf leaf-4">🌟</div>
-      <div class="leaf leaf-5">💫</div>
+      <div class="leaf leaf-1">📸</div>
+      <div class="leaf leaf-2">🌅</div>
+      <div class="leaf leaf-3">🌸</div>
+      <div class="leaf leaf-4">🎨</div>
+      <div class="leaf leaf-5">✨</div>
     </div>
 
     <div class="page-container">
@@ -23,276 +23,756 @@
       <nav class="page-nav">
         <a href="../index.html" class="nav-back">🏰 Back to Sky Castle</a>
         <div class="nav-links">
-          <a href="about.html" class="nav-link">🌟 About</a>
-          <a href="contact.html" class="nav-link active">📮 Contact</a>
+          <a href="about.html" class="nav-link">🦄 The Real Me</a>
+          <a href="contact.html" class="nav-link active">📸 Photography</a>
         </div>
       </nav>
 
-      <!-- Contact Content -->
+      <!-- Photography Content -->
       <main class="page-content">
         <div class="content-wrapper">
-          <header class="page-header">
-            <h1 class="page-title">Send a Message to the Sky Castle</h1>
+          <header class="photo-header">
+            <h1 class="page-title">Through My Fujifilm Lens</h1>
             <p class="page-subtitle">
-              Let's create something magical together ✨
+              Capturing moments, emotions, and the magic hidden in everyday life
+              ✨
             </p>
+            <div class="camera-info">
+              <span class="camera-badge">📷 Shot with Fujifilm</span>
+            </div>
           </header>
 
-          <section class="contact-hero">
-            <div class="contact-illustration">
-              <div class="message-bird">
-                <span class="bird-emoji">🕊️</span>
-                <div class="message-trail">
-                  <span>💌</span>
-                  <span>✨</span>
-                  <span>💫</span>
-                </div>
-              </div>
+          <!-- Photo Controls -->
+          <section class="photo-controls">
+            <div class="filter-buttons">
+              <button class="filter-btn active" data-filter="all">
+                All Photos
+              </button>
+              <button class="filter-btn" data-filter="portrait">
+                Portraits
+              </button>
+              <button class="filter-btn" data-filter="landscape">
+                Landscapes
+              </button>
+              <button class="filter-btn" data-filter="street">Street</button>
+              <button class="filter-btn" data-filter="nature">Nature</button>
+              <button class="filter-btn" data-filter="macro">Macro</button>
             </div>
 
-            <div class="contact-intro">
-              <h2>Ready to Begin Our Adventure?</h2>
-              <p>
-                Whether you have a project that needs a touch of magic, want to
-                collaborate on something wonderful, or just want to say hello
-                from your own floating island, I'd love to hear from you!
-              </p>
+            <div class="view-toggles">
+              <button class="view-btn active" data-view="grid">📱 Grid</button>
+              <button class="view-btn" data-view="masonry">🏗️ Masonry</button>
+              <button class="view-btn" data-view="slider">🎞️ Slider</button>
             </div>
           </section>
 
-          <div class="contact-content">
-            <!-- Contact Form -->
-            <section class="contact-form-section">
-              <div class="form-container">
-                <h3>📝 Send Your Message</h3>
-                <form class="contact-form" id="contactForm">
-                  <div class="form-group">
-                    <label for="name" class="form-label">✨ Your Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      class="form-input"
-                      required
-                    />
-                    <span class="form-magic"></span>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="email" class="form-label">📧 Your Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      class="form-input"
-                      required
-                    />
-                    <span class="form-magic"></span>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="subject" class="form-label"
-                      >🎯 What's This About?</label
-                    >
-                    <select
-                      id="subject"
-                      name="subject"
-                      class="form-select"
-                      required
-                    >
-                      <option value="">Choose your adventure...</option>
-                      <option value="project">
-                        🚀 New Project Collaboration
-                      </option>
-                      <option value="freelance">
-                        💼 Freelance Opportunity
-                      </option>
-                      <option value="question">
-                        ❓ Question About My Work
-                      </option>
-                      <option value="feedback">
-                        💭 Feedback & Suggestions
-                      </option>
-                      <option value="other">🌟 Something Else Magical</option>
-                    </select>
-                    <span class="form-magic"></span>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="message" class="form-label"
-                      >💌 Your Message</label
-                    >
-                    <textarea
-                      id="message"
-                      name="message"
-                      class="form-textarea"
-                      rows="6"
-                      placeholder="Tell me about your project, ideas, or just say hello! What kind of magic are we creating together?"
-                      required
-                    ></textarea>
-                    <span class="form-magic"></span>
-                  </div>
-
-                  <div class="form-group checkbox-group">
-                    <label class="checkbox-label">
-                      <input
-                        type="checkbox"
-                        id="newsletter"
-                        name="newsletter"
-                        class="form-checkbox"
-                      />
-                      <span class="checkbox-custom"></span>
-                      ✨ Send me updates about new magical projects
-                    </label>
-                  </div>
-
-                  <button type="submit" class="submit-button">
-                    <span class="button-text">🕊️ Send My Message</span>
-                    <div class="button-magic"></div>
-                  </button>
-                </form>
-
-                <div
-                  class="form-success"
-                  id="formSuccess"
-                  style="display: none"
-                >
-                  <div class="success-content">
-                    <span class="success-icon">🎉</span>
-                    <h4>Message Sent Successfully!</h4>
-                    <p>
-                      Your message has been delivered to the Sky Castle. I'll
-                      get back to you soon!
-                    </p>
+          <!-- Photo Gallery -->
+          <section class="photo-gallery" id="photoGallery">
+            <div class="gallery-grid" id="galleryGrid">
+              <!-- Sample Photos - Replace with your actual images -->
+              <div class="photo-item" data-category="landscape" data-index="0">
+                <div class="photo-container">
+                  <img
+                    src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800"
+                    alt="Mountain Sunset"
+                    class="photo-img"
+                    loading="lazy"
+                  />
+                  <div class="photo-overlay">
+                    <div class="photo-info">
+                      <h3>Mountain Sunset</h3>
+                      <div class="camera-settings">
+                        <span>f/8.0</span> • <span>1/250s</span> •
+                        <span>ISO 200</span>
+                      </div>
+                    </div>
+                    <button class="expand-btn">🔍</button>
                   </div>
                 </div>
               </div>
-            </section>
 
-            <!-- Alternative Contact Methods -->
-            <section class="contact-alternatives">
-              <h3>🌈 Other Ways to Connect</h3>
-
-              <div class="contact-methods">
-                <div class="contact-method">
-                  <div class="method-icon">📧</div>
-                  <h4>Direct Email</h4>
-                  <p>For urgent matters or detailed discussions</p>
-                  <a href="mailto:hello@skycastle.dev" class="method-link"
-                    >hello@skycastle.dev</a
-                  >
-                </div>
-
-                <div class="contact-method">
-                  <div class="method-icon">💼</div>
-                  <h4>LinkedIn</h4>
-                  <p>Let's connect professionally</p>
-                  <a href="#" class="method-link" target="_blank"
-                    >View Profile</a
-                  >
-                </div>
-
-                <div class="contact-method">
-                  <div class="method-icon">💻</div>
-                  <h4>GitHub</h4>
-                  <p>Explore my code and projects</p>
-                  <a href="#" class="method-link" target="_blank"
-                    >@skycastle-dev</a
-                  >
-                </div>
-
-                <div class="contact-method">
-                  <div class="method-icon">🎨</div>
-                  <h4>Behance</h4>
-                  <p>See my design portfolio</p>
-                  <a href="#" class="method-link" target="_blank"
-                    >Design Works</a
-                  >
+              <div class="photo-item" data-category="portrait" data-index="1">
+                <div class="photo-container">
+                  <img
+                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800"
+                    alt="Portrait Study"
+                    class="photo-img"
+                    loading="lazy"
+                  />
+                  <div class="photo-overlay">
+                    <div class="photo-info">
+                      <h3>Portrait Study</h3>
+                      <div class="camera-settings">
+                        <span>f/2.8</span> • <span>1/160s</span> •
+                        <span>ISO 400</span>
+                      </div>
+                    </div>
+                    <button class="expand-btn">🔍</button>
+                  </div>
                 </div>
               </div>
-            </section>
 
-            <!-- Project Timeline -->
-            <section class="timeline-section">
-              <h3>⏰ Project Timeline</h3>
-              <div class="timeline-info">
-                <div class="timeline-item">
-                  <div class="timeline-icon">💌</div>
-                  <h4>Response Time</h4>
-                  <p>I typically respond within 24-48 hours</p>
-                </div>
-
-                <div class="timeline-item">
-                  <div class="timeline-icon">☕</div>
-                  <h4>Initial Discussion</h4>
-                  <p>Let's chat about your project over virtual coffee</p>
-                </div>
-
-                <div class="timeline-item">
-                  <div class="timeline-icon">📋</div>
-                  <h4>Proposal & Planning</h4>
-                  <p>Detailed project proposal and timeline</p>
-                </div>
-
-                <div class="timeline-item">
-                  <div class="timeline-icon">✨</div>
-                  <h4>Magic Creation</h4>
-                  <p>Bringing your vision to life with regular updates</p>
+              <div class="photo-item" data-category="street" data-index="2">
+                <div class="photo-container">
+                  <img
+                    src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800"
+                    alt="City Life"
+                    class="photo-img"
+                    loading="lazy"
+                  />
+                  <div class="photo-overlay">
+                    <div class="photo-info">
+                      <h3>City Life</h3>
+                      <div class="camera-settings">
+                        <span>f/5.6</span> • <span>1/500s</span> •
+                        <span>ISO 800</span>
+                      </div>
+                    </div>
+                    <button class="expand-btn">🔍</button>
+                  </div>
                 </div>
               </div>
-            </section>
-          </div>
 
-          <!-- FAQ Section -->
-          <section class="faq-section">
-            <h2>🤔 Frequently Asked Questions</h2>
-            <div class="faq-grid">
-              <div class="faq-item">
-                <h4>What types of projects do you work on?</h4>
-                <p>
-                  I love working on web applications, mobile apps, interactive
-                  experiences, and anything that needs a touch of creativity and
-                  technical magic!
-                </p>
+              <div class="photo-item" data-category="nature" data-index="3">
+                <div class="photo-container">
+                  <img
+                    src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800"
+                    alt="Forest Path"
+                    class="photo-img"
+                    loading="lazy"
+                  />
+                  <div class="photo-overlay">
+                    <div class="photo-info">
+                      <h3>Forest Path</h3>
+                      <div class="camera-settings">
+                        <span>f/4.0</span> • <span>1/60s</span> •
+                        <span>ISO 100</span>
+                      </div>
+                    </div>
+                    <button class="expand-btn">🔍</button>
+                  </div>
+                </div>
               </div>
 
-              <div class="faq-item">
-                <h4>How do you approach new projects?</h4>
-                <p>
-                  Every project starts with understanding your vision and users'
-                  needs. Then we create something beautiful, functional, and
-                  magical together.
-                </p>
+              <div class="photo-item" data-category="macro" data-index="4">
+                <div class="photo-container">
+                  <img
+                    src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800"
+                    alt="Water Drop"
+                    class="photo-img"
+                    loading="lazy"
+                  />
+                  <div class="photo-overlay">
+                    <div class="photo-info">
+                      <h3>Water Drop</h3>
+                      <div class="camera-settings">
+                        <span>f/11</span> • <span>1/200s</span> •
+                        <span>ISO 200</span>
+                      </div>
+                    </div>
+                    <button class="expand-btn">🔍</button>
+                  </div>
+                </div>
               </div>
 
-              <div class="faq-item">
-                <h4>What's your development process like?</h4>
-                <p>
-                  I believe in collaborative development with regular check-ins,
-                  transparent communication, and iterative improvements based on
-                  feedback.
-                </p>
+              <div class="photo-item" data-category="landscape" data-index="5">
+                <div class="photo-container">
+                  <img
+                    src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800"
+                    alt="Golden Hour"
+                    class="photo-img"
+                    loading="lazy"
+                  />
+                  <div class="photo-overlay">
+                    <div class="photo-info">
+                      <h3>Golden Hour</h3>
+                      <div class="camera-settings">
+                        <span>f/16</span> • <span>1/125s</span> •
+                        <span>ISO 100</span>
+                      </div>
+                    </div>
+                    <button class="expand-btn">🔍</button>
+                  </div>
+                </div>
               </div>
 
-              <div class="faq-item">
-                <h4>Do you work with teams or solo?</h4>
-                <p>
-                  Both! I enjoy collaborating with teams and also work
-                  independently on projects that need focused attention.
-                </p>
+              <!-- Add more photo items as needed -->
+            </div>
+          </section>
+
+          <!-- Upload Section -->
+          <section class="upload-section">
+            <div class="upload-info">
+              <h2>📤 Want to See More?</h2>
+              <p>
+                This gallery is constantly evolving. New captures from my
+                Fujifilm adventures are added regularly.
+              </p>
+              <div class="stats">
+                <div class="stat-item">
+                  <span class="stat-number">150+</span>
+                  <span class="stat-label">Photos Captured</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">5</span>
+                  <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">∞</span>
+                  <span class="stat-label">Moments Preserved</span>
+                </div>
               </div>
             </div>
           </section>
         </div>
       </main>
 
+      <!-- Lightbox Modal -->
+      <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+          <button class="lightbox-close">&times;</button>
+          <button class="lightbox-prev">‹</button>
+          <button class="lightbox-next">›</button>
+          <div class="lightbox-image-container">
+            <img class="lightbox-image" id="lightboxImage" alt="" />
+            <div class="lightbox-info">
+              <h3 class="lightbox-title"></h3>
+              <div class="lightbox-settings"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Footer -->
       <footer class="page-footer">
-        <p>Made with 💖 and a sprinkle of magic</p>
+        <p>Every photo tells a story • Shot with passion and precision 📸</p>
       </footer>
     </div>
 
     <script src="../js/page-animations.js"></script>
-    <script src="../js/contact-form.js"></script>
+    <script>
+      // Photography Gallery JavaScript
+      document.addEventListener("DOMContentLoaded", function () {
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const viewBtns = document.querySelectorAll(".view-btn");
+        const photoItems = document.querySelectorAll(".photo-item");
+        const gallery = document.getElementById("galleryGrid");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImage = document.getElementById("lightboxImage");
+        const lightboxTitle = document.querySelector(".lightbox-title");
+        const lightboxSettings = document.querySelector(".lightbox-settings");
+
+        let currentImageIndex = 0;
+        const images = Array.from(photoItems);
+
+        // Filter functionality
+        filterBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const filter = btn.dataset.filter;
+
+            // Update active button
+            filterBtns.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // Filter photos
+            photoItems.forEach((item) => {
+              if (filter === "all" || item.dataset.category === filter) {
+                item.style.display = "block";
+                setTimeout(() => {
+                  item.style.opacity = "1";
+                  item.style.transform = "scale(1)";
+                }, 50);
+              } else {
+                item.style.opacity = "0";
+                item.style.transform = "scale(0.8)";
+                setTimeout(() => {
+                  item.style.display = "none";
+                }, 300);
+              }
+            });
+          });
+        });
+
+        // View toggle functionality
+        viewBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const view = btn.dataset.view;
+
+            viewBtns.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            gallery.className = `gallery-${view}`;
+          });
+        });
+
+        // Lightbox functionality
+        photoItems.forEach((item, index) => {
+          const expandBtn = item.querySelector(".expand-btn");
+          const img = item.querySelector(".photo-img");
+
+          [expandBtn, img].forEach((element) => {
+            element.addEventListener("click", () => {
+              currentImageIndex = index;
+              openLightbox(item);
+            });
+          });
+        });
+
+        function openLightbox(item) {
+          const img = item.querySelector(".photo-img");
+          const title = item.querySelector(".photo-info h3").textContent;
+          const settings = item.querySelector(".camera-settings").textContent;
+
+          lightboxImage.src = img.src;
+          lightboxImage.alt = img.alt;
+          lightboxTitle.textContent = title;
+          lightboxSettings.textContent = settings;
+
+          lightbox.classList.add("active");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove("active");
+          document.body.style.overflow = "auto";
+        }
+
+        function nextImage() {
+          const visibleImages = images.filter(
+            (item) => item.style.display !== "none"
+          );
+          const currentVisibleIndex = visibleImages.findIndex(
+            (item) => parseInt(item.dataset.index) === currentImageIndex
+          );
+          const nextIndex = (currentVisibleIndex + 1) % visibleImages.length;
+          currentImageIndex = parseInt(visibleImages[nextIndex].dataset.index);
+          openLightbox(visibleImages[nextIndex]);
+        }
+
+        function prevImage() {
+          const visibleImages = images.filter(
+            (item) => item.style.display !== "none"
+          );
+          const currentVisibleIndex = visibleImages.findIndex(
+            (item) => parseInt(item.dataset.index) === currentImageIndex
+          );
+          const prevIndex =
+            currentVisibleIndex === 0
+              ? visibleImages.length - 1
+              : currentVisibleIndex - 1;
+          currentImageIndex = parseInt(visibleImages[prevIndex].dataset.index);
+          openLightbox(visibleImages[prevIndex]);
+        }
+
+        // Event listeners
+        document
+          .querySelector(".lightbox-close")
+          .addEventListener("click", closeLightbox);
+        document
+          .querySelector(".lightbox-next")
+          .addEventListener("click", nextImage);
+        document
+          .querySelector(".lightbox-prev")
+          .addEventListener("click", prevImage);
+
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) closeLightbox();
+        });
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+          if (!lightbox.classList.contains("active")) return;
+
+          if (e.key === "Escape") closeLightbox();
+          if (e.key === "ArrowLeft") prevImage();
+          if (e.key === "ArrowRight") nextImage();
+        });
+
+        // Intersection Observer for lazy loading
+        const observerOptions = {
+          root: null,
+          rootMargin: "50px",
+          threshold: 0.1,
+        };
+
+        const imageObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.classList.add("loaded");
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll(".photo-img").forEach((img) => {
+          imageObserver.observe(img);
+        });
+      });
+    </script>
+
+    <style>
+      /* Photography Page Styles */
+      .photography-page {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        min-height: 100vh;
+      }
+
+      .photo-header {
+        text-align: center;
+        padding: 3rem 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .camera-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .photo-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .filter-buttons,
+      .view-toggles {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn,
+      .view-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .filter-btn:hover,
+      .view-btn:hover,
+      .filter-btn.active,
+      .view-btn.active {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .gallery-masonry {
+        column-count: 3;
+        column-gap: 1.5rem;
+      }
+
+      .gallery-masonry .photo-item {
+        break-inside: avoid;
+        margin-bottom: 1.5rem;
+      }
+
+      .gallery-slider {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        padding: 1rem 0;
+        scroll-snap-type: x mandatory;
+      }
+
+      .gallery-slider .photo-item {
+        flex: 0 0 400px;
+        scroll-snap-align: start;
+      }
+
+      .photo-item {
+        transition: all 0.3s ease;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .photo-container {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .photo-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .photo-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .photo-img:not(.loaded) {
+        opacity: 0;
+      }
+
+      .photo-img.loaded {
+        opacity: 1;
+      }
+
+      .photo-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        opacity: 0;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1.5rem;
+      }
+
+      .photo-container:hover .photo-overlay {
+        opacity: 1;
+      }
+
+      .photo-info h3 {
+        color: #fff;
+        margin: 0 0 0.5rem 0;
+        font-size: 1.2rem;
+      }
+
+      .camera-settings {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        font-family: "Courier New", monospace;
+      }
+
+      .expand-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        opacity: 0;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .photo-container:hover .expand-btn {
+        opacity: 1;
+      }
+
+      .expand-btn:hover {
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1);
+      }
+
+      .upload-section {
+        text-align: center;
+        padding: 3rem 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        margin: 3rem 0;
+        backdrop-filter: blur(10px);
+      }
+
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      }
+
+      .stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+
+      /* Lightbox Styles */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .lightbox.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .lightbox-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+      }
+
+      .lightbox-image {
+        width: 100%;
+        height: auto;
+        max-height: 80vh;
+        object-fit: contain;
+      }
+
+      .lightbox-info {
+        padding: 1.5rem;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+      }
+
+      .lightbox-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.3rem;
+      }
+
+      .lightbox-settings {
+        color: rgba(255, 255, 255, 0.8);
+        font-family: "Courier New", monospace;
+      }
+
+      .lightbox-close,
+      .lightbox-prev,
+      .lightbox-next {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .lightbox-close {
+        top: 1rem;
+        right: 1rem;
+      }
+
+      .lightbox-prev {
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .lightbox-next {
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .lightbox-close:hover,
+      .lightbox-prev:hover,
+      .lightbox-next:hover {
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1);
+      }
+
+      .lightbox-prev:hover {
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .lightbox-next:hover {
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .photo-controls {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .filter-buttons,
+        .view-toggles {
+          justify-content: center;
+        }
+
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .gallery-masonry {
+          column-count: 1;
+        }
+
+        .stats {
+          gap: 1.5rem;
+        }
+
+        .stat-number {
+          font-size: 2rem;
+        }
+
+        .lightbox-content {
+          max-width: 95vw;
+          max-height: 95vh;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .gallery-masonry {
+          column-count: 2;
+        }
+      }
+    </style>
   </body>
 </html>
