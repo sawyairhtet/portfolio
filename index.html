@@ -3,69 +3,83 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sky Castle Portfolio</title>
+    <title>Developer • Photographer • Creator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
   </head>
   <body>
-    <!-- Floating clouds -->
-    <div class="cloud cloud-1"></div>
-    <div class="cloud cloud-2"></div>
-    <div class="cloud cloud-3"></div>
+    <!-- Geometric elements -->
+    <div class="geometric-element element-1"></div>
+    <div class="geometric-element element-2"></div>
+    <div class="geometric-element element-3"></div>
 
-    <!-- Magical sparkles -->
-    <div class="sparkle" style="top: 20%; left: 80%; animation-delay: 0s"></div>
-    <div class="sparkle" style="top: 60%; left: 15%; animation-delay: 1s"></div>
-    <div class="sparkle" style="top: 40%; left: 70%; animation-delay: 2s"></div>
+    <!-- Code particles -->
+    <div class="code-particle" style="top: 20%; left: 80%; animation-delay: 0s">
+      { }
+    </div>
+    <div class="code-particle" style="top: 60%; left: 15%; animation-delay: 2s">
+      f/2.8
+    </div>
+    <div class="code-particle" style="top: 40%; left: 70%; animation-delay: 4s">
+      =>
+    </div>
+    <div class="code-particle" style="top: 80%; left: 40%; animation-delay: 6s">
+      ISO 200
+    </div>
+    <div class="code-particle" style="top: 30%; left: 25%; animation-delay: 8s">
+      const
+    </div>
     <div
-      class="sparkle"
-      style="top: 80%; left: 40%; animation-delay: 1.5s"
-    ></div>
+      class="code-particle"
+      style="top: 70%; left: 85%; animation-delay: 10s"
+    >
+      1/250s
+    </div>
 
     <div id="canvas-container">
       <div class="loading" id="loading">
-        <div class="loading-text">✨ Creating magical worlds... ✨</div>
+        <div class="loading-text">Initializing creative space...</div>
       </div>
 
       <div id="ui-overlay">
         <div class="intro-text">
-          <h1>Sky Castle Portfolio</h1>
+          <h1>Code • Capture • Create</h1>
           <p>
-            Welcome to a world where creativity floats among the clouds. Explore
-            magical floating islands, each containing a different adventure in
-            design and development.
+            Where software engineering precision meets photographic artistry.
+            Explore a collection of digital experiences and visual stories
+            crafted with technical expertise and creative vision.
           </p>
         </div>
 
         <div class="controls">
-          <p>✨ Click and drag the sky • Scroll to soar closer ✨</p>
+          <p>← drag to explore • scroll to focus →</p>
         </div>
 
         <nav class="navigation">
-          <div class="nav-item" onclick="focusProject(0)">🌸 Web Gardens</div>
-          <div class="nav-item" onclick="focusProject(1)">📱 App Crystals</div>
-          <div class="nav-item" onclick="focusProject(2)">🎨 Art Spheres</div>
-          <div class="nav-item" onclick="focusProject(3)">✨ Brand Magic</div>
+          <div class="nav-item" onclick="focusProject(0)">Web Applications</div>
+          <div class="nav-item" onclick="focusProject(1)">Mobile Apps</div>
+          <div class="nav-item" onclick="focusProject(2)">Photography</div>
+          <div class="nav-item" onclick="focusProject(3)">Creative Code</div>
           <div
             class="nav-item"
             onclick="window.location.href='pages/about.html'"
           >
-            🌟 About Me
+            About Me
           </div>
           <div
             class="nav-item"
             onclick="window.location.href='pages/contact.html'"
           >
-            📸 Photography
+            Gallery
           </div>
         </nav>
 
         <div class="project-info" id="project-info">
-          <h3 id="project-title">Choose an island to explore</h3>
+          <h3 id="project-title">Select a project to explore</h3>
           <p id="project-description">
-            Gently hover over the floating islands to discover the magical
-            projects within each world.
+            Navigate through the 3D space to discover projects that showcase the
+            intersection of technical innovation and visual storytelling.
           </p>
           <div class="tech-stack" id="tech-stack"></div>
           <div class="project-links" id="project-links"></div>
@@ -73,8 +87,8 @@
       </div>
     </div>
 
-    <script src="js/scene-setup.js"></script>
     <script src="js/projects-data.js"></script>
+    <script src="js/scene-setup.js"></script>
     <script src="js/interactions.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/main.js"></script>

@@ -1,4 +1,4 @@
-// Animation system for magical floating effects
+// Animation system for technical portfolio
 let animationId = null;
 let isAnimating = false;
 
@@ -26,14 +26,17 @@ function animate() {
     window.interactionFunctions.updateCameraPosition();
   }
 
-  // Animate floating islands
-  animateFloatingIslands();
+  // Animate project structures
+  animateProjectStructures();
 
-  // Animate particles
-  animateParticles();
+  // Animate data streams
+  animateDataStreams();
 
-  // Animate platforms
-  animatePlatforms();
+  // Animate wireframe bases
+  animateWireframeBases();
+
+  // Animate code particles
+  animateCodeParticles();
 
   // Render the scene
   if (renderer && scene && camera) {
@@ -41,64 +44,64 @@ function animate() {
   }
 }
 
-function animateFloatingIslands() {
+function animateProjectStructures() {
   if (!projectMeshes.length) return;
 
-  const time = Date.now() * 0.0008;
+  const time = Date.now() * 0.001;
 
   projectMeshes.forEach((mesh, index) => {
-    if (!mesh.userData.originalPosition) return;
+    if (!mesh.userData.originalPosition || !mesh.userData.rotationSpeed) return;
 
     const originalPos = mesh.userData.originalPosition;
+    const rotationSpeed = mesh.userData.rotationSpeed;
 
-    // Gentle rotation
-    mesh.rotation.x += 0.002;
-    mesh.rotation.y += 0.003;
+    // Smooth rotation
+    mesh.rotation.x += rotationSpeed;
+    mesh.rotation.y += rotationSpeed * 0.7;
+    mesh.rotation.z += rotationSpeed * 0.3;
 
-    // Floating motion like Laputa - gentle vertical bobbing
-    mesh.position.y = originalPos.y + Math.sin(time + index * 2) * 0.8;
+    // Subtle floating motion
+    mesh.position.y = originalPos.y + Math.sin(time * 0.5 + index * 2) * 0.3;
 
-    // Slight horizontal drift
-    mesh.position.x = originalPos.x + Math.cos(time * 0.7 + index) * 0.3;
-    mesh.position.z = originalPos.z + Math.sin(time * 0.5 + index * 1.5) * 0.2;
-
-    // Add slight rotation variation for more natural movement
-    const rotationOffset = Math.sin(time * 0.3 + index) * 0.1;
-    mesh.rotation.z = rotationOffset;
+    // Slight positional variation
+    mesh.position.x = originalPos.x + Math.cos(time * 0.3 + index) * 0.1;
+    mesh.position.z = originalPos.z + Math.sin(time * 0.2 + index * 1.5) * 0.1;
   });
 }
 
-function animateParticles() {
+function animateDataStreams() {
   if (!particles.length) return;
 
   const time = Date.now() * 0.001;
 
   particles.forEach((particleSystem, systemIndex) => {
     const positions = particleSystem.geometry.attributes.position.array;
-    const originalPositions = particleSystem.userData.originalPositions;
     const velocities = particleSystem.userData.velocities;
 
-    if (!originalPositions || !velocities) return;
+    if (!velocities) return;
 
     for (let i = 0; i < positions.length; i += 3) {
       const particleIndex = i / 3;
 
-      // Gentle floating motion
-      positions[i] =
-        originalPositions[i] + Math.sin(time + particleIndex * 0.1) * 2;
-      positions[i + 1] =
-        originalPositions[i + 1] +
-        Math.cos(time * 0.7 + particleIndex * 0.2) * 1.5;
-      positions[i + 2] =
-        originalPositions[i + 2] +
-        Math.sin(time * 0.5 + particleIndex * 0.15) * 1;
+      // Update positions based on velocities
+      positions[i] += velocities[i];
+      positions[i + 1] += velocities[i + 1];
+      positions[i + 2] += velocities[i + 2];
 
-      // Add some upward drift
-      originalPositions[i + 1] += 0.005;
+      // Add some variation
+      positions[i] += Math.sin(time + particleIndex * 0.1) * 0.002;
+      positions[i + 1] += Math.cos(time * 0.7 + particleIndex * 0.2) * 0.001;
 
-      // Reset particles that drift too high
-      if (originalPositions[i + 1] > projects[systemIndex].position.y + 15) {
-        originalPositions[i + 1] = projects[systemIndex].position.y - 8;
+      // Keep particles in circular orbit
+      const centerX = projects[systemIndex].position.x;
+      const centerZ = projects[systemIndex].position.z;
+      const dx = positions[i] - centerX;
+      const dz = positions[i + 2] - centerZ;
+      const distance = Math.sqrt(dx * dx + dz * dz);
+
+      if (distance > 8) {
+        positions[i] = centerX + (dx / distance) * 4;
+        positions[i + 2] = centerZ + (dz / distance) * 4;
       }
     }
 
@@ -106,31 +109,50 @@ function animateParticles() {
   });
 }
 
-function animatePlatforms() {
+function animateWireframeBases() {
   if (!platforms.length) return;
 
-  const time = Date.now() * 0.0008;
+  const time = Date.now() * 0.001;
 
   platforms.forEach((platform, index) => {
-    if (!platform.userData.originalPosition) return;
+    if (!platform.userData.originalPosition || !platform.userData.rotationSpeed)
+      return;
 
     const originalPos = platform.userData.originalPosition;
+    const rotationSpeed = platform.userData.rotationSpeed;
 
-    // Gentle floating motion - slightly slower than the islands
+    // Continuous rotation
+    platform.rotation.y += rotationSpeed;
+
+    // Subtle floating motion
     platform.position.y =
-      originalPos.y + Math.sin(time * 0.8 + index * 2) * 0.6;
-    platform.position.x = originalPos.x + Math.cos(time * 0.5 + index) * 0.2;
-    platform.position.z =
-      originalPos.z + Math.sin(time * 0.3 + index * 1.5) * 0.15;
-
-    // Gentle rotation
-    platform.rotation.y += 0.001;
+      originalPos.y + Math.sin(time * 0.3 + index * 2) * 0.1;
   });
 }
 
-// Special effects functions
-function createMagicalBurst(position, color = 0xffd700) {
-  const particleCount = 50;
+function animateCodeParticles() {
+  if (!codeParticles.length) return;
+
+  const time = Date.now() * 0.001;
+
+  codeParticles.forEach((particle, index) => {
+    if (!particle.userData.rotationSpeed) return;
+
+    const rotationSpeed = particle.userData.rotationSpeed;
+
+    // Rotate each code particle
+    particle.rotation.x += rotationSpeed.x;
+    particle.rotation.y += rotationSpeed.y;
+    particle.rotation.z += rotationSpeed.z;
+
+    // Subtle floating motion
+    particle.position.y += Math.sin(time * 0.2 + index) * 0.001;
+  });
+}
+
+// Technical effects functions
+function createDataBurst(position, color = 0xff9800) {
+  const particleCount = 30;
   const burstGeometry = new THREE.BufferGeometry();
   const positions = new Float32Array(particleCount * 3);
   const velocities = [];
@@ -148,9 +170,9 @@ function createMagicalBurst(position, color = 0xffd700) {
 
     // Random velocities for explosion effect
     velocities.push({
-      x: (Math.random() - 0.5) * 0.5,
-      y: Math.random() * 0.3,
-      z: (Math.random() - 0.5) * 0.5,
+      x: (Math.random() - 0.5) * 0.3,
+      y: Math.random() * 0.2,
+      z: (Math.random() - 0.5) * 0.3,
     });
 
     colors[i3] = particleColor.r;
@@ -165,7 +187,7 @@ function createMagicalBurst(position, color = 0xffd700) {
   burstGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
   const burstMaterial = new THREE.PointsMaterial({
-    size: 0.3,
+    size: 0.15,
     transparent: true,
     opacity: 1,
     vertexColors: true,
@@ -177,10 +199,10 @@ function createMagicalBurst(position, color = 0xffd700) {
 
   // Animate the burst
   let burstTime = 0;
-  const burstDuration = 2000;
+  const burstDuration = 1500;
 
   function animateBurst() {
-    burstTime += 16; // Approximately 60fps
+    burstTime += 16;
     const progress = burstTime / burstDuration;
 
     if (progress >= 1) {
@@ -198,12 +220,12 @@ function createMagicalBurst(position, color = 0xffd700) {
       positions[i3 + 1] += velocity.y;
       positions[i3 + 2] += velocity.z;
 
-      // Add gravity
-      velocity.y -= 0.01;
+      // Apply gravity
+      velocity.y -= 0.002;
     }
 
     burst.geometry.attributes.position.needsUpdate = true;
-    burst.material.opacity = 1 - progress;
+    burstMaterial.opacity = 1 - progress;
 
     requestAnimationFrame(animateBurst);
   }
@@ -211,38 +233,47 @@ function createMagicalBurst(position, color = 0xffd700) {
   animateBurst();
 }
 
-function createShimmerEffect(mesh) {
-  const originalColor = mesh.material.color.clone();
-  const shimmerColor = new THREE.Color(0xffffff);
+function createGlowEffect(mesh) {
+  if (!mesh.material) return;
 
-  let shimmerProgress = 0;
-  const shimmerDuration = 1000;
-  const startTime = Date.now();
+  const originalEmissive = mesh.material.emissive.clone();
+  const targetEmissive = new THREE.Color(0xff9800).multiplyScalar(0.3);
 
-  function animateShimmer() {
-    const elapsed = Date.now() - startTime;
-    shimmerProgress = elapsed / shimmerDuration;
+  let progress = 0;
+  const duration = 2000;
 
-    if (shimmerProgress >= 1) {
-      mesh.material.color.copy(originalColor);
-      return;
+  function animateGlow() {
+    progress += 16;
+    const t = Math.min(progress / duration, 1);
+
+    // Smooth easing
+    const easedT = easeInOutCubic(t);
+
+    if (t < 0.5) {
+      mesh.material.emissive.lerpColors(
+        originalEmissive,
+        targetEmissive,
+        easedT * 2
+      );
+    } else {
+      mesh.material.emissive.lerpColors(
+        targetEmissive,
+        originalEmissive,
+        (easedT - 0.5) * 2
+      );
     }
 
-    // Pulse between original and white
-    const intensity = Math.sin(shimmerProgress * Math.PI * 4) * 0.5 + 0.5;
-    mesh.material.color.lerpColors(
-      originalColor,
-      shimmerColor,
-      intensity * 0.3
-    );
-
-    requestAnimationFrame(animateShimmer);
+    if (t < 1) {
+      requestAnimationFrame(animateGlow);
+    } else {
+      mesh.material.emissive.copy(originalEmissive);
+    }
   }
 
-  animateShimmer();
+  animateGlow();
 }
 
-// Utility functions for smooth animations
+// Utility functions
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 }
@@ -260,54 +291,14 @@ function lerp(start, end, t) {
   return start + (end - start) * t;
 }
 
-// Background animation for ambient atmosphere
-function createFloatingDebris() {
-  const debrisCount = 20;
-  const debris = [];
-
-  for (let i = 0; i < debrisCount; i++) {
-    const geometry = new THREE.SphereGeometry(0.1 + Math.random() * 0.2, 6, 6);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0xdeb887,
-      transparent: true,
-      opacity: 0.3 + Math.random() * 0.3,
-    });
-
-    const debrisPiece = new THREE.Mesh(geometry, material);
-    debrisPiece.position.set(
-      (Math.random() - 0.5) * 100,
-      (Math.random() - 0.5) * 50,
-      (Math.random() - 0.5) * 100
-    );
-
-    debrisPiece.userData = {
-      velocity: {
-        x: (Math.random() - 0.5) * 0.02,
-        y: (Math.random() - 0.5) * 0.01,
-        z: (Math.random() - 0.5) * 0.02,
-      },
-      rotationSpeed: {
-        x: (Math.random() - 0.5) * 0.02,
-        y: (Math.random() - 0.5) * 0.02,
-        z: (Math.random() - 0.5) * 0.02,
-      },
-    };
-
-    scene.add(debrisPiece);
-    debris.push(debrisPiece);
-  }
-
-  return debris;
-}
-
-// Export animation functions
+// Export functions to global scope
 window.animationFunctions = {
   startAnimationLoop,
   stopAnimationLoop,
-  createMagicalBurst,
-  createShimmerEffect,
-  createFloatingDebris,
-  easeInOutCubic,
-  easeOutElastic,
-  lerp,
+  createDataBurst,
+  createGlowEffect,
+  animateProjectStructures,
+  animateDataStreams,
+  animateWireframeBases,
+  animateCodeParticles,
 };

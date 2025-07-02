@@ -1,94 +1,133 @@
-// Project data with Ghibli themes
+// Project data showcasing photography and software engineering
 const projects = [
   {
-    title: "Enchanted E-Commerce Garden",
+    title: "Portfolio Management System",
     description:
-      "A magical marketplace where products bloom like flowers and shopping feels like wandering through a secret garden. Features intuitive navigation and delightful micro-animations.",
-    tech: ["React", "Node.js", "MongoDB", "Framer Motion"],
-    color: 0x90ee90,
+      "Full-stack web application for photographers to manage clients, galleries, and bookings. Features automated watermarking, client proofing workflows, and integrated payment processing.",
+    tech: ["React", "Node.js", "PostgreSQL", "AWS S3", "Stripe API"],
+    color: 0xff9800,
     position: { x: -12, y: 3, z: 0 },
     shape: "sphere",
     links: [
-      { text: "🌐 Live Demo", url: "#" },
-      { text: "💻 GitHub", url: "#" },
+      { text: "Live Demo", url: "#" },
+      { text: "GitHub", url: "#" },
+      { text: "Case Study", url: "#" },
     ],
   },
   {
-    title: "Crystal Mobile Adventures",
+    title: "Mobile Photo Editor",
     description:
-      "A fitness companion app that transforms workouts into magical quests. Users collect crystal energy and unlock new abilities as they stay active.",
-    tech: ["React Native", "Firebase", "Three.js", "Redux"],
-    color: 0x87cefa,
+      "Native mobile application with advanced photo editing capabilities. Implements custom algorithms for exposure correction, color grading, and film emulation filters.",
+    tech: ["React Native", "OpenCV", "Firebase", "TypeScript"],
+    color: 0x607d8b,
     position: { x: 12, y: -2, z: -3 },
-    shape: "crystal",
-    links: [
-      { text: "📱 App Store", url: "#" },
-      { text: "🤖 Google Play", url: "#" },
-      { text: "💻 GitHub", url: "#" },
-    ],
-  },
-  {
-    title: "Floating Art Gallery",
-    description:
-      "An immersive 3D gallery where artworks float in space like magical paintings from Howl's Moving Castle. Visitors can walk through and interact with each piece.",
-    tech: ["Three.js", "WebGL", "GSAP", "Canvas API"],
-    color: 0xdda0dd,
-    position: { x: 0, y: 8, z: -8 },
     shape: "octahedron",
     links: [
-      { text: "🎨 Explore Gallery", url: "#" },
-      { text: "💻 GitHub", url: "#" },
+      { text: "App Store", url: "#" },
+      { text: "GitHub", url: "#" },
+      { text: "Technical Blog", url: "#" },
     ],
   },
   {
-    title: "Totoro Brand Studio",
+    title: "Photography Series: Urban Code",
     description:
-      "Complete brand identity system inspired by nature and wonder. Created logos, color palettes, and brand guidelines that capture the magic of childhood imagination.",
-    tech: ["Adobe CC", "Figma", "Procreate", "After Effects"],
-    color: 0xffb6c1,
+      "Visual exploration of architecture as code - capturing geometric patterns, reflections, and shadows in urban environments. Shot with Fujifilm X-T4 and edited with custom Python scripts.",
+    tech: ["Photography", "Python", "Adobe Lightroom", "Color Science"],
+    color: 0x455a64,
+    position: { x: 0, y: 8, z: -8 },
+    shape: "crystal",
+    links: [
+      { text: "View Gallery", url: "#" },
+      { text: "Behind the Scenes", url: "#" },
+    ],
+  },
+  {
+    title: "Real-time Image Processing API",
+    description:
+      "High-performance REST API for real-time image manipulation and analysis. Supports batch processing, format conversion, and AI-powered auto-enhancement for photography workflows.",
+    tech: ["Python", "FastAPI", "OpenCV", "TensorFlow", "Docker"],
+    color: 0x37474f,
     position: { x: -6, y: -8, z: 5 },
     shape: "dodecahedron",
     links: [
-      { text: "📖 Case Study", url: "#" },
-      { text: "🎨 Behance", url: "#" },
+      { text: "API Documentation", url: "#" },
+      { text: "GitHub", url: "#" },
+      { text: "Performance Metrics", url: "#" },
     ],
   },
 ];
 
-// Additional project categories for expansion
+// Additional project categories
 const additionalProjects = {
   webDevelopment: [
     {
-      title: "Spirited Away Restaurant Site",
+      title: "Photography Agency Website",
       description:
-        "A restaurant website that brings the magical dining experience from Spirited Away to life.",
-      tech: ["Vue.js", "Nuxt.js", "SCSS", "AOS"],
-      image: "assets/images/restaurant-site.jpg",
+        "Responsive website for a photography agency featuring immersive galleries, client testimonials, and booking system.",
+      tech: ["Next.js", "Tailwind CSS", "Sanity CMS", "Framer Motion"],
+      image: "assets/images/agency-site.jpg",
     },
     {
-      title: "Castle in the Sky Landing Page",
+      title: "Event Photography Dashboard",
       description:
-        "An interactive landing page with floating elements and Laputa-inspired design.",
-      tech: ["HTML5", "CSS3", "JavaScript", "Three.js"],
-      image: "assets/images/castle-landing.jpg",
+        "Real-time dashboard for event photographers to upload, organize, and share photos during live events.",
+      tech: ["Vue.js", "Express.js", "Socket.io", "Cloudinary"],
+      image: "assets/images/event-dashboard.jpg",
     },
   ],
   mobileApps: [
     {
-      title: "Catbus Navigation App",
+      title: "Exposure Calculator",
       description:
-        "A public transportation app with whimsical animations and route optimization.",
-      tech: ["Flutter", "Dart", "Google Maps API", "Firebase"],
-      image: "assets/images/catbus-app.jpg",
+        "Mobile app for calculating exposure settings, depth of field, and hyperfocal distance for photographers.",
+      tech: ["Flutter", "Dart", "SQLite", "Camera2 API"],
+      image: "assets/images/exposure-calc.jpg",
+    },
+    {
+      title: "Photo Location Scout",
+      description:
+        "GPS-based app for discovering and sharing photography locations with community ratings and weather data.",
+      tech: ["React Native", "MapBox", "Firebase", "Weather API"],
+      image: "assets/images/location-scout.jpg",
     },
   ],
-  design: [
+  photography: [
     {
-      title: "Kodama Logo Collection",
+      title: "Street Photography: Digital Nomads",
       description:
-        "A series of nature-inspired logos featuring forest spirits and organic shapes.",
-      tech: ["Illustrator", "Photoshop", "Figma"],
-      image: "assets/images/kodama-logos.jpg",
+        "Documentary series capturing the intersection of technology and travel in urban environments.",
+      tech: ["Fujifilm X-T4", "35mm f/1.4", "Capture One", "Photoshop"],
+      image: "assets/images/street-series.jpg",
+    },
+    {
+      title: "Corporate Headshots",
+      description:
+        "Professional headshot photography for tech companies and startups, emphasizing clean and modern aesthetic.",
+      tech: ["Canon R5", "85mm f/1.2", "Profoto Lighting", "Lightroom"],
+      image: "assets/images/headshots.jpg",
+    },
+    {
+      title: "Architecture: Code in Concrete",
+      description:
+        "Architectural photography exploring patterns, geometry, and the relationship between digital and physical structures.",
+      tech: ["Sony A7R IV", "16-35mm f/2.8", "Tilt-shift", "Photoshop"],
+      image: "assets/images/architecture.jpg",
+    },
+  ],
+  creativeCode: [
+    {
+      title: "Generative Art with Photography",
+      description:
+        "Algorithmic art pieces combining computational creativity with photographic elements and data visualization.",
+      tech: ["Processing", "p5.js", "Machine Learning", "Creative Coding"],
+      image: "assets/images/generative-art.jpg",
+    },
+    {
+      title: "Interactive Photo Installations",
+      description:
+        "Motion-sensor driven photography displays that respond to viewer presence and movement.",
+      tech: ["Arduino", "Kinect", "MAX/MSP", "Projection Mapping"],
+      image: "assets/images/installations.jpg",
     },
   ],
 };
@@ -96,34 +135,78 @@ const additionalProjects = {
 // Skills and technologies
 const skills = {
   frontend: [
-    "HTML5",
-    "CSS3",
-    "JavaScript",
     "React",
+    "Next.js",
     "Vue.js",
+    "TypeScript",
+    "Tailwind CSS",
     "Three.js",
-    "GSAP",
+    "Framer Motion",
   ],
   backend: [
     "Node.js",
     "Python",
-    "MongoDB",
+    "FastAPI",
     "PostgreSQL",
-    "Firebase",
-    "Express",
+    "MongoDB",
+    "Docker",
+    "AWS",
   ],
-  mobile: ["React Native", "Flutter", "Ionic"],
-  design: [
+  mobile: ["React Native", "Flutter", "iOS Development", "Android Development"],
+  photography: [
+    "Fujifilm X-System",
+    "Canon R Series",
+    "Adobe Lightroom",
+    "Capture One",
+    "Color Science",
+    "Studio Lighting",
+  ],
+  creative: [
+    "Processing",
+    "p5.js",
+    "OpenCV",
     "Adobe Creative Suite",
-    "Figma",
-    "Sketch",
-    "Procreate",
+    "DaVinci Resolve",
     "After Effects",
   ],
-  tools: ["Git", "Webpack", "Vite", "Docker", "AWS", "Vercel"],
+  tools: ["Git", "Docker", "Kubernetes", "CI/CD", "Figma", "Linear"],
+};
+
+// Photography equipment and technical specs
+const equipment = {
+  cameras: [
+    {
+      name: "Fujifilm X-T4",
+      type: "Mirrorless",
+      features: ["26.1MP X-Trans", "IBIS", "4K Video"],
+    },
+    {
+      name: "Canon EOS R5",
+      type: "Full Frame Mirrorless",
+      features: ["45MP", "8K Video", "Dual Pixel AF"],
+    },
+  ],
+  lenses: [
+    {
+      name: "XF 35mm f/1.4 R",
+      mount: "Fujifilm X",
+      specialty: "Street Photography",
+    },
+    {
+      name: "RF 85mm f/1.2L",
+      mount: "Canon RF",
+      specialty: "Portraits",
+    },
+  ],
+  software: [
+    "Adobe Lightroom Classic",
+    "Capture One Pro",
+    "Adobe Photoshop",
+    "DxO PhotoLab",
+  ],
 };
 
 // Export for use in other files
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { projects, additionalProjects, skills };
+  module.exports = { projects, additionalProjects, skills, equipment };
 }

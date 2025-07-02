@@ -3,1189 +3,268 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Me - Sky Castle Portfolio</title>
+    <title>About Me - Developer • Photographer</title>
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/pages.css" />
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
   </head>
-  <body class="page-body quirky-about">
-    <!-- Floating magical elements -->
+  <body class="page-body professional-about">
+    <!-- Floating geometric elements -->
     <div class="floating-leaves">
-      <div class="leaf leaf-1">🍃</div>
-      <div class="leaf leaf-2">🌸</div>
-      <div class="leaf leaf-3">✨</div>
-      <div class="leaf leaf-4">🍃</div>
-      <div class="leaf leaf-5">🌺</div>
-      <div class="leaf leaf-6">🦋</div>
-      <div class="leaf leaf-7">🐛</div>
-      <div class="leaf leaf-8">🌙</div>
-    </div>
-
-    <!-- Secret konami code -->
-    <div id="secret-mode" class="hidden">
-      <div class="secret-message">
-        🎮 CHEAT CODE ACTIVATED! You found the secret developer mode! 🎮
-      </div>
+      <div class="leaf leaf-1">{ }</div>
+      <div class="leaf leaf-2">📸</div>
+      <div class="leaf leaf-3">→</div>
+      <div class="leaf leaf-4">f/2.8</div>
+      <div class="leaf leaf-5">const</div>
+      <div class="leaf leaf-6">ISO</div>
+      <div class="leaf leaf-7">=></div>
+      <div class="leaf leaf-8">1/250</div>
     </div>
 
     <div class="page-container">
       <!-- Navigation -->
       <nav class="page-nav">
-        <a href="../index.html" class="nav-back">🏰 Back to Reality</a>
+        <a href="../index.html" class="nav-back">← Back to Portfolio</a>
         <div class="nav-links">
-          <a href="about.html" class="nav-link active">🦄 The Real Me</a>
-          <a href="contact.html" class="nav-link">📸 Photography</a>
+          <a href="about.html" class="nav-link active">About Me</a>
+          <a href="contact.html" class="nav-link">Gallery</a>
         </div>
       </nav>
 
       <!-- About Content -->
       <main class="page-content">
         <div class="content-wrapper">
-          <!-- Quirky Intro -->
-          <section class="chaos-intro">
-            <div class="glitch-text">
-              <h1 data-text="Hi, I'm not just another developer">
-                Hi, I'm not just another developer
-              </h1>
+          <!-- Professional Intro -->
+          <section class="professional-intro">
+            <div class="intro-header">
+              <h1>Where Code Meets Capture</h1>
+              <div class="dual-identity">
+                <span class="identity-tag">Software Engineer</span>
+                <span class="identity-separator">•</span>
+                <span class="identity-tag">Photographer</span>
+              </div>
             </div>
-            <div class="rotating-emojis">
-              <span class="emoji-spin">🤖</span>
-              <span class="emoji-spin">🎨</span>
-              <span class="emoji-spin">🚀</span>
-              <span class="emoji-spin">🌮</span>
-              <span class="emoji-spin">🎵</span>
-            </div>
-            <p class="sub-chaos">
-              I'm a digital chaos coordinator who accidentally became good at
-              making pretty things work.
+            <p class="intro-description">
+              I bridge the gap between technical precision and creative vision,
+              building digital experiences with the same attention to detail I
+              bring to capturing light and shadow through a lens.
             </p>
           </section>
 
-          <!-- The Real Story -->
-          <section class="honest-story">
-            <h2 class="section-title">The Unfiltered Origin Story 📖</h2>
-            <div class="story-timeline">
-              <div class="timeline-item" onclick="toggleTimelineItem(this)">
-                <div class="timeline-dot">🎮</div>
+          <!-- The Journey -->
+          <section class="journey-section">
+            <h2 class="section-title">The Journey</h2>
+            <div class="journey-timeline">
+              <div class="timeline-item" data-year="2018">
+                <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                  <h3>Age 8: The Awakening</h3>
-                  <p class="preview">Discovered I could break websites...</p>
-                  <div class="full-story hidden">
-                    <p>
-                      I spent hours on my dad's computer trying to "hack"
-                      Neopets. Spoiler: I just learned HTML by accident. My pet
-                      died of starvation while I was busy making rainbow text.
-                      Sorry, BluePoogle47. 🐧💔
-                    </p>
-                  </div>
+                  <h3>First Lines of Code</h3>
+                  <p>
+                    Started with Python to automate photo organization and
+                    metadata extraction. The intersection of technology and
+                    photography fascinated me from day one.
+                  </p>
                 </div>
               </div>
 
-              <div class="timeline-item" onclick="toggleTimelineItem(this)">
-                <div class="timeline-dot">📚</div>
+              <div class="timeline-item" data-year="2019">
+                <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                  <h3>College: The Plot Twist</h3>
-                  <p class="preview">
-                    Studied something completely different...
+                  <h3>Full-Stack Development</h3>
+                  <p>
+                    Dove deep into React and Node.js while building my first
+                    photography portfolio website. Learned that good code, like
+                    good photography, is about composition and clarity.
                   </p>
-                  <div class="full-story hidden">
-                    <p>
-                      Majored in Psychology because I wanted to understand why
-                      people click "OK" without reading error messages. Ended up
-                      understanding human behavior AND why my code doesn't work
-                      at 3 AM. Win-win! 🧠
-                    </p>
-                  </div>
                 </div>
               </div>
 
-              <div class="timeline-item" onclick="toggleTimelineItem(this)">
-                <div class="timeline-dot">💡</div>
+              <div class="timeline-item" data-year="2021">
+                <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                  <h3>The "Oh Shit" Moment</h3>
-                  <p class="preview">When everything clicked...</p>
-                  <div class="full-story hidden">
-                    <p>
-                      Built my first "real" project: a mood tracker that used
-                      colors instead of boring numbers. Friends actually used
-                      it. Mind = blown. Realized I could make things people
-                      don't hate using! 🌈
-                    </p>
-                  </div>
+                  <h3>Professional Photographer</h3>
+                  <p>
+                    Began shooting professionally for tech companies and
+                    startups. Discovered the unique challenge of translating
+                    brand identity into visual storytelling.
+                  </p>
                 </div>
               </div>
 
-              <div class="timeline-item" onclick="toggleTimelineItem(this)">
-                <div class="timeline-dot">🚀</div>
+              <div class="timeline-item" data-year="2023">
+                <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                  <h3>Now: Professional Chaos</h3>
-                  <p class="preview">Somehow got paid for this...</p>
-                  <div class="full-story hidden">
-                    <p>
-                      Turns out companies will pay you to make their digital
-                      stuff less terrible. Who knew? I specialize in making
-                      complicated things feel simple, and simple things feel
-                      magical. ✨
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Skills But Make It Weird -->
-          <section class="skills-chaos">
-            <h2>Things I'm Surprisingly Good At 🎯</h2>
-            <div class="skill-randomizer">
-              <button onclick="randomizeSkills()" class="chaos-button">
-                🎲 Shuffle My Brain
-              </button>
-              <div class="skills-display" id="skillsDisplay">
-                <div class="skill-card code-skill">
-                  <h3>🔮 Code Wizardry</h3>
-                  <p>JavaScript, React, Node.js, Python</p>
-                  <div class="skill-level">
-                    Confidence: 87% (92% after coffee)
-                  </div>
-                </div>
-                <div class="skill-card design-skill">
-                  <h3>🎨 Making Pretty Things</h3>
-                  <p>UI/UX, Figma, CSS Magic, User Psychology</p>
-                  <div class="skill-level">
-                    Pixel-perfect obsession: Unhealthy
-                  </div>
-                </div>
-                <div class="skill-card weird-skill">
-                  <h3>🤹 Random Talents</h3>
+                  <h3>Present Day</h3>
                   <p>
-                    Coffee-to-code conversion, Debugging at 3AM, Explaining tech
-                    to cats
-                  </p>
-                  <div class="skill-level">Weirdness: Maximum</div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Random Facts -->
-          <section class="random-facts">
-            <h2>Random Facts About This Human 🎪</h2>
-            <div class="facts-grid">
-              <div class="fact-card" onclick="flipCard(this)">
-                <div class="card-front">
-                  <span class="fact-icon">🌮</span>
-                  <p>Taco Consumption</p>
-                </div>
-                <div class="card-back">
-                  <p>
-                    I've eaten tacos in 47 different cities. It's not a hobby,
-                    it's a lifestyle choice.
-                  </p>
-                </div>
-              </div>
-
-              <div class="fact-card" onclick="flipCard(this)">
-                <div class="card-front">
-                  <span class="fact-icon">🎵</span>
-                  <p>Coding Soundtrack</p>
-                </div>
-                <div class="card-back">
-                  <p>
-                    I code to everything from lo-fi hip hop to death metal. The
-                    bugs don't discriminate by genre.
-                  </p>
-                </div>
-              </div>
-
-              <div class="fact-card" onclick="flipCard(this)">
-                <div class="card-front">
-                  <span class="fact-icon">🌱</span>
-                  <p>Plant Parent</p>
-                </div>
-                <div class="card-back">
-                  <p>
-                    I have 23 plants. They're better at handling my schedule
-                    than most humans.
-                  </p>
-                </div>
-              </div>
-
-              <div class="fact-card" onclick="flipCard(this)">
-                <div class="card-front">
-                  <span class="fact-icon">🎮</span>
-                  <p>Gaming Habits</p>
-                </div>
-                <div class="card-back">
-                  <p>
-                    I speedrun debugging sessions like they're video games.
-                    Personal best: 17 minutes for a "simple" CSS fix.
-                  </p>
-                </div>
-              </div>
-
-              <div class="fact-card" onclick="flipCard(this)">
-                <div class="card-front">
-                  <span class="fact-icon">📚</span>
-                  <p>Learning Addiction</p>
-                </div>
-                <div class="card-back">
-                  <p>
-                    I learn new frameworks for fun. My browser bookmarks folder
-                    is labeled "Things I'll Totally Use Someday."
-                  </p>
-                </div>
-              </div>
-
-              <div class="fact-card" onclick="flipCard(this)">
-                <div class="card-front">
-                  <span class="fact-icon">🦆</span>
-                  <p>Rubber Duck</p>
-                </div>
-                <div class="card-back">
-                  <p>
-                    My rubber duck debugging partner is named Gerald. He's an
-                    excellent listener and terrible at giving advice.
+                    Combining both passions to create photography applications,
+                    automated workflows, and digital experiences that serve the
+                    creative community.
                   </p>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Philosophy Section -->
-          <section class="life-philosophy">
-            <h2>My Completely Unoriginal Life Philosophy 🧘‍♀️</h2>
-            <div class="philosophy-quotes">
-              <blockquote class="philosophy-item">
+          <!-- Skills Showcase -->
+          <section class="skills-showcase">
+            <h2>Technical Expertise</h2>
+            <div class="skills-grid">
+              <div class="skill-category">
+                <h3>Development</h3>
+                <div class="skill-tags">
+                  <span class="skill-tag">React</span>
+                  <span class="skill-tag">Node.js</span>
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">TypeScript</span>
+                  <span class="skill-tag">PostgreSQL</span>
+                  <span class="skill-tag">AWS</span>
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h3>Photography</h3>
+                <div class="skill-tags">
+                  <span class="skill-tag">Fujifilm X-System</span>
+                  <span class="skill-tag">Canon R Series</span>
+                  <span class="skill-tag">Adobe Lightroom</span>
+                  <span class="skill-tag">Capture One</span>
+                  <span class="skill-tag">Color Science</span>
+                  <span class="skill-tag">Studio Lighting</span>
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h3>Creative Technology</h3>
+                <div class="skill-tags">
+                  <span class="skill-tag">OpenCV</span>
+                  <span class="skill-tag">Processing</span>
+                  <span class="skill-tag">Three.js</span>
+                  <span class="skill-tag">Computer Vision</span>
+                  <span class="skill-tag">Generative Art</span>
+                  <span class="skill-tag">Creative Coding</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Philosophy -->
+          <section class="philosophy-section">
+            <h2>Philosophy</h2>
+            <div class="philosophy-grid">
+              <div class="philosophy-card">
+                <div class="card-icon">🔍</div>
+                <h3>Attention to Detail</h3>
                 <p>
-                  "Make it work, make it pretty, make it fast. In that order.
-                  Coffee helps with all three."
+                  Whether debugging code or perfecting exposure, I believe that
+                  excellence lies in the details. Both crafts demand precision
+                  and patience.
                 </p>
-                <cite>- Me, at 2 AM</cite>
-              </blockquote>
+              </div>
 
-              <blockquote class="philosophy-item">
+              <div class="philosophy-card">
+                <div class="card-icon">⚡</div>
+                <h3>Technical Innovation</h3>
                 <p>
-                  "If users have to think about how to use it, I haven't done my
-                  job yet."
+                  I leverage technology to push creative boundaries, building
+                  tools that enhance rather than replace the human creative
+                  process.
                 </p>
-                <cite>- Also me, but caffeinated</cite>
-              </blockquote>
-
-              <blockquote class="philosophy-item">
-                <p>"Technology should feel like magic, not homework."</p>
-                <cite
-                  >- Me, explaining why I spent 3 hours on a loading
-                  animation</cite
-                >
-              </blockquote>
-            </div>
-          </section>
-
-          <!-- Current Status -->
-          <section class="current-status">
-            <h2>Real-Time Life Status 📊</h2>
-            <div class="status-dashboard">
-              <div class="status-meter">
-                <label>Coffee Level</label>
-                <div class="meter">
-                  <div class="meter-fill coffee-meter" style="width: 73%"></div>
-                </div>
-                <span class="meter-value">73% (Optimal range)</span>
               </div>
 
-              <div class="status-meter">
-                <label>Code Quality</label>
-                <div class="meter">
-                  <div class="meter-fill code-meter" style="width: 89%"></div>
-                </div>
-                <span class="meter-value">89% (Above average Tuesday)</span>
+              <div class="philosophy-card">
+                <div class="card-icon">🎯</div>
+                <h3>Purpose-Driven Design</h3>
+                <p>
+                  Every line of code and every captured frame serves a purpose.
+                  I focus on solving real problems with elegant, user-centered
+                  solutions.
+                </p>
               </div>
 
-              <div class="status-meter">
-                <label>Impostor Syndrome</label>
-                <div class="meter">
-                  <div
-                    class="meter-fill impostor-meter"
-                    style="width: 42%"
-                  ></div>
-                </div>
-                <span class="meter-value">42% (Manageable today)</span>
-              </div>
-
-              <div class="status-meter">
-                <label>Plant Happiness</label>
-                <div class="meter">
-                  <div class="meter-fill plant-meter" style="width: 91%"></div>
-                </div>
-                <span class="meter-value"
-                  >91% (They forgave the overwatering)</span
-                >
+              <div class="philosophy-card">
+                <div class="card-icon">🔄</div>
+                <h3>Continuous Learning</h3>
+                <p>
+                  Technology and photography both evolve rapidly. I stay
+                  curious, experiment with new techniques, and embrace the
+                  learning process.
+                </p>
               </div>
             </div>
           </section>
 
-          <!-- Interactive CTA -->
-          <section class="interactive-cta">
-            <div class="cta-content">
-              <h2>Want to Build Something Awesome Together? 🤝</h2>
-              <p>
-                I promise to bring the weird ideas, you bring the vision. Let's
-                make the internet a little more fun.
-              </p>
-
-              <div class="cta-game">
-                <p>Choose your collaboration style:</p>
-                <div class="choice-buttons">
-                  <button onclick="showCollabStyle('chaos')" class="choice-btn">
-                    🌪️ Controlled Chaos
-                  </button>
-                  <button
-                    onclick="showCollabStyle('methodical')"
-                    class="choice-btn"
-                  >
-                    📋 Methodical Magic
-                  </button>
-                  <button
-                    onclick="showCollabStyle('hybrid')"
-                    class="choice-btn"
-                  >
-                    🔄 Best of Both
-                  </button>
-                </div>
-                <div id="collabResult" class="collab-result"></div>
+          <!-- Equipment & Tools -->
+          <section class="equipment-section">
+            <h2>Current Setup</h2>
+            <div class="equipment-grid">
+              <div class="equipment-category">
+                <h3>Photography Gear</h3>
+                <ul class="equipment-list">
+                  <li>Fujifilm X-T4 + XF 35mm f/1.4</li>
+                  <li>Canon EOS R5 + RF 85mm f/1.2L</li>
+                  <li>Profoto B1X Studio Lighting</li>
+                  <li>Adobe Lightroom Classic + Capture One</li>
+                </ul>
               </div>
 
-              <div class="cta-buttons">
-                <a href="contact.html" class="cta-button primary pulse"
-                  >✨ Let's Chat</a
-                >
-                <a href="../index.html" class="cta-button secondary"
-                  >🎪 See My Circus</a
-                >
+              <div class="equipment-category">
+                <h3>Development Tools</h3>
+                <ul class="equipment-list">
+                  <li>MacBook Pro M1 Max</li>
+                  <li>VS Code + Neovim</li>
+                  <li>Docker + Kubernetes</li>
+                  <li>Figma + Adobe Creative Suite</li>
+                </ul>
               </div>
             </div>
           </section>
 
-          <!-- Contact Section -->
-          <section class="contact-minimal">
-            <h2>Let's Connect 🤝</h2>
+          <!-- Contact CTA -->
+          <section class="contact-cta">
+            <h2>Let's Create Something</h2>
             <p>
-              If you've made it this far, you're probably someone I'd love to
-              chat with!
+              Whether you need a developer who understands visual design or a
+              photographer who speaks tech, let's explore how we can work
+              together.
             </p>
-            <div class="contact-links">
-              <a
-                href="mailto:your.email@gmail.com"
-                class="contact-link"
-                title="Email"
+            <div class="cta-buttons">
+              <a href="contact.html" class="cta-button primary"
+                >View Photography</a
               >
-                <span class="contact-icon">📧</span>
-                <span class="contact-label">Email</span>
-              </a>
-              <a
-                href="https://linkedin.com/in/yourprofile"
-                class="contact-link"
-                title="LinkedIn"
-                target="_blank"
+              <a href="../index.html" class="cta-button secondary"
+                >See Projects</a
               >
-                <span class="contact-icon">💼</span>
-                <span class="contact-label">LinkedIn</span>
-              </a>
-              <a
-                href="https://github.com/yourusername"
-                class="contact-link"
-                title="GitHub"
-                target="_blank"
-              >
-                <span class="contact-icon">💻</span>
-                <span class="contact-label">GitHub</span>
-              </a>
-              <a
-                href="https://instagram.com/yourusername"
-                class="contact-link"
-                title="Instagram"
-                target="_blank"
-              >
-                <span class="contact-icon">📸</span>
-                <span class="contact-label">Instagram</span>
-              </a>
-              <a
-                href="https://x.com/yourusername"
-                class="contact-link"
-                title="X (Twitter)"
-                target="_blank"
-              >
-                <span class="contact-icon">🐦</span>
-                <span class="contact-label">X</span>
-              </a>
             </div>
-          </section>
-
-          <!-- Easter Egg Section -->
-          <section class="easter-eggs">
-            <p class="small-text">
-              PS: Try the Konami code (↑↑↓↓←→←→BA) for a surprise 🎮
-            </p>
-            <p class="smaller-text">
-              PPS: If you're reading this, you're the kind of person I want to
-              work with.
-            </p>
           </section>
         </div>
       </main>
-
-      <!-- Footer -->
-      <footer class="page-footer">
-        <p>
-          Made with 💖, questionable amounts of caffeine, and at least 3
-          existential crises
-        </p>
-        <p class="footer-truth">
-          This website was debugged with the help of Gerald the Rubber Duck 🦆
-        </p>
-      </footer>
     </div>
 
     <script src="../js/page-animations.js"></script>
     <script>
-      // Konami Code Easter Egg
-      let konamiCode = [];
-      const konamiSequence = [
-        "ArrowUp",
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowDown",
-        "ArrowLeft",
-        "ArrowRight",
-        "ArrowLeft",
-        "ArrowRight",
-        "KeyB",
-        "KeyA",
-      ];
+      // Initialize timeline animations
+      document.addEventListener("DOMContentLoaded", function () {
+        const timelineItems = document.querySelectorAll(".timeline-item");
 
-      document.addEventListener("keydown", (e) => {
-        konamiCode.push(e.code);
-        if (konamiCode.length > konamiSequence.length) {
-          konamiCode.shift();
-        }
-        if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-          document.getElementById("secret-mode").classList.remove("hidden");
-          document.body.classList.add("matrix-mode");
-          setTimeout(() => {
-            document.getElementById("secret-mode").classList.add("hidden");
-            document.body.classList.remove("matrix-mode");
-          }, 5000);
-        }
-      });
-
-      // Timeline interaction
-      function toggleTimelineItem(item) {
-        const fullStory = item.querySelector(".full-story");
-        const preview = item.querySelector(".preview");
-
-        if (fullStory.classList.contains("hidden")) {
-          fullStory.classList.remove("hidden");
-          preview.style.display = "none";
-          item.classList.add("expanded");
-        } else {
-          fullStory.classList.add("hidden");
-          preview.style.display = "block";
-          item.classList.remove("expanded");
-        }
-      }
-
-      // Skill randomizer
-      function randomizeSkills() {
-        const skills = [
-          {
-            title: "🔮 Code Wizardry",
-            desc: "JavaScript, React, Node.js, Python",
-            level: "Confidence: 87% (92% after coffee)",
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+              }
+            });
           },
-          {
-            title: "🎨 Making Pretty Things",
-            desc: "UI/UX, Figma, CSS Magic, User Psychology",
-            level: "Pixel-perfect obsession: Unhealthy",
-          },
-          {
-            title: "🤹 Random Talents",
-            desc: "Coffee-to-code conversion, Debugging at 3AM, Explaining tech to cats",
-            level: "Weirdness: Maximum",
-          },
-          {
-            title: "🚀 Performance Optimization",
-            desc: "Making websites faster than my attention span",
-            level: "Speed: Ludicrous",
-          },
-          {
-            title: "🎭 Animation Magic",
-            desc: "GSAP, CSS animations, Making things bounce unnecessarily",
-            level: "Bounce factor: 11/10",
-          },
-          {
-            title: "🔧 Problem Solving",
-            desc: "Breaking things to understand them better",
-            level: "Chaos level: Productive",
-          },
-          {
-            title: "📱 Mobile Wizardry",
-            desc: "React Native, PWAs, Making things work on that one weird phone",
-            level: "Device compatibility: Yes",
-          },
-          {
-            title: "🌐 API Whispering",
-            desc: "RESTful APIs, GraphQL, Making servers talk nicely",
-            level: "Diplomacy: Expert",
-          },
-          {
-            title: "🎪 Event Management",
-            desc: "JavaScript events, not birthday parties (sadly)",
-            level: "Handler skills: Elite",
-          },
-        ];
+          { threshold: 0.3 }
+        );
 
-        const shuffled = skills.sort(() => Math.random() - 0.5).slice(0, 3);
-        const display = document.getElementById("skillsDisplay");
-
-        display.style.opacity = "0";
-        setTimeout(() => {
-          display.innerHTML = shuffled
-            .map(
-              (skill, index) => `
-            <div class="skill-card ${
-              ["code-skill", "design-skill", "weird-skill"][index]
-            }">
-              <h3>${skill.title}</h3>
-              <p>${skill.desc}</p>
-              <div class="skill-level">${skill.level}</div>
-            </div>
-          `
-            )
-            .join("");
-          display.style.opacity = "1";
-        }, 200);
-      }
-
-      // Flip cards
-      function flipCard(card) {
-        card.classList.toggle("flipped");
-      }
-
-      // Collaboration style chooser
-      function showCollabStyle(style) {
-        const result = document.getElementById("collabResult");
-        const responses = {
-          chaos:
-            "Perfect! I'll bring the creative madness, you bring the vision. We'll build something that makes people go 'Wait, how did they do that?' 🌟",
-          methodical:
-            "Excellent choice! I love a good plan. We'll document everything, test religiously, and build something rock-solid that scales beautifully. 📈",
-          hybrid:
-            "You get it! Sometimes you need to plan the architecture, sometimes you need to just try the crazy idea. Best of both worlds! 🎯",
-        };
-
-        result.innerHTML = `<p>${responses[style]}</p>`;
-        result.style.display = "block";
-      }
-
-      // Update status meters randomly (because why not)
-      setInterval(() => {
-        document.querySelectorAll(".meter-fill").forEach((meter) => {
-          const currentWidth = parseInt(meter.style.width);
-          const change = Math.random() * 10 - 5; // -5 to +5 change
-          const newWidth = Math.max(10, Math.min(100, currentWidth + change));
-          meter.style.width = newWidth + "%";
-
-          // Update the text too
-          const valueSpan = meter.parentElement.nextElementSibling;
-          if (meter.classList.contains("coffee-meter")) {
-            valueSpan.textContent = `${Math.round(newWidth)}% ${
-              newWidth > 80
-                ? "(Jittery)"
-                : newWidth > 60
-                ? "(Optimal range)"
-                : "(Needs refill)"
-            }`;
-          }
+        timelineItems.forEach((item) => {
+          item.style.opacity = "0";
+          item.style.transform = "translateY(30px)";
+          item.style.transition = "all 0.6s ease";
+          observer.observe(item);
         });
-      }, 30000); // Update every 30 seconds
-
-      // Add some interactive sparkles
-      document.addEventListener("mousemove", (e) => {
-        if (Math.random() > 0.98) {
-          // Only sometimes
-          const sparkle = document.createElement("div");
-          sparkle.className = "mouse-sparkle";
-          sparkle.style.left = e.clientX + "px";
-          sparkle.style.top = e.clientY + "px";
-          sparkle.innerHTML = ["✨", "⭐", "💫", "🌟"][
-            Math.floor(Math.random() * 4)
-          ];
-          document.body.appendChild(sparkle);
-
-          setTimeout(() => {
-            if (sparkle.parentNode) {
-              sparkle.parentNode.removeChild(sparkle);
-            }
-          }, 1000);
-        }
       });
     </script>
-
-    <style>
-      /* Additional quirky styles */
-      .quirky-about {
-        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-      }
-
-      .chaos-intro {
-        text-align: center;
-        padding: 4rem 0;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        margin-bottom: 3rem;
-        backdrop-filter: blur(10px);
-      }
-
-      .glitch-text h1 {
-        font-size: 3rem;
-        font-weight: bold;
-        position: relative;
-        color: #fff;
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-      }
-
-      .glitch-text h1:hover {
-        animation: glitch 0.3s ease-in-out;
-      }
-
-      @keyframes glitch {
-        0% {
-          transform: translate(0);
-        }
-        20% {
-          transform: translate(-2px, 2px);
-        }
-        40% {
-          transform: translate(-2px, -2px);
-        }
-        60% {
-          transform: translate(2px, 2px);
-        }
-        80% {
-          transform: translate(2px, -2px);
-        }
-        100% {
-          transform: translate(0);
-        }
-      }
-
-      .rotating-emojis {
-        margin: 2rem 0;
-      }
-
-      .emoji-spin {
-        font-size: 2rem;
-        margin: 0 1rem;
-        display: inline-block;
-        animation: spin 3s linear infinite;
-      }
-
-      .emoji-spin:nth-child(2) {
-        animation-delay: 0.5s;
-      }
-      .emoji-spin:nth-child(3) {
-        animation-delay: 1s;
-      }
-      .emoji-spin:nth-child(4) {
-        animation-delay: 1.5s;
-      }
-      .emoji-spin:nth-child(5) {
-        animation-delay: 2s;
-      }
-
-      @keyframes spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .sub-chaos {
-        font-size: 1.2rem;
-        color: rgba(255, 255, 255, 0.9);
-        margin-top: 1rem;
-      }
-
-      .story-timeline {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .timeline-item {
-        display: flex;
-        margin: 2rem 0;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 1rem;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-      }
-
-      .timeline-item:hover {
-        transform: translateX(10px);
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      .timeline-dot {
-        font-size: 2rem;
-        margin-right: 1rem;
-        flex-shrink: 0;
-      }
-
-      .timeline-content h3 {
-        color: #fff;
-        margin: 0 0 0.5rem 0;
-      }
-
-      .preview {
-        color: rgba(255, 255, 255, 0.8);
-        font-style: italic;
-      }
-
-      .full-story {
-        color: rgba(255, 255, 255, 0.9);
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .skills-chaos {
-        text-align: center;
-        margin: 4rem 0;
-      }
-
-      .chaos-button {
-        background: linear-gradient(45deg, #ff6b6b, #feca57);
-        border: none;
-        padding: 1rem 2rem;
-        font-size: 1.1rem;
-        border-radius: 25px;
-        cursor: pointer;
-        color: white;
-        font-weight: bold;
-        margin-bottom: 2rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      .chaos-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      }
-
-      .skills-display {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
-        transition: opacity 0.3s ease;
-      }
-
-      .skill-card {
-        background: rgba(255, 255, 255, 0.15);
-        padding: 2rem;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .skill-card h3 {
-        color: #fff;
-        margin: 0 0 1rem 0;
-      }
-
-      .skill-card p {
-        color: rgba(255, 255, 255, 0.9);
-        margin: 0 0 1rem 0;
-      }
-
-      .skill-level {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.9rem;
-        font-style: italic;
-      }
-
-      .facts-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin: 2rem 0;
-      }
-
-      .fact-card {
-        perspective: 1000px;
-        height: 200px;
-        cursor: pointer;
-      }
-
-      .card-front,
-      .card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.15);
-        border-radius: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 1rem;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: transform 0.6s;
-        backface-visibility: hidden;
-      }
-
-      .card-back {
-        transform: rotateY(180deg);
-      }
-
-      .fact-card.flipped .card-front {
-        transform: rotateY(180deg);
-      }
-
-      .fact-card.flipped .card-back {
-        transform: rotateY(0);
-      }
-
-      .fact-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
-
-      .card-front p,
-      .card-back p {
-        color: #fff;
-        margin: 0;
-      }
-
-      .philosophy-quotes {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .philosophy-item {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 2rem;
-        margin: 2rem 0;
-        border-radius: 15px;
-        border-left: 5px solid #feca57;
-        backdrop-filter: blur(10px);
-      }
-
-      .philosophy-item p {
-        color: #fff;
-        font-size: 1.2rem;
-        margin: 0 0 1rem 0;
-        font-style: italic;
-      }
-
-      .philosophy-item cite {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.9rem;
-      }
-
-      .status-dashboard {
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      .status-meter {
-        margin: 2rem 0;
-        text-align: left;
-      }
-
-      .status-meter label {
-        color: #fff;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-        display: block;
-      }
-
-      .meter {
-        background: rgba(255, 255, 255, 0.2);
-        height: 20px;
-        border-radius: 10px;
-        overflow: hidden;
-        margin: 0.5rem 0;
-      }
-
-      .meter-fill {
-        height: 100%;
-        border-radius: 10px;
-        transition: width 0.5s ease;
-      }
-
-      .coffee-meter {
-        background: linear-gradient(45deg, #8b4513, #d2691e);
-      }
-      .code-meter {
-        background: linear-gradient(45deg, #00c851, #007e33);
-      }
-      .impostor-meter {
-        background: linear-gradient(45deg, #ff4444, #cc0000);
-      }
-      .plant-meter {
-        background: linear-gradient(45deg, #4caf50, #2e7d32);
-      }
-
-      .meter-value {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9rem;
-      }
-
-      .choice-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin: 2rem 0;
-        flex-wrap: wrap;
-      }
-
-      .choice-btn {
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        color: #fff;
-        padding: 1rem 1.5rem;
-        border-radius: 15px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-      }
-
-      .choice-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-      }
-
-      .collab-result {
-        background: rgba(255, 255, 255, 0.15);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin-top: 1rem;
-        backdrop-filter: blur(10px);
-        display: none;
-      }
-
-      .collab-result p {
-        color: #fff;
-        margin: 0;
-      }
-
-      .pulse {
-        animation: pulse 2s infinite;
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      .easter-eggs {
-        text-align: center;
-        margin: 3rem 0;
-        padding: 2rem;
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 15px;
-      }
-
-      .small-text {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 0.9rem;
-        margin: 0.5rem 0;
-      }
-
-      .smaller-text {
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.8rem;
-        margin: 0.5rem 0;
-      }
-
-      .footer-truth {
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.6);
-        margin-top: 0.5rem;
-      }
-
-      .secret-message {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: linear-gradient(45deg, #00ff00, #0080ff);
-        color: #000;
-        padding: 2rem;
-        border-radius: 15px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        z-index: 1000;
-        box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
-        animation: matrix-glow 1s ease-in-out infinite alternate;
-      }
-
-      @keyframes matrix-glow {
-        from {
-          box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
-        }
-        to {
-          box-shadow: 0 0 100px rgba(0, 255, 0, 0.8);
-        }
-      }
-
-      .matrix-mode {
-        background: #000 !important;
-        color: #00ff00 !important;
-      }
-
-      .mouse-sparkle {
-        position: fixed;
-        pointer-events: none;
-        font-size: 1rem;
-        z-index: 1000;
-        animation: sparkle-fade 1s ease-out forwards;
-      }
-
-      @keyframes sparkle-fade {
-        0% {
-          opacity: 1;
-          transform: scale(0) rotate(0deg);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1) rotate(180deg);
-        }
-        100% {
-          opacity: 0;
-          transform: scale(0) rotate(360deg);
-        }
-      }
-
-      .hidden {
-        display: none !important;
-      }
-
-      /* Contact Section Styles */
-      .contact-minimal {
-        text-align: center;
-        margin: 4rem 0;
-        padding: 3rem 2rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .contact-minimal h2 {
-        color: #fff;
-        margin-bottom: 1rem;
-        font-size: 2rem;
-      }
-
-      .contact-minimal p {
-        color: rgba(255, 255, 255, 0.9);
-        margin-bottom: 2rem;
-        font-size: 1.1rem;
-      }
-
-      .contact-links {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-      }
-
-      .contact-link {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        color: #fff;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 1.5rem;
-        border-radius: 15px;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        min-width: 100px;
-      }
-
-      .contact-link:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        border-color: rgba(255, 255, 255, 0.4);
-      }
-
-      .contact-icon {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-        transition: transform 0.3s ease;
-      }
-
-      .contact-link:hover .contact-icon {
-        transform: scale(1.2);
-      }
-
-      .contact-label {
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 500;
-      }
-
-      /* Responsive adjustments */
-      @media (max-width: 768px) {
-        .glitch-text h1 {
-          font-size: 2rem;
-        }
-
-        .choice-buttons {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .skills-display {
-          grid-template-columns: 1fr;
-        }
-
-        .facts-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .contact-links {
-          gap: 1rem;
-        }
-
-        .contact-link {
-          min-width: 80px;
-          padding: 1rem;
-        }
-
-        .contact-icon {
-          font-size: 1.5rem;
-        }
-      }
-    </style>
   </body>
 </html>

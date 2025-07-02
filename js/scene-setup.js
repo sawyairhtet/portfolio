@@ -1,13 +1,14 @@
-// Three.js Scene Setup
+// Three.js Scene Setup for Photography/Development Portfolio
 let scene, camera, renderer;
 let projectMeshes = [];
 let particles = [];
 let platforms = [];
+let codeParticles = [];
 
 function initScene() {
-  // Scene setup with Ghibli-style lighting
+  // Professional scene setup
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x87ceeb, 10, 50);
+  scene.fog = new THREE.Fog(0x0a0a0a, 20, 80);
 
   // Camera setup
   camera = new THREE.PerspectiveCamera(
@@ -16,146 +17,194 @@ function initScene() {
     0.1,
     1000
   );
-  camera.position.set(0, 5, 20);
+  camera.position.set(0, 5, 25);
 
   // Renderer setup
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x87ceeb, 0);
+  renderer.setClearColor(0x0a0a0a, 0);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
   document.getElementById("canvas-container").appendChild(renderer.domElement);
 
   setupLighting();
-  createProjectIslands();
+  createProjectStructures();
+  addTechnicalElements();
 
   // Handle window resize
   window.addEventListener("resize", onWindowResize);
 }
 
 function setupLighting() {
-  // Warm, magical lighting like Ghibli films
-  const ambientLight = new THREE.AmbientLight(0xffe4b5, 0.8);
+  // Professional studio-style lighting
+  const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
   scene.add(ambientLight);
 
-  const sunLight = new THREE.DirectionalLight(0xffd700, 1.2);
-  sunLight.position.set(10, 15, 5);
-  sunLight.castShadow = true;
-  sunLight.shadow.mapSize.width = 2048;
-  sunLight.shadow.mapSize.height = 2048;
-  sunLight.shadow.camera.near = 0.5;
-  sunLight.shadow.camera.far = 50;
-  sunLight.shadow.camera.left = -20;
-  sunLight.shadow.camera.right = 20;
-  sunLight.shadow.camera.top = 20;
-  sunLight.shadow.camera.bottom = -20;
-  scene.add(sunLight);
+  // Key light (main illumination)
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  keyLight.position.set(15, 20, 10);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.width = 2048;
+  keyLight.shadow.mapSize.height = 2048;
+  keyLight.shadow.camera.near = 0.5;
+  keyLight.shadow.camera.far = 100;
+  keyLight.shadow.camera.left = -30;
+  keyLight.shadow.camera.right = 30;
+  keyLight.shadow.camera.top = 30;
+  keyLight.shadow.camera.bottom = -30;
+  scene.add(keyLight);
 
-  const fillLight = new THREE.DirectionalLight(0x87ceeb, 0.5);
-  fillLight.position.set(-5, 10, -5);
+  // Fill light (softer, opposite side)
+  const fillLight = new THREE.DirectionalLight(0x4a90e2, 0.6);
+  fillLight.position.set(-10, 15, -8);
   scene.add(fillLight);
 
-  // Add rim light for magical effect
-  const rimLight = new THREE.DirectionalLight(0xffb6c1, 0.3);
-  rimLight.position.set(0, -5, 10);
+  // Accent light (signature orange)
+  const accentLight = new THREE.DirectionalLight(0xff9800, 0.8);
+  accentLight.position.set(0, -10, 15);
+  scene.add(accentLight);
+
+  // Rim light for depth
+  const rimLight = new THREE.DirectionalLight(0xff6f00, 0.4);
+  rimLight.position.set(5, 0, -20);
   scene.add(rimLight);
 }
 
-function createProjectIslands() {
+function createProjectStructures() {
   projects.forEach((project, index) => {
-    // Create different magical shapes
+    // Create technical geometric shapes
     let geometry;
     switch (project.shape) {
       case "sphere":
-        geometry = new THREE.SphereGeometry(2, 16, 16);
+        // Data node representation
+        geometry = new THREE.IcosahedronGeometry(2.2, 1);
         break;
       case "crystal":
+        // Camera aperture inspired
         geometry = new THREE.OctahedronGeometry(2.5);
         break;
       case "octahedron":
+        // Code structure representation
         geometry = new THREE.OctahedronGeometry(2.2);
         break;
       case "dodecahedron":
+        // Complex algorithm visualization
         geometry = new THREE.DodecahedronGeometry(2);
         break;
       default:
-        geometry = new THREE.SphereGeometry(2, 16, 16);
+        geometry = new THREE.IcosahedronGeometry(2.2, 1);
     }
 
-    // Magical material with soft glow
-    const material = new THREE.MeshPhongMaterial({
+    // Professional material with subtle glow
+    const material = new THREE.MeshPhysicalMaterial({
       color: project.color,
+      metalness: 0.3,
+      roughness: 0.4,
       transparent: true,
-      opacity: 0.85,
-      shininess: 30,
-      specular: 0x222222,
+      opacity: 0.9,
+      emissive: new THREE.Color(project.color).multiplyScalar(0.1),
+      transmission: 0.1,
+      thickness: 0.5,
     });
 
-    const island = new THREE.Mesh(geometry, material);
-    island.position.set(
+    const structure = new THREE.Mesh(geometry, material);
+    structure.position.set(
       project.position.x,
       project.position.y,
       project.position.z
     );
-    island.userData = {
+    structure.userData = {
       projectIndex: index,
       isHovered: false,
       originalPosition: { ...project.position },
+      rotationSpeed: 0.005 + Math.random() * 0.01,
     };
-    island.castShadow = true;
-    island.receiveShadow = true;
+    structure.castShadow = true;
+    structure.receiveShadow = true;
 
-    scene.add(island);
-    projectMeshes.push(island);
+    scene.add(structure);
+    projectMeshes.push(structure);
 
-    // Add floating base/platform under each island
-    createPlatform(project.position, index);
+    // Add wireframe base (representing code structure)
+    createWireframeBase(project.position, project.color, index);
 
-    // Add magical floating particles around each island
-    createParticleSystem(project, index);
+    // Add data stream particles
+    createDataStream(project, index);
   });
 }
 
-function createPlatform(position, index) {
-  const platformGeometry = new THREE.CylinderGeometry(3, 2.5, 0.5, 12);
-  const platformMaterial = new THREE.MeshPhongMaterial({
-    color: 0xdeb887,
+function createWireframeBase(position, color, index) {
+  const baseGeometry = new THREE.CylinderGeometry(3.5, 3, 0.3, 8);
+  const baseMaterial = new THREE.MeshBasicMaterial({
+    color: color,
+    wireframe: true,
     transparent: true,
-    opacity: 0.7,
+    opacity: 0.3,
   });
-  const platform = new THREE.Mesh(platformGeometry, platformMaterial);
-  platform.position.set(position.x, position.y - 2.5, position.z);
-  platform.userData = {
-    originalPosition: { x: position.x, y: position.y - 2.5, z: position.z },
+  const base = new THREE.Mesh(baseGeometry, baseMaterial);
+  base.position.set(position.x, position.y - 3, position.z);
+  base.userData = {
+    originalPosition: { x: position.x, y: position.y - 3, z: position.z },
+    rotationSpeed: 0.002,
   };
-  platform.castShadow = true;
-  platform.receiveShadow = true;
-  scene.add(platform);
-  platforms.push(platform);
+  scene.add(base);
+  platforms.push(base);
+
+  // Add connecting lines (representing data connections)
+  const lineGeometry = new THREE.BufferGeometry();
+  const linePositions = new Float32Array([
+    position.x,
+    position.y - 2.5,
+    position.z,
+    position.x,
+    position.y,
+    position.z,
+  ]);
+  lineGeometry.setAttribute(
+    "position",
+    new THREE.BufferAttribute(linePositions, 3)
+  );
+
+  const lineMaterial = new THREE.LineBasicMaterial({
+    color: color,
+    transparent: true,
+    opacity: 0.4,
+  });
+
+  const line = new THREE.Line(lineGeometry, lineMaterial);
+  scene.add(line);
 }
 
-function createParticleSystem(project, index) {
-  const particleCount = 30;
+function createDataStream(project, index) {
+  const particleCount = 40;
   const particleGeometry = new THREE.BufferGeometry();
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
   const velocities = new Float32Array(particleCount * 3);
+  const sizes = new Float32Array(particleCount);
 
   const color = new THREE.Color(project.color);
 
   for (let i = 0; i < particleCount; i++) {
     const i3 = i * 3;
-    positions[i3] = project.position.x + (Math.random() - 0.5) * 12;
-    positions[i3 + 1] = project.position.y + (Math.random() - 0.5) * 8;
-    positions[i3 + 2] = project.position.z + (Math.random() - 0.5) * 12;
+    // Create circular data streams around each project
+    const angle = (i / particleCount) * Math.PI * 2;
+    const radius = 4 + Math.random() * 3;
+    positions[i3] = project.position.x + Math.cos(angle) * radius;
+    positions[i3 + 1] = project.position.y + (Math.random() - 0.5) * 6;
+    positions[i3 + 2] = project.position.z + Math.sin(angle) * radius;
 
-    velocities[i3] = (Math.random() - 0.5) * 0.02;
-    velocities[i3 + 1] = Math.random() * 0.01;
-    velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+    velocities[i3] = -Math.sin(angle) * 0.01;
+    velocities[i3 + 1] = (Math.random() - 0.5) * 0.005;
+    velocities[i3 + 2] = Math.cos(angle) * 0.01;
 
     colors[i3] = color.r;
     colors[i3 + 1] = color.g;
     colors[i3 + 2] = color.b;
+
+    sizes[i] = 0.1 + Math.random() * 0.2;
   }
 
   particleGeometry.setAttribute(
@@ -163,14 +212,16 @@ function createParticleSystem(project, index) {
     new THREE.BufferAttribute(positions, 3)
   );
   particleGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  particleGeometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
   particleGeometry.userData = { velocities: velocities };
 
   const particleMaterial = new THREE.PointsMaterial({
-    size: 0.2,
+    size: 0.15,
     transparent: true,
-    opacity: 0.8,
+    opacity: 0.7,
     vertexColors: true,
     blending: THREE.AdditiveBlending,
+    sizeAttenuation: true,
   });
 
   const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
@@ -183,33 +234,50 @@ function createParticleSystem(project, index) {
   particles.push(particleSystem);
 }
 
-function addEnvironmentalElements() {
-  // Add some floating rocks/debris for atmosphere
-  for (let i = 0; i < 15; i++) {
-    const rockGeometry = new THREE.DodecahedronGeometry(
-      Math.random() * 0.5 + 0.2
-    );
-    const rockMaterial = new THREE.MeshPhongMaterial({
-      color: 0x8b7d6b,
+function addTechnicalElements() {
+  // Add floating geometric elements representing code blocks
+  for (let i = 0; i < 20; i++) {
+    const geometries = [
+      new THREE.BoxGeometry(0.3, 0.3, 0.3),
+      new THREE.TetrahedronGeometry(0.4),
+      new THREE.OctahedronGeometry(0.35),
+    ];
+
+    const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+    const material = new THREE.MeshPhysicalMaterial({
+      color: 0xff9800,
+      metalness: 0.5,
+      roughness: 0.3,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.4,
+      emissive: new THREE.Color(0xff9800).multiplyScalar(0.05),
     });
-    const rock = new THREE.Mesh(rockGeometry, rockMaterial);
 
-    rock.position.set(
-      (Math.random() - 0.5) * 60,
-      (Math.random() - 0.5) * 40,
-      (Math.random() - 0.5) * 60
+    const element = new THREE.Mesh(geometry, material);
+    element.position.set(
+      (Math.random() - 0.5) * 80,
+      (Math.random() - 0.5) * 30,
+      (Math.random() - 0.5) * 80
     );
 
-    rock.rotation.set(
-      Math.random() * Math.PI,
-      Math.random() * Math.PI,
-      Math.random() * Math.PI
-    );
+    element.userData = {
+      rotationSpeed: new THREE.Vector3(
+        (Math.random() - 0.5) * 0.02,
+        (Math.random() - 0.5) * 0.02,
+        (Math.random() - 0.5) * 0.02
+      ),
+    };
 
-    scene.add(rock);
+    scene.add(element);
+    codeParticles.push(element);
   }
+
+  // Add grid floor (representing code structure)
+  const gridHelper = new THREE.GridHelper(100, 50, 0xff9800, 0x333333);
+  gridHelper.position.y = -15;
+  gridHelper.material.transparent = true;
+  gridHelper.material.opacity = 0.2;
+  scene.add(gridHelper);
 }
 
 function onWindowResize() {
@@ -226,4 +294,5 @@ window.sceneObjects = {
   projectMeshes,
   particles,
   platforms,
+  codeParticles,
 };

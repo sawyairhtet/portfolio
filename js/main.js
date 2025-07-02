@@ -1,11 +1,11 @@
-// Main initialization and control
+// Main initialization and control for technical portfolio
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize the magical portfolio experience
+  // Initialize the professional portfolio experience
   initPortfolio();
 });
 
 function initPortfolio() {
-  console.log("🌟 Initializing magical portfolio...");
+  console.log("🚀 Initializing professional portfolio...");
 
   // Show loading screen
   showLoadingScreen();
@@ -14,7 +14,7 @@ function initPortfolio() {
   setTimeout(() => {
     try {
       initScene();
-      console.log("✨ Scene initialized");
+      console.log("✅ Scene initialized");
 
       // Initialize interactions
       if (window.interactionFunctions) {
@@ -22,33 +22,24 @@ function initPortfolio() {
         console.log("🎮 Interactions initialized");
       }
 
-      // Add environmental elements
-      addEnvironmentalElements();
-
-      // Create floating debris for atmosphere
-      if (window.animationFunctions) {
-        window.animationFunctions.createFloatingDebris();
-        console.log("🍃 Atmospheric elements added");
-      }
-
       // Hide loading screen and start animation
       setTimeout(() => {
         hideLoadingScreen();
 
-        // Start the magical animation loop
+        // Start the technical animation loop
         if (window.animationFunctions) {
           window.animationFunctions.startAnimationLoop();
-          console.log("🎪 Animation loop started");
+          console.log("⚡ Animation loop started");
         }
 
-        // Show welcome message
+        // Show welcome effects
         showWelcomeEffects();
-      }, 1500);
+      }, 1000);
     } catch (error) {
       console.error("Failed to initialize portfolio:", error);
       showErrorMessage();
     }
-  }, 1000);
+  }, 800);
 }
 
 function showLoadingScreen() {
@@ -62,39 +53,39 @@ function showLoadingScreen() {
 function hideLoadingScreen() {
   const loading = document.getElementById("loading");
   if (loading) {
-    loading.style.transition = "opacity 1s ease-out";
+    loading.style.transition = "opacity 0.8s ease-out";
     loading.style.opacity = "0";
     setTimeout(() => {
       loading.style.display = "none";
-    }, 1000);
+    }, 800);
   }
 }
 
 function showWelcomeEffects() {
-  // Create magical burst effects at each project island
+  // Create data burst effects at each project structure
   setTimeout(() => {
     projects.forEach((project, index) => {
       setTimeout(() => {
-        if (window.animationFunctions) {
-          window.animationFunctions.createMagicalBurst(
+        if (window.animationFunctions && projectMeshes[index]) {
+          window.animationFunctions.createDataBurst(
             project.position,
             project.color
           );
         }
-      }, index * 800);
+      }, index * 400);
     });
-  }, 2000);
+  }, 1000);
 
-  // Add shimmer effects to islands
+  // Add glow effects to structures
   setTimeout(() => {
     projectMeshes.forEach((mesh, index) => {
       setTimeout(() => {
         if (window.animationFunctions) {
-          window.animationFunctions.createShimmerEffect(mesh);
+          window.animationFunctions.createGlowEffect(mesh);
         }
-      }, index * 600);
+      }, index * 300);
     });
-  }, 4000);
+  }, 2000);
 }
 
 function showErrorMessage() {
@@ -114,9 +105,9 @@ window.focusProject = function (index) {
   if (window.interactionFunctions) {
     window.interactionFunctions.focusProject(index);
 
-    // Add magical effect when focusing
+    // Add technical effect when focusing
     if (window.animationFunctions && projectMeshes[index]) {
-      window.animationFunctions.createMagicalBurst(
+      window.animationFunctions.createDataBurst(
         projectMeshes[index].position,
         projects[index].color
       );
@@ -154,11 +145,11 @@ document.addEventListener("keydown", function (event) {
 
     case " ":
       event.preventDefault();
-      // Space bar to create random magical burst
-      if (window.animationFunctions) {
+      // Space bar to create random data burst
+      if (window.animationFunctions && projects.length > 0) {
         const randomProject =
           projects[Math.floor(Math.random() * projects.length)];
-        window.animationFunctions.createMagicalBurst(
+        window.animationFunctions.createDataBurst(
           randomProject.position,
           randomProject.color
         );
@@ -198,7 +189,7 @@ function adjustQuality() {
   }
 }
 
-// Utility functions
+// Device detection and optimization
 function isMobileDevice() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
@@ -206,60 +197,49 @@ function isMobileDevice() {
 }
 
 function getOptimalQuality() {
-  const isMobile = isMobileDevice();
-  const pixelRatio = window.devicePixelRatio || 1;
+  if (isMobileDevice()) {
+    return 0.5; // Lower quality for mobile
+  }
+  return Math.min(window.devicePixelRatio, 2);
+}
 
-  if (isMobile) {
-    return Math.min(pixelRatio * 0.8, 1.5);
-  } else {
-    return Math.min(pixelRatio, 2);
+// Scene management
+function pauseScene() {
+  if (window.animationFunctions) {
+    window.animationFunctions.stopAnimationLoop();
   }
 }
 
-// Handle visibility change (for performance)
+function resumeScene() {
+  if (window.animationFunctions) {
+    window.animationFunctions.startAnimationLoop();
+  }
+}
+
+// Visibility API for performance
 document.addEventListener("visibilitychange", function () {
   if (document.hidden) {
-    // Pause animation when tab is not visible
-    if (window.animationFunctions) {
-      window.animationFunctions.stopAnimationLoop();
-    }
+    pauseScene();
   } else {
-    // Resume animation when tab becomes visible
-    if (window.animationFunctions) {
-      window.animationFunctions.startAnimationLoop();
-    }
+    resumeScene();
   }
 });
 
-// Graceful error handling
-window.addEventListener("error", function (event) {
-  console.error("Portfolio error:", event.error);
+// Handle focus/blur for performance
+window.addEventListener("blur", pauseScene);
+window.addEventListener("focus", resumeScene);
 
-  // Try to recover by restarting the animation
-  setTimeout(() => {
-    if (window.animationFunctions) {
-      window.animationFunctions.stopAnimationLoop();
-      setTimeout(() => {
-        window.animationFunctions.startAnimationLoop();
-      }, 1000);
-    }
-  }, 2000);
-});
-
-// Export for debugging
-window.portfolioDebug = {
-  resetPortfolio: initPortfolio,
-  showPerformanceInfo: () => console.log(`FPS: ${fps}`),
-  createRandomBurst: () => {
-    if (window.animationFunctions) {
-      const randomProject =
-        projects[Math.floor(Math.random() * projects.length)];
-      window.animationFunctions.createMagicalBurst(
-        randomProject.position,
-        randomProject.color
-      );
-    }
-  },
+// Export main functions
+window.portfolioFunctions = {
+  initPortfolio,
+  showLoadingScreen,
+  hideLoadingScreen,
+  showWelcomeEffects,
+  showErrorMessage,
+  updatePerformanceMetrics,
+  adjustQuality,
+  pauseScene,
+  resumeScene,
 };
 
 console.log(

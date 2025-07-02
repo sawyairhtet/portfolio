@@ -4,14 +4,43 @@
 .page-body {
   background: linear-gradient(
     135deg,
-    #87ceeb 0%,
-    /* Sky blue */ #98d8e8 25%,
-    /* Light blue */ #f0e68c 75%,
-    /* Pale yellow */ #ffb6c1 100% /* Light pink */
+    #0a0a0a 0%,
+    #1a1a1a 25%,
+    #2a2a2a 50%,
+    #1a1a1a 75%,
+    #0a0a0a 100%
   );
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e5e5e5;
+}
+
+.page-body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 152, 0, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 152, 0, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(255, 152, 0, 0.02) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 1;
 }
 
 .page-container {
@@ -90,34 +119,35 @@
 
 /* === NAVIGATION === */
 .page-nav {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(15px);
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid rgba(255, 152, 0, 0.1);
 }
 
 .nav-back {
-  color: #2f4f4f;
+  color: #e5e5e5;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 500;
+  font-size: 1rem;
   transition: all 0.3s ease;
   padding: 10px 20px;
-  border-radius: 25px;
-  background: rgba(135, 206, 235, 0.2);
-  border: 2px solid transparent;
+  border-radius: 6px;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.2);
 }
 
 .nav-back:hover {
-  background: rgba(135, 206, 235, 0.3);
-  transform: translateY(-2px);
-  border-color: #87ceeb;
+  background: rgba(255, 152, 0, 0.2);
+  border-color: rgba(255, 152, 0, 0.4);
+  transform: translateY(-1px);
 }
 
 .nav-links {
@@ -126,20 +156,20 @@
 }
 
 .nav-link {
-  color: #2f4f4f;
+  color: #e5e5e5;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   padding: 10px 20px;
-  border-radius: 25px;
+  border-radius: 6px;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  background: rgba(144, 238, 144, 0.3);
-  border-color: #90ee90;
-  transform: translateY(-2px);
+  background: rgba(255, 152, 0, 0.1);
+  border-color: rgba(255, 152, 0, 0.3);
+  transform: translateY(-1px);
 }
 
 /* === PAGE HEADERS === */
@@ -1105,4 +1135,624 @@
   .floating-leaves {
     display: none; /* Hide floating elements on very small screens */
   }
+}
+
+/* === PROFESSIONAL ABOUT PAGE STYLES === */
+.professional-intro {
+  text-align: center;
+  padding: 4rem 0;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+.intro-header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dual-identity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.identity-tag {
+  padding: 8px 16px;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 6px;
+  color: #ff9800;
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.identity-separator {
+  color: #666;
+  font-weight: 300;
+}
+
+.intro-description {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Journey Timeline */
+.journey-section {
+  margin: 4rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.journey-timeline {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.journey-timeline::before {
+  content: "";
+  position: absolute;
+  left: 2rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 152, 0, 0.3),
+    rgba(255, 152, 0, 0.1)
+  );
+}
+
+.timeline-item {
+  position: relative;
+  margin: 3rem 0;
+  padding-left: 5rem;
+}
+
+.timeline-item::before {
+  content: attr(data-year);
+  position: absolute;
+  left: -1rem;
+  top: 0;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  color: #ff9800;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 1.5rem;
+  top: 0.5rem;
+  width: 12px;
+  height: 12px;
+  background: #ff9800;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 152, 0, 0.3);
+}
+
+.timeline-content h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.timeline-content p {
+  color: #b0b0b0;
+  line-height: 1.6;
+}
+
+/* Skills Showcase */
+.skills-showcase {
+  margin: 4rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.skill-category {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 152, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.skill-category h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  padding: 6px 12px;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.2);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #ff9800;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(255, 152, 0, 0.2);
+  border-color: rgba(255, 152, 0, 0.4);
+}
+
+/* Philosophy Section */
+.philosophy-section {
+  margin: 4rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.philosophy-card {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 152, 0, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.philosophy-card:hover {
+  border-color: rgba(255, 152, 0, 0.3);
+  transform: translateY(-5px);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  filter: grayscale(1) sepia(1) hue-rotate(25deg) saturate(3);
+}
+
+.philosophy-card h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.philosophy-card p {
+  color: #b0b0b0;
+  line-height: 1.6;
+}
+
+/* Equipment Section */
+.equipment-section {
+  margin: 4rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.equipment-category {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 152, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.equipment-category h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.equipment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.equipment-list li {
+  color: #b0b0b0;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 152, 0, 0.1);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9rem;
+}
+
+.equipment-list li:last-child {
+  border-bottom: none;
+}
+
+/* Contact CTA */
+.contact-cta {
+  text-align: center;
+  margin: 4rem 0;
+  padding: 3rem 2rem;
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 152, 0, 0.2);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 10;
+}
+
+.contact-cta h2 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.contact-cta p {
+  color: #b0b0b0;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid;
+}
+
+.cta-button.primary {
+  background: rgba(255, 152, 0, 0.1);
+  border-color: rgba(255, 152, 0, 0.4);
+  color: #ff9800;
+}
+
+.cta-button.primary:hover {
+  background: rgba(255, 152, 0, 0.2);
+  border-color: #ff9800;
+  transform: translateY(-2px);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #e5e5e5;
+}
+
+.cta-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 2.2rem;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #ff9800, #ff6f00);
+  margin-top: 1rem;
+  border-radius: 2px;
+}
+
+/* Photography Section Enhancements */
+.photo-header {
+  text-align: center;
+  margin: 3rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.photo-header h1 {
+  font-size: 3rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.photo-header .page-subtitle {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.camera-info {
+  margin-top: 1rem;
+}
+
+.camera-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: 6px;
+  color: #ff9800;
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.photo-controls {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 152, 0, 0.1);
+  backdrop-filter: blur(10px);
+  margin: 2rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.filter-buttons,
+.view-toggles {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.filter-btn,
+.view-btn {
+  padding: 8px 16px;
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.2);
+  border-radius: 6px;
+  color: #ff9800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.filter-btn:hover,
+.view-btn:hover,
+.filter-btn.active,
+.view-btn.active {
+  background: rgba(255, 152, 0, 0.2);
+  border-color: rgba(255, 152, 0, 0.4);
+}
+
+/* Photo Gallery Improvements */
+.photo-gallery {
+  position: relative;
+  z-index: 10;
+}
+
+.photo-item {
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 152, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.photo-item:hover {
+  border-color: rgba(255, 152, 0, 0.3);
+  transform: translateY(-5px);
+}
+
+.photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    transparent 100%
+  );
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-container:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-info h3 {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.camera-settings {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  color: #ff9800;
+  font-weight: 400;
+}
+
+.expand-btn {
+  background: rgba(255, 152, 0, 0.2);
+  border: 1px solid rgba(255, 152, 0, 0.4);
+  color: #ff9800;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.expand-btn:hover {
+  background: rgba(255, 152, 0, 0.3);
+  transform: scale(1.1);
+}
+
+/* === PHOTOGRAPHY PAGE OVERRIDES === */
+.photography-page {
+  background: linear-gradient(
+    135deg,
+    #0a0a0a 0%,
+    #1a1a1a 25%,
+    #2a2a2a 50%,
+    #1a1a1a 75%,
+    #0a0a0a 100%
+  ) !important;
+  min-height: 100vh;
+}
+
+.photography-page::before {
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(255, 152, 0, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 152, 0, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(255, 152, 0, 0.02) 0%,
+      transparent 50%
+    ) !important;
+}
+
+.photography-page .page-container {
+  background: transparent !important;
+}
+
+.photography-page .page-content {
+  background: transparent !important;
+}
+
+/* Photo Gallery Enhancements */
+.photo-gallery .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.photo-item .photo-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 152, 0, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.photo-container:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 152, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(255, 152, 0, 0.1);
+}
+
+.photo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.photo-container:hover .photo-img {
+  transform: scale(1.05);
+}
+
+.photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    transparent 100%
+  );
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-container:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-info h3 {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.camera-settings {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  color: #ff9800;
+  font-weight: 400;
 }
