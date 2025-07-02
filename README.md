@@ -39,7 +39,7 @@ A magical, Ghibli-inspired portfolio website featuring floating islands, Three.j
 1. **Clone or Download**: Get the portfolio files
 2. **Open in Browser**: Simply open `index.html` in your web browser
 3. **Customize Content**: Edit the project data in `js/projects-data.js`
-4. **Personalize Pages**: Update `pages/about.html` and `pages/contact.html`
+4. **Personalize Pages**: Update `pages/about.html` and `pages/gallery.html`
 
 ## 📁 Project Structure
 
@@ -59,7 +59,7 @@ portfolio/
 │   └── contact-form.js     # Contact form handling
 ├── pages/
 │   ├── about.html         # About page
-│   └── contact.html       # Contact page
+│   └── gallery.html       # Photography gallery page
 ├── assets/                # Images and static assets
 └── README.md             # This file
 ```
