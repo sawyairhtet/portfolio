@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Developer • Photographer • Creator</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  </head>
+  <body class="blog-body">
+    <div class="blog-page">
+      <!-- Background elements -->
+      <div class="geometric-element element-1"></div>
+      <div class="geometric-element element-2"></div>
+      <div class="geometric-element element-3"></div>
+
+      <!-- Navigation -->
+      <nav class="top-nav">
+        <div class="nav-brand">
+          <a href="../index.html">Code • Capture • Create</a>
+        </div>
+        <div class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="blog.html" class="active">Blog</a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-wrapper">
+          <header class="page-header">
+            <h1>Blog</h1>
+            <p class="subtitle">
+              Insights on development, technology, and the creative process
+            </p>
+          </header>
+
+          <!-- Blog Filter -->
+          <div class="blog-filter">
+            <button class="filter-btn active" data-filter="all">
+              All Posts
+            </button>
+            <button class="filter-btn" data-filter="development">
+              Development
+            </button>
+            <button class="filter-btn" data-filter="creative">
+              Creative Process
+            </button>
+            <button class="filter-btn" data-filter="tech">Tech & Tools</button>
+          </div>
+
+          <!-- Blog Posts Grid -->
+          <div class="blog-grid">
+            <!-- Blog Post 1 -->
+            <article class="blog-post" data-category="development">
+              <div class="post-content">
+                <div class="post-meta-header">
+                  <div class="post-date">Jan 15, 2025</div>
+                  <div class="post-category">Development</div>
+                </div>
+                <h2 class="post-title">
+                  <a href="../blog/urban-photography-techniques.html"
+                    >Urban Photography: Capturing Life in Motion</a
+                  >
+                </h2>
+                <p class="post-excerpt">
+                  Exploring techniques for capturing the energy and stories of
+                  urban environments, from street photography to architectural
+                  details.
+                </p>
+                <div class="post-meta">
+                  <span class="read-time">5 min read</span>
+                  <span class="post-tags">
+                    <span class="tag">Photography</span>
+                    <span class="tag">Urban</span>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-post" data-category="development">
+              <div class="post-content">
+                <div class="post-meta-header">
+                  <div class="post-date">Jan 10, 2025</div>
+                  <div class="post-category">Development</div>
+                </div>
+                <h2 class="post-title">
+                  <a href="../blog/react-performance-optimization.html"
+                    >React Performance Optimization: A Deep Dive</a
+                  >
+                </h2>
+                <p class="post-excerpt">
+                  Advanced techniques for optimizing React applications,
+                  including memoization, lazy loading, and bundle optimization
+                  strategies.
+                </p>
+                <div class="post-meta">
+                  <span class="read-time">8 min read</span>
+                  <span class="post-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Performance</span>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="blog-post" data-category="creative">
+              <div class="post-content">
+                <div class="post-meta-header">
+                  <div class="post-date">Jan 5, 2025</div>
+                  <div class="post-category">Creative Process</div>
+                </div>
+                <h2 class="post-title">
+                  <a href="../blog/bridging-code-and-photography.html"
+                    >Bridging Code and Photography: A Creative Journey</a
+                  >
+                </h2>
+                <p class="post-excerpt">
+                  How technical thinking influences creative vision and vice
+                  versa. The intersection of systematic problem-solving and
+                  artistic expression.
+                </p>
+                <div class="post-meta">
+                  <span class="read-time">6 min read</span>
+                  <span class="post-tags">
+                    <span class="tag">Creativity</span>
+                    <span class="tag">Philosophy</span>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Blog Post 4 -->
+            <article class="blog-post" data-category="tech">
+              <div class="post-content">
+                <div class="post-meta-header">
+                  <div class="post-date">Dec 28, 2024</div>
+                  <div class="post-category">Tech & Tools</div>
+                </div>
+                <h2 class="post-title">
+                  <a href="../blog/developer-photographer-setup.html"
+                    >My Developer-Photographer Setup: Best of Both Worlds</a
+                  >
+                </h2>
+                <p class="post-excerpt">
+                  A comprehensive look at my workstation setup optimized for
+                  both development work and photo editing, including hardware,
+                  software, and workflow recommendations.
+                </p>
+                <div class="post-meta">
+                  <span class="read-time">7 min read</span>
+                  <span class="post-tags">
+                    <span class="tag">Setup</span>
+                    <span class="tag">Workflow</span>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Blog Post 5 -->
+            <article class="blog-post" data-category="development">
+              <div class="post-content">
+                <div class="post-meta-header">
+                  <div class="post-date">Dec 20, 2024</div>
+                  <div class="post-category">Development</div>
+                </div>
+                <h2 class="post-title">
+                  <a href="../blog/building-3d-portfolio-threejs.html"
+                    >Building a 3D Portfolio with Three.js</a
+                  >
+                </h2>
+                <p class="post-excerpt">
+                  Behind the scenes of creating this interactive 3D portfolio.
+                  Technical challenges, design decisions, and lessons learned.
+                </p>
+                <div class="post-meta">
+                  <span class="read-time">10 min read</span>
+                  <span class="post-tags">
+                    <span class="tag">Three.js</span>
+                    <span class="tag">3D</span>
+                  </span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Blog Post 6 -->
+            <article class="blog-post" data-category="development">
+              <div class="post-content">
+                <div class="post-meta-header">
+                  <div class="post-date">Dec 15, 2024</div>
+                  <div class="post-category">Development</div>
+                </div>
+                <h2 class="post-title">
+                  <a href="../blog/mastering-low-light-photography.html"
+                    >Mastering Low Light Photography</a
+                  >
+                </h2>
+                <p class="post-excerpt">
+                  Techniques and equipment for shooting in challenging lighting
+                  conditions. From technical settings to creative approaches.
+                </p>
+                <div class="post-meta">
+                  <span class="read-time">6 min read</span>
+                  <span class="post-tags">
+                    <span class="tag">Low Light</span>
+                    <span class="tag">Techniques</span>
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Load More Button -->
+          <div class="load-more-section">
+            <button class="load-more-btn">Load More Posts</button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="page-footer">
+        <div class="footer-content">
+          <p>&copy; 2025 Code • Capture • Create. All rights reserved.</p>
+          <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="blog.html">Blog</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="../js/blog.js"></script>
+  </body>
+</html>
