@@ -5,74 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React Performance Optimization: A Deep Dive - Blog</title>
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/pages.css" />
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body class="blog-body">
-    <div class="blog-page">
-      <!-- Background elements -->
-      <div class="geometric-element element-1"></div>
-      <div class="geometric-element element-2"></div>
-      <div class="geometric-element element-3"></div>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="profile">
+          <h1 class="name">
+            <a href="../index.html" class="back-link">← Back to Portfolio</a>
+          </h1>
+          <p class="tagline">
+            <a href="../pages/blog.html" class="blog-link">← All Posts</a>
+          </p>
+        </div>
 
-      <!-- Navigation -->
-      <nav class="top-nav">
-        <div class="nav-brand">
-          <a href="../index.html">Code • Capture • Create</a>
+        <nav class="social-links">
+          <a href="../pages/about.html" class="social-link">About</a>
+          <a href="../pages/gallery.html" class="social-link">Gallery</a>
+          <a href="../pages/blog.html" class="social-link">Blog</a>
+        </nav>
+      </header>
+
+      <!-- Article Header -->
+      <section class="article-header">
+        <div class="article-meta">
+          <span class="article-date">January 10, 2025</span>
+          <span class="article-separator">•</span>
+          <span class="article-read-time">8 min read</span>
+          <span class="article-separator">•</span>
+          <span class="article-category">Development</span>
         </div>
-        <div class="nav-links">
-          <a href="../index.html">Home</a>
-          <a href="../pages/about.html">About</a>
-          <a href="../pages/gallery.html">Gallery</a>
-          <a href="../pages/blog.html">Blog</a>
+
+        <h1 class="article-title">
+          React Performance Optimization: A Deep Dive
+        </h1>
+
+        <p class="article-subtitle">
+          Advanced techniques for optimizing React applications, including
+          memoization, lazy loading, and bundle optimization strategies.
+          Performance optimization is both an art and a science.
+        </p>
+
+        <div class="article-tags">
+          <span class="tag">React</span>
+          <span class="tag">Performance</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Web Development</span>
         </div>
-      </nav>
+      </section>
 
       <!-- Article Content -->
-      <main class="main-content">
-        <div class="content-wrapper">
-          <article class="blog-article">
-            <header class="article-header">
-              <div class="article-meta">
-                <span class="article-date">January 10, 2025</span>
-                <span class="article-category">Development</span>
-                <span class="article-read-time">8 min read</span>
-              </div>
-              <h1 class="article-title">
-                React Performance Optimization: A Deep Dive
-              </h1>
-              <p class="article-subtitle">
-                Advanced techniques for optimizing React applications, including
-                memoization, lazy loading, and bundle optimization strategies.
-              </p>
-              <div class="article-tags">
-                <span class="tag">React</span>
-                <span class="tag">Performance</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">Web Development</span>
-              </div>
-            </header>
+      <article class="article-content">
+        <p class="lead">
+          Performance optimization in React applications is both an art and a
+          science. Like composing a photograph, every decision matters—from the
+          initial architecture to the final bundle size. Here's what I've
+          learned building performant React applications over the past few
+          years.
+        </p>
 
-            <div class="article-content">
-              <p class="lead">
-                Performance optimization in React applications is both an art
-                and a science. Like composing a photograph, every decision
-                matters—from the initial architecture to the final bundle size.
-                Here's what I've learned building performant React applications.
-              </p>
+        <h2>The Foundation: Understanding React's Rendering</h2>
+        <p>
+          Before diving into optimization techniques, it's crucial to understand
+          how React decides when to re-render components. React's reconciliation
+          algorithm compares the current virtual DOM with the previous version,
+          but this process can become expensive with complex component trees.
+        </p>
 
-              <h2>The Foundation: Understanding React's Rendering</h2>
-              <p>
-                Before diving into optimization techniques, it's crucial to
-                understand how React decides when to re-render components.
-                React's reconciliation algorithm compares the current virtual
-                DOM with the previous version, but this process can become
-                expensive with complex component trees.
-              </p>
+        <p>
+          The key insight is that React re-renders a component when its props or
+          state change. However, it also re-renders all of its children by
+          default, even if their props haven't changed. This is where
+          optimization opportunities arise.
+        </p>
 
-              <div class="code-block">
-                <h3>Profiling with React DevTools</h3>
-                <pre><code>// Enable profiling in development
+        <h3>Profiling with React DevTools</h3>
+        <p>
+          The first step in any performance optimization is measurement. React
+          DevTools Profiler is invaluable for understanding where your app
+          spends its time:
+        </p>
+
+        <div class="code-block">
+          <pre><code>// Enable profiling in development
 if (process.env.NODE_ENV === 'development') {
   const { Profiler } = require('react');
   
@@ -85,22 +107,20 @@ if (process.env.NODE_ENV === 'development') {
     &lt;PhotoGallery /&gt;
   &lt;/Profiler&gt;
 }</code></pre>
-              </div>
+        </div>
 
-              <h2>React.memo: The First Line of Defense</h2>
-              <p>
-                React.memo is your first tool for preventing unnecessary
-                re-renders. It's particularly effective for components that
-                receive the same props frequently, like list items or UI
-                components.
-              </p>
+        <h2>React.memo: The First Line of Defense</h2>
+        <p>
+          <code>React.memo</code> is your first tool for preventing unnecessary
+          re-renders. It's particularly effective for components that receive
+          the same props frequently, like list items or UI components. However,
+          it's not a silver bullet—use it strategically.
+        </p>
 
-              <div class="code-block">
-                <h3>Strategic Memoization</h3>
-                <pre><code>// Bad: Memoizing everything
-const ExpensiveComponent = React.memo(({ data, onUpdate }) => {
-  // Simple component that doesn't benefit from memoization
-  return &lt;div&gt;{data.title}&lt;/div&gt;;
+        <div class="code-block">
+          <pre><code>// Bad: Memoizing everything
+const SimpleComponent = React.memo(({ title }) => {
+  return &lt;div&gt;{title}&lt;/div&gt;;
 });
 
 // Good: Memoizing components with expensive operations
@@ -120,26 +140,24 @@ const PhotoCard = React.memo(({ photo, onLike, onShare }) => {
   return prevProps.photo.id === nextProps.photo.id &&
          prevProps.photo.lastModified === nextProps.photo.lastModified;
 });</code></pre>
-              </div>
+        </div>
 
-              <h2>useMemo and useCallback: Precision Tools</h2>
-              <p>
-                These hooks are often misused. The key is understanding when the
-                cost of memoization outweighs the performance benefit. Use them
-                for expensive calculations and stable references, not for every
-                variable.
-              </p>
+        <h2>useMemo and useCallback: Precision Tools</h2>
+        <p>
+          These hooks are often misused. The key is understanding when the cost
+          of memoization outweighs the performance benefit. Use them for
+          expensive calculations and stable references, not for every variable.
+        </p>
 
-              <blockquote class="article-quote">
-                <p>
-                  "Premature optimization is the root of all evil, but so is
-                  ignoring performance until it's too late."
-                </p>
-              </blockquote>
+        <blockquote class="quote">
+          <p>
+            "Premature optimization is the root of all evil, but so is ignoring
+            performance until it's too late."
+          </p>
+        </blockquote>
 
-              <div class="code-block">
-                <h3>Smart Memoization Patterns</h3>
-                <pre><code>function PhotoGallery({ photos, filters, sortBy }) {
+        <div class="code-block">
+          <pre><code>function PhotoGallery({ photos, filters, sortBy }) {
   // Expensive calculation - worth memoizing
   const filteredPhotos = useMemo(() => {
     return photos
@@ -150,7 +168,7 @@ const PhotoCard = React.memo(({ photo, onLike, onShare }) => {
   // Stable function reference - prevents child re-renders
   const handlePhotoClick = useCallback((photoId) => {
     analytics.track('photo_clicked', { photoId });
-    // Handle photo click
+    router.push(`/photo/${photoId}`);
   }, []);
 
   // Don't memoize simple calculations
@@ -168,18 +186,18 @@ const PhotoCard = React.memo(({ photo, onLike, onShare }) => {
     &lt;/div&gt;
   );
 }</code></pre>
-              </div>
+        </div>
 
-              <h2>Code Splitting and Lazy Loading</h2>
-              <p>
-                One of the most effective performance optimizations is loading
-                only what users need, when they need it. React's lazy loading
-                combined with Suspense creates smooth user experiences.
-              </p>
+        <h2>Code Splitting and Lazy Loading</h2>
+        <p>
+          One of the most effective performance optimizations is loading only
+          what users need, when they need it. React's lazy loading combined with
+          Suspense creates smooth user experiences while dramatically reducing
+          initial bundle sizes.
+        </p>
 
-              <div class="code-block">
-                <h3>Strategic Code Splitting</h3>
-                <pre><code>// Route-based splitting
+        <div class="code-block">
+          <pre><code>// Route-based splitting
 const PhotoEditor = lazy(() => import('./PhotoEditor'));
 const GalleryView = lazy(() => import('./GalleryView'));
 const BlogPost = lazy(() => import('./BlogPost'));
@@ -204,391 +222,582 @@ function App() {
     &lt;/BrowserRouter&gt;
   );
 }</code></pre>
-              </div>
+        </div>
 
-              <h2>Virtual Scrolling for Large Lists</h2>
-              <p>
-                When dealing with large photo galleries or datasets, virtual
-                scrolling becomes essential. It's like having a viewfinder that
-                only renders what's visible.
-              </p>
+        <h2>Bundle Optimization Strategies</h2>
+        <p>
+          Beyond code splitting, there are several webpack and build-time
+          optimizations that can significantly impact performance:
+        </p>
 
-              <div class="technical-tip">
-                <h3>Implementation Strategy</h3>
-                <p>
-                  For my photography portfolio, I implemented virtual scrolling
-                  using react-window for galleries with 1000+ images. The key
-                  insight was calculating item heights dynamically based on
-                  image aspect ratios and screen size.
-                </p>
-              </div>
+        <h3>Tree Shaking and Dead Code Elimination</h3>
+        <p>
+          Modern bundlers are good at removing unused code, but you can help
+          them by using ES6 imports and avoiding side effects:
+        </p>
 
-              <h2>Bundle Optimization Strategies</h2>
-              <p>
-                Bundle analysis should be part of your regular development
-                workflow. Tools like webpack-bundle-analyzer reveal optimization
-                opportunities that aren't obvious from the code.
-              </p>
+        <div class="code-block">
+          <pre><code>// Good: Named imports enable tree shaking
+import { debounce, throttle } from 'lodash-es';
 
-              <div class="code-block">
-                <h3>Bundle Analysis Script</h3>
-                <pre><code>// package.json
+// Bad: Imports entire library
+import _ from 'lodash';
+
+// Good: Import only what you need
+import debounce from 'lodash/debounce';
+
+// For date libraries, use modern alternatives
+import { format, parseISO } from 'date-fns';
+// Instead of moment.js which is much larger</code></pre>
+        </div>
+
+        <h3>Bundle Analysis</h3>
+        <p>
+          Use tools like webpack-bundle-analyzer to understand what's actually
+          in your bundle:
+        </p>
+
+        <div class="code-block">
+          <pre><code>npm install --save-dev webpack-bundle-analyzer
+
+// In your package.json
 {
   "scripts": {
     "analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js"
   }
+}</code></pre>
+        </div>
+
+        <h2>Real-World Performance Patterns</h2>
+        <p>
+          Here are some patterns I've found particularly effective in production
+          applications:
+        </p>
+
+        <h3>Virtualization for Large Lists</h3>
+        <p>
+          When dealing with large datasets, virtualization can be a
+          game-changer. Libraries like react-window only render visible items:
+        </p>
+
+        <div class="code-block">
+          <pre><code>import { FixedSizeList as List } from 'react-window';
+
+function PhotoList({ photos }) {
+  const Row = ({ index, style }) => (
+    &lt;div style={style}&gt;
+      &lt;PhotoCard photo={photos[index]} /&gt;
+    &lt;/div&gt;
+  );
+
+  return (
+    &lt;List
+      height={600}
+      itemCount={photos.length}
+      itemSize={200}
+      width="100%"
+    &gt;
+      {Row}
+    &lt;/List&gt;
+  );
+}</code></pre>
+        </div>
+
+        <h3>Intersection Observer for Lazy Loading</h3>
+        <p>
+          Load images and components only when they're about to enter the
+          viewport:
+        </p>
+
+        <div class="code-block">
+          <pre><code>function LazyImage({ src, alt, ...props }) {
+  const [imageSrc, setImageSrc] = useState(null);
+  const [imageRef, setImageRef] = useState();
+
+  useEffect(() => {
+    let observer;
+    
+    if (imageRef && imageSrc !== src) {
+      observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setImageSrc(src);
+              observer.unobserve(imageRef);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(imageRef);
+    }
+    
+    return () => {
+      if (observer && observer.unobserve) {
+        observer.unobserve(imageRef);
+      }
+    };
+  }, [imageRef, imageSrc, src]);
+
+  return (
+    &lt;div ref={setImageRef}&gt;
+      {imageSrc ? &lt;img src={imageSrc} alt={alt} {...props} /&gt; : &lt;div&gt;Loading...&lt;/div&gt;}
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+
+        <h2>Performance Monitoring in Production</h2>
+        <p>
+          Optimization doesn't end at deployment. Continuous monitoring helps
+          you catch performance regressions and understand real-world usage
+          patterns:
+        </p>
+
+        <div class="code-block">
+          <pre><code>// Simple performance tracking
+function trackPerformance(name, fn) {
+  return function(...args) {
+    const start = performance.now();
+    const result = fn.apply(this, args);
+    const end = performance.now();
+    
+    // Send to analytics service
+    analytics.track('performance_metric', {
+      name,
+      duration: end - start,
+      timestamp: Date.now()
+    });
+    
+    return result;
+  };
 }
 
-// webpack.config.js optimizations
-module.exports = {
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-        common: {
-          minChunks: 2,
-          chunks: 'all',
-          enforce: true
-        }
-      }
-    }
-  }
-};</code></pre>
-              </div>
-
-              <h2>State Management Performance</h2>
-              <p>
-                How you structure your state can make or break performance.
-                Avoid deeply nested objects and consider normalizing your data
-                structure, especially for lists and relational data.
-              </p>
-
-              <div class="code-block">
-                <h3>Normalized State Structure</h3>
-                <pre><code>// Bad: Nested structure causes widespread re-renders
-const badState = {
-  galleries: [
-    {
-      id: '1',
-      name: 'Urban Photography',
-      photos: [
-        { id: 'p1', title: 'Street Scene', likes: 42 },
-        { id: 'p2', title: 'Architecture', likes: 38 }
-      ]
-    }
-  ]
-};
-
-// Good: Normalized structure allows surgical updates
-const goodState = {
-  galleries: {
-    '1': { id: '1', name: 'Urban Photography', photoIds: ['p1', 'p2'] }
-  },
-  photos: {
-    'p1': { id: 'p1', title: 'Street Scene', likes: 42 },
-    'p2': { id: 'p2', title: 'Architecture', likes: 38 }
-  }
-};</code></pre>
-              </div>
-
-              <h2>Performance Monitoring</h2>
-              <p>
-                Performance optimization is an ongoing process. Set up
-                monitoring to catch regressions before they reach users. I use a
-                combination of React DevTools Profiler, Lighthouse CI, and real
-                user monitoring.
-              </p>
-
-              <div class="article-conclusion">
-                <h2>The Performance Mindset</h2>
-                <p>
-                  Optimizing React performance is like perfecting a
-                  photograph—it requires understanding your tools, knowing when
-                  to use them, and always keeping the end user in mind. The goal
-                  isn't to optimize everything, but to optimize the right things
-                  at the right time.
-                </p>
-                <p>
-                  Start with measurement, focus on the biggest impact areas, and
-                  remember that the best optimization is often the code you
-                  don't write. Every component, every state update, and every
-                  bundle byte should serve a purpose in creating a smooth,
-                  responsive user experience.
-                </p>
-              </div>
-            </div>
-
-            <footer class="article-footer">
-              <div class="article-author">
-                <div class="author-info">
-                  <h3>About the Author</h3>
-                  <p>
-                    Full-stack developer with 6+ years of experience building
-                    high-performance web applications. Specializes in React,
-                    Node.js, and performance optimization strategies.
-                  </p>
-                </div>
-              </div>
-
-              <div class="article-navigation">
-                <a href="urban-photography-techniques.html" class="nav-button"
-                  >← Previous Article</a
-                >
-                <a href="../pages/blog.html" class="nav-button">Back to Blog</a>
-              </div>
-            </footer>
-          </article>
+// Usage
+const optimizedFilter = trackPerformance('photo_filter', filterPhotos);</code></pre>
         </div>
-      </main>
+
+        <h2>Key Takeaways</h2>
+        <p>
+          Performance optimization is an ongoing process, not a one-time task.
+          Here are the key principles that have served me well:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Measure first:</strong> Always profile before optimizing.
+            Assumptions about performance bottlenecks are often wrong.
+          </li>
+          <li>
+            <strong>Start with the basics:</strong> Proper code splitting and
+            bundle optimization often provide the biggest wins.
+          </li>
+          <li>
+            <strong>Be strategic with memoization:</strong> React.memo, useMemo,
+            and useCallback are tools, not solutions to sprinkle everywhere.
+          </li>
+          <li>
+            <strong>Think about the user journey:</strong> Optimize for
+            perceived performance, not just raw metrics.
+          </li>
+          <li>
+            <strong>Monitor continuously:</strong> Set up performance monitoring
+            to catch regressions early.
+          </li>
+        </ul>
+
+        <p>
+          Like photography, performance optimization requires both technical
+          knowledge and artistic judgment. The goal isn't to squeeze every
+          millisecond out of your app, but to create smooth, delightful
+          experiences that users love.
+        </p>
+      </article>
+
+      <!-- Article Footer -->
+      <section class="article-footer">
+        <div class="article-actions">
+          <p>
+            Thanks for reading! If you found this helpful, you might also enjoy
+            my posts on
+            <a href="#">Building APIs for Creative Applications</a> or
+            <a href="../blog/urban-photography-techniques.html"
+              >Urban Photography Techniques</a
+            >.
+          </p>
+        </div>
+
+        <div class="author-bio">
+          <h3>About the Author</h3>
+          <p>
+            I'm a developer and photographer who loves building things that
+            matter. When I'm not optimizing React apps, you'll find me exploring
+            the city with a camera or working on creative coding projects.
+            <a href="../pages/about.html">Learn more about me</a>.
+          </p>
+        </div>
+      </section>
+
+      <!-- Navigation -->
+      <nav class="post-navigation">
+        <a href="../pages/blog.html" class="nav-back">← All Posts</a>
+        <a href="../blog/urban-photography-techniques.html" class="nav-next"
+          >Next: Urban Photography →</a
+        >
+      </nav>
 
       <!-- Footer -->
-      <footer class="page-footer">
-        <div class="footer-content">
-          <p>&copy; 2025 Code • Capture • Create. All rights reserved.</p>
-          <div class="footer-links">
-            <a href="../index.html">Home</a>
-            <a href="../pages/about.html">About</a>
-            <a href="../pages/gallery.html">Gallery</a>
-            <a href="../pages/blog.html">Blog</a>
-          </div>
+      <footer class="footer">
+        <p>
+          © 2025 • Follow me on <a href="#">@yourusername</a> for more updates
+        </p>
+        <div class="footer-links">
+          <a href="../index.html" class="footer-link">Portfolio</a>
+          <a href="../pages/about.html" class="footer-link">About</a>
+          <a href="../pages/gallery.html" class="footer-link">Gallery</a>
+          <a href="../pages/blog.html" class="footer-link">Blog</a>
         </div>
       </footer>
     </div>
 
     <style>
-      /* Blog Article Specific Styles */
-      .blog-article {
-        max-width: 800px;
-        margin: 0 auto;
-        background: rgba(20, 20, 20, 0.9);
-        border-radius: 12px;
-        padding: 60px;
-        border: 1px solid rgba(255, 152, 0, 0.2);
-        backdrop-filter: blur(10px);
-      }
-
+      /* Article-specific styles */
       .article-header {
-        text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 50px;
         padding-bottom: 30px;
-        border-bottom: 1px solid rgba(255, 152, 0, 0.1);
+        border-bottom: 1px solid #e5e5e5;
       }
 
       .article-meta {
         display: flex;
-        justify-content: center;
-        gap: 20px;
+        align-items: center;
+        gap: 8px;
         margin-bottom: 20px;
-        flex-wrap: wrap;
+        font-size: 0.9rem;
+        color: #888;
+      }
+
+      .article-separator {
+        color: #ccc;
       }
 
       .article-date,
-      .article-category,
-      .article-read-time {
-        color: #ff9800;
-        font-size: 0.9rem;
+      .article-read-time,
+      .article-category {
         font-weight: 500;
-        font-family: "JetBrains Mono", monospace;
       }
 
       .article-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 20px;
         line-height: 1.2;
-        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+        color: #111;
       }
 
       .article-subtitle {
-        font-size: 1.3rem;
-        color: #b0b0b0;
-        line-height: 1.6;
-        margin-bottom: 30px;
+        font-size: 1.2rem;
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 25px;
       }
 
       .article-tags {
         display: flex;
-        justify-content: center;
         gap: 10px;
         flex-wrap: wrap;
       }
 
+      .tag {
+        background-color: #f0f0f0;
+        color: #666;
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+
+      /* Article content */
       .article-content {
+        line-height: 1.7;
         font-size: 1.1rem;
-        line-height: 1.8;
-        color: #e5e5e5;
+        color: #333;
+      }
+
+      .article-content .lead {
+        font-size: 1.25rem;
+        color: #444;
+        margin-bottom: 40px;
+        line-height: 1.6;
       }
 
       .article-content h2 {
-        color: #ffffff;
-        font-size: 2rem;
-        margin: 40px 0 20px 0;
+        font-size: 1.8rem;
         font-weight: 600;
+        margin: 50px 0 20px 0;
+        color: #111;
+        line-height: 1.3;
       }
 
       .article-content h3 {
-        color: #ff9800;
         font-size: 1.4rem;
-        margin: 30px 0 15px 0;
         font-weight: 600;
+        margin: 35px 0 15px 0;
+        color: #111;
       }
 
       .article-content p {
         margin-bottom: 20px;
-        color: #d0d0d0;
       }
 
-      .lead {
-        font-size: 1.3rem;
-        font-weight: 500;
-        color: #ffffff;
-        margin-bottom: 30px;
+      .article-content ul,
+      .article-content ol {
+        margin: 20px 0;
+        padding-left: 30px;
+      }
+
+      .article-content li {
+        margin-bottom: 8px;
+      }
+
+      .article-content strong {
+        font-weight: 600;
+        color: #111;
+      }
+
+      .article-content code {
+        background-color: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono",
+          monospace;
+        font-size: 0.9em;
+        color: #e73c4e;
       }
 
       .code-block {
-        background: rgba(10, 10, 10, 0.8);
-        border: 1px solid rgba(255, 152, 0, 0.3);
+        background-color: #f8f9fa;
         border-radius: 8px;
         padding: 25px;
         margin: 30px 0;
-      }
-
-      .code-block h3 {
-        color: #ff9800;
-        margin: 0 0 15px 0;
-        font-size: 1.1rem;
+        overflow-x: auto;
+        border: 1px solid #e9ecef;
       }
 
       .code-block pre {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 15px;
-        border-radius: 5px;
-        overflow-x: auto;
-        font-family: "JetBrains Mono", monospace;
+        margin: 0;
+        font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono",
+          monospace;
         font-size: 0.9rem;
-        color: #e5e5e5;
-        margin: 0;
+        line-height: 1.5;
+        color: #333;
       }
 
-      .article-quote {
-        background: rgba(255, 152, 0, 0.1);
-        border-left: 4px solid #ff9800;
-        padding: 25px;
+      .code-block code {
+        background: none;
+        padding: 0;
+        color: inherit;
+      }
+
+      .quote {
+        background-color: #f8f9fa;
+        border-left: 4px solid #0066cc;
+        padding: 20px 25px;
         margin: 30px 0;
-        border-radius: 0 8px 8px 0;
-      }
-
-      .article-quote p {
-        font-size: 1.2rem;
         font-style: italic;
-        color: #ffffff;
+      }
+
+      .quote p {
         margin: 0;
+        font-size: 1.1rem;
+        color: #555;
       }
 
-      .technical-tip {
-        background: rgba(0, 100, 200, 0.1);
-        border: 1px solid rgba(0, 150, 255, 0.3);
-        border-radius: 8px;
-        padding: 25px;
-        margin: 30px 0;
-      }
-
-      .technical-tip h3 {
-        color: #00aaff;
-        margin: 0 0 15px 0;
-      }
-
-      .article-conclusion {
-        background: rgba(255, 152, 0, 0.05);
-        border: 1px solid rgba(255, 152, 0, 0.2);
-        border-radius: 8px;
-        padding: 30px;
-        margin: 40px 0;
-      }
-
+      /* Article footer */
       .article-footer {
-        border-top: 1px solid rgba(255, 152, 0, 0.1);
-        padding-top: 30px;
-        margin-top: 40px;
+        margin-top: 60px;
+        padding-top: 40px;
+        border-top: 1px solid #e5e5e5;
       }
 
-      .author-info {
-        text-align: center;
-        margin-bottom: 30px;
+      .article-actions {
+        margin-bottom: 40px;
       }
 
-      .author-info h3 {
-        color: #ff9800;
-        margin-bottom: 10px;
+      .article-actions p {
+        color: #555;
+        line-height: 1.6;
       }
 
-      .author-info p {
-        color: #b0b0b0;
-        font-size: 1rem;
+      .author-bio {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 8px;
       }
 
-      .article-navigation {
+      .author-bio h3 {
+        margin: 0 0 15px 0;
+        color: #111;
+        font-size: 1.2rem;
+      }
+
+      .author-bio p {
+        margin: 0;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      /* Post navigation */
+      .post-navigation {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 20px;
+        margin: 50px 0;
+        padding: 30px 0;
+        border-top: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
       }
 
-      .nav-button {
-        padding: 12px 24px;
-        background: rgba(255, 152, 0, 0.1);
-        border: 1px solid rgba(255, 152, 0, 0.3);
-        border-radius: 8px;
-        color: #ff9800;
+      .nav-back,
+      .nav-next {
+        color: #0066cc;
         text-decoration: none;
         font-weight: 500;
-        transition: all 0.3s ease;
+        padding: 10px 0;
+        transition: color 0.2s ease;
       }
 
-      .nav-button:hover {
-        background: rgba(255, 152, 0, 0.2);
-        border-color: rgba(255, 152, 0, 0.5);
-        transform: translateY(-2px);
+      .nav-back:hover,
+      .nav-next:hover {
+        color: #004499;
       }
 
+      /* Header adjustments for blog posts */
+      .back-link,
+      .blog-link {
+        color: #0066cc;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .back-link:hover,
+      .blog-link:hover {
+        color: #004499;
+      }
+
+      /* Responsive design */
       @media (max-width: 768px) {
-        .blog-article {
-          padding: 30px;
-        }
-
         .article-title {
-          font-size: 2.2rem;
+          font-size: 2rem;
         }
 
         .article-subtitle {
           font-size: 1.1rem;
         }
 
-        .article-meta {
-          flex-direction: column;
-          gap: 10px;
-        }
-
         .article-content {
           font-size: 1rem;
         }
 
-        .article-content h2 {
-          font-size: 1.6rem;
+        .article-content .lead {
+          font-size: 1.1rem;
         }
 
-        .article-navigation {
+        .article-content h2 {
+          font-size: 1.5rem;
+        }
+
+        .article-content h3 {
+          font-size: 1.25rem;
+        }
+
+        .post-navigation {
           flex-direction: column;
+          gap: 15px;
           text-align: center;
+        }
+
+        .code-block {
+          padding: 20px 15px;
+          margin: 20px -15px;
+          border-radius: 0;
+          border-left: none;
+          border-right: none;
+        }
+
+        .article-meta {
+          flex-wrap: wrap;
+        }
+
+        .author-bio {
+          padding: 25px 20px;
         }
       }
     </style>
+
+    <script>
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Copy code blocks on click
+      document.querySelectorAll(".code-block").forEach((block) => {
+        block.addEventListener("click", function () {
+          const code = this.querySelector("code");
+          if (code) {
+            navigator.clipboard.writeText(code.textContent).then(() => {
+              // Simple feedback
+              const originalBg = this.style.backgroundColor;
+              this.style.backgroundColor = "#e7f3ff";
+              setTimeout(() => {
+                this.style.backgroundColor = originalBg;
+              }, 200);
+            });
+          }
+        });
+      });
+
+      // Fade-in animation
+      document.addEventListener("DOMContentLoaded", function () {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        }, observerOptions);
+
+        document
+          .querySelectorAll(
+            ".article-header, .article-content > *, .article-footer, .post-navigation"
+          )
+          .forEach((element) => {
+            element.style.opacity = "0";
+            element.style.transform = "translateY(20px)";
+            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+            observer.observe(element);
+          });
+      });
+
+      console.log("📖 Blog post loaded successfully!");
+    </script>
   </body>
 </html>

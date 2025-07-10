@@ -5,237 +5,488 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog - Developer • Photographer • Creator</title>
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/pages.css" />
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body class="blog-body">
-    <div class="blog-page">
-      <!-- Background elements -->
-      <div class="geometric-element element-1"></div>
-      <div class="geometric-element element-2"></div>
-      <div class="geometric-element element-3"></div>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="profile">
+          <h1 class="name">Blog</h1>
+          <p class="tagline">
+            Thoughts on code, photography, and the creative process
+          </p>
+        </div>
 
-      <!-- Navigation -->
-      <nav class="top-nav">
-        <div class="nav-brand">
-          <a href="../index.html">Code • Capture • Create</a>
-        </div>
-        <div class="nav-links">
-          <a href="../index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="gallery.html">Gallery</a>
-          <a href="blog.html" class="active">Blog</a>
-        </div>
+        <nav class="social-links">
+          <a href="../index.html" class="social-link">← Back Home</a>
+          <a href="about.html" class="social-link">About</a>
+          <a href="gallery.html" class="social-link">Gallery</a>
+        </nav>
+      </header>
+
+      <!-- Intro -->
+      <section class="intro">
+        <p class="intro-text">
+          I write about the intersection of technology and creativity. You'll
+          find posts about web development, photography techniques, and thoughts
+          on building things that matter. I believe the best ideas come from
+          combining different perspectives.
+        </p>
+      </section>
+
+      <!-- Filter Navigation -->
+      <nav class="main-nav">
+        <a href="#" class="nav-link active" data-filter="all">All Posts</a>
+        <a href="#" class="nav-link" data-filter="development">Development</a>
+        <a href="#" class="nav-link" data-filter="photography">Photography</a>
+        <a href="#" class="nav-link" data-filter="creative">Creative Process</a>
+        <a href="#" class="nav-link" data-filter="tools">Tools & Setup</a>
       </nav>
 
-      <!-- Main Content -->
-      <main class="main-content">
-        <div class="content-wrapper">
-          <header class="page-header">
-            <h1>Blog</h1>
-            <p class="subtitle">
-              Insights on development, technology, and the creative process
+      <!-- Recent Posts -->
+      <section class="section">
+        <h2 class="section-title">Recent Posts</h2>
+
+        <div class="posts-list">
+          <article class="post-item" data-category="photography">
+            <div class="post-date">Jan 15, 2025</div>
+            <h3 class="post-title">
+              <a href="../blog/urban-photography-techniques.html"
+                >Urban Photography: Capturing Life in Motion</a
+              >
+            </h3>
+            <p class="post-description">
+              Exploring techniques for capturing the energy and stories of urban
+              environments. From street photography to architectural details,
+              here's what I've learned about photographing city life.
             </p>
-          </header>
-
-          <!-- Blog Filter -->
-          <div class="blog-filter">
-            <button class="filter-btn active" data-filter="all">
-              All Posts
-            </button>
-            <button class="filter-btn" data-filter="development">
-              Development
-            </button>
-            <button class="filter-btn" data-filter="creative">
-              Creative Process
-            </button>
-            <button class="filter-btn" data-filter="tech">Tech & Tools</button>
-          </div>
-
-          <!-- Blog Posts Grid -->
-          <div class="blog-grid">
-            <!-- Blog Post 1 -->
-            <article class="blog-post" data-category="development">
-              <div class="post-content">
-                <div class="post-meta-header">
-                  <div class="post-date">Jan 15, 2025</div>
-                  <div class="post-category">Development</div>
-                </div>
-                <h2 class="post-title">
-                  <a href="../blog/urban-photography-techniques.html"
-                    >Urban Photography: Capturing Life in Motion</a
-                  >
-                </h2>
-                <p class="post-excerpt">
-                  Exploring techniques for capturing the energy and stories of
-                  urban environments, from street photography to architectural
-                  details.
-                </p>
-                <div class="post-meta">
-                  <span class="read-time">5 min read</span>
-                  <span class="post-tags">
-                    <span class="tag">Photography</span>
-                    <span class="tag">Urban</span>
-                  </span>
-                </div>
+            <div class="post-meta">
+              <span class="read-time">5 min read</span>
+              <div class="post-tags">
+                <span class="post-tag">Photography</span>
+                <span class="post-tag">Urban</span>
+                <span class="post-tag">Street</span>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <!-- Blog Post 2 -->
-            <article class="blog-post" data-category="development">
-              <div class="post-content">
-                <div class="post-meta-header">
-                  <div class="post-date">Jan 10, 2025</div>
-                  <div class="post-category">Development</div>
-                </div>
-                <h2 class="post-title">
-                  <a href="../blog/react-performance-optimization.html"
-                    >React Performance Optimization: A Deep Dive</a
-                  >
-                </h2>
-                <p class="post-excerpt">
-                  Advanced techniques for optimizing React applications,
-                  including memoization, lazy loading, and bundle optimization
-                  strategies.
-                </p>
-                <div class="post-meta">
-                  <span class="read-time">8 min read</span>
-                  <span class="post-tags">
-                    <span class="tag">React</span>
-                    <span class="tag">Performance</span>
-                  </span>
-                </div>
+          <article class="post-item" data-category="development">
+            <div class="post-date">Jan 10, 2025</div>
+            <h3 class="post-title">
+              <a href="../blog/react-performance-optimization.html"
+                >React Performance Optimization: A Deep Dive</a
+              >
+            </h3>
+            <p class="post-description">
+              Advanced techniques for optimizing React applications, including
+              memoization, lazy loading, and bundle optimization strategies.
+              Performance optimization is both an art and a science.
+            </p>
+            <div class="post-meta">
+              <span class="read-time">8 min read</span>
+              <div class="post-tags">
+                <span class="post-tag">React</span>
+                <span class="post-tag">Performance</span>
+                <span class="post-tag">JavaScript</span>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <!-- Blog Post 3 -->
-            <article class="blog-post" data-category="creative">
-              <div class="post-content">
-                <div class="post-meta-header">
-                  <div class="post-date">Jan 5, 2025</div>
-                  <div class="post-category">Creative Process</div>
-                </div>
-                <h2 class="post-title">
-                  <a href="../blog/bridging-code-and-photography.html"
-                    >Bridging Code and Photography: A Creative Journey</a
-                  >
-                </h2>
-                <p class="post-excerpt">
-                  How technical thinking influences creative vision and vice
-                  versa. The intersection of systematic problem-solving and
-                  artistic expression.
-                </p>
-                <div class="post-meta">
-                  <span class="read-time">6 min read</span>
-                  <span class="post-tags">
-                    <span class="tag">Creativity</span>
-                    <span class="tag">Philosophy</span>
-                  </span>
-                </div>
+          <article class="post-item" data-category="creative">
+            <div class="post-date">Jan 5, 2025</div>
+            <h3 class="post-title">
+              <a href="#">Bridging Code and Photography: A Creative Journey</a>
+            </h3>
+            <p class="post-description">
+              How technical thinking influences creative vision and vice versa.
+              The intersection of systematic problem-solving and artistic
+              expression has shaped how I approach both coding and photography.
+            </p>
+            <div class="post-meta">
+              <span class="read-time">6 min read</span>
+              <div class="post-tags">
+                <span class="post-tag">Creativity</span>
+                <span class="post-tag">Philosophy</span>
+                <span class="post-tag">Process</span>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <!-- Blog Post 4 -->
-            <article class="blog-post" data-category="tech">
-              <div class="post-content">
-                <div class="post-meta-header">
-                  <div class="post-date">Dec 28, 2024</div>
-                  <div class="post-category">Tech & Tools</div>
-                </div>
-                <h2 class="post-title">
-                  <a href="../blog/developer-photographer-setup.html"
-                    >My Developer-Photographer Setup: Best of Both Worlds</a
-                  >
-                </h2>
-                <p class="post-excerpt">
-                  A comprehensive look at my workstation setup optimized for
-                  both development work and photo editing, including hardware,
-                  software, and workflow recommendations.
-                </p>
-                <div class="post-meta">
-                  <span class="read-time">7 min read</span>
-                  <span class="post-tags">
-                    <span class="tag">Setup</span>
-                    <span class="tag">Workflow</span>
-                  </span>
-                </div>
+          <article class="post-item" data-category="tools">
+            <div class="post-date">Dec 28, 2024</div>
+            <h3 class="post-title">
+              <a href="#"
+                >My Developer-Photographer Setup: Best of Both Worlds</a
+              >
+            </h3>
+            <p class="post-description">
+              A comprehensive look at my workstation setup optimized for both
+              development work and photo editing, including hardware, software,
+              and workflow recommendations.
+            </p>
+            <div class="post-meta">
+              <span class="read-time">7 min read</span>
+              <div class="post-tags">
+                <span class="post-tag">Setup</span>
+                <span class="post-tag">Workflow</span>
+                <span class="post-tag">Tools</span>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <!-- Blog Post 5 -->
-            <article class="blog-post" data-category="development">
-              <div class="post-content">
-                <div class="post-meta-header">
-                  <div class="post-date">Dec 20, 2024</div>
-                  <div class="post-category">Development</div>
-                </div>
-                <h2 class="post-title">
-                  <a href="../blog/building-3d-portfolio-threejs.html"
-                    >Building a 3D Portfolio with Three.js</a
-                  >
-                </h2>
-                <p class="post-excerpt">
-                  Behind the scenes of creating this interactive 3D portfolio.
-                  Technical challenges, design decisions, and lessons learned.
-                </p>
-                <div class="post-meta">
-                  <span class="read-time">10 min read</span>
-                  <span class="post-tags">
-                    <span class="tag">Three.js</span>
-                    <span class="tag">3D</span>
-                  </span>
-                </div>
+          <article class="post-item" data-category="development">
+            <div class="post-date">Dec 20, 2024</div>
+            <h3 class="post-title">
+              <a href="#">From 3D to Clean: Why I Redesigned My Portfolio</a>
+            </h3>
+            <p class="post-description">
+              Behind the scenes of creating and then simplifying this portfolio.
+              Technical challenges, design decisions, and lessons learned about
+              the power of restraint in web design.
+            </p>
+            <div class="post-meta">
+              <span class="read-time">10 min read</span>
+              <div class="post-tags">
+                <span class="post-tag">Design</span>
+                <span class="post-tag">Portfolio</span>
+                <span class="post-tag">Web Development</span>
               </div>
-            </article>
+            </div>
+          </article>
 
-            <!-- Blog Post 6 -->
-            <article class="blog-post" data-category="development">
-              <div class="post-content">
-                <div class="post-meta-header">
-                  <div class="post-date">Dec 15, 2024</div>
-                  <div class="post-category">Development</div>
-                </div>
-                <h2 class="post-title">
-                  <a href="../blog/mastering-low-light-photography.html"
-                    >Mastering Low Light Photography</a
-                  >
-                </h2>
-                <p class="post-excerpt">
-                  Techniques and equipment for shooting in challenging lighting
-                  conditions. From technical settings to creative approaches.
-                </p>
-                <div class="post-meta">
-                  <span class="read-time">6 min read</span>
-                  <span class="post-tags">
-                    <span class="tag">Low Light</span>
-                    <span class="tag">Techniques</span>
-                  </span>
-                </div>
+          <article class="post-item" data-category="photography">
+            <div class="post-date">Dec 15, 2024</div>
+            <h3 class="post-title">
+              <a href="#">Mastering Low Light Photography</a>
+            </h3>
+            <p class="post-description">
+              Techniques for capturing great photos when the light is
+              challenging. From understanding your camera's capabilities to
+              post-processing tips that bring out the best in your low-light
+              shots.
+            </p>
+            <div class="post-meta">
+              <span class="read-time">6 min read</span>
+              <div class="post-tags">
+                <span class="post-tag">Photography</span>
+                <span class="post-tag">Low Light</span>
+                <span class="post-tag">Techniques</span>
               </div>
-            </article>
-          </div>
+            </div>
+          </article>
 
-          <!-- Load More Button -->
-          <div class="load-more-section">
-            <button class="load-more-btn">Load More Posts</button>
-          </div>
+          <article class="post-item" data-category="development">
+            <div class="post-date">Dec 8, 2024</div>
+            <h3 class="post-title">
+              <a href="#">Building APIs for Creative Applications</a>
+            </h3>
+            <p class="post-description">
+              Designing and building APIs that serve creative tools and
+              workflows. From image processing endpoints to handling large file
+              uploads, here's what I've learned building for creative
+              professionals.
+            </p>
+            <div class="post-meta">
+              <span class="read-time">9 min read</span>
+              <div class="post-tags">
+                <span class="post-tag">API Design</span>
+                <span class="post-tag">Backend</span>
+                <span class="post-tag">Creative Tools</span>
+              </div>
+            </div>
+          </article>
         </div>
-      </main>
+      </section>
+
+      <!-- Newsletter Signup -->
+      <section class="section">
+        <h2 class="section-title">Stay Updated</h2>
+        <div class="newsletter-signup">
+          <p>
+            I write about once a month with new posts about development,
+            photography, and creative process. No spam, just thoughtful content.
+          </p>
+          <form class="signup-form">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              class="email-input"
+              required
+            />
+            <button type="submit" class="signup-button">Subscribe</button>
+          </form>
+          <p class="signup-note">
+            You can unsubscribe at any time. No spam, ever.
+          </p>
+        </div>
+      </section>
 
       <!-- Footer -->
-      <footer class="page-footer">
-        <div class="footer-content">
-          <p>&copy; 2025 Code • Capture • Create. All rights reserved.</p>
-          <div class="footer-links">
-            <a href="../index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="blog.html">Blog</a>
-          </div>
+      <footer class="footer">
+        <p>
+          Thanks for reading! Follow me on <a href="#">@yourusername</a> for
+          more frequent updates.
+        </p>
+        <div class="footer-links">
+          <a href="../index.html" class="footer-link">Portfolio</a>
+          <a href="about.html" class="footer-link">About</a>
+          <a href="gallery.html" class="footer-link">Gallery</a>
         </div>
       </footer>
     </div>
 
-    <script src="../js/blog.js"></script>
+    <style>
+      /* Blog-specific styles */
+      .posts-list {
+        display: grid;
+        gap: 50px;
+      }
+
+      .post-item {
+        padding-bottom: 40px;
+        border-bottom: 1px solid #e5e5e5;
+      }
+
+      .post-item:last-child {
+        border-bottom: none;
+      }
+
+      .post-date {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .post-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        line-height: 1.3;
+      }
+
+      .post-title a {
+        color: #111;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .post-title a:hover {
+        color: #0066cc;
+      }
+
+      .post-description {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        font-size: 1rem;
+      }
+
+      .post-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .read-time {
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      .post-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .post-tag {
+        background-color: #f0f0f0;
+        color: #666;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      /* Newsletter signup */
+      .newsletter-signup {
+        background-color: #f8f9fa;
+        padding: 40px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .newsletter-signup p {
+        margin-bottom: 30px;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .signup-form {
+        display: flex;
+        gap: 12px;
+        max-width: 400px;
+        margin: 0 auto 15px;
+        flex-wrap: wrap;
+      }
+
+      .email-input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        min-width: 200px;
+      }
+
+      .email-input:focus {
+        outline: none;
+        border-color: #0066cc;
+      }
+
+      .signup-button {
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .signup-button:hover {
+        background-color: #004499;
+      }
+
+      .signup-note {
+        font-size: 0.9rem;
+        color: #777;
+        margin: 0;
+      }
+
+      /* Filter functionality */
+      .nav-link[data-filter] {
+        cursor: pointer;
+      }
+
+      .post-item {
+        transition: opacity 0.3s ease;
+      }
+
+      .post-item.hidden {
+        display: none;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .post-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .signup-form {
+          flex-direction: column;
+          max-width: 300px;
+        }
+
+        .email-input {
+          min-width: auto;
+        }
+
+        .newsletter-signup {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+
+    <script>
+      // Filter functionality
+      const filterLinks = document.querySelectorAll("[data-filter]");
+      const posts = document.querySelectorAll(".post-item");
+
+      filterLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const filter = this.dataset.filter;
+
+          // Update active link
+          filterLinks.forEach((l) => l.classList.remove("active"));
+          this.classList.add("active");
+
+          // Filter posts
+          posts.forEach((post) => {
+            if (filter === "all" || post.dataset.category === filter) {
+              post.classList.remove("hidden");
+            } else {
+              post.classList.add("hidden");
+            }
+          });
+        });
+      });
+
+      // Newsletter signup
+      const signupForm = document.querySelector(".signup-form");
+      if (signupForm) {
+        signupForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const button = this.querySelector(".signup-button");
+          const originalText = button.textContent;
+
+          button.textContent = "Subscribing...";
+          button.disabled = true;
+
+          // Simulate API call
+          setTimeout(() => {
+            button.textContent = "Subscribed!";
+            setTimeout(() => {
+              button.textContent = originalText;
+              button.disabled = false;
+              this.querySelector(".email-input").value = "";
+            }, 2000);
+          }, 1000);
+        });
+      }
+
+      // Fade-in animation
+      document.addEventListener("DOMContentLoaded", function () {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        }, observerOptions);
+
+        document
+          .querySelectorAll(".section, .intro, .post-item")
+          .forEach((element) => {
+            element.style.opacity = "0";
+            element.style.transform = "translateY(20px)";
+            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+            observer.observe(element);
+          });
+      });
+
+      console.log("📝 Blog loaded successfully!");
+    </script>
   </body>
 </html>

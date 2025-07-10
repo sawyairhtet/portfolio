@@ -1,247 +1,197 @@
-// Main initialization and control for technical portfolio
+// Simple interactions for the clean portfolio design
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize the professional portfolio experience
-  initPortfolio();
-});
-
-function initPortfolio() {
-  console.log("🚀 Initializing professional portfolio...");
-
-  // Show loading screen
-  showLoadingScreen();
-
-  // Initialize Three.js scene
-  setTimeout(() => {
-    try {
-      initScene();
-      console.log("✅ Scene initialized");
-
-      // Initialize interactions
-      if (window.interactionFunctions) {
-        window.interactionFunctions.initInteractions();
-        console.log("🎮 Interactions initialized");
+  // Smooth scrolling for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       }
+    });
+  });
 
-      // Hide loading screen and start animation
+  // Add simple fade-in animation for sections
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      }
+    });
+  }, observerOptions);
+
+  // Observe all sections for fade-in effect
+  document.querySelectorAll(".section, .intro, .header").forEach((section) => {
+    section.style.opacity = "0";
+    section.style.transform = "translateY(20px)";
+    section.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+    observer.observe(section);
+  });
+
+  // Add subtle hover effects to project cards
+  document.querySelectorAll(".project-card").forEach((card) => {
+    card.addEventListener("mouseenter", function () {
+      this.style.transform = "translateY(-2px)";
+    });
+
+    card.addEventListener("mouseleave", function () {
+      this.style.transform = "translateY(0)";
+    });
+  });
+
+  // Add transition styles to project cards
+  document.querySelectorAll(".project-card").forEach((card) => {
+    card.style.transition = "transform 0.2s ease";
+  });
+
+  // Simple typing effect for the header (optional)
+  const tagline = document.querySelector(".tagline");
+  if (tagline) {
+    const text = tagline.textContent;
+    tagline.textContent = "";
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        tagline.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+
+    // Start typing after a brief delay
+    setTimeout(typeWriter, 1000);
+  }
+
+  // Add scroll-based navigation highlighting
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+  const sections = document.querySelectorAll(".section");
+
+  function highlightNavigation() {
+    let currentSection = "";
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 100;
+      const sectionHeight = section.offsetHeight;
+
+      if (
+        window.scrollY >= sectionTop &&
+        window.scrollY < sectionTop + sectionHeight
+      ) {
+        currentSection = section.getAttribute("id");
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.style.fontWeight = "500";
+      link.style.color = "#0066cc";
+
+      if (link.getAttribute("href") === `#${currentSection}`) {
+        link.style.fontWeight = "600";
+        link.style.color = "#004499";
+      }
+    });
+  }
+
+  // Throttled scroll event for performance
+  let ticking = false;
+  function handleScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        highlightNavigation();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener("scroll", handleScroll);
+
+  // Easter egg: Konami code
+  let konamiCode = [];
+  const konamiSequence = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "KeyB",
+    "KeyA",
+  ];
+
+  document.addEventListener("keydown", function (e) {
+    konamiCode.push(e.code);
+
+    if (konamiCode.length > konamiSequence.length) {
+      konamiCode.shift();
+    }
+
+    if (konamiCode.join(",") === konamiSequence.join(",")) {
+      // Add a fun little surprise
+      document.body.style.fontFamily = "Comic Sans MS, cursive";
       setTimeout(() => {
-        hideLoadingScreen();
+        document.body.style.fontFamily = "";
+      }, 5000);
 
-        // Start the technical animation loop
-        if (window.animationFunctions) {
-          window.animationFunctions.startAnimationLoop();
-          console.log("⚡ Animation loop started");
-        }
+      // Show a message
+      const message = document.createElement("div");
+      message.textContent =
+        "🎉 You found the easter egg! Comic Sans for 5 seconds!";
+      message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #0066cc;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                z-index: 1000;
+                font-size: 14px;
+                font-weight: 500;
+            `;
+      document.body.appendChild(message);
 
-        // Show welcome effects
-        showWelcomeEffects();
+      setTimeout(() => {
+        message.remove();
+      }, 5000);
+
+      konamiCode = [];
+    }
+  });
+
+  // Simple contact form enhancement (if contact form exists)
+  const contactForm = document.querySelector("#contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+
+      submitButton.textContent = "Sending...";
+      submitButton.disabled = true;
+
+      // Simulate form submission (replace with actual form handling)
+      setTimeout(() => {
+        submitButton.textContent = "Sent!";
+        setTimeout(() => {
+          submitButton.textContent = originalText;
+          submitButton.disabled = false;
+        }, 2000);
       }, 1000);
-    } catch (error) {
-      console.error("Failed to initialize portfolio:", error);
-      showErrorMessage();
-    }
-  }, 800);
-}
-
-function showLoadingScreen() {
-  const loading = document.getElementById("loading");
-  if (loading) {
-    loading.style.display = "block";
-    loading.style.opacity = "1";
-  }
-}
-
-function hideLoadingScreen() {
-  const loading = document.getElementById("loading");
-  if (loading) {
-    loading.style.transition = "opacity 0.8s ease-out";
-    loading.style.opacity = "0";
-    setTimeout(() => {
-      loading.style.display = "none";
-    }, 800);
-  }
-}
-
-function showWelcomeEffects() {
-  // Create data burst effects at each project structure
-  setTimeout(() => {
-    projects.forEach((project, index) => {
-      setTimeout(() => {
-        if (window.animationFunctions && projectMeshes[index]) {
-          window.animationFunctions.createDataBurst(
-            project.position,
-            project.color
-          );
-        }
-      }, index * 400);
     });
-  }, 1000);
-
-  // Add glow effects to structures
-  setTimeout(() => {
-    projectMeshes.forEach((mesh, index) => {
-      setTimeout(() => {
-        if (window.animationFunctions) {
-          window.animationFunctions.createGlowEffect(mesh);
-        }
-      }, index * 300);
-    });
-  }, 2000);
-}
-
-function showErrorMessage() {
-  const loading = document.getElementById("loading");
-  if (loading) {
-    const loadingText = loading.querySelector(".loading-text");
-    if (loadingText) {
-      loadingText.textContent =
-        "⚠️ Something went wrong. Please refresh the page.";
-      loadingText.style.color = "#FF6B6B";
-    }
   }
-}
 
-// Navigation functions (called from HTML)
-window.focusProject = function (index) {
-  if (window.interactionFunctions) {
-    window.interactionFunctions.focusProject(index);
-
-    // Add technical effect when focusing
-    if (window.animationFunctions && projectMeshes[index]) {
-      window.animationFunctions.createDataBurst(
-        projectMeshes[index].position,
-        projects[index].color
-      );
-    }
-  }
-};
-
-window.resetView = function () {
-  if (window.interactionFunctions) {
-    window.interactionFunctions.resetCamera();
-  }
-};
-
-// Keyboard shortcuts for enhanced experience
-document.addEventListener("keydown", function (event) {
-  switch (event.key) {
-    case "1":
-    case "2":
-    case "3":
-    case "4":
-      const projectIndex = parseInt(event.key) - 1;
-      if (projectIndex >= 0 && projectIndex < projects.length) {
-        window.focusProject(projectIndex);
-      }
-      break;
-
-    case "r":
-    case "R":
-      window.resetView();
-      break;
-
-    case "Escape":
-      window.resetView();
-      break;
-
-    case " ":
-      event.preventDefault();
-      // Space bar to create random data burst
-      if (window.animationFunctions && projects.length > 0) {
-        const randomProject =
-          projects[Math.floor(Math.random() * projects.length)];
-        window.animationFunctions.createDataBurst(
-          randomProject.position,
-          randomProject.color
-        );
-      }
-      break;
-  }
+  console.log("🎨 Clean portfolio loaded successfully!");
+  console.log("💡 Tip: Try the Konami code for a surprise!");
 });
-
-// Performance monitoring
-let lastFrameTime = Date.now();
-let frameCount = 0;
-let fps = 60;
-
-function updatePerformanceMetrics() {
-  frameCount++;
-  const currentTime = Date.now();
-
-  if (currentTime - lastFrameTime >= 1000) {
-    fps = frameCount;
-    frameCount = 0;
-    lastFrameTime = currentTime;
-
-    // Adjust quality based on performance
-    adjustQuality();
-  }
-}
-
-function adjustQuality() {
-  if (!renderer) return;
-
-  // Lower quality if FPS is too low
-  if (fps < 30) {
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio * 0.5, 1));
-    console.log("📉 Reducing quality for better performance");
-  } else if (fps > 50) {
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  }
-}
-
-// Device detection and optimization
-function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
-}
-
-function getOptimalQuality() {
-  if (isMobileDevice()) {
-    return 0.5; // Lower quality for mobile
-  }
-  return Math.min(window.devicePixelRatio, 2);
-}
-
-// Scene management
-function pauseScene() {
-  if (window.animationFunctions) {
-    window.animationFunctions.stopAnimationLoop();
-  }
-}
-
-function resumeScene() {
-  if (window.animationFunctions) {
-    window.animationFunctions.startAnimationLoop();
-  }
-}
-
-// Visibility API for performance
-document.addEventListener("visibilitychange", function () {
-  if (document.hidden) {
-    pauseScene();
-  } else {
-    resumeScene();
-  }
-});
-
-// Handle focus/blur for performance
-window.addEventListener("blur", pauseScene);
-window.addEventListener("focus", resumeScene);
-
-// Export main functions
-window.portfolioFunctions = {
-  initPortfolio,
-  showLoadingScreen,
-  hideLoadingScreen,
-  showWelcomeEffects,
-  showErrorMessage,
-  updatePerformanceMetrics,
-  adjustQuality,
-  pauseScene,
-  resumeScene,
-};
-
-console.log(
-  "🚀 Portfolio main script loaded. Press 1-4 to focus projects, R to reset, Space for magic!"
-);

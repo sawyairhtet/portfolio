@@ -4,99 +4,266 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Developer • Photographer • Creator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <!-- Geometric elements -->
-    <div class="geometric-element element-1"></div>
-    <div class="geometric-element element-2"></div>
-    <div class="geometric-element element-3"></div>
-
-    <!-- Code particles -->
-    <div class="code-particle" style="top: 20%; left: 80%; animation-delay: 0s">
-      { }
-    </div>
-    <div class="code-particle" style="top: 60%; left: 15%; animation-delay: 2s">
-      f/2.8
-    </div>
-    <div class="code-particle" style="top: 40%; left: 70%; animation-delay: 4s">
-      =>
-    </div>
-    <div class="code-particle" style="top: 80%; left: 40%; animation-delay: 6s">
-      ISO 200
-    </div>
-    <div class="code-particle" style="top: 30%; left: 25%; animation-delay: 8s">
-      const
-    </div>
-    <div
-      class="code-particle"
-      style="top: 70%; left: 85%; animation-delay: 10s"
-    >
-      1/250s
-    </div>
-
-    <div id="canvas-container">
-      <div class="loading" id="loading">
-        <div class="loading-text">Initializing creative space...</div>
-      </div>
-
-      <div id="ui-overlay">
-        <div class="intro-text">
-          <h1>Code • Capture • Create</h1>
-          <p>
-            Where software engineering precision meets photographic artistry.
-            Explore a collection of digital experiences and visual stories
-            crafted with technical expertise and creative vision.
-          </p>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="profile">
+          <h1 class="name">Your Name</h1>
+          <p class="tagline">Developer • Photographer • Creator</p>
+          <p class="location">📍 Your City, Country</p>
         </div>
 
-        <div class="controls">
-          <p>← drag to explore • scroll to focus →</p>
-        </div>
-
-        <nav class="navigation">
-          <div class="nav-item" onclick="focusProject(0)">Web Applications</div>
-          <div class="nav-item" onclick="focusProject(1)">Mobile Apps</div>
-          <div class="nav-item" onclick="focusProject(2)">Photography</div>
-          <div class="nav-item" onclick="focusProject(3)">Creative Code</div>
-          <div
-            class="nav-item"
-            onclick="window.location.href='pages/about.html'"
-          >
-            About Me
-          </div>
-          <div
-            class="nav-item"
-            onclick="window.location.href='pages/gallery.html'"
-          >
-            Gallery
-          </div>
-          <div
-            class="nav-item"
-            onclick="window.location.href='pages/blog.html'"
-          >
-            Blog
-          </div>
+        <nav class="social-links">
+          <a href="#" class="social-link">@yourusername</a>
+          <a href="#" class="social-link">GitHub</a>
+          <a href="#" class="social-link">Instagram</a>
+          <a href="#" class="social-link">LinkedIn</a>
+          <a href="pages/blog.html" class="social-link">Blog</a>
         </nav>
+      </header>
 
-        <div class="project-info" id="project-info">
-          <h3 id="project-title">Select a project to explore</h3>
-          <p id="project-description">
-            Navigate through the 3D space to discover projects that showcase the
-            intersection of technical innovation and visual storytelling.
-          </p>
-          <div class="tech-stack" id="tech-stack"></div>
-          <div class="project-links" id="project-links"></div>
+      <!-- Navigation -->
+      <nav class="main-nav">
+        <a href="#projects" class="nav-link">Stuff I've Built</a>
+        <a href="#timeline" class="nav-link">Timeline</a>
+        <a href="#loves" class="nav-link">100 Things I Love</a>
+        <a href="pages/about.html" class="nav-link">About</a>
+        <a href="pages/gallery.html" class="nav-link">Gallery</a>
+      </nav>
+
+      <!-- Intro -->
+      <section class="intro">
+        <p class="intro-text">
+          I'm a developer and photographer who loves building digital
+          experiences and capturing moments. I write code, take photos, and
+          create things that live at the intersection of technology and art.
+          Currently building beautiful web applications and documenting life
+          through my lens.
+        </p>
+      </section>
+
+      <!-- Stuff I've Built -->
+      <section id="projects" class="section">
+        <h2 class="section-title">Stuff I've Built</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <h3 class="project-title">Portfolio Management System</h3>
+            <p class="project-description">
+              Full-stack web application for photographers to manage clients,
+              galleries, and bookings. Features automated watermarking, client
+              proofing workflows, and integrated payment processing.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">AWS S3</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">Live Demo</a>
+              <a href="#" class="project-link">GitHub</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3 class="project-title">Mobile Photo Editor</h3>
+            <p class="project-description">
+              Native mobile application with advanced photo editing
+              capabilities. Implements custom algorithms for exposure
+              correction, color grading, and film emulation filters.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">React Native</span>
+              <span class="tech-tag">OpenCV</span>
+              <span class="tech-tag">Firebase</span>
+              <span class="tech-tag">TypeScript</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">App Store</a>
+              <a href="#" class="project-link">GitHub</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3 class="project-title">Photography Series: Urban Code</h3>
+            <p class="project-description">
+              Visual exploration of architecture as code - capturing geometric
+              patterns, reflections, and shadows in urban environments. Shot
+              with Fujifilm X-T4 and edited with custom Python scripts.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Photography</span>
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Lightroom</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">View Gallery</a>
+              <a href="#" class="project-link">Behind the Scenes</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <h3 class="project-title">Real-time Image Processing API</h3>
+            <p class="project-description">
+              High-performance REST API for real-time image manipulation and
+              analysis. Supports batch processing, format conversion, and
+              AI-powered auto-enhancement for photography workflows.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">FastAPI</span>
+              <span class="tech-tag">OpenCV</span>
+              <span class="tech-tag">Docker</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">API Docs</a>
+              <a href="#" class="project-link">GitHub</a>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <!-- Timeline -->
+      <section id="timeline" class="section">
+        <h2 class="section-title">Timeline</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2024</div>
+            <div class="timeline-content">
+              <h3>Freelance Developer & Photographer</h3>
+              <p>
+                Building custom web applications and shooting commercial
+                photography projects.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2023</div>
+            <div class="timeline-content">
+              <h3>Senior Frontend Developer</h3>
+              <p>
+                Led development of React applications and mentored junior
+                developers.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2022</div>
+            <div class="timeline-content">
+              <h3>Photography Exhibition</h3>
+              <p>
+                First solo exhibition "Digital Landscapes" showcasing urban
+                photography.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">2021</div>
+            <div class="timeline-content">
+              <h3>Full Stack Developer</h3>
+              <p>
+                Built e-commerce platforms and learned the art of digital
+                photography.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Things I Love -->
+      <section id="loves" class="section">
+        <h2 class="section-title">100 Things I Really Love</h2>
+        <p class="section-subtitle">
+          Here's a list, in no particular order, of things that have helped
+          shape how I view the world and my work as a developer and
+          photographer.
+        </p>
+
+        <div class="loves-grid">
+          <div class="love-item">
+            <h4>The Art of Code</h4>
+            <p>Clean, readable code that tells a story</p>
+          </div>
+
+          <div class="love-item">
+            <h4>Golden Hour Photography</h4>
+            <p>That magical light just before sunset</p>
+          </div>
+
+          <div class="love-item">
+            <h4>React Hooks</h4>
+            <p>The moment functional components clicked</p>
+          </div>
+
+          <div class="love-item">
+            <h4>Street Photography</h4>
+            <p>Capturing unguarded moments in urban life</p>
+          </div>
+
+          <div class="love-item">
+            <h4>Open Source</h4>
+            <p>The collaborative spirit of building together</p>
+          </div>
+
+          <div class="love-item">
+            <h4>Film Photography</h4>
+            <p>The intentionality of shooting on film</p>
+          </div>
+
+          <div class="love-item">
+            <h4>VS Code</h4>
+            <p>My daily companion for crafting code</p>
+          </div>
+
+          <div class="love-item">
+            <h4>Coffee Shops</h4>
+            <p>Perfect for coding sessions and photo editing</p>
+          </div>
+
+          <div class="love-item">
+            <h4>Minimal Design</h4>
+            <p>Less is more, in both code and composition</p>
+          </div>
+
+          <div class="love-item">
+            <h4>Analog Cameras</h4>
+            <p>The satisfying click of a mechanical shutter</p>
+          </div>
+        </div>
+
+        <p class="loves-note">
+          There aren't yet 100 things on this list… I have many years to go and
+          many more amazing things left to discover.
+        </p>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>You've made it this far, so you should probably connect with me!</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">@yourusername</a>
+          <a href="mailto:your@email.com" class="footer-link">your@email.com</a>
+        </div>
+        <p class="footer-note">
+          Built with ❤️ using HTML, CSS, and a little bit of JavaScript. No 3D
+          libraries were harmed in the making of this website.
+        </p>
+      </footer>
     </div>
 
-    <script src="js/projects-data.js"></script>
-    <script src="js/scene-setup.js"></script>
-    <script src="js/interactions.js"></script>
-    <script src="js/animations.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
