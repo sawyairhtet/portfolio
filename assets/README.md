@@ -1,6 +1,6 @@
 # 🎨 Assets Folder
 
-This folder contains all the static assets for your Sky Castle Portfolio.
+This folder contains all the static assets for your clean portfolio website.
 
 ## 📁 Recommended Structure
 
@@ -48,17 +48,18 @@ assets/
 
 ### Colors That Match the Theme
 
-- **Primary**: Sky blues (#87CEEB, #98D8E8)
-- **Secondary**: Soft greens (#90EE90, #98FB98)
-- **Accent**: Warm pinks (#FFB6C1, #DDA0DD)
-- **Text**: Dark slate (#2F4F4F, #556B2F)
+- **Primary**: Professional blue (#0066cc, #004499)
+- **Text**: Dark gray (#1f2937, #374151)
+- **Background**: Clean white (#ffffff, #f8f9fa)
+- **Accent**: Subtle amber (#f59e0b, #d97706)
 
 ### Image Style
 
-- **Soft, rounded corners** when possible
-- **Gentle shadows** for depth
-- **Natural lighting** for photos
+- **Clean, minimal composition**
+- **Subtle shadows** for depth
+- **High contrast** and clarity
 - **Consistent aspect ratios**
+- **Professional lighting** for photos
 
 ## 📱 Responsive Considerations
 
@@ -115,16 +116,16 @@ assets/
 - **Animation frames** for complex interactions
 - **Icon sets** for consistent UI elements
 
-## 🎪 Magical Touches
+## 🎯 Design Principles
 
-Keep the Ghibli theme in mind:
+Keep the clean, professional aesthetic in mind:
 
-- **Soft, organic shapes**
-- **Natural color palettes**
-- **Gentle gradients**
-- **Hand-drawn elements** if you're artistic
-- **Whimsical details**
+- **Minimal composition** with plenty of white space
+- **Typography-focused** layouts
+- **Subtle interactions** and animations
+- **High-quality photography** that tells a story
+- **Consistent visual hierarchy**
 
 ---
 
-_Remember: Images should enhance your magical portfolio experience, not overwhelm it_ ✨
+_Remember: Images should enhance your professional story, not distract from it_ 📖

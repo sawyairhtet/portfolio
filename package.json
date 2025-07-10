@@ -1,7 +1,7 @@
 {
-  "name": "sky-castle-portfolio",
+  "name": "clean-portfolio-website",
   "version": "1.0.0",
-  "description": "A magical, Ghibli-inspired portfolio website featuring floating islands and Three.js 3D graphics",
+  "description": "A clean, modern, and responsive portfolio website built with vanilla HTML, CSS, and JavaScript",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
@@ -11,18 +11,19 @@
   },
   "keywords": [
     "portfolio",
-    "three.js",
-    "3d",
-    "ghibli",
-    "magical",
-    "interactive",
-    "floating-islands",
+    "clean-design",
+    "minimalist",
+    "responsive",
+    "vanilla-javascript",
     "web-portfolio",
+    "modern-css",
+    "typography",
+    "professional",
     "javascript",
     "css3",
     "html5"
   ],
-  "author": "Sky Castle Developer",
+  "author": "Portfolio Developer",
   "license": "MIT",
   "devDependencies": {
     "live-server": "^1.2.2",
@@ -31,11 +32,11 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/sky-castle-portfolio.git"
+    "url": "https://github.com/your-username/portfolio-website.git"
   },
-  "homepage": "https://your-username.github.io/sky-castle-portfolio",
+  "homepage": "https://your-username.github.io/portfolio-website",
   "bugs": {
-    "url": "https://github.com/your-username/sky-castle-portfolio/issues"
+    "url": "https://github.com/your-username/portfolio-website/issues"
   },
   "engines": {
     "node": ">=14.0.0"

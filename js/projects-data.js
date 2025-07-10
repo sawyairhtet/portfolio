@@ -268,7 +268,6 @@ const skills = {
     "Vue.js",
     "TypeScript",
     "Tailwind CSS",
-    "Three.js",
     "Framer Motion",
     "HTML5",
     "CSS3",
