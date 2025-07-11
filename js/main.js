@@ -106,21 +106,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Improved profile icon interaction for touch devices
-  const profileIcon = document.querySelector(".profile-icon");
-  if (profileIcon) {
+  // Improved profile picture interaction for touch devices
+  const profilePicture = document.querySelector(".profile-picture");
+  if (profilePicture) {
     if (isTouchDevice) {
-      profileIcon.addEventListener("touchstart", function () {
+      profilePicture.addEventListener("touchstart", function () {
         this.style.transform = "scale(0.95)";
       });
 
-      profileIcon.addEventListener("touchend", function () {
+      profilePicture.addEventListener("touchend", function () {
         setTimeout(() => {
           this.style.transform = "scale(1)";
         }, 150);
       });
     } else {
-      profileIcon.addEventListener("click", function () {
+      profilePicture.addEventListener("click", function () {
         this.style.transform = "scale(0.95)";
         setTimeout(() => {
           this.style.transform = "scale(1)";
