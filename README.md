@@ -1,80 +1,116 @@
-# 🎨 Personal Portfolio Website
+# 🎨 Saw Ye Htet - Developer • Photographer • Creator
 
-A clean, modern, and responsive portfolio website built with vanilla HTML, CSS, and JavaScript. Inspired by minimalist design principles, this portfolio emphasizes typography, storytelling, and user experience over flashy effects.
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live-brightgreen)](https://your-portfolio-url.com)
+[![GitHub](https://img.shields.io/badge/GitHub-sawyairhtet-blue)](https://github.com/sawyairhtet)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/)
 
-## ✨ Features
+A clean, modern, and responsive portfolio website showcasing the intersection of development and photography. Built with vanilla HTML, CSS, and JavaScript, this portfolio emphasizes minimalist design, storytelling, and exceptional user experience.
 
-### 🏠 Main Portfolio Page
+## 🌟 Live Demo
 
-- **Hero Section**: Clean introduction with smooth animations
-- **Projects Showcase**: Timeline-based project display with categories
-- **Skills Section**: Technology stack and expertise areas
-- **Personal Touch**: "Things I Love" section for personality
-- **Contact Form**: Functional contact form with validation
+🔗 **[View Live Portfolio](https://your-portfolio-url.com)**
 
-### 📖 About Page
+## 📸 Preview
 
-- **Personal Story**: "How I Got Here" narrative section
-- **Professional Overview**: "What I Do" detailed description
-- **Work Philosophy**: "How I Work" methodology
-- **Personal Side**: "Random Facts About Me" for relatability
-- **Current Setup**: Development environment and tools
+![Portfolio Preview](assets/screenshots/portfolio-preview.jpg)
 
-### 🖼️ Gallery Page
+_Clean, minimal design that lets the work speak for itself_
 
-- **Photo Categories**: Organized by Portraits, Street, Architecture, Nature
-- **Interactive Filters**: Category-based navigation
+## ✨ Features Overview
+
+### 🏠 Main Portfolio
+
+- **Hero Section**: Professional introduction with custom profile picture
+- **Projects Showcase**: Curated selection of development and photography work
+- **Interactive Timeline**: Career progression and milestones
+- **Personal Touch**: "100 Things I Love" for authentic personality
+- **Responsive Design**: Seamless experience across all devices
+
+### 👨‍💻 Developer Focus
+
+- **Technical Projects**: Full-stack applications, mobile apps, and APIs
+- **Code Samples**: Clean, documented examples of development work
+- **Technology Stack**: Comprehensive skills and expertise display
+- **GitHub Integration**: Direct links to repositories and live demos
+
+### 📷 Photography Portfolio
+
+- **Gallery Categories**: Portraits, Street, Architecture, Nature photography
+- **Interactive Filters**: Easy navigation between photo categories
 - **Lightbox Viewer**: Full-screen photo viewing experience
-- **Photo Metadata**: Camera settings and technical details
-- **Responsive Grid**: Adaptive layout for all screen sizes
+- **Technical Details**: Camera settings, equipment, and techniques
+- **Professional Metadata**: Complete EXIF information display
 
-### 📝 Blog Section
+### 📝 Content & Blog
 
-- **Technical Posts**: In-depth tutorials and insights
-- **Photography Content**: Visual storytelling and techniques
-- **Category Filtering**: Easy content discovery
-- **Newsletter Signup**: Visitor engagement
-- **Clean Typography**: Readable and accessible content
+- **Technical Writing**: Development tutorials and insights
+- **Photography Articles**: Visual storytelling and technique guides
+- **Newsletter Integration**: Visitor engagement and updates
+- **SEO Optimized**: Search engine friendly content structure
 
 ## 🛠️ Technology Stack
 
-- **HTML5**: Semantic structure and accessibility
-- **CSS3**: Modern styling with Flexbox/Grid, animations, and responsive design
-- **Vanilla JavaScript**: Clean, dependency-free interactions
-- **Inter Font**: Professional typography from Google Fonts
-- **Responsive Design**: Mobile-first approach
-- **Progressive Enhancement**: Works without JavaScript
+### Frontend
 
-## 📁 File Structure
+- **HTML5**: Semantic markup and accessibility
+- **CSS3**: Modern styling with Flexbox/Grid, custom properties, and animations
+- **Vanilla JavaScript**: Clean, dependency-free interactions
+- **Progressive Enhancement**: Works without JavaScript enabled
+
+### Design & UX
+
+- **Inter Font Family**: Professional typography from Google Fonts
+- **Mobile-First Design**: Responsive across all screen sizes
+- **Accessibility**: WCAG 2.1 AA compliant
+- **Performance**: Optimized for Core Web Vitals
+
+### Development Tools
+
+- **No Build Process**: Direct file editing for immediate changes
+- **Version Control**: Git workflow ready
+- **Modern Browser Support**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+
+## 📁 Project Structure
 
 ```
 portfolio/
 ├── index.html                    # Main portfolio page
 ├── pages/
-│   ├── about.html               # About page with personal story
-│   ├── blog.html                # Blog listing page
-│   └── gallery.html             # Photo gallery with categories
+│   ├── about.html               # Personal story and background
+│   ├── blog.html                # Blog listing and articles
+│   └── gallery.html             # Photography portfolio
 ├── blog/
 │   ├── react-performance-optimization.html
 │   └── urban-photography-techniques.html
 ├── css/
-│   └── main.css                 # Main styles and animations
+│   └── main.css                 # All styles and animations
 ├── js/
-│   ├── main.js                  # Core functionality and animations
-│   ├── projects-data.js         # Project data and content
+│   ├── main.js                  # Core functionality
+│   ├── projects-data.js         # Project and content data
 │   └── blog.js                  # Blog functionality
-├── assets/                      # Images and static assets
+├── assets/
+│   ├── profile-picture.jpg      # Main profile image
+│   ├── gallery/                 # Photography portfolio images
+│   ├── projects/                # Project screenshots
+│   ├── icons/                   # Favicons and PWA icons
+│   └── documents/               # Resume and other documents
 ├── package.json                 # Project configuration
 └── README.md                    # This documentation
 ```
 
 ## 🚀 Quick Start
 
-### Local Development
+### Prerequisites
+
+- Modern web browser
+- Code editor (VS Code recommended)
+- Optional: Node.js for development server
+
+### Installation
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/sawyairhtet/portfolio.git
 cd portfolio
 
 # Option 1: Use live-server for development
@@ -87,207 +123,149 @@ npx serve .
 # Simply open index.html in your preferred browser
 ```
 
-### No Build Process Required
+### Development Workflow
 
-This portfolio is built with vanilla technologies and requires no compilation or build steps. You can edit files directly and see changes immediately.
+```bash
+# Start development server
+npm run dev
 
-## 🎨 Design Philosophy
+# Build for production (optional)
+npm run build
 
-### Clean & Minimal
+# Deploy to GitHub Pages
+npm run deploy
+```
 
-- **Typography First**: Content and readability are paramount
-- **White Space**: Generous spacing for visual breathing room
-- **Subtle Interactions**: Gentle animations enhance without distracting
-- **Fast Loading**: Optimized for performance and accessibility
-
-### Personal Storytelling
-
-- **Authentic Voice**: Real personality shines through content
-- **Visual Hierarchy**: Clear information structure
-- **Progressive Disclosure**: Information revealed as needed
-- **Mobile Experience**: Designed for all devices
-
-### Professional Polish
-
-- **Consistent Branding**: Cohesive visual language throughout
-- **Accessibility**: WCAG compliance and screen reader friendly
-- **SEO Optimized**: Semantic HTML and meta tags
-- **Performance**: Fast loading and smooth interactions
-
-## 🛠️ Customization Guide
+## 🎨 Customization Guide
 
 ### 1. Personal Information
 
-Edit content in `js/projects-data.js`:
+**Update your details in multiple locations:**
+
+`index.html` - Header section:
+
+```html
+<h1 class="name">Your Name</h1>
+<p class="tagline">Your Professional Title</p>
+<p class="location">📍 Your City, Country</p>
+```
+
+`js/projects-data.js` - Data configuration:
 
 ```javascript
-// Update personal details
 const personalInfo = {
   name: "Your Name",
-  title: "Your Professional Title",
+  title: "Developer • Photographer • Creator",
   email: "your.email@example.com",
   location: "Your City, Country",
+  github: "https://github.com/yourusername",
+  linkedin: "https://linkedin.com/in/yourprofile",
 };
+```
 
-// Add your projects
+### 2. Profile Picture
+
+Replace `assets/profile-picture.jpg` with your photo:
+
+- **Recommended size**: 400x400px minimum
+- **Format**: JPG (optimized for web)
+- **Style**: Professional headshot with clean background
+
+### 3. Projects Portfolio
+
+Edit `js/projects-data.js`:
+
+```javascript
 const projects = [
   {
-    title: "Project Name",
-    description: "Brief project description",
-    tech: ["React", "Node.js", "MongoDB"],
-    github: "https://github.com/username/project",
-    demo: "https://project-demo.com",
-    category: "web",
-    year: 2024,
+    title: "Your Project Name",
+    description:
+      "Detailed project description highlighting key features and impact",
+    tech: ["React", "Node.js", "PostgreSQL", "AWS"],
+    links: [
+      { text: "Live Demo", url: "https://your-demo.com" },
+      { text: "GitHub", url: "https://github.com/yourusername/project" },
+      { text: "Case Study", url: "#" },
+    ],
+    image: "assets/projects/project-screenshot.jpg",
     featured: true,
   },
 ];
-
-// Customize "Things I Love"
-const thingsILove = [
-  "Coffee",
-  "Clean Code",
-  "Photography",
-  // Add your own interests
-];
 ```
 
-### 2. About Page Content
+### 4. Photography Gallery
 
-Update `pages/about.html` with your story:
+**Add your photos to `assets/gallery/`:**
+
+```
+assets/gallery/
+├── portraits/
+├── street/
+├── architecture/
+└── nature/
+```
+
+**Update `pages/gallery.html`:**
 
 ```html
-<!-- Personal narrative sections -->
-<section class="story-section">
-  <h2>How I Got Here</h2>
-  <p>Your unique journey into development/design...</p>
-</section>
+<img
+  src="../assets/gallery/portraits/your-photo.jpg"
+  alt="Photo Description"
+  class="photo-img"
+/>
 ```
 
-### 3. Gallery Photos
+### 5. About Page Content
 
-Add your photos to the `assets/` directory and update gallery data:
+Customize `pages/about.html` with your story:
 
-```javascript
-// In js/projects-data.js or create gallery-data.js
-const galleryPhotos = [
-  {
-    src: "assets/photo1.jpg",
-    alt: "Photo description",
-    category: "street",
-    camera: "Canon EOS R5",
-    lens: "24-70mm f/2.8",
-    settings: "1/125s, f/4, ISO 200",
-  },
-];
-```
+- Personal journey into development/photography
+- Professional experience and achievements
+- Current projects and interests
+- Technical setup and equipment
 
-### 4. Blog Posts
+### 6. Color Scheme & Branding
 
-Create new blog posts in the `blog/` directory following the existing structure:
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Your Post Title</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/pages.css" />
-  </head>
-  <body>
-    <!-- Follow existing blog post structure -->
-  </body>
-</html>
-```
-
-### 5. Styling Customization
-
-Update CSS variables in `css/main.css`:
+Update CSS custom properties in `css/main.css`:
 
 ```css
 :root {
-  --primary-color: #2563eb; /* Blue */
-  --text-color: #1f2937; /* Dark gray */
-  --background-color: #ffffff; /* White */
-  --accent-color: #f59e0b; /* Amber */
-
-  /* Update fonts */
-  --font-family: "Inter", sans-serif;
-  --font-mono: "Fira Code", monospace;
+  --primary-color: #2563eb;
+  --secondary-color: #64748b;
+  --accent-color: #f59e0b;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --background: #ffffff;
+  --surface: #f8fafc;
 }
 ```
 
-## 🎯 Key Features in Detail
+## 📱 Responsive Design
 
-### Smooth Animations
+### Breakpoints
 
-- **Intersection Observer**: Fade-in animations on scroll
-- **CSS Transitions**: Smooth hover effects and state changes
-- **Performance Optimized**: GPU-accelerated transforms
+- **Mobile**: 320px - 767px
+- **Tablet**: 768px - 1023px
+- **Desktop**: 1024px - 1439px
+- **Large Desktop**: 1440px+
 
-### Responsive Design
-
-- **Mobile First**: Designed for mobile, enhanced for desktop
-- **Flexible Grid**: CSS Grid and Flexbox for layouts
-- **Breakpoints**: Tablet and desktop optimizations
-
-### Contact Form
-
-- **Client-side Validation**: Real-time feedback
-- **Accessibility**: Proper labels and error handling
-- **Integration Ready**: Easy to connect to backend services
-
-### SEO & Performance
-
-- **Semantic HTML**: Proper heading hierarchy and structure
-- **Meta Tags**: Social media and search engine optimization
-- **Fast Loading**: Minimal dependencies and optimized assets
-- **Lighthouse Score**: Optimized for Core Web Vitals
-
-## 📱 Browser Support
-
-- **Chrome**: 90+
-- **Firefox**: 88+
-- **Safari**: 14+
-- **Edge**: 90+
-
-### Progressive Enhancement
-
-- Core functionality works without JavaScript
-- Enhanced experience with modern browser features
-- Graceful degradation for older browsers
-
-## 🚀 Deployment Options
-
-### Static Hosting (Recommended)
+### Testing
 
 ```bash
-# Netlify
-# Drag and drop the portfolio folder to Netlify
-
-# GitHub Pages
-# Push to GitHub and enable Pages in repository settings
-
-# Vercel
-npx vercel --prod
-
-# Firebase Hosting
-firebase deploy
+# Test responsive design
+# Chrome DevTools: Toggle device toolbar
+# Test on actual devices when possible
 ```
 
-### Traditional Hosting
+## 🎯 Performance Optimization
 
-Upload all files to your web server's public directory. No server-side requirements needed.
-
-## 📈 Performance Optimization
-
-### Implemented Optimizations
+### Current Optimizations
 
 - **Minimal Dependencies**: Only Google Fonts external dependency
-- **Efficient CSS**: Compiled and organized styles
-- **Image Optimization**: Properly sized and compressed images
-- **Lazy Loading**: Images load as needed
-- **Reduced JavaScript**: Clean, efficient code
+- **Optimized Images**: WebP format with fallbacks
+- **Lazy Loading**: Images load as user scrolls
+- **Efficient CSS**: Organized and minified styles
+- **JavaScript**: Clean, performance-focused code
 
 ### Lighthouse Scores Target
 
@@ -296,43 +274,315 @@ Upload all files to your web server's public directory. No server-side requireme
 - **Best Practices**: 100
 - **SEO**: 100
 
-## 🎨 Color Palette
+### Performance Tips
 
-```css
-/* Primary Colors */
---blue-600: #2563eb; /* Primary actions */
---gray-900: #111827; /* Main text */
---gray-600: #4b5563; /* Secondary text */
---gray-100: #f3f4f6; /* Light backgrounds */
+```bash
+# Optimize images before adding
+# Use WebP format for modern browsers
+# Compress files for production
+# Enable gzip on server
+```
 
-/* Accent Colors */
---amber-500: #f59e0b; /* Highlights */
---green-500: #10b981; /* Success states */
---red-500: #ef4444; /* Error states */
+## ♿ Accessibility Features
+
+- **Semantic HTML**: Proper heading hierarchy and landmarks
+- **Keyboard Navigation**: Full keyboard accessibility
+- **Screen Reader Support**: ARIA labels and descriptions
+- **Color Contrast**: WCAG AA compliant contrast ratios
+- **Focus Management**: Visible focus indicators
+- **Alternative Text**: Descriptive alt text for all images
+
+## 🔧 Browser Support
+
+| Browser | Version | Status           |
+| ------- | ------- | ---------------- |
+| Chrome  | 90+     | ✅ Full Support  |
+| Firefox | 88+     | ✅ Full Support  |
+| Safari  | 14+     | ✅ Full Support  |
+| Edge    | 90+     | ✅ Full Support  |
+| IE 11   | -       | ❌ Not Supported |
+
+### Progressive Enhancement
+
+- Core functionality works without JavaScript
+- Enhanced animations and interactions with JavaScript
+- Graceful degradation for older browsers
+
+## 🚀 Deployment Options
+
+### Static Hosting (Recommended)
+
+**Netlify:**
+
+```bash
+# Drag and drop the portfolio folder to Netlify
+# Or connect GitHub repository for automatic deployments
+```
+
+**Vercel:**
+
+```bash
+npx vercel --prod
+```
+
+**GitHub Pages:**
+
+```bash
+# Enable Pages in repository settings
+# Choose source: Deploy from a branch
+# Select main branch and / (root) folder
+```
+
+**Firebase Hosting:**
+
+```bash
+npm install -g firebase-tools
+firebase login
+firebase init hosting
+firebase deploy
+```
+
+### Custom Domain Setup
+
+1. Purchase domain from registrar
+2. Configure DNS settings
+3. Update hosting platform with custom domain
+4. Enable SSL certificate
+
+## 📊 Analytics & Monitoring
+
+### Google Analytics Setup
+
+Add to `<head>` section:
+
+```html
+<!-- Google Analytics -->
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "GA_MEASUREMENT_ID");
+</script>
+```
+
+### Contact Form Integration
+
+**Netlify Forms:**
+
+```html
+<form netlify>
+  <!-- Form fields -->
+</form>
+```
+
+**Formspree:**
+
+```html
+<form action="https://formspree.io/f/your-form-id" method="POST">
+  <!-- Form fields -->
+</form>
+```
+
+## 🔍 SEO Optimization
+
+### Meta Tags Setup
+
+```html
+<!-- Basic SEO -->
+<title>Saw Ye Htet - Developer • Photographer • Creator</title>
+<meta
+  name="description"
+  content="Portfolio of Saw Ye Htet, a developer and photographer who builds beautiful web applications and captures compelling moments."
+/>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Saw Ye Htet - Developer • Photographer" />
+<meta
+  property="og:description"
+  content="Portfolio showcasing development and photography work"
+/>
+<meta property="og:image" content="https://yoursite.com/assets/og-image.jpg" />
+<meta property="og:url" content="https://yoursite.com" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Saw Ye Htet Portfolio" />
+<meta
+  name="twitter:description"
+  content="Developer and photographer portfolio"
+/>
+<meta
+  name="twitter:image"
+  content="https://yoursite.com/assets/twitter-image.jpg"
+/>
+```
+
+### Schema Markup
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Saw Ye Htet",
+  "jobTitle": "Developer and Photographer",
+  "url": "https://yoursite.com",
+  "sameAs": [
+    "https://github.com/sawyairhtet",
+    "https://linkedin.com/in/saw-ye-htet-the-man-who-code"
+  ]
+}
+```
+
+## 📝 Content Guidelines
+
+### Writing Style
+
+- **Authentic Voice**: Personal and professional balance
+- **Clear Communication**: Avoid jargon, explain technical concepts
+- **Storytelling**: Connect projects to real-world impact
+- **Visual Hierarchy**: Use headings and formatting effectively
+
+### Photography Guidelines
+
+- **High Quality**: Sharp, well-composed images
+- **Consistent Style**: Cohesive visual aesthetic
+- **Proper Attribution**: Credit collaborators and models
+- **Technical Info**: Include camera settings and equipment details
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Images not loading:**
+
+```bash
+# Check file paths are correct
+# Ensure images are properly uploaded
+# Verify file formats (JPG, PNG, WebP)
+```
+
+**Contact form not working:**
+
+```bash
+# Verify form action URL
+# Check for JavaScript console errors
+# Test form submission manually
+```
+
+**Mobile display issues:**
+
+```bash
+# Test on actual devices
+# Use Chrome DevTools responsive mode
+# Check viewport meta tag
+```
+
+**Performance issues:**
+
+```bash
+# Optimize and compress images
+# Minimize HTTP requests
+# Enable browser caching
 ```
 
 ## 🤝 Contributing
 
-This portfolio template is open for customization. Feel free to:
+While this is a personal portfolio, contributions for improvements are welcome:
 
-1. Fork the repository
-2. Customize for your needs
-3. Share improvements back to the community
-4. Create issues for bugs or suggestions
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/improvement`)
+3. **Commit** your changes (`git commit -am 'Add improvement'`)
+4. **Push** to the branch (`git push origin feature/improvement`)
+5. **Create** a Pull Request
+
+### Development Guidelines
+
+- Follow existing code style and structure
+- Test across multiple browsers and devices
+- Ensure accessibility compliance
+- Optimize for performance
 
 ## 📄 License
 
-MIT License - feel free to use this template for your own portfolio.
+MIT License - You're free to use this template for your own portfolio.
 
-## 🙋‍♂️ Support
+```
+MIT License
+
+Copyright (c) 2024 Saw Ye Htet
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## 📞 Contact & Support
+
+### Get in Touch
+
+- **Email**: [your@email.com](mailto:your@email.com)
+- **GitHub**: [@sawyairhtet](https://github.com/sawyairhtet)
+- **LinkedIn**: [Saw Ye Htet](https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/)
+
+### Support This Project
 
 If you find this portfolio template helpful:
 
-- ⭐ Star the repository
-- 🐛 Report issues
-- 💡 Suggest improvements
-- 📧 Reach out with questions
+- ⭐ **Star** the repository
+- 🐛 **Report** issues and bugs
+- 💡 **Suggest** improvements and features
+- 📤 **Share** with other developers and photographers
+- ☕ **Buy me a coffee** if you're feeling generous
+
+### Hire Me
+
+Currently available for:
+
+- **Web Development**: Full-stack applications and websites
+- **Photography**: Portraits, events, and commercial work
+- **Consulting**: Technical guidance and creative direction
 
 ---
 
-**Built with ❤️ and clean code principles**
+## 🚀 Project Roadmap
+
+### Upcoming Features
+
+- [ ] **Dark Mode**: Toggle between light and dark themes
+- [ ] **Blog CMS**: Content management system integration
+- [ ] **Advanced Gallery**: Enhanced photo organization and search
+- [ ] **Client Portal**: Password-protected project galleries
+- [ ] **Analytics Dashboard**: Built-in visitor and engagement metrics
+
+### Version History
+
+- **v1.0.0** - Initial release with core portfolio features
+- **v1.1.0** - Added photography gallery and blog section
+- **v1.2.0** - Enhanced mobile responsiveness and performance
+- **v1.3.0** - Current version with improved accessibility and SEO
+
+---
+
+**Built with ❤️, clean code, and creative vision**
+
+_Last updated: January 2025_
