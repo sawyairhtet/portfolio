@@ -105,8 +105,24 @@ const portfolioConfig = {
       description: "Creating intuitive and accessible digital experiences",
     },
     {
-      title: "Continuous Learning",
-      description: "Embracing the journey of lifelong education in tech",
+      title: "JavaScript Frameworks",
+      description: "Exploring React, Vue, and other modern frameworks",
+    },
+    {
+      title: "API Development",
+      description: "Building robust backend services and RESTful APIs",
+    },
+    {
+      title: "Version Control",
+      description: "Git workflows and collaborative development practices",
+    },
+    {
+      title: "Cloud Computing",
+      description: "Learning AWS, Docker, and modern deployment strategies",
+    },
+    {
+      title: "System Design",
+      description: "Understanding how large-scale applications are architected",
     },
   ],
 
@@ -122,13 +138,13 @@ const portfolioConfig = {
         "Learn essential techniques for optimizing React applications for better performance and user experience.",
     },
     {
-      title: "Urban Photography Techniques",
+      title: "Building My First Full-Stack Application",
       date: "December 28, 2024",
-      readTime: "6 min read",
-      category: "Photography",
-      url: "blog/urban-photography-techniques.html",
+      readTime: "5 min read",
+      category: "Development",
+      url: "blog/building-first-fullstack-app.html",
       excerpt:
-        "Exploring creative techniques for capturing the essence of urban environments.",
+        "My journey learning full-stack development and the challenges I overcame as an IT student.",
     },
   ],
 };
