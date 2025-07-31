@@ -21,7 +21,7 @@
         <div class="profile">
           <h1 class="name">Blog</h1>
           <p class="tagline">
-            Thoughts on code, photography, and the creative process
+            Reflections on life, personal experiences, and thoughts
           </p>
         </div>
 
@@ -35,50 +35,66 @@
       <!-- Intro -->
       <section class="intro">
         <p class="intro-text">
-          I write about the intersection of technology and creativity. You'll
-          find posts about web development, photography techniques, and thoughts
-          on building things that matter. I believe the best ideas come from
-          combining different perspectives.
+          I share my personal journey through life experiences, thoughts, and
+          ideas . You'll find reflections on myself, my thoughts , and my
+          perspectives on them along the way. These are my own thoughts and
+          experiences so take what resonates with you.
         </p>
       </section>
 
       <!-- Filter Navigation -->
       <nav class="main-nav">
         <a href="#" class="nav-link active" data-filter="all">All Posts</a>
-        <a href="#" class="nav-link" data-filter="development">Development</a>
-        <a href="#" class="nav-link" data-filter="photography">Photography</a>
-        <a href="#" class="nav-link" data-filter="creative">Creative Process</a>
-        <a href="#" class="nav-link" data-filter="tools">Tools & Setup</a>
+        <a href="#" class="nav-link" data-filter="2025">2025</a>
       </nav>
+
+      <!-- Sort Controls -->
+      <div class="sort-controls">
+        <label for="sort-select">Sort by:</label>
+        <select id="sort-select" class="sort-dropdown">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="alpha-asc">A-Z</option>
+          <option value="alpha-desc">Z-A</option>
+        </select>
+      </div>
 
       <!-- Recent Posts -->
       <section class="section">
         <h2 class="section-title">Recent Posts</h2>
 
         <div class="posts-list">
-          <article class="post-item" data-category="photography">
+          <article
+            class="post-item"
+            data-category="thoughts"
+            data-year="2025"
+            data-date="2025-01-15"
+          >
             <div class="post-date">Jan 15, 2025</div>
             <h3 class="post-title">
-              <a href="../blog/urban-photography-techniques.html"
-                >Urban Photography: Capturing Life in Motion</a
-              >
+              <a href="#">The Art of Slowing Down in a Fast-Paced World</a>
             </h3>
             <p class="post-description">
-              Exploring techniques for capturing the energy and stories of urban
-              environments. From street photography to architectural details,
-              here's what I've learned about photographing city life.
+              Reflections on finding balance and mindfulness in our constantly
+              connected world. How taking intentional breaks and being present
+              has changed my perspective on productivity and happiness.
             </p>
             <div class="post-meta">
-              <span class="read-time">5 min read</span>
+              <span class="read-time">4 min read</span>
               <div class="post-tags">
-                <span class="post-tag">Photography</span>
-                <span class="post-tag">Urban</span>
-                <span class="post-tag">Street</span>
+                <span class="post-tag">Mindfulness</span>
+                <span class="post-tag">Balance</span>
+                <span class="post-tag">Reflection</span>
               </div>
             </div>
           </article>
 
-          <article class="post-item" data-category="development">
+          <article
+            class="post-item"
+            data-category="development"
+            data-year="2025"
+            data-date="2025-01-10"
+          >
             <div class="post-date">Jan 10, 2025</div>
             <h3 class="post-title">
               <a href="../blog/react-performance-optimization.html"
@@ -100,49 +116,63 @@
             </div>
           </article>
 
-          <article class="post-item" data-category="creative">
+          <article
+            class="post-item"
+            data-category="life"
+            data-year="2025"
+            data-date="2025-01-05"
+          >
             <div class="post-date">Jan 5, 2025</div>
             <h3 class="post-title">
-              <a href="#">Bridging Code and Photography: A Creative Journey</a>
+              <a href="#">Lessons from Moving Away from Home</a>
             </h3>
             <p class="post-description">
-              How technical thinking influences creative vision and vice versa.
-              The intersection of systematic problem-solving and artistic
-              expression has shaped how I approach both coding and photography.
+              The challenges and growth that come with independence. From
+              learning to cook to managing finances, here are the unexpected
+              lessons I've learned since starting life on my own and what it
+              taught me about myself.
             </p>
             <div class="post-meta">
               <span class="read-time">6 min read</span>
               <div class="post-tags">
-                <span class="post-tag">Creativity</span>
-                <span class="post-tag">Philosophy</span>
-                <span class="post-tag">Process</span>
+                <span class="post-tag">Independence</span>
+                <span class="post-tag">Growth</span>
+                <span class="post-tag">Life Lessons</span>
               </div>
             </div>
           </article>
 
-          <article class="post-item" data-category="tools">
+          <article
+            class="post-item"
+            data-category="growth"
+            data-year="2024"
+            data-date="2024-12-28"
+          >
             <div class="post-date">Dec 28, 2024</div>
             <h3 class="post-title">
-              <a href="#"
-                >My Developer-Photographer Setup: Best of Both Worlds</a
-              >
+              <a href="#">Embracing Failure as a Teacher</a>
             </h3>
             <p class="post-description">
-              A comprehensive look at my workstation setup optimized for both
-              development work and photo editing, including hardware, software,
-              and workflow recommendations.
+              How changing my relationship with failure transformed my approach
+              to learning and growth. The mindset shifts that helped me see
+              setbacks as stepping stones rather than roadblocks.
             </p>
             <div class="post-meta">
-              <span class="read-time">7 min read</span>
+              <span class="read-time">5 min read</span>
               <div class="post-tags">
-                <span class="post-tag">Setup</span>
-                <span class="post-tag">Workflow</span>
-                <span class="post-tag">Tools</span>
+                <span class="post-tag">Mindset</span>
+                <span class="post-tag">Learning</span>
+                <span class="post-tag">Resilience</span>
               </div>
             </div>
           </article>
 
-          <article class="post-item" data-category="development">
+          <article
+            class="post-item"
+            data-category="development"
+            data-year="2024"
+            data-date="2024-12-20"
+          >
             <div class="post-date">Dec 20, 2024</div>
             <h3 class="post-title">
               <a href="#">From 3D to Clean: Why I Redesigned My Portfolio</a>
@@ -162,44 +192,54 @@
             </div>
           </article>
 
-          <article class="post-item" data-category="photography">
+          <article
+            class="post-item"
+            data-category="thoughts"
+            data-year="2024"
+            data-date="2024-12-15"
+          >
             <div class="post-date">Dec 15, 2024</div>
             <h3 class="post-title">
-              <a href="#">Mastering Low Light Photography</a>
+              <a href="#">The Power of Small Daily Habits</a>
             </h3>
             <p class="post-description">
-              Techniques for capturing great photos when the light is
-              challenging. From understanding your camera's capabilities to
-              post-processing tips that bring out the best in your low-light
-              shots.
+              How tiny, consistent actions have created significant changes in
+              my life. From reading for 10 minutes a day to drinking more water,
+              here's what I've learned about building habits that actually
+              stick.
             </p>
             <div class="post-meta">
-              <span class="read-time">6 min read</span>
+              <span class="read-time">5 min read</span>
               <div class="post-tags">
-                <span class="post-tag">Photography</span>
-                <span class="post-tag">Low Light</span>
-                <span class="post-tag">Techniques</span>
+                <span class="post-tag">Habits</span>
+                <span class="post-tag">Self-Improvement</span>
+                <span class="post-tag">Consistency</span>
               </div>
             </div>
           </article>
 
-          <article class="post-item" data-category="development">
+          <article
+            class="post-item"
+            data-category="life"
+            data-year="2024"
+            data-date="2024-12-08"
+          >
             <div class="post-date">Dec 8, 2024</div>
             <h3 class="post-title">
-              <a href="#">Building APIs for Creative Applications</a>
+              <a href="#">Finding My Voice in a Noisy World</a>
             </h3>
             <p class="post-description">
-              Designing and building APIs that serve creative tools and
-              workflows. From image processing endpoints to handling large file
-              uploads, here's what I've learned building for creative
-              professionals.
+              Navigating social expectations while staying true to myself. The
+              journey of discovering what I actually believe in versus what I
+              thought I should believe, and why authenticity is harder but more
+              rewarding than conformity.
             </p>
             <div class="post-meta">
-              <span class="read-time">9 min read</span>
+              <span class="read-time">7 min read</span>
               <div class="post-tags">
-                <span class="post-tag">API Design</span>
-                <span class="post-tag">Backend</span>
-                <span class="post-tag">Creative Tools</span>
+                <span class="post-tag">Authenticity</span>
+                <span class="post-tag">Self-Discovery</span>
+                <span class="post-tag">Identity</span>
               </div>
             </div>
           </article>
@@ -211,8 +251,9 @@
         <h2 class="section-title">Stay Updated</h2>
         <div class="newsletter-signup">
           <p>
-            I write about once a month with new posts about development,
-            photography, and creative process. No spam, just thoughtful content.
+            I share personal reflections and life experiences about once a
+            month. Thoughtful content about growth, ideas, and the journey of
+            life. No spam, just authentic stories.
           </p>
           <form class="signup-form">
             <input
@@ -370,6 +411,38 @@
         margin: 0;
       }
 
+      /* Sort Controls */
+      .sort-controls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin: 20px 0;
+        padding: 15px 0;
+        border-top: 1px solid #e5e5e5;
+      }
+
+      .sort-controls label {
+        font-weight: 500;
+        color: #555;
+        font-size: 0.9rem;
+      }
+
+      .sort-dropdown {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: border-color 0.2s ease;
+      }
+
+      .sort-dropdown:focus {
+        outline: none;
+        border-color: #374151;
+      }
+
       /* Filter functionality */
       .nav-link[data-filter] {
         cursor: pointer;
@@ -403,33 +476,93 @@
         .newsletter-signup {
           padding: 30px 20px;
         }
+
+        .sort-controls {
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 8px;
+        }
+
+        .sort-dropdown {
+          width: 100%;
+          max-width: 200px;
+        }
       }
     </style>
 
     <script>
-      // Filter functionality
+      // Filter and Sort functionality
       const filterLinks = document.querySelectorAll("[data-filter]");
       const posts = document.querySelectorAll(".post-item");
+      const sortDropdown = document.getElementById("sort-select");
+      const postsContainer = document.querySelector(".posts-list");
 
+      let currentFilter = "all";
+      let currentSort = "date-desc";
+
+      function applyFiltersAndSort() {
+        // Filter posts
+        const visiblePosts = Array.from(posts).filter((post) => {
+          if (currentFilter === "all") return true;
+          return post.dataset.year === currentFilter;
+        });
+
+        // Hide all posts first
+        posts.forEach((post) => post.classList.add("hidden"));
+
+        // Sort visible posts
+        visiblePosts.sort((a, b) => {
+          switch (currentSort) {
+            case "date-desc":
+              return new Date(b.dataset.date) - new Date(a.dataset.date);
+            case "date-asc":
+              return new Date(a.dataset.date) - new Date(b.dataset.date);
+            case "alpha-asc":
+              const titleA = a
+                .querySelector(".post-title a")
+                .textContent.toLowerCase();
+              const titleB = b
+                .querySelector(".post-title a")
+                .textContent.toLowerCase();
+              return titleA.localeCompare(titleB);
+            case "alpha-desc":
+              const titleA2 = a
+                .querySelector(".post-title a")
+                .textContent.toLowerCase();
+              const titleB2 = b
+                .querySelector(".post-title a")
+                .textContent.toLowerCase();
+              return titleB2.localeCompare(titleA2);
+            default:
+              return 0;
+          }
+        });
+
+        // Re-append sorted posts to container
+        visiblePosts.forEach((post) => {
+          post.classList.remove("hidden");
+          postsContainer.appendChild(post);
+        });
+      }
+
+      // Year filter functionality
       filterLinks.forEach((link) => {
         link.addEventListener("click", function (e) {
           e.preventDefault();
-
-          const filter = this.dataset.filter;
+          currentFilter = this.dataset.filter;
 
           // Update active link
           filterLinks.forEach((l) => l.classList.remove("active"));
           this.classList.add("active");
 
-          // Filter posts
-          posts.forEach((post) => {
-            if (filter === "all" || post.dataset.category === filter) {
-              post.classList.remove("hidden");
-            } else {
-              post.classList.add("hidden");
-            }
-          });
+          applyFiltersAndSort();
         });
+      });
+
+      // Sort functionality
+      sortDropdown.addEventListener("change", function () {
+        currentSort = this.value;
+        applyFiltersAndSort();
       });
 
       // Newsletter signup
