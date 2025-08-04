@@ -21,7 +21,7 @@
         <div class="profile">
           <h1 class="name">Blog</h1>
           <p class="tagline">
-            Reflections on life, personal experiences, and thoughts
+            Reflections on life experiences, career, and thoughts.
           </p>
         </div>
 
@@ -35,214 +35,24 @@
       <!-- Intro -->
       <section class="intro">
         <p class="intro-text">
-          I share my personal journey through life experiences, thoughts, and
-          ideas . You'll find reflections on myself, my thoughts , and my
-          perspectives on them along the way. These are my own thoughts and
-          experiences so take what resonates with you.
+          I will share my personal journey through life experiences, thoughts,
+          and ideas . You'll find some interesting reflections about myself, and
+          my different perspectives. These are my own thoughts and experiences
+          so I suggest to take what resonates with you.
         </p>
       </section>
 
-      <!-- Filter Navigation -->
-      <nav class="main-nav">
-        <a href="#" class="nav-link active" data-filter="all">All Posts</a>
-        <a href="#" class="nav-link" data-filter="2025">2025</a>
-      </nav>
-
-      <!-- Sort Controls -->
-      <div class="sort-controls">
-        <label for="sort-select">Sort by:</label>
-        <select id="sort-select" class="sort-dropdown">
-          <option value="date-desc">Newest First</option>
-          <option value="date-asc">Oldest First</option>
-          <option value="alpha-asc">A-Z</option>
-          <option value="alpha-desc">Z-A</option>
-        </select>
-      </div>
-
-      <!-- Recent Posts -->
+      <!-- Empty State -->
       <section class="section">
-        <h2 class="section-title">Recent Posts</h2>
-
-        <div class="posts-list">
-          <article
-            class="post-item"
-            data-category="thoughts"
-            data-year="2025"
-            data-date="2025-01-15"
-          >
-            <div class="post-date">Jan 15, 2025</div>
-            <h3 class="post-title">
-              <a href="#">The Art of Slowing Down in a Fast-Paced World</a>
-            </h3>
-            <p class="post-description">
-              Reflections on finding balance and mindfulness in our constantly
-              connected world. How taking intentional breaks and being present
-              has changed my perspective on productivity and happiness.
+        <div class="empty-state">
+          <div class="empty-state-content">
+            <h2 class="empty-state-title">No Posts Yet</h2>
+            <p class="empty-state-description">
+              I haven't published any blog posts yet, but I'm working on some
+              interesting content! See you soon.
             </p>
-            <div class="post-meta">
-              <span class="read-time">4 min read</span>
-              <div class="post-tags">
-                <span class="post-tag">Mindfulness</span>
-                <span class="post-tag">Balance</span>
-                <span class="post-tag">Reflection</span>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="post-item"
-            data-category="development"
-            data-year="2025"
-            data-date="2025-01-10"
-          >
-            <div class="post-date">Jan 10, 2025</div>
-            <h3 class="post-title">
-              <a href="../blog/react-performance-optimization.html"
-                >React Performance Optimization: A Deep Dive</a
-              >
-            </h3>
-            <p class="post-description">
-              Advanced techniques for optimizing React applications, including
-              memoization, lazy loading, and bundle optimization strategies.
-              Performance optimization is both an art and a science.
-            </p>
-            <div class="post-meta">
-              <span class="read-time">8 min read</span>
-              <div class="post-tags">
-                <span class="post-tag">React</span>
-                <span class="post-tag">Performance</span>
-                <span class="post-tag">JavaScript</span>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="post-item"
-            data-category="life"
-            data-year="2025"
-            data-date="2025-01-05"
-          >
-            <div class="post-date">Jan 5, 2025</div>
-            <h3 class="post-title">
-              <a href="#">Lessons from Moving Away from Home</a>
-            </h3>
-            <p class="post-description">
-              The challenges and growth that come with independence. From
-              learning to cook to managing finances, here are the unexpected
-              lessons I've learned since starting life on my own and what it
-              taught me about myself.
-            </p>
-            <div class="post-meta">
-              <span class="read-time">6 min read</span>
-              <div class="post-tags">
-                <span class="post-tag">Independence</span>
-                <span class="post-tag">Growth</span>
-                <span class="post-tag">Life Lessons</span>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="post-item"
-            data-category="growth"
-            data-year="2024"
-            data-date="2024-12-28"
-          >
-            <div class="post-date">Dec 28, 2024</div>
-            <h3 class="post-title">
-              <a href="#">Embracing Failure as a Teacher</a>
-            </h3>
-            <p class="post-description">
-              How changing my relationship with failure transformed my approach
-              to learning and growth. The mindset shifts that helped me see
-              setbacks as stepping stones rather than roadblocks.
-            </p>
-            <div class="post-meta">
-              <span class="read-time">5 min read</span>
-              <div class="post-tags">
-                <span class="post-tag">Mindset</span>
-                <span class="post-tag">Learning</span>
-                <span class="post-tag">Resilience</span>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="post-item"
-            data-category="development"
-            data-year="2024"
-            data-date="2024-12-20"
-          >
-            <div class="post-date">Dec 20, 2024</div>
-            <h3 class="post-title">
-              <a href="#">From 3D to Clean: Why I Redesigned My Portfolio</a>
-            </h3>
-            <p class="post-description">
-              Behind the scenes of creating and then simplifying this portfolio.
-              Technical challenges, design decisions, and lessons learned about
-              the power of restraint in web design.
-            </p>
-            <div class="post-meta">
-              <span class="read-time">10 min read</span>
-              <div class="post-tags">
-                <span class="post-tag">Design</span>
-                <span class="post-tag">Portfolio</span>
-                <span class="post-tag">Web Development</span>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="post-item"
-            data-category="thoughts"
-            data-year="2024"
-            data-date="2024-12-15"
-          >
-            <div class="post-date">Dec 15, 2024</div>
-            <h3 class="post-title">
-              <a href="#">The Power of Small Daily Habits</a>
-            </h3>
-            <p class="post-description">
-              How tiny, consistent actions have created significant changes in
-              my life. From reading for 10 minutes a day to drinking more water,
-              here's what I've learned about building habits that actually
-              stick.
-            </p>
-            <div class="post-meta">
-              <span class="read-time">5 min read</span>
-              <div class="post-tags">
-                <span class="post-tag">Habits</span>
-                <span class="post-tag">Self-Improvement</span>
-                <span class="post-tag">Consistency</span>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="post-item"
-            data-category="life"
-            data-year="2024"
-            data-date="2024-12-08"
-          >
-            <div class="post-date">Dec 8, 2024</div>
-            <h3 class="post-title">
-              <a href="#">Finding My Voice in a Noisy World</a>
-            </h3>
-            <p class="post-description">
-              Navigating social expectations while staying true to myself. The
-              journey of discovering what I actually believe in versus what I
-              thought I should believe, and why authenticity is harder but more
-              rewarding than conformity.
-            </p>
-            <div class="post-meta">
-              <span class="read-time">7 min read</span>
-              <div class="post-tags">
-                <span class="post-tag">Authenticity</span>
-                <span class="post-tag">Self-Discovery</span>
-                <span class="post-tag">Identity</span>
-              </div>
-            </div>
-          </article>
+            <div class="empty-state-icon">📝</div>
+          </div>
         </div>
       </section>
 
@@ -251,9 +61,9 @@
         <h2 class="section-title">Stay Updated</h2>
         <div class="newsletter-signup">
           <p>
-            I share personal reflections and life experiences about once a
-            month. Thoughtful content about growth, ideas, and the journey of
-            life. No spam, just authentic stories.
+            I share personal reflections and thoughtful content about growth,
+            ideas, and the journey of life about once a month. No spam, just
+            authentic stories.
           </p>
           <form class="signup-form">
             <input
@@ -285,72 +95,34 @@
         gap: 50px;
       }
 
-      .post-item {
-        padding-bottom: 40px;
-        border-bottom: 1px solid #e5e5e5;
+      /* Empty State */
+      .empty-state {
+        text-align: center;
+        padding: 80px 20px;
       }
 
-      .post-item:last-child {
-        border-bottom: none;
+      .empty-state-content {
+        max-width: 500px;
+        margin: 0 auto;
       }
 
-      .post-date {
-        font-size: 0.9rem;
-        color: #888;
-        margin-bottom: 8px;
-        font-weight: 500;
-      }
-
-      .post-title {
-        font-size: 1.5rem;
+      .empty-state-title {
+        font-size: 2rem;
         font-weight: 600;
-        margin-bottom: 12px;
-        line-height: 1.3;
-      }
-
-      .post-title a {
-        color: #111;
-        text-decoration: none;
-        transition: color 0.2s ease;
-      }
-
-      .post-title a:hover {
         color: #374151;
+        margin-bottom: 16px;
       }
 
-      .post-description {
-        color: #555;
+      .empty-state-description {
+        font-size: 1.1rem;
+        color: #6b7280;
         line-height: 1.6;
-        margin-bottom: 20px;
-        font-size: 1rem;
+        margin-bottom: 24px;
       }
 
-      .post-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-
-      .read-time {
-        color: #888;
-        font-size: 0.9rem;
-      }
-
-      .post-tags {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-
-      .post-tag {
-        background-color: #f0f0f0;
-        color: #666;
-        padding: 4px 10px;
-        border-radius: 12px;
-        font-size: 0.8rem;
-        font-weight: 500;
+      .empty-state-icon {
+        font-size: 3rem;
+        opacity: 0.7;
       }
 
       /* Newsletter signup */
@@ -411,59 +183,8 @@
         margin: 0;
       }
 
-      /* Sort Controls */
-      .sort-controls {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 10px;
-        margin: 20px 0;
-        padding: 15px 0;
-        border-top: 1px solid #e5e5e5;
-      }
-
-      .sort-controls label {
-        font-weight: 500;
-        color: #555;
-        font-size: 0.9rem;
-      }
-
-      .sort-dropdown {
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        background-color: white;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: border-color 0.2s ease;
-      }
-
-      .sort-dropdown:focus {
-        outline: none;
-        border-color: #374151;
-      }
-
-      /* Filter functionality */
-      .nav-link[data-filter] {
-        cursor: pointer;
-      }
-
-      .post-item {
-        transition: opacity 0.3s ease;
-      }
-
-      .post-item.hidden {
-        display: none;
-      }
-
       /* Responsive design */
       @media (max-width: 768px) {
-        .post-meta {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-        }
-
         .signup-form {
           flex-direction: column;
           max-width: 300px;
@@ -477,94 +198,21 @@
           padding: 30px 20px;
         }
 
-        .sort-controls {
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 8px;
+        .empty-state {
+          padding: 60px 20px;
         }
 
-        .sort-dropdown {
-          width: 100%;
-          max-width: 200px;
+        .empty-state-title {
+          font-size: 1.8rem;
+        }
+
+        .empty-state-description {
+          font-size: 1rem;
         }
       }
     </style>
 
     <script>
-      // Filter and Sort functionality
-      const filterLinks = document.querySelectorAll("[data-filter]");
-      const posts = document.querySelectorAll(".post-item");
-      const sortDropdown = document.getElementById("sort-select");
-      const postsContainer = document.querySelector(".posts-list");
-
-      let currentFilter = "all";
-      let currentSort = "date-desc";
-
-      function applyFiltersAndSort() {
-        // Filter posts
-        const visiblePosts = Array.from(posts).filter((post) => {
-          if (currentFilter === "all") return true;
-          return post.dataset.year === currentFilter;
-        });
-
-        // Hide all posts first
-        posts.forEach((post) => post.classList.add("hidden"));
-
-        // Sort visible posts
-        visiblePosts.sort((a, b) => {
-          switch (currentSort) {
-            case "date-desc":
-              return new Date(b.dataset.date) - new Date(a.dataset.date);
-            case "date-asc":
-              return new Date(a.dataset.date) - new Date(b.dataset.date);
-            case "alpha-asc":
-              const titleA = a
-                .querySelector(".post-title a")
-                .textContent.toLowerCase();
-              const titleB = b
-                .querySelector(".post-title a")
-                .textContent.toLowerCase();
-              return titleA.localeCompare(titleB);
-            case "alpha-desc":
-              const titleA2 = a
-                .querySelector(".post-title a")
-                .textContent.toLowerCase();
-              const titleB2 = b
-                .querySelector(".post-title a")
-                .textContent.toLowerCase();
-              return titleB2.localeCompare(titleA2);
-            default:
-              return 0;
-          }
-        });
-
-        // Re-append sorted posts to container
-        visiblePosts.forEach((post) => {
-          post.classList.remove("hidden");
-          postsContainer.appendChild(post);
-        });
-      }
-
-      // Year filter functionality
-      filterLinks.forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          currentFilter = this.dataset.filter;
-
-          // Update active link
-          filterLinks.forEach((l) => l.classList.remove("active"));
-          this.classList.add("active");
-
-          applyFiltersAndSort();
-        });
-      });
-
-      // Sort functionality
-      sortDropdown.addEventListener("change", function () {
-        currentSort = this.value;
-        applyFiltersAndSort();
-      });
-
       // Newsletter signup
       const signupForm = document.querySelector(".signup-form");
       if (signupForm) {
@@ -605,7 +253,7 @@
         }, observerOptions);
 
         document
-          .querySelectorAll(".section, .intro, .post-item")
+          .querySelectorAll(".section, .intro, .empty-state")
           .forEach((element) => {
             element.style.opacity = "0";
             element.style.transform = "translateY(20px)";
