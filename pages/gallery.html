@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gallery - Developer • Photographer • Creator</title>
+    <title>Photography Gallery - Capturing Life's Beautiful Moments</title>
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
@@ -23,24 +23,32 @@
 
       .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 40px;
-        margin-top: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+        align-items: start;
       }
 
       .photo-item {
         break-inside: avoid;
-        margin-bottom: 40px;
+        transition: all 0.2s ease;
+      }
+
+      .photo-item:hover {
+        transform: translateY(-3px);
       }
 
       .photo-container {
         position: relative;
         overflow: hidden;
         border-radius: 8px;
-        transition: transform 0.2s ease;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        background: #fff;
       }
 
       .photo-container:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
         transform: translateY(-2px);
       }
 
@@ -48,11 +56,23 @@
         width: 100%;
         height: auto;
         display: block;
-        border-radius: 8px;
+        border-radius: 8px 8px 0 0;
+        transition: transform 0.2s ease;
+        cursor: pointer;
+      }
+
+      .photo-img:hover {
+        transform: scale(1.02);
       }
 
       .photo-info {
-        margin-top: 15px;
+        padding: 15px;
+        background: #fff;
+        border-radius: 0 0 8px 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 70px;
       }
 
       .photo-title {
@@ -60,13 +80,14 @@
         font-weight: 600;
         color: #111;
         margin-bottom: 8px;
+        letter-spacing: -0.01em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .photo-description {
-        color: #666;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        margin-bottom: 10px;
+        display: none;
       }
 
       .camera-settings {
@@ -75,13 +96,22 @@
         font-size: 0.85rem;
         color: #888;
         font-family: "JetBrains Mono", monospace;
+        padding: 10px 0 0 0;
+        border-top: 1px solid #f0f0f0;
+        margin-top: 10px;
       }
 
       .filter-nav {
         display: flex;
         flex-wrap: wrap;
-        gap: 30px;
-        margin-bottom: 50px;
+        gap: 40px;
+        margin-bottom: 60px;
+        justify-content: center;
+        padding: 30px 0;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(59, 130, 246, 0.1);
       }
 
       .filter-btn {
@@ -91,10 +121,16 @@
         font-weight: 500;
         font-size: 1.1rem;
         cursor: pointer;
-        transition: all 0.2s ease;
-        padding: 8px 0;
+        transition: all 0.3s ease;
+        padding: 12px 20px;
         position: relative;
         text-decoration: none;
+        border-radius: 8px;
+      }
+
+      .filter-btn:hover {
+        background: rgba(59, 130, 246, 0.05);
+        transform: translateY(-2px);
       }
 
       .filter-btn::after {
@@ -119,21 +155,7 @@
       }
 
       .photo-category {
-        margin-bottom: 60px;
-      }
-
-      .category-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #111;
-        margin-bottom: 20px;
-      }
-
-      .category-description {
-        color: #666;
-        line-height: 1.6;
-        margin-bottom: 30px;
-        max-width: 600px;
+        margin-bottom: 40px;
       }
 
       /* Lightbox styles */
@@ -142,12 +164,14 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
         z-index: 1000;
         justify-content: center;
         align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
       }
 
       .lightbox.active {
@@ -155,53 +179,148 @@
       }
 
       .lightbox-content {
-        max-width: 90%;
-        max-height: 90%;
         position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .lightbox-img {
-        max-width: 100%;
-        max-height: 100%;
+        max-width: 95vw;
+        max-height: 95vh;
+        width: auto;
+        height: auto;
         object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
       }
 
       .lightbox-close {
-        position: absolute;
-        top: -40px;
-        right: 0;
+        position: fixed;
+        top: 20px;
+        right: 30px;
         color: white;
-        font-size: 24px;
+        font-size: 32px;
         cursor: pointer;
-        background: none;
+        background: rgba(0, 0, 0, 0.5);
         border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background 0.2s ease;
+        z-index: 1001;
+      }
+
+      .lightbox-close:hover {
+        background: rgba(0, 0, 0, 0.8);
       }
 
       @media (max-width: 768px) {
         .gallery-container {
-          padding: 30px 16px;
+          padding: 20px 15px;
         }
 
         .gallery-grid {
-          grid-template-columns: 1fr;
-          gap: 30px;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+        }
+
+        .photo-info {
+          padding: 12px;
+          min-height: 65px;
         }
 
         .filter-nav {
-          gap: 20px;
+          gap: 15px;
+          margin-bottom: 30px;
+          padding: 15px 10px;
+          flex-direction: row;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .filter-btn {
+          padding: 8px 12px;
+          font-size: 0.95rem;
+        }
+
+        .photo-category {
+          padding: 20px 10px;
           margin-bottom: 40px;
         }
 
-        .camera-settings {
-          flex-direction: column;
-          gap: 5px;
+        .category-title {
+          font-size: 1.6rem;
+        }
+
+        .category-description {
+          font-size: 1rem;
+        }
+
+        .lightbox-close {
+          top: 15px;
+          right: 15px;
+          width: 40px;
+          height: 40px;
+          font-size: 24px;
         }
       }
 
       @media (max-width: 480px) {
-        .filter-nav {
+        .gallery-grid {
+          grid-template-columns: 1fr;
           gap: 15px;
+        }
+
+        .photo-info {
+          padding: 10px;
+          min-height: 60px;
+        }
+
+        .filter-nav {
+          gap: 10px;
+          padding: 10px 5px;
+          flex-direction: column;
+        }
+
+        .filter-btn {
+          padding: 6px 10px;
+          font-size: 0.9rem;
+        }
+
+        .photo-category {
+          padding: 15px 5px;
           margin-bottom: 30px;
+        }
+
+        .category-title {
+          font-size: 1.4rem;
+        }
+
+        .photo-title {
+          font-size: 1rem;
+        }
+
+        .photo-description {
+          font-size: 0.85rem;
+        }
+
+        .lightbox-img {
+          max-width: 90vw;
+          max-height: 90vh;
+        }
+
+        .lightbox-close {
+          top: 10px;
+          right: 10px;
+          width: 35px;
+          height: 35px;
+          font-size: 20px;
         }
       }
     </style>
@@ -211,10 +330,8 @@
       <!-- Header -->
       <header class="header">
         <div class="profile">
-          <h1 class="name">Projects Gallery</h1>
-          <p class="tagline">
-            Showcasing my development journey and tech projects
-          </p>
+          <h1 class="name">Little Album</h1>
+          <p class="tagline">Some of the visuals I took during my story</p>
         </div>
 
         <nav class="social-links">
@@ -227,252 +344,163 @@
       <!-- Intro -->
       <section class="intro">
         <p class="intro-text">
-          A collection of projects that showcase my growth as an IT student and
-          developer. Each project represents a learning milestone, from simple
-          websites to complex applications, demonstrating my journey in
-          mastering modern web technologies.
+          I rarely used to take photos, mainly because I wasn't professional at
+          that and most of my old photos also proved that correct. But one time
+          I found the photo album that my mom kept where all my childhood
+          memories are attached and most of them I barely remember. Smart phones
+          and cameras are no where to be found at that time but my parents did
+          their best to make sure I had a core memory. I really thankful to them
+          for that and it is my privilege to do the same in my turn.
         </p>
       </section>
 
-      <!-- Filter Navigation -->
+      <!-- Year Navigation -->
       <nav class="filter-nav">
-        <button class="filter-btn active" data-filter="all">All Photos</button>
-        <button class="filter-btn" data-filter="portraits">Portraits</button>
-        <button class="filter-btn" data-filter="street">Street</button>
-        <button class="filter-btn" data-filter="architecture">
-          Architecture
-        </button>
-        <button class="filter-btn" data-filter="nature">Nature</button>
+        <button class="filter-btn active" data-filter="all">All Years</button>
+        <button class="filter-btn" data-filter="2025">2025</button>
+        <button class="filter-btn" data-filter="2024">2024</button>
+        <button class="filter-btn" data-filter="2023">2023</button>
       </nav>
 
-      <!-- Portrait Photography -->
-      <section class="photo-category" data-category="portraits">
-        <h2 class="category-title">Portrait Studies</h2>
-        <p class="category-description">
-          Professional and personal portraits that aim to capture authentic
-          moments and genuine expressions. Shot with natural light and a focus
-          on storytelling through careful composition.
-        </p>
-
+      <!-- Photo Album -->
+      <section class="photo-category" data-category="2025">
         <div class="gallery-grid">
-          <div class="photo-item" data-category="portraits">
+          <div class="photo-item" data-year="2025">
             <div class="photo-container">
               <img
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&h=1000&fit=crop"
-                alt="Portrait Study"
+                src="../assets/gallery/SG60 pre celebration.jpg"
+                alt="SG60 Pre-Celebration"
                 class="photo-img"
                 loading="lazy"
               />
             </div>
             <div class="photo-info">
-              <h3 class="photo-title">Portrait Study #1</h3>
-              <p class="photo-description">
-                Natural light portrait focusing on authentic expression and
-                careful composition.
-              </p>
-              <div class="camera-settings">
-                <span>f/2.8</span>
-                <span>1/160s</span>
-                <span>ISO 400</span>
-                <span>56mm</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="photo-item" data-category="portraits">
-            <div class="photo-container">
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop"
-                alt="Professional Headshot"
-                class="photo-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="photo-info">
-              <h3 class="photo-title">Professional Headshot</h3>
-              <p class="photo-description">
-                Clean corporate portrait with modern lighting setup.
-              </p>
-              <div class="camera-settings">
-                <span>f/4.0</span>
-                <span>1/125s</span>
-                <span>ISO 200</span>
-                <span>85mm</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Street Photography -->
-      <section class="photo-category" data-category="street">
-        <h2 class="category-title">Street Photography</h2>
-        <p class="category-description">
-          Candid moments captured in urban environments, exploring the
-          relationship between people and the spaces they inhabit. Each frame
-          tells a story about modern life and human connection.
-        </p>
-
-        <div class="gallery-grid">
-          <div class="photo-item" data-category="street">
-            <div class="photo-container">
-              <img
-                src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop"
-                alt="City Life"
-                class="photo-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="photo-info">
-              <h3 class="photo-title">City Rhythms</h3>
-              <p class="photo-description">
-                The beautiful chaos of urban life captured in a single frame.
-              </p>
+              <h3 class="photo-title">SG60 Pre-Celebration</h3>
               <div class="camera-settings">
                 <span>f/5.6</span>
-                <span>1/500s</span>
+                <span>1/30s</span>
                 <span>ISO 800</span>
-                <span>35mm</span>
+                <span>46mm</span>
               </div>
             </div>
           </div>
 
-          <div class="photo-item" data-category="street">
+          <div class="photo-item" data-year="2025">
             <div class="photo-container">
               <img
-                src="https://images.unsplash.com/photo-1481277542470-605612bd2d61?w=800&h=600&fit=crop"
-                alt="Urban Moment"
+                src="../assets/gallery/SG60 pre celebration fireworks.jpg"
+                alt="SG60 Celebration Fireworks"
                 class="photo-img"
                 loading="lazy"
               />
             </div>
             <div class="photo-info">
-              <h3 class="photo-title">Crossing Paths</h3>
-              <p class="photo-description">
-                A quiet moment of solitude in the midst of urban energy.
-              </p>
+              <h3 class="photo-title">SG60 Celebration Fireworks</h3>
               <div class="camera-settings">
-                <span>f/8.0</span>
-                <span>1/250s</span>
+                <span>f/1.78</span>
+                <span>1/33s</span>
+                <span>ISO 640</span>
+                <span>38mm</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="photo-item" data-year="2025">
+            <div class="photo-container">
+              <img
+                src="../assets/gallery/Singapore Polytechnic.jpg"
+                alt="Singapore Polytechnic Campus"
+                class="photo-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="photo-info">
+              <h3 class="photo-title">Singapore Polytechnic</h3>
+              <div class="camera-settings">
+                <span>f/1.78</span>
+                <span>1/5814s</span>
+                <span>ISO 80</span>
+                <span>45mm</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="photo-item" data-year="2025">
+            <div class="photo-container">
+              <img
+                src="../assets/gallery/Singapore Poly Football field & lamp.jpg"
+                alt="Singapore Polytechnic Football Field"
+                class="photo-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="photo-info">
+              <h3 class="photo-title">Campus Football Field</h3>
+              <div class="camera-settings">
+                <span>f/1.78</span>
+                <span>1/25s</span>
                 <span>ISO 400</span>
-                <span>35mm</span>
+                <span>51mm</span>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- Architecture -->
-      <section class="photo-category" data-category="architecture">
-        <h2 class="category-title">Architecture & Design</h2>
-        <p class="category-description">
-          Exploring the geometry and patterns in modern architecture. These
-          images focus on the intersection of form and function, capturing how
-          design shapes our daily experiences.
-        </p>
-
-        <div class="gallery-grid">
-          <div class="photo-item" data-category="architecture">
+          <div class="photo-item" data-year="2025">
             <div class="photo-container">
               <img
-                src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=1000&fit=crop"
-                alt="Modern Architecture"
+                src="../assets/gallery/Siloso beach.jpg"
+                alt="Siloso Beach"
                 class="photo-img"
                 loading="lazy"
               />
             </div>
             <div class="photo-info">
-              <h3 class="photo-title">Lines and Light</h3>
-              <p class="photo-description">
-                Modern architecture creating patterns of light and shadow.
-              </p>
+              <h3 class="photo-title">Siloso Beach</h3>
               <div class="camera-settings">
-                <span>f/11</span>
-                <span>1/125s</span>
-                <span>ISO 100</span>
+                <span>f/1.78</span>
+                <span>1/10417s</span>
+                <span>ISO 80</span>
                 <span>24mm</span>
               </div>
             </div>
           </div>
 
-          <div class="photo-item" data-category="architecture">
+          <div class="photo-item" data-year="2025">
             <div class="photo-container">
               <img
-                src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800&h=600&fit=crop"
-                alt="Geometric Patterns"
+                src="../assets/gallery/path on the hill to my job.jpg"
+                alt="Path on the Hill"
                 class="photo-img"
                 loading="lazy"
               />
             </div>
             <div class="photo-info">
-              <h3 class="photo-title">Geometric Poetry</h3>
-              <p class="photo-description">
-                Finding beauty in the precise geometry of contemporary design.
-              </p>
+              <h3 class="photo-title">Path to Work</h3>
               <div class="camera-settings">
-                <span>f/8.0</span>
-                <span>1/200s</span>
-                <span>ISO 200</span>
-                <span>50mm</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Nature -->
-      <section class="photo-category" data-category="nature">
-        <h2 class="category-title">Nature & Landscapes</h2>
-        <p class="category-description">
-          Moments of tranquility away from screens and code. These images
-          capture the natural world that provides balance and inspiration for
-          creative work.
-        </p>
-
-        <div class="gallery-grid">
-          <div class="photo-item" data-category="nature">
-            <div class="photo-container">
-              <img
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop"
-                alt="Mountain Sunset"
-                class="photo-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="photo-info">
-              <h3 class="photo-title">Digital Detox</h3>
-              <p class="photo-description">
-                Finding perspective in the mountains, away from screens and
-                notifications.
-              </p>
-              <div class="camera-settings">
-                <span>f/8.0</span>
-                <span>1/250s</span>
-                <span>ISO 200</span>
-                <span>35mm</span>
+                <span>f/2.2</span>
+                <span>1/299s</span>
+                <span>ISO 40</span>
+                <span>16mm</span>
               </div>
             </div>
           </div>
 
-          <div class="photo-item" data-category="nature">
+          <div class="photo-item" data-year="2025">
             <div class="photo-container">
               <img
-                src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop"
-                alt="Forest Path"
+                src="../assets/gallery/Pussy cat.jpg"
+                alt="Adorable Cat"
                 class="photo-img"
                 loading="lazy"
               />
             </div>
             <div class="photo-info">
-              <h3 class="photo-title">Forest Paths</h3>
-              <p class="photo-description">
-                Sometimes the best debugging happens on forest trails.
-              </p>
+              <h3 class="photo-title">Furry Friend</h3>
               <div class="camera-settings">
-                <span>f/4.0</span>
-                <span>1/60s</span>
-                <span>ISO 100</span>
-                <span>35mm</span>
+                <span>f/1.78</span>
+                <span>1/100s</span>
+                <span>ISO 160</span>
+                <span>24mm</span>
               </div>
             </div>
           </div>
@@ -493,14 +521,14 @@
         <button class="lightbox-close" onclick="closeLightbox()">
           &times;
         </button>
-        <img src="" alt="" class="lightbox-img" id="lightboxImg" />
+        <img src="#" alt="" class="lightbox-img" id="lightboxImg" />
       </div>
     </div>
 
     <script>
-      // Filter functionality
+      // Year filter functionality
       const filterButtons = document.querySelectorAll(".filter-btn");
-      const photoCategories = document.querySelectorAll(".photo-category");
+      const photoItems = document.querySelectorAll(".photo-item");
 
       filterButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -510,12 +538,12 @@
           filterButtons.forEach((btn) => btn.classList.remove("active"));
           button.classList.add("active");
 
-          // Show/hide categories
-          photoCategories.forEach((category) => {
-            if (filter === "all" || category.dataset.category === filter) {
-              category.style.display = "block";
+          // Show/hide photos based on year
+          photoItems.forEach((item) => {
+            if (filter === "all" || item.dataset.year === filter) {
+              item.style.display = "block";
             } else {
-              category.style.display = "none";
+              item.style.display = "none";
             }
           });
         });
@@ -570,14 +598,12 @@
           });
         }, observerOptions);
 
-        document
-          .querySelectorAll(".photo-category, .intro")
-          .forEach((section) => {
-            section.style.opacity = "0";
-            section.style.transform = "translateY(20px)";
-            section.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-            observer.observe(section);
-          });
+        document.querySelectorAll(".photo-item, .intro").forEach((item) => {
+          item.style.opacity = "0";
+          item.style.transform = "translateY(20px)";
+          item.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          observer.observe(item);
+        });
       });
 
       console.log("📸 Gallery loaded successfully!");
