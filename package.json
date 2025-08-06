@@ -6,6 +6,8 @@
   "scripts": {
     "start": "npx serve .",
     "dev": "npx live-server --port=3000",
+    "check": "node check-before-deploy.js",
+    "safe-deploy": "npm run check && git status",
     "deploy": "echo 'Upload files to your static hosting provider'",
     "build": "echo 'No build step required - pure HTML/CSS/JS'"
   },
