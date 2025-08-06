@@ -222,7 +222,7 @@
 
     <script>
       // Simple form - no JavaScript interference
-      console.log("📧 Newsletter form ready - using direct submission");
+      console.log("📧 Newsletter form ready - using direct submission v2");
 
       // Check for success parameter
       const urlParams = new URLSearchParams(window.location.search);
@@ -232,7 +232,7 @@
         successDiv.innerHTML = `
           <div style="background: #d1fae5; border: 1px solid #059669; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
             <h3 style="color: #059669; margin: 0 0 10px 0;">✅ Success!</h3>
-            <p style="color: #047857; margin: 0;">Thank you for subscribing! You should see your submission in the Netlify dashboard now.</p>
+            <p style="color: #047857; margin: 0;">Thank you for subscribing! Stay tuned.</p>
           </div>
         `;
         form.appendChild(successDiv);
