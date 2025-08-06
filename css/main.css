@@ -635,8 +635,8 @@ body::before {
 
 .contact-links {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
   margin-bottom: 40px;
   max-width: 1000px;
   margin-left: auto;
@@ -647,22 +647,16 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 20px 15px;
-  background: var(--card-background);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
+  gap: 4px;
+  padding: 5px 3px;
   text-decoration: none;
   color: var(--text-primary);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 4px var(--shadow-color);
   text-align: center;
 }
 
 .contact-link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px var(--shadow-hover);
-  border-color: var(--accent-color);
 }
 
 .contact-icon {
@@ -1037,14 +1031,14 @@ body::before {
   }
 
   .contact-links {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
     max-width: 600px;
   }
 
   .contact-link {
-    padding: 18px 12px;
-    gap: 10px;
+    padding: 3px 2px;
+    gap: 3px;
   }
 
   .contact-icon {
@@ -1202,14 +1196,14 @@ body::before {
   }
 
   .contact-links {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
     max-width: 400px;
   }
 
   .contact-link {
-    padding: 16px 12px;
-    gap: 10px;
+    padding: 2px 1px;
+    gap: 3px;
   }
 
   .contact-icon {
