@@ -220,10 +220,72 @@
     </style>
 
     <script>
-      // Simple form - no JavaScript interference
-      console.log("📧 Newsletter form ready - using direct submission v2");
+      // Newsletter form with modal success feedback
+      console.log("📧 Newsletter form ready - with modal feedback");
 
-      // Form will redirect to Netlify's default success page
+      // Handle form submission
+      const signupForm = document.querySelector(".signup-form");
+      if (signupForm) {
+        signupForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const button = this.querySelector(".signup-button");
+          const originalText = button.textContent;
+          const formData = new FormData(this);
+
+          // Show loading state
+          button.textContent = "Subscribing...";
+          button.disabled = true;
+
+          // Submit to Netlify
+          fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString(),
+          })
+            .then(() => {
+              // Clear form and show modal
+              this.querySelector(".email-input").value = "";
+              showModal();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Something went wrong. Please try again.");
+            })
+            .finally(() => {
+              // Reset button
+              button.textContent = originalText;
+              button.disabled = false;
+            });
+        });
+      }
+
+      // Modal functions
+      function showModal() {
+        const modal = document.getElementById("successModal");
+        modal.classList.add("show");
+
+        // Close modal when clicking outside
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            closeModal();
+          }
+        });
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("successModal");
+        modal.classList.remove("show");
+      }
+
+      // Make closeModal global for onclick handlers
+      window.closeModal = closeModal;
 
       // Fade-in animation
       document.addEventListener("DOMContentLoaded", function () {
@@ -253,5 +315,165 @@
 
       console.log("📝 Blog loaded successfully!");
     </script>
+
+    <!-- Newsletter Success Modal -->
+    <div class="modal-overlay" id="successModal">
+      <div class="modal-content">
+        <div class="modal-close" onclick="closeModal()">&times;</div>
+        <div class="modal-body">
+          <div class="modal-icon">✨</div>
+          <h3 class="modal-title">Thank You for Subscribing!</h3>
+          <p class="modal-message">You can expect occasional emails from me.</p>
+          <p class="modal-note">Stay tuned!</p>
+          <button class="modal-button" onclick="closeModal()">
+            Continue Reading
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      /* Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .modal-overlay.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 12px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .modal-overlay.show .modal-content {
+        transform: translateY(0);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        cursor: pointer;
+        color: #999;
+        transition: color 0.2s ease;
+        line-height: 1;
+        user-select: none;
+      }
+
+      .modal-close:hover {
+        color: #333;
+      }
+
+      .modal-body {
+        padding: 40px 30px 30px;
+        text-align: center;
+      }
+
+      .modal-icon {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        animation: bounce 0.6s ease-in-out;
+      }
+
+      .modal-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        line-height: 1.3;
+      }
+
+      .modal-message {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 15px;
+        line-height: 1.5;
+      }
+
+      .modal-note {
+        font-size: 0.95rem;
+        color: #777;
+        margin-bottom: 25px;
+        line-height: 1.4;
+      }
+
+      .modal-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-width: 150px;
+      }
+
+      .modal-button:hover {
+        background-color: #0056b3;
+        transform: translateY(-1px);
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-8px);
+        }
+        60% {
+          transform: translateY(-4px);
+        }
+      }
+
+      /* Responsive modal */
+      @media (max-width: 768px) {
+        .modal-content {
+          margin: 20px;
+          max-width: calc(100% - 40px);
+        }
+
+        .modal-body {
+          padding: 30px 20px 25px;
+        }
+
+        .modal-title {
+          font-size: 1.5rem;
+        }
+
+        .modal-message {
+          font-size: 1rem;
+        }
+      }
+    </style>
   </body>
 </html>
