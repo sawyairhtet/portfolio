@@ -25,7 +25,7 @@
     "css3",
     "html5"
   ],
-  "author": "Portfolio Developer",
+  "author": "Saw Ye Htet <minwn2244@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "live-server": "^1.2.2",
@@ -34,11 +34,11 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/portfolio-website.git"
+    "url": "https://github.com/sawyairhtet/portfolio.git"
   },
-  "homepage": "https://your-username.github.io/portfolio-website",
+  "homepage": "https://sawyehtet.com",
   "bugs": {
-    "url": "https://github.com/your-username/portfolio-website/issues"
+    "url": "https://github.com/sawyairhtet/portfolio/issues"
   },
   "engines": {
     "node": ">=14.0.0"

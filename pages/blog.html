@@ -3,7 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog - Developer • Photographer • Creator</title>
+    <title>Blog - Saw Ye Htet • Life & Tech Reflections</title>
+    <meta
+      name="description"
+      content="Personal reflections on life experiences, career journey, and thoughts from Saw Ye Htet. Authentic stories about growth and technology."
+    />
+    <meta
+      property="og:title"
+      content="Blog - Saw Ye Htet • Life & Tech Reflections"
+    />
+    <meta
+      property="og:description"
+      content="Personal reflections on life experiences, career journey, and thoughts from Saw Ye Htet."
+    />
+    <meta
+      property="og:image"
+      content="https://sawyehtet.com/assets/profile-picture.jpg"
+    />
+    <meta property="og:url" content="https://sawyehtet.com/pages/blog.html" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
@@ -71,6 +90,7 @@
             method="POST"
             data-netlify="true"
             action="/pages/newsletter-success.html"
+            id="newsletter-form"
           >
             <input type="hidden" name="form-name" value="newsletter" />
             <input
@@ -79,8 +99,15 @@
               placeholder="your@email.com"
               class="email-input"
               required
+              id="email-input"
             />
-            <button type="submit" class="signup-button">Subscribe</button>
+            <button type="submit" class="signup-button" id="signup-button">
+              <span class="button-text">Subscribe</span>
+              <span class="button-loading" style="display: none">
+                <span class="loading-spinner"></span>
+                Subscribing...
+              </span>
+            </button>
           </form>
           <p class="signup-note">
             You can unsubscribe at any time. No spam, ever.
@@ -192,6 +219,34 @@
         margin: 0;
       }
 
+      /* Loading states */
+      .loading-spinner {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 8px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .signup-button[disabled] {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .signup-button[disabled]:hover {
+        background-color: #374151;
+        transform: none;
+      }
+
       /* Responsive design */
       @media (max-width: 768px) {
         .signup-form {
@@ -222,8 +277,29 @@
     </style>
 
     <script>
-      // Newsletter form - direct submission only (like working test form)
-      console.log("📧 Newsletter form ready - direct submission to Netlify");
+      // Newsletter form with loading states
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("newsletter-form");
+        const button = document.getElementById("signup-button");
+        const buttonText = document.querySelector(".button-text");
+        const buttonLoading = document.querySelector(".button-loading");
+        const emailInput = document.getElementById("email-input");
+
+        if (form) {
+          form.addEventListener("submit", function (e) {
+            // Show loading state
+            button.disabled = true;
+            buttonText.style.display = "none";
+            buttonLoading.style.display = "inline-flex";
+            emailInput.disabled = true;
+
+            // Note: Form will submit naturally to Netlify
+            console.log("📧 Newsletter subscription started...");
+          });
+        }
+      });
+
+      console.log("📧 Newsletter form ready - with loading states");
 
       // Fade-in animation
       document.addEventListener("DOMContentLoaded", function () {
