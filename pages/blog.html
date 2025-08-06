@@ -70,7 +70,6 @@
             name="newsletter"
             method="POST"
             data-netlify="true"
-            action="/pages/blog.html?success=true"
           >
             <input type="hidden" name="form-name" value="newsletter" />
             <input
@@ -224,26 +223,7 @@
       // Simple form - no JavaScript interference
       console.log("📧 Newsletter form ready - using direct submission v2");
 
-      // Check for success parameter
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get("success") === "true") {
-        const form = document.querySelector(".newsletter-signup");
-        const successDiv = document.createElement("div");
-        successDiv.innerHTML = `
-          <div style="background: #d1fae5; border: 1px solid #059669; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
-            <h3 style="color: #059669; margin: 0 0 10px 0;">✅ Success!</h3>
-            <p style="color: #047857; margin: 0;">Thank you for subscribing! Stay tuned.</p>
-          </div>
-        `;
-        form.appendChild(successDiv);
-
-        // Clear the URL parameter
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-      }
+      // Form will redirect to Netlify's default success page
 
       // Fade-in animation
       document.addEventListener("DOMContentLoaded", function () {
