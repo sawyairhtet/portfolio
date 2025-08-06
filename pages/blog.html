@@ -70,6 +70,7 @@
             name="newsletter"
             method="POST"
             data-netlify="true"
+            action="/pages/blog.html?subscribed=true"
           >
             <input type="hidden" name="form-name" value="newsletter" />
             <input
@@ -220,43 +221,20 @@
     </style>
 
     <script>
-      // Newsletter form with modal success feedback
-      console.log("📧 Newsletter form ready - with modal feedback");
+      // Newsletter form with direct submission + modal feedback
+      console.log("📧 Newsletter form ready - direct submission with modal");
 
-      // Handle form submission
-      const signupForm = document.querySelector(".signup-form");
-      if (signupForm) {
-        signupForm.addEventListener("submit", function (e) {
-          e.preventDefault();
-          const button = this.querySelector(".signup-button");
-          const originalText = button.textContent;
-          const formData = new FormData(this);
+      // Check if user just subscribed and show modal
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("subscribed") === "true") {
+        // Show modal after a brief delay for smooth experience
+        setTimeout(() => {
+          showModal();
+        }, 100);
 
-          // Show loading state
-          button.textContent = "Subscribing...";
-          button.disabled = true;
-
-          // Submit to Netlify
-          fetch("/", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(formData).toString(),
-          })
-            .then(() => {
-              // Clear form and show modal
-              this.querySelector(".email-input").value = "";
-              showModal();
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Something went wrong. Please try again.");
-            })
-            .finally(() => {
-              // Reset button
-              button.textContent = originalText;
-              button.disabled = false;
-            });
-        });
+        // Clean up URL without reloading page
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
       }
 
       // Modal functions
