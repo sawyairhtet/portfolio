@@ -163,7 +163,7 @@
 
       /* Newsletter signup */
       .newsletter-signup {
-        background-color: #f8f9fa;
+        background-color: var(--card-background);
         padding: 40px;
         border-radius: 8px;
         text-align: center;
@@ -171,7 +171,7 @@
 
       .newsletter-signup p {
         margin-bottom: 30px;
-        color: #555;
+        color: var(--text-secondary);
         line-height: 1.6;
       }
 
@@ -186,19 +186,21 @@
       .email-input {
         flex: 1;
         padding: 12px 16px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--border-light);
         border-radius: 6px;
         font-size: 1rem;
         min-width: 200px;
+        background: var(--card-background);
+        color: var(--text-primary);
       }
 
       .email-input:focus {
         outline: none;
-        border-color: #374151;
+        border-color: var(--accent-color);
       }
 
       .signup-button {
-        background-color: #374151;
+        background-color: var(--accent-color);
         color: white;
         border: none;
         padding: 12px 24px;
@@ -210,12 +212,12 @@
       }
 
       .signup-button:hover {
-        background-color: #1f2937;
+        background-color: var(--accent-hover);
       }
 
       .signup-note {
         font-size: 0.9rem;
-        color: #777;
+        color: var(--text-light);
         margin: 0;
       }
 
@@ -224,9 +226,9 @@
         display: inline-block;
         width: 12px;
         height: 12px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid var(--text-light);
         border-radius: 50%;
-        border-top-color: white;
+        border-top-color: var(--text-primary);
         animation: spin 1s ease-in-out infinite;
         margin-right: 8px;
       }
@@ -243,7 +245,7 @@
       }
 
       .signup-button[disabled]:hover {
-        background-color: #374151;
+        background-color: var(--accent-color);
         transform: none;
       }
 
@@ -328,6 +330,68 @@
       });
 
       console.log("📝 Blog loaded successfully!");
+    </script>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle dark mode">
+      <span class="theme-toggle-icon light-icon">🌙</span>
+      <span class="theme-toggle-icon dark-icon">☀️</span>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+      <span class="back-to-top-icon">↑</span>
+    </button>
+
+    <script>
+      // Initialize dark mode for this page
+      document.addEventListener("DOMContentLoaded", function () {
+        function initTheme() {
+          const savedTheme = localStorage.getItem("theme") || "light";
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        }
+
+        function toggleTheme() {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+          document.documentElement.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+        }
+
+        function toggleBackToTop() {
+          const backToTopButton = document.querySelector(".back-to-top");
+          if (window.scrollY > 300) {
+            backToTopButton?.classList.add("visible");
+          } else {
+            backToTopButton?.classList.remove("visible");
+          }
+        }
+
+        function scrollToTop() {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+
+        // Initialize theme
+        initTheme();
+
+        // Theme toggle functionality
+        const themeToggle = document.querySelector(".theme-toggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", toggleTheme);
+        }
+
+        // Back to top functionality
+        const backToTopButton = document.querySelector(".back-to-top");
+        if (backToTopButton) {
+          backToTopButton.addEventListener("click", scrollToTop);
+          window.addEventListener("scroll", toggleBackToTop, { passive: true });
+        }
+      });
     </script>
   </body>
 </html>

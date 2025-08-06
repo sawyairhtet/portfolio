@@ -263,5 +263,67 @@
         });
       });
     </script>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle dark mode">
+      <span class="theme-toggle-icon light-icon">🌙</span>
+      <span class="theme-toggle-icon dark-icon">☀️</span>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+      <span class="back-to-top-icon">↑</span>
+    </button>
+
+    <script>
+      // Initialize dark mode for this page
+      document.addEventListener("DOMContentLoaded", function () {
+        function initTheme() {
+          const savedTheme = localStorage.getItem("theme") || "light";
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        }
+
+        function toggleTheme() {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+          document.documentElement.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+        }
+
+        function toggleBackToTop() {
+          const backToTopButton = document.querySelector(".back-to-top");
+          if (window.scrollY > 300) {
+            backToTopButton?.classList.add("visible");
+          } else {
+            backToTopButton?.classList.remove("visible");
+          }
+        }
+
+        function scrollToTop() {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+
+        // Initialize theme
+        initTheme();
+
+        // Theme toggle functionality
+        const themeToggle = document.querySelector(".theme-toggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", toggleTheme);
+        }
+
+        // Back to top functionality
+        const backToTopButton = document.querySelector(".back-to-top");
+        if (backToTopButton) {
+          backToTopButton.addEventListener("click", scrollToTop);
+          window.addEventListener("scroll", toggleBackToTop, { passive: true });
+        }
+      });
+    </script>
   </body>
 </html>

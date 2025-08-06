@@ -149,24 +149,24 @@
       }
 
       .success-button.primary {
-        background-color: #374151;
+        background-color: var(--accent-color);
         color: white;
       }
 
       .success-button.primary:hover {
-        background-color: #4b5563;
+        background-color: var(--accent-hover);
         transform: translateY(-1px);
       }
 
       .success-button.secondary {
         background-color: transparent;
-        color: #374151;
-        border-color: #d1d5db;
+        color: var(--text-secondary);
+        border-color: var(--border-light);
       }
 
       .success-button.secondary:hover {
-        background-color: #f9fafb;
-        border-color: #9ca3af;
+        background-color: var(--background);
+        border-color: var(--accent-color);
         transform: translateY(-1px);
       }
 
@@ -217,10 +217,45 @@
             ".success-button.primary"
           );
           if (primaryButton) {
-            primaryButton.style.boxShadow = "0 0 0 3px rgba(59, 130, 246, 0.1)";
+            primaryButton.style.boxShadow = "0 0 0 3px var(--subtle-border)";
           }
         }, 1000);
+
+        // Initialize dark mode
+        function initTheme() {
+          const savedTheme = localStorage.getItem("theme") || "light";
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        }
+
+        function toggleTheme() {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+          document.documentElement.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+        }
+
+        // Initialize theme
+        initTheme();
+
+        // Theme toggle functionality
+        const themeToggle = document.querySelector(".theme-toggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", toggleTheme);
+        }
       });
     </script>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle dark mode">
+      <span class="theme-toggle-icon light-icon">🌙</span>
+      <span class="theme-toggle-icon dark-icon">☀️</span>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+      <span class="back-to-top-icon">↑</span>
+    </button>
   </body>
 </html>

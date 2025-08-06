@@ -111,5 +111,52 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Dark mode functionality
+  function initTheme() {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  }
+
+  // Theme toggle button functionality
+  const themeToggle = document.querySelector(".theme-toggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+  }
+
+  // Back to top functionality
+  const backToTopButton = document.querySelector(".back-to-top");
+
+  function toggleBackToTop() {
+    if (window.scrollY > 300) {
+      backToTopButton?.classList.add("visible");
+    } else {
+      backToTopButton?.classList.remove("visible");
+    }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  // Back to top button functionality
+  if (backToTopButton) {
+    backToTopButton.addEventListener("click", scrollToTop);
+    window.addEventListener("scroll", toggleBackToTop, { passive: true });
+  }
+
+  // Initialize theme
+  initTheme();
+
   console.log("✨ Portfolio loaded - Clean and simple");
 });
