@@ -3,6 +3,7 @@
 ## ✅ **Safe Deployment Workflow** (Follow EVERY Time)
 
 ### **Step 1: Local Testing**
+
 ```bash
 # Start local development server
 npm run dev  # Opens http://localhost:3000
@@ -13,6 +14,7 @@ npm run dev  # Opens http://localhost:3000
 ```
 
 ### **Step 2: Pre-Commit Safety Check**
+
 ```bash
 # Run automated safety checks
 npm run check
@@ -22,6 +24,7 @@ npm run check
 ```
 
 ### **Step 3: Git Safety Workflow**
+
 ```bash
 # Check what you're committing
 git status
@@ -38,6 +41,7 @@ git push origin main
 ```
 
 ### **Step 4: Verify Deployment**
+
 ```bash
 # Wait 2-3 minutes, then check:
 # 1. Visit https://sawyehtet.com
@@ -52,6 +56,7 @@ git push origin main
 ### **If You Pushed Broken Code:**
 
 #### **Method 1: Quick Hotfix (Recommended)**
+
 ```bash
 # Fix the issue locally
 # Test with npm run dev
@@ -63,6 +68,7 @@ git push origin main
 ```
 
 #### **Method 2: Rollback to Previous Version**
+
 ```bash
 # See recent commits
 git log --oneline -5
@@ -75,6 +81,7 @@ git push origin main
 ```
 
 #### **Method 3: Nuclear Option (Last Resort)**
+
 ```bash
 # Reset to specific good commit (DANGEROUS!)
 git log --oneline -10        # Find good commit hash
@@ -87,16 +94,19 @@ git push --force origin main # ⚠️ This rewrites history!
 ## 🔍 **Common Issues & Prevention**
 
 ### **Prevent Broken Images**
+
 - Always check image paths with `npm run check`
 - Use relative paths: `assets/image.jpg` ✅
 - Avoid absolute paths: `/home/user/image.jpg` ❌
 
 ### **Prevent CSS/JS Errors**
+
 - Test in multiple browsers
 - Check browser console (F12) for errors
 - Use CSS/JS validators online
 
 ### **Prevent Content Issues**
+
 - Spell check important text
 - Test all links work
 - Verify contact information is correct
@@ -106,11 +116,13 @@ git push --force origin main # ⚠️ This rewrites history!
 ## 📊 **Monitoring Your Site**
 
 ### **Set Up Alerts (Recommended)**
+
 1. **UptimeRobot** - Free monitoring, emails when site is down
 2. **Google Search Console** - SEO and indexing issues
 3. **Netlify Status** - Check deployment status
 
 ### **Weekly Health Check**
+
 ```bash
 # Run every Sunday
 npm run check
@@ -123,6 +135,7 @@ npm run check
 ## 🎯 **Best Practices**
 
 ### **Commit Messages**
+
 - ✅ "Add new VR project with hand tracking demo"
 - ✅ "Update timeline with Capella Hotel experience"
 - ✅ "Fix mobile navigation on gallery page"
@@ -130,6 +143,7 @@ npm run check
 - ❌ "fix stuff"
 
 ### **Testing Checklist**
+
 - [ ] Homepage loads correctly
 - [ ] All navigation links work
 - [ ] Gallery images display
@@ -139,6 +153,7 @@ npm run check
 - [ ] Contact information is accurate
 
 ### **Git Branch Strategy (Optional)**
+
 ```bash
 # For major changes, use branches
 git checkout -b feature/new-project-section
