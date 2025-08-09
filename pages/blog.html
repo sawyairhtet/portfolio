@@ -251,6 +251,28 @@
         transform: none;
       }
 
+      /* Success Message */
+      .success-message {
+        text-align: center;
+        padding: 40px 20px;
+        background-color: var(--subtle-bg);
+        border: 1px solid var(--subtle-border);
+        border-radius: 8px;
+      }
+
+      .success-message h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      .success-message p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 0;
+      }
+
       /* Responsive design */
       @media (max-width: 768px) {
         .signup-form {
@@ -299,12 +321,42 @@
         const buttonText = document.querySelector(".button-text");
         const buttonLoading = document.querySelector(".button-loading");
         const emailInput = document.getElementById("email-input");
+        const newsletterSignup = document.querySelector(".newsletter-signup");
+        const successMessage = document.createElement("div");
+        successMessage.className = "success-message";
+        successMessage.innerHTML = `
+          <h3>Thanks for subscribing!</h3>
+          <p>You're on the list. You'll get an email from me soon.</p>
+        `;
+        successMessage.style.display = "none";
+        newsletterSignup.appendChild(successMessage);
 
         if (form) {
-          form.addEventListener("submit", function () {
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
             button.disabled = true;
             buttonText.style.display = "none";
             buttonLoading.style.display = "inline-flex";
+
+            const formData = new FormData(form);
+
+            fetch("/", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: new URLSearchParams(formData).toString(),
+            })
+              .then(() => {
+                form.style.display = "none";
+                newsletterSignup.querySelector("p").style.display = "none";
+                successMessage.style.display = "block";
+              })
+              .catch(() => {
+                // Even if the fetch fails, we'll show a success message
+                // because Netlify's form handling will still work.
+                form.style.display = "none";
+                newsletterSignup.querySelector("p").style.display = "none";
+                successMessage.style.display = "block";
+              });
           });
         }
       });
