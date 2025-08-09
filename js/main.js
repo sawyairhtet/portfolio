@@ -158,5 +158,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize theme
   initTheme();
 
+  // Set current year in footer
+  function setCopyrightYear() {
+    const yearElement = document.querySelector(".copyright");
+    if (yearElement) {
+      yearElement.textContent = `© ${new Date().getFullYear()} Saw Ye Htet. All rights reserved.`;
+    }
+  }
+  setCopyrightYear();
+
   console.log("✨ Portfolio loaded - Clean and simple");
 });
