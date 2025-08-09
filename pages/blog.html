@@ -24,8 +24,8 @@
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="../css/main.css" />
+    <link rel="canonical" href="https://sawyehtet.com/pages/blog.html" />
     <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -51,69 +51,71 @@
         </nav>
       </header>
 
-      <!-- Intro -->
-      <section class="intro">
-        <p class="intro-text">
-          I will share my personal journey through life experiences, thoughts,
-          and ideas . You'll find some interesting reflections about myself, and
-          my different perspectives. These are my own thoughts and experiences
-          so I suggest to take what resonates with you.
-        </p>
-      </section>
+      <main id="main" role="main">
+        <!-- Intro -->
+        <section class="intro">
+          <p class="intro-text">
+            I share my personal journey through life experiences, thoughts, and
+            ideas. You'll find reflections about myself and different
+            perspectives. These are my own thoughts and experiences, so take
+            what resonates with you.
+          </p>
+        </section>
 
-      <!-- Empty State -->
-      <section class="section">
-        <div class="empty-state">
-          <div class="empty-state-content">
-            <h2 class="empty-state-title">No Posts Yet</h2>
-            <p class="empty-state-description">
-              I haven't published any blog posts yet, but I'm working on some
-              interesting content! See you soon.
-            </p>
-            <div class="empty-state-icon">📝</div>
+        <!-- Empty State -->
+        <section class="section">
+          <div class="empty-state">
+            <div class="empty-state-content">
+              <h2 class="empty-state-title">No Posts Yet</h2>
+              <p class="empty-state-description">
+                I haven't published any blog posts yet, but I'm working on some
+                interesting content! See you soon.
+              </p>
+              <div class="empty-state-icon">📝</div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Newsletter Signup -->
-      <section class="section">
-        <h2 class="section-title">Stay Updated</h2>
-        <div class="newsletter-signup">
-          <p>
-            I share personal reflections and thoughtful content about growth,
-            ideas, and the journey of life about once a month. No spam, just
-            authentic stories.
-          </p>
-          <form
-            class="signup-form"
-            name="newsletter"
-            method="POST"
-            data-netlify="true"
-            action="/pages/newsletter-success.html"
-            id="newsletter-form"
-          >
-            <input type="hidden" name="form-name" value="newsletter" />
-            <input
-              type="email"
-              name="email"
-              placeholder="your@email.com"
-              class="email-input"
-              required
-              id="email-input"
-            />
-            <button type="submit" class="signup-button" id="signup-button">
-              <span class="button-text">Subscribe</span>
-              <span class="button-loading" style="display: none">
-                <span class="loading-spinner"></span>
-                Subscribing...
-              </span>
-            </button>
-          </form>
-          <p class="signup-note">
-            You can unsubscribe at any time. No spam, ever.
-          </p>
-        </div>
-      </section>
+        <!-- Newsletter Signup -->
+        <section class="section">
+          <h2 class="section-title">Stay Updated</h2>
+          <div class="newsletter-signup">
+            <p>
+              I share personal reflections and thoughtful content about growth,
+              ideas, and the journey of life about once a month. No spam, just
+              authentic stories.
+            </p>
+            <form
+              class="signup-form"
+              name="newsletter"
+              method="POST"
+              data-netlify="true"
+              action="/pages/newsletter-success.html"
+              id="newsletter-form"
+            >
+              <input type="hidden" name="form-name" value="newsletter" />
+              <input
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                class="email-input"
+                required
+                id="email-input"
+              />
+              <button type="submit" class="signup-button" id="signup-button">
+                <span class="button-text">Subscribe</span>
+                <span class="button-loading" style="display: none">
+                  <span class="loading-spinner"></span>
+                  Subscribing...
+                </span>
+              </button>
+            </form>
+            <p class="signup-note">
+              You can unsubscribe at any time. No spam, ever.
+            </p>
+          </div>
+        </section>
+      </main>
 
       <!-- Footer -->
       <footer class="footer">
@@ -278,60 +280,6 @@
       }
     </style>
 
-    <script>
-      // Newsletter form with loading states
-      document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("newsletter-form");
-        const button = document.getElementById("signup-button");
-        const buttonText = document.querySelector(".button-text");
-        const buttonLoading = document.querySelector(".button-loading");
-        const emailInput = document.getElementById("email-input");
-
-        if (form) {
-          form.addEventListener("submit", function (e) {
-            // Show loading state
-            button.disabled = true;
-            buttonText.style.display = "none";
-            buttonLoading.style.display = "inline-flex";
-            emailInput.disabled = true;
-
-            // Note: Form will submit naturally to Netlify
-            console.log("📧 Newsletter subscription started...");
-          });
-        }
-      });
-
-      console.log("📧 Newsletter form ready - with loading states");
-
-      // Fade-in animation
-      document.addEventListener("DOMContentLoaded", function () {
-        const observerOptions = {
-          threshold: 0.1,
-          rootMargin: "0px 0px -50px 0px",
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = "1";
-              entry.target.style.transform = "translateY(0)";
-            }
-          });
-        }, observerOptions);
-
-        document
-          .querySelectorAll(".section, .intro, .empty-state")
-          .forEach((element) => {
-            element.style.opacity = "0";
-            element.style.transform = "translateY(20px)";
-            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-            observer.observe(element);
-          });
-      });
-
-      console.log("📝 Blog loaded successfully!");
-    </script>
-
     <!-- Theme Toggle Button -->
     <button class="theme-toggle" aria-label="Toggle dark mode">
       <span class="theme-toggle-icon light-icon">🌙</span>
@@ -344,54 +292,24 @@
     </button>
 
     <script>
-      // Initialize dark mode for this page
+      // Newsletter form loading state only (keep minimal inline)
       document.addEventListener("DOMContentLoaded", function () {
-        function initTheme() {
-          const savedTheme = localStorage.getItem("theme") || "light";
-          document.documentElement.setAttribute("data-theme", savedTheme);
-        }
+        const form = document.getElementById("newsletter-form");
+        const button = document.getElementById("signup-button");
+        const buttonText = document.querySelector(".button-text");
+        const buttonLoading = document.querySelector(".button-loading");
+        const emailInput = document.getElementById("email-input");
 
-        function toggleTheme() {
-          const currentTheme =
-            document.documentElement.getAttribute("data-theme");
-          const newTheme = currentTheme === "dark" ? "light" : "dark";
-
-          document.documentElement.setAttribute("data-theme", newTheme);
-          localStorage.setItem("theme", newTheme);
-        }
-
-        function toggleBackToTop() {
-          const backToTopButton = document.querySelector(".back-to-top");
-          if (window.scrollY > 300) {
-            backToTopButton?.classList.add("visible");
-          } else {
-            backToTopButton?.classList.remove("visible");
-          }
-        }
-
-        function scrollToTop() {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
+        if (form) {
+          form.addEventListener("submit", function () {
+            button.disabled = true;
+            buttonText.style.display = "none";
+            buttonLoading.style.display = "inline-flex";
+            emailInput.disabled = true;
           });
-        }
-
-        // Initialize theme
-        initTheme();
-
-        // Theme toggle functionality
-        const themeToggle = document.querySelector(".theme-toggle");
-        if (themeToggle) {
-          themeToggle.addEventListener("click", toggleTheme);
-        }
-
-        // Back to top functionality
-        const backToTopButton = document.querySelector(".back-to-top");
-        if (backToTopButton) {
-          backToTopButton.addEventListener("click", scrollToTop);
-          window.addEventListener("scroll", toggleBackToTop, { passive: true });
         }
       });
     </script>
+    <script src="../js/main.js"></script>
   </body>
 </html>

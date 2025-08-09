@@ -53,6 +53,14 @@ npx http-server
 
 Then visit `http://localhost:8000`
 
+Or use the included dev server:
+
+```bash
+npm install
+npm run dev
+# Opens http://localhost:3000
+```
+
 ## Tech Stack
 
 - HTML5

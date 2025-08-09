@@ -62,6 +62,12 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Reserve space for images to reduce layout shift */
+img[width][height] {
+  height: auto;
+  max-width: 100%;
+}
+
 a {
   transition: all 0.2s ease;
 }

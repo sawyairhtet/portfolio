@@ -27,8 +27,11 @@
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="../css/main.css" />
+    <link
+      rel="canonical"
+      href="https://sawyehtet.com/pages/newsletter-success.html"
+    />
     <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -209,9 +212,8 @@
     </style>
 
     <script>
-      // Add some interactive enhancement
+      // Small enhancement only; rely on shared JS for theme/back-to-top
       document.addEventListener("DOMContentLoaded", function () {
-        // Auto-focus on the primary action after a short delay
         setTimeout(() => {
           const primaryButton = document.querySelector(
             ".success-button.primary"
@@ -220,30 +222,6 @@
             primaryButton.style.boxShadow = "0 0 0 3px var(--subtle-border)";
           }
         }, 1000);
-
-        // Initialize dark mode
-        function initTheme() {
-          const savedTheme = localStorage.getItem("theme") || "light";
-          document.documentElement.setAttribute("data-theme", savedTheme);
-        }
-
-        function toggleTheme() {
-          const currentTheme =
-            document.documentElement.getAttribute("data-theme");
-          const newTheme = currentTheme === "dark" ? "light" : "dark";
-
-          document.documentElement.setAttribute("data-theme", newTheme);
-          localStorage.setItem("theme", newTheme);
-        }
-
-        // Initialize theme
-        initTheme();
-
-        // Theme toggle functionality
-        const themeToggle = document.querySelector(".theme-toggle");
-        if (themeToggle) {
-          themeToggle.addEventListener("click", toggleTheme);
-        }
       });
     </script>
 
@@ -257,5 +235,6 @@
     <button class="back-to-top" aria-label="Back to top">
       <span class="back-to-top-icon">↑</span>
     </button>
+    <script src="../js/main.js"></script>
   </body>
 </html>
