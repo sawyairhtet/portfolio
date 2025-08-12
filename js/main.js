@@ -2,6 +2,60 @@
 // No overengineering - just essential functionality
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Enhanced lazy loading with intersection observer fallback
+  function initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+    
+    // Add loaded class when images finish loading
+    lazyImages.forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+      }
+    });
+    
+    // Check if native lazy loading is supported
+    if ('loading' in HTMLImageElement.prototype) {
+      // Native lazy loading is supported, images will load automatically
+      console.log('✅ Native lazy loading supported');
+    } else {
+      // Fallback for older browsers using Intersection Observer
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src || img.src;
+              img.classList.remove('lazy');
+              img.addEventListener('load', () => {
+                img.classList.add('loaded');
+              });
+              imageObserver.unobserve(img);
+            }
+          });
+        });
+
+        lazyImages.forEach(img => {
+          imageObserver.observe(img);
+        });
+        
+        console.log('✅ Fallback lazy loading with Intersection Observer');
+      } else {
+        // Fallback for very old browsers - load all images
+        lazyImages.forEach(img => {
+          img.src = img.dataset.src || img.src;
+          img.addEventListener('load', () => {
+            img.classList.add('loaded');
+          });
+        });
+        console.log('⚠️ Loading all images immediately (old browser)');
+      }
+    }
+  }
+
   // Simple smooth scrolling for navigation links
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
@@ -157,6 +211,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize theme
   initTheme();
+
+  // Initialize lazy loading
+  initLazyLoading();
 
   // Set current year in footer
   function setCopyrightYear() {

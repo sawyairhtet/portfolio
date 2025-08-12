@@ -43,6 +43,8 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Preload critical images -->
+    <link rel="preload" href="assets/profile-picture.jpg" as="image" />
   </head>
   <body>
     <div class="container">
@@ -53,6 +55,9 @@
             src="assets/profile-picture.jpg"
             alt="Saw Ye Htet"
             class="profile-picture"
+            loading="eager"
+            width="160"
+            height="160"
           />
           <h1 class="name">Saw Ye Htet</h1>
           <p class="tagline">

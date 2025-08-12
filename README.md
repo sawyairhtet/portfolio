@@ -8,7 +8,7 @@ This is my portfolio website where I share my projects, timeline, and personal i
 
 ## Structure
 
-```
+```plaintext
 portfolio/
 ├── index.html              # Main homepage
 ├── pages/
@@ -36,6 +36,9 @@ portfolio/
 - Clean, minimal aesthetic
 - SEO optimized with proper meta tags
 - Fast loading with vanilla JS
+- **Optimized lazy loading** with native browser support and fallbacks
+- Shimmer loading animations for better UX
+- Critical resource preloading for faster initial load
 
 ## Local Development
 
@@ -67,6 +70,22 @@ npm run dev
 - CSS3 (Grid, Flexbox, Custom Properties)
 - Vanilla JavaScript
 - No build process or frameworks
+
+## Performance Optimizations
+
+### Lazy Loading Implementation
+
+- **Native lazy loading** with `loading="lazy"` attribute for modern browsers
+- **Intersection Observer fallback** for older browser compatibility
+- **Critical resource preloading** using `rel="preload"` for above-the-fold images
+- **Shimmer loading animations** for better perceived performance
+- **Explicit image dimensions** to prevent layout shift (CLS)
+
+### Loading Strategy
+
+- **Eager loading**: Profile picture and critical images load immediately
+- **Lazy loading**: Gallery images and below-the-fold content load on demand
+- **Bandwidth optimization**: Images only load when users scroll to them
 
 ## Deployment
 
