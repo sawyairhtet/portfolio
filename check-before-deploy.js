@@ -1,55 +1,51 @@
 #!/usr/bin/env node
 
-// 🛡️ Pre-deployment safety checks for portfolio website
+// Pre-deployment safety checks for portfolio website
 const fs = require('fs');
-const path = require('path');
 
-console.log('🔍 Running pre-deployment safety checks...\n');
+console.log('Running pre-deployment safety checks...\n');
 
 let hasErrors = false;
 
 // Check 1: Verify main files exist
 const requiredFiles = ['index.html', 'css/main.css', 'js/main.js'];
-requiredFiles.forEach(file => {
+requiredFiles.forEach((file) => {
   if (!fs.existsSync(file)) {
-    console.log(`❌ Missing required file: ${file}`);
+    console.log(`[ERROR] Missing required file: ${file}`);
     hasErrors = true;
   } else {
-    console.log(`✅ Found: ${file}`);
+    console.log(`[OK] Found: ${file}`);
   }
 });
 
-// Check 2: Validate HTML syntax (basic)
+// Check 2: Validate HTML syntax (very basic)
 try {
   const htmlContent = fs.readFileSync('index.html', 'utf8');
-  
-  // Check for common HTML issues
+
   if (!htmlContent.includes('<!DOCTYPE html>')) {
-    console.log('⚠️  Missing DOCTYPE declaration');
+    console.log('[WARN] Missing DOCTYPE declaration');
   }
-  
+
   if (!htmlContent.includes('</html>')) {
-    console.log('❌ Missing closing </html> tag');
+    console.log('[ERROR] Missing closing </html> tag');
     hasErrors = true;
   }
-  
+
   if (!htmlContent.includes('</body>')) {
-    console.log('❌ Missing closing </body> tag');
+    console.log('[ERROR] Missing closing </body> tag');
     hasErrors = true;
   }
-  
-  // Check for properly closed tags
+
   const bodyOpenTags = (htmlContent.match(/<body[^>]*>/g) || []).length;
   const bodyCloseTags = (htmlContent.match(/<\/body>/g) || []).length;
-  
   if (bodyOpenTags !== bodyCloseTags) {
-    console.log('❌ Unmatched <body> tags');
+    console.log('[ERROR] Unmatched <body> tags');
     hasErrors = true;
   }
-  
-  console.log('✅ Basic HTML structure looks good');
+
+  console.log('[OK] Basic HTML structure looks good');
 } catch (error) {
-  console.log('❌ Error reading index.html:', error.message);
+  console.log('[ERROR] Error reading index.html:', error.message);
   hasErrors = true;
 }
 
@@ -57,59 +53,55 @@ try {
 try {
   const cssContent = fs.readFileSync('css/main.css', 'utf8');
   if (cssContent.trim().length === 0) {
-    console.log('⚠️  CSS file is empty');
+    console.log('[WARN] CSS file is empty');
   } else {
-    console.log('✅ CSS file has content');
+    console.log('[OK] CSS file has content');
   }
 } catch (error) {
-  console.log('⚠️  Could not read CSS file:', error.message);
+  console.log('[WARN] Could not read CSS file:', error.message);
 }
 
-// Check 4: Verify JavaScript syntax (basic)
+// Check 4: Verify JavaScript syntax (very basic)
 try {
   const jsContent = fs.readFileSync('js/main.js', 'utf8');
-  // Very basic check for unclosed brackets
   const openBraces = (jsContent.match(/\{/g) || []).length;
   const closeBraces = (jsContent.match(/\}/g) || []).length;
-  
   if (openBraces !== closeBraces) {
-    console.log('⚠️  Potential JavaScript syntax issue (unmatched braces)');
+    console.log('[WARN] Potential JavaScript syntax issue (unmatched braces)');
   } else {
-    console.log('✅ JavaScript syntax looks okay');
+    console.log('[OK] JavaScript syntax looks okay');
   }
 } catch (error) {
-  console.log('⚠️  Could not read JavaScript file:', error.message);
+  console.log('[WARN] Could not read JavaScript file:', error.message);
 }
 
-// Check 5: Look for broken image paths
+// Check 5: Look for broken image paths in index.html
 try {
   const htmlContent = fs.readFileSync('index.html', 'utf8');
   const imgMatches = htmlContent.match(/src=["']([^"']+)["']/g);
-  
   if (imgMatches) {
-    imgMatches.forEach(match => {
+    imgMatches.forEach((match) => {
       const imgPath = match.match(/src=["']([^"']+)["']/)[1];
-      if (imgPath.startsWith('http')) return; // Skip external URLs
-      
+      if (imgPath.startsWith('http')) return; // external URLs
       if (!fs.existsSync(imgPath)) {
-        console.log(`❌ CRITICAL: Image not found: ${imgPath}`);
+        console.log(`[ERROR] Image not found: ${imgPath}`);
         hasErrors = true;
       }
     });
   }
-  console.log('✅ Image paths checked');
+  console.log('[OK] Image paths checked');
 } catch (error) {
-  console.log('⚠️  Could not check image paths:', error.message);
+  console.log('[WARN] Could not check image paths:', error.message);
 }
 
 console.log('\n' + '='.repeat(50));
-
 if (hasErrors) {
-  console.log('❌ CRITICAL ISSUES FOUND - DO NOT DEPLOY!');
+  console.log('[ERROR] CRITICAL ISSUES FOUND - DO NOT DEPLOY!');
   console.log('Please fix the errors above before committing.');
   process.exit(1);
 } else {
-  console.log('✅ All checks passed - Safe to deploy!');
-  console.log('💡 Remember to test locally at http://localhost:3000 first');
+  console.log('[OK] All checks passed - Safe to deploy!');
+  console.log('Reminder: Test locally at http://localhost:3000 first');
   process.exit(0);
 }
+

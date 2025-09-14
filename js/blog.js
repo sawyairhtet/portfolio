@@ -49,5 +49,5 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   setCopyrightYear();
 
-  console.log("📝 Blog loaded - Simple and clean");
+  console.log('Blog loaded - Simple and clean');
 });
