@@ -121,7 +121,7 @@
       <!-- Footer -->
       <footer class="footer">
         <p class="footer-note">Built with love using HTML, CSS, and vanilla JavaScript by Saw Ye Htet</p>
-        <p class="copyright">© 2025 Saw Ye Htet. All rights reserved.</p>
+        <p class="copyright">&copy; <span data-current-year>2025</span> Saw Ye Htet. All rights reserved.</p>
       </footer>
     </div>
 
@@ -272,6 +272,16 @@
         margin-bottom: 0;
       }
 
+      .error-message {
+        margin-top: 16px;
+        color: #dc2626;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+
+      [data-theme="dark"] .error-message {
+        color: #fca5a5;
+      }
       /* Responsive design */
       @media (max-width: 768px) {
         .signup-form {
@@ -302,7 +312,7 @@
     </style>
 
     <!-- Theme Toggle Button -->
-    <button class="theme-toggle" aria-label="Toggle dark mode">
+    <button class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">
   <span class="theme-toggle-icon light-icon">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zm9.83-19.16l-1.79-1.79-1.8 1.79 1.8 1.8 1.79-1.8zM17.24 4.84l-1.8 1.8 1.8 1.8 1.8-1.8-1.8-1.8zM12 6a6 6 0 100 12A6 6 0 0012 6zm8 7h3v-2h-3v2zM4.22 18.36l1.79 1.79 1.8-1.79-1.8-1.8-1.79 1.8zM17.24 19.16l1.8 1.79 1.79-1.79-1.79-1.8-1.8 1.8z"/>
@@ -331,45 +341,68 @@
         const button = document.getElementById("signup-button");
         const buttonText = document.querySelector(".button-text");
         const buttonLoading = document.querySelector(".button-loading");
-        const emailInput = document.getElementById("email-input");
         const newsletterSignup = document.querySelector(".newsletter-signup");
+
+        if (!form || !button || !buttonText || !buttonLoading || !newsletterSignup) {
+          return;
+        }
+
+        const introParagraph = newsletterSignup.querySelector("p");
+        const signupNote = newsletterSignup.querySelector(".signup-note");
+
         const successMessage = document.createElement("div");
         successMessage.className = "success-message";
+        successMessage.setAttribute("role", "status");
         successMessage.innerHTML = `
           <h3>Thanks for subscribing!</h3>
           <p>You're on the list. You'll get an email from me soon.</p>
         `;
         successMessage.style.display = "none";
+
+        const errorMessage = document.createElement("p");
+        errorMessage.className = "error-message";
+        errorMessage.setAttribute("role", "alert");
+        errorMessage.textContent = "Hmm, that didn't work. Please try again or email me directly.";
+        errorMessage.style.display = "none";
+
         newsletterSignup.appendChild(successMessage);
+        form.insertAdjacentElement("afterend", errorMessage);
 
-        if (form) {
-          form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            button.disabled = true;
-            buttonText.style.display = "none";
-            buttonLoading.style.display = "inline-flex";
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
 
-            const formData = new FormData(form);
+          errorMessage.style.display = "none";
+          button.disabled = true;
+          buttonText.style.display = "none";
+          buttonLoading.style.display = "inline-flex";
 
-            fetch("/", {
-              method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams(formData).toString(),
+          const formData = new FormData(form);
+
+          fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString(),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+
+              form.reset();
+              form.style.display = "none";
+              if (introParagraph) introParagraph.style.display = "none";
+              if (signupNote) signupNote.style.display = "none";
+              buttonLoading.style.display = "none";
+              successMessage.style.display = "block";
             })
-              .then(() => {
-                form.style.display = "none";
-                newsletterSignup.querySelector("p").style.display = "none";
-                successMessage.style.display = "block";
-              })
-              .catch(() => {
-                // Even if the fetch fails, we'll show a success message
-                // because Netlify's form handling will still work.
-                form.style.display = "none";
-                newsletterSignup.querySelector("p").style.display = "none";
-                successMessage.style.display = "block";
-              });
-          });
-        }
+            .catch((error) => {
+              console.error("Newsletter signup failed", error);
+              button.disabled = false;
+              buttonText.style.display = "";
+              buttonLoading.style.display = "none";
+              errorMessage.style.display = "block";
+            });
+        });
       });
     </script>
     <script src="../js/main.js"></script>

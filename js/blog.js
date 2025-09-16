@@ -42,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Set current year in footer
   function setCopyrightYear() {
-    const yearElement = document.querySelector(".copyright");
-    if (yearElement) {
-      yearElement.textContent = `© ${new Date().getFullYear()} Saw Ye Htet. All rights reserved.`;
-    }
+    const year = new Date().getFullYear();
+    document.querySelectorAll('[data-current-year]').forEach((el) => {
+      el.textContent = year;
+    });
   }
   setCopyrightYear();
 
