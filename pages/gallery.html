@@ -55,17 +55,29 @@
       /* Make page chrome consistent with About/Blog */
       @media (min-width: 769px) {
         .gallery-container .header,
-        .gallery-container .intro,
         .gallery-container .footer {
           max-width: 760px; /* site content width */
           margin-left: auto;
           margin-right: auto;
         }
+
+        /* Intro should match the width of the year menu bar (filter-nav) */
+        .gallery-container .intro {
+          max-width: none; /* stretch to container width */
+        }
       }
 
-      /* Keep readable line length, consistent with other pages */
+      /* On mobile, avoid the global negative margins so it aligns with filter-nav */
+      @media (max-width: 768px) {
+        .gallery-container .intro {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+
+      /* Let the paragraph span the full intro card width */
       .gallery-container .intro-text {
-        max-width: 650px;
+        max-width: none;
       }
 
       .gallery-grid {
