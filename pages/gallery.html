@@ -52,6 +52,22 @@
         padding: 40px 20px;
       }
 
+      /* Make page chrome consistent with About/Blog */
+      @media (min-width: 769px) {
+        .gallery-container .header,
+        .gallery-container .intro,
+        .gallery-container .footer {
+          max-width: 760px; /* site content width */
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      /* Keep readable line length, consistent with other pages */
+      .gallery-container .intro-text {
+        max-width: 650px;
+      }
+
       .gallery-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -377,6 +393,7 @@
       </header>
 
       <!-- Intro -->
+      <main id="main" role="main">
       <section class="intro">
         <p class="intro-text">
           I rarely used to take photos, mainly because I wasn't professional at
@@ -555,6 +572,8 @@
           </div>
         </div>
       </section>
+
+      </main>
 
       <!-- Footer -->
       <footer class="footer">
