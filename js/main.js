@@ -1,12 +1,54 @@
-// Simple and clean portfolio interactions
+﻿// Simple and clean portfolio interactions
 // No overengineering - just essential functionality
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Enhanced lazy loading with Intersection Observer fallback
+  function ensureGlobalControls() {
+    let themeToggle = document.querySelector('.theme-toggle');
+    if (!themeToggle) {
+      themeToggle = document.createElement('button');
+      themeToggle.type = 'button';
+      themeToggle.className = 'theme-toggle';
+      themeToggle.setAttribute('aria-label', 'Toggle dark mode');
+      themeToggle.setAttribute('aria-pressed', 'false');
+      themeToggle.innerHTML = `
+  <span class="theme-toggle-icon light-icon">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zm9.83-19.16l-1.79-1.79-1.8 1.79 1.8 1.8 1.79-1.8zM17.24 4.84l-1.8 1.8 1.8 1.8 1.8-1.8-1.8-1.8zM12 6a6 6 0 100 12A6 6 0 0012 6zm8 7h3v-2h-3v2zM4.22 18.36l1.79 1.79 1.8-1.79-1.8-1.8-1.79 1.8zM17.24 19.16l1.8 1.79 1.79-1.79-1.79-1.8-1.8 1.8z"/>
+    </svg>
+  </span>
+  <span class="theme-toggle-icon dark-icon">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M21.64 13a9 9 0 01-11.31-11.31 1 1 0 00-1.33-1.33A11 11 0 1022.97 14.3a1 1 0 00-1.33-1.3z"/>
+    </svg>
+  </span>
+`;
+      document.body.appendChild(themeToggle);
+    }
+
+    let backToTopButton = document.querySelector('.back-to-top');
+    if (!backToTopButton) {
+      backToTopButton = document.createElement('button');
+      backToTopButton.type = 'button';
+      backToTopButton.className = 'back-to-top';
+      backToTopButton.setAttribute('aria-label', 'Back to top');
+      backToTopButton.innerHTML = `
+  <span class="back-to-top-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 4l-7 7h4v9h6v-9h4z"/>
+    </svg>
+  </span>
+`;
+      document.body.appendChild(backToTopButton);
+    }
+
+    return { themeToggle, backToTopButton };
+  }
+
+  const { themeToggle, backToTopButton } = ensureGlobalControls();
+
   function initLazyLoading() {
     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
 
-    // Add loaded class when images finish loading
     lazyImages.forEach((img) => {
       if (img.complete) {
         img.classList.add('loaded');
@@ -36,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
       lazyImages.forEach((img) => imageObserver.observe(img));
       console.log('Fallback lazy loading with Intersection Observer');
     } else {
-      // Very old browsers: load all images
       lazyImages.forEach((img) => {
         img.src = img.dataset.src || img.src;
         img.addEventListener('load', () => img.classList.add('loaded'));
@@ -45,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Smooth scrolling for internal links
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
       const href = anchor.getAttribute('href');
@@ -59,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Fade-in animation for sections
   const sections = document.querySelectorAll('.section, .intro');
   const sectionObserver = new IntersectionObserver(
     (entries) => {
@@ -80,21 +119,20 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionObserver.observe(el);
   });
 
-  // Simple hover effects for project cards
   document.querySelectorAll('.project-card').forEach((card) => {
     card.style.transition = 'transform 0.2s ease';
     card.addEventListener('mouseenter', () => (card.style.transform = 'translateX(5px)'));
     card.addEventListener('mouseleave', () => (card.style.transform = 'translateX(0)'));
   });
 
-  // Navigation highlighting on scroll
   function highlightNavigation() {
     const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-    const sections = document.querySelectorAll('.section');
+    if (!navLinks.length) return;
+    const contentSections = document.querySelectorAll('.section');
     let current = '';
     const offset = 100;
 
-    sections.forEach((section) => {
+    contentSections.forEach((section) => {
       const top = section.offsetTop - offset;
       const height = section.offsetHeight;
       if (window.scrollY >= top && window.scrollY < top + height) {
@@ -103,7 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     navLinks.forEach((link) => {
-      link.style.fontWeight = link.getAttribute('href') === `#${current}` ? '600' : '500';
+      const isActive = current && link.getAttribute('href') === `#${current}`;
+      link.style.fontWeight = isActive ? '600' : '500';
+      if (isActive) {
+        link.setAttribute('aria-current', 'location');
+      } else {
+        link.removeAttribute('aria-current');
+      }
     });
   }
 
@@ -119,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.addEventListener('scroll', handleScroll, { passive: true });
 
-  // Profile picture interaction
   const profilePicture = document.querySelector('.profile-picture');
   if (profilePicture) {
     profilePicture.addEventListener('click', function () {
@@ -127,9 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => (this.style.transform = 'scale(1)'), 150);
     });
   }
-
-  // Dark mode functionality
-  const themeToggle = document.querySelector('.theme-toggle');
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
@@ -155,26 +195,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
 
-  // Back to top
-  const backToTopButton = document.querySelector('.back-to-top');
   function toggleBackToTop() {
     if (!backToTopButton) return;
     if (window.scrollY > 300) backToTopButton.classList.add('visible');
     else backToTopButton.classList.remove('visible');
   }
+
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
   if (backToTopButton) {
     backToTopButton.addEventListener('click', scrollToTop);
     window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    toggleBackToTop();
   }
 
-  // Initialize
   initTheme();
   initLazyLoading();
+  highlightNavigation();
 
-  // Set current year in footer
   function updateYear() {
     const year = new Date().getFullYear();
     document.querySelectorAll('[data-current-year]').forEach((el) => {
@@ -184,4 +224,3 @@ document.addEventListener('DOMContentLoaded', () => {
   updateYear();
   console.log('Portfolio loaded - Clean and simple');
 });
-
