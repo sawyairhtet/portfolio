@@ -8,7 +8,7 @@ console.log('Running pre-deployment safety checks...\n');
 let hasErrors = false;
 
 // Check 1: Verify main files exist
-const requiredFiles = ['index.html', 'css/main.css', 'js/main.js'];
+const requiredFiles = ['index.html', 'css/main.css', 'js/main.js', '404.html'];
 requiredFiles.forEach((file) => {
   if (!fs.existsSync(file)) {
     console.log(`[ERROR] Missing required file: ${file}`);
@@ -104,4 +104,3 @@ if (hasErrors) {
   console.log('Reminder: Test locally at http://localhost:3000 first');
   process.exit(0);
 }
-

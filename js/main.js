@@ -176,6 +176,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeToggle) {
       themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
     }
+    // Update browser UI tint to match theme
+    try {
+      const themeMeta = document.querySelector('meta#theme-color');
+      if (themeMeta) {
+        const light = '#fafafa';
+        const dark = '#121212';
+        themeMeta.setAttribute('content', theme === 'dark' ? dark : light);
+      }
+    } catch (_) {
+      // no-op
+    }
   }
 
   function initTheme() {

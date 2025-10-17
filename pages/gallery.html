@@ -12,6 +12,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" id="theme-color" content="#fafafa" />
     <title>Photography Gallery - Saw Ye Htet's Visual Journey</title>
     <meta
       name="description"
@@ -409,6 +410,7 @@
         <nav class="social-links">
           <a href="../index.html" class="social-link">&larr; Back Home</a>
           <a href="about.html" class="social-link">About</a>
+          <a href="gallery.html" class="social-link" aria-current="page">Gallery</a>
           <a href="blog.html" class="social-link">Blog</a>
         </nav>
       </header>
@@ -417,22 +419,21 @@
       <main id="main" role="main">
       <section class="intro">
         <p class="intro-text">
-          I rarely used to take photos, mainly because I wasn't professional at
-          that and most of my old photos also proved that correct. But one time
-          I found the photo album that my mom kept where all my childhood
-          memories are attached and most of them I barely remember. Smart phones
-          and cameras are no where to be found at that time but my parents did
-          their best to make sure I had a core memory. I really thankful to them
-          for that and it is my privilege to do the same in my turn.
+          I rarely used to take photos, mostly because I wasn’t good at it—and
+          my old pictures proved it. One day I found my mom’s album with my
+          childhood memories, many of which I barely remembered. Smartphones and
+          cameras weren’t around for us then, but my parents still made sure I
+          had core memories. I’m really thankful for that, and it’s my privilege
+          to do the same in my turn.
         </p>
       </section>
 
       <!-- Year Navigation -->
-      <nav class="filter-nav" role="radiogroup" aria-label="Filter gallery by year">
+      <nav class="filter-nav" aria-label="Filter gallery by year">
         <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All Years</button>
         <button class="filter-btn" type="button" data-filter="2025" aria-pressed="false">2025</button>
         <button class="filter-btn" type="button" data-filter="2024" aria-pressed="false">2024</button>
-        <button class="filter-btn" data-filter="2023">2023</button>
+        <button class="filter-btn" type="button" data-filter="2023" aria-pressed="false">2023</button>
       </nav>
 
       <!-- Photo Album -->
@@ -604,9 +605,9 @@
     </div>
 
     <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
       <div class="lightbox-content">
-        <button class="lightbox-close" onclick="closeLightbox()">
+        <button class="lightbox-close" aria-label="Close lightbox" onclick="closeLightbox()">
           &times;
         </button>
         <img src="#" alt="" class="lightbox-img" id="lightboxImg" />
@@ -620,8 +621,15 @@
       filterButtons.forEach((button) => {
         button.addEventListener("click", () => {
           const filter = button.dataset.filter;
-          filterButtons.forEach((btn) => btn.classList.remove("active"));
+          // Visual state
+          filterButtons.forEach((btn) => {
+            btn.classList.remove("active");
+            btn.setAttribute("aria-pressed", "false");
+          });
           button.classList.add("active");
+          button.setAttribute("aria-pressed", "true");
+
+          // Filter items
           photoItems.forEach((item) => {
             item.style.display =
               filter === "all" || item.dataset.year === filter
