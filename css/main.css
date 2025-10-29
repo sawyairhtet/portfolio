@@ -487,6 +487,10 @@ body::before {
   background: #d97706;
 }
 
+.status-complete {
+  background: #16a34a;
+}
+
 .status-prototyping {
   background: #7c3aed;
 }
