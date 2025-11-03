@@ -753,6 +753,11 @@ body::before {
   color: white;
 }
 
+.kofi-icon {
+  background: #ff5f5f;
+  color: white;
+}
+
 /* SVG icon styling */
 .contact-icon svg {
   width: 20px;
