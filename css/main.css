@@ -186,7 +186,12 @@ body::before {
   font-size: 1rem;
   color: var(--text-light);
   font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
+
+.location-pin { vertical-align: middle; }
 
 /* ===== 4. NAVIGATION ===== */
 .social-links {
@@ -411,6 +416,7 @@ body::before {
 }
 
 .project-card {
+  display: block;
   padding: 30px;
   border: 1px solid var(--subtle-border);
   background: var(--subtle-bg);
@@ -418,6 +424,8 @@ body::before {
   transition: all 0.3s ease;
   border-radius: 8px;
   margin-left: 30px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .project-card::before {
@@ -472,6 +480,7 @@ body::before {
   background: var(--accent-color);
   opacity: 0.9;
   transition: all 0.2s ease;
+  text-decoration: none;
 }
 
 .status-tag:hover {
