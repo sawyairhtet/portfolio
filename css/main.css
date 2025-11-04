@@ -191,7 +191,9 @@ body::before {
   gap: 6px;
 }
 
-.location-pin { vertical-align: middle; }
+.location-pin {
+  vertical-align: middle;
+}
 
 /* ===== 4. NAVIGATION ===== */
 .social-links {
@@ -1565,14 +1567,57 @@ body::before {
   }
 }
 
-/* ===== Enhancements: Responsive About + Safe-area overrides ===== */
-@media (max-width: 768px) {
-  .setup-grid { grid-template-columns: 1fr; gap: 20px; }
+/* ===== 15. ICONS ===== */
+.project-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: var(--accent-color);
+}
+
+.love-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: var(--accent-color);
+}
+
+/* Adjustments for new contact link structure */
+.contact-link {
+  gap: 8px; /* Increased gap between icon and text */
+}
+
+.contact-title {
+  font-size: 0.9rem; /* Slightly smaller text for balance */
+  font-weight: 500;
 }
 
 @media (max-width: 480px) {
-  .philosophy-list { gap: 20px; }
-  .random-facts ul { gap: 8px; }
-  .theme-toggle { top: calc(12px + env(safe-area-inset-top)); right: calc(12px + env(safe-area-inset-right)); }
-  .back-to-top { bottom: calc(20px + env(safe-area-inset-bottom)); right: calc(12px + env(safe-area-inset-right)); }
+  .contact-links {
+    gap: 10px;
+  }
+
+  .contact-link {
+    flex-direction: row;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    width: calc(50% - 5px);
+    justify-content: center;
+  }
+
+  .contact-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .contact-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .contact-title {
+    font-size: 0.85rem;
+  }
 }

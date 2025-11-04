@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
   </span>
 `;
       document.body.appendChild(backToTopButton);
+      backToTopButton.setAttribute('data-sfx', 'click');
     }
-    backToTopButton.setAttribute('data-sfx', 'click');
 
     return { themeToggle, sfxToggle, backToTopButton };
   }
