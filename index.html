@@ -99,11 +99,15 @@
       <main id="main" role="main">
         <!-- Navigation -->
         <nav class="main-nav">
-          <a href="#projects" class="nav-link">My Smithing Journey</a>
-          <a href="#timeline" class="nav-link">Timeline</a>
-          <a href="#loves" class="nav-link">Things I Love</a>
-          <a href="#skills" class="nav-link">Skills</a>
-          <a href="#contact" class="nav-link">Contact</a>
+          <a href="#projects" class="nav-link" data-sfx="click"
+            >My Smithing Journey</a
+          >
+          <a href="#timeline" class="nav-link" data-sfx="click">Timeline</a>
+          <a href="#loves" class="nav-link" data-sfx="click"
+            >Things I Love</a
+          >
+          <a href="#skills" class="nav-link" data-sfx="click">Skills</a>
+          <a href="#contact" class="nav-link" data-sfx="click">Contact</a>
         </nav>
 
         <!-- Stuff I've Built -->
@@ -113,34 +117,42 @@
             My Smithing Journey
           </h2>
           <div class="projects-grid">
-            <!-- <div class="project-card">
-            <span class="status-tag status-graduated">Graduated</span>
-            <h3 class="project-title">Personal Portfolio Website</h3>
-            <p class="project-description">
-              This website! Obviously, right? This is built with vanilla HTML,
-              CSS, and JavaScript. The whole design is responsive, and what I
-              most proud of is its clean aesthetics, and simple interactive
-              elements.
-            </p>
-          </div> -->
+            <article class="project-card" data-window-sfx>
+              <header class="project-window-bar" aria-hidden="true">
+                <div class="project-window-controls" role="presentation">
+                  <span class="project-window-dot dot-close"></span>
+                  <span class="project-window-dot dot-minimize"></span>
+                  <span class="project-window-dot dot-maximize"></span>
+                </div>
+                <p class="project-window-title">vr_lab.exe</p>
+                <a
+                  class="project-window-open"
+                  href="https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Unity VR Game project on GitHub"
+                  data-sfx="click"
+                >
+                  Open
+                </a>
+              </header>
 
-            <a
-              class="project-card"
-              href="https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="View Unity VR Game project on GitHub"
-            >
-              <span class="status-tag status-complete">Complete</span>
-              <h3 class="project-title">Unity VR Game with Hand Tracking</h3>
-              <p class="project-description">
-                This is a VR game that I am working on during my internship. I
-                am using Unity and the Meta Quest 3 to create a VR game. What's
-                special about this game is that it is entirely controlled with
-                hand tracking and haptic gloves&mdash;no traditional controller
-                needed.
-              </p>
-            </a>
+              <div class="project-window-body">
+                <span class="status-tag status-complete">Complete</span>
+                <h3 class="project-title">Unity VR Game with Hand Tracking</h3>
+                <p class="project-description">
+                  Built a custom VR training experience during my internship
+                  using Unity and Meta Quest 3 hardware. The entire gameplay is
+                  controller-free thanks to hand tracking and haptic gloves,
+                  which made immersion and accessibility the top priorities.
+                </p>
+                <ul class="project-meta">
+                  <li>Unity &amp; XR Interaction Toolkit</li>
+                  <li>Hand tracking + haptic integration</li>
+                  <li>Game design, prototyping, playtesting</li>
+                </ul>
+              </div>
+            </article>
           </div>
         </section>
 

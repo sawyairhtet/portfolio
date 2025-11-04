@@ -25,6 +25,29 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.appendChild(themeToggle);
     }
 
+    let sfxToggle = document.querySelector('.sfx-toggle');
+    if (!sfxToggle) {
+      sfxToggle = document.createElement('button');
+      sfxToggle.type = 'button';
+      sfxToggle.className = 'sfx-toggle';
+      sfxToggle.setAttribute('aria-label', 'Toggle interface sound effects');
+      sfxToggle.setAttribute('aria-pressed', 'false');
+      sfxToggle.setAttribute('data-sfx-enabled', 'false');
+      sfxToggle.innerHTML = `
+  <span class="sfx-toggle-icon sfx-icon-on" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a2.5 2.5 0 00-1.5-2.296v4.592a2.5 2.5 0 001.5-2.296zm-1.5-7.981v2.054a4.5 4.5 0 010 9.854v2.055A6.5 6.5 0 0020 12a6.5 6.5 0 00-5-6.981z"/>
+    </svg>
+  </span>
+  <span class="sfx-toggle-icon sfx-icon-off" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M16 7.27V4.05A6.5 6.5 0 0120 12a6.45 6.45 0 01-1.04 3.53l-1.5-1.5A4.5 4.5 0 0018 12a4.48 4.48 0 00-2-3.73zM4.41 3L3 4.41 7.59 9H3v6h4l5 5v-6.59l4.11 4.11A6.46 6.46 0 0113.5 20v-2.05a4.51 4.51 0 001.48-1.02l3.11 3.11 1.41-1.41L4.41 3zM12 4L9.91 6.09 12 8.18V4z"/>
+    </svg>
+  </span>
+`;
+      document.body.appendChild(sfxToggle);
+    }
+
     let backToTopButton = document.querySelector('.back-to-top');
     if (!backToTopButton) {
       backToTopButton = document.createElement('button');
@@ -40,11 +63,87 @@ document.addEventListener('DOMContentLoaded', () => {
 `;
       document.body.appendChild(backToTopButton);
     }
+    backToTopButton.setAttribute('data-sfx', 'click');
 
-    return { themeToggle, backToTopButton };
+    return { themeToggle, sfxToggle, backToTopButton };
   }
 
-  const { themeToggle, backToTopButton } = ensureGlobalControls();
+  const { themeToggle, sfxToggle, backToTopButton } = ensureGlobalControls();
+
+  const soundFx = (() => {
+    const AudioCtor = window.AudioContext || window.webkitAudioContext;
+    let context = null;
+    let enabled = false;
+
+    function ensureContext() {
+      if (!AudioCtor) return null;
+      if (!context) {
+        try {
+          context = new AudioCtor();
+        } catch (_) {
+          context = null;
+        }
+      }
+      return context;
+    }
+
+    function enable() {
+      const ctx = ensureContext();
+      if (!ctx) return false;
+      if (ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
+      enabled = true;
+      return true;
+    }
+
+    function disable() {
+      enabled = false;
+    }
+
+    function isEnabled() {
+      return enabled;
+    }
+
+    function play(type = 'click') {
+      if (!enabled) return;
+      const ctx = ensureContext();
+      if (!ctx || ctx.state === 'suspended') return;
+
+      const now = ctx.currentTime + 0.005;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const tones = {
+        click: 420,
+        window: 480,
+        hover: 520,
+        toggleOn: 660,
+        toggleOff: 240,
+      };
+      const duration = type === 'hover' ? 0.15 : 0.22;
+      const baseFrequency = tones[type] || tones.click;
+      const startGain = type === 'hover' ? 0.05 : 0.09;
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(baseFrequency, now);
+      if (type === 'toggleOff') {
+        osc.frequency.exponentialRampToValueAtTime(180, now + duration);
+      } else {
+        osc.frequency.exponentialRampToValueAtTime(baseFrequency * 1.12, now + duration);
+      }
+
+      gain.gain.setValueAtTime(startGain, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + duration + 0.05);
+    }
+
+    return { enable, disable, isEnabled, play, hasSupport: Boolean(AudioCtor) };
+  })();
 
   function initLazyLoading() {
     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
@@ -119,12 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionObserver.observe(el);
   });
 
-  document.querySelectorAll('.project-card').forEach((card) => {
-    card.style.transition = 'transform 0.2s ease';
-    card.addEventListener('mouseenter', () => (card.style.transform = 'translateX(5px)'));
-    card.addEventListener('mouseleave', () => (card.style.transform = 'translateX(0)'));
-  });
-
   function highlightNavigation() {
     const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
     if (!navLinks.length) return;
@@ -171,6 +264,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function applySfxToggleState(isOn) {
+    if (!sfxToggle) return;
+    sfxToggle.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+    sfxToggle.setAttribute('data-sfx-enabled', isOn ? 'true' : 'false');
+  }
+
+  function attachSfxHandlers() {
+    const clickTargets = document.querySelectorAll('[data-sfx="click"]');
+    clickTargets.forEach((el) => {
+      el.addEventListener('click', () => soundFx.play('click'));
+    });
+
+    document.querySelectorAll('[data-window-sfx]').forEach((card) => {
+      card.addEventListener('pointerenter', () => soundFx.play('window'));
+      card.addEventListener('focusin', () => soundFx.play('window'));
+    });
+  }
+
+  function initSfx() {
+    if (!sfxToggle) return;
+    if (!soundFx.hasSupport) {
+      sfxToggle.setAttribute('disabled', 'true');
+      sfxToggle.setAttribute('aria-disabled', 'true');
+      sfxToggle.title = 'Sound effects are not available in this browser';
+      return;
+    }
+
+    const stored = localStorage.getItem('portfolio:sfx-enabled');
+    let prefersSfx = stored === 'true';
+    applySfxToggleState(prefersSfx);
+
+    if (prefersSfx) {
+      const unlock = () => {
+        if (soundFx.enable()) {
+          document.removeEventListener('pointerdown', unlock);
+        }
+      };
+      document.addEventListener('pointerdown', unlock, { once: true });
+    }
+
+    sfxToggle.addEventListener('click', () => {
+      const next = !prefersSfx;
+      if (next) {
+        if (!soundFx.enable()) {
+          return;
+        }
+        soundFx.play('toggleOn');
+      } else {
+        soundFx.play('toggleOff');
+        soundFx.disable();
+      }
+      prefersSfx = next;
+      applySfxToggleState(next);
+      localStorage.setItem('portfolio:sfx-enabled', String(next));
+    });
+
+    attachSfxHandlers();
+  }
+
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     if (themeToggle) {
@@ -202,6 +354,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const next = current === 'dark' ? 'light' : 'dark';
     applyTheme(next);
     localStorage.setItem('theme', next);
+    if (soundFx.isEnabled()) {
+      soundFx.play(next === 'dark' ? 'toggleOn' : 'toggleOff');
+    }
   }
 
   if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
@@ -222,6 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleBackToTop();
   }
 
+  initSfx();
   initTheme();
   initLazyLoading();
   highlightNavigation();
