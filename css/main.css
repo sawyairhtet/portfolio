@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #008080; /* Classic Teal */
+    --bg-color: #008080; /* Classic Windows Teal */
     --window-bg: #c0c0c0;
     --window-border-light: #ffffff;
     --window-border-dark: #808080;
@@ -17,13 +17,14 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* No scrolling on the desktop */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
     background-color: var(--bg-color);
+    position: relative;
     font-family: var(--font-main);
     font-size: 18px;
     color: var(--text-color);
-    height: 100vh;
-    width: 100vw;
 }
 
 /* Mobile Warning */
@@ -71,6 +72,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 80%;
+    z-index: 10;
 }
 
 .icon {
@@ -115,6 +117,7 @@ body {
     max-height: 80vh;
     display: flex;
     flex-direction: column;
+    z-index: 20;
 }
 
 .window-header {

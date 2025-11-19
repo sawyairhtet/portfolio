@@ -1,4 +1,4 @@
-﻿// Z-Index Management
+// Z-Index Management
 let highestZ = 100;
 
 function bringToFront(element) {
@@ -100,4 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', checkMobile);
     checkMobile(); // Run on load
+
+    // Background is static CSS now
 });
