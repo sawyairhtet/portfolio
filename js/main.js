@@ -84,18 +84,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mobile Check (Optional extra enforcement)
+    // Mobile Check with Dismissal
+    const warning = document.getElementById('mobile-warning');
+    const desktop = document.getElementById('desktop');
+    const dismissBtn = document.getElementById('dismiss-warning');
+
     function checkMobile() {
-        if (window.innerWidth < 768) {
-            const warning = document.getElementById('mobile-warning');
-            const desktop = document.getElementById('desktop');
+        const isMobile = window.innerWidth < 768;
+        const isDismissed = sessionStorage.getItem('mobileWarningDismissed') === 'true';
+
+        if (isMobile && !isDismissed) {
             if (warning) warning.style.display = 'flex';
-            if (desktop) desktop.style.display = 'none';
+            // We don't hide desktop anymore, CSS handles layout, 
+            // and warning is an overlay.
         } else {
-            const warning = document.getElementById('mobile-warning');
-            const desktop = document.getElementById('desktop');
             if (warning) warning.style.display = 'none';
-            if (desktop) desktop.style.display = 'block';
         }
+    }
+
+    if (dismissBtn) {
+        dismissBtn.addEventListener('click', () => {
+            if (warning) warning.style.display = 'none';
+            sessionStorage.setItem('mobileWarningDismissed', 'true');
+        });
     }
 
     window.addEventListener('resize', checkMobile);
