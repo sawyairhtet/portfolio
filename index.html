@@ -55,6 +55,10 @@
                 <div class="icon-img">📧</div>
                 <div class="icon-label">Contact</div>
             </div>
+            <div class="icon" onclick="openWindow('terminal-window')">
+                <div class="icon-img">⌨️</div>
+                <div class="icon-label">Terminal.exe</div>
+            </div>
         </div>
 
         <!-- Windows -->
@@ -440,6 +444,25 @@
                 <h2>Get in Touch</h2>
                 <p><strong>Email:</strong> <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a></p>
                 <p><strong>Location:</strong> Singapore</p>
+            </div>
+        </div>
+
+        <!-- Terminal Window -->
+        <div id="terminal-window" class="window" style="top: 10%; left: 20%; display: none; width: 650px;">
+            <div class="window-header">
+                <div class="window-title">Terminal</div>
+                <button class="close-btn" onclick="closeWindow('terminal-window')">X</button>
+            </div>
+            <div class="window-body terminal-body">
+                <div class="terminal-output" id="terminal-output">
+                    <div class="terminal-line">Welcome to Saw Ye Htet's Portfolio Terminal</div>
+                    <div class="terminal-line">Type 'help' to see available commands</div>
+                    <div class="terminal-line">─────────────────────────────────────────</div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">visitor@portfolio:~$</span>
+                    <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" spellcheck="false" />
+                </div>
             </div>
         </div>
 

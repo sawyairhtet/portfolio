@@ -442,3 +442,72 @@ h2 {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+/* Terminal Styling */
+.terminal-body {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', 'Consolas', monospace;
+    padding: 15px;
+    min-height: 400px;
+    max-height: 500px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.terminal-output {
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.terminal-line {
+    margin: 5px 0;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.terminal-prompt {
+    color: #0f0;
+    margin-right: 8px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.terminal-input {
+    background: transparent;
+    border: none;
+    color: #0f0;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 14px;
+    outline: none;
+    flex-grow: 1;
+    caret-color: #0f0;
+}
+
+.terminal-input::selection {
+    background-color: #0f0;
+    color: #000;
+}
+
+.terminal-command {
+    color: #0ff;
+}
+
+.terminal-error {
+    color: #f00;
+}
+
+.terminal-success {
+    color: #0f0;
+}
+
+[data-theme="dark"] .terminal-body {
+    background-color: #000;
+    color: #0f0;
+}
