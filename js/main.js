@@ -29,6 +29,11 @@ function closeWindow(windowId) {
 
 // Draggable Logic
 function makeDraggable(element) {
+    // Skip dragging functionality on mobile
+    if (window.innerWidth <= 768) {
+        return;
+    }
+    
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     const header = element.querySelector('.window-header');
 
@@ -88,37 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Mobile Check (Optional extra enforcement)
-    // Mobile Check with Dismissal
-    const warning = document.getElementById('mobile-warning');
-    const desktop = document.getElementById('desktop');
-    const dismissBtn = document.getElementById('dismiss-warning');
-
-    function checkMobile() {
-        const isMobile = window.innerWidth < 768;
-        const isDismissed = sessionStorage.getItem('mobileWarningDismissed') === 'true';
-
-        if (isMobile && !isDismissed) {
-            if (warning) warning.style.display = 'flex';
-            // We don't hide desktop anymore, CSS handles layout, 
-            // and warning is an overlay.
-        } else {
-            if (warning) warning.style.display = 'none';
-        }
-    }
-
-    if (dismissBtn) {
-        dismissBtn.addEventListener('click', () => {
-            if (warning) warning.style.display = 'none';
-            sessionStorage.setItem('mobileWarningDismissed', 'true');
-        });
-    }
-
-    window.addEventListener('resize', checkMobile);
-    checkMobile(); // Run on load
-
-    // Background is static CSS now
-
+    // Mobile warning disabled - CSS handles mobile mode gracefully
+    // The mobile mode transforms the interface into a PDA/Gameboy style
+    
     // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
     const sunIcon = document.getElementById('sun-icon');

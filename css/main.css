@@ -268,6 +268,201 @@ h2 {
 }
 
 .project-list h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.warning-box p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.retro-btn {
+    background-color: #f39c12; /* Orange/Yellow friendly color */
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 12px 25px;
+    font-family: var(--font-header);
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.1s;
+    text-transform: lowercase;
+}
+
+.retro-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    /* Adjust Desktop Icons for Mobile */
+    .desktop-icons {
+        width: 90%;
+        gap: 15px;
+        padding: 10px;
+        top: 50%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        justify-items: center;
+    }
+    
+    .icon {
+        width: 100%;
+        max-width: 100px;
+    }
+    
+    .icon-img {
+        font-size: 32px;
+    }
+    
+    .icon-label {
+        font-size: 12px;
+    }
+    
+    /* Adjust Windows for Mobile */
+    .window {
+        width: 94% !important;
+        left: 3% !important;
+        top: 5% !important;
+        max-height: 90vh;
+    }
+    
+    .window-body {
+        padding: 10px;
+    }
+}
+
+/* Desktop Icons */
+.desktop-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    z-index: 10;
+}
+
+.icon {
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon:hover {
+    border: 1px dotted #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.icon-img {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.icon-label {
+    color: #fff;
+    text-shadow: 1px 1px #000;
+    font-family: var(--font-header);
+    font-size: 14px;
+}
+
+/* Windows */
+.window {
+    position: absolute;
+    background-color: var(--window-bg);
+    border-top: 2px solid var(--window-border-light);
+    border-left: 2px solid var(--window-border-light);
+    border-right: 2px solid var(--window-border-dark);
+    border-bottom: 2px solid var(--window-border-dark);
+    box-shadow: 2px 2px 0px var(--window-border-darker);
+    width: 400px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+}
+
+.window-header {
+    background-color: var(--header-blue);
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+}
+
+.window-header:active {
+    cursor: grabbing;
+}
+
+.window-title {
+    color: #fff;
+    font-family: var(--font-header);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.close-btn {
+    background-color: var(--window-bg);
+    border-top: 1px solid var(--window-border-light);
+    border-left: 1px solid var(--window-border-light);
+    border-right: 1px solid var(--window-border-dark);
+    border-bottom: 1px solid var(--window-border-dark);
+    font-family: var(--font-header);
+    font-size: 10px;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.close-btn:active {
+    border-top: 1px solid var(--window-border-dark);
+    border-left: 1px solid var(--window-border-dark);
+    border-right: 1px solid var(--window-border-light);
+    border-bottom: 1px solid var(--window-border-light);
+}
+
+.window-body {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+h2 {
+    font-family: var(--font-header);
+    font-size: 16px;
+    margin-top: 0;
+    border-bottom: 1px solid var(--window-border-dark);
+    padding-bottom: 5px;
+}
+
+.project-list {
+    list-style: none;
+    padding: 0;
+}
+
+.project-list li {
+    margin-bottom: 15px;
+    border: 1px solid var(--window-border-dark);
+    padding: 10px;
+    background-color: #fff;
+}
+
+.project-list h3 {
     margin: 0 0 5px 0;
     font-family: var(--font-header);
     font-size: 12px;
@@ -276,8 +471,8 @@ h2 {
 /* Theme Toggle Button */
 #theme-toggle {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    bottom: 50px; /* Above taskbar */
+    left: 10px;
     z-index: 1000;
     background-color: var(--window-bg);
     border-top: 2px solid var(--window-border-light);
@@ -320,11 +515,26 @@ h2 {
     color: #fff;
 }
 /* File Explorer Styling */
-.file-explorer {
+.file-explorer-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     padding: 15px;
+}
+
+/* Responsive grid for narrow widths */
+@media (max-width: 600px) {
+    .file-explorer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .file-explorer-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
 }
 
 .file-icon {
@@ -653,5 +863,171 @@ h2 {
     .taskbar-window-btn {
         max-width: 100px;
         font-size: 10px;
+    }
+}
+
+/* ============================================
+   MOBILE MODE (PDA/Gameboy Style)
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Desktop - adjust padding and spacing */
+    #desktop {
+        padding: 10px;
+        padding-bottom: 50px; /* Extra space for taskbar */
+    }
+    
+    /* Desktop icons - 3-column grid */
+    .icons-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px 10px;
+    }
+    
+    .icon {
+        width: 70px;
+    }
+    
+    .icon-img {
+        font-size: 32px;
+        margin-bottom: 4px;
+    }
+    
+    .icon-label {
+        font-size: 10px;
+    }
+    
+    /* Windows - fullscreen/maximize style */
+    .window {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: calc(100vh - 40px) !important;
+        max-width: 100% !important;
+        max-height: calc(100vh - 40px) !important;
+        border-radius: 0;
+        margin: 0;
+    }
+    
+    /* Window headers - larger tap targets */
+    .window-header {
+        padding: 8px 10px;
+        min-height: 40px;
+    }
+    
+    .window-title {
+        font-size: 13px;
+    }
+    
+    .close-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    /* Window body scrolling */
+    .window-body {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Taskbar adjustments */
+    .taskbar {
+        height: 40px;
+        padding: 0 4px;
+    }
+    
+    .start-button {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .start-text {
+        display: none; /* Hide "Start" text, keep icon only */
+    }
+    
+    .start-icon {
+        font-size: 18px;
+    }
+    
+    .taskbar-windows {
+        gap: 2px;
+    }
+    
+    .taskbar-window-btn {
+        font-size: 9px;
+        padding: 4px 6px;
+        max-width: 80px;
+    }
+    
+    .taskbar-clock {
+        font-size: 10px;
+        padding: 4px 6px;
+        min-width: 65px;
+    }
+    
+    /* Start Menu */
+    .start-menu {
+        bottom: 42px;
+        left: 2px;
+        min-width: 180px;
+    }
+    
+    .start-menu-item {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    /* Theme toggle */
+    #theme-toggle {
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+    }
+    
+    /* Terminal adjustments */
+    .terminal-body {
+        font-size: 11px;
+        padding: 10px;
+        max-height: none;
+    }
+    
+    .terminal-input {
+        font-size: 11px;
+    }
+    
+    .terminal-prompt {
+        font-size: 11px;
+    }
+    
+    /* Projects file explorer */
+    .file-explorer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .file-icon {
+        width: 100%;
+    }
+    
+    /* About/System windows */
+    .window-body h2 {
+        font-size: 16px;
+    }
+    
+    .window-body h3 {
+        font-size: 14px;
+    }
+    
+    .window-body p {
+        font-size: 12px;
+    }
+    
+    /* Mobile warning - hide completely */
+    #mobile-warning {
+        display: none !important;
     }
 }
