@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         moonIcon.style.display = 'block';
     }
 
+
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
@@ -146,4 +147,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Project Icon Double-Click Handlers
+    const projectIcons = document.querySelectorAll('.file-icon');
+    projectIcons.forEach(icon => {
+        icon.addEventListener('dblclick', () => {
+            const projectId = icon.getAttribute('data-project');
+            openProjectDetail(projectId);
+        });
+        
+        // Make project detail windows draggable
+        const projectWindow = document.getElementById(`project-${projectId}`);
+        if (projectWindow) {
+            makeDraggable(projectWindow);
+            projectWindow.addEventListener('mousedown', () => {
+                bringToFront(projectWindow);
+            });
+        }
+    });
 });
+
+// Open Project Detail Window
+function openProjectDetail(projectId) {
+    const windowId = `project-${projectId}`;
+    const win = document.getElementById(windowId);
+    if (win) {
+        win.style.display = 'flex';
+        bringToFront(win);
+    }
+}

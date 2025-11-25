@@ -123,52 +123,277 @@
             </div>
         </div>
 
-        <!-- Projects Window -->
-        <div id="projects-window" class="window" style="top: 15%; left: 15%; display: none;">
+        <!-- Projects Window (File Explorer) -->
+        <div id="projects-window" class="window" style="top: 15%; left: 15%; display: none; width: 580px;">
             <div class="window-header">
                 <div class="window-title">Projects</div>
                 <button class="close-btn" onclick="closeWindow('projects-window')">X</button>
             </div>
             <div class="window-body">
-                <h2>My Projects</h2>
-                <ul class="project-list">
-                    <li>
-                        <h3>Finance</h3>
-                        <p>Web development</p>
-                    </li>
-                    <li>
-                        <h3>Orizon</h3>
-                        <p>Web development</p>
-                    </li>
-                    <li>
-                        <h3>Fundo</h3>
-                        <p>Web design</p>
-                    </li>
-                    <li>
-                        <h3>Brawlhalla</h3>
-                        <p>Applications</p>
-                    </li>
-                    <li>
-                        <h3>DSM.</h3>
-                        <p>Web design</p>
-                    </li>
-                    <li>
-                        <h3>MetaSpark</h3>
-                        <p>Web design</p>
-                    </li>
-                    <li>
-                        <h3>Summary</h3>
-                        <p>Web development</p>
-                    </li>
-                    <li>
-                        <h3>Task Manager</h3>
-                        <p>Applications</p>
-                    </li>
-                    <li>
-                        <h3>Arrival</h3>
-                        <p>Web development</p>
-                    </li>
-                </ul>
+                <div class="file-explorer">
+                    <div class="file-icon" data-project="finance">
+                        <div class="file-icon-img">🌐</div>
+                        <div class="file-icon-label">Finance</div>
+                    </div>
+                    <div class="file-icon" data-project="orizon">
+                        <div class="file-icon-img">🏦</div>
+                        <div class="file-icon-label">Orizon</div>
+                    </div>
+                    <div class="file-icon" data-project="fundo">
+                        <div class="file-icon-img">🎨</div>
+                        <div class="file-icon-label">Fundo</div>
+                    </div>
+                    <div class="file-icon" data-project="brawlhalla">
+                        <div class="file-icon-img">⚙️</div>
+                        <div class="file-icon-label">Brawlhalla.exe</div>
+                    </div>
+                    <div class="file-icon" data-project="dsm">
+                        <div class="file-icon-img">🎨</div>
+                        <div class="file-icon-label">DSM</div>
+                    </div>
+                    <div class="file-icon" data-project="metaspark">
+                        <div class="file-icon-img">🎨</div>
+                        <div class="file-icon-label">MetaSpark</div>
+                    </div>
+                    <div class="file-icon" data-project="summary">
+                        <div class="file-icon-img">🌐</div>
+                        <div class="file-icon-label">Summary</div>
+                    </div>
+                    <div class="file-icon" data-project="taskmanager">
+                        <div class="file-icon-img">⚙️</div>
+                        <div class="file-icon-label">TaskManager.exe</div>
+                    </div>
+                    <div class="file-icon" data-project="arrival">
+                        <div class="file-icon-img">🌐</div>
+                        <div class="file-icon-label">Arrival</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Detail Windows -->
+        
+        <!-- Finance Project -->
+        <div id="project-finance" class="window project-detail-window" style="top: 10%; left: 25%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">Finance - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-finance')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">📊 Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>A comprehensive financial management web application featuring dashboard analytics, transaction tracking, and budget management tools.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">React</span>
+                </div>
+                
+                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+            </div>
+        </div>
+
+        <!-- Orizon Project -->
+        <div id="project-orizon" class="window project-detail-window" style="top: 12%; left: 27%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">Orizon - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-orizon')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">🏦 Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>A modern banking interface with seamless user experience, account management, and secure transaction processing.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">TypeScript</span>
+                    <span class="tech-badge">Next.js</span>
+                    <span class="tech-badge">Tailwind CSS</span>
+                </div>
+                
+                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+            </div>
+        </div>
+
+        <!-- Fundo Project -->
+        <div id="project-fundo" class="window project-detail-window" style="top: 14%; left: 29%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">Fundo - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-fundo')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">🎨 Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>A creative design portfolio showcase with stunning animations, responsive layouts, and modern aesthetic principles.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">GSAP</span>
+                </div>
+                
+                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+            </div>
+        </div>
+
+        <!-- Brawlhalla Project -->
+        <div id="project-brawlhalla" class="window project-detail-window" style="top: 16%; left: 31%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">Brawlhalla.exe - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-brawlhalla')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">🎮 Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>A desktop application built with modern frameworks, featuring game statistics tracking and player analytics.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Tkinter</span>
+                    <span class="tech-badge">SQLite</span>
+                </div>
+                
+                <button class="run-button" onclick="alert('Desktop application - download coming soon!')">💾 Download App</button>
+            </div>
+        </div>
+
+        <!-- DSM Project -->
+        <div id="project-dsm" class="window project-detail-window" style="top: 18%; left: 33%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">DSM - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-dsm')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">🎨 Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>A design system management tool with component library, style guide documentation, and design tokens.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Figma API</span>
+                </div>
+                
+                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+            </div>
+        </div>
+
+        <!-- MetaSpark Project -->
+        <div id="project-metaspark" class="window project-detail-window" style="top: 20%; left: 35%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">MetaSpark - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-metaspark')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">✨ Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>An innovative metaverse platform design featuring immersive 3D environments and social interaction features.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">Three.js</span>
+                    <span class="tech-badge">WebGL</span>
+                    <span class="tech-badge">React</span>
+                    <span class="tech-badge">Node.js</span>
+                </div>
+                
+                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+            </div>
+        </div>
+
+        <!-- Summary Project -->
+        <div id="project-summary" class="window project-detail-window" style="top: 22%; left: 37%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">Summary - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-summary')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">📝 Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>An intelligent text summarization tool using natural language processing to condense long articles into key points.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Flask</span>
+                    <span class="tech-badge">NLP</span>
+                    <span class="tech-badge">JavaScript</span>
+                </div>
+                
+                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+            </div>
+        </div>
+
+        <!-- Task Manager Project -->
+        <div id="project-taskmanager" class="window project-detail-window" style="top: 24%; left: 39%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">TaskManager.exe - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-taskmanager')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">✅ Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>A productivity application for task organization, time tracking, and project management with intuitive UI.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">C#</span>
+                    <span class="tech-badge">.NET</span>
+                    <span class="tech-badge">WPF</span>
+                    <span class="tech-badge">SQL Server</span>
+                </div>
+                
+                <button class="run-button" onclick="alert('Desktop application - download coming soon!')">💾 Download App</button>
+            </div>
+        </div>
+
+        <!-- Arrival Project -->
+        <div id="project-arrival" class="window project-detail-window" style="top: 26%; left: 41%; display: none; width: 550px;">
+            <div class="window-header">
+                <div class="window-title">Arrival - Project Details</div>
+                <button class="close-btn" onclick="closeWindow('project-arrival')">X</button>
+            </div>
+            <div class="window-body">
+                <div class="project-screenshot">
+                    <div class="screenshot-placeholder">🚀 Project Screenshot</div>
+                </div>
+                <h3>Description</h3>
+                <p>A landing page design for a technology startup with smooth scrolling, parallax effects, and conversion optimization.</p>
+                
+                <h3>Tech Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">ScrollMagic</span>
+                </div>
+                
+                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
             </div>
         </div>
 
