@@ -1,24 +1,29 @@
 // Z-Index Management
-let highestZ = 100;
+let currentZIndex = 100;
 
 function bringToFront(element) {
-    highestZ++;
-    element.style.zIndex = highestZ;
+    currentZIndex++;
+    element.style.zIndex = currentZIndex;
+    updateTaskbarActiveStates();
 }
 
-// Open/Close Logic
+// Open Window
 function openWindow(windowId) {
     const win = document.getElementById(windowId);
     if (win) {
         win.style.display = 'flex';
+        win.dataset.minimized = 'false';
         bringToFront(win);
+        addToTaskbar(windowId);
     }
 }
 
+// Close Window
 function closeWindow(windowId) {
     const win = document.getElementById(windowId);
     if (win) {
         win.style.display = 'none';
+        removeFromTaskbar(windowId);
     }
 }
 
@@ -351,4 +356,133 @@ function initializeTerminal() {
 // Initialize terminal on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     initializeTerminal();
+});
+
+// ============================================
+// TASKBAR SYSTEM
+// ============================================
+
+// Taskbar Management
+function addToTaskbar(windowId) {
+    const taskbarWindows = document.getElementById('taskbar-windows');
+    if (!taskbarWindows) return;
+    if (document.getElementById(`taskbar-${windowId}`)) return;
+    
+    const win = document.getElementById(windowId);
+    const title = win.querySelector('.window-title').textContent;
+    
+    const btn = document.createElement('button');
+    btn.id = `taskbar-${windowId}`;
+    btn.className = 'taskbar-window-btn active';
+    btn.textContent = title;
+    btn.onclick = () => toggleWindowFromTaskbar(windowId);
+    
+    taskbarWindows.appendChild(btn);
+}
+
+function removeFromTaskbar(windowId) {
+    const btn = document.getElementById(`taskbar-${windowId}`);
+    if (btn) btn.remove();
+}
+
+function toggleWindowFromTaskbar(windowId) {
+    const win = document.getElementById(windowId);
+    if (!win) return;
+    
+    if (win.dataset.minimized === 'true') {
+        restoreWindow(windowId);
+    } else if (win.style.zIndex === String(currentZIndex)) {
+        minimizeWindow(windowId);
+    } else {
+        bringToFront(win);
+    }
+}
+
+function minimizeWindow(windowId) {
+    const win = document.getElementById(windowId);
+    if (!win) return;
+    
+    win.style.display = 'none';
+    win.dataset.minimized = 'true';
+    
+    const btn = document.getElementById(`taskbar-${windowId}`);
+    if (btn) btn.classList.remove('active');
+}
+
+function restoreWindow(windowId) {
+    const win = document.getElementById(windowId);
+    if (!win) return;
+    
+    win.style.display = 'flex';
+    win.dataset.minimized = 'false';
+    bringToFront(win);
+    
+    const btn = document.getElementById(`taskbar-${windowId}`);
+    if (btn) btn.classList.add('active');
+}
+
+function updateTaskbarActiveStates() {
+    const taskbarButtons = document.querySelectorAll('.taskbar-window-btn');
+    taskbarButtons.forEach(btn => {
+        const windowId = btn.id.replace('taskbar-', '');
+        const win = document.getElementById(windowId);
+        if (win && win.style.zIndex === String(currentZIndex)) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
+// Start Menu
+function initializeTaskbar() {
+    const startButton = document.getElementById('start-button');
+    const startMenu = document.getElementById('start-menu');
+    
+    if (startButton && startMenu) {
+        startButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = startMenu.style.display === 'block';
+            startMenu.style.display = isOpen ? 'none' : 'block';
+            startButton.classList.toggle('active');
+        });
+        
+        // Close start menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!startButton.contains(e.target) && !startMenu.contains(e.target)) {
+                startMenu.style.display = 'none';
+                startButton.classList.remove('active');
+            }
+        });
+    }
+    
+    // Initialize clock
+    updateClock();
+    setInterval(updateClock, 60000); // Update every minute
+}
+
+function closeStartMenu() {
+    const startMenu = document.getElementById('start-menu');
+    const startButton = document.getElementById('start-button');
+    if (startMenu) startMenu.style.display = 'none';
+    if (startButton) startButton.classList.remove('active');
+}
+
+// Live Clock
+function updateClock() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    
+    const clockElement = document.getElementById('taskbar-clock');
+    if (clockElement) {
+        clockElement.textContent = `${displayHours}:${minutes} ${ampm}`;
+    }
+}
+
+// Initialize taskbar on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTaskbar();
 });
