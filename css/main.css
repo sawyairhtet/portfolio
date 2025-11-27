@@ -354,9 +354,11 @@ h2 {
 
 .icon {
     width: 100px;
+    min-width: 80px; /* Minimum width to prevent squishing */
     text-align: center;
     cursor: pointer;
     padding: 10px;
+    margin: 10px; /* Add spacing around icon to prevent collisions */
     border: 1px solid transparent;
     display: flex;
     flex-direction: column;
@@ -379,6 +381,9 @@ h2 {
     text-shadow: 1px 1px #000;
     font-family: var(--font-header);
     font-size: 14px;
+    word-wrap: break-word; /* Allow labels to wrap if needed */
+    max-width: 100%;
+    line-height: 1.2; /* Improve readability for multi-line labels */
 }
 
 /* Windows */
