@@ -3,496 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Desktop Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <title>Saw Ye Htet - Portfolio</title>
     <link rel="stylesheet" href="css/main.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-    <div id="mobile-warning">
-        <div class="warning-box">
-            <h1>hey there!</h1>
-            <p>just letting you know that this site is best experienced on desktop, some features might be wonky on different devices.</p>
-            <button id="dismiss-warning" class="retro-btn">okay</button>
+    
+    <!-- Top Bar (Menu Bar for macOS / Status Bar for iOS/iPadOS) -->
+    <div class="top-bar">
+        <!-- macOS Menu Bar Items (Desktop only) -->
+        <div class="menu-bar-left">
+            <div class="apple-logo"></div>
+            <div class="menu-item">Finder</div>
+            <div class="menu-item">File</div>
+            <div class="menu-item">Edit</div>
+            <div class="menu-item">View</div>
+        </div>
+        
+        <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
+        <div class="status-bar">
+            <div class="status-time"></div>
+            <div class="dynamic-island"></div>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+        
+        <!-- macOS Menu Bar Right (Desktop only) -->
+        <div class="menu-bar-right">
+            <i class="fas fa-battery-three-quarters"></i>
+            <i class="fas fa-wifi"></i>
+            <div class="menu-clock"></div>
+            <div class="control-center-icon">
+                <i class="fas fa-sliders-h"></i>
+            </div>
         </div>
     </div>
 
-
-
-    <button id="theme-toggle" aria-label="Toggle Dark Mode">
-        <!-- Sun Icon (Default) -->
-        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 9c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zM11 1h2v2h-2zm0 20h2v2h-2zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414zM1 11h2v2H1zm20 0h2v2h-2zM4.929 19.071L3.515 17.657l2.121-2.121 1.414 1.414zM18.364 5.636l1.414-1.414 2.121 2.121-1.414 1.414z"/></svg>
-        <!-- Moon Icon (Hidden by default via JS) -->
-        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
-    </button>
-
-    <div id="desktop">
-        <!-- Desktop Icons -->
-        <div class="desktop-icons">
-            <div class="icon" onclick="openWindow('about-window')">
-                <div class="icon-img">📝</div>
-                <div class="icon-label">About.txt</div>
-            </div>
-            <div class="icon" onclick="openWindow('system-window')">
-                <div class="icon-img">💻</div>
-                <div class="icon-label">My Computer</div>
-            </div>
-            <div class="icon" onclick="openWindow('projects-window')">
-                <div class="icon-img">💾</div>
-                <div class="icon-label">Projects</div>
-            </div>
-            <div class="icon" onclick="openWindow('links-window')">
-                <div class="icon-img">🔗</div>
-                <div class="icon-label">Links</div>
-            </div>
-            <div class="icon" onclick="openWindow('faq-window')">
-                <div class="icon-img">❓</div>
-                <div class="icon-label">FAQ</div>
-            </div>
-            <div class="icon" onclick="openWindow('contact-window')">
-                <div class="icon-img">📧</div>
-                <div class="icon-label">Contact</div>
-            </div>
-            <div class="icon" onclick="openWindow('terminal-window')">
-                <div class="icon-img">⌨️</div>
-                <div class="icon-label">Terminal.exe</div>
-            </div>
-        </div>
-
-        <!-- Windows -->
+    <!-- Main Content Area -->
+    <div class="main-content">
         
-        <!-- About Window -->
-        <div id="about-window" class="window" style="top: 10%; left: 10%; display: none;">
-            <div class="window-header">
-                <div class="window-title">About.txt</div>
-                <button class="close-btn" onclick="closeWindow('about-window')">X</button>
-            </div>
-            <div class="window-body">
-                <h2>Saw Ye Htet</h2>
-                <p><strong>IT Student & Software Engineer</strong></p>
-                <p>IT Student at Singapore Polytechnic passionate about software engineering, VR development, and creating meaningful digital solutions.</p>
-                
-                <h3>Education</h3>
-                <p><strong>Singapore Polytechnic</strong><br>
-                Diploma in Information Technology</p>
-                
-                <h3>Interests</h3>
-                <p>Building immersive VR experiences, crafting pixel-perfect web interfaces, and exploring the intersection of technology and creativity.</p>
-                
-                <h3>Currently</h3>
-                <p>🟢 <strong>Available for opportunities</strong></p>
-            </div>
-        </div>
-
-        <!-- System Properties Window -->
-        <div id="system-window" class="window" style="top: 12%; left: 12%; display: none; width: 450px;">
-            <div class="window-header">
-                <div class="window-title">System Properties</div>
-                <button class="close-btn" onclick="closeWindow('system-window')">X</button>
-            </div>
-            <div class="window-body">
-                <h2>💻 System Specifications</h2>
-                
-                <h3>⚙️ Processor</h3>
-                <p><strong>Problem Solver i9</strong> @ 3.8 GHz<br>
-                High-performance multi-threaded thinking with creative problem-solving acceleration</p>
-                
-                <h3>🧠 Memory (RAM)</h3>
-                <p><strong>Full Stack Knowledge</strong> - 16GB DDR5<br>
-                Rapid access to JavaScript, Python, C#, HTML5, CSS3, SQL</p>
-                
-                <h3>💿 Installed Drivers & Software</h3>
-                <p><strong>Programming Languages:</strong><br>
-                • JavaScript ES6+ (Primary Driver)<br>
-                • Python 3.x (Secondary Driver)<br>
-                • C# .NET (Unity Optimized)<br>
-                • SQL (Database Engine)</p>
-                
-                <h3>🎨 Graphics & Display</h3>
-                <p><strong>Frontend Rendering Engine v2.0</strong><br>
-                HTML5 Canvas • CSS3 Animations • Responsive Design • UI/UX Optimization</p>
-                
-                <h3>🌐 Network & Connectivity</h3>
-                <p><strong>RESTful API Protocol</strong><br>
-                HTTP/HTTPS • JSON • WebSocket • Database Integration</p>
-                
-                <h3>🎮 Gaming & VR Module</h3>
-                <p><strong>Unity Engine 2022+</strong><br>
-                VR Development • 3D Graphics • Physics Simulation • Interactive Experiences</p>
-                
-                <h3>🛠️ Development Tools</h3>
-                <p>Git Version Control • VS Code IDE • Chrome DevTools • Figma</p>
-            </div>
-        </div>
-
-        <!-- Projects Window (File Explorer) -->
-        <div id="projects-window" class="window" style="top: 15%; left: 15%; display: none; width: 580px;">
-            <div class="window-header">
-                <div class="window-title">Projects</div>
-                <button class="close-btn" onclick="closeWindow('projects-window')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="file-explorer">
-                    <div class="file-icon" data-project="finance">
-                        <div class="file-icon-img">🌐</div>
-                        <div class="file-icon-label">Finance</div>
-                    </div>
-                    <div class="file-icon" data-project="orizon">
-                        <div class="file-icon-img">🏦</div>
-                        <div class="file-icon-label">Orizon</div>
-                    </div>
-                    <div class="file-icon" data-project="fundo">
-                        <div class="file-icon-img">🎨</div>
-                        <div class="file-icon-label">Fundo</div>
-                    </div>
-                    <div class="file-icon" data-project="brawlhalla">
-                        <div class="file-icon-img">⚙️</div>
-                        <div class="file-icon-label">Brawlhalla.exe</div>
-                    </div>
-                    <div class="file-icon" data-project="dsm">
-                        <div class="file-icon-img">🎨</div>
-                        <div class="file-icon-label">DSM</div>
-                    </div>
-                    <div class="file-icon" data-project="metaspark">
-                        <div class="file-icon-img">🎨</div>
-                        <div class="file-icon-label">MetaSpark</div>
-                    </div>
-                    <div class="file-icon" data-project="summary">
-                        <div class="file-icon-img">🌐</div>
-                        <div class="file-icon-label">Summary</div>
-                    </div>
-                    <div class="file-icon" data-project="taskmanager">
-                        <div class="file-icon-img">⚙️</div>
-                        <div class="file-icon-label">TaskManager.exe</div>
-                    </div>
-                    <div class="file-icon" data-project="arrival">
-                        <div class="file-icon-img">🌐</div>
-                        <div class="file-icon-label">Arrival</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Project Detail Windows -->
+        <!-- Desktop Wallpaper (macOS only) -->
+        <div class="wallpaper"></div>
         
-        <!-- Finance Project -->
-        <div id="project-finance" class="window project-detail-window" style="top: 10%; left: 25%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">Finance - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-finance')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">📊 Project Screenshot</div>
+        <!-- App Icons Grid (All layouts) -->
+        <div class="app-grid">
+            <!-- About App -->
+            <div class="app-icon" data-app="about">
+                <div class="app-icon-wrapper">
+                    <i class="fas fa-user-circle"></i>
                 </div>
-                <h3>Description</h3>
-                <p>A comprehensive financial management web application featuring dashboard analytics, transaction tracking, and budget management tools.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">HTML5</span>
-                    <span class="tech-badge">CSS3</span>
-                    <span class="tech-badge">React</span>
+                <div class="app-label">About</div>
+            </div>
+            
+            <!-- Skills App -->
+            <div class="app-icon" data-app="skills">
+                <div class="app-icon-wrapper">
+                    <i class="fas fa-tools"></i>
                 </div>
-                
-                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+                <div class="app-label">Skills</div>
             </div>
-        </div>
-
-        <!-- Orizon Project -->
-        <div id="project-orizon" class="window project-detail-window" style="top: 12%; left: 27%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">Orizon - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-orizon')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">🏦 Project Screenshot</div>
+            
+            <!-- Projects App -->
+            <div class="app-icon" data-app="projects">
+                <div class="app-icon-wrapper">
+                    <i class="fas fa-folder"></i>
                 </div>
-                <h3>Description</h3>
-                <p>A modern banking interface with seamless user experience, account management, and secure transaction processing.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">TypeScript</span>
-                    <span class="tech-badge">Next.js</span>
-                    <span class="tech-badge">Tailwind CSS</span>
+                <div class="app-label">Projects</div>
+            </div>
+            
+            <!-- Contact App -->
+            <div class="app-icon" data-app="contact">
+                <div class="app-icon-wrapper">
+                    <i class="fas fa-phone"></i>
                 </div>
-                
-                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+                <div class="app-label">Contact</div>
             </div>
-        </div>
-
-        <!-- Fundo Project -->
-        <div id="project-fundo" class="window project-detail-window" style="top: 14%; left: 29%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">Fundo - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-fundo')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">🎨 Project Screenshot</div>
+            
+            <!-- Links App -->
+            <div class="app-icon" data-app="links">
+                <div class="app-icon-wrapper">
+                    <i class="fas fa-link"></i>
                 </div>
-                <h3>Description</h3>
-                <p>A creative design portfolio showcase with stunning animations, responsive layouts, and modern aesthetic principles.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">HTML5</span>
-                    <span class="tech-badge">CSS3</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">GSAP</span>
+                <div class="app-label">Links</div>
+            </div>
+            
+            <!-- Terminal App -->
+            <div class="app-icon" data-app="terminal">
+                <div class="app-icon-wrapper">
+                    <i class="fas fa-terminal"></i>
                 </div>
-                
-                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
+                <div class="app-label">Terminal</div>
             </div>
-        </div>
-
-        <!-- Brawlhalla Project -->
-        <div id="project-brawlhalla" class="window project-detail-window" style="top: 16%; left: 31%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">Brawlhalla.exe - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-brawlhalla')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">🎮 Project Screenshot</div>
+            
+            <!-- Settings App -->
+            <div class="app-icon" data-app="settings">
+                <div class="app-icon-wrapper">
+                    <i class="fas fa-cog"></i>
                 </div>
-                <h3>Description</h3>
-                <p>A desktop application built with modern frameworks, featuring game statistics tracking and player analytics.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">Python</span>
-                    <span class="tech-badge">Tkinter</span>
-                    <span class="tech-badge">SQLite</span>
-                </div>
-                
-                <button class="run-button" onclick="alert('Desktop application - download coming soon!')">💾 Download App</button>
+                <div class="app-label">Settings</div>
             </div>
-        </div>
-
-        <!-- DSM Project -->
-        <div id="project-dsm" class="window project-detail-window" style="top: 18%; left: 33%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">DSM - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-dsm')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">🎨 Project Screenshot</div>
-                </div>
-                <h3>Description</h3>
-                <p>A design system management tool with component library, style guide documentation, and design tokens.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">HTML5</span>
-                    <span class="tech-badge">CSS3</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">Figma API</span>
-                </div>
-                
-                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
-            </div>
-        </div>
-
-        <!-- MetaSpark Project -->
-        <div id="project-metaspark" class="window project-detail-window" style="top: 20%; left: 35%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">MetaSpark - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-metaspark')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">✨ Project Screenshot</div>
-                </div>
-                <h3>Description</h3>
-                <p>An innovative metaverse platform design featuring immersive 3D environments and social interaction features.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">Three.js</span>
-                    <span class="tech-badge">WebGL</span>
-                    <span class="tech-badge">React</span>
-                    <span class="tech-badge">Node.js</span>
-                </div>
-                
-                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
-            </div>
-        </div>
-
-        <!-- Summary Project -->
-        <div id="project-summary" class="window project-detail-window" style="top: 22%; left: 37%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">Summary - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-summary')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">📝 Project Screenshot</div>
-                </div>
-                <h3>Description</h3>
-                <p>An intelligent text summarization tool using natural language processing to condense long articles into key points.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">Python</span>
-                    <span class="tech-badge">Flask</span>
-                    <span class="tech-badge">NLP</span>
-                    <span class="tech-badge">JavaScript</span>
-                </div>
-                
-                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
-            </div>
-        </div>
-
-        <!-- Task Manager Project -->
-        <div id="project-taskmanager" class="window project-detail-window" style="top: 24%; left: 39%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">TaskManager.exe - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-taskmanager')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">✅ Project Screenshot</div>
-                </div>
-                <h3>Description</h3>
-                <p>A productivity application for task organization, time tracking, and project management with intuitive UI.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">C#</span>
-                    <span class="tech-badge">.NET</span>
-                    <span class="tech-badge">WPF</span>
-                    <span class="tech-badge">SQL Server</span>
-                </div>
-                
-                <button class="run-button" onclick="alert('Desktop application - download coming soon!')">💾 Download App</button>
-            </div>
-        </div>
-
-        <!-- Arrival Project -->
-        <div id="project-arrival" class="window project-detail-window" style="top: 26%; left: 41%; display: none; width: 550px;">
-            <div class="window-header">
-                <div class="window-title">Arrival - Project Details</div>
-                <button class="close-btn" onclick="closeWindow('project-arrival')">X</button>
-            </div>
-            <div class="window-body">
-                <div class="project-screenshot">
-                    <div class="screenshot-placeholder">🚀 Project Screenshot</div>
-                </div>
-                <h3>Description</h3>
-                <p>A landing page design for a technology startup with smooth scrolling, parallax effects, and conversion optimization.</p>
-                
-                <h3>Tech Stack</h3>
-                <div class="tech-stack">
-                    <span class="tech-badge">HTML5</span>
-                    <span class="tech-badge">CSS3</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">ScrollMagic</span>
-                </div>
-                
-                <button class="run-button" onclick="window.open('#', '_blank')">🚀 Run Live Demo</button>
-            </div>
-        </div>
-
-        <!-- Links Window -->
-        <div id="links-window" class="window" style="top: 18%; left: 18%; display: none;">
-            <div class="window-header">
-                <div class="window-title">Links</div>
-                <button class="close-btn" onclick="closeWindow('links-window')">X</button>
-            </div>
-            <div class="window-body">
-                <h2>Social Links</h2>
-                <p><a href="https://github.com/sawyairhtet" target="_blank">GitHub</a></p>
-                <p><a href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/" target="_blank">LinkedIn</a></p>
-                <p><a href="https://x.com/saulyehtet_" target="_blank">X (Twitter)</a></p>
-            </div>
-        </div>
-
-        <!-- FAQ Window -->
-        <div id="faq-window" class="window" style="top: 22%; left: 22%; display: none;">
-            <div class="window-header">
-                <div class="window-title">FAQ</div>
-                <button class="close-btn" onclick="closeWindow('faq-window')">X</button>
-            </div>
-            <div class="window-body">
-                <h2>Frequently Asked Questions</h2>
-                <p><strong>Q: Are you open to work?</strong></p>
-                <p>A: Yes! I am currently looking for opportunities.</p>
-                <hr>
-                <p><strong>Q: What tech stack do you use?</strong></p>
-                <p>A: I mainly work with JavaScript, Python, and C# (Unity).</p>
-                <hr>
-                <p><strong>Q: How can I contact you?</strong></p>
-                <p>A: You can email me at minwn2244@gmail.com.</p>
-            </div>
-        </div>
-
-        <!-- Contact Window -->
-        <div id="contact-window" class="window" style="top: 20%; left: 20%; display: none;">
-            <div class="window-header">
-                <div class="window-title">Contact</div>
-                <button class="close-btn" onclick="closeWindow('contact-window')">X</button>
-            </div>
-            <div class="window-body">
-                <h2>Get in Touch</h2>
-                <p><strong>Email:</strong> <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a></p>
-                <p><strong>Location:</strong> Singapore</p>
-            </div>
-        </div>
-
-        <!-- Terminal Window -->
-        <div id="terminal-window" class="window" style="top: 10%; left: 20%; display: none; width: 650px;">
-            <div class="window-header">
-                <div class="window-title">Terminal</div>
-                <button class="close-btn" onclick="closeWindow('terminal-window')">X</button>
-            </div>
-            <div class="window-body terminal-body">
-                <div class="terminal-output" id="terminal-output">
-                    <div class="terminal-line">Welcome to Saw Ye Htet's Portfolio Terminal</div>
-                    <div class="terminal-line">Type 'help' to see available commands</div>
-                    <div class="terminal-line">─────────────────────────────────────────</div>
-                </div>
-                <div class="terminal-input-line">
-                    <span class="terminal-prompt">visitor@portfolio:~$</span>
-                    <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" spellcheck="false" />
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Taskbar -->
-    <div class="taskbar">
-        <button class="start-button" id="start-button">
-            <span class="start-icon">⊞</span>
-            <span class="start-text">Start</span>
-        </button>
-        
-        <div class="taskbar-windows" id="taskbar-windows">
-            <!-- Active windows will be added here dynamically -->
         </div>
         
-        <div class="taskbar-clock" id="taskbar-clock">
-            12:00 PM
+        <!-- Widget Container (iPad/iOS) -->
+        <div class="widget-container">
+            <div class="widget widget-about">
+                <h3>About Me</h3>
+                <p>Saw Ye Htet - IT Student & Software Engineer</p>
+            </div>
         </div>
     </div>
 
-    <!-- Start Menu -->
-    <div class="start-menu" id="start-menu" style="display: none;">
-        <div class="start-menu-item" onclick="openWindow('about-window'); closeStartMenu();">📄 About.txt</div>
-        <div class="start-menu-item" onclick="openWindow('system-window'); closeStartMenu();">💻 My Computer</div>
-        <div class="start-menu-item" onclick="openWindow('projects-window'); closeStartMenu();">📁 Projects</div>
-        <div class="start-menu-item" onclick="openWindow('links-window'); closeStartMenu();">🔗 Links</div>
-        <div class="start-menu-item" onclick="openWindow('faq-window'); closeStartMenu();">❓ FAQ</div>
-        <div class="start-menu-item" onclick="openWindow('contact-window'); closeStartMenu();">📧 Contact</div>
-        <div class="start-menu-item" onclick="openWindow('terminal-window'); closeStartMenu();">⌨️ Terminal.exe</div>
+    <!-- Windows/Apps Content -->
+    
+    <!-- About Window/App -->
+    <div class="window" id="about-window" data-app="about">
+        <div class="window-header">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">About</div>
+            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="window-body">
+            <h2>Saw Ye Htet</h2>
+            <p><strong>IT Student & Software Engineer</strong></p>
+            <p>IT Student at Singapore Polytechnic passionate about software engineering, VR development, and creating meaningful digital solutions.</p>
+            
+            <h3>Education</h3>
+            <p><strong>Singapore Polytechnic</strong><br>
+            Diploma in Information Technology</p>
+            
+            <h3>Interests</h3>
+            <p>Building immersive VR experiences, crafting pixel-perfect web interfaces, and exploring the intersection of technology and creativity.</p>
+            
+            <h3>Currently</h3>
+            <p>🟢 <strong>Available for opportunities</strong></p>
+        </div>
+    </div>
+
+    <!-- Skills Window/App -->
+    <div class="window" id="skills-window" data-app="skills">
+        <div class="window-header">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">Skills</div>
+            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="window-body">
+            <h2>💻 System Specifications</h2>
+            
+            <h3>⚙️ Processor</h3>
+            <p><strong>Problem Solver i9</strong> @ 3.8 GHz<br>
+            High-performance multi-threaded thinking with creative problem-solving acceleration</p>
+            
+            <h3>🧠 Memory (RAM)</h3>
+            <p><strong>Full Stack Knowledge</strong> - 16GB DDR5<br>
+            Rapid access to JavaScript, Python, C#, HTML5, CSS3, SQL</p>
+            
+            <h3>💿 Programming Languages</h3>
+            <p>
+            • JavaScript ES6+ (Primary Driver)<br>
+            • Python 3.x (Secondary Driver)<br>
+            • C# .NET (Unity Optimized)<br>
+            • SQL (Database Engine)
+            </p>
+            
+            <h3>🎨 Frontend Technologies</h3>
+            <p>HTML5 Canvas • CSS3 Animations • Responsive Design • UI/UX Optimization</p>
+            
+            <h3>🌐 Backend & APIs</h3>
+            <p>RESTful API Protocol • HTTP/HTTPS • JSON • WebSocket • Database Integration</p>
+            
+            <h3>🎮 VR Development</h3>
+            <p><strong>Unity Engine 2022+</strong><br>
+            VR Development • 3D Graphics • Physics Simulation • Interactive Experiences</p>
+            
+            <h3>🛠️ Development Tools</h3>
+            <p>Git Version Control • VS Code IDE • Chrome DevTools • Figma</p>
+        </div>
+    </div>
+
+    <!-- Projects Window/App -->
+    <div class="window" id="projects-window" data-app="projects">
+        <div class="window-header">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">Projects</div>
+            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="window-body">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">🌐</div>
+                    <h3>Finance</h3>
+                    <p>Financial management web application with dashboard analytics and budget tools.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">CSS3</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon">🏦</div>
+                    <h3>Orizon</h3>
+                    <p>Modern banking interface with seamless UX and secure transactions.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">TypeScript</span>
+                        <span class="tech-badge">Next.js</span>
+                        <span class="tech-badge">Tailwind</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon">🎨</div>
+                    <h3>Fundo</h3>
+                    <p>Creative design portfolio with stunning animations and modern aesthetics.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">GSAP</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon">🎮</div>
+                    <h3>Brawlhalla</h3>
+                    <p>Game statistics tracking with player analytics.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Tkinter</span>
+                        <span class="tech-badge">SQLite</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon">✨</div>
+                    <h3>MetaSpark</h3>
+                    <p>Metaverse platform with immersive 3D environments.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Three.js</span>
+                        <span class="tech-badge">WebGL</span>
+                        <span class="tech-badge">React</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-icon">📝</div>
+                    <h3>Summary</h3>
+                    <p>Text summarization tool using natural language processing.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Flask</span>
+                        <span class="tech-badge">NLP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Window/App -->
+    <div class="window" id="contact-window" data-app="contact">
+        <div class="window-header">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">Contact</div>
+            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="window-body">
+            <h2>Get in Touch</h2>
+            <p><strong>Email:</strong> <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a></p>
+            <p><strong>Location:</strong> Singapore</p>
+            <p><strong>Status:</strong> 🟢 Available for opportunities</p>
+        </div>
+    </div>
+
+    <!-- Links Window/App -->
+    <div class="window" id="links-window" data-app="links">
+        <div class="window-header">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">Links</div>
+            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="window-body">
+            <h2>Social Links</h2>
+            <div class="links-list">
+                <a href="https://github.com/sawyairhtet" target="_blank" class="social-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/" target="_blank" class="social-link">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://x.com/saulyehtet_" target="_blank" class="social-link">
+                    <i class="fab fa-twitter"></i> X (Twitter)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Window/App -->
+    <div class="window" id="terminal-window" data-app="terminal">
+        <div class="window-header">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">Terminal</div>
+            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="window-body terminal-body">
+            <div class="terminal-output" id="terminal-output">
+                <div class="terminal-line">Welcome to Saw Ye Htet's Portfolio Terminal</div>
+                <div class="terminal-line">Type 'help' to see available commands</div>
+                <div class="terminal-line">─────────────────────────────────────────</div>
+            </div>
+            <div class="terminal-input-line">
+                <span class="terminal-prompt">visitor@portfolio:~$</span>
+                <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" spellcheck="false" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Window/App -->
+    <div class="window" id="settings-window" data-app="settings">
+        <div class="window-header">
+            <div class="traffic-lights">
+                <span class="traffic-light close"></span>
+                <span class="traffic-light minimize"></span>
+                <span class="traffic-light maximize"></span>
+            </div>
+            <div class="window-title">Settings</div>
+            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="window-body">
+            <h2>Preferences</h2>
+            <div class="setting-item">
+                <label for="theme-toggle">Dark Mode</label>
+                <input type="checkbox" id="theme-toggle" class="toggle-switch">
+            </div>
+        </div>
+    </div>
+
+    <!-- Dock -->
+    <div class="dock">
+        <div class="dock-item" data-app="about" title="About">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="dock-item" data-app="projects" title="Projects">
+            <i class="fas fa-folder"></i>
+        </div>
+        <div class="dock-item" data-app="contact" title="Contact">
+            <i class="fas fa-phone"></i>
+        </div>
+        <div class="dock-separator"></div>
+        <div class="dock-item" data-app="terminal" title="Terminal">
+            <i class="fas fa-terminal"></i>
+        </div>
+        <div class="dock-item" data-app="settings" title="Settings">
+            <i class="fas fa-cog"></i>
+        </div>
     </div>
 
     <script src="js/main.js"></script>

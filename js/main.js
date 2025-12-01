@@ -1,172 +1,226 @@
-// Z-Index Management
+// ============================================
+// STATE MANAGEMENT
+// ============================================
+
+let currentOS = 'desktop'; // desktop, tablet, or mobile
 let currentZIndex = 100;
+let activeWindows = new Set();
+
+// ============================================
+// DEVICE DETECTION
+// ============================================
+
+function detectOS() {
+    const width = window.innerWidth;
+    if (width <= 767) {
+        return 'mobile';
+    } else if (width <= 1024) {
+        return 'tablet';
+    } else {
+        return 'desktop';
+    }
+}
+
+function updateOS() {
+    const newOS = detectOS();
+    if (newOS !== currentOS) {
+        currentOS = newOS;
+        console.log(`OS changed to: ${currentOS}`);
+        // Close all windows on OS change
+        closeAllWindows();
+    }
+}
+
+// ============================================
+// WINDOW MANAGEMENT
+// ============================================
+
+function openWindow(appName) {
+    const windowId = `${appName}-window`;
+    const windowEl = document.getElementById(windowId);
+    
+    if (!windowEl) return;
+    
+    // Close existing window if already open
+    if (activeWindows.has(windowId)) {
+        closeWindow(windowId);
+        return;
+    }
+    
+    windowEl.style.display = 'flex';
+    activeWindows.add(windowId);
+    bringToFront(windowEl);
+    
+    // Add animation based on OS
+    if (currentOS === 'mobile') {
+        // Slide up animation for mobile
+        windowEl.style.animation = 'slideUp 0.3s ease-out';
+    } else if (currentOS === 'tablet') {
+        // Fade in for tablet
+        windowEl.style.animation = 'fadeIn 0.2s ease-out';
+    } else {
+        // Scale in for desktop
+        windowEl.style.animation = 'scaleIn 0.2s ease-out';
+    }
+}
+
+function closeWindow(windowId) {
+    const windowEl = document.getElementById(windowId);
+    if (!windowEl) return;
+    
+    windowEl.style.display = 'none';
+    activeWindows.delete(windowId);
+}
+
+function closeAllWindows() {
+    activeWindows.forEach(windowId => {
+        closeWindow(windowId);
+    });
+}
 
 function bringToFront(element) {
     currentZIndex++;
     element.style.zIndex = currentZIndex;
-    updateTaskbarActiveStates();
 }
 
-// Open Window
-function openWindow(windowId) {
-    const win = document.getElementById(windowId);
-    if (win) {
-        win.style.display = 'flex';
-        win.dataset.minimized = 'false';
-        bringToFront(win);
-        addToTaskbar(windowId);
-    }
-}
+// ============================================
+// DRAGGABLE WINDOWS (Desktop Only)
+// ============================================
 
-// Close Window
-function closeWindow(windowId) {
-    const win = document.getElementById(windowId);
-    if (win) {
-        win.style.display = 'none';
-        removeFromTaskbar(windowId);
-    }
-}
-
-// Draggable Logic
 function makeDraggable(element) {
-    // Skip dragging functionality on mobile
-    if (window.innerWidth <= 768) {
-        return;
-    }
+    if (currentOS !== 'desktop') return;
     
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     const header = element.querySelector('.window-header');
-
-    if (header) {
-        // if present, the header is where you move the DIV from:
-        header.onmousedown = dragMouseDown;
-    } else {
-        // otherwise, move the DIV from anywhere inside the DIV:
-        element.onmousedown = dragMouseDown;
-    }
-
+    
+    if (!header) return;
+    
+    header.onmousedown = dragMouseDown;
+    
     function dragMouseDown(e) {
+        if (currentOS !== 'desktop') return;
+        
         e = e || window.event;
         e.preventDefault();
-        // get the mouse cursor position at startup:
         pos3 = e.clientX;
         pos4 = e.clientY;
         
-        // Bring to front when dragging starts
         bringToFront(element);
-
+        
         document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
         document.onmousemove = elementDrag;
     }
-
+    
     function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
-        // calculate the new cursor position:
+        
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
-        // set the element's new position:
+        
         element.style.top = (element.offsetTop - pos2) + "px";
         element.style.left = (element.offsetLeft - pos1) + "px";
     }
-
+    
     function closeDragElement() {
-        // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
     }
 }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    // Make all windows draggable
-    const windows = document.querySelectorAll('.window');
-    windows.forEach(win => {
-        makeDraggable(win);
-        
-        // Also add click listener to body to bring to front even if not dragging
-        win.addEventListener('mousedown', () => {
-            bringToFront(win);
+// ============================================
+// APP ICONS & DOCK INTERACTION
+// ============================================
+
+function setupAppIcons() {
+    // App icons from grid
+    const appIcons = document.querySelectorAll('.app-icon');
+    appIcons.forEach(icon => {
+        icon.addEventListener('click', () => {
+            const appName = icon.dataset.app;
+            openWindow(appName);
         });
     });
-
-    // Mobile warning disabled - CSS handles mobile mode gracefully
-    // The mobile mode transforms the interface into a PDA/Gameboy style
     
-    // Theme Toggle Logic
-    const themeToggle = document.getElementById('theme-toggle');
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
-    const htmlElement = document.documentElement;
-
-    // Check for saved preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        htmlElement.setAttribute('data-theme', 'dark');
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-    }
-
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                // Switch to Light
-                htmlElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            } else {
-                // Switch to Dark
-                htmlElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
+    // Dock items
+    const dockItems = document.querySelectorAll('.dock-item');
+    dockItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const appName = item.dataset.app;
+            if (appName) {
+                openWindow(appName);
             }
         });
-    }
-
-    // Project Icon Double-Click Handlers
-    const projectIcons = document.querySelectorAll('.file-icon');
-    projectIcons.forEach(icon => {
-        icon.addEventListener('dblclick', () => {
-            const projectId = icon.getAttribute('data-project');
-            openProjectDetail(projectId);
-        });
-        
-        // Make project detail windows draggable
-        const projectWindow = document.getElementById(`project-${projectId}`);
-        if (projectWindow) {
-            makeDraggable(projectWindow);
-            projectWindow.addEventListener('mousedown', () => {
-                bringToFront(projectWindow);
-            });
-        }
     });
-});
+}
 
-// Open Project Detail Window
-function openProjectDetail(projectId) {
-    const windowId = `project-${projectId}`;
-    const win = document.getElementById(windowId);
-    if (win) {
-        win.style.display = 'flex';
-        bringToFront(win);
+// ============================================
+// TRAFFIC LIGHTS (Desktop Only)
+// ============================================
+
+function setupTrafficLights() {
+    document.querySelectorAll('.traffic-light.close').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const windowEl = btn.closest('.window');
+            if (windowEl) {
+                closeWindow(windowEl.id);
+            }
+        });
+    });
+    
+    // Minimize and maximize can be added here
+}
+
+// ============================================
+// MOBILE CLOSE BUTTONS
+// ============================================
+
+function setupMobileCloseButtons() {
+    document.querySelectorAll('.close-btn-mobile').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const windowEl = btn.closest('.window');
+            if (windowEl) {
+                closeWindow(windowEl.id);
+            }
+        });
+    });
+}
+
+// ============================================
+// CLOCK & TIME
+// ============================================
+
+function updateClock() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    
+    // Menu bar clock (desktop)
+    const menuClock = document.querySelector('.menu-clock');
+    if (menuClock) {
+        menuClock.textContent = `${displayHours}:${minutes} ${ampm}`;
+    }
+    
+    // Status bar time (mobile/tablet)
+    const statusTime = document.querySelector('.status-time');
+    if (statusTime) {
+        statusTime.textContent = `${displayHours}:${minutes}`;
     }
 }
 
 // ============================================
-// TERMINAL SYSTEM
+// TERMINAL
 // ============================================
 
 let terminalHistory = [];
 let historyIndex = -1;
 
-// Terminal Commands
 const terminalCommands = {
     help: () => {
         return `Available commands:
@@ -205,13 +259,8 @@ Twitter:  x.com/saulyehtet_`;
 2. Orizon         - Modern banking interface
 3. Fundo          - Creative design portfolio
 4. Brawlhalla     - Game statistics tracking app
-5. DSM            - Design system management tool
-6. MetaSpark      - Metaverse platform design
-7. Summary        - Text summarization tool
-8. Task Manager   - Productivity application
-9. Arrival        - Technology startup landing page
-
-Tip: Double-click projects in the Projects window for details!`;
+5. MetaSpark      - Metaverse platform design
+6. Summary        - Text summarization tool`;
     },
     
     skills: () => {
@@ -237,7 +286,6 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     }
 };
 
-// Execute terminal command
 function executeTerminalCommand(input) {
     const trimmedInput = input.trim();
     if (!trimmedInput) return '';
@@ -253,18 +301,15 @@ function executeTerminalCommand(input) {
 Type 'help' for available commands.`;
 }
 
-// Add output to terminal
 function addTerminalOutput(command, output) {
     const terminalOutput = document.getElementById('terminal-output');
     if (!terminalOutput) return;
     
-    // Add command line
     const commandLine = document.createElement('div');
     commandLine.className = 'terminal-line terminal-command';
     commandLine.textContent = `visitor@portfolio:~$ ${command}`;
     terminalOutput.appendChild(commandLine);
     
-    // Add output
     if (output) {
         const outputDiv = document.createElement('div');
         outputDiv.className = 'terminal-line';
@@ -272,19 +317,13 @@ function addTerminalOutput(command, output) {
         terminalOutput.appendChild(outputDiv);
     }
     
-    // Auto-scroll to bottom
     terminalOutput.parentElement.scrollTop = terminalOutput.parentElement.scrollHeight;
 }
 
-// Initialize terminal when opening
-function initializeTerminal() {
+function setupTerminal() {
     const terminalInput = document.getElementById('terminal-input');
     if (!terminalInput) return;
     
-    // Focus input when terminal opens
-    setTimeout(() => terminalInput.focus(), 100);
-    
-    // Handle Enter key
     terminalInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             const command = terminalInput.value;
@@ -297,19 +336,13 @@ function initializeTerminal() {
             }
             
             terminalInput.value = '';
-        }
-        
-        // Handle Up arrow (previous command)
-        else if (e.key === 'ArrowUp') {
+        } else if (e.key === 'ArrowUp') {
             e.preventDefault();
             if (historyIndex > 0) {
                 historyIndex--;
                 terminalInput.value = terminalHistory[historyIndex];
             }
-        }
-        
-        // Handle Down arrow (next command)
-        else if (e.key === 'ArrowDown') {
+        } else if (e.key === 'ArrowDown') {
             e.preventDefault();
             if (historyIndex < terminalHistory.length - 1) {
                 historyIndex++;
@@ -320,146 +353,106 @@ function initializeTerminal() {
             }
         }
     });
-    
-    // Keep focus on input when clicking terminal window
-    const terminalBody = document.querySelector('.terminal-body');
-    if (terminalBody) {
-        terminalBody.addEventListener('click', () => {
-            terminalInput.focus();
-        });
-    }
 }
-
-// Initialize terminal on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
-    initializeTerminal();
-});
 
 // ============================================
-// TASKBAR SYSTEM
+// THEME TOGGLE
 // ============================================
 
-// Taskbar Management
-function addToTaskbar(windowId) {
-    const taskbarWindows = document.getElementById('taskbar-windows');
-    if (!taskbarWindows) return;
-    if (document.getElementById(`taskbar-${windowId}`)) return;
+function setupThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
     
-    const win = document.getElementById(windowId);
-    const title = win.querySelector('.window-title').textContent;
-    
-    const btn = document.createElement('button');
-    btn.id = `taskbar-${windowId}`;
-    btn.className = 'taskbar-window-btn active';
-    btn.textContent = title;
-    btn.onclick = () => toggleWindowFromTaskbar(windowId);
-    
-    taskbarWindows.appendChild(btn);
-}
-
-function removeFromTaskbar(windowId) {
-    const btn = document.getElementById(`taskbar-${windowId}`);
-    if (btn) btn.remove();
-}
-
-function toggleWindowFromTaskbar(windowId) {
-    const win = document.getElementById(windowId);
-    if (!win) return;
-    
-    if (win.dataset.minimized === 'true') {
-        restoreWindow(windowId);
-    } else if (win.style.zIndex === String(currentZIndex)) {
-        minimizeWindow(windowId);
-    } else {
-        bringToFront(win);
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggle.checked = true;
     }
-}
-
-function minimizeWindow(windowId) {
-    const win = document.getElementById(windowId);
-    if (!win) return;
     
-    win.style.display = 'none';
-    win.dataset.minimized = 'true';
-    
-    const btn = document.getElementById(`taskbar-${windowId}`);
-    if (btn) btn.classList.remove('active');
-}
-
-function restoreWindow(windowId) {
-    const win = document.getElementById(windowId);
-    if (!win) return;
-    
-    win.style.display = 'flex';
-    win.dataset.minimized = 'false';
-    bringToFront(win);
-    
-    const btn = document.getElementById(`taskbar-${windowId}`);
-    if (btn) btn.classList.add('active');
-}
-
-function updateTaskbarActiveStates() {
-    const taskbarButtons = document.querySelectorAll('.taskbar-window-btn');
-    taskbarButtons.forEach(btn => {
-        const windowId = btn.id.replace('taskbar-', '');
-        const win = document.getElementById(windowId);
-        if (win && win.style.zIndex === String(currentZIndex)) {
-            btn.classList.add('active');
+    themeToggle.addEventListener('change', () => {
+        if (themeToggle.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
         } else {
-            btn.classList.remove('active');
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
         }
     });
 }
 
-// Start Menu
-function initializeTaskbar() {
-    const startButton = document.getElementById('start-button');
-    const startMenu = document.getElementById('start-menu');
-    
-    if (startButton && startMenu) {
-        startButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = startMenu.style.display === 'block';
-            startMenu.style.display = isOpen ? 'none' : 'block';
-            startButton.classList.toggle('active');
-        });
-        
-        // Close start menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!startButton.contains(e.target) && !startMenu.contains(e.target)) {
-                startMenu.style.display = 'none';
-                startButton.classList.remove('active');
+// ============================================
+// ANIMATIONS (CSS Keyframes in JS for dynamic injection)
+// ============================================
+
+function injectAnimations() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
             }
-        });
-    }
-    
-    // Initialize clock
-    updateClock();
-    setInterval(updateClock, 60000); // Update every minute
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    `;
+    document.head.appendChild(style);
 }
 
-function closeStartMenu() {
-    const startMenu = document.getElementById('start-menu');
-    const startButton = document.getElementById('start-button');
-    if (startMenu) startMenu.style.display = 'none';
-    if (startButton) startButton.classList.remove('active');
-}
+// ============================================
+// INITIALIZATION
+// ============================================
 
-// Live Clock
-function updateClock() {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const displayHours = hours % 12 || 12;
-    
-    const clockElement = document.getElementById('taskbar-clock');
-    if (clockElement) {
-        clockElement.textContent = `${displayHours}:${minutes} ${ampm}`;
-    }
-}
-
-// Initialize taskbar on page load
 document.addEventListener('DOMContentLoaded', () => {
-    initializeTaskbar();
+    // Detect initial OS
+    updateOS();
+    
+    // Inject animations
+    injectAnimations();
+    
+    // Setup all interactions
+    setupAppIcons();
+    setupTrafficLights();
+    setupMobileCloseButtons();
+    setupTerminal();
+    setupThemeToggle();
+    
+    // Make all windows draggable (will be disabled on mobile/tablet)
+    document.querySelectorAll('.window').forEach(win => {
+        makeDraggable(win);
+        
+        // Bring to front on click
+        win.addEventListener('mousedown', () => {
+            bringToFront(win);
+        });
+    });
+    
+    // Update clock
+    updateClock();
+    setInterval(updateClock, 1000);
+    
+    // Listen for window resize
+    window.addEventListener('resize', () => {
+        updateOS();
+    });
 });
