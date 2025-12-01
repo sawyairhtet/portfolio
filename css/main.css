@@ -64,6 +64,15 @@
     box-sizing: border-box;
 }
 
+button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
 body {
     font-family: var(--font-system);
     background: var(--color-bg-light);
@@ -167,7 +176,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: url('../assets/wallpaper-abstract.png') no-repeat center center/cover;
     z-index: 0;
 }
 
@@ -200,7 +209,7 @@ body {
 .app-icon-wrapper {
     width: 64px;
     height: 64px;
-    background: var(--color-glass-light);
+    background: var(--color-glass-light); /* Fallback */
     backdrop-filter: var(--glass-blur);
     border-radius: var(--radius-md);
     display: flex;
@@ -209,6 +218,38 @@ body {
     font-size: 32px;
     margin-bottom: var(--spacing-sm);
     box-shadow: var(--shadow-md);
+    color: #fff;
+}
+
+/* App Icon Gradients */
+.app-icon[data-app="about"] .app-icon-wrapper {
+    background: linear-gradient(135deg, #8e9eab 0%, #eef2f3 100%);
+    color: #333;
+}
+
+.app-icon[data-app="skills"] .app-icon-wrapper {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.app-icon[data-app="projects"] .app-icon-wrapper {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.app-icon[data-app="contact"] .app-icon-wrapper {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: #333;
+}
+
+.app-icon[data-app="links"] .app-icon-wrapper {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.app-icon[data-app="terminal"] .app-icon-wrapper {
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+}
+
+.app-icon[data-app="settings"] .app-icon-wrapper {
+    background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
 }
 
 .app-label {
