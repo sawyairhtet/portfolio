@@ -1,27 +1,28 @@
 /* ============================================
-   CSS VARIABLES & THEMING
+   CSS VARIABLES & THEMING - UBUNTU YARU
    ============================================ */
 
 :root {
-    /* Primary Font - Inter with Apple fallbacks */
-    --font-system: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    /* Primary Font - Ubuntu with fallbacks */
+    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     
-    /* Colors - macOS Sonoma Inspired */
-    --color-primary: #007AFF;
-    --color-bg-light: #F5F5F7;
-    --color-bg-dark: #1C1C1E;
-    --color-glass-light: rgba(255, 255, 255, 0.72);
-    --color-glass-dark: rgba(28, 28, 30, 0.72);
-    --color-text-light: #1D1D1F;
+    /* Colors - Ubuntu Yaru Inspired */
+    --color-primary: #E95420; /* Ubuntu Orange */
+    --color-bg-light: #2C001E; /* Canonical Aubergine */
+    --color-bg-dark: #1a0012;
+    --color-glass-light: rgba(44, 0, 30, 0.85);
+    --color-glass-dark: rgba(26, 0, 18, 0.9);
+    --color-text-light: #FFFFFF;
     --color-text-dark: #F5F5F7;
-    --color-text-dark: #F5F5F7;
-    --color-border: rgba(0, 0, 0, 0.1);
-    --color-card-bg: rgba(255, 255, 255, 0.5);
+    --color-border: rgba(255, 255, 255, 0.12);
+    --color-card-bg: rgba(255, 255, 255, 0.08);
     
-    /* Traffic Light Colors */
-    --color-close: #FF5F57;
-    --color-minimize: #FFBD2E;
-    --color-maximize: #28C840;
+    /* Ubuntu GNOME Window Colors */
+    --color-header-bg: #3D3D3D;
+    --color-header-text: #FFFFFF;
+    --color-close: #F44336;
+    --color-minimize: #FFEB3B;
+    --color-maximize: #4CAF50;
     
     /* Spacing */
     --spacing-xs: 4px;
@@ -30,32 +31,35 @@
     --spacing-lg: 24px;
     --spacing-xl: 32px;
     
-    /* Border Radius */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-xl: 24px;
+    /* Border Radius - More Angular for GNOME */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
     
     /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
     
     /* Glassmorphism */
-    --glass-blur: blur(40px);
-    --glass-saturation: saturate(180%);
+    --glass-blur: blur(20px);
+    --glass-saturation: saturate(150%);
+    
+    /* Ubuntu Dock Width */
+    --dock-width: 60px;
 }
 
 [data-theme="dark"] {
-    --color-bg-light: #0d0d0f;
-    --color-bg-dark: #0d0d0f;
-    --color-glass-light: rgba(30, 30, 35, 0.85);
-    --color-glass-dark: rgba(30, 30, 35, 0.85);
+    --color-bg-light: #1a0012;
+    --color-bg-dark: #0d0008;
+    --color-glass-light: rgba(20, 0, 15, 0.9);
+    --color-glass-dark: rgba(20, 0, 15, 0.95);
     --color-text-light: #F5F5F7;
     --color-text-dark: #F5F5F7;
-    --color-border: rgba(255, 255, 255, 0.12);
-    --color-card-bg: rgba(255, 255, 255, 0.08);
-    --color-primary: #0A84FF;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-card-bg: rgba(255, 255, 255, 0.05);
+    --color-primary: #FF6B3D;
 }
 
 /* ============================================
@@ -87,7 +91,7 @@ body {
 }
 
 /* ============================================
-   TOP BAR (Menu Bar / Status Bar)
+   TOP BAR (GNOME Panel)
    ============================================ */
 
 .top-bar {
@@ -101,42 +105,60 @@ body {
     align-items: center;
     padding: 0 var(--spacing-md);
     font-size: 13px;
+    font-weight: 500;
     z-index: 1000;
-    backdrop-filter: var(--glass-blur) var(--glass-saturation);
-    background: var(--color-glass-light);
-    border-bottom: 1px solid var(--color-border);
+    background: #000000;
+    border-bottom: none;
 }
 
 .menu-bar-left,
+.menu-bar-center,
 .menu-bar-right {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
 }
 
-.apple-logo::before {
-    content: "";
-    font-size: 16px;
+.menu-bar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.menu-item {
-    cursor: pointer;
-    padding: 2px 8px;
+.activities-btn {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 12px;
     border-radius: 4px;
     transition: background 0.2s;
+    font-family: var(--font-system);
 }
 
-.menu-item:hover {
-    background: rgba(0, 0, 0, 0.05);
+.activities-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .menu-clock,
 .status-time {
     font-variant-numeric: tabular-nums;
+    color: #fff;
 }
 
-.control-center-icon {
+.status-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background 0.2s;
+}
+
+.status-menu:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */
@@ -171,6 +193,7 @@ body {
     position: relative;
     height: 100vh;
     padding-top: 28px;
+    padding-left: var(--dock-width);
 }
 
 /* Wallpaper (Desktop only) */
@@ -181,8 +204,7 @@ body {
     right: 0;
     bottom: 0;
     background: 
-        url('../assets/wallpaper-abstract.png') no-repeat center center/cover,
-        linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
     z-index: 0;
 }
 
@@ -193,7 +215,7 @@ body {
 .app-grid {
     position: absolute;
     top: 80px;
-    left: 40px;
+    left: calc(var(--dock-width) + 40px);
     display: grid;
     gap: var(--spacing-lg);
     z-index: 10;
@@ -215,7 +237,7 @@ body {
 .app-icon-wrapper {
     width: 64px;
     height: 64px;
-    background: var(--color-glass-light); /* Fallback */
+    background: var(--color-glass-light);
     backdrop-filter: var(--glass-blur);
     border-radius: var(--radius-md);
     display: flex;
@@ -227,47 +249,43 @@ body {
     color: #fff;
 }
 
-/* App Icon Gradients */
+/* App Icon Gradients - Ubuntu Style */
 .app-icon[data-app="about"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #8e9eab 0%, #eef2f3 100%);
-    color: #333;
+    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
 }
 
 .app-icon[data-app="skills"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #77216F 0%, #5E2750 100%);
 }
 
 .app-icon[data-app="projects"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
 }
 
 .app-icon[data-app="contact"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    color: #333;
+    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
 }
 
 .app-icon[data-app="links"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    background: linear-gradient(135deg, #E95420 0%, #FF7A45 100%);
 }
 
 .app-icon[data-app="terminal"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+    background: linear-gradient(135deg, #300A24 0%, #2C001E 100%);
 }
 
 .app-icon[data-app="settings"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
+    background: linear-gradient(135deg, #666666 0%, #333333 100%);
 }
 
 .app-label {
     font-size: 12px;
     text-align: center;
     color: #fff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
-    background: rgba(0, 0, 0, 0.45);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.5);
     padding: 4px 10px;
-    border-radius: 8px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    border-radius: 4px;
 }
 
 /* Widget Container (Hidden on Desktop) */
@@ -276,14 +294,14 @@ body {
 }
 
 /* ============================================
-   WINDOWS
+   WINDOWS - GNOME Style
    ============================================ */
 
 .window {
     position: absolute;
     background: var(--color-glass-light);
     backdrop-filter: var(--glass-blur) var(--glass-saturation);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--color-border);
     display: none;
@@ -297,8 +315,10 @@ body {
 .window-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: var(--spacing-sm) var(--spacing-md);
-    border-bottom: 1px solid var(--color-border);
+    background: var(--color-header-bg);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
     cursor: grab;
 }
 
@@ -306,17 +326,37 @@ body {
     cursor: grabbing;
 }
 
+/* GNOME: Title on Left, Controls on Right */
+.window-title {
+    flex: 1;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-header-text);
+    padding-left: var(--spacing-sm);
+}
+
 .traffic-lights {
     display: flex;
-    gap: 8px;
-    margin-right: var(--spacing-md);
+    gap: 6px;
+    order: 1; /* Move to right */
 }
 
 .traffic-light {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: transparent;
+    transition: all 0.2s;
+}
+
+.traffic-light:hover {
+    color: #333;
 }
 
 .traffic-light.close {
@@ -331,13 +371,6 @@ body {
     background: var(--color-maximize);
 }
 
-.window-title {
-    flex: 1;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-}
-
 .close-btn-mobile {
     display: none;
 }
@@ -346,6 +379,8 @@ body {
     padding: var(--spacing-lg);
     overflow-y: auto;
     flex: 1;
+    background: rgba(60, 60, 60, 0.95);
+    color: #fff;
 }
 
 .window-body h2 {
@@ -368,7 +403,7 @@ body {
 .about-hero {
     text-align: center;
     padding: var(--spacing-xl);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background: linear-gradient(135deg, #E95420 0%, #77216F 100%);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-lg);
     color: #fff;
@@ -436,9 +471,9 @@ body {
 
 /* Terminal Styling */
 .terminal-body {
-    background: #000;
-    color: #0f0;
-    font-family: 'Courier New', monospace;
+    background: #300A24;
+    color: #fff;
+    font-family: 'Ubuntu Mono', 'Courier New', monospace;
     padding: var(--spacing-md);
     min-height: 400px;
 }
@@ -457,15 +492,15 @@ body {
 }
 
 .terminal-prompt {
-    color: #0f0;
+    color: #4E9A06;
     margin-right: var(--spacing-sm);
 }
 
 .terminal-input {
     background: transparent;
     border: none;
-    color: #0f0;
-    font-family: 'Courier New', monospace;
+    color: #fff;
+    font-family: 'Ubuntu Mono', 'Courier New', monospace;
     font-size: 14px;
     outline: none;
     flex: 1;
@@ -491,7 +526,7 @@ body {
 
 .project-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
     border-color: var(--color-primary);
 }
 
@@ -562,43 +597,47 @@ body {
 }
 
 /* ============================================
-   DOCK
+   DOCK - Ubuntu Vertical Left Dock
    ============================================ */
 
 .dock {
     position: fixed;
-    bottom: var(--spacing-sm);
-    left: 50%;
-    transform: translateX(-50%);
+    top: 28px;
+    left: 0;
+    bottom: 0;
+    width: var(--dock-width);
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: var(--spacing-sm);
-    background: var(--color-glass-light);
-    backdrop-filter: var(--glass-blur) var(--glass-saturation);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: var(--glass-blur);
+    padding: var(--spacing-md) var(--spacing-sm);
+    border-right: 1px solid var(--color-border);
     z-index: 1000;
 }
 
 .dock-item {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 24px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.2s ease;
     border-radius: var(--radius-sm);
+    color: #fff;
 }
 
 .dock-item:hover {
-    transform: translateY(-12px) scale(1.2);
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.1);
 }
 
 .dock-separator {
-    width: 1px;
+    width: 80%;
+    height: 1px;
     background: var(--color-border);
     margin: var(--spacing-sm) 0;
 }
@@ -608,8 +647,9 @@ body {
    ============================================ */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    /* Hide macOS menu items */
-    .menu-bar-left .menu-item,
+    /* Hide GNOME menu items */
+    .menu-bar-left,
+    .menu-bar-center,
     .menu-bar-right {
         display: none;
     }
@@ -620,12 +660,22 @@ body {
     }
     
     .dynamic-island {
-        display: none; /* iPadOS doesn't have Dynamic Island */
+        display: none;
+    }
+    
+    /* Hide dock on tablet */
+    .dock {
+        display: none;
+    }
+    
+    .main-content {
+        padding-left: 0;
     }
     
     /* App Grid - 4 columns */
     .app-grid {
         position: static;
+        left: 0;
         grid-template-columns: repeat(4, 1fr);
         padding: var(--spacing-xl);
         gap: var(--spacing-xl);
@@ -684,19 +734,6 @@ body {
         cursor: pointer;
         color: var(--color-text-light);
     }
-    
-    /* Dock adjustments */
-    .dock {
-        bottom: var(--spacing-md);
-        border-radius: var(--radius-xl);
-        padding: var(--spacing-md);
-    }
-    
-    .dock-item {
-        width: 64px;
-        height: 64px;
-        font-size: 32px;
-    }
 }
 
 /* ============================================
@@ -704,8 +741,9 @@ body {
    ============================================ */
 
 @media (max-width: 767px) {
-    /* Hide macOS menu items */
+    /* Hide GNOME menu items */
     .menu-bar-left,
+    .menu-bar-center,
     .menu-bar-right {
         display: none;
     }
@@ -721,11 +759,13 @@ body {
     
     .main-content {
         padding-top: 44px;
+        padding-left: 0;
     }
     
     /* App Grid - 4 columns */
     .app-grid {
         position: static;
+        left: 0;
         grid-template-columns: repeat(4, 1fr);
         padding: var(--spacing-lg);
         gap: var(--spacing-lg);
@@ -796,10 +836,15 @@ body {
     
     /* Dock - Fixed at bottom */
     .dock {
+        top: auto;
         bottom: 0;
         left: 0;
         right: 0;
-        transform: none;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        border-right: none;
+        border-top: 1px solid var(--color-border);
         border-radius: 0;
         padding: var(--spacing-sm);
         justify-content: space-around;
@@ -821,7 +866,7 @@ body {
 }
 
 /* ============================================
-   DESKTOP SPECIFIC (macOS)
+   DESKTOP SPECIFIC (GNOME)
    ============================================ */
 
 @media (min-width: 1025px) {
@@ -833,7 +878,7 @@ body {
     /* Windows can be positioned anywhere */
     .window {
         top: 15%;
-        left: 20%;
+        left: calc(var(--dock-width) + 10%);
     }
 }
 
@@ -926,7 +971,7 @@ body {
 }
 
 /* ============================================
-   HUMANIZATION: BOOT SCREEN
+   BOOT SCREEN - Linux Boot Log Style
    ============================================ */
 
 .boot-screen {
@@ -938,11 +983,13 @@ body {
     background: #000;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
     z-index: 9999;
     opacity: 1;
     transition: opacity 0.5s ease;
+    overflow: hidden;
 }
 
 .boot-screen.fade-out {
@@ -950,21 +997,24 @@ body {
     pointer-events: none;
 }
 
-.boot-logo {
-    font-size: 64px;
+.boot-log {
+    font-family: 'Ubuntu Mono', 'Courier New', monospace;
+    font-size: 14px;
     color: #fff;
-    margin-bottom: 40px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    width: 100%;
 }
 
-.boot-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+.boot-log .ok {
+    color: #4E9A06;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+.boot-log .fail {
+    color: #CC0000;
 }
+
+.boot-log .info {
+    color: #729FCF;
+}
+

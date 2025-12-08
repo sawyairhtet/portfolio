@@ -347,19 +347,23 @@ Follow the white rabbit. 🐇
 
     neofetch: () => {
         return `
-       .--.
-      |o_o |
-      |:_/ |
-     //   \ \
-    (|     | )
-   /'\_   _/'\    visitor@portfolio
-   \___)=(___/   ─────────────────
-                 OS: macOS Sonoma (Fake)
-                 Host: Saw Ye Htet's Portfolio
-                 Uptime: Since you landed here
-                 Shell: JavaScript
-                 Theme: Glassmorphism
-                 Memory: Lots of dreams`;
+         .............'cdddl,.
+        .,;:::::::::,'..;oooooc.
+       .coooooooooool' .,oooooooc.
+       coooooooooooooc. .;loooooool.
+      .cooooooooooooooc;;;:cloooooooc.
+      :ooooooooooooooooooooooooooooool.
+      cooooooooooooooool;'',;coooooool'
+     .cooooooooooooool;.   .,looooooo:
+      coooooooooooool,  ...';cooooool.
+      .:oooooooooooo:   .:looooooooo.    visitor@portfolio
+       .cooooooooool.  .coooooooooc'    ─────────────────
+        ;ooooooooooo:. ;oooooooool.     OS: Ubuntu 24.04 LTS
+         cooooooooooo:,cooooooooc       Host: Saw Ye Htet's Portfolio
+          ,looooooooooooooooool.        Uptime: Since you landed here
+           .:looooooooooooool,.         Shell: JavaScript ES6+
+             .,:cloooooolc:'.           Theme: Yaru (Dark)
+                ..,,,,,...              Memory: Lots of dreams`;
     }
 };
 
@@ -501,24 +505,73 @@ function injectAnimations() {
 // ============================================
 
 // ============================================
-// BOOT SCREEN
+// BOOT SCREEN - Linux Boot Log
 // ============================================
+
+const bootLogMessages = [
+    '[    0.000000] Linux version 6.8.0-45-generic (buildd@lcy02-amd64-056)',
+    '[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-45-generic',
+    '[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable',
+    '[    0.000000] ACPI: RSDP 0x00000000000F05B0 000024 (v02 LENOVO)',
+    '[    0.045632] CPU: Intel(R) Core(TM) i9-13900K @ 5.80GHz',
+    '[    0.076234] Memory: 32GB DDR5-5600',
+    '[ OK ] Started Journal Service.',
+    '[ OK ] Reached target Basic System.',
+    '[ OK ] Started D-Bus System Message Bus.',
+    '[ OK ] Started Network Manager.',
+    '[ OK ] Reached target Network.',
+    '[ OK ] Started GNOME Display Manager.',
+    '[ OK ] Started User Manager for UID 1000.',
+    '[ OK ] Started Session Service of user visitor.',
+    '[ OK ] Reached target Graphical Interface.',
+    '',
+    'Ubuntu 24.04 LTS portfolio tty1',
+    '',
+    'portfolio login: visitor',
+    'Password: ********',
+    'Welcome to Saw Ye Htet\'s Portfolio!',
+    ''
+];
 
 function initBootScreen() {
     const bootScreen = document.getElementById('boot-screen');
-    if (!bootScreen) return;
+    const bootLog = document.getElementById('boot-log');
+    if (!bootScreen || !bootLog) return;
 
-    // Fade out boot screen after 1.5 seconds
-    setTimeout(() => {
-        bootScreen.classList.add('fade-out');
-        
-        // Remove from DOM after fade
-        setTimeout(() => {
-            bootScreen.remove();
-            // Auto-open About window after boot
-            openWindow('about');
-        }, 500);
-    }, 1500);
+    let lineIndex = 0;
+    const interval = 80; // ms per line
+    
+    function addLine() {
+        if (lineIndex < bootLogMessages.length) {
+            const line = bootLogMessages[lineIndex];
+            const lineEl = document.createElement('div');
+            
+            // Style [ OK ] in green
+            if (line.startsWith('[ OK ]')) {
+                lineEl.innerHTML = '<span class="ok">[ OK ]</span>' + line.substring(6);
+            } else if (line.startsWith('[')) {
+                lineEl.innerHTML = '<span class="info">' + line + '</span>';
+            } else {
+                lineEl.textContent = line;
+            }
+            
+            bootLog.appendChild(lineEl);
+            bootLog.scrollTop = bootLog.scrollHeight;
+            lineIndex++;
+            setTimeout(addLine, interval);
+        } else {
+            // Boot complete, fade out
+            setTimeout(() => {
+                bootScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    bootScreen.remove();
+                    openWindow('about');
+                }, 500);
+            }, 500);
+        }
+    }
+    
+    addLine();
 }
 
 // ============================================

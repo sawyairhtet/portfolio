@@ -5,33 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saw Ye Htet - Portfolio</title>
     <link rel="stylesheet" href="css/main.css">
-    <!-- Google Fonts - Inter -->
+    <!-- Google Fonts - Ubuntu -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     
-    <!-- Boot Screen -->
+    <!-- Boot Screen (Linux Boot Log Style) -->
     <div class="boot-screen" id="boot-screen">
-        <div class="boot-logo"></div>
-        <div class="boot-spinner"></div>
+        <div class="boot-log" id="boot-log"></div>
     </div>
 
     <!-- Sticky Notes Container -->
     <div class="sticky-notes-container" id="sticky-notes"></div>
 
-    <!-- Top Bar (Menu Bar for macOS / Status Bar for iOS/iPadOS) -->
+    <!-- Top Bar (GNOME Panel) -->
     <div class="top-bar">
-        <!-- macOS Menu Bar Items (Desktop only) -->
+        <!-- GNOME Panel Left - Activities -->
         <div class="menu-bar-left">
-            <div class="apple-logo"></div>
-            <div class="menu-item">Finder</div>
-            <div class="menu-item">File</div>
-            <div class="menu-item">Edit</div>
-            <div class="menu-item">View</div>
+            <button class="activities-btn">Activities</button>
         </div>
         
         <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
@@ -45,13 +40,18 @@
             </div>
         </div>
         
-        <!-- macOS Menu Bar Right (Desktop only) -->
-        <div class="menu-bar-right">
-            <i class="fas fa-battery-three-quarters"></i>
-            <i class="fas fa-wifi"></i>
+        <!-- GNOME Panel Center - Clock -->
+        <div class="menu-bar-center">
             <div class="menu-clock"></div>
-            <div class="control-center-icon">
-                <i class="fas fa-sliders-h"></i>
+        </div>
+        
+        <!-- GNOME Panel Right - Status Indicators -->
+        <div class="menu-bar-right">
+            <div class="status-menu">
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-volume-up"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+                <i class="fas fa-power-off"></i>
             </div>
         </div>
     </div>
