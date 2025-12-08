@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
     <script>
@@ -11,48 +11,292 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" id="theme-color" content="#fafafa" />
+    <meta name="theme-color" id="theme-color" content="#667eea" />
     <title>404 — Page Not Found | Saw Ye Htet</title>
     <meta name="description" content="The page you're looking for doesn't exist. Return to the homepage or explore other pages." />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <a href="#main" class="skip-link">Skip to content</a>
-    <div class="container">
-      <header class="header">
-        <div class="profile">
-          <h1 class="name">404 — Page Not Found</h1>
-          <p class="tagline">The page you're looking for doesn't exist.</p>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 404 Page Specific Styles */
+        .error-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        
+        .error-card {
+            background: var(--color-glass-light);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+            animation: errorCardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes errorCardIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .error-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 56px;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(238, 90, 90, 0.4);
+        }
+        
+        .error-code {
+            font-size: 72px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+        
+        .error-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--color-text-light);
+        }
+        
+        .error-message {
+            font-size: 16px;
+            color: var(--color-text-light);
+            opacity: 0.7;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .error-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        
+        .error-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+        
+        .error-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+        
+        .error-btn-secondary {
+            background: var(--color-card-bg);
+            color: var(--color-text-light);
+            border: 1px solid var(--color-border);
+        }
+        
+        .error-btn-secondary:hover {
+            background: var(--color-glass-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Hide dock on 404 page since we're not in the main app */
+        .dock-404 {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            background: var(--color-glass-light);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            padding: 8px;
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dock-404 a {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--color-text-light);
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+        }
+        
+        .dock-404 a:hover {
+            transform: translateY(-8px) scale(1.15);
+            background: var(--color-card-bg);
+        }
+
+        @media (max-width: 767px) {
+            .error-card {
+                padding: 32px 24px;
+            }
+            
+            .error-code {
+                font-size: 56px;
+            }
+            
+            .error-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+                border-radius: 20px;
+            }
+            
+            .dock-404 {
+                bottom: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                border-radius: 0;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="menu-bar-left">
+            <div class="apple-logo"></div>
+            <div class="menu-item">Finder</div>
+            <div class="menu-item">File</div>
+            <div class="menu-item">Edit</div>
+            <div class="menu-item">View</div>
         </div>
-        <nav class="social-links">
-          <a href="index.html" class="social-link">&larr; Back Home</a>
-          <a href="pages/about.html" class="social-link">About</a>
-          <a href="pages/blog.html" class="social-link">Blog</a>
-          <a href="pages/gallery.html" class="social-link">Gallery</a>
-        </nav>
-      </header>
-
-      <main id="main" role="main">
-        <section class="intro">
-          <p class="intro-text">
-            The link might be broken or the page may have moved.
-            Try navigating using the links above.
-          </p>
-        </section>
-      </main>
-
-      <footer class="footer">
-        <p class="footer-note">Built with love using HTML, CSS, and vanilla JavaScript by Saw Ye Htet</p>
-        <p class="copyright">&copy; <span data-current-year>2025</span> Saw Ye Htet. All rights reserved.</p>
-      </footer>
+        
+        <div class="status-bar">
+            <div class="status-time"></div>
+            <div class="dynamic-island"></div>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+        
+        <div class="menu-bar-right">
+            <i class="fas fa-battery-three-quarters"></i>
+            <i class="fas fa-wifi"></i>
+            <div class="menu-clock"></div>
+            <div class="control-center-icon">
+                <i class="fas fa-sliders-h"></i>
+            </div>
+        </div>
     </div>
 
-    <script src="js/main.js"></script>
-  </body>
-</html>
+    <!-- Wallpaper -->
+    <div class="main-content">
+        <div class="wallpaper"></div>
+        
+        <!-- Error Content -->
+        <div class="error-page">
+            <div class="error-card">
+                <div class="error-icon">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <div class="error-code">404</div>
+                <h1 class="error-title">Page Not Found</h1>
+                <p class="error-message">
+                    The file you're looking for seems to have been moved or deleted. 
+                    Let's get you back on track.
+                </p>
+                <div class="error-actions">
+                    <a href="index.html" class="error-btn error-btn-primary">
+                        <i class="fas fa-home"></i>
+                        Go Home
+                    </a>
+                    <a href="javascript:history.back()" class="error-btn error-btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Go Back
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mini Dock -->
+    <div class="dock-404">
+        <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+        <a href="https://github.com/sawyairhtet" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
 
+    <script>
+        // Update clock
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12;
+            
+            const menuClock = document.querySelector('.menu-clock');
+            if (menuClock) {
+                menuClock.textContent = `${displayHours}:${minutes} ${ampm}`;
+            }
+            
+            const statusTime = document.querySelector('.status-time');
+            if (statusTime) {
+                statusTime.textContent = `${displayHours}:${minutes}`;
+            }
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
