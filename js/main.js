@@ -7,6 +7,16 @@ let currentZIndex = 100;
 let activeWindows = new Set();
 
 // ============================================
+// STICKY NOTES DATA (Humanization)
+// ============================================
+
+const stickyNotesData = [
+    { text: "Remember: coffee first, code later ☕", color: "yellow", rotation: -3, x: 75, y: 15 },
+    { text: "TODO: Add more projects", color: "pink", rotation: 2, x: 82, y: 35 },
+    { text: "'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.' - Martin Fowler", color: "blue", rotation: -1, x: 78, y: 55 }
+];
+
+// ============================================
 // DEVICE DETECTION
 // ============================================
 
@@ -51,25 +61,30 @@ function openWindow(appName) {
     activeWindows.add(windowId);
     bringToFront(windowEl);
     
-    // Add animation based on OS
-    if (currentOS === 'mobile') {
-        // Slide up animation for mobile
-        windowEl.style.animation = 'slideUp 0.3s ease-out';
-    } else if (currentOS === 'tablet') {
-        // Fade in for tablet
-        windowEl.style.animation = 'fadeIn 0.2s ease-out';
-    } else {
-        // Scale in for desktop
-        windowEl.style.animation = 'scaleIn 0.2s ease-out';
-    }
+    // Bounce animation for organic feel
+    windowEl.classList.remove('closing');
+    windowEl.classList.add('opening');
+    
+    // Remove animation class after it completes
+    setTimeout(() => {
+        windowEl.classList.remove('opening');
+    }, 400);
 }
 
 function closeWindow(windowId) {
     const windowEl = document.getElementById(windowId);
     if (!windowEl) return;
     
-    windowEl.style.display = 'none';
-    activeWindows.delete(windowId);
+    // Add closing animation
+    windowEl.classList.remove('opening');
+    windowEl.classList.add('closing');
+    
+    // Hide after animation completes
+    setTimeout(() => {
+        windowEl.style.display = 'none';
+        windowEl.classList.remove('closing');
+        activeWindows.delete(windowId);
+    }, 250);
 }
 
 function closeAllWindows() {
@@ -230,7 +245,10 @@ const terminalCommands = {
   skills      - Display technical skills
   echo [text] - Echo back your text
   clear       - Clear terminal output
-  help        - Show this help message`;
+  help        - Show this help message
+  
+  // Easter eggs:
+  coffee, sudo, matrix, hello`;
     },
     
     whoami: () => {
@@ -283,6 +301,65 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
             output.innerHTML = '';
         }
         return '';
+    },
+
+    // === EASTER EGG COMMANDS ===
+    coffee: () => {
+        return `
+    ( (
+     ) )
+  .........
+  |       |]
+  \       /
+   '----'
+
+Brewing some caffeine... ☕
+Fun fact: Programmers convert coffee to code at ~0.5 LOC/ml.`;
+    },
+
+    sudo: () => {
+        return `Nice try! 😏
+
+But you're not root here. Maybe ask nicely?`;
+    },
+
+    matrix: () => {
+        return `Wake up, Neo...
+The Matrix has you...
+Follow the white rabbit. 🐇
+
+01001000 01100101 01101100 01101100 01101111`;
+    },
+
+    hello: () => {
+        const greetings = [
+            "Hey there! 👋 Welcome to my corner of the internet.",
+            "Hi! Thanks for exploring. Feel free to poke around!",
+            "Hello, world! (A programmer's favorite phrase 😄)",
+            "Greetings, traveler! You've found the secret hello."
+        ];
+        return greetings[Math.floor(Math.random() * greetings.length)];
+    },
+
+    date: () => {
+        return new Date().toString();
+    },
+
+    neofetch: () => {
+        return `
+       .--.
+      |o_o |
+      |:_/ |
+     //   \ \
+    (|     | )
+   /'\_   _/'\    visitor@portfolio
+   \___)=(___/   ─────────────────
+                 OS: macOS Sonoma (Fake)
+                 Host: Saw Ye Htet's Portfolio
+                 Uptime: Since you landed here
+                 Shell: JavaScript
+                 Theme: Glassmorphism
+                 Memory: Lots of dreams`;
     }
 };
 
@@ -423,7 +500,101 @@ function injectAnimations() {
 // INITIALIZATION
 // ============================================
 
+// ============================================
+// BOOT SCREEN
+// ============================================
+
+function initBootScreen() {
+    const bootScreen = document.getElementById('boot-screen');
+    if (!bootScreen) return;
+
+    // Fade out boot screen after 1.5 seconds
+    setTimeout(() => {
+        bootScreen.classList.add('fade-out');
+        
+        // Remove from DOM after fade
+        setTimeout(() => {
+            bootScreen.remove();
+            // Auto-open About window after boot
+            openWindow('about');
+        }, 500);
+    }, 1500);
+}
+
+// ============================================
+// STICKY NOTES (Humanization)
+// ============================================
+
+function createStickyNotes() {
+    if (currentOS !== 'desktop') return; // Only show on desktop
+    
+    const container = document.getElementById('sticky-notes');
+    if (!container) return;
+
+    stickyNotesData.forEach((note, index) => {
+        const noteEl = document.createElement('div');
+        noteEl.className = `sticky-note ${note.color !== 'yellow' ? note.color : ''}`;
+        noteEl.style.transform = `rotate(${note.rotation}deg)`;
+        noteEl.style.right = `${100 - note.x}%`;
+        noteEl.style.top = `${note.y}%`;
+        noteEl.textContent = note.text;
+        noteEl.setAttribute('data-note-index', index);
+
+        // Make sticky notes draggable
+        makeStickyDraggable(noteEl);
+        
+        container.appendChild(noteEl);
+    });
+}
+
+function makeStickyDraggable(element) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    
+    element.onmousedown = dragMouseDown;
+    
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        
+        element.classList.add('dragging');
+        element.style.zIndex = 999;
+        
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    }
+    
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+        element.style.right = 'auto'; // Switch from right to left positioning
+    }
+    
+    function closeDragElement() {
+        element.classList.remove('dragging');
+        element.style.zIndex = 50;
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Show boot screen first
+    initBootScreen();
+    
     // Detect initial OS
     updateOS();
     
@@ -436,6 +607,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMobileCloseButtons();
     setupTerminal();
     setupThemeToggle();
+    
+    // Create sticky notes (desktop only)
+    createStickyNotes();
     
     // Make all windows draggable (will be disabled on mobile/tablet)
     document.querySelectorAll('.window').forEach(win => {
