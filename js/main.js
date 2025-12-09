@@ -13,7 +13,7 @@ let activeWindows = new Set();
 const stickyNotesData = [
     { text: "I like coke but \ncoke light is better 🥤", color: "yellow", rotation: -3, x: 75, y: 15 },
     { text: "Roses are red.\nViolets are blue.\nUnexpected error in line 52.", color: "pink", rotation: 2, x: 82, y: 35 },
-    { text: 'print("Hi Mom!")', color: "blue", rotation: -1, x: 78, y: 55 }
+    { text: 'System.out.println\n("Hi Mom! I love you.");', color: "blue", rotation: -1, x: 78, y: 55 }
 ];
 
 // ============================================
@@ -248,7 +248,7 @@ const terminalCommands = {
   help        - Show this help message
   
   // Easter eggs:
-  coffee, sudo, matrix, hello`;
+  milk, sudo, matrix, hello`;
     },
     
     whoami: () => {
@@ -304,17 +304,18 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     // === EASTER EGG COMMANDS ===
-    coffee: () => {
+    milk: () => {
         return `
-    ( (
-     ) )
-  .........
-  |       |]
-  \       /
-   '----'
+    .------.
+   /        \\
+   |  MILK  |
+   |        |
+   |________|
+    \\      /
+     '----'
 
-Brewing some caffeine... ☕
-Fun fact: Programmers convert coffee to code at ~0.5 LOC/ml.`;
+Pouring some fresh milk... 🥛
+Fun fact: Milk builds strong bones for those long coding sessions!`;
     },
 
     sudo: () => {
@@ -335,7 +336,7 @@ Follow the white rabbit. 🐇
         const greetings = [
             "Hey there! 👋 Welcome to my corner of the internet.",
             "Hi! Thanks for exploring. Feel free to poke around!",
-            "Hello, world! (A programmer's favorite phrase 😄)",
+            "Hi Mom! 💙 (This one's for you)",
             "Greetings, traveler! You've found the secret hello."
         ];
         return greetings[Math.floor(Math.random() * greetings.length)];
