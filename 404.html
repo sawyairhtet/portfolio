@@ -20,9 +20,18 @@
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     <style>
         /* 404 Page Specific Styles */
         .error-page {
@@ -79,7 +88,7 @@
         .error-code {
             font-size: 72px;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -125,13 +134,13 @@
         }
         
         .error-btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-btn);
             color: #fff;
         }
         
         .error-btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 24px rgba(233, 84, 32, 0.4);
         }
         
         .error-btn-secondary {
@@ -209,19 +218,16 @@
 </head>
 <body>
     
-    <!-- Top Bar -->
+    <!-- Top Bar (GNOME Panel) -->
     <div class="top-bar">
+        <!-- GNOME Panel Left - Activities -->
         <div class="menu-bar-left">
-            <div class="apple-logo"></div>
-            <div class="menu-item">Finder</div>
-            <div class="menu-item">File</div>
-            <div class="menu-item">Edit</div>
-            <div class="menu-item">View</div>
+            <button class="activities-btn">Activities</button>
         </div>
         
+        <!-- Status Bar (Mobile/Tablet only) -->
         <div class="status-bar">
             <div class="status-time"></div>
-            <div class="dynamic-island"></div>
             <div class="status-icons">
                 <i class="fas fa-signal"></i>
                 <i class="fas fa-wifi"></i>
@@ -229,12 +235,18 @@
             </div>
         </div>
         
-        <div class="menu-bar-right">
-            <i class="fas fa-battery-three-quarters"></i>
-            <i class="fas fa-wifi"></i>
+        <!-- GNOME Panel Center - Clock -->
+        <div class="menu-bar-center">
             <div class="menu-clock"></div>
-            <div class="control-center-icon">
-                <i class="fas fa-sliders-h"></i>
+        </div>
+        
+        <!-- GNOME Panel Right - Status Indicators -->
+        <div class="menu-bar-right">
+            <div class="status-menu">
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-volume-up"></i>
+                <i class="fas fa-battery-three-quarters"></i>
+                <i class="fas fa-power-off"></i>
             </div>
         </div>
     </div>

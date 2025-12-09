@@ -48,6 +48,11 @@
     
     /* Ubuntu Dock Width */
     --dock-width: 60px;
+    
+    /* Theme-aware Gradients */
+    --gradient-wallpaper: linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
+    --gradient-accent: linear-gradient(135deg, #E95420 0%, #77216F 100%);
+    --gradient-btn: linear-gradient(135deg, #E95420 0%, #C74316 100%);
 }
 
 [data-theme="dark"] {
@@ -60,6 +65,11 @@
     --color-border: rgba(255, 255, 255, 0.08);
     --color-card-bg: rgba(255, 255, 255, 0.05);
     --color-primary: #FF6B3D;
+    
+    /* Darker gradients for dark mode */
+    --gradient-wallpaper: linear-gradient(135deg, #1a0012 0%, #3d1a35 50%, #2a1525 100%);
+    --gradient-accent: linear-gradient(135deg, #C74316 0%, #5E2750 100%);
+    --gradient-btn: linear-gradient(135deg, #C74316 0%, #9E3610 100%);
 }
 
 /* ============================================
@@ -169,16 +179,6 @@ body {
     align-items: center;
 }
 
-.dynamic-island {
-    width: 120px;
-    height: 22px;
-    background: #000;
-    border-radius: 20px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 .status-icons {
     display: flex;
     gap: 6px;
@@ -203,8 +203,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
+    background: var(--gradient-wallpaper);
     z-index: 0;
 }
 
@@ -403,7 +402,7 @@ body {
 .about-hero {
     text-align: center;
     padding: var(--spacing-xl);
-    background: linear-gradient(135deg, #E95420 0%, #77216F 100%);
+    background: var(--gradient-accent);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-lg);
     color: #fff;
@@ -659,9 +658,6 @@ body {
         display: flex;
     }
     
-    .dynamic-island {
-        display: none;
-    }
     
     /* Hide dock on tablet */
     .dock {

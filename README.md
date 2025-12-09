@@ -4,41 +4,37 @@ My personal portfolio website showcasing my journey as an IT student at Singapor
 
 ## About
 
-This is my portfolio website where I share my projects, timeline, and personal interests. Built with vanilla HTML, CSS, and JavaScript to keep things simple and fast.
+This is my portfolio website featuring an **Ubuntu GNOME (Yaru)** desktop theme. It simulates a Linux desktop experience with a GNOME-style top panel, a left-side dock, and draggable windows. Built with vanilla HTML, CSS, and JavaScript to keep things simple and fast.
 
 ## Structure
 
 ```plaintext
 portfolio/
-├── index.html              # Main homepage
-├── pages/
-│   ├── about.html          # About me page
-│   ├── blog.html           # Blog (coming soon)
-│   ├── gallery.html        # Photography gallery
-│   └── newsletter-success.html
+├── index.html              # Main OS simulation (Single Page App)
+├── 404.html                # Custom 404 Error Page
+├── check-before-deploy.js  # Pre-deployment safety check script
 ├── css/
-│   └── main.css            # All styles
+│   └── main.css            # Global styles and Ubuntu theme logic
 ├── js/
-│   ├── main.js             # Homepage interactions
-│   └── blog.js             # Blog functionality
-├── assets/
-│   ├── gallery/            # Photography collection
-│   ├── profile-picture.jpg
-│   └── favicon.svg
-└── blog/                   # Future blog posts
+│   └── main.js             # OS logic, window management, terminal
+├── pages/                  # Static pages (Fallbacks/Legacy)
+│   ├── about.html
+│   └── newsletter-success.html
+└── assets/
+    ├── favicon.svg
+    └── images/             # Project assets and wallpapers
 ```
 
 ## Features
 
+- **Ubuntu GNOME Desktop Theme** with Yaru-inspired colors and font
+- **Simulated Linux Boot Log** on page load
+- **Interactive Terminal** with commands like `neofetch`, `whoami`, and easter eggs
+- **Draggable Windows** on desktop, with mobile-responsive views
+- **Left-Side Dock** for quick app access (GNOME-style)
 - Responsive design that works on all devices
-- Photography gallery with lightbox
-- Smooth scrolling navigation
-- Clean, minimal aesthetic
 - SEO optimized with proper meta tags
 - Fast loading with vanilla JS
-- **Optimized lazy loading** with native browser support and fallbacks
-- Shimmer loading animations for better UX
-- Critical resource preloading for faster initial load
 
 ## Local Development
 
@@ -71,21 +67,7 @@ npm run dev
 - Vanilla JavaScript
 - No build process or frameworks
 
-## Performance Optimizations
 
-### Lazy Loading Implementation
-
-- **Native lazy loading** with `loading="lazy"` attribute for modern browsers
-- **Intersection Observer fallback** for older browser compatibility
-- **Critical resource preloading** using `rel="preload"` for above-the-fold images
-- **Shimmer loading animations** for better perceived performance
-- **Explicit image dimensions** to prevent layout shift (CLS)
-
-### Loading Strategy
-
-- **Eager loading**: Profile picture and critical images load immediately
-- **Lazy loading**: Gallery images and below-the-fold content load on demand
-- **Bandwidth optimization**: Images only load when users scroll to them
 
 ## Deployment
 
