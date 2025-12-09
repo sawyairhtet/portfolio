@@ -11,8 +11,8 @@ let activeWindows = new Set();
 // ============================================
 
 const stickyNotesData = [
-    { text: "I like coke but coke light is better 🥤", color: "yellow", rotation: -3, x: 75, y: 15 },
-    { text: "Roses are red. Violets are blue. Unexpected error in line 52.", color: "pink", rotation: 2, x: 82, y: 35 },
+    { text: "I like coke but \ncoke light is better 🥤", color: "yellow", rotation: -3, x: 75, y: 15 },
+    { text: "Roses are red.\nViolets are blue.\nUnexpected error in line 52.", color: "pink", rotation: 2, x: 82, y: 35 },
     { text: 'print("Hi Mom!")', color: "blue", rotation: -1, x: 78, y: 55 }
 ];
 

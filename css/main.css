@@ -980,6 +980,7 @@ body {
     font-size: 15px;
     line-height: 1.4;
     color: #5D4037;
+    white-space: pre-line;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     cursor: grab;
     z-index: 50;
