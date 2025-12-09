@@ -483,6 +483,7 @@ body {
 
 .terminal-line {
     margin: 4px 0;
+    white-space: pre-wrap;
 }
 
 .terminal-input-line {
