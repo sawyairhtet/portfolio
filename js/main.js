@@ -11,9 +11,9 @@ let activeWindows = new Set();
 // ============================================
 
 const stickyNotesData = [
-    { text: "Remember: coffee first, code later ☕", color: "yellow", rotation: -3, x: 75, y: 15 },
-    { text: "TODO: Add more projects", color: "pink", rotation: 2, x: 82, y: 35 },
-    { text: "'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.' - Martin Fowler", color: "blue", rotation: -1, x: 78, y: 55 }
+    { text: "I like coke but coke light is better 🥤", color: "yellow", rotation: -3, x: 75, y: 15 },
+    { text: "Roses are red. Violets are blue. Unexpected error in line 52.", color: "pink", rotation: 2, x: 82, y: 35 },
+    { text: 'print("Hi Mom!")', color: "blue", rotation: -1, x: 78, y: 55 }
 ];
 
 // ============================================
