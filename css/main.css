@@ -1035,6 +1035,17 @@ a.project-card {
     .dock-separator {
         display: none;
     }
+    
+    /* Active indicator at bottom for horizontal dock */
+    .dock-item.active::after {
+        left: 50%;
+        top: auto;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 3px;
+        border-radius: 2px 2px 0 0;
+    }
 }
 
 /* ============================================
