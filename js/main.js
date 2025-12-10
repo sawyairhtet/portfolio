@@ -61,6 +61,9 @@ function openWindow(appName) {
     activeWindows.add(windowId);
     bringToFront(windowEl);
     
+    // Update dock active states
+    updateDockActiveStates();
+    
     // Bounce animation for organic feel
     windowEl.classList.remove('closing');
     windowEl.classList.add('opening');
@@ -84,6 +87,9 @@ function closeWindow(windowId) {
         windowEl.style.display = 'none';
         windowEl.classList.remove('closing');
         activeWindows.delete(windowId);
+        
+        // Update dock active states
+        updateDockActiveStates();
     }, 250);
 }
 
@@ -96,6 +102,25 @@ function closeAllWindows() {
 function bringToFront(element) {
     currentZIndex++;
     element.style.zIndex = currentZIndex;
+}
+
+// ============================================
+// DOCK ACTIVE STATE MANAGEMENT
+// ============================================
+
+function updateDockActiveStates() {
+    const dockItems = document.querySelectorAll('.dock-item');
+    dockItems.forEach(item => {
+        const appName = item.dataset.app;
+        if (appName) {
+            const windowId = `${appName}-window`;
+            if (activeWindows.has(windowId)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        }
+    });
 }
 
 // ============================================

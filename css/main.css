@@ -149,6 +149,18 @@ body {
     background: rgba(255, 255, 255, 0.15);
 }
 
+/* Personal Branding Badge */
+.personal-brand {
+    font-weight: 700;
+    font-size: 11px;
+    background: var(--gradient-btn);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
 .menu-clock,
 .status-time {
     font-variant-numeric: tabular-nums;
@@ -207,6 +219,21 @@ body {
     z-index: 0;
 }
 
+/* Subtle pattern overlay for wallpaper depth */
+.wallpaper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 40%),
+        radial-gradient(circle at 60% 30%, rgba(233, 84, 32, 0.05) 0%, transparent 30%);
+    pointer-events: none;
+}
+
 /* ============================================
    APP GRID
    ============================================ */
@@ -216,7 +243,8 @@ body {
     top: 80px;
     left: calc(var(--dock-width) + 40px);
     display: grid;
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
     z-index: 10;
 }
 
@@ -226,7 +254,7 @@ body {
     align-items: center;
     cursor: pointer;
     transition: transform 0.2s;
-    width: 80px;
+    width: 90px;
 }
 
 .app-icon:hover {
@@ -305,8 +333,9 @@ body {
     border: 1px solid var(--color-border);
     display: none;
     flex-direction: column;
-    min-width: 400px;
-    max-width: 800px;
+    width: 600px;
+    min-width: 500px;
+    max-width: 650px;
     max-height: 80vh;
     z-index: 100;
 }
@@ -447,14 +476,19 @@ body {
 
 .about-content {
     display: grid;
-    gap: var(--spacing-md);
+    gap: var(--spacing-xl);
 }
 
 .about-section {
     background: var(--color-card-bg);
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
+}
+
+.about-section p {
+    margin-top: var(--spacing-sm);
+    line-height: 1.8;
 }
 
 .about-section h3 {
@@ -537,6 +571,26 @@ body {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
     border-color: var(--color-primary);
+}
+
+/* Project Preview Image */
+.project-preview {
+    width: 100%;
+    height: 100px;
+    background: var(--gradient-accent);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.project-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .project-icon {
@@ -712,11 +766,26 @@ body {
     transition: all 0.2s ease;
     border-radius: var(--radius-sm);
     color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    position: relative;
 }
 
 .dock-item:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
+}
+
+/* Active indicator for dock items */
+.dock-item.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    background: var(--color-primary);
+    border-radius: 0 2px 2px 0;
 }
 
 .dock-separator {
