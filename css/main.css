@@ -427,6 +427,16 @@ body {
     line-height: 1.6;
 }
 
+.window-body a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.window-body a:hover {
+    color: var(--color-primary);
+}
+
 /* About Hero Section */
 .about-hero {
     text-align: center;
