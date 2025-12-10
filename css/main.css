@@ -602,6 +602,18 @@ body {
 .project-card h3 {
     font-size: 18px;
     margin-bottom: var(--spacing-sm);
+    color: #fff;
+}
+
+.project-card p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Ensure project card links don't have default link styling */
+a.project-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .tech-stack {
