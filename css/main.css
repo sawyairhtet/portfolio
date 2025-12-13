@@ -215,7 +215,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--gradient-wallpaper);
+    background: url('../images/Jammy_Jellyfish.png') center/cover no-repeat;
     z-index: 0;
 }
 
