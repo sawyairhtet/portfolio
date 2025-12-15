@@ -220,9 +220,8 @@ function setupDraggableAppIcons() {
         let pos = savedGridPositions[appName];
         
         if (!pos) {
-            // Default sequential layout for new/reset icons
-            // 6 columns max assumption for default layout
-            const defaultCols = 6; 
+            // Default vertical layout: 2 columns, fill top-to-bottom like real desktops
+            const defaultCols = 2; 
             pos = {
                 col: (index % defaultCols) + 1,
                 row: Math.floor(index / defaultCols) + 1
@@ -380,27 +379,33 @@ function startDrag() {
     draggedIcon.classList.add('dragging-original');
 }
 
+// Grid constraints - matching CSS grid definition
+const MAX_GRID_COLS = 6;
+const MAX_GRID_ROWS = 6;
+
 function updateDrag(clientX, clientY) {
     if (!dragClone || !placeholder) return;
     
     const appGrid = document.querySelector('.app-grid');
     const gridRect = appGrid.getBoundingClientRect();
+    const gridPadding = 16; // CSS var(--spacing-md)
     
     // Move clone
     dragClone.style.left = (clientX - dragClone.offsetWidth / 2) + 'px';
     dragClone.style.top = (clientY - dragClone.offsetHeight / 2) + 'px';
     
     // Calculate Grid Coordinate based on mouse position relative to container
-    // We add half gap to center the snap point
-    const relativeX = clientX - gridRect.left;
-    const relativeY = clientY - gridRect.top;
+    // Account for grid padding
+    const relativeX = clientX - gridRect.left - gridPadding;
+    const relativeY = clientY - gridRect.top - gridPadding;
     
-    let targetCol = Math.ceil((relativeX) / (GRID_CELL_WIDTH + GRID_GAP));
-    let targetRow = Math.ceil((relativeY) / (GRID_CELL_HEIGHT + GRID_GAP));
+    // Use floor + 1 for more intuitive snapping (snap to cell under cursor)
+    let targetCol = Math.floor(relativeX / (GRID_CELL_WIDTH + GRID_GAP)) + 1;
+    let targetRow = Math.floor(relativeY / (GRID_CELL_HEIGHT + GRID_GAP)) + 1;
     
-    // Boundaries
-    if (targetCol < 1) targetCol = 1;
-    if (targetRow < 1) targetRow = 1;
+    // Clamp to grid boundaries (1 to MAX)
+    targetCol = Math.max(1, Math.min(targetCol, MAX_GRID_COLS));
+    targetRow = Math.max(1, Math.min(targetRow, MAX_GRID_ROWS));
     
     // Update placeholder position
     placeholder.style.gridColumnStart = targetCol;
