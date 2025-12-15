@@ -192,157 +192,276 @@ function makeDraggable(element) {
 }
 
 // ============================================
-// DRAGGABLE APP ICONS (Desktop Only)
+// DRAGGABLE APP ICONS (Desktop Only) - Grid-Based
 // ============================================
 
+let draggedIcon = null;
+let dragClone = null;
+let placeholder = null;
+let iconOrder = []; // Stores the order of app icons
+
 function setupDraggableAppIcons() {
-    if (currentOS !== 'desktop') return;
+    // Works on all devices now (desktop, tablet, mobile)
     
-    const appIcons = document.querySelectorAll('.app-icon');
     const appGrid = document.querySelector('.app-grid');
-    
     if (!appGrid) return;
     
-    // Load saved positions from localStorage
-    const savedPositions = JSON.parse(localStorage.getItem('appIconPositions') || '{}');
+    // Load saved order from localStorage
+    const savedOrder = JSON.parse(localStorage.getItem('appIconOrder') || '[]');
     
-    // If we have saved positions, switch to absolute positioning mode
-    if (Object.keys(savedPositions).length > 0) {
-        appGrid.classList.add('free-positioning');
+    // Get all app icons
+    const appIcons = Array.from(document.querySelectorAll('.app-icon'));
+    
+    // If we have a saved order, reorder the icons
+    if (savedOrder.length > 0) {
+        const orderedIcons = [];
+        savedOrder.forEach(appName => {
+            const icon = appIcons.find(ic => ic.dataset.app === appName);
+            if (icon) orderedIcons.push(icon);
+        });
+        // Add any new icons not in saved order
+        appIcons.forEach(icon => {
+            if (!orderedIcons.includes(icon)) orderedIcons.push(icon);
+        });
+        // Reorder in DOM
+        orderedIcons.forEach(icon => appGrid.appendChild(icon));
     }
     
-    appIcons.forEach(icon => {
-        const appName = icon.dataset.app;
-        
-        // Apply saved position if available
-        if (savedPositions[appName]) {
-            appGrid.classList.add('free-positioning');
-            icon.style.position = 'absolute';
-            icon.style.top = savedPositions[appName].top;
-            icon.style.left = savedPositions[appName].left;
-        }
-        
-        // Make draggable
-        makeAppIconDraggable(icon);
+    // Store current order
+    iconOrder = Array.from(appGrid.querySelectorAll('.app-icon')).map(ic => ic.dataset.app);
+    
+    // Create placeholder element
+    placeholder = document.createElement('div');
+    placeholder.className = 'app-icon-placeholder';
+    placeholder.style.display = 'none';
+    appGrid.appendChild(placeholder);
+    
+    // Setup drag handlers for each icon
+    appGrid.querySelectorAll('.app-icon').forEach(icon => {
+        setupIconDragHandlers(icon);
     });
 }
 
-function makeAppIconDraggable(icon) {
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+function setupIconDragHandlers(icon) {
     let isDragging = false;
     let startX, startY;
-    const dragThreshold = 5; // Minimum pixels to move before considering it a drag
+    const dragThreshold = 10;
+    let touchTimer = null;
     
-    icon.addEventListener('mousedown', dragMouseDown);
+    // Mouse events
+    icon.addEventListener('mousedown', onPointerDown);
     
-    function dragMouseDown(e) {
-        if (currentOS !== 'desktop') return;
-        
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        startX = e.clientX;
-        startY = e.clientY;
-        isDragging = false;
-        
-        document.addEventListener('mouseup', closeDragElement);
-        document.addEventListener('mousemove', elementDrag);
+    // Touch events for mobile
+    icon.addEventListener('touchstart', onTouchStart, { passive: false });
+    
+    function getEventCoords(e) {
+        if (e.touches && e.touches.length > 0) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
     }
     
-    function elementDrag(e) {
+    function onTouchStart(e) {
         e.preventDefault();
+        const coords = getEventCoords(e);
+        startX = coords.x;
+        startY = coords.y;
+        isDragging = false;
+        draggedIcon = icon;
         
-        const deltaX = Math.abs(e.clientX - startX);
-        const deltaY = Math.abs(e.clientY - startY);
+        document.addEventListener('touchmove', onTouchMove, { passive: false });
+        document.addEventListener('touchend', onTouchEnd);
+        document.addEventListener('touchcancel', onTouchEnd);
+    }
+    
+    function onTouchMove(e) {
+        e.preventDefault();
+        const coords = getEventCoords(e);
+        const deltaX = Math.abs(coords.x - startX);
+        const deltaY = Math.abs(coords.y - startY);
         
-        // Only start dragging if moved beyond threshold
         if (!isDragging && (deltaX > dragThreshold || deltaY > dragThreshold)) {
             isDragging = true;
-            
-            // Switch to free positioning mode
-            const appGrid = document.querySelector('.app-grid');
-            if (appGrid && !appGrid.classList.contains('free-positioning')) {
-                // Convert all icons to absolute positioning
-                const allIcons = appGrid.querySelectorAll('.app-icon');
-                allIcons.forEach(ic => {
-                    const rect = ic.getBoundingClientRect();
-                    const gridRect = appGrid.getBoundingClientRect();
-                    ic.style.position = 'absolute';
-                    ic.style.top = (rect.top - gridRect.top) + 'px';
-                    ic.style.left = (rect.left - gridRect.left) + 'px';
-                });
-                appGrid.classList.add('free-positioning');
-            }
-            
-            icon.classList.add('dragging');
-            icon.style.zIndex = 100;
+            startDrag({ clientX: coords.x, clientY: coords.y });
         }
         
         if (isDragging) {
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            
-            // Calculate new position with boundaries
-            const appGrid = document.querySelector('.app-grid');
-            const gridRect = appGrid.getBoundingClientRect();
-            
-            let newTop = icon.offsetTop - pos2;
-            let newLeft = icon.offsetLeft - pos1;
-            
-            // Keep within reasonable bounds
-            const minY = 0;
-            const minX = 0;
-            const maxY = window.innerHeight - gridRect.top - 100;
-            const maxX = window.innerWidth - gridRect.left - 100;
-            
-            newTop = Math.max(minY, Math.min(newTop, maxY));
-            newLeft = Math.max(minX, Math.min(newLeft, maxX));
-            
-            icon.style.top = newTop + 'px';
-            icon.style.left = newLeft + 'px';
+            updateDrag({ clientX: coords.x, clientY: coords.y });
         }
     }
     
-    function closeDragElement() {
-        document.removeEventListener('mouseup', closeDragElement);
-        document.removeEventListener('mousemove', elementDrag);
+    function onTouchEnd(e) {
+        document.removeEventListener('touchmove', onTouchMove);
+        document.removeEventListener('touchend', onTouchEnd);
+        document.removeEventListener('touchcancel', onTouchEnd);
         
         if (isDragging) {
-            icon.classList.remove('dragging');
-            icon.style.zIndex = '';
-            
-            // Save position to localStorage
-            const appName = icon.dataset.app;
-            const savedPositions = JSON.parse(localStorage.getItem('appIconPositions') || '{}');
-            savedPositions[appName] = {
-                top: icon.style.top,
-                left: icon.style.left
-            };
-            localStorage.setItem('appIconPositions', JSON.stringify(savedPositions));
+            endDrag();
         } else {
-            // It was a click, not a drag - open the window
+            // It was a tap, not a drag
             const appName = icon.dataset.app;
             openWindow(appName);
         }
         
         isDragging = false;
+        draggedIcon = null;
+    }
+    
+    function onPointerDown(e) {
+        e.preventDefault();
+        
+        startX = e.clientX;
+        startY = e.clientY;
+        isDragging = false;
+        draggedIcon = icon;
+        
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    }
+    
+    function onMouseMove(e) {
+        const deltaX = Math.abs(e.clientX - startX);
+        const deltaY = Math.abs(e.clientY - startY);
+        
+        // Start dragging if moved beyond threshold
+        if (!isDragging && (deltaX > dragThreshold || deltaY > dragThreshold)) {
+            isDragging = true;
+            startDrag(e);
+        }
+        
+        if (isDragging) {
+            updateDrag(e);
+        }
+    }
+    
+    function onMouseUp(e) {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        
+        if (isDragging) {
+            endDrag();
+        } else {
+            // It was a click, not a drag
+            const appName = icon.dataset.app;
+            openWindow(appName);
+        }
+        
+        isDragging = false;
+        draggedIcon = null;
     }
 }
 
-function resetAppIconPositions() {
-    localStorage.removeItem('appIconPositions');
+function startDrag(e) {
     const appGrid = document.querySelector('.app-grid');
-    if (appGrid) {
-        appGrid.classList.remove('free-positioning');
-        const appIcons = appGrid.querySelectorAll('.app-icon');
-        appIcons.forEach(icon => {
-            icon.style.position = '';
-            icon.style.top = '';
-            icon.style.left = '';
-        });
+    if (!appGrid || !draggedIcon) return;
+    
+    // Get original icon position
+    const rect = draggedIcon.getBoundingClientRect();
+    
+    // Create a clone that follows the mouse
+    dragClone = draggedIcon.cloneNode(true);
+    dragClone.className = 'app-icon drag-clone';
+    dragClone.style.position = 'fixed';
+    dragClone.style.left = rect.left + 'px';
+    dragClone.style.top = rect.top + 'px';
+    dragClone.style.width = rect.width + 'px';
+    dragClone.style.pointerEvents = 'none';
+    dragClone.style.zIndex = '9999';
+    dragClone.style.opacity = '0.9';
+    dragClone.style.transform = 'scale(1.1)';
+    dragClone.style.transition = 'none';
+    document.body.appendChild(dragClone);
+    
+    // Show placeholder in original position
+    placeholder.style.display = 'flex';
+    placeholder.style.width = draggedIcon.offsetWidth + 'px';
+    placeholder.style.height = draggedIcon.offsetHeight + 'px';
+    appGrid.insertBefore(placeholder, draggedIcon);
+    
+    // Hide original icon
+    draggedIcon.classList.add('dragging-original');
+}
+
+function updateDrag(e) {
+    if (!dragClone || !draggedIcon) return;
+    
+    const appGrid = document.querySelector('.app-grid');
+    if (!appGrid) return;
+    
+    // Move clone with mouse
+    const cloneWidth = dragClone.offsetWidth;
+    const cloneHeight = dragClone.offsetHeight;
+    dragClone.style.left = (e.clientX - cloneWidth / 2) + 'px';
+    dragClone.style.top = (e.clientY - cloneHeight / 2) + 'px';
+    
+    // Find which icon we're hovering over
+    const icons = Array.from(appGrid.querySelectorAll('.app-icon:not(.dragging-original)'));
+    let targetIcon = null;
+    let insertBefore = true;
+    
+    for (const icon of icons) {
+        const rect = icon.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Check if mouse is within this icon's area
+        if (e.clientX >= rect.left && e.clientX <= rect.right &&
+            e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            targetIcon = icon;
+            // Determine if we should insert before or after
+            insertBefore = e.clientX < centerX || e.clientY < centerY;
+            break;
+        }
     }
+    
+    // Move placeholder to new position
+    if (targetIcon && targetIcon !== placeholder.nextElementSibling && targetIcon !== placeholder.previousElementSibling) {
+        if (insertBefore) {
+            appGrid.insertBefore(placeholder, targetIcon);
+        } else {
+            appGrid.insertBefore(placeholder, targetIcon.nextElementSibling);
+        }
+    }
+}
+
+function endDrag() {
+    const appGrid = document.querySelector('.app-grid');
+    if (!appGrid) return;
+    
+    // Remove clone
+    if (dragClone) {
+        dragClone.remove();
+        dragClone = null;
+    }
+    
+    // Move original icon to placeholder position
+    if (draggedIcon && placeholder) {
+        appGrid.insertBefore(draggedIcon, placeholder);
+        draggedIcon.classList.remove('dragging-original');
+    }
+    
+    // Hide placeholder
+    if (placeholder) {
+        placeholder.style.display = 'none';
+    }
+    
+    // Save new order
+    saveIconOrder();
+}
+
+function saveIconOrder() {
+    const appGrid = document.querySelector('.app-grid');
+    if (!appGrid) return;
+    
+    const order = Array.from(appGrid.querySelectorAll('.app-icon')).map(icon => icon.dataset.app);
+    localStorage.setItem('appIconOrder', JSON.stringify(order));
+    iconOrder = order;
+}
+
+function resetAppIconPositions() {
+    localStorage.removeItem('appIconOrder');
+    // Reload to reset order
+    location.reload();
 }
 
 // ============================================

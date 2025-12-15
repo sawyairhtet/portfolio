@@ -236,45 +236,64 @@ body {
 }
 
 /* ============================================
-   APP GRID
+   APP GRID - Responsive Multi-Column Layout
    ============================================ */
 
 .app-grid {
     position: absolute;
-    top: 80px;
-    left: calc(var(--dock-width) + 40px);
+    top: 60px;
+    left: calc(var(--dock-width) + 20px);
+    right: 20px;
+    bottom: 80px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-xl);
+    grid-template-columns: repeat(auto-fill, 100px);
+    grid-template-rows: repeat(auto-fill, 110px);
+    gap: var(--spacing-md);
+    align-content: start;
     z-index: 10;
+    padding: var(--spacing-md);
 }
 
 .app-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     cursor: pointer;
     transition: transform 0.2s;
-    width: 90px;
+    width: 100px;
+    height: 110px;
+    padding: var(--spacing-sm);
 }
 
 .app-icon:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
-/* Draggable app icons - free positioning */
-.app-grid.free-positioning {
-    display: block;
-    position: absolute;
-    width: calc(100vw - var(--dock-width) - 80px);
-    height: calc(100vh - 100px);
+/* Draggable app icons - grid reordering */
+.app-icon-placeholder {
+    width: 100px;
+    height: 110px;
+    background: rgba(233, 84, 32, 0.15);
+    border: 2px dashed var(--color-primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    box-shadow: inset 0 0 20px rgba(233, 84, 32, 0.1);
 }
 
-.app-icon.dragging {
-    transform: scale(1.1);
-    opacity: 0.9;
+.app-icon.dragging-original {
+    opacity: 0.2;
+    pointer-events: none;
+    transform: scale(0.95);
+}
+
+.app-icon.drag-clone {
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
     cursor: grabbing !important;
-    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4));
+    transform: scale(1.1);
 }
 
 .app-icon-wrapper {
@@ -1253,3 +1272,106 @@ a.project-card {
     color: #729FCF;
 }
 
+/* ============================================
+   RESPONSIVE MEDIA QUERIES
+   ============================================ */
+
+/* Tablet Layout (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    .app-grid {
+        left: calc(var(--dock-width) + 10px);
+        right: 10px;
+        top: 50px;
+        grid-template-columns: repeat(auto-fill, 90px);
+        grid-template-rows: repeat(auto-fill, 100px);
+        gap: var(--spacing-sm);
+    }
+    
+    .app-icon {
+        width: 90px;
+        height: 100px;
+    }
+    
+    .app-icon-placeholder {
+        width: 90px;
+        height: 100px;
+    }
+    
+    .app-icon-wrapper {
+        width: 56px;
+        height: 56px;
+        font-size: 28px;
+    }
+}
+
+/* Mobile Layout (under 768px) */
+@media screen and (max-width: 768px) {
+    .main-content {
+        padding-left: 0;
+    }
+    
+    .dock {
+        display: none; /* Dock is hidden on mobile */
+    }
+    
+    .app-grid {
+        left: 10px;
+        right: 10px;
+        top: 40px;
+        bottom: 70px;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(auto-fill, 95px);
+        gap: var(--spacing-sm);
+        justify-items: center;
+    }
+    
+    .app-icon {
+        width: 80px;
+        height: 95px;
+    }
+    
+    .app-icon-placeholder {
+        width: 80px;
+        height: 95px;
+    }
+    
+    .app-icon-wrapper {
+        width: 52px;
+        height: 52px;
+        font-size: 26px;
+    }
+    
+    .app-label {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+}
+
+/* Small Mobile Layout (under 480px) */
+@media screen and (max-width: 480px) {
+    .app-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+    
+    .app-icon {
+        width: 70px;
+        height: 85px;
+    }
+    
+    .app-icon-placeholder {
+        width: 70px;
+        height: 85px;
+    }
+    
+    .app-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+    
+    .app-label {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+}
