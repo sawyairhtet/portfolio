@@ -195,74 +195,80 @@ function makeDraggable(element) {
 // DRAGGABLE APP ICONS (Desktop Only) - Grid-Based
 // ============================================
 
+// ============================================
+// DRAGGABLE APP ICONS (Sparse Grid System)
+// ============================================
+
 let draggedIcon = null;
 let dragClone = null;
 let placeholder = null;
-let iconOrder = []; // Stores the order of app icons
+const GRID_CELL_WIDTH = 100;  // Matches CSS grid-template-columns
+const GRID_CELL_HEIGHT = 110; // Matches CSS grid-template-rows
+const GRID_GAP = 16;         // Matches CSS var(--spacing-md)
 
 function setupDraggableAppIcons() {
-    // Works on all devices now (desktop, tablet, mobile)
-    
     const appGrid = document.querySelector('.app-grid');
     if (!appGrid) return;
     
-    // Load saved order from localStorage
-    const savedOrder = JSON.parse(localStorage.getItem('appIconOrder') || '[]');
-    
-    // Get all app icons
+    // Load saved PROPER grid positions {appName: {row, col}}
+    const savedGridPositions = JSON.parse(localStorage.getItem('appGridPositions') || '{}');
     const appIcons = Array.from(document.querySelectorAll('.app-icon'));
     
-    // If we have a saved order, reorder the icons
-    if (savedOrder.length > 0) {
-        const orderedIcons = [];
-        savedOrder.forEach(appName => {
-            const icon = appIcons.find(ic => ic.dataset.app === appName);
-            if (icon) orderedIcons.push(icon);
-        });
-        // Add any new icons not in saved order
-        appIcons.forEach(icon => {
-            if (!orderedIcons.includes(icon)) orderedIcons.push(icon);
-        });
-        // Reorder in DOM
-        orderedIcons.forEach(icon => appGrid.appendChild(icon));
-    }
+    // Initialize positions
+    appIcons.forEach((icon, index) => {
+        const appName = icon.dataset.app;
+        let pos = savedGridPositions[appName];
+        
+        if (!pos) {
+            // Default sequential layout for new/reset icons
+            // 6 columns max assumption for default layout
+            const defaultCols = 6; 
+            pos = {
+                col: (index % defaultCols) + 1,
+                row: Math.floor(index / defaultCols) + 1
+            };
+        }
+        
+        // Apply Grid Position
+        setGridPosition(icon, pos.row, pos.col);
+    });
     
-    // Store current order
-    iconOrder = Array.from(appGrid.querySelectorAll('.app-icon')).map(ic => ic.dataset.app);
-    
-    // Create placeholder element
+    // Create placeholder
     placeholder = document.createElement('div');
     placeholder.className = 'app-icon-placeholder';
     placeholder.style.display = 'none';
     appGrid.appendChild(placeholder);
     
-    // Setup drag handlers for each icon
-    appGrid.querySelectorAll('.app-icon').forEach(icon => {
-        setupIconDragHandlers(icon);
-    });
+    // Setup handlers
+    appIcons.forEach(icon => setupIconDragHandlers(icon));
+}
+
+function setGridPosition(element, row, col) {
+    element.style.gridRowStart = row;
+    element.style.gridColumnStart = col;
+    // Store in dataset for easy reading
+    element.dataset.row = row;
+    element.dataset.col = col;
 }
 
 function setupIconDragHandlers(icon) {
     let isDragging = false;
     let startX, startY;
     const dragThreshold = 10;
-    let touchTimer = null;
     
     // Mouse events
     icon.addEventListener('mousedown', onPointerDown);
-    
-    // Touch events for mobile
+    // Touch events
     icon.addEventListener('touchstart', onTouchStart, { passive: false });
     
     function getEventCoords(e) {
-        if (e.touches && e.touches.length > 0) {
-            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        }
+        if (e.touches && e.touches.length > 0) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
         return { x: e.clientX, y: e.clientY };
     }
     
     function onTouchStart(e) {
-        e.preventDefault();
+        if(e.target.closest('.close-btn')) return; // Allow interaction with proper elements if any
+        
         const coords = getEventCoords(e);
         startX = coords.x;
         startY = coords.y;
@@ -271,43 +277,42 @@ function setupIconDragHandlers(icon) {
         
         document.addEventListener('touchmove', onTouchMove, { passive: false });
         document.addEventListener('touchend', onTouchEnd);
-        document.addEventListener('touchcancel', onTouchEnd);
     }
     
     function onTouchMove(e) {
-        e.preventDefault();
         const coords = getEventCoords(e);
         const deltaX = Math.abs(coords.x - startX);
         const deltaY = Math.abs(coords.y - startY);
         
         if (!isDragging && (deltaX > dragThreshold || deltaY > dragThreshold)) {
             isDragging = true;
-            startDrag({ clientX: coords.x, clientY: coords.y });
+            e.preventDefault(); // Prevent scrolling only when actually dragging
+            startDrag();
         }
         
         if (isDragging) {
-            updateDrag({ clientX: coords.x, clientY: coords.y });
+            e.preventDefault();
+            updateDrag(coords.x, coords.y);
         }
     }
     
     function onTouchEnd(e) {
         document.removeEventListener('touchmove', onTouchMove);
         document.removeEventListener('touchend', onTouchEnd);
-        document.removeEventListener('touchcancel', onTouchEnd);
         
         if (isDragging) {
             endDrag();
         } else {
-            // It was a tap, not a drag
-            const appName = icon.dataset.app;
-            openWindow(appName);
+            // Tap interaction
+             const appName = icon.dataset.app;
+             openWindow(appName);
         }
-        
         isDragging = false;
         draggedIcon = null;
     }
     
     function onPointerDown(e) {
+        if(e.button !== 0) return; // Only left click
         e.preventDefault();
         
         startX = e.clientX;
@@ -323,14 +328,13 @@ function setupIconDragHandlers(icon) {
         const deltaX = Math.abs(e.clientX - startX);
         const deltaY = Math.abs(e.clientY - startY);
         
-        // Start dragging if moved beyond threshold
         if (!isDragging && (deltaX > dragThreshold || deltaY > dragThreshold)) {
             isDragging = true;
-            startDrag(e);
+            startDrag();
         }
         
         if (isDragging) {
-            updateDrag(e);
+            updateDrag(e.clientX, e.clientY);
         }
     }
     
@@ -341,126 +345,109 @@ function setupIconDragHandlers(icon) {
         if (isDragging) {
             endDrag();
         } else {
-            // It was a click, not a drag
-            const appName = icon.dataset.app;
-            openWindow(appName);
+             const appName = icon.dataset.app;
+             openWindow(appName);
         }
-        
         isDragging = false;
         draggedIcon = null;
     }
 }
 
-function startDrag(e) {
+function startDrag() {
     const appGrid = document.querySelector('.app-grid');
     if (!appGrid || !draggedIcon) return;
     
-    // Get original icon position
     const rect = draggedIcon.getBoundingClientRect();
     
-    // Create a clone that follows the mouse
+    // Create visual clone
     dragClone = draggedIcon.cloneNode(true);
     dragClone.className = 'app-icon drag-clone';
     dragClone.style.position = 'fixed';
     dragClone.style.left = rect.left + 'px';
     dragClone.style.top = rect.top + 'px';
     dragClone.style.width = rect.width + 'px';
+    dragClone.style.height = rect.height + 'px';
     dragClone.style.pointerEvents = 'none';
     dragClone.style.zIndex = '9999';
-    dragClone.style.opacity = '0.9';
-    dragClone.style.transform = 'scale(1.1)';
-    dragClone.style.transition = 'none';
     document.body.appendChild(dragClone);
     
-    // Show placeholder in original position
+    // Configure placeholder
     placeholder.style.display = 'flex';
-    placeholder.style.width = draggedIcon.offsetWidth + 'px';
-    placeholder.style.height = draggedIcon.offsetHeight + 'px';
-    appGrid.insertBefore(placeholder, draggedIcon);
+    placeholder.style.gridRowStart = draggedIcon.dataset.row;
+    placeholder.style.gridColumnStart = draggedIcon.dataset.col;
     
-    // Hide original icon
+    // Hide original
     draggedIcon.classList.add('dragging-original');
 }
 
-function updateDrag(e) {
-    if (!dragClone || !draggedIcon) return;
+function updateDrag(clientX, clientY) {
+    if (!dragClone || !placeholder) return;
     
     const appGrid = document.querySelector('.app-grid');
-    if (!appGrid) return;
+    const gridRect = appGrid.getBoundingClientRect();
     
-    // Move clone with mouse
-    const cloneWidth = dragClone.offsetWidth;
-    const cloneHeight = dragClone.offsetHeight;
-    dragClone.style.left = (e.clientX - cloneWidth / 2) + 'px';
-    dragClone.style.top = (e.clientY - cloneHeight / 2) + 'px';
+    // Move clone
+    dragClone.style.left = (clientX - dragClone.offsetWidth / 2) + 'px';
+    dragClone.style.top = (clientY - dragClone.offsetHeight / 2) + 'px';
     
-    // Find which icon we're hovering over
-    const icons = Array.from(appGrid.querySelectorAll('.app-icon:not(.dragging-original)'));
-    let targetIcon = null;
-    let insertBefore = true;
+    // Calculate Grid Coordinate based on mouse position relative to container
+    // We add half gap to center the snap point
+    const relativeX = clientX - gridRect.left;
+    const relativeY = clientY - gridRect.top;
     
-    for (const icon of icons) {
-        const rect = icon.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        // Check if mouse is within this icon's area
-        if (e.clientX >= rect.left && e.clientX <= rect.right &&
-            e.clientY >= rect.top && e.clientY <= rect.bottom) {
-            targetIcon = icon;
-            // Determine if we should insert before or after
-            insertBefore = e.clientX < centerX || e.clientY < centerY;
-            break;
-        }
-    }
+    let targetCol = Math.ceil((relativeX) / (GRID_CELL_WIDTH + GRID_GAP));
+    let targetRow = Math.ceil((relativeY) / (GRID_CELL_HEIGHT + GRID_GAP));
     
-    // Move placeholder to new position
-    if (targetIcon && targetIcon !== placeholder.nextElementSibling && targetIcon !== placeholder.previousElementSibling) {
-        if (insertBefore) {
-            appGrid.insertBefore(placeholder, targetIcon);
-        } else {
-            appGrid.insertBefore(placeholder, targetIcon.nextElementSibling);
-        }
-    }
+    // Boundaries
+    if (targetCol < 1) targetCol = 1;
+    if (targetRow < 1) targetRow = 1;
+    
+    // Update placeholder position
+    placeholder.style.gridColumnStart = targetCol;
+    placeholder.style.gridRowStart = targetRow;
 }
 
 function endDrag() {
-    const appGrid = document.querySelector('.app-grid');
-    if (!appGrid) return;
-    
-    // Remove clone
     if (dragClone) {
         dragClone.remove();
         dragClone = null;
     }
     
-    // Move original icon to placeholder position
-    if (draggedIcon && placeholder) {
-        appGrid.insertBefore(draggedIcon, placeholder);
-        draggedIcon.classList.remove('dragging-original');
+    const targetRow = placeholder.style.gridRowStart;
+    const targetCol = placeholder.style.gridColumnStart;
+    
+    // Check if slot is occupied by ANOTHER icon
+    const existingIcon = document.querySelector(`.app-icon[data-row="${targetRow}"][data-col="${targetCol}"]:not(.dragging-original)`);
+    
+    if (existingIcon) {
+        // SWAP: Move existing icon to dragged icon's old position
+        const oldRow = draggedIcon.dataset.row;
+        const oldCol = draggedIcon.dataset.col;
+        setGridPosition(existingIcon, oldRow, oldCol);
     }
     
-    // Hide placeholder
-    if (placeholder) {
-        placeholder.style.display = 'none';
-    }
+    // Move dragged icon to new position
+    setGridPosition(draggedIcon, targetRow, targetCol);
     
-    // Save new order
-    saveIconOrder();
+    draggedIcon.classList.remove('dragging-original');
+    placeholder.style.display = 'none';
+    
+    saveGridPositions();
 }
 
-function saveIconOrder() {
-    const appGrid = document.querySelector('.app-grid');
-    if (!appGrid) return;
-    
-    const order = Array.from(appGrid.querySelectorAll('.app-icon')).map(icon => icon.dataset.app);
-    localStorage.setItem('appIconOrder', JSON.stringify(order));
-    iconOrder = order;
+function saveGridPositions() {
+    const savedPositions = {};
+    document.querySelectorAll('.app-icon').forEach(icon => {
+        savedPositions[icon.dataset.app] = {
+            row: parseInt(icon.dataset.row),
+            col: parseInt(icon.dataset.col)
+        };
+    });
+    localStorage.setItem('appGridPositions', JSON.stringify(savedPositions));
 }
 
 function resetAppIconPositions() {
-    localStorage.removeItem('appIconOrder');
-    // Reload to reset order
+    localStorage.removeItem('appGridPositions');
     location.reload();
 }
 
