@@ -632,7 +632,7 @@ function createStickyNotes() {
     if (!container) return;
     
     // Load saved positions from localStorage
-    const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions') || '{}');
+    const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v2') || '{}');
 
     stickyNotesData.forEach((note, index) => {
         const noteEl = document.createElement('div');
@@ -701,12 +701,12 @@ function makeStickyDraggable(element) {
         // Save position to localStorage
         const noteIndex = element.getAttribute('data-note-index');
         if (noteIndex !== null) {
-            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions') || '{}');
+            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v2') || '{}');
             savedPositions[noteIndex] = {
                 top: element.style.top,
                 left: element.style.left
             };
-            localStorage.setItem('stickyNotePositions', JSON.stringify(savedPositions));
+            localStorage.setItem('stickyNotePositions_v2', JSON.stringify(savedPositions));
         }
     }
 }
