@@ -72,6 +72,14 @@ function openWindow(appName) {
     setTimeout(() => {
         windowEl.classList.remove('opening');
     }, 400);
+    
+    // Auto-focus terminal input when terminal window opens
+    if (appName === 'terminal') {
+        setTimeout(() => {
+            const terminalInput = document.getElementById('terminal-input');
+            if (terminalInput) terminalInput.focus();
+        }, 100);
+    }
 }
 
 function closeWindow(windowId) {
@@ -160,8 +168,21 @@ function makeDraggable(element) {
         pos3 = e.clientX;
         pos4 = e.clientY;
         
-        element.style.top = (element.offsetTop - pos2) + "px";
-        element.style.left = (element.offsetLeft - pos1) + "px";
+        // Calculate new position
+        let newTop = element.offsetTop - pos2;
+        let newLeft = element.offsetLeft - pos1;
+        
+        // Boundary clamping - prevent window from going off-screen
+        const minY = 28; // Top bar height
+        const minX = 0;
+        const maxY = window.innerHeight - 50; // Leave some visible area
+        const maxX = window.innerWidth - 100; // Leave window partially visible
+        
+        newTop = Math.max(minY, Math.min(newTop, maxY));
+        newLeft = Math.max(minX, Math.min(newLeft, maxX));
+        
+        element.style.top = newTop + "px";
+        element.style.left = newLeft + "px";
     }
     
     function closeDragElement() {
@@ -609,13 +630,26 @@ function createStickyNotes() {
     
     const container = document.getElementById('sticky-notes');
     if (!container) return;
+    
+    // Load saved positions from localStorage
+    const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions') || '{}');
 
     stickyNotesData.forEach((note, index) => {
         const noteEl = document.createElement('div');
         noteEl.className = `sticky-note ${note.color !== 'yellow' ? note.color : ''}`;
         noteEl.style.transform = `rotate(${note.rotation}deg)`;
-        noteEl.style.right = `${100 - note.x}%`;
-        noteEl.style.top = `${note.y}%`;
+        
+        // Use saved position if available, otherwise use default
+        const saved = savedPositions[index];
+        if (saved) {
+            noteEl.style.top = saved.top;
+            noteEl.style.left = saved.left;
+            noteEl.style.right = 'auto';
+        } else {
+            noteEl.style.right = `${100 - note.x}%`;
+            noteEl.style.top = `${note.y}%`;
+        }
+        
         noteEl.textContent = note.text;
         noteEl.setAttribute('data-note-index', index);
 
@@ -663,6 +697,17 @@ function makeStickyDraggable(element) {
         element.style.zIndex = 50;
         document.onmouseup = null;
         document.onmousemove = null;
+        
+        // Save position to localStorage
+        const noteIndex = element.getAttribute('data-note-index');
+        if (noteIndex !== null) {
+            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions') || '{}');
+            savedPositions[noteIndex] = {
+                top: element.style.top,
+                left: element.style.left
+            };
+            localStorage.setItem('stickyNotePositions', JSON.stringify(savedPositions));
+        }
     }
 }
 
