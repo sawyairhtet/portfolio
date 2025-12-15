@@ -192,20 +192,179 @@ function makeDraggable(element) {
 }
 
 // ============================================
+// DRAGGABLE APP ICONS (Desktop Only)
+// ============================================
+
+function setupDraggableAppIcons() {
+    if (currentOS !== 'desktop') return;
+    
+    const appIcons = document.querySelectorAll('.app-icon');
+    const appGrid = document.querySelector('.app-grid');
+    
+    if (!appGrid) return;
+    
+    // Load saved positions from localStorage
+    const savedPositions = JSON.parse(localStorage.getItem('appIconPositions') || '{}');
+    
+    // If we have saved positions, switch to absolute positioning mode
+    if (Object.keys(savedPositions).length > 0) {
+        appGrid.classList.add('free-positioning');
+    }
+    
+    appIcons.forEach(icon => {
+        const appName = icon.dataset.app;
+        
+        // Apply saved position if available
+        if (savedPositions[appName]) {
+            appGrid.classList.add('free-positioning');
+            icon.style.position = 'absolute';
+            icon.style.top = savedPositions[appName].top;
+            icon.style.left = savedPositions[appName].left;
+        }
+        
+        // Make draggable
+        makeAppIconDraggable(icon);
+    });
+}
+
+function makeAppIconDraggable(icon) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let isDragging = false;
+    let startX, startY;
+    const dragThreshold = 5; // Minimum pixels to move before considering it a drag
+    
+    icon.addEventListener('mousedown', dragMouseDown);
+    
+    function dragMouseDown(e) {
+        if (currentOS !== 'desktop') return;
+        
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        startX = e.clientX;
+        startY = e.clientY;
+        isDragging = false;
+        
+        document.addEventListener('mouseup', closeDragElement);
+        document.addEventListener('mousemove', elementDrag);
+    }
+    
+    function elementDrag(e) {
+        e.preventDefault();
+        
+        const deltaX = Math.abs(e.clientX - startX);
+        const deltaY = Math.abs(e.clientY - startY);
+        
+        // Only start dragging if moved beyond threshold
+        if (!isDragging && (deltaX > dragThreshold || deltaY > dragThreshold)) {
+            isDragging = true;
+            
+            // Switch to free positioning mode
+            const appGrid = document.querySelector('.app-grid');
+            if (appGrid && !appGrid.classList.contains('free-positioning')) {
+                // Convert all icons to absolute positioning
+                const allIcons = appGrid.querySelectorAll('.app-icon');
+                allIcons.forEach(ic => {
+                    const rect = ic.getBoundingClientRect();
+                    const gridRect = appGrid.getBoundingClientRect();
+                    ic.style.position = 'absolute';
+                    ic.style.top = (rect.top - gridRect.top) + 'px';
+                    ic.style.left = (rect.left - gridRect.left) + 'px';
+                });
+                appGrid.classList.add('free-positioning');
+            }
+            
+            icon.classList.add('dragging');
+            icon.style.zIndex = 100;
+        }
+        
+        if (isDragging) {
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            
+            // Calculate new position with boundaries
+            const appGrid = document.querySelector('.app-grid');
+            const gridRect = appGrid.getBoundingClientRect();
+            
+            let newTop = icon.offsetTop - pos2;
+            let newLeft = icon.offsetLeft - pos1;
+            
+            // Keep within reasonable bounds
+            const minY = 0;
+            const minX = 0;
+            const maxY = window.innerHeight - gridRect.top - 100;
+            const maxX = window.innerWidth - gridRect.left - 100;
+            
+            newTop = Math.max(minY, Math.min(newTop, maxY));
+            newLeft = Math.max(minX, Math.min(newLeft, maxX));
+            
+            icon.style.top = newTop + 'px';
+            icon.style.left = newLeft + 'px';
+        }
+    }
+    
+    function closeDragElement() {
+        document.removeEventListener('mouseup', closeDragElement);
+        document.removeEventListener('mousemove', elementDrag);
+        
+        if (isDragging) {
+            icon.classList.remove('dragging');
+            icon.style.zIndex = '';
+            
+            // Save position to localStorage
+            const appName = icon.dataset.app;
+            const savedPositions = JSON.parse(localStorage.getItem('appIconPositions') || '{}');
+            savedPositions[appName] = {
+                top: icon.style.top,
+                left: icon.style.left
+            };
+            localStorage.setItem('appIconPositions', JSON.stringify(savedPositions));
+        } else {
+            // It was a click, not a drag - open the window
+            const appName = icon.dataset.app;
+            openWindow(appName);
+        }
+        
+        isDragging = false;
+    }
+}
+
+function resetAppIconPositions() {
+    localStorage.removeItem('appIconPositions');
+    const appGrid = document.querySelector('.app-grid');
+    if (appGrid) {
+        appGrid.classList.remove('free-positioning');
+        const appIcons = appGrid.querySelectorAll('.app-icon');
+        appIcons.forEach(icon => {
+            icon.style.position = '';
+            icon.style.top = '';
+            icon.style.left = '';
+        });
+    }
+}
+
+// ============================================
 // APP ICONS & DOCK INTERACTION
 // ============================================
 
 function setupAppIcons() {
-    // App icons from grid
-    const appIcons = document.querySelectorAll('.app-icon');
-    appIcons.forEach(icon => {
-        icon.addEventListener('click', () => {
-            const appName = icon.dataset.app;
-            openWindow(appName);
-        });
-    });
+    // App icons now handled by setupDraggableAppIcons for desktop
+    // This only handles non-desktop or dock items
     
-    // Dock items
+    if (currentOS !== 'desktop') {
+        // On mobile/tablet, use simple click handlers
+        const appIcons = document.querySelectorAll('.app-icon');
+        appIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const appName = icon.dataset.app;
+                openWindow(appName);
+            });
+        });
+    }
+    
+    // Dock items (all platforms)
     const dockItems = document.querySelectorAll('.dock-item');
     dockItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -291,6 +450,7 @@ const terminalCommands = {
   skills      - Display technical skills
   echo [text] - Echo back your text
   clear       - Clear terminal output
+  reset-icons - Reset app icons to default positions
   help        - Show this help message
   
   // Easter eggs:
@@ -347,6 +507,11 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
             output.innerHTML = '';
         }
         return '';
+    },
+
+    'reset-icons': () => {
+        resetAppIconPositions();
+        return 'Desktop icons reset to default positions.\nRefresh the page to see changes.';
     },
 
     // === EASTER EGG COMMANDS ===
@@ -734,6 +899,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Create sticky notes (desktop only)
     createStickyNotes();
+    
+    // Setup draggable app icons (desktop only)
+    setupDraggableAppIcons();
     
     // Make all windows draggable (will be disabled on mobile/tablet)
     document.querySelectorAll('.window').forEach(win => {
