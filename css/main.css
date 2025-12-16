@@ -246,9 +246,9 @@ body {
     right: 20px;
     bottom: 80px;
     display: grid;
-    /* Fixed 6-column grid for desktop-like icon placement */
-    grid-template-columns: repeat(6, 100px);
-    grid-template-rows: repeat(6, 110px);
+    /* Expanded grid for flexible desktop-like icon placement - anywhere on screen */
+    grid-template-columns: repeat(12, 100px);
+    grid-template-rows: repeat(10, 110px);
     gap: var(--spacing-md);
     align-content: start;
     justify-content: start;
@@ -279,7 +279,7 @@ body {
     background: rgba(233, 84, 32, 0.15);
     border: 2px dashed var(--color-primary);
     border-radius: var(--radius-md);
-    display: flex;
+    display: none;  /* Hidden by default, shown via JS only when dragging */
     align-items: center;
     justify-content: center;
     transition: all 0.15s ease;
@@ -287,9 +287,9 @@ body {
 }
 
 .app-icon.dragging-original {
-    opacity: 0.2;
+    opacity: 0.5;
     pointer-events: none;
-    transform: scale(0.95);
+    transform: scale(0.98);
 }
 
 .app-icon.drag-clone {

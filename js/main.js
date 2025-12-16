@@ -210,17 +210,31 @@ function setupDraggableAppIcons() {
     const appGrid = document.querySelector('.app-grid');
     if (!appGrid) return;
     
+    // CLEANUP: Remove any existing placeholders or stray clones from previous sessions/reloads
+    document.querySelectorAll('.app-icon-placeholder').forEach(el => el.remove());
+    document.querySelectorAll('.app-icon.drag-clone').forEach(el => el.remove());
+    
     // Load saved PROPER grid positions {appName: {row, col}}
     const savedGridPositions = JSON.parse(localStorage.getItem('appGridPositions') || '{}');
     const appIcons = Array.from(document.querySelectorAll('.app-icon'));
     
     // Initialize positions
     appIcons.forEach((icon, index) => {
+        // Remove old listeners to prevent duplicates (cloning node is a cheap way to strip listeners)
+        // But here we'll just be careful not to double-bind if called again, 
+        // essentially this function should only be called once or we need to manage listeners better.
+        // For now, we assume simple page load.
+        
         const appName = icon.dataset.app;
+        if (!appName) return; 
+
+        // Remove any residual drag classes
+        icon.classList.remove('dragging-original');
+
         let pos = savedGridPositions[appName];
         
         if (!pos) {
-            // Default vertical layout: 2 columns, fill top-to-bottom like real desktops
+            // Default layout: 2 columns, fill top-to-bottom
             const defaultCols = 2; 
             pos = {
                 col: (index % defaultCols) + 1,
@@ -230,16 +244,21 @@ function setupDraggableAppIcons() {
         
         // Apply Grid Position
         setGridPosition(icon, pos.row, pos.col);
+        
+        // Setup handlers (remove old ones first if possible, or just add fresh ones)
+        // Since we don't have named functions for all handlers easily available to remove,
+        // we'll rely on the fact this is called once. 
+        // To be safe against re-init, we can clone the node to strip listeners.
+        const newIcon = icon.cloneNode(true);
+        icon.parentNode.replaceChild(newIcon, icon);
+        setupIconDragHandlers(newIcon);
     });
     
-    // Create placeholder
+    // Create SINGLE placeholder
     placeholder = document.createElement('div');
     placeholder.className = 'app-icon-placeholder';
-    placeholder.style.display = 'none';
+    placeholder.style.display = 'none'; // Hidden by default
     appGrid.appendChild(placeholder);
-    
-    // Setup handlers
-    appIcons.forEach(icon => setupIconDragHandlers(icon));
 }
 
 function setGridPosition(element, row, col) {
@@ -379,9 +398,9 @@ function startDrag() {
     draggedIcon.classList.add('dragging-original');
 }
 
-// Grid constraints - matching CSS grid definition
-const MAX_GRID_COLS = 6;
-const MAX_GRID_ROWS = 6;
+// Grid constraints - matching CSS grid definition (12 cols x 10 rows for flexible placement)
+const MAX_GRID_COLS = 12;
+const MAX_GRID_ROWS = 10;
 
 function updateDrag(clientX, clientY) {
     if (!dragClone || !placeholder) return;
@@ -399,9 +418,14 @@ function updateDrag(clientX, clientY) {
     const relativeX = clientX - gridRect.left - gridPadding;
     const relativeY = clientY - gridRect.top - gridPadding;
     
-    // Use floor + 1 for more intuitive snapping (snap to cell under cursor)
-    let targetCol = Math.floor(relativeX / (GRID_CELL_WIDTH + GRID_GAP)) + 1;
-    let targetRow = Math.floor(relativeY / (GRID_CELL_HEIGHT + GRID_GAP)) + 1;
+    // Cell pitch = cell size + gap (the repeating unit in the grid)
+    const cellPitchX = GRID_CELL_WIDTH + GRID_GAP;
+    const cellPitchY = GRID_CELL_HEIGHT + GRID_GAP;
+    
+    // Calculate which cell the cursor is over
+    // Add half a gap offset to center the snap point within each cell
+    let targetCol = Math.floor((relativeX + GRID_GAP / 2) / cellPitchX) + 1;
+    let targetRow = Math.floor((relativeY + GRID_GAP / 2) / cellPitchY) + 1;
     
     // Clamp to grid boundaries (1 to MAX)
     targetCol = Math.max(1, Math.min(targetCol, MAX_GRID_COLS));
@@ -413,31 +437,46 @@ function updateDrag(clientX, clientY) {
 }
 
 function endDrag() {
-    if (dragClone) {
-        dragClone.remove();
-        dragClone = null;
+    try {
+        if (!draggedIcon || !placeholder) return;
+
+        const targetRow = placeholder.style.gridRowStart;
+        const targetCol = placeholder.style.gridColumnStart;
+        
+        if (!targetRow || !targetCol) return; // Safety check
+
+        // Check if slot is occupied by ANOTHER icon
+        const existingIcon = document.querySelector(`.app-icon[data-row="${targetRow}"][data-col="${targetCol}"]:not(.dragging-original)`);
+        
+        if (existingIcon && existingIcon !== draggedIcon) {
+            // SWAP: Move existing icon to dragged icon's old position
+            const oldRow = draggedIcon.dataset.row;
+            const oldCol = draggedIcon.dataset.col;
+            setGridPosition(existingIcon, oldRow, oldCol);
+        }
+        
+        // Move dragged icon to new position
+        setGridPosition(draggedIcon, targetRow, targetCol);
+        saveGridPositions();
+
+    } catch (err) {
+        console.error("Error in endDrag:", err);
+    } finally {
+        // ALWAYS CLEANUP
+        if (dragClone) {
+            dragClone.remove();
+            dragClone = null;
+        }
+        
+        if (draggedIcon) {
+            draggedIcon.classList.remove('dragging-original');
+            draggedIcon = null; // Clear reference
+        }
+        
+        if (placeholder) {
+            placeholder.style.display = 'none';
+        }
     }
-    
-    const targetRow = placeholder.style.gridRowStart;
-    const targetCol = placeholder.style.gridColumnStart;
-    
-    // Check if slot is occupied by ANOTHER icon
-    const existingIcon = document.querySelector(`.app-icon[data-row="${targetRow}"][data-col="${targetCol}"]:not(.dragging-original)`);
-    
-    if (existingIcon) {
-        // SWAP: Move existing icon to dragged icon's old position
-        const oldRow = draggedIcon.dataset.row;
-        const oldCol = draggedIcon.dataset.col;
-        setGridPosition(existingIcon, oldRow, oldCol);
-    }
-    
-    // Move dragged icon to new position
-    setGridPosition(draggedIcon, targetRow, targetCol);
-    
-    draggedIcon.classList.remove('dragging-original');
-    placeholder.style.display = 'none';
-    
-    saveGridPositions();
 }
 
 function saveGridPositions() {
