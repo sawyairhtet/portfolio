@@ -246,8 +246,8 @@ body {
     right: 20px;
     bottom: 80px;
     display: grid;
-    /* Expanded grid for flexible desktop-like icon placement - anywhere on screen */
-    grid-template-columns: repeat(12, 100px);
+    /* Dynamic grid - fills available width, stops at screen edge */
+    grid-template-columns: repeat(auto-fill, 100px);
     grid-template-rows: repeat(10, 110px);
     gap: var(--spacing-md);
     align-content: start;

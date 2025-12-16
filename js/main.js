@@ -398,8 +398,7 @@ function startDrag() {
     draggedIcon.classList.add('dragging-original');
 }
 
-// Grid constraints - matching CSS grid definition (12 cols x 10 rows for flexible placement)
-const MAX_GRID_COLS = 12;
+// Grid row limit (columns are now dynamic based on screen width)
 const MAX_GRID_ROWS = 10;
 
 function updateDrag(clientX, clientY) {
@@ -422,13 +421,17 @@ function updateDrag(clientX, clientY) {
     const cellPitchX = GRID_CELL_WIDTH + GRID_GAP;
     const cellPitchY = GRID_CELL_HEIGHT + GRID_GAP;
     
+    // Calculate max columns dynamically based on actual container width
+    const availableWidth = appGrid.clientWidth - (gridPadding * 2);
+    const maxCols = Math.floor(availableWidth / cellPitchX);
+    
     // Calculate which cell the cursor is over
     // Add half a gap offset to center the snap point within each cell
     let targetCol = Math.floor((relativeX + GRID_GAP / 2) / cellPitchX) + 1;
     let targetRow = Math.floor((relativeY + GRID_GAP / 2) / cellPitchY) + 1;
     
-    // Clamp to grid boundaries (1 to MAX)
-    targetCol = Math.max(1, Math.min(targetCol, MAX_GRID_COLS));
+    // Clamp to grid boundaries (1 to dynamically calculated max)
+    targetCol = Math.max(1, Math.min(targetCol, maxCols));
     targetRow = Math.max(1, Math.min(targetRow, MAX_GRID_ROWS));
     
     // Update placeholder position
