@@ -3,18 +3,20 @@
    ============================================ */
 
 :root {
-    /* Primary Font - Ubuntu with fallbacks */
-    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    /* Primary Font - Inter for modern feel + Ubuntu fallbacks */
+    --font-system: 'Inter', 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     
     /* Colors - Ubuntu Yaru Inspired */
     --color-primary: #E95420; /* Ubuntu Orange */
+    --color-primary-glow: rgba(233, 84, 32, 0.4);
     --color-bg-light: #2C001E; /* Canonical Aubergine */
     --color-bg-dark: #1a0012;
-    --color-glass-light: rgba(44, 0, 30, 0.85);
-    --color-glass-dark: rgba(26, 0, 18, 0.9);
+    --color-glass-light: rgba(44, 0, 30, 0.75);
+    --color-glass-dark: rgba(26, 0, 18, 0.85);
     --color-text-light: #FFFFFF;
     --color-text-dark: #F5F5F7;
     --color-border: rgba(255, 255, 255, 0.12);
+    --color-border-glow: rgba(255, 255, 255, 0.25);
     --color-card-bg: rgba(255, 255, 255, 0.08);
     
     /* Ubuntu GNOME Window Colors */
@@ -41,10 +43,12 @@
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px var(--color-primary-glow);
     
-    /* Glassmorphism */
-    --glass-blur: blur(20px);
-    --glass-saturation: saturate(150%);
+    /* Enhanced Glassmorphism */
+    --glass-blur: blur(24px);
+    --glass-saturation: saturate(180%);
+    --glass-brightness: brightness(1.1);
     
     /* Ubuntu Dock Width */
     --dock-width: 60px;
@@ -53,6 +57,11 @@
     --gradient-wallpaper: linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
     --gradient-accent: linear-gradient(135deg, #E95420 0%, #77216F 100%);
     --gradient-btn: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+    
+    /* Animation Timing */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-smooth: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 [data-theme="dark"] {
@@ -212,12 +221,19 @@ body {
 /* Wallpaper (Desktop only) */
 .wallpaper {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
     background: url('../images/Jammy_Jellyfish.png') center/cover no-repeat;
     z-index: 0;
+    /* Parallax support via CSS custom properties */
+    transform: translate(
+        calc(var(--mouse-x, 0) * -8px),
+        calc(var(--mouse-y, 0) * -8px)
+    );
+    transition: transform 0.3s ease-out;
+    will-change: transform;
 }
 
 /* Subtle pattern overlay for wallpaper depth */
@@ -232,6 +248,19 @@ body {
         radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04) 0%, transparent 40%),
         radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 40%),
         radial-gradient(circle at 60% 30%, rgba(233, 84, 32, 0.05) 0%, transparent 30%);
+    pointer-events: none;
+}
+
+/* Subtle noise grain texture */
+.wallpaper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
     pointer-events: none;
 }
 
@@ -262,14 +291,42 @@ body {
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform var(--transition-smooth), filter var(--transition-normal);
     width: 100px;
     height: 110px;
     padding: var(--spacing-sm);
+    /* Entrance animation */
+    opacity: 0;
+    animation: iconFadeIn 0.5s ease forwards;
+}
+
+/* Staggered entrance delays for each icon */
+.app-icon:nth-child(1) { animation-delay: 0.1s; }
+.app-icon:nth-child(2) { animation-delay: 0.15s; }
+.app-icon:nth-child(3) { animation-delay: 0.2s; }
+.app-icon:nth-child(4) { animation-delay: 0.25s; }
+.app-icon:nth-child(5) { animation-delay: 0.3s; }
+.app-icon:nth-child(6) { animation-delay: 0.35s; }
+.app-icon:nth-child(7) { animation-delay: 0.4s; }
+
+@keyframes iconFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .app-icon:hover {
-    transform: scale(1.08);
+    transform: scale(1.12) translateY(-4px);
+    filter: drop-shadow(0 8px 16px rgba(233, 84, 32, 0.3));
+}
+
+.app-icon:active {
+    transform: scale(0.95);
 }
 
 /* Draggable app icons - grid reordering */
@@ -302,15 +359,22 @@ body {
     width: 64px;
     height: 64px;
     background: var(--color-glass-light);
-    backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur) var(--glass-saturation);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 32px;
     margin-bottom: var(--spacing-sm);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.1);
     color: #fff;
+    border: 1px solid transparent;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.app-icon:hover .app-icon-wrapper {
+    border-color: var(--color-border-glow);
+    box-shadow: var(--shadow-lg), 0 0 12px rgba(233, 84, 32, 0.25);
 }
 
 /* App Icon Gradients - Ubuntu Style */
@@ -857,16 +921,23 @@ a.project-card {
     justify-content: center;
     font-size: 24px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-smooth);
     border-radius: var(--radius-sm);
     color: #fff;
     background: rgba(255, 255, 255, 0.05);
     position: relative;
+    border: 1px solid transparent;
 }
 
 .dock-item:hover {
     background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
+    transform: scale(1.15) translateX(4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 16px rgba(233, 84, 32, 0.3);
+}
+
+.dock-item:active {
+    transform: scale(0.95);
 }
 
 /* Active indicator for dock items */
@@ -1159,7 +1230,30 @@ a.project-card {
     cursor: grab;
     z-index: 50;
     user-select: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-normal);
+    /* Entrance animation */
+    opacity: 0;
+    animation: stickyNoteIn 0.6s ease forwards;
+}
+
+/* Staggered entrance for sticky notes */
+.sticky-note:nth-child(1) { animation-delay: 0.5s; }
+.sticky-note:nth-child(2) { animation-delay: 0.7s; }
+.sticky-note:nth-child(3) { animation-delay: 0.9s; }
+
+@keyframes stickyNoteIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px) rotate(-5deg) scale(0.8);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(5px) rotate(1deg) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(var(--note-rotation, 0deg)) scale(1);
+    }
 }
 
 .sticky-note:hover {

@@ -1030,6 +1030,44 @@ function makeStickyDraggable(element) {
 }
 
 // ============================================
+// PARALLAX WALLPAPER EFFECT
+// ============================================
+
+function setupParallaxWallpaper() {
+    if (currentOS !== 'desktop') return;
+    
+    const wallpaper = document.querySelector('.wallpaper');
+    if (!wallpaper) return;
+    
+    let rafId = null;
+    
+    document.addEventListener('mousemove', (e) => {
+        // Throttle with requestAnimationFrame
+        if (rafId) return;
+        
+        rafId = requestAnimationFrame(() => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;  // -1 to 1
+            const y = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+            
+            wallpaper.style.setProperty('--mouse-x', x.toFixed(3));
+            wallpaper.style.setProperty('--mouse-y', y.toFixed(3));
+            
+            rafId = null;
+        });
+    });
+}
+
+// ============================================
+// SMOOTH SCROLL FOR WINDOW BODIES
+// ============================================
+
+function setupSmoothScroll() {
+    document.querySelectorAll('.window-body').forEach(body => {
+        body.style.scrollBehavior = 'smooth';
+    });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -1055,6 +1093,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup draggable app icons (desktop only)
     setupDraggableAppIcons();
+    
+    // Setup parallax wallpaper effect (desktop only)
+    setupParallaxWallpaper();
+    
+    // Setup smooth scroll for window bodies
+    setupSmoothScroll();
     
     // Make all windows draggable (will be disabled on mobile/tablet)
     document.querySelectorAll('.window').forEach(win => {
