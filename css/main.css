@@ -3,12 +3,87 @@
    ============================================ */
 
 :root {
-    /* Primary Font - Inter for modern feel + Ubuntu fallbacks */
-    --font-system: 'Inter', 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    /* Primary Font - Ubuntu with fallbacks */
+    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    /* ========================================
+       LIGHT MODE (Default) - Bright & Clean
+       ======================================== */
+    --color-primary: #E95420;
+    /* Ubuntu Orange */
+    --color-bg-light: #F5F5F7;
+    /* Light gray background */
+    --color-bg-dark: #E8E8ED;
+    --color-glass-light: rgba(255, 255, 255, 0.85);
+    --color-glass-dark: rgba(245, 245, 247, 0.95);
+    --color-text-light: #1D1D1F;
+    /* Dark text on light bg */
+    --color-text-dark: #333333;
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-card-bg: rgba(0, 0, 0, 0.04);
+
+    /* Light Mode Window Colors */
+    --color-header-bg: #E0E0E0;
+    --color-header-text: #333333;
+    --color-window-body-bg: rgba(255, 255, 255, 0.98);
+    --color-window-body-text: #1D1D1F;
+    --color-close: #FF5F57;
+    --color-minimize: #FFBD2E;
+    --color-maximize: #28C940;
+
+    /* Light Mode Dock */
+    --color-dock-bg: rgba(255, 255, 255, 0.8);
+    --color-dock-item-bg: rgba(0, 0, 0, 0.05);
+    --color-dock-item-hover: rgba(0, 0, 0, 0.1);
+    --color-dock-text: #333333;
+
+    /* Light Mode Top Bar */
+    --color-topbar-bg: #3D3D3D;
+    --color-topbar-text: #FFFFFF;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Border Radius - More Angular for GNOME */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    /* Shadows - Lighter for light mode */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    /* Glassmorphism */
+    --glass-blur: blur(20px);
+    --glass-saturation: saturate(150%);
+
+    /* Ubuntu Dock Width */
+    --dock-width: 60px;
+
+    /* Light Theme Gradients */
+    --gradient-wallpaper: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    --gradient-accent: linear-gradient(135deg, #E95420 0%, #FF7A45 100%);
+    --gradient-btn: linear-gradient(135deg, #E95420 0%, #C74316 100%);
     
-    /* Colors - Ubuntu Yaru Inspired */
-    --color-primary: #E95420; /* Ubuntu Orange */
-    --color-primary-glow: rgba(233, 84, 32, 0.4);
+    /* Animation Timing */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-smooth: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========================================
+   DARK MODE - Ubuntu Aubergine Aesthetic
+   ======================================== */
+[data-theme="dark"] {
+    /* Dark Ubuntu Colors */
+    --color-primary: #FF6B3D;
     --color-bg-light: #2C001E; /* Canonical Aubergine */
     --color-bg-dark: #1a0012;
     --color-glass-light: rgba(44, 0, 30, 0.75);
@@ -18,28 +93,27 @@
     --color-border: rgba(255, 255, 255, 0.12);
     --color-border-glow: rgba(255, 255, 255, 0.25);
     --color-card-bg: rgba(255, 255, 255, 0.08);
-    
-    /* Ubuntu GNOME Window Colors */
+
+    /* Dark Mode Window Colors */
     --color-header-bg: #3D3D3D;
     --color-header-text: #FFFFFF;
+    --color-window-body-bg: rgba(60, 60, 60, 0.95);
+    --color-window-body-text: #FFFFFF;
     --color-close: #F44336;
     --color-minimize: #FFEB3B;
     --color-maximize: #4CAF50;
-    
-    /* Spacing */
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
-    
-    /* Border Radius - More Angular for GNOME */
-    --radius-sm: 6px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    
-    /* Shadows */
+
+    /* Dark Mode Dock */
+    --color-dock-bg: rgba(0, 0, 0, 0.7);
+    --color-dock-item-bg: rgba(255, 255, 255, 0.05);
+    --color-dock-item-hover: rgba(255, 255, 255, 0.2);
+    --color-dock-text: #FFFFFF;
+
+    /* Dark Mode Top Bar */
+    --color-topbar-bg: #1a0012;
+    --color-topbar-text: #FFFFFF;
+
+    /* Shadows - Darker for dark mode */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -52,31 +126,9 @@
     
     /* Ubuntu Dock Width */
     --dock-width: 60px;
-    
-    /* Theme-aware Gradients */
-    --gradient-wallpaper: linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
-    --gradient-accent: linear-gradient(135deg, #E95420 0%, #77216F 100%);
-    --gradient-btn: linear-gradient(135deg, #E95420 0%, #C74316 100%);
-    
-    /* Animation Timing */
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.25s ease;
-    --transition-smooth: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
 
-[data-theme="dark"] {
-    --color-bg-light: #1a0012;
-    --color-bg-dark: #0d0008;
-    --color-glass-light: rgba(20, 0, 15, 0.9);
-    --color-glass-dark: rgba(20, 0, 15, 0.95);
-    --color-text-light: #F5F5F7;
-    --color-text-dark: #F5F5F7;
-    --color-border: rgba(255, 255, 255, 0.08);
-    --color-card-bg: rgba(255, 255, 255, 0.05);
-    --color-primary: #FF6B3D;
-    
-    /* Darker gradients for dark mode */
-    --gradient-wallpaper: linear-gradient(135deg, #1a0012 0%, #3d1a35 50%, #2a1525 100%);
+    /* Dark Ubuntu Gradients */
+    --gradient-wallpaper: linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
     --gradient-accent: linear-gradient(135deg, #C74316 0%, #5E2750 100%);
     --gradient-btn: linear-gradient(135deg, #C74316 0%, #9E3610 100%);
 }
@@ -105,9 +157,13 @@ body {
     background: var(--color-bg-light);
     color: var(--color-text-light);
     overflow: hidden;
-    height: 100vh; /* Fallback for browsers without dvh support */
-    height: 100dvh; /* Dynamic viewport height for mobile */
+    height: 100vh;
+    /* Fallback for browsers without dvh support */
+    height: 100dvh;
+    /* Dynamic viewport height for mobile */
     width: 100vw;
+    /* Custom Ubuntu-style cursor */
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E95420' d='M5.5 3.21V20.8l5.7-5.69h8.3L5.5 3.21z'/%3E%3Cpath fill='%23fff' d='M6.5 5.83v11.99l3.96-3.96h5.77L6.5 5.83z'/%3E%3C/svg%3E") 0 0, auto;
 }
 
 /* ============================================
@@ -127,7 +183,7 @@ body {
     font-size: 13px;
     font-weight: 500;
     z-index: 1000;
-    background: #000000;
+    background: var(--color-topbar-bg);
     border-bottom: none;
 }
 
@@ -244,9 +300,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 40%),
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
         radial-gradient(circle at 60% 30%, rgba(233, 84, 32, 0.05) 0%, transparent 30%);
     pointer-events: none;
 }
@@ -336,7 +392,8 @@ body {
     background: rgba(233, 84, 32, 0.15);
     border: 2px dashed var(--color-primary);
     border-radius: var(--radius-md);
-    display: none;  /* Hidden by default, shown via JS only when dragging */
+    display: none;
+    /* Hidden by default, shown via JS only when dragging */
     align-items: center;
     justify-content: center;
     transition: all 0.15s ease;
@@ -409,11 +466,12 @@ body {
 .app-label {
     font-size: 12px;
     text-align: center;
-    color: #fff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    color: #FFFFFF;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.5);
     background: rgba(0, 0, 0, 0.5);
     padding: 4px 10px;
     border-radius: 4px;
+    backdrop-filter: blur(8px);
 }
 
 /* Widget Container (Hidden on Desktop) */
@@ -468,7 +526,8 @@ body {
 .traffic-lights {
     display: flex;
     gap: 6px;
-    order: 1; /* Move to right */
+    order: 1;
+    /* Move to right */
 }
 
 .traffic-light {
@@ -508,8 +567,8 @@ body {
     padding: var(--spacing-lg);
     overflow-y: auto;
     flex: 1;
-    background: rgba(60, 60, 60, 0.95);
-    color: #fff;
+    background: var(--color-window-body-bg);
+    color: var(--color-window-body-text);
 }
 
 .window-body h2 {
@@ -707,9 +766,9 @@ body {
     border-radius: var(--radius-sm);
     padding: var(--spacing-md);
     border: 1px solid var(--color-border);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                box-shadow 0.3s ease,
-                border-color 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
     cursor: pointer;
 }
 
@@ -748,11 +807,12 @@ body {
 .project-card h3 {
     font-size: 18px;
     margin-bottom: var(--spacing-sm);
-    color: #fff;
+    color: var(--color-window-body-text);
 }
 
 .project-card p {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--color-window-body-text);
+    opacity: 0.85;
 }
 
 /* Ensure project card links don't have default link styling */
@@ -906,7 +966,7 @@ a.project-card {
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-sm);
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--color-dock-bg);
     backdrop-filter: var(--glass-blur);
     padding: var(--spacing-md) var(--spacing-sm);
     border-right: 1px solid var(--color-border);
@@ -923,14 +983,14 @@ a.project-card {
     cursor: pointer;
     transition: all var(--transition-smooth);
     border-radius: var(--radius-sm);
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-dock-text);
+    background: var(--color-dock-item-bg);
     position: relative;
     border: 1px solid transparent;
 }
 
 .dock-item:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--color-dock-item-hover);
     transform: scale(1.15) translateX(4px);
     border-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 16px rgba(233, 84, 32, 0.3);
@@ -965,28 +1025,29 @@ a.project-card {
    ============================================ */
 
 @media (min-width: 768px) and (max-width: 1024px) {
+
     /* Hide GNOME menu items */
     .menu-bar-left,
     .menu-bar-center,
     .menu-bar-right {
         display: none;
     }
-    
+
     /* Show status bar */
     .status-bar {
         display: flex;
     }
-    
-    
+
+
     /* Hide dock on tablet */
     .dock {
         display: none;
     }
-    
+
     .main-content {
         padding-left: 0;
     }
-    
+
     /* App Grid - 4 columns */
     .app-grid {
         position: static;
@@ -996,27 +1057,27 @@ a.project-card {
         gap: var(--spacing-xl);
         margin-top: 80px;
     }
-    
+
     .app-icon {
         width: 100%;
     }
-    
+
     .app-icon-wrapper {
         width: 80px;
         height: 80px;
         font-size: 40px;
     }
-    
+
     .app-label {
         font-size: 14px;
     }
-    
+
     /* Widget Container */
     .widget-container {
         display: block;
         padding: var(--spacing-xl);
     }
-    
+
     .widget {
         background: var(--color-glass-light);
         backdrop-filter: var(--glass-blur);
@@ -1024,7 +1085,7 @@ a.project-card {
         padding: var(--spacing-lg);
         margin-bottom: var(--spacing-md);
     }
-    
+
     /* Windows become modals */
     .window {
         position: fixed;
@@ -1035,12 +1096,12 @@ a.project-card {
         max-width: 600px;
         min-width: 0;
     }
-    
+
     /* Show close button on iPad */
     .traffic-lights {
         display: none;
     }
-    
+
     .close-btn-mobile {
         display: block;
         background: none;
@@ -1056,27 +1117,28 @@ a.project-card {
    ============================================ */
 
 @media (max-width: 767px) {
+
     /* Hide GNOME menu items */
     .menu-bar-left,
     .menu-bar-center,
     .menu-bar-right {
         display: none;
     }
-    
+
     /* Show status bar */
     .status-bar {
         display: flex;
     }
-    
+
     .top-bar {
         height: 44px;
     }
-    
+
     .main-content {
         padding-top: 44px;
         padding-left: 0;
     }
-    
+
     /* App Grid - 4 columns */
     .app-grid {
         position: static;
@@ -1086,41 +1148,43 @@ a.project-card {
         gap: var(--spacing-lg);
         margin-top: 40px;
     }
-    
+
     .app-icon {
         width: 100%;
     }
-    
+
     .app-icon-wrapper {
         width: 60px;
         height: 60px;
         font-size: 28px;
     }
-    
+
     .app-label {
         font-size: 11px;
     }
-    
+
     /* Windows become full-screen */
     .window {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        bottom: 64px; /* Account for mobile dock height */
+        bottom: 64px;
+        /* Account for mobile dock height */
         width: 100%;
         max-width: 100%;
         min-width: 100%;
-        max-height: calc(100% - 64px); /* Subtract dock height */
+        max-height: calc(100% - 64px);
+        /* Subtract dock height */
         border-radius: 0;
         margin-top: 44px;
     }
-    
+
     /* Hide traffic lights */
     .traffic-lights {
         display: none;
     }
-    
+
     .close-btn-mobile {
         display: block;
         background: none;
@@ -1129,18 +1193,18 @@ a.project-card {
         cursor: pointer;
         color: var(--color-text-light);
     }
-    
+
     .window-header {
         height: 44px;
         padding: var(--spacing-sm) var(--spacing-md);
     }
-    
+
     /* Widget Container */
     .widget-container {
         display: block;
         padding: var(--spacing-md);
     }
-    
+
     .widget {
         background: var(--color-glass-light);
         backdrop-filter: var(--glass-blur);
@@ -1148,7 +1212,7 @@ a.project-card {
         padding: var(--spacing-md);
         margin-bottom: var(--spacing-sm);
     }
-    
+
     /* Dock - Fixed at bottom */
     .dock {
         top: auto;
@@ -1164,21 +1228,21 @@ a.project-card {
         padding: var(--spacing-sm);
         justify-content: space-around;
     }
-    
+
     .dock-item {
         width: 48px;
         height: 48px;
         font-size: 24px;
     }
-    
+
     .dock-item:hover {
         transform: none;
     }
-    
+
     .dock-separator {
         display: none;
     }
-    
+
     /* Active indicator at bottom for horizontal dock */
     .dock-item.active::after {
         left: 50%;
@@ -1196,11 +1260,12 @@ a.project-card {
    ============================================ */
 
 @media (min-width: 1025px) {
+
     /* App grid positioned freely */
     .app-grid {
         grid-template-columns: repeat(1, 1fr);
     }
-    
+
     /* Windows can be positioned anywhere */
     .window {
         top: 15%;
@@ -1291,10 +1356,12 @@ a.project-card {
         opacity: 0;
         transform: scale(0.8) translateY(20px);
     }
+
     60% {
         opacity: 1;
         transform: scale(1.05) translateY(-5px);
     }
+
     100% {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -1306,6 +1373,7 @@ a.project-card {
         opacity: 1;
         transform: scale(1);
     }
+
     100% {
         opacity: 0;
         transform: scale(0.9) translateY(30px);
@@ -1382,17 +1450,17 @@ a.project-card {
         grid-template-rows: repeat(auto-fill, 100px);
         gap: var(--spacing-sm);
     }
-    
+
     .app-icon {
         width: 90px;
         height: 100px;
     }
-    
+
     .app-icon-placeholder {
         width: 90px;
         height: 100px;
     }
-    
+
     .app-icon-wrapper {
         width: 56px;
         height: 56px;
@@ -1405,11 +1473,12 @@ a.project-card {
     .main-content {
         padding-left: 0;
     }
-    
+
     .dock {
-        display: none; /* Dock is hidden on mobile */
+        display: none;
+        /* Dock is hidden on mobile */
     }
-    
+
     .app-grid {
         left: 10px;
         right: 10px;
@@ -1420,23 +1489,23 @@ a.project-card {
         gap: var(--spacing-sm);
         justify-items: center;
     }
-    
+
     .app-icon {
         width: 80px;
         height: 95px;
     }
-    
+
     .app-icon-placeholder {
         width: 80px;
         height: 95px;
     }
-    
+
     .app-icon-wrapper {
         width: 52px;
         height: 52px;
         font-size: 26px;
     }
-    
+
     .app-label {
         font-size: 11px;
         padding: 3px 8px;
@@ -1449,23 +1518,23 @@ a.project-card {
         grid-template-columns: repeat(4, 1fr);
         gap: 8px;
     }
-    
+
     .app-icon {
         width: 70px;
         height: 85px;
     }
-    
+
     .app-icon-placeholder {
         width: 70px;
         height: 85px;
     }
-    
+
     .app-icon-wrapper {
         width: 48px;
         height: 48px;
         font-size: 24px;
     }
-    
+
     .app-label {
         font-size: 10px;
         padding: 2px 6px;
