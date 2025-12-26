@@ -39,8 +39,8 @@
     --color-dock-text: #333333;
 
     /* Light Mode Top Bar */
-    --color-topbar-bg: #3D3D3D;
-    --color-topbar-text: #FFFFFF;
+    --color-topbar-bg: #FFFFFF;
+    --color-topbar-text: #1D1D1F;
 
     /* Spacing */
     --spacing-xs: 4px;
@@ -184,7 +184,8 @@ body {
     font-weight: 500;
     z-index: 1000;
     background: var(--color-topbar-bg);
-    border-bottom: none;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
 }
 
 .menu-bar-left,
@@ -202,7 +203,7 @@ body {
 }
 
 .activities-btn {
-    color: #fff;
+    color: var(--color-topbar-text);
     font-size: 13px;
     font-weight: 500;
     padding: 4px 12px;
@@ -212,7 +213,7 @@ body {
 }
 
 .activities-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--color-card-bg);
 }
 
 /* Personal Branding Badge */
@@ -230,14 +231,14 @@ body {
 .menu-clock,
 .status-time {
     font-variant-numeric: tabular-nums;
-    color: #fff;
+    color: var(--color-topbar-text);
 }
 
 .status-menu {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #fff;
+    color: var(--color-topbar-text);
     font-size: 14px;
     padding: 4px 8px;
     border-radius: 4px;
@@ -246,7 +247,7 @@ body {
 }
 
 .status-menu:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--color-card-bg);
 }
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */
@@ -352,8 +353,8 @@ body {
     height: 110px;
     padding: var(--spacing-sm);
     /* Entrance animation */
-    opacity: 0;
-    animation: iconFadeIn 0.5s ease forwards;
+    opacity: 1; /* Ensure visible by default to prevent disappearance */
+    animation: iconFadeIn 0.5s ease; /* Removed forwards to let base styles take over */
 }
 
 /* Staggered entrance delays for each icon */
@@ -385,32 +386,7 @@ body {
     transform: scale(0.95);
 }
 
-/* Draggable app icons - grid reordering */
-.app-icon-placeholder {
-    width: 100px;
-    height: 110px;
-    background: rgba(233, 84, 32, 0.15);
-    border: 2px dashed var(--color-primary);
-    border-radius: var(--radius-md);
-    display: none;
-    /* Hidden by default, shown via JS only when dragging */
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s ease;
-    box-shadow: inset 0 0 20px rgba(233, 84, 32, 0.1);
-}
 
-.app-icon.dragging-original {
-    opacity: 0.5;
-    pointer-events: none;
-    transform: scale(0.98);
-}
-
-.app-icon.drag-clone {
-    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
-    cursor: grabbing !important;
-    transform: scale(1.1);
-}
 
 .app-icon-wrapper {
     width: 64px;
@@ -676,7 +652,7 @@ body {
 .resume-section {
     margin-top: 24px;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--color-border);
 }
 
 .resume-section h3 {
@@ -876,7 +852,7 @@ a.project-card {
     padding-top: var(--spacing-md);
     border-top: 1px solid var(--color-border);
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--color-text-dark);
 }
 
 .project-meta span {

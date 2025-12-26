@@ -51,9 +51,9 @@ function openWindow(appName) {
 
     if (!windowEl) return;
 
-    // Close existing window if already open
+    // If already open, just bring to front
     if (activeWindows.has(windowId)) {
-        closeWindow(windowId);
+        bringToFront(windowEl);
         return;
     }
 
@@ -196,334 +196,56 @@ function makeDraggable(element) {
 // ============================================
 
 // ============================================
-// DRAGGABLE APP ICONS (Sparse Grid System)
-// ============================================
-
-let draggedIcon = null;
-let dragClone = null;
-let placeholder = null;
-const GRID_CELL_WIDTH = 100;  // Matches CSS grid-template-columns
-const GRID_CELL_HEIGHT = 110; // Matches CSS grid-template-rows
-const GRID_GAP = 16;         // Matches CSS var(--spacing-md)
-
-function setupDraggableAppIcons() {
-    const appGrid = document.querySelector('.app-grid');
-    if (!appGrid) return;
-
-    // CLEANUP: Remove any existing placeholders or stray clones from previous sessions/reloads
-    document.querySelectorAll('.app-icon-placeholder').forEach(el => el.remove());
-    document.querySelectorAll('.app-icon.drag-clone').forEach(el => el.remove());
-
-    // Load saved PROPER grid positions {appName: {row, col}}
-    const savedGridPositions = JSON.parse(localStorage.getItem('appGridPositions') || '{}');
-    const appIcons = Array.from(document.querySelectorAll('.app-icon'));
-
-    // Initialize positions
-    appIcons.forEach((icon, index) => {
-        // Remove old listeners to prevent duplicates (cloning node is a cheap way to strip listeners)
-        // But here we'll just be careful not to double-bind if called again, 
-        // essentially this function should only be called once or we need to manage listeners better.
-        // For now, we assume simple page load.
-
-        const appName = icon.dataset.app;
-        if (!appName) return;
-
-        // Remove any residual drag classes
-        icon.classList.remove('dragging-original');
-
-        let pos = savedGridPositions[appName];
-
-        if (!pos) {
-            // Default layout: 2 columns, fill top-to-bottom
-            const defaultCols = 2;
-            pos = {
-                col: (index % defaultCols) + 1,
-                row: Math.floor(index / defaultCols) + 1
-            };
-        }
-
-        // Apply Grid Position
-        setGridPosition(icon, pos.row, pos.col);
-
-        // Setup handlers (remove old ones first if possible, or just add fresh ones)
-        // Since we don't have named functions for all handlers easily available to remove,
-        // we'll rely on the fact this is called once. 
-        // To be safe against re-init, we can clone the node to strip listeners.
-        const newIcon = icon.cloneNode(true);
-        icon.parentNode.replaceChild(newIcon, icon);
-        setupIconDragHandlers(newIcon);
-    });
-
-    // Create SINGLE placeholder
-    placeholder = document.createElement('div');
-    placeholder.className = 'app-icon-placeholder';
-    placeholder.style.display = 'none'; // Hidden by default
-    appGrid.appendChild(placeholder);
-}
-
-function setGridPosition(element, row, col) {
-    element.style.gridRowStart = row;
-    element.style.gridColumnStart = col;
-    // Store in dataset for easy reading
-    element.dataset.row = row;
-    element.dataset.col = col;
-}
-
-function setupIconDragHandlers(icon) {
-    let isDragging = false;
-    let startX, startY;
-    const dragThreshold = 10;
-
-    // Mouse events
-    icon.addEventListener('mousedown', onPointerDown);
-    // Touch events
-    icon.addEventListener('touchstart', onTouchStart, { passive: false });
-
-    function getEventCoords(e) {
-        if (e.touches && e.touches.length > 0) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        return { x: e.clientX, y: e.clientY };
-    }
-
-    function onTouchStart(e) {
-        if (e.target.closest('.close-btn')) return; // Allow interaction with proper elements if any
-
-        const coords = getEventCoords(e);
-        startX = coords.x;
-        startY = coords.y;
-        isDragging = false;
-        draggedIcon = icon;
-
-        document.addEventListener('touchmove', onTouchMove, { passive: false });
-        document.addEventListener('touchend', onTouchEnd);
-    }
-
-    function onTouchMove(e) {
-        const coords = getEventCoords(e);
-        const deltaX = Math.abs(coords.x - startX);
-        const deltaY = Math.abs(coords.y - startY);
-
-        if (!isDragging && (deltaX > dragThreshold || deltaY > dragThreshold)) {
-            isDragging = true;
-            e.preventDefault(); // Prevent scrolling only when actually dragging
-            startDrag();
-        }
-
-        if (isDragging) {
-            e.preventDefault();
-            updateDrag(coords.x, coords.y);
-        }
-    }
-
-    function onTouchEnd(e) {
-        document.removeEventListener('touchmove', onTouchMove);
-        document.removeEventListener('touchend', onTouchEnd);
-
-        if (isDragging) {
-            endDrag();
-        } else {
-            // Tap interaction
-            const appName = icon.dataset.app;
-            openWindow(appName);
-        }
-        isDragging = false;
-        draggedIcon = null;
-    }
-
-    function onPointerDown(e) {
-        if (e.button !== 0) return; // Only left click
-        e.preventDefault();
-
-        startX = e.clientX;
-        startY = e.clientY;
-        isDragging = false;
-        draggedIcon = icon;
-
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-    }
-
-    function onMouseMove(e) {
-        const deltaX = Math.abs(e.clientX - startX);
-        const deltaY = Math.abs(e.clientY - startY);
-
-        if (!isDragging && (deltaX > dragThreshold || deltaY > dragThreshold)) {
-            isDragging = true;
-            startDrag();
-        }
-
-        if (isDragging) {
-            updateDrag(e.clientX, e.clientY);
-        }
-    }
-
-    function onMouseUp(e) {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-
-        if (isDragging) {
-            endDrag();
-        } else {
-            const appName = icon.dataset.app;
-            openWindow(appName);
-        }
-        isDragging = false;
-        draggedIcon = null;
-    }
-}
-
-function startDrag() {
-    const appGrid = document.querySelector('.app-grid');
-    if (!appGrid || !draggedIcon) return;
-
-    const rect = draggedIcon.getBoundingClientRect();
-
-    // Create visual clone
-    dragClone = draggedIcon.cloneNode(true);
-    dragClone.className = 'app-icon drag-clone';
-    dragClone.style.position = 'fixed';
-    dragClone.style.left = rect.left + 'px';
-    dragClone.style.top = rect.top + 'px';
-    dragClone.style.width = rect.width + 'px';
-    dragClone.style.height = rect.height + 'px';
-    dragClone.style.pointerEvents = 'none';
-    dragClone.style.zIndex = '9999';
-    document.body.appendChild(dragClone);
-
-    // Configure placeholder
-    placeholder.style.display = 'flex';
-    placeholder.style.gridRowStart = draggedIcon.dataset.row;
-    placeholder.style.gridColumnStart = draggedIcon.dataset.col;
-
-    // Hide original
-    draggedIcon.classList.add('dragging-original');
-}
-
-// Grid row limit (columns are now dynamic based on screen width)
-const MAX_GRID_ROWS = 10;
-
-function updateDrag(clientX, clientY) {
-    if (!dragClone || !placeholder) return;
-
-    const appGrid = document.querySelector('.app-grid');
-    const gridRect = appGrid.getBoundingClientRect();
-    const gridPadding = 16; // CSS var(--spacing-md)
-
-    // Move clone
-    dragClone.style.left = (clientX - dragClone.offsetWidth / 2) + 'px';
-    dragClone.style.top = (clientY - dragClone.offsetHeight / 2) + 'px';
-
-    // Calculate Grid Coordinate based on mouse position relative to container
-    // Account for grid padding
-    const relativeX = clientX - gridRect.left - gridPadding;
-    const relativeY = clientY - gridRect.top - gridPadding;
-
-    // Cell pitch = cell size + gap (the repeating unit in the grid)
-    const cellPitchX = GRID_CELL_WIDTH + GRID_GAP;
-    const cellPitchY = GRID_CELL_HEIGHT + GRID_GAP;
-
-    // Calculate max columns dynamically based on actual container width
-    const availableWidth = appGrid.clientWidth - (gridPadding * 2);
-    const maxCols = Math.floor(availableWidth / cellPitchX);
-
-    // Calculate which cell the cursor is over
-    // Add half a gap offset to center the snap point within each cell
-    let targetCol = Math.floor((relativeX + GRID_GAP / 2) / cellPitchX) + 1;
-    let targetRow = Math.floor((relativeY + GRID_GAP / 2) / cellPitchY) + 1;
-
-    // Clamp to grid boundaries (1 to dynamically calculated max)
-    targetCol = Math.max(1, Math.min(targetCol, maxCols));
-    targetRow = Math.max(1, Math.min(targetRow, MAX_GRID_ROWS));
-
-    // Update placeholder position
-    placeholder.style.gridColumnStart = targetCol;
-    placeholder.style.gridRowStart = targetRow;
-}
-
-function endDrag() {
-    try {
-        if (!draggedIcon || !placeholder) return;
-
-        const targetRow = placeholder.style.gridRowStart;
-        const targetCol = placeholder.style.gridColumnStart;
-
-        if (!targetRow || !targetCol) return; // Safety check
-
-        // Check if slot is occupied by ANOTHER icon
-        const existingIcon = document.querySelector(`.app-icon[data-row="${targetRow}"][data-col="${targetCol}"]:not(.dragging-original)`);
-
-        if (existingIcon && existingIcon !== draggedIcon) {
-            // SWAP: Move existing icon to dragged icon's old position
-            const oldRow = draggedIcon.dataset.row;
-            const oldCol = draggedIcon.dataset.col;
-            setGridPosition(existingIcon, oldRow, oldCol);
-        }
-
-        // Move dragged icon to new position
-        setGridPosition(draggedIcon, targetRow, targetCol);
-        saveGridPositions();
-
-    } catch (err) {
-        console.error("Error in endDrag:", err);
-    } finally {
-        // ALWAYS CLEANUP
-        if (dragClone) {
-            dragClone.remove();
-            dragClone = null;
-        }
-
-        if (draggedIcon) {
-            draggedIcon.classList.remove('dragging-original');
-            draggedIcon = null; // Clear reference
-        }
-
-        if (placeholder) {
-            placeholder.style.display = 'none';
-        }
-    }
-}
-
-function saveGridPositions() {
-    const savedPositions = {};
-    document.querySelectorAll('.app-icon').forEach(icon => {
-        savedPositions[icon.dataset.app] = {
-            row: parseInt(icon.dataset.row),
-            col: parseInt(icon.dataset.col)
-        };
-    });
-    localStorage.setItem('appGridPositions', JSON.stringify(savedPositions));
-}
-
-function resetAppIconPositions() {
-    localStorage.removeItem('appGridPositions');
-    location.reload();
-}
-
-// ============================================
 // APP ICONS & DOCK INTERACTION
 // ============================================
 
-function setupAppIcons() {
-    // App icons now handled by setupDraggableAppIcons for desktop
-    // This only handles non-desktop or dock items
+function handleAppIconClick(appName) {
+    if (!appName) return;
 
-    if (currentOS !== 'desktop') {
-        // On mobile/tablet, use simple click handlers
-        const appIcons = document.querySelectorAll('.app-icon');
-        appIcons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                const appName = icon.dataset.app;
-                openWindow(appName);
-            });
-        });
+    const windowId = `${appName}-window`;
+    const windowEl = document.getElementById(windowId);
+
+    if (!windowEl) return;
+
+    // Check if window is currently active/open
+    if (activeWindows.has(windowId)) {
+        // It is open. Check if it is the TOP most window.
+        // We compare zIndex. currentZIndex holds the value of the topmost window.
+        const zIndex = parseInt(windowEl.style.zIndex || 0);
+        
+        if (zIndex === currentZIndex) {
+            // It is the top window, so toggle it OFF (close it)
+            closeWindow(windowId);
+        } else {
+            // It is open but in background, so bring to front
+            openWindow(appName);
+        }
+    } else {
+        // Not open, so open it
+        openWindow(appName);
     }
+}
+
+function setupAppIcons() {
+    // App icons (all platforms)
+    const appIcons = document.querySelectorAll('.app-icon');
+    appIcons.forEach(icon => {
+        icon.addEventListener('click', (e) => {
+            // Prevent double firing if needed, though click is usually fine
+            e.preventDefault();
+            const appName = icon.dataset.app;
+            handleAppIconClick(appName);
+        });
+    });
 
     // Dock items (all platforms)
     const dockItems = document.querySelectorAll('.dock-item');
     dockItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
             const appName = item.dataset.app;
             if (appName) {
-                openWindow(appName);
+                handleAppIconClick(appName);
             }
         });
     });
@@ -1294,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createStickyNotes();
 
     // Setup draggable app icons (desktop only)
-    setupDraggableAppIcons();
+
     // Setup parallax wallpaper effect (desktop only)
     setupParallaxWallpaper();
     
