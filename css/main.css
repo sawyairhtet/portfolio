@@ -56,9 +56,9 @@
     --radius-xl: 16px;
 
     /* Shadows - Lighter for light mode */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.15);
 
     /* Glassmorphism */
     --glass-blur: blur(20px);
@@ -443,11 +443,10 @@ body {
     font-size: 12px;
     text-align: center;
     color: #FFFFFF;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.5);
-    background: rgba(0, 0, 0, 0.5);
-    padding: 4px 10px;
-    border-radius: 4px;
-    backdrop-filter: blur(8px);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.6);
+    padding: 4px 8px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 /* Widget Container (Hidden on Desktop) */
@@ -473,6 +472,12 @@ body {
     max-width: 650px;
     max-height: 80vh;
     z-index: 100;
+    transition: box-shadow 0.2s ease;
+}
+
+/* Subtle glow on focused/topmost window */
+.window:focus-within {
+    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(233, 84, 32, 0.15);
 }
 
 .window-header {
@@ -692,6 +697,47 @@ body {
     border-radius: 50%;
 }
 
+/* Skills Grid - Clean Card Layout */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.skill-card {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.skill-icon {
+    font-size: 28px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.skill-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-window-body-text);
+}
+
+.skill-card p {
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.85;
+    margin: 0;
+}
+
 /* Terminal Styling */
 .terminal-body {
     background: #300A24;
@@ -891,25 +937,35 @@ a.project-card {
 
 /* Links List */
 .links-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-md);
 }
 
 .social-link {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-md);
     background: var(--color-card-bg);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
     text-decoration: none;
     color: inherit;
-    transition: transform 0.2s;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-link i {
+    font-size: 24px;
+    color: var(--color-primary);
 }
 
 .social-link:hover {
-    transform: translateX(8px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Settings */
@@ -1237,9 +1293,9 @@ a.project-card {
 
 @media (min-width: 1025px) {
 
-    /* App grid positioned freely */
+    /* App grid positioned in 2 columns */
     .app-grid {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 100px);
     }
 
     /* Windows can be positioned anywhere */
