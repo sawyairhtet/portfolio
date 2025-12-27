@@ -24,6 +24,20 @@
     <!-- Sticky Notes Container -->
     <div class="sticky-notes-container" id="sticky-notes"></div>
 
+    <!-- Snap Preview Overlay (for window snapping) -->
+    <div class="snap-preview" id="snap-preview"></div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="context-menu">
+        <div class="context-menu-item" data-action="new-folder"><i class="fas fa-folder-plus"></i> New Folder</div>
+        <div class="context-menu-item" data-action="new-file"><i class="fas fa-file-plus"></i> New File</div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" data-action="refresh"><i class="fas fa-sync-alt"></i> Refresh</div>
+        <div class="context-menu-item" data-action="terminal"><i class="fas fa-terminal"></i> Open Terminal</div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" data-action="settings"><i class="fas fa-cog"></i> Settings</div>
+    </div>
+
     <!-- Top Bar (GNOME Panel) -->
     <div class="top-bar">
         <!-- GNOME Panel Left - Activities -->
@@ -360,6 +374,10 @@
             <div class="setting-item">
                 <label for="theme-toggle">Dark Mode</label>
                 <input type="checkbox" id="theme-toggle" class="toggle-switch">
+            </div>
+            <div class="setting-item">
+                <label for="sound-toggle">Sound Effects</label>
+                <input type="checkbox" id="sound-toggle" class="toggle-switch" checked>
             </div>
         </div>
     </div>

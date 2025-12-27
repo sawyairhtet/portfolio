@@ -7,6 +7,137 @@ let currentZIndex = 100;
 let activeWindows = new Set();
 
 // ============================================
+// SOUND MANAGER - WebAudio Synthesis
+// ============================================
+
+const SoundManager = {
+    audioContext: null,
+    muted: localStorage.getItem('soundMuted') === 'true',
+
+    init() {
+        // Create audio context lazily (requires user gesture)
+        if (!this.audioContext) {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        return this.audioContext;
+    },
+
+    setMuted(muted) {
+        this.muted = muted;
+        localStorage.setItem('soundMuted', muted.toString());
+    },
+
+    isMuted() {
+        return this.muted;
+    },
+
+    // Synthesize a click sound
+    playClick() {
+        if (this.muted) return;
+        try {
+            const ctx = this.init();
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+
+            oscillator.frequency.setValueAtTime(800, ctx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.05);
+            
+            gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+
+            oscillator.start(ctx.currentTime);
+            oscillator.stop(ctx.currentTime + 0.05);
+        } catch (e) {
+            console.log('Sound playback failed:', e);
+        }
+    },
+
+    // Synthesize a whoosh sound for window close/minimize
+    playWhoosh() {
+        if (this.muted) return;
+        try {
+            const ctx = this.init();
+            
+            // Create noise for whoosh effect
+            const bufferSize = ctx.sampleRate * 0.15;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+            }
+            
+            const noise = ctx.createBufferSource();
+            noise.buffer = buffer;
+            
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(3000, ctx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(500, ctx.currentTime + 0.15);
+            
+            const gainNode = ctx.createGain();
+            gainNode.gain.setValueAtTime(0.08, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+            
+            noise.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            noise.start(ctx.currentTime);
+        } catch (e) {
+            console.log('Sound playback failed:', e);
+        }
+    },
+
+    // Synthesize Ubuntu drum sound (simplified)
+    playStartupDrum() {
+        if (this.muted) return;
+        try {
+            const ctx = this.init();
+            
+            // Bass drum
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.frequency.setValueAtTime(150, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.3);
+            
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.3);
+            
+            // Second hit
+            setTimeout(() => {
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                
+                osc2.frequency.setValueAtTime(120, ctx.currentTime);
+                osc2.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.25);
+                
+                gain2.gain.setValueAtTime(0.25, ctx.currentTime);
+                gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+                
+                osc2.start(ctx.currentTime);
+                osc2.stop(ctx.currentTime + 0.25);
+            }, 200);
+        } catch (e) {
+            console.log('Sound playback failed:', e);
+        }
+    }
+};
+
+// ============================================
 // STICKY NOTES DATA (Humanization)
 // ============================================
 
@@ -61,6 +192,9 @@ function openWindow(appName) {
     activeWindows.add(windowId);
     bringToFront(windowEl);
 
+    // Play open sound
+    SoundManager.playClick();
+
     // Update dock active states
     updateDockActiveStates();
 
@@ -85,6 +219,9 @@ function openWindow(appName) {
 function closeWindow(windowId) {
     const windowEl = document.getElementById(windowId);
     if (!windowEl) return;
+
+    // Play close sound
+    SoundManager.playWhoosh();
 
     // Add closing animation
     windowEl.classList.remove('opening');
@@ -132,14 +269,19 @@ function updateDockActiveStates() {
 }
 
 // ============================================
-// DRAGGABLE WINDOWS (Desktop Only)
+// DRAGGABLE WINDOWS (Desktop Only) + SNAP DETECTION
 // ============================================
+
+// Store original window positions before snapping (for un-snap)
+const windowSnapState = new Map();
 
 function makeDraggable(element) {
     if (currentOS !== 'desktop') return;
 
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let isDragging = false;
     const header = element.querySelector('.window-header');
+    const snapPreview = document.getElementById('snap-preview');
 
     if (!header) return;
 
@@ -147,11 +289,32 @@ function makeDraggable(element) {
 
     function dragMouseDown(e) {
         if (currentOS !== 'desktop') return;
+        // Don't drag if clicking on traffic lights
+        if (e.target.classList.contains('traffic-light')) return;
 
         e = e || window.event;
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
+        isDragging = true;
+
+        // If window is snapped, unsnap it first and reposition under cursor
+        if (element.classList.contains('snapped-left') || 
+            element.classList.contains('snapped-right') ||
+            element.classList.contains('snapped-maximized')) {
+            
+            const originalState = windowSnapState.get(element.id);
+            if (originalState) {
+                element.classList.remove('snapped-left', 'snapped-right', 'snapped-maximized');
+                element.style.width = originalState.width;
+                element.style.height = originalState.height;
+                // Center window under cursor
+                element.style.left = (e.clientX - parseInt(originalState.width) / 2) + 'px';
+                element.style.top = e.clientY + 'px';
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+            }
+        }
 
         bringToFront(element);
 
@@ -175,19 +338,156 @@ function makeDraggable(element) {
         // Boundary clamping - prevent window from going off-screen
         const minY = 28; // Top bar height
         const minX = 0;
-        const maxY = window.innerHeight - 50; // Leave some visible area
-        const maxX = window.innerWidth - 100; // Leave window partially visible
+        const maxY = window.innerHeight - 50;
+        const maxX = window.innerWidth - 100;
 
         newTop = Math.max(minY, Math.min(newTop, maxY));
         newLeft = Math.max(minX, Math.min(newLeft, maxX));
 
         element.style.top = newTop + "px";
         element.style.left = newLeft + "px";
+
+        // Snap detection zones
+        const snapThreshold = 50;
+        const dockWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
+
+        // Clear previous snap preview
+        snapPreview.classList.remove('visible', 'snap-left', 'snap-right', 'snap-maximize');
+
+        // Check for snap zones
+        if (e.clientX <= dockWidth + snapThreshold) {
+            // Left edge snap
+            snapPreview.classList.add('visible', 'snap-left');
+        } else if (e.clientX >= window.innerWidth - snapThreshold) {
+            // Right edge snap
+            snapPreview.classList.add('visible', 'snap-right');
+        } else if (e.clientY <= 28 + snapThreshold / 2) {
+            // Top edge = maximize
+            snapPreview.classList.add('visible', 'snap-maximize');
+        }
     }
 
-    function closeDragElement() {
+    function closeDragElement(e) {
+        isDragging = false;
+        const dockWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
+        const snapThreshold = 50;
+
+        // Save original state before snapping
+        if (!windowSnapState.has(element.id)) {
+            windowSnapState.set(element.id, {
+                width: element.style.width || getComputedStyle(element).width,
+                height: element.style.height || getComputedStyle(element).height,
+                top: element.style.top,
+                left: element.style.left
+            });
+        }
+
+        // Apply snap if in snap zone
+        if (e && e.clientX <= dockWidth + snapThreshold) {
+            element.classList.add('snapped-left');
+        } else if (e && e.clientX >= window.innerWidth - snapThreshold) {
+            element.classList.add('snapped-right');
+        } else if (e && e.clientY <= 28 + snapThreshold / 2) {
+            element.classList.add('snapped-maximized');
+        }
+
+        // Hide snap preview
+        snapPreview.classList.remove('visible', 'snap-left', 'snap-right', 'snap-maximize');
+
         document.onmouseup = null;
         document.onmousemove = null;
+    }
+}
+
+// ============================================
+// RESIZABLE WINDOWS (Desktop Only)
+// ============================================
+
+function makeResizable(element) {
+    if (currentOS !== 'desktop') return;
+
+    const minWidth = 400;
+    const minHeight = 300;
+
+    // Create resize handles
+    const handles = ['top', 'bottom', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'];
+    handles.forEach(pos => {
+        const handle = document.createElement('div');
+        handle.className = `resize-handle ${pos}`;
+        handle.dataset.direction = pos;
+        element.appendChild(handle);
+
+        handle.addEventListener('mousedown', initResize);
+    });
+
+    let startX, startY, startWidth, startHeight, startTop, startLeft;
+    let currentHandle = null;
+
+    function initResize(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Remove any snap classes when manually resizing
+        element.classList.remove('snapped-left', 'snapped-right', 'snapped-maximized');
+
+        currentHandle = e.target.dataset.direction;
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = element.offsetWidth;
+        startHeight = element.offsetHeight;
+        startTop = element.offsetTop;
+        startLeft = element.offsetLeft;
+
+        bringToFront(element);
+
+        document.addEventListener('mousemove', doResize);
+        document.addEventListener('mouseup', stopResize);
+    }
+
+    function doResize(e) {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        let newWidth = startWidth;
+        let newHeight = startHeight;
+        let newTop = startTop;
+        let newLeft = startLeft;
+
+        // Handle each direction
+        if (currentHandle.includes('right')) {
+            newWidth = Math.max(minWidth, startWidth + dx);
+        }
+        if (currentHandle.includes('left')) {
+            newWidth = Math.max(minWidth, startWidth - dx);
+            if (newWidth > minWidth) {
+                newLeft = startLeft + dx;
+            }
+        }
+        if (currentHandle.includes('bottom')) {
+            newHeight = Math.max(minHeight, startHeight + dy);
+        }
+        if (currentHandle.includes('top')) {
+            newHeight = Math.max(minHeight, startHeight - dy);
+            if (newHeight > minHeight) {
+                newTop = startTop + dy;
+            }
+        }
+
+        // Apply new dimensions
+        element.style.width = newWidth + 'px';
+        element.style.height = newHeight + 'px';
+        element.style.top = newTop + 'px';
+        element.style.left = newLeft + 'px';
+
+        // Update max-width/max-height to allow resizing beyond defaults
+        element.style.maxWidth = 'none';
+        element.style.maxHeight = 'none';
+    }
+
+    function stopResize() {
+        currentHandle = null;
+        document.removeEventListener('mousemove', doResize);
+        document.removeEventListener('mouseup', stopResize);
     }
 }
 
@@ -255,7 +555,11 @@ function setupAppIcons() {
 // TRAFFIC LIGHTS (Desktop Only)
 // ============================================
 
+// Track minimized windows
+const minimizedWindows = new Map();
+
 function setupTrafficLights() {
+    // Close button
     document.querySelectorAll('.traffic-light.close').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -266,7 +570,105 @@ function setupTrafficLights() {
         });
     });
 
-    // Minimize and maximize can be added here
+    // Minimize button with genie effect
+    document.querySelectorAll('.traffic-light.minimize').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const windowEl = btn.closest('.window');
+            if (windowEl) {
+                minimizeWindow(windowEl.id);
+            }
+        });
+    });
+
+    // Maximize button
+    document.querySelectorAll('.traffic-light.maximize').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const windowEl = btn.closest('.window');
+            if (windowEl) {
+                if (windowEl.classList.contains('snapped-maximized')) {
+                    // Restore from maximize
+                    windowEl.classList.remove('snapped-maximized');
+                    const state = windowSnapState.get(windowEl.id);
+                    if (state) {
+                        windowEl.style.width = state.width;
+                        windowEl.style.height = state.height;
+                        windowEl.style.top = state.top;
+                        windowEl.style.left = state.left;
+                    }
+                } else {
+                    // Maximize
+                    if (!windowSnapState.has(windowEl.id)) {
+                        windowSnapState.set(windowEl.id, {
+                            width: windowEl.style.width || getComputedStyle(windowEl).width,
+                            height: windowEl.style.height || getComputedStyle(windowEl).height,
+                            top: windowEl.style.top,
+                            left: windowEl.style.left
+                        });
+                    }
+                    windowEl.classList.add('snapped-maximized');
+                }
+            }
+        });
+    });
+}
+
+function minimizeWindow(windowId) {
+    const windowEl = document.getElementById(windowId);
+    if (!windowEl) return;
+
+    // Play minimize sound
+    SoundManager.playWhoosh();
+
+    // Store window state
+    minimizedWindows.set(windowId, {
+        top: windowEl.style.top,
+        left: windowEl.style.left
+    });
+
+    // Add minimizing animation class
+    windowEl.classList.add('minimizing');
+    windowEl.classList.remove('opening');
+
+    // Hide after animation
+    setTimeout(() => {
+        windowEl.style.display = 'none';
+        windowEl.classList.remove('minimizing');
+        activeWindows.delete(windowId);
+        updateDockActiveStates();
+    }, 350);
+}
+
+function restoreWindow(appName) {
+    const windowId = `${appName}-window`;
+    const windowEl = document.getElementById(windowId);
+    
+    if (!windowEl) return;
+    
+    // Check if minimized
+    if (minimizedWindows.has(windowId)) {
+        const state = minimizedWindows.get(windowId);
+        
+        windowEl.style.display = 'flex';
+        windowEl.classList.add('restoring');
+        
+        // Play restore sound
+        SoundManager.playClick();
+        
+        activeWindows.add(windowId);
+        bringToFront(windowEl);
+        updateDockActiveStates();
+        
+        setTimeout(() => {
+            windowEl.classList.remove('restoring');
+        }, 350);
+        
+        minimizedWindows.delete(windowId);
+    } else {
+        // Normal open
+        openWindow(appName);
+    }
 }
 
 // ============================================
@@ -282,6 +684,64 @@ function setupMobileCloseButtons() {
                 closeWindow(windowEl.id);
             }
         });
+    });
+}
+
+// ============================================
+// MOBILE GESTURES  
+// ============================================
+
+function setupMobileGestures() {
+    if (currentOS === 'desktop') return;
+
+    let touchStartY = 0;
+    let touchStartX = 0;
+    let currentWindowEl = null;
+
+    document.querySelectorAll('.window-header').forEach(header => {
+        header.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            currentWindowEl = header.closest('.window');
+        }, { passive: true });
+
+        header.addEventListener('touchend', (e) => {
+            if (!currentWindowEl) return;
+
+            const touchEndY = e.changedTouches[0].clientY;
+            const touchEndX = e.changedTouches[0].clientX;
+            const diffY = touchEndY - touchStartY;
+            const diffX = touchEndX - touchStartX;
+
+            // Swipe down = close
+            if (diffY > 80 && Math.abs(diffX) < 50) {
+                closeWindow(currentWindowEl.id);
+            }
+            // Swipe left/right = switch apps
+            else if (Math.abs(diffX) > 100 && Math.abs(diffY) < 50) {
+                const windowsArray = Array.from(activeWindows);
+                if (windowsArray.length <= 1) return;
+
+                const currentIndex = windowsArray.indexOf(currentWindowEl.id);
+                let newIndex;
+
+                if (diffX > 0) {
+                    // Swipe right = previous app
+                    newIndex = currentIndex > 0 ? currentIndex - 1 : windowsArray.length - 1;
+                } else {
+                    // Swipe left = next app
+                    newIndex = currentIndex < windowsArray.length - 1 ? currentIndex + 1 : 0;
+                }
+
+                const nextWindowId = windowsArray[newIndex];
+                const nextWindowEl = document.getElementById(nextWindowId);
+                if (nextWindowEl) {
+                    bringToFront(nextWindowEl);
+                }
+            }
+
+            currentWindowEl = null;
+        }, { passive: true });
     });
 }
 
@@ -316,9 +776,11 @@ function updateClock() {
 let terminalHistory = [];
 let historyIndex = -1;
 
-// Fake Filesystem
+// Fake Filesystem - Now with persistence!
 let currentPath = '/home/visitor';
-const fileSystem = {
+
+// Default filesystem (used on first visit or after reset)
+const defaultFileSystem = {
     '/': {
         type: 'dir',
         children: ['home', 'etc', 'var']
@@ -413,6 +875,20 @@ const fileSystem = {
     }
 };
 
+// Load filesystem from localStorage or use default
+let fileSystem = JSON.parse(localStorage.getItem('portfolioFileSystem')) || JSON.parse(JSON.stringify(defaultFileSystem));
+
+// Save filesystem to localStorage
+function saveFileSystem() {
+    localStorage.setItem('portfolioFileSystem', JSON.stringify(fileSystem));
+}
+
+// Reset filesystem to default
+function resetFileSystem() {
+    fileSystem = JSON.parse(JSON.stringify(defaultFileSystem));
+    saveFileSystem();
+}
+
 function resolvePath(inputPath) {
     if (!inputPath) return currentPath;
 
@@ -445,18 +921,23 @@ function resolvePath(inputPath) {
 const terminalCommands = {
     help: () => {
         return `Available commands:
-  ls [dir]    - List directory contents
-  cd <dir>    - Change directory
-  pwd         - Print working directory
-  cat <file>  - View file contents
-  whoami      - Display bio information
-  contact     - Show contact information
-  projects    - List all projects
-  skills      - Display technical skills
-  echo [text] - Echo back your text
-  clear       - Clear terminal output
-  reset-icons - Reset app icons to default positions
-  help        - Show this help message
+  ls [dir]      - List directory contents
+  cd <dir>      - Change directory
+  pwd           - Print working directory
+  cat <file>    - View file contents
+  touch <file>  - Create an empty file
+  mkdir <dir>   - Create a directory
+  rm <file>     - Remove a file
+  rmdir <dir>   - Remove an empty directory
+  whoami        - Display bio information
+  contact       - Show contact information
+  projects      - List all projects
+  skills        - Display technical skills
+  echo [text]   - Echo back your text
+  clear         - Clear terminal output
+  reset-icons   - Reset app icons to default positions
+  reset-fs      - Reset filesystem to default
+  help          - Show this help message
   
   // Easter eggs:
   milk, sudo, matrix, hello, neofetch`;
@@ -589,6 +1070,152 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     'reset-icons': () => {
         resetAppIconPositions();
         return 'Desktop icons reset to default positions.\nRefresh the page to see changes.';
+    },
+
+    // === FILE SYSTEM COMMANDS ===
+    touch: (args) => {
+        if (!args[0]) {
+            return 'Usage: touch <filename>';
+        }
+
+        const targetPath = resolvePath(args[0]);
+        const fileName = targetPath.split('/').pop();
+        const parentPath = targetPath.substring(0, targetPath.lastIndexOf('/')) || '/';
+        const parentNode = fileSystem[parentPath];
+
+        // Check if file already exists
+        if (fileSystem[targetPath]) {
+            return `touch: cannot create '${args[0]}': File exists`;
+        }
+
+        // Check if parent directory exists
+        if (!parentNode || parentNode.type !== 'dir') {
+            return `touch: cannot create '${args[0]}': No such directory`;
+        }
+
+        // Create the file
+        fileSystem[targetPath] = {
+            type: 'file',
+            content: ''
+        };
+        parentNode.children.push(fileName);
+        saveFileSystem();
+
+        return `Created file: ${fileName}`;
+    },
+
+    mkdir: (args) => {
+        if (!args[0]) {
+            return 'Usage: mkdir <dirname>';
+        }
+
+        const targetPath = resolvePath(args[0]);
+        const dirName = targetPath.split('/').pop();
+        const parentPath = targetPath.substring(0, targetPath.lastIndexOf('/')) || '/';
+        const parentNode = fileSystem[parentPath];
+
+        // Check if already exists
+        if (fileSystem[targetPath]) {
+            return `mkdir: cannot create directory '${args[0]}': File exists`;
+        }
+
+        // Check if parent directory exists
+        if (!parentNode || parentNode.type !== 'dir') {
+            return `mkdir: cannot create directory '${args[0]}': No such directory`;
+        }
+
+        // Create the directory
+        fileSystem[targetPath] = {
+            type: 'dir',
+            children: []
+        };
+        parentNode.children.push(dirName);
+        saveFileSystem();
+
+        return `Created directory: ${dirName}`;
+    },
+
+    rm: (args) => {
+        if (!args[0]) {
+            return 'Usage: rm <filename>';
+        }
+
+        const targetPath = resolvePath(args[0]);
+        const node = fileSystem[targetPath];
+
+        if (!node) {
+            return `rm: cannot remove '${args[0]}': No such file or directory`;
+        }
+
+        if (node.type === 'dir') {
+            return `rm: cannot remove '${args[0]}': Is a directory (use rmdir)`;
+        }
+
+        // Prevent deleting system files
+        if (!targetPath.startsWith('/home/visitor/')) {
+            return `rm: cannot remove '${args[0]}': Permission denied`;
+        }
+
+        const fileName = targetPath.split('/').pop();
+        const parentPath = targetPath.substring(0, targetPath.lastIndexOf('/'));
+        const parentNode = fileSystem[parentPath];
+
+        // Remove from parent's children
+        if (parentNode && parentNode.children) {
+            parentNode.children = parentNode.children.filter(c => c !== fileName);
+        }
+
+        // Delete the file
+        delete fileSystem[targetPath];
+        saveFileSystem();
+
+        return `Removed: ${args[0]}`;
+    },
+
+    rmdir: (args) => {
+        if (!args[0]) {
+            return 'Usage: rmdir <dirname>';
+        }
+
+        const targetPath = resolvePath(args[0]);
+        const node = fileSystem[targetPath];
+
+        if (!node) {
+            return `rmdir: failed to remove '${args[0]}': No such file or directory`;
+        }
+
+        if (node.type !== 'dir') {
+            return `rmdir: failed to remove '${args[0]}': Not a directory`;
+        }
+
+        if (node.children && node.children.length > 0) {
+            return `rmdir: failed to remove '${args[0]}': Directory not empty`;
+        }
+
+        // Prevent deleting system directories
+        if (!targetPath.startsWith('/home/visitor/') || targetPath === '/home/visitor') {
+            return `rmdir: failed to remove '${args[0]}': Permission denied`;
+        }
+
+        const dirName = targetPath.split('/').pop();
+        const parentPath = targetPath.substring(0, targetPath.lastIndexOf('/'));
+        const parentNode = fileSystem[parentPath];
+
+        // Remove from parent's children
+        if (parentNode && parentNode.children) {
+            parentNode.children = parentNode.children.filter(c => c !== dirName);
+        }
+
+        // Delete the directory
+        delete fileSystem[targetPath];
+        saveFileSystem();
+
+        return `Removed directory: ${args[0]}`;
+    },
+
+    'reset-fs': () => {
+        resetFileSystem();
+        return 'Filesystem reset to default.\nAll user-created files and folders have been removed.';
     },
 
     // === EASTER EGG COMMANDS ===
@@ -748,6 +1375,108 @@ function setupThemeToggle() {
             localStorage.setItem('theme', 'light');
         }
     });
+}
+
+// ============================================
+// SOUND TOGGLE
+// ============================================
+
+function setupSoundToggle() {
+    const soundToggle = document.getElementById('sound-toggle');
+    if (!soundToggle) return;
+
+    // Set initial state from SoundManager
+    soundToggle.checked = !SoundManager.isMuted();
+
+    soundToggle.addEventListener('change', () => {
+        SoundManager.setMuted(!soundToggle.checked);
+    });
+}
+
+// ============================================
+// CONTEXT MENU
+// ============================================
+
+function setupContextMenu() {
+    const contextMenu = document.getElementById('context-menu');
+    if (!contextMenu) return;
+
+    // Show context menu on right-click on desktop (main-content or wallpaper)
+    document.querySelector('.main-content').addEventListener('contextmenu', (e) => {
+        // Only show context menu on desktop
+        if (currentOS !== 'desktop') return;
+        
+        // Don't show if clicking on a window or app icon
+        if (e.target.closest('.window') || e.target.closest('.app-icon') || e.target.closest('.dock')) {
+            return;
+        }
+
+        e.preventDefault();
+
+        // Position the menu
+        let x = e.clientX;
+        let y = e.clientY;
+
+        // Ensure menu doesn't go off-screen
+        const menuWidth = 180;
+        const menuHeight = 200;
+        if (x + menuWidth > window.innerWidth) x -= menuWidth;
+        if (y + menuHeight > window.innerHeight) y -= menuHeight;
+
+        contextMenu.style.left = x + 'px';
+        contextMenu.style.top = y + 'px';
+        contextMenu.classList.add('visible');
+    });
+
+    // Hide context menu on click anywhere
+    document.addEventListener('click', () => {
+        contextMenu.classList.remove('visible');
+    });
+
+    // Hide on scroll
+    document.addEventListener('scroll', () => {
+        contextMenu.classList.remove('visible');
+    });
+
+    // Handle context menu item clicks
+    contextMenu.querySelectorAll('.context-menu-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const action = item.dataset.action;
+            handleContextMenuAction(action);
+            contextMenu.classList.remove('visible');
+        });
+    });
+}
+
+function handleContextMenuAction(action) {
+    switch (action) {
+        case 'new-folder':
+            const folderName = prompt('Enter folder name:');
+            if (folderName && folderName.trim()) {
+                const result = terminalCommands.mkdir([folderName.trim()]);
+                console.log(result);
+            }
+            break;
+        case 'new-file':
+            const fileName = prompt('Enter file name:');
+            if (fileName && fileName.trim()) {
+                const result = terminalCommands.touch([fileName.trim()]);
+                console.log(result);
+            }
+            break;
+        case 'refresh':
+            window.location.reload();
+            break;
+        case 'terminal':
+            openWindow('terminal');
+            break;
+        case 'settings':
+            openWindow('settings');
+            break;
+        default:
+            console.log('Unknown action:', action);
+    }
 }
 
 // ============================================
@@ -1011,6 +1740,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMobileCloseButtons();
     setupTerminal();
     setupThemeToggle();
+    setupSoundToggle();
+    setupContextMenu();
+    setupMobileGestures();
 
     // Create sticky notes (desktop only)
     createStickyNotes();
@@ -1022,9 +1754,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup smooth scroll for window bodies
     setupSmoothScroll();
-    // Make all windows draggable (will be disabled on mobile/tablet)
+    // Make all windows draggable and resizable (will be disabled on mobile/tablet)
     document.querySelectorAll('.window').forEach(win => {
         makeDraggable(win);
+        makeResizable(win);
 
         // Bring to front on click
         win.addEventListener('mousedown', () => {

@@ -480,6 +480,208 @@ body {
     box-shadow: var(--shadow-lg), 0 0 0 2px rgba(233, 84, 32, 0.15);
 }
 
+/* ============================================
+   WINDOW RESIZE HANDLES
+   ============================================ */
+
+.window .resize-handle {
+    position: absolute;
+    z-index: 10;
+}
+
+/* Edge handles */
+.window .resize-handle.top {
+    top: -4px;
+    left: 8px;
+    right: 8px;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.window .resize-handle.bottom {
+    bottom: -4px;
+    left: 8px;
+    right: 8px;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.window .resize-handle.left {
+    left: -4px;
+    top: 8px;
+    bottom: 8px;
+    width: 8px;
+    cursor: ew-resize;
+}
+
+.window .resize-handle.right {
+    right: -4px;
+    top: 8px;
+    bottom: 8px;
+    width: 8px;
+    cursor: ew-resize;
+}
+
+/* Corner handles */
+.window .resize-handle.top-left {
+    top: -4px;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nwse-resize;
+}
+
+.window .resize-handle.top-right {
+    top: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nesw-resize;
+}
+
+.window .resize-handle.bottom-left {
+    bottom: -4px;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nesw-resize;
+}
+
+.window .resize-handle.bottom-right {
+    bottom: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nwse-resize;
+}
+
+/* ============================================
+   WINDOW SNAP STATES
+   ============================================ */
+
+.window.snapped-left {
+    top: 28px !important;
+    left: var(--dock-width) !important;
+    width: calc(50vw - var(--dock-width) / 2) !important;
+    height: calc(100vh - 28px) !important;
+    border-radius: 0;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.window.snapped-right {
+    top: 28px !important;
+    left: calc(50vw + var(--dock-width) / 2) !important;
+    width: calc(50vw - var(--dock-width) / 2) !important;
+    height: calc(100vh - 28px) !important;
+    border-radius: 0;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.window.snapped-maximized {
+    top: 28px !important;
+    left: var(--dock-width) !important;
+    width: calc(100vw - var(--dock-width)) !important;
+    height: calc(100vh - 28px) !important;
+    border-radius: 0;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Snap Preview Overlay */
+.snap-preview {
+    position: fixed;
+    top: 28px;
+    background: rgba(233, 84, 32, 0.15);
+    border: 2px dashed var(--color-primary);
+    border-radius: var(--radius-md);
+    z-index: 99;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.snap-preview.visible {
+    opacity: 1;
+}
+
+.snap-preview.snap-left {
+    left: var(--dock-width);
+    width: calc(50vw - var(--dock-width) / 2);
+    height: calc(100vh - 28px);
+}
+
+.snap-preview.snap-right {
+    left: calc(50vw + var(--dock-width) / 2);
+    width: calc(50vw - var(--dock-width) / 2);
+    height: calc(100vh - 28px);
+}
+
+.snap-preview.snap-maximize {
+    left: var(--dock-width);
+    width: calc(100vw - var(--dock-width));
+    height: calc(100vh - 28px);
+}
+
+/* ============================================
+   CONTEXT MENU
+   ============================================ */
+
+.context-menu {
+    position: fixed;
+    background: var(--color-window-body-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 180px;
+    padding: var(--spacing-xs) 0;
+    z-index: 10000;
+    display: none;
+    backdrop-filter: var(--glass-blur);
+}
+
+.context-menu.visible {
+    display: block;
+    animation: contextMenuIn 0.15s ease-out;
+}
+
+@keyframes contextMenuIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--color-window-body-text);
+    transition: background 0.15s ease;
+}
+
+.context-menu-item:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.context-menu-item i {
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.context-menu-separator {
+    height: 1px;
+    background: var(--color-border);
+    margin: var(--spacing-xs) 0;
+}
+
 .window-header {
     display: flex;
     align-items: center;
@@ -1418,6 +1620,46 @@ a.project-card {
 
 .window.closing {
     animation: windowBounceOut 0.25s ease-out forwards;
+}
+
+/* Genie Minimize Animation */
+@keyframes genieMinimize {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(0.5) translateY(50vh);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.1) translateY(100vh) translateX(var(--genie-target-x, 0));
+    }
+}
+
+@keyframes genieRestore {
+    0% {
+        opacity: 0;
+        transform: scale(0.1) translateY(100vh);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(0.5) translateY(50vh);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.window.minimizing {
+    animation: genieMinimize 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    pointer-events: none;
+}
+
+.window.restoring {
+    animation: genieRestore 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* ============================================
