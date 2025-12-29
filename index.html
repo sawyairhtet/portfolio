@@ -1,21 +1,26 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Saw Ye Htet - IT Student & VR Developer at Singapore Polytechnic. Specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
+    <meta name="description"
+        content="Saw Ye Htet - IT Student & VR Developer at Singapore Polytechnic. Specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
     <title>Saw Ye Htet - Portfolio</title>
     <link rel="stylesheet" href="css/main.css">
     <!-- Google Fonts - Inter + Ubuntu -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
+
 <body>
-    
+
     <!-- Boot Screen (Linux Boot Log Style) -->
     <div class="boot-screen" id="boot-screen">
         <div class="boot-log" id="boot-log"></div>
@@ -43,9 +48,9 @@
         <!-- GNOME Panel Left - Activities -->
         <div class="menu-bar-left">
             <span class="personal-brand">SYH</span>
-            <button class="activities-btn">Activities</button>
+            <button class="activities-btn pill">Activities</button>
         </div>
-        
+
         <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
         <div class="status-bar">
             <div class="status-time"></div>
@@ -55,18 +60,17 @@
                 <i class="fas fa-battery-three-quarters"></i>
             </div>
         </div>
-        
+
         <!-- GNOME Panel Center - Clock -->
         <div class="menu-bar-center">
-            <div class="menu-clock"></div>
+            <div class="menu-clock pill"></div>
         </div>
-        
+
         <!-- GNOME Panel Right - Status Indicators -->
         <div class="menu-bar-right">
-            <div class="status-menu">
-                <i class="fas fa-wifi"></i>
+            <div class="status-menu pill">
+                <i class="fas fa-network-wired"></i>
                 <i class="fas fa-volume-up"></i>
-                <i class="fas fa-battery-three-quarters"></i>
                 <i class="fas fa-power-off"></i>
             </div>
         </div>
@@ -74,10 +78,10 @@
 
     <!-- Main Content Area -->
     <div class="main-content">
-        
+
         <!-- Desktop Wallpaper (macOS only) -->
         <div class="wallpaper"></div>
-        
+
         <!-- App Icons Grid (All layouts) -->
         <div class="app-grid">
             <!-- About App -->
@@ -87,7 +91,7 @@
                 </div>
                 <div class="app-label">About</div>
             </button>
-            
+
             <!-- Skills App -->
             <button class="app-icon" data-app="skills" aria-label="Skills">
                 <div class="app-icon-wrapper">
@@ -95,7 +99,7 @@
                 </div>
                 <div class="app-label">Skills</div>
             </button>
-            
+
             <!-- Projects App -->
             <button class="app-icon" data-app="projects" aria-label="Projects">
                 <div class="app-icon-wrapper">
@@ -103,7 +107,7 @@
                 </div>
                 <div class="app-label">Projects</div>
             </button>
-            
+
             <!-- Contact App -->
             <button class="app-icon" data-app="contact" aria-label="Contact">
                 <div class="app-icon-wrapper">
@@ -111,7 +115,7 @@
                 </div>
                 <div class="app-label">Contact</div>
             </button>
-            
+
             <!-- Links App -->
             <button class="app-icon" data-app="links" aria-label="Links">
                 <div class="app-icon-wrapper">
@@ -119,7 +123,7 @@
                 </div>
                 <div class="app-label">Links</div>
             </button>
-            
+
             <!-- Terminal App -->
             <button class="app-icon" data-app="terminal" aria-label="Terminal">
                 <div class="app-icon-wrapper">
@@ -127,7 +131,7 @@
                 </div>
                 <div class="app-label">Terminal</div>
             </button>
-            
+
             <!-- Settings App -->
             <button class="app-icon" data-app="settings" aria-label="Settings">
                 <div class="app-icon-wrapper">
@@ -136,7 +140,7 @@
                 <div class="app-label">Settings</div>
             </button>
         </div>
-        
+
         <!-- Widget Container (iPad/iOS) -->
         <div class="widget-container">
             <div class="widget widget-about">
@@ -147,17 +151,14 @@
     </div>
 
     <!-- Windows/Apps Content -->
-    
+
     <!-- About Window/App -->
     <div class="window" id="about-window" data-app="about">
         <div class="window-header">
-            <div class="traffic-lights">
-                <span class="traffic-light close"></span>
-                <span class="traffic-light minimize"></span>
-                <span class="traffic-light maximize"></span>
-            </div>
             <div class="window-title">About</div>
-            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+            <div class="window-controls">
+                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="window-body">
             <div class="about-hero">
@@ -167,18 +168,18 @@
                 <h2>Saw Ye Htet</h2>
                 <p class="about-tagline">IT Student & VR Developer</p>
             </div>
-            
+
             <div class="about-content">
                 <div class="about-section">
                     <h3><i class="fas fa-graduation-cap"></i> Education</h3>
                     <p><strong>Singapore Polytechnic</strong><br>
-                    Diploma in Information Technology</p>
+                        Diploma in Information Technology</p>
                 </div>
-                
+
                 <div class="about-section">
                     <h3><i class="fas fa-briefcase"></i> Experience</h3>
                     <p><strong>VR Developer</strong><br>
-                    Developed immersive VR experiences using Unity and Meta Quest hand tracking technology.</p>
+                        Developed immersive VR experiences using Unity and Meta Quest hand tracking technology.</p>
                 </div>
             </div>
         </div>
@@ -187,42 +188,39 @@
     <!-- Skills Window/App -->
     <div class="window" id="skills-window" data-app="skills">
         <div class="window-header">
-            <div class="traffic-lights">
-                <span class="traffic-light close"></span>
-                <span class="traffic-light minimize"></span>
-                <span class="traffic-light maximize"></span>
-            </div>
             <div class="window-title">Skills</div>
-            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+            <div class="window-controls">
+                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="window-body">
             <h2>💻 Skills & Tools</h2>
-            
+
             <div class="skills-grid">
                 <div class="skill-card">
                     <div class="skill-icon">💿</div>
                     <h4>Languages</h4>
                     <p>JavaScript, Python, C#, Java, SQL</p>
                 </div>
-                
+
                 <div class="skill-card">
                     <div class="skill-icon">🎨</div>
                     <h4>Frontend</h4>
                     <p>HTML5, CSS3, React, Responsive Design</p>
                 </div>
-                
+
                 <div class="skill-card">
                     <div class="skill-icon">🌐</div>
                     <h4>Backend</h4>
                     <p>REST APIs, Node.js, Database Integration</p>
                 </div>
-                
+
                 <div class="skill-card">
                     <div class="skill-icon">🎮</div>
                     <h4>VR Development</h4>
                     <p>Unity, Meta Quest, Hand Tracking</p>
                 </div>
-                
+
                 <div class="skill-card">
                     <div class="skill-icon">🛠️</div>
                     <h4>Tools</h4>
@@ -235,21 +233,20 @@
     <!-- Projects Window/App -->
     <div class="window" id="projects-window" data-app="projects">
         <div class="window-header">
-            <div class="traffic-lights">
-                <span class="traffic-light close"></span>
-                <span class="traffic-light minimize"></span>
-                <span class="traffic-light maximize"></span>
-            </div>
             <div class="window-title">Projects</div>
-            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+            <div class="window-controls">
+                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="window-body">
             <div class="projects-grid">
-                <a href="https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking" target="_blank" class="project-card featured-project">
+                <a href="https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking"
+                    target="_blank" class="project-card featured-project">
                     <div class="project-badge">Featured</div>
                     <div class="project-preview">🥽</div>
                     <h3>Jewelry Shop Robbery VR</h3>
-                    <p>An immersive VR heist game for Meta Quest with full hand tracking support. Grab precious gems, avoid security, and escape with the loot!</p>
+                    <p>An immersive VR heist game for Meta Quest with full hand tracking support. Grab precious gems,
+                        avoid security, and escape with the loot!</p>
                     <div class="tech-stack">
                         <span class="tech-badge">Unity</span>
                         <span class="tech-badge">C#</span>
@@ -261,11 +258,12 @@
                         <span class="project-link"><i class="fab fa-github"></i> View on GitHub</span>
                     </div>
                 </a>
-                
+
                 <a href="https://github.com/sawyairhtet/portfolio" target="_blank" class="project-card">
                     <div class="project-preview">🖥️</div>
                     <h3>Ubuntu Portfolio Website</h3>
-                    <p>This very website! A unique Ubuntu GNOME-styled portfolio with draggable windows, working terminal, boot animation, and sticky notes.</p>
+                    <p>This very website! A unique Ubuntu GNOME-styled portfolio with draggable windows, working
+                        terminal, boot animation, and sticky notes.</p>
                     <div class="tech-stack">
                         <span class="tech-badge">HTML5</span>
                         <span class="tech-badge">CSS3</span>
@@ -284,20 +282,17 @@
     <!-- Contact Window/App -->
     <div class="window" id="contact-window" data-app="contact">
         <div class="window-header">
-            <div class="traffic-lights">
-                <span class="traffic-light close"></span>
-                <span class="traffic-light minimize"></span>
-                <span class="traffic-light maximize"></span>
-            </div>
             <div class="window-title">Contact</div>
-            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+            <div class="window-controls">
+                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="window-body">
             <h2>Get in Touch</h2>
             <p><strong>Email:</strong> <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a></p>
             <p><strong>Location:</strong> Singapore</p>
             <p><strong>Status:</strong> 🟢 Available for opportunities</p>
-            
+
             <div class="resume-section">
                 <h3><i class="fas fa-file-alt"></i> Resume / CV</h3>
                 <a href="#" class="resume-btn">
@@ -310,13 +305,10 @@
     <!-- Links Window/App -->
     <div class="window" id="links-window" data-app="links">
         <div class="window-header">
-            <div class="traffic-lights">
-                <span class="traffic-light close"></span>
-                <span class="traffic-light minimize"></span>
-                <span class="traffic-light maximize"></span>
-            </div>
             <div class="window-title">Links</div>
-            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+            <div class="window-controls">
+                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="window-body">
             <h2>Social Links</h2>
@@ -337,13 +329,10 @@
     <!-- Terminal Window/App -->
     <div class="window" id="terminal-window" data-app="terminal">
         <div class="window-header">
-            <div class="traffic-lights">
-                <span class="traffic-light close"></span>
-                <span class="traffic-light minimize"></span>
-                <span class="traffic-light maximize"></span>
-            </div>
             <div class="window-title">Terminal</div>
-            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+            <div class="window-controls">
+                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="window-body terminal-body">
             <div class="terminal-output" id="terminal-output" aria-live="polite" aria-label="Terminal output">
@@ -361,13 +350,10 @@
     <!-- Settings Window/App -->
     <div class="window" id="settings-window" data-app="settings">
         <div class="window-header">
-            <div class="traffic-lights">
-                <span class="traffic-light close"></span>
-                <span class="traffic-light minimize"></span>
-                <span class="traffic-light maximize"></span>
-            </div>
             <div class="window-title">Settings</div>
-            <button class="close-btn-mobile"><i class="fas fa-times"></i></button>
+            <div class="window-controls">
+                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="window-body">
             <h2>Preferences</h2>
@@ -404,4 +390,5 @@
 
     <script src="js/main.js"></script>
 </body>
+
 </html>

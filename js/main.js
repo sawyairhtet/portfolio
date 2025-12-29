@@ -289,8 +289,8 @@ function makeDraggable(element) {
 
     function dragMouseDown(e) {
         if (currentOS !== 'desktop') return;
-        // Don't drag if clicking on traffic lights
-        if (e.target.classList.contains('traffic-light')) return;
+        // Don't drag if clicking on window controls
+        if (e.target.closest('.window-control')) return;
 
         e = e || window.event;
         e.preventDefault();
@@ -552,15 +552,15 @@ function setupAppIcons() {
 }
 
 // ============================================
-// TRAFFIC LIGHTS (Desktop Only)
+// WINDOW CONTROLS
 // ============================================
 
 // Track minimized windows
 const minimizedWindows = new Map();
 
-function setupTrafficLights() {
+function setupTrafficLights() { // Keeping function name to avoid breaking calls, or could rename
     // Close button
-    document.querySelectorAll('.traffic-light.close').forEach(btn => {
+    document.querySelectorAll('.window-control.close').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const windowEl = btn.closest('.window');
@@ -571,7 +571,7 @@ function setupTrafficLights() {
     });
 
     // Minimize button with genie effect
-    document.querySelectorAll('.traffic-light.minimize').forEach(btn => {
+    document.querySelectorAll('.window-control.minimize').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const windowEl = btn.closest('.window');
@@ -582,7 +582,7 @@ function setupTrafficLights() {
     });
 
     // Maximize button
-    document.querySelectorAll('.traffic-light.maximize').forEach(btn => {
+    document.querySelectorAll('.window-control.maximize').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const windowEl = btn.closest('.window');
