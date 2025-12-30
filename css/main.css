@@ -270,7 +270,7 @@ body {
     left: -20px;
     right: -20px;
     bottom: -20px;
-    background: url('../images/Jammy_Jellyfish.png') center/cover no-repeat;
+    background: url('../images/noble-numbat.jpg') center/cover no-repeat;
     z-index: 0;
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px),
