@@ -148,6 +148,55 @@
     box-sizing: border-box;
 }
 
+/* ============================================
+   CUSTOM SCROLLBARS
+   ============================================ */
+
+/* Webkit Scrollbars (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(233, 84, 32, 0.5);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(233, 84, 32, 0.7);
+    background-clip: padding-box;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: rgba(255, 107, 61, 0.5);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 107, 61, 0.7);
+}
+
+/* Firefox Scrollbars */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(233, 84, 32, 0.5) rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] * {
+    scrollbar-color: rgba(255, 107, 61, 0.5) rgba(255, 255, 255, 0.05);
+}
+
 button {
     border: none;
     background: none;
@@ -217,7 +266,7 @@ body {
 
 /* Pill Styling for Top Bar Items */
 .pill {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.08);
     border-radius: 100px;
     padding: 4px 14px;
     margin: 4px 0;
@@ -233,7 +282,7 @@ body {
 }
 
 .pill:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.15);
 }
 
 [data-theme="dark"] .pill:hover {
@@ -1912,4 +1961,74 @@ a.project-card {
         font-size: 10px;
         padding: 2px 6px;
     }
+}
+
+/* ============================================
+   PERSONAL BRAND ALIGNMENT FIX
+   ============================================ */
+
+.personal-brand {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-topbar-text);
+    display: flex;
+    align-items: center;
+    line-height: 1;
+}
+
+/* ============================================
+   ACCESSIBILITY - FOCUS INDICATORS
+   ============================================ */
+
+/* Visible focus outlines for keyboard navigation */
+.app-icon:focus-visible,
+.dock-item:focus-visible,
+.window-control:focus-visible,
+.activities-btn:focus-visible,
+.social-link:focus-visible,
+.project-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary);
+    color: white;
+    padding: 8px 16px;
+    z-index: 10001;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ============================================
+   WINDOW CONTROLS - MINIMIZE & MAXIMIZE
+   ============================================ */
+
+.window-control.minimize,
+.window-control.maximize {
+    background: var(--color-control-bg);
+    color: var(--color-control-text);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .window-control.minimize,
+[data-theme="dark"] .window-control.maximize {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.window-control.minimize:hover,
+.window-control.maximize:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .window-control.minimize:hover,
+[data-theme="dark"] .window-control.maximize:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
