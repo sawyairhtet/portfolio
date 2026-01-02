@@ -289,6 +289,27 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Quick Theme Toggle Button */
+.theme-toggle-btn {
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-topbar-text);
+    transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--color-primary);
+    transform: rotate(15deg);
+}
+
+.theme-toggle-btn i {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="dark"] .theme-toggle-btn i {
+    transform: rotate(360deg);
+}
+
 /* Hover effects handled by .pill class */
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */
@@ -895,6 +916,23 @@ body {
     font-size: 48px;
     backdrop-filter: blur(10px);
     border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-avatar:hover {
+    transform: scale(1.05);
+    animation: avatarPulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes avatarPulseGlow {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(233, 84, 32, 0.3), 
+                    0 0 40px rgba(233, 84, 32, 0.1); 
+    }
+    50% { 
+        box-shadow: 0 0 30px rgba(233, 84, 32, 0.5), 
+                    0 0 60px rgba(233, 84, 32, 0.2); 
+    }
 }
 
 .about-hero h2 {
@@ -946,6 +984,65 @@ body {
 
 .about-section h3 i {
     color: var(--color-primary);
+}
+
+/* Contact Items */
+.contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-card-bg);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-item:hover {
+    transform: translateX(4px);
+    border-color: var(--color-primary);
+}
+
+.contact-item > i {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-card-bg);
+    border-radius: var(--radius-sm);
+    color: var(--color-primary);
+}
+
+.contact-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.contact-item > div strong {
+    font-size: 12px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-item > div a,
+.contact-item > div span {
+    font-size: 14px;
+}
+
+.contact-item .status-available {
+    color: #4CAF50;
+    font-size: 10px;
 }
 
 /* Resume Section */
@@ -1064,6 +1161,29 @@ body {
     line-height: 1.5;
     opacity: 0.85;
     margin: 0;
+}
+
+/* Skill Progress Bars */
+.skill-progress {
+    width: 100%;
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 3px;
+    margin-top: var(--spacing-sm);
+    overflow: hidden;
+}
+
+.skill-progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--color-primary) 0%, #FF7A45 100%);
+    border-radius: 3px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animate progress bars when visible */
+.window[data-app="skills"][style*="display: flex"] .skill-progress-bar {
+    width: var(--progress);
 }
 
 /* Terminal Styling */
@@ -1206,8 +1326,8 @@ a.project-card {
 
 .project-badge {
     position: absolute;
-    top: -10px;
-    left: 20px;
+    top: 12px;
+    left: 12px;
     background: var(--gradient-btn);
     color: #fff;
     padding: 6px 14px;
@@ -1217,6 +1337,7 @@ a.project-card {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     box-shadow: var(--shadow-sm);
+    z-index: 1;
 }
 
 .project-meta {
@@ -1256,6 +1377,23 @@ a.project-card {
     opacity: 0.7;
     border-style: dashed;
     cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card.coming-soon::before {
+    content: '🚧';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 20px;
+    animation: constructionBounce 2s ease-in-out infinite;
+}
+
+@keyframes constructionBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(-5deg); }
+    75% { transform: translateY(-3px) rotate(5deg); }
 }
 
 .project-card.coming-soon:hover {
@@ -1283,17 +1421,26 @@ a.project-card {
     text-decoration: none;
     color: inherit;
     text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
 }
 
 .social-link i {
     font-size: 24px;
     color: var(--color-primary);
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .social-link:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
+}
+
+.social-link:hover i {
+    transform: scale(1.2);
+    color: #FF7A45;
 }
 
 /* Settings */
@@ -2031,4 +2178,52 @@ a.project-card {
 [data-theme="dark"] .window-control.minimize:hover,
 [data-theme="dark"] .window-control.maximize:hover {
     background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   MOBILE DOCK BOUNCE EFFECT
+   ============================================ */
+
+@media (max-width: 767px) {
+    .dock-item:active {
+        animation: dockBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    @keyframes dockBounce {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.85); }
+        100% { transform: scale(1); }
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY - REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .wallpaper {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .app-icon,
+    .dock-item,
+    .window,
+    .sticky-note {
+        animation: none !important;
+    }
+    
+    .skill-progress-bar {
+        transition: none !important;
+        width: var(--progress) !important;
+    }
 }

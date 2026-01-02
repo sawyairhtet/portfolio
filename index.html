@@ -71,6 +71,9 @@
 
         <!-- GNOME Panel Right - Status Indicators -->
         <div class="menu-bar-right">
+            <button class="theme-toggle-btn pill" id="quick-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
             <div class="status-menu pill">
                 <i class="fas fa-network-wired"></i>
                 <i class="fas fa-volume-up"></i>
@@ -208,30 +211,35 @@
                     <div class="skill-icon">💿</div>
                     <h4>Languages</h4>
                     <p>JavaScript, Python, C#, Java, SQL</p>
+                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 85%"></div></div>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon">🎨</div>
                     <h4>Frontend</h4>
                     <p>HTML5, CSS3, React, Responsive Design</p>
+                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 90%"></div></div>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon">🌐</div>
                     <h4>Backend</h4>
                     <p>REST APIs, Node.js, Database Integration</p>
+                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 75%"></div></div>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon">🎮</div>
                     <h4>VR Development</h4>
                     <p>Unity, Meta Quest, Hand Tracking</p>
+                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 80%"></div></div>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon">🛠️</div>
                     <h4>Tools</h4>
                     <p>Git, VS Code, Figma, Chrome DevTools</p>
+                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 88%"></div></div>
                 </div>
             </div>
         </div>
@@ -330,9 +338,29 @@
         </div>
         <div class="window-body">
             <h2>Get in Touch</h2>
-            <p><strong>Email:</strong> <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a></p>
-            <p><strong>Location:</strong> Singapore</p>
-            <p><strong>Status:</strong> 🟢 Available for opportunities</p>
+            <div class="contact-items">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong>
+                        <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Location</strong>
+                        <span>Singapore</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-circle status-available"></i>
+                    <div>
+                        <strong>Status</strong>
+                        <span>Available for opportunities</span>
+                    </div>
+                </div>
+            </div>
 
             <div class="resume-section">
                 <h3><i class="fas fa-file-alt"></i> Resume / CV</h3>
