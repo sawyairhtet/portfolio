@@ -1371,12 +1371,16 @@ function setupThemeToggle() {
     
     // Function to update UI based on theme
     function updateThemeUI(isDark) {
-        if (themeToggle) themeToggle.checked = isDark;
+        if (themeToggle) {
+            themeToggle.checked = isDark;
+            themeToggle.setAttribute('aria-expanded', isDark);
+        }
         if (quickToggle) {
             const icon = quickToggle.querySelector('i');
             if (icon) {
                 icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
             }
+            quickToggle.setAttribute('aria-expanded', isDark);
         }
     }
     
@@ -1399,6 +1403,9 @@ function setupThemeToggle() {
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         updateThemeUI(true);
+    } else {
+        // Set initial aria-expanded state for light mode
+        updateThemeUI(false);
     }
 
     // Settings toggle handler
@@ -1420,15 +1427,54 @@ function setupThemeToggle() {
 // SOUND TOGGLE
 // ============================================
 
+// Toast notification helper
+function showToast(message, icon = 'fa-info-circle') {
+    // Remove any existing toast
+    const existingToast = document.querySelector('.toast-notification');
+    if (existingToast) {
+        existingToast.remove();
+    }
+
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+    document.body.appendChild(toast);
+
+    // Show toast
+    requestAnimationFrame(() => {
+        toast.classList.add('visible');
+    });
+
+    // Hide and remove after 2 seconds
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
+
 function setupSoundToggle() {
     const soundToggle = document.getElementById('sound-toggle');
     if (!soundToggle) return;
 
     // Set initial state from SoundManager
     soundToggle.checked = !SoundManager.isMuted();
+    // Set aria-expanded for accessibility
+    soundToggle.setAttribute('aria-expanded', !SoundManager.isMuted());
 
     soundToggle.addEventListener('change', () => {
-        SoundManager.setMuted(!soundToggle.checked);
+        const isMuted = !soundToggle.checked;
+        SoundManager.setMuted(isMuted);
+        
+        // Update aria-expanded
+        soundToggle.setAttribute('aria-expanded', !isMuted);
+        
+        // Show toast notification
+        if (isMuted) {
+            showToast('Sound effects muted', 'fa-volume-mute');
+        } else {
+            showToast('Sound effects enabled', 'fa-volume-up');
+        }
     });
 }
 
