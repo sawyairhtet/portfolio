@@ -1040,18 +1040,18 @@ Currently available for opportunities!`;
 Email:    minwn2244@gmail.com
 LinkedIn: linkedin.com/in/saw-ye-htet-the-man-who-code/
 GitHub:   github.com/sawyairhtet
-Twitter:  x.com/saulyehtet_`;
+X:        x.com/saulyehtet_`;
     },
 
     projects: () => {
         return `Projects:
 ─────────────────────
-1. Finance        - Financial management web application
-2. Orizon         - Modern banking interface
-3. Fundo          - Creative design portfolio
-4. Brawlhalla     - Game statistics tracking app
-5. MetaSpark      - Metaverse platform design
-6. Summary        - Text summarization tool`;
+1. Jewelry Shop Robbery VR  - VR heist game for Meta Quest with hand tracking
+2. Ubuntu Portfolio         - This website! GNOME-styled portfolio
+3. AI Image Generator       - Web-based AI image generation (Coming Soon)
+4. Smart Task Manager       - AI-powered task management app (Coming Soon)
+
+Type 'cat /home/visitor/projects/README.md' for more details.`;
     },
 
     skills: () => {

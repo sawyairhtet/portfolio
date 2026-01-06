@@ -1,3 +1,6 @@
+/* Import handwriting font for sticky notes - must be at top */
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
 /* ============================================
    CSS VARIABLES & THEMING - UBUNTU YARU
    ============================================ */
@@ -1612,8 +1615,8 @@ a.project-card {
         min-width: 0;
     }
 
-    /* Show close button on iPad */
-    .traffic-lights {
+    /* Hide window controls on iPad */
+    .window-controls {
         display: none;
     }
 
@@ -1695,8 +1698,8 @@ a.project-card {
         margin-top: 44px;
     }
 
-    /* Hide traffic lights */
-    .traffic-lights {
+    /* Hide window controls */
+    .window-controls {
         display: none;
     }
 
@@ -1791,9 +1794,6 @@ a.project-card {
 /* ============================================
    HUMANIZATION: STICKY NOTES
    ============================================ */
-
-/* Import handwriting font */
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 .sticky-note {
     position: absolute;
