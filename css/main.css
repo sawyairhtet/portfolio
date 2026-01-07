@@ -1556,10 +1556,47 @@ a.project-card {
         display: flex;
     }
 
-
-    /* Hide dock on tablet */
+    /* Show dock as bottom bar on tablet (like mobile) */
     .dock {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        flex-direction: row;
+        border-right: none;
+        border-top: 1px solid var(--color-border);
+        border-radius: 0;
+        padding: var(--spacing-sm);
+        justify-content: space-around;
+        transform: none;
+    }
+
+    .dock-item {
+        width: 52px;
+        height: 52px;
+        font-size: 26px;
+    }
+
+    .dock-item:hover {
+        transform: none;
+    }
+
+    .dock-separator {
         display: none;
+    }
+
+    /* Active indicator at bottom for horizontal dock */
+    .dock-item.active::after {
+        left: 50%;
+        top: auto;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 3px;
+        border-radius: 2px 2px 0 0;
     }
 
     .main-content {
@@ -1604,15 +1641,16 @@ a.project-card {
         margin-bottom: var(--spacing-md);
     }
 
-    /* Windows become modals */
+    /* Windows become modals - positioned from top, not center transform */
     .window {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
+        top: 60px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+        width: 85%;
         max-width: 600px;
         min-width: 0;
+        max-height: calc(100vh - 140px);
     }
 
     /* Hide window controls on iPad */
@@ -1620,13 +1658,29 @@ a.project-card {
         display: none;
     }
 
+    /* Mobile close button - proper touch target */
     .close-btn-mobile {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
         background: none;
         border: none;
         font-size: 20px;
         cursor: pointer;
         color: var(--color-text-light);
+        margin-left: auto;
+        border-radius: var(--radius-sm);
+        transition: background 0.2s ease;
+    }
+
+    .close-btn-mobile:hover {
+        background: rgba(233, 84, 32, 0.15);
+    }
+
+    .close-btn-mobile:active {
+        background: rgba(233, 84, 32, 0.3);
     }
 }
 
@@ -1704,12 +1758,23 @@ a.project-card {
     }
 
     .close-btn-mobile {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
         background: none;
         border: none;
         font-size: 18px;
         cursor: pointer;
         color: var(--color-text-light);
+        margin-left: auto;
+        border-radius: var(--radius-sm);
+        transition: background 0.2s ease;
+    }
+
+    .close-btn-mobile:active {
+        background: rgba(233, 84, 32, 0.3);
     }
 
     .window-header {
@@ -1733,12 +1798,15 @@ a.project-card {
 
     /* Dock - Fixed at bottom */
     .dock {
+        position: fixed;
         top: auto;
         bottom: 0;
         left: 0;
         right: 0;
         width: 100%;
         height: auto;
+        min-height: auto;
+        transform: none;
         flex-direction: row;
         border-right: none;
         border-top: 1px solid var(--color-border);
@@ -2043,10 +2111,7 @@ a.project-card {
         padding-left: 0;
     }
 
-    .dock {
-        display: none;
-        /* Dock is hidden on mobile */
-    }
+    /* Dock styles for mobile are in the main media query at line ~1788 */
 
     .app-grid {
         left: 10px;
@@ -2279,5 +2344,87 @@ a.project-card {
     .skill-progress-bar {
         transition: none !important;
         width: var(--progress) !important;
+    }
+}
+
+/* ============================================
+   iOS SAFE AREA INSETS
+   ============================================ */
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    @media (max-width: 1024px) {
+        /* Dock accounts for home indicator */
+        .dock {
+            padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
+        }
+        
+        /* Windows account for safe areas */
+        .window {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        /* Full-screen mobile windows */
+        @media (max-width: 767px) {
+            .window {
+                bottom: calc(64px + env(safe-area-inset-bottom));
+                max-height: calc(100% - 64px - env(safe-area-inset-bottom));
+            }
+        }
+    }
+}
+
+/* ============================================
+   MOBILE GRID IMPROVEMENTS
+   ============================================ */
+
+@media (max-width: 767px) {
+    /* Projects grid - single column on mobile */
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Featured project takes full width */
+    .project-card.featured-project {
+        grid-column: 1;
+    }
+    
+    /* Links grid - 2 columns on mobile, stacked on very small */
+    .links-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+    
+    /* Skills grid - 2 columns */
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+    
+    /* App label minimum readable size */
+    .app-label {
+        font-size: 12px;
+    }
+    
+    /* Hide sticky notes on mobile */
+    .sticky-notes-container {
+        display: none;
+    }
+}
+
+/* Very small screens - stack links */
+@media (max-width: 400px) {
+    .links-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Hide sticky notes on tablet too */
+@media (max-width: 1024px) {
+    .sticky-notes-container {
+        display: none;
     }
 }
