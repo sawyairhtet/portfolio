@@ -3,7 +3,7 @@
 // ============================================
 
 let currentOS = 'desktop'; // desktop, tablet, or mobile
-let currentZIndex = 100;
+let currentZIndex = 1100;
 let activeWindows = new Set();
 
 // ============================================

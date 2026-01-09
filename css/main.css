@@ -561,7 +561,7 @@ body {
     min-width: 500px;
     max-width: 650px;
     max-height: 80vh;
-    z-index: 100;
+    z-index: 1100;
     transition: box-shadow 0.2s ease;
 }
 
