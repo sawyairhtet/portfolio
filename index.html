@@ -189,7 +189,6 @@
                     <h3><i class="fas fa-briefcase"></i> Experience</h3>
                     <p><strong>VR Developer</strong><br>
                         Developed immersive VR experiences using Unity and Meta Quest hand tracking technology.</p>
-                </div>
             </div>
         </div>
     </div>
@@ -206,39 +205,39 @@
             </div>
         </div>
         <div class="window-body">
-            <h2>💻 Skills & Tools</h2>
+            <h2><i class="fas fa-laptop-code"></i> Skills & Tools</h2>
 
             <div class="skills-grid">
                 <div class="skill-card">
-                    <div class="skill-icon">💿</div>
+                    <div class="skill-icon languages"><i class="fas fa-code"></i></div>
                     <h4>Languages</h4>
                     <p>JavaScript, Python, C#, Java, SQL</p>
                     <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 85%"></div></div>
                 </div>
 
                 <div class="skill-card">
-                    <div class="skill-icon">🎨</div>
+                    <div class="skill-icon frontend"><i class="fas fa-palette"></i></div>
                     <h4>Frontend</h4>
                     <p>HTML5, CSS3, React, Responsive Design</p>
                     <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 90%"></div></div>
                 </div>
 
                 <div class="skill-card">
-                    <div class="skill-icon">🌐</div>
+                    <div class="skill-icon backend"><i class="fas fa-server"></i></div>
                     <h4>Backend</h4>
                     <p>REST APIs, Node.js, Database Integration</p>
                     <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 75%"></div></div>
                 </div>
 
                 <div class="skill-card">
-                    <div class="skill-icon">🎮</div>
+                    <div class="skill-icon vr"><i class="fas fa-vr-cardboard"></i></div>
                     <h4>VR Development</h4>
                     <p>Unity, Meta Quest, Hand Tracking</p>
                     <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 80%"></div></div>
                 </div>
 
                 <div class="skill-card">
-                    <div class="skill-icon">🛠️</div>
+                    <div class="skill-icon tools"><i class="fas fa-tools"></i></div>
                     <h4>Tools</h4>
                     <p>Git, VS Code, Figma, Chrome DevTools</p>
                     <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 88%"></div></div>
@@ -263,7 +262,7 @@
                 <a href="https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking"
                     target="_blank" rel="noopener noreferrer" class="project-card featured-project">
                     <div class="project-badge">Featured</div>
-                    <div class="project-preview">🥽</div>
+                    <div class="project-preview"><i class="fas fa-vr-cardboard"></i></div>
                     <h3>Jewelry Shop Robbery VR</h3>
                     <p>An immersive VR heist game for Meta Quest with full hand tracking support. Grab precious gems,
                         avoid security, and escape with the loot!</p>
@@ -280,7 +279,7 @@
                 </a>
 
                 <a href="https://github.com/sawyairhtet/portfolio" target="_blank" rel="noopener noreferrer" class="project-card">
-                    <div class="project-preview">🖥️</div>
+                    <div class="project-preview"><i class="fas fa-desktop"></i></div>
                     <h3>Ubuntu Portfolio Website</h3>
                     <p>This very website! A unique Ubuntu GNOME-styled portfolio with draggable windows, working
                         terminal, boot animation, and sticky notes.</p>
@@ -295,36 +294,6 @@
                         <span class="project-link"><i class="fab fa-github"></i> View on GitHub</span>
                     </div>
                 </a>
-
-                <div class="project-card coming-soon">
-                    <div class="project-preview">🎯</div>
-                    <h3>AI Image Generator</h3>
-                    <p>A web-based AI image generator using cutting-edge machine learning models. Create stunning
-                        visuals from text prompts.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">FastAPI</span>
-                        <span class="tech-badge">Stable Diffusion</span>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-platform"><i class="fas fa-hourglass-half"></i> Coming Soon</span>
-                    </div>
-                </div>
-
-                <div class="project-card coming-soon">
-                    <div class="project-preview">📱</div>
-                    <h3>Smart Task Manager</h3>
-                    <p>A cross-platform task management app with AI-powered prioritization and natural language
-                        processing.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">React Native</span>
-                        <span class="tech-badge">Node.js</span>
-                        <span class="tech-badge">OpenAI</span>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-platform"><i class="fas fa-hourglass-half"></i> Coming Soon</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -364,17 +333,6 @@
                         <span>Available for opportunities</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="resume-section">
-                <h3><i class="fas fa-file-alt"></i> Resume / CV</h3>
-                <p class="resume-status">
-                    <i class="fas fa-hammer"></i> Still polishing this piece. Check back soon—or just hire me
-                    based on vibes! 😄
-                </p>
-                <button class="resume-btn disabled" disabled title="Almost ready!">
-                    <i class="fas fa-hourglass-half"></i> Coming Soon™
-                </button>
             </div>
         </div>
     </div>
@@ -456,22 +414,35 @@
 
     <!-- Dock -->
     <div class="dock">
-        <button class="dock-item" data-app="about" title="About" aria-label="About">
+        <button class="dock-item" data-app="about" aria-label="About">
             <i class="fas fa-user-circle"></i>
+            <span class="dock-tooltip">About Me</span>
         </button>
-        <button class="dock-item" data-app="projects" title="Projects" aria-label="Projects">
+        <button class="dock-item" data-app="projects" aria-label="Projects">
             <i class="fas fa-folder"></i>
+            <span class="dock-tooltip">Projects</span>
         </button>
-        <button class="dock-item" data-app="contact" title="Contact" aria-label="Contact">
+        <button class="dock-item" data-app="contact" aria-label="Contact">
             <i class="fas fa-envelope"></i>
+            <span class="dock-tooltip">Contact</span>
         </button>
         <div class="dock-separator"></div>
-        <button class="dock-item" data-app="terminal" title="Terminal" aria-label="Terminal">
+        <button class="dock-item" data-app="terminal" aria-label="Terminal">
             <i class="fas fa-terminal"></i>
+            <span class="dock-tooltip">Terminal</span>
         </button>
-        <button class="dock-item" data-app="settings" title="Settings" aria-label="Settings">
+        <button class="dock-item" data-app="settings" aria-label="Settings">
             <i class="fas fa-cog"></i>
+            <span class="dock-tooltip">Settings</span>
         </button>
+    </div>
+
+    <!-- First-Visit Navigation Hint -->
+    <div class="nav-hint" id="nav-hint">
+        <div class="nav-hint-icon">👆</div>
+        <h3>Welcome to My Desktop!</h3>
+        <p>Click on the app icons above or use the dock on the left to explore my portfolio. Try dragging these windows around!</p>
+        <button class="nav-hint-dismiss" id="nav-hint-dismiss">Got it!</button>
     </div>
 
     <script src="js/main.js"></script>

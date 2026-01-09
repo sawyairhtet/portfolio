@@ -530,9 +530,13 @@ body {
     text-align: center;
     color: #FFFFFF;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.6);
-    padding: 4px 8px;
+    padding: 4px 10px;
     font-weight: 500;
     letter-spacing: 0.3px;
+    /* Subtle dark background for better readability */
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
 }
 
 /* Widget Container (Hidden on Desktop) */
@@ -787,10 +791,11 @@ body {
 .window-title {
     flex: 1;
     text-align: left;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     color: var(--color-header-text);
     padding-left: var(--spacing-sm);
+    letter-spacing: 0.2px;
 }
 
 /* Ubuntu Yaru Window Controls */
@@ -820,7 +825,8 @@ body {
 [data-theme="dark"] .window-control {
     background: var(--color-control-bg);
     color: var(--color-control-text);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .window-control:hover {
@@ -829,6 +835,7 @@ body {
 
 [data-theme="dark"] .window-control:hover {
     filter: brightness(1.2);
+    box-shadow: 0 0 12px rgba(255, 107, 61, 0.3);
 }
 
 /* Close button - Gray by default in Modern Yaru */
@@ -1150,6 +1157,35 @@ body {
 .skill-icon {
     font-size: 28px;
     margin-bottom: var(--spacing-sm);
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    color: #fff;
+}
+
+/* Colorful skill icon gradients */
+.skill-icon.languages {
+    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+}
+
+.skill-icon.frontend {
+    background: linear-gradient(135deg, #77216F 0%, #5E2750 100%);
+}
+
+.skill-icon.backend {
+    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+}
+
+.skill-icon.vr {
+    background: linear-gradient(135deg, #FF6B3D 0%, #E95420 100%);
+}
+
+.skill-icon.tools {
+    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
 }
 
 .skill-card h4 {
@@ -1501,10 +1537,30 @@ a.project-card {
     cursor: pointer;
     transition: all var(--transition-smooth);
     border-radius: var(--radius-sm);
-    color: var(--color-dock-text);
-    background: var(--color-dock-item-bg);
+    color: #fff;
     position: relative;
     border: 1px solid transparent;
+}
+
+/* Colorful dock icon gradients */
+.dock-item[data-app="about"] {
+    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+}
+
+.dock-item[data-app="projects"] {
+    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
+}
+
+.dock-item[data-app="contact"] {
+    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+}
+
+.dock-item[data-app="terminal"] {
+    background: linear-gradient(135deg, #300A24 0%, #2C001E 100%);
+}
+
+.dock-item[data-app="settings"] {
+    background: linear-gradient(135deg, #666666 0%, #333333 100%);
 }
 
 .dock-item:hover {
@@ -2409,6 +2465,13 @@ a.project-card {
     .sticky-notes-container {
         display: none;
     }
+    
+    /* Larger touch targets for mobile dock */
+    .dock-item {
+        width: 54px;
+        height: 54px;
+        font-size: 26px;
+    }
 }
 
 /* Very small screens - stack links */
@@ -2428,3 +2491,292 @@ a.project-card {
         display: none;
     }
 }
+
+/* ============================================
+   DOCK TOOLTIPS - GNOME Style
+   ============================================ */
+
+.dock-tooltip {
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-window-body-bg);
+    color: var(--color-window-body-text);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+/* Arrow pointing to dock item */
+.dock-tooltip::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-right-color: var(--color-window-body-bg);
+}
+
+.dock-item:hover .dock-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile/Tablet: tooltips appear above */
+@media (max-width: 1024px) {
+    .dock-tooltip {
+        left: 50%;
+        top: auto;
+        bottom: calc(100% + 12px);
+        transform: translateX(-50%);
+    }
+    
+    .dock-tooltip::before {
+        right: auto;
+        left: 50%;
+        top: 100%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: var(--color-window-body-bg);
+    }
+}
+
+/* ============================================
+   SKELETON LOADER / SHIMMER EFFECT
+   ============================================ */
+
+.skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%
+    );
+    animation: shimmerMove 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmerMove {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Window loading state */
+.window.loading .window-body {
+    position: relative;
+    overflow: hidden;
+}
+
+.window.loading .window-body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(var(--color-primary), 0.1) 50%,
+        transparent 100%
+    );
+    animation: shimmerMove 1.2s ease-in-out;
+}
+
+/* ============================================
+   DARK MODE WINDOW CONTROL ENHANCEMENTS
+   ============================================ */
+
+[data-theme="dark"] .window-control {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .window-control:hover {
+    box-shadow: 0 0 8px rgba(233, 84, 32, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .window-control.close:hover {
+    box-shadow: 0 0 12px rgba(233, 84, 32, 0.5),
+                0 2px 4px rgba(233, 84, 32, 0.3);
+}
+
+/* ============================================
+   MOBILE WIDGET POLISH
+   ============================================ */
+
+@media (max-width: 767px) {
+    .widget {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-border);
+        margin: var(--spacing-md);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .widget h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .widget p {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+}
+
+/* ============================================
+   SWIPE GESTURE HINT
+   ============================================ */
+
+.swipe-hint {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-window-body-bg);
+    color: var(--color-window-body-text);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.swipe-hint.visible {
+    opacity: 1;
+    visibility: visible;
+    animation: swipeHintPulse 2s ease-in-out infinite;
+}
+
+.swipe-hint i {
+    color: var(--color-primary);
+}
+
+@keyframes swipeHintPulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.02); }
+}
+
+/* ============================================
+   FIRST-VISIT NAVIGATION HINT
+   ============================================ */
+
+.nav-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-glass-dark);
+    backdrop-filter: var(--glass-blur);
+    color: var(--color-text-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    max-width: 320px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+}
+
+.nav-hint.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.nav-hint h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+}
+
+.nav-hint p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.9;
+}
+
+.nav-hint-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+    animation: navHintBounce 2s ease-in-out infinite;
+}
+
+@keyframes navHintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.nav-hint-dismiss {
+    background: var(--gradient-btn);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-hint-dismiss:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(233, 84, 32, 0.4);
+}
+
+/* ============================================
+   SKILL ICON STYLING (Font Awesome)
+   ============================================ */
+
+.skill-icon {
+    font-size: 32px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+    transform: scale(1.15);
+}
+
+/* Specific skill icon colors */
+.skill-icon.languages { color: #E95420; }
+.skill-icon.frontend { color: #FF7A45; }
+.skill-icon.backend { color: #77216F; }
+.skill-icon.vr { color: #5E2750; }
+.skill-icon.tools { color: #AEA79F; }

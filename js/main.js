@@ -1806,6 +1806,81 @@ function setupSmoothScroll() {
 }
 
 // ============================================
+// FIRST-VISIT NAVIGATION HINT
+// ============================================
+
+function setupNavigationHint() {
+    const navHint = document.getElementById('nav-hint');
+    const dismissBtn = document.getElementById('nav-hint-dismiss');
+    
+    if (!navHint || !dismissBtn) return;
+    
+    // Check if user has seen the hint before
+    const hasSeenHint = localStorage.getItem('hasSeenNavHint');
+    
+    if (!hasSeenHint && currentOS === 'desktop') {
+        // Show hint after boot animation completes
+        setTimeout(() => {
+            navHint.classList.add('visible');
+        }, 4000); // Wait for boot animation
+    }
+    
+    // Dismiss button handler
+    dismissBtn.addEventListener('click', () => {
+        navHint.classList.remove('visible');
+        localStorage.setItem('hasSeenNavHint', 'true');
+    });
+    
+    // Also dismiss on any app icon click
+    document.querySelectorAll('.app-icon, .dock-item').forEach(el => {
+        el.addEventListener('click', () => {
+            if (navHint.classList.contains('visible')) {
+                navHint.classList.remove('visible');
+                localStorage.setItem('hasSeenNavHint', 'true');
+            }
+        }, { once: true });
+    });
+}
+
+// ============================================
+// MOBILE SWIPE GESTURE HINT
+// ============================================
+
+function setupSwipeHint() {
+    if (currentOS === 'desktop') return;
+    
+    const hasSeenSwipeHint = localStorage.getItem('hasSeenSwipeHint');
+    if (hasSeenSwipeHint) return;
+    
+    // Create swipe hint element
+    const swipeHint = document.createElement('div');
+    swipeHint.className = 'swipe-hint';
+    swipeHint.innerHTML = '<i class="fas fa-hand-pointer"></i> Swipe down on window header to close';
+    document.body.appendChild(swipeHint);
+    
+    // Show hint after first window opens
+    let windowOpenCount = 0;
+    const originalOpenWindow = window.openWindow || openWindow;
+    
+    // Listen for first window open on mobile
+    document.querySelectorAll('.app-icon, .dock-item').forEach(el => {
+        el.addEventListener('click', () => {
+            windowOpenCount++;
+            if (windowOpenCount === 1 && !hasSeenSwipeHint) {
+                setTimeout(() => {
+                    swipeHint.classList.add('visible');
+                    // Auto-hide after 5 seconds
+                    setTimeout(() => {
+                        swipeHint.classList.remove('visible');
+                        localStorage.setItem('hasSeenSwipeHint', 'true');
+                    }, 5000);
+                }, 1000);
+            }
+        }, { once: true });
+    });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -1839,6 +1914,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup smooth scroll for window bodies
     setupSmoothScroll();
+    
+    // Setup first-visit navigation hint
+    setupNavigationHint();
+    
+    // Setup mobile swipe gesture hint
+    setupSwipeHint();
+    
     // Make all windows draggable and resizable (will be disabled on mobile/tablet)
     document.querySelectorAll('.window').forEach(win => {
         makeDraggable(win);
