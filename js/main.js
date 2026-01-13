@@ -148,6 +148,130 @@ const stickyNotesData = [
 ];
 
 // ============================================
+// CONFIGURATION & DATA
+// ============================================
+
+const BOOT_LOG_MESSAGES = [
+    '[    0.000000] Linux version 6.8.0-45-generic (buildd@lcy02-amd64-056)',
+    '[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-45-generic',
+    '[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable',
+    '[    0.000000] ACPI: RSDP 0x00000000000F05B0 000024 (v02 LENOVO)',
+    '[    0.045632] CPU: AMD Ryzen 9 9900X @ 5.60GHz',
+    '[    0.076234] Memory: 32GB DDR5 CL30',
+    '[ OK ] Started Journal Service.',
+    '[ OK ] Reached target Basic System.',
+    '[ OK ] Started D-Bus System Message Bus.',
+    '[ OK ] Started Network Manager.',
+    '[ OK ] Reached target Network.',
+    '[ OK ] Started GNOME Display Manager.',
+    '[ OK ] Started User Manager for UID 1000.',
+    '[ OK ] Started Session Service of user visitor.',
+    '[ OK ] Reached target Graphical Interface.',
+    '',
+    'Ubuntu 24.04 LTS portfolio tty1',
+    '',
+    'portfolio login: visitor',
+    'Password: ********',
+    'Welcome to Saw Ye Htet\'s Portfolio!',
+    ''
+];
+
+const DEFAULT_FILE_SYSTEM = {
+    '/': {
+        type: 'dir',
+        children: ['home', 'etc', 'var']
+    },
+    '/home': {
+        type: 'dir',
+        children: ['visitor']
+    },
+    '/home/visitor': {
+        type: 'dir',
+        children: ['projects', 'documents', 'resume.txt', '.bashrc']
+    },
+    '/home/visitor/projects': {
+        type: 'dir',
+        children: ['jewelry-vr', 'portfolio', 'README.md']
+    },
+    '/home/visitor/projects/jewelry-vr': {
+        type: 'dir',
+        children: ['main.cs', 'HandTracking.cs']
+    },
+    '/home/visitor/projects/jewelry-vr/main.cs': {
+        type: 'file',
+        content: '// Unity VR Game - Main Entry Point\nusing UnityEngine;\n\npublic class JewelryHeist : MonoBehaviour {\n    void Start() {\n        Debug.Log("Welcome to Jewelry Shop Robbery VR!");\n    }\n}'
+    },
+    '/home/visitor/projects/jewelry-vr/HandTracking.cs': {
+        type: 'file',
+        content: '// Meta Quest Hand Tracking Integration\nusing Oculus.Interaction;\n\npublic class HandGrabber : MonoBehaviour {\n    // Grab gems with your bare hands!\n}'
+    },
+    '/home/visitor/projects/portfolio': {
+        type: 'dir',
+        children: ['index.html', 'main.css', 'main.js']
+    },
+    '/home/visitor/projects/portfolio/index.html': {
+        type: 'file',
+        content: '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <title>Saw Ye Htet - Portfolio</title>\n</head>\n<body>\n    <!-- You are here! -->\n</body>\n</html>'
+    },
+    '/home/visitor/projects/portfolio/main.css': {
+        type: 'file',
+        content: '/* Ubuntu Yaru Theme */\n:root {\n    --color-primary: #E95420;\n    --color-bg: #2C001E;\n}\n/* ... 1000+ more lines of CSS magic */'
+    },
+    '/home/visitor/projects/portfolio/main.js': {
+        type: 'file',
+        content: '// The very code running this terminal!\n// Written with ❤️ by Saw Ye Htet\nconsole.log("Hello, curious visitor!");'
+    },
+    '/home/visitor/projects/README.md': {
+        type: 'file',
+        content: '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: VR Heist Game for Meta Quest\n- **portfolio**: This website!\n\nFeel free to explore with `cd` and `cat`.'
+    },
+    '/home/visitor/documents': {
+        type: 'dir',
+        children: ['notes.txt', 'ideas.md']
+    },
+    '/home/visitor/documents/notes.txt': {
+        type: 'file',
+        content: 'TODO:\n- Finish VR project\n- Update portfolio\n- Learn more about AI\n- Call mom 💙'
+    },
+    '/home/visitor/documents/ideas.md': {
+        type: 'file',
+        content: '# Future Project Ideas\n\n1. AI-powered code reviewer\n2. Multiplayer VR escape room\n3. Personal finance tracker with ML predictions'
+    },
+    '/home/visitor/resume.txt': {
+        type: 'file',
+        content: '╔═══════════════════════════════════════╗\n║         SAW YE HTET - RESUME          ║\n╠═══════════════════════════════════════╣\n║ Education: Singapore Polytechnic      ║\n║ Major: Information Technology         ║\n║ Skills: Unity, C#, JavaScript, Python ║\n║ Focus: VR Development, Full-Stack     ║\n╚═══════════════════════════════════════╝\n\nContact: minwn2244@gmail.com'
+    },
+    '/home/visitor/.bashrc': {
+        type: 'file',
+        content: '# ~/.bashrc\nexport PS1="visitor@portfolio:~$ "\nalias ll="ls -la"\nalias cls="clear"\n\n# Secret: You found the hidden config!'
+    },
+    '/etc': {
+        type: 'dir',
+        children: ['hostname', 'os-release']
+    },
+    '/etc/hostname': {
+        type: 'file',
+        content: 'portfolio'
+    },
+    '/etc/os-release': {
+        type: 'file',
+        content: 'NAME="Ubuntu"\nVERSION="24.04 LTS (Noble Numbat)"\nID=ubuntu\nPRETTY_NAME="Saw Ye Htet Portfolio OS"'
+    },
+    '/var': {
+        type: 'dir',
+        children: ['log']
+    },
+    '/var/log': {
+        type: 'dir',
+        children: ['visitor.log']
+    },
+    '/var/log/visitor.log': {
+        type: 'file',
+        content: '[INFO] Visitor connected to portfolio\n[INFO] Terminal session started\n[INFO] Thanks for exploring! 🎉'
+    }
+};
+
+// ============================================
 // DEVICE DETECTION
 // ============================================
 
@@ -788,104 +912,16 @@ let historyIndex = -1;
 // Fake Filesystem - Now with persistence!
 let currentPath = '/home/visitor';
 
-// Default filesystem (used on first visit or after reset)
-const defaultFileSystem = {
-    '/': {
-        type: 'dir',
-        children: ['home', 'etc', 'var']
-    },
-    '/home': {
-        type: 'dir',
-        children: ['visitor']
-    },
-    '/home/visitor': {
-        type: 'dir',
-        children: ['projects', 'documents', 'resume.txt', '.bashrc']
-    },
-    '/home/visitor/projects': {
-        type: 'dir',
-        children: ['jewelry-vr', 'portfolio', 'README.md']
-    },
-    '/home/visitor/projects/jewelry-vr': {
-        type: 'dir',
-        children: ['main.cs', 'HandTracking.cs']
-    },
-    '/home/visitor/projects/jewelry-vr/main.cs': {
-        type: 'file',
-        content: '// Unity VR Game - Main Entry Point\nusing UnityEngine;\n\npublic class JewelryHeist : MonoBehaviour {\n    void Start() {\n        Debug.Log("Welcome to Jewelry Shop Robbery VR!");\n    }\n}'
-    },
-    '/home/visitor/projects/jewelry-vr/HandTracking.cs': {
-        type: 'file',
-        content: '// Meta Quest Hand Tracking Integration\nusing Oculus.Interaction;\n\npublic class HandGrabber : MonoBehaviour {\n    // Grab gems with your bare hands!\n}'
-    },
-    '/home/visitor/projects/portfolio': {
-        type: 'dir',
-        children: ['index.html', 'main.css', 'main.js']
-    },
-    '/home/visitor/projects/portfolio/index.html': {
-        type: 'file',
-        content: '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <title>Saw Ye Htet - Portfolio</title>\n</head>\n<body>\n    <!-- You are here! -->\n</body>\n</html>'
-    },
-    '/home/visitor/projects/portfolio/main.css': {
-        type: 'file',
-        content: '/* Ubuntu Yaru Theme */\n:root {\n    --color-primary: #E95420;\n    --color-bg: #2C001E;\n}\n/* ... 1000+ more lines of CSS magic */'
-    },
-    '/home/visitor/projects/portfolio/main.js': {
-        type: 'file',
-        content: '// The very code running this terminal!\n// Written with ❤️ by Saw Ye Htet\nconsole.log("Hello, curious visitor!");'
-    },
-    '/home/visitor/projects/README.md': {
-        type: 'file',
-        content: '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: VR Heist Game for Meta Quest\n- **portfolio**: This website!\n\nFeel free to explore with `cd` and `cat`.'
-    },
-    '/home/visitor/documents': {
-        type: 'dir',
-        children: ['notes.txt', 'ideas.md']
-    },
-    '/home/visitor/documents/notes.txt': {
-        type: 'file',
-        content: 'TODO:\n- Finish VR project\n- Update portfolio\n- Learn more about AI\n- Call mom 💙'
-    },
-    '/home/visitor/documents/ideas.md': {
-        type: 'file',
-        content: '# Future Project Ideas\n\n1. AI-powered code reviewer\n2. Multiplayer VR escape room\n3. Personal finance tracker with ML predictions'
-    },
-    '/home/visitor/resume.txt': {
-        type: 'file',
-        content: '╔═══════════════════════════════════════╗\n║         SAW YE HTET - RESUME          ║\n╠═══════════════════════════════════════╣\n║ Education: Singapore Polytechnic      ║\n║ Major: Information Technology         ║\n║ Skills: Unity, C#, JavaScript, Python ║\n║ Focus: VR Development, Full-Stack     ║\n╚═══════════════════════════════════════╝\n\nContact: minwn2244@gmail.com'
-    },
-    '/home/visitor/.bashrc': {
-        type: 'file',
-        content: '# ~/.bashrc\nexport PS1="visitor@portfolio:~$ "\nalias ll="ls -la"\nalias cls="clear"\n\n# Secret: You found the hidden config!'
-    },
-    '/etc': {
-        type: 'dir',
-        children: ['hostname', 'os-release']
-    },
-    '/etc/hostname': {
-        type: 'file',
-        content: 'portfolio'
-    },
-    '/etc/os-release': {
-        type: 'file',
-        content: 'NAME="Ubuntu"\nVERSION="24.04 LTS (Noble Numbat)"\nID=ubuntu\nPRETTY_NAME="Saw Ye Htet Portfolio OS"'
-    },
-    '/var': {
-        type: 'dir',
-        children: ['log']
-    },
-    '/var/log': {
-        type: 'dir',
-        children: ['visitor.log']
-    },
-    '/var/log/visitor.log': {
-        type: 'file',
-        content: '[INFO] Visitor connected to portfolio\n[INFO] Terminal session started\n[INFO] Thanks for exploring! 🎉'
-    }
-};
+// (Moved to top of file as DEFAULT_FILE_SYSTEM)
 
 // Load filesystem from localStorage or use default
-let fileSystem = JSON.parse(localStorage.getItem('portfolioFileSystem')) || JSON.parse(JSON.stringify(defaultFileSystem));
+let fileSystem;
+try {
+    fileSystem = JSON.parse(localStorage.getItem('portfolioFileSystem')) || JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
+} catch (e) {
+    console.error('Failed to load filesystem from localStorage:', e);
+    fileSystem = JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
+}
 
 // Save filesystem to localStorage
 function saveFileSystem() {
@@ -894,7 +930,7 @@ function saveFileSystem() {
 
 // Reset filesystem to default
 function resetFileSystem() {
-    fileSystem = JSON.parse(JSON.stringify(defaultFileSystem));
+    fileSystem = JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
     saveFileSystem();
 }
 
@@ -1611,30 +1647,7 @@ function injectAnimations() {
 // BOOT SCREEN - Linux Boot Log
 // ============================================
 
-const bootLogMessages = [
-    '[    0.000000] Linux version 6.8.0-45-generic (buildd@lcy02-amd64-056)',
-    '[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-45-generic',
-    '[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable',
-    '[    0.000000] ACPI: RSDP 0x00000000000F05B0 000024 (v02 LENOVO)',
-    '[    0.045632] CPU: AMD Ryzen 9 9900X @ 5.60GHz',
-    '[    0.076234] Memory: 32GB DDR5 CL30',
-    '[ OK ] Started Journal Service.',
-    '[ OK ] Reached target Basic System.',
-    '[ OK ] Started D-Bus System Message Bus.',
-    '[ OK ] Started Network Manager.',
-    '[ OK ] Reached target Network.',
-    '[ OK ] Started GNOME Display Manager.',
-    '[ OK ] Started User Manager for UID 1000.',
-    '[ OK ] Started Session Service of user visitor.',
-    '[ OK ] Reached target Graphical Interface.',
-    '',
-    'Ubuntu 24.04 LTS portfolio tty1',
-    '',
-    'portfolio login: visitor',
-    'Password: ********',
-    'Welcome to Saw Ye Htet\'s Portfolio!',
-    ''
-];
+// (Moved to top of file as BOOT_LOG_MESSAGES)
 
 function initBootScreen() {
     const bootScreen = document.getElementById('boot-screen');
@@ -1645,8 +1658,8 @@ function initBootScreen() {
     const interval = 80; // ms per line
 
     function addLine() {
-        if (lineIndex < bootLogMessages.length) {
-            const line = bootLogMessages[lineIndex];
+        if (lineIndex < BOOT_LOG_MESSAGES.length) {
+            const line = BOOT_LOG_MESSAGES[lineIndex];
             const lineEl = document.createElement('div');
 
             // Style [ OK ] in green
@@ -1669,6 +1682,8 @@ function initBootScreen() {
                 setTimeout(() => {
                     bootScreen.remove();
                     openWindow('about');
+                    // Try to play startup sound (might be blocked by browser policy without interaction)
+                    SoundManager.playStartupDrum();
                 }, 500);
             }, 500);
         }
@@ -1688,7 +1703,13 @@ function createStickyNotes() {
     if (!container) return;
 
     // Load saved positions from localStorage
-    const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v2') || '{}');
+    let savedPositions = {};
+    try {
+        savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v2') || '{}');
+    } catch (e) {
+        console.error('Failed to load sticky note positions:', e);
+        savedPositions = {};
+    }
 
     stickyNotesData.forEach((note, index) => {
         const noteEl = document.createElement('div');
@@ -1860,7 +1881,6 @@ function setupSwipeHint() {
     
     // Show hint after first window opens
     let windowOpenCount = 0;
-    const originalOpenWindow = window.openWindow || openWindow;
     
     // Listen for first window open on mobile
     document.querySelectorAll('.app-icon, .dock-item').forEach(el => {
@@ -1906,8 +1926,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create sticky notes (desktop only)
     createStickyNotes();
-
-    // Setup draggable app icons (desktop only)
 
     // Setup parallax wallpaper effect (desktop only)
     setupParallaxWallpaper();

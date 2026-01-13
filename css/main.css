@@ -81,6 +81,17 @@
     --transition-fast: 0.15s ease;
     --transition-normal: 0.25s ease;
     --transition-smooth: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Z-Index Layer Map */
+    --z-wallpaper: 0;
+    --z-desktop-icons: 10;
+    --z-window: 100;
+    --z-dock: 1000;
+    --z-topbar: 1100;
+    --z-modal: 2000;
+    --z-context-menu: 9999;
+    --z-tooltip: 10000;
+    --z-skip-link: 10001;
 }
 
 /* ========================================
@@ -239,7 +250,9 @@ body {
     padding: 0 var(--spacing-md);
     font-size: 13px;
     font-weight: 500;
-    z-index: 1000;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: var(--z-topbar);
     background: var(--color-topbar-bg);
     border-bottom: 1px solid var(--color-border);
     box-shadow: var(--shadow-sm);
@@ -348,7 +361,9 @@ body {
     right: -20px;
     bottom: -20px;
     background: url('../images/noble-numbat.jpg') center/cover no-repeat;
-    z-index: 0;
+    bottom: -20px;
+    background: url('../images/noble-numbat.jpg') center/cover no-repeat;
+    z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px),
             calc(var(--mouse-y, 0) * -8px));
@@ -401,7 +416,9 @@ body {
     gap: var(--spacing-md);
     align-content: start;
     justify-content: start;
-    z-index: 10;
+    align-content: start;
+    justify-content: start;
+    z-index: var(--z-desktop-icons);
     padding: var(--spacing-md);
 }
 
@@ -560,9 +577,13 @@ body {
     width: 600px;
     min-width: 500px;
     max-width: 650px;
+    max-width: 650px;
     max-height: 80vh;
-    z-index: 1100;
+    z-index: var(--z-window);
     transition: box-shadow 0.2s ease;
+    /* Default position - ensure windows don't overlap dock on desktop */
+    left: calc(var(--dock-width) + 20px);
+    top: 15%;
 }
 
 /* Subtle glow on focused/topmost window */
@@ -722,8 +743,9 @@ body {
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
     min-width: 180px;
+    min-width: 180px;
     padding: var(--spacing-xs) 0;
-    z-index: 10000;
+    z-index: var(--z-context-menu);
     display: none;
     backdrop-filter: var(--glass-blur);
 }
@@ -1375,6 +1397,8 @@ a.project-card {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     box-shadow: var(--shadow-sm);
     z-index: 1;
 }
@@ -1521,7 +1545,7 @@ a.project-card {
     padding: var(--spacing-md) 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    z-index: 1000;
+    z-index: var(--z-dock);
     box-shadow: var(--shadow-lg);
     /* Remove full height border */
     bottom: auto;
@@ -1930,6 +1954,7 @@ a.project-card {
     line-height: 1.4;
     color: #5D4037;
     white-space: pre-line;
+    white-space: pre-line;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     cursor: grab;
     z-index: 50;
@@ -2097,7 +2122,7 @@ a.project-card {
     align-items: flex-start;
     justify-content: flex-start;
     padding: 20px;
-    z-index: 9999;
+    z-index: var(--z-context-menu);
     opacity: 1;
     transition: opacity 0.5s ease;
     overflow: hidden;
@@ -2267,7 +2292,7 @@ a.project-card {
     background: var(--color-primary);
     color: white;
     padding: 8px 16px;
-    z-index: 10001;
+    z-index: var(--z-skip-link);
     transition: top 0.3s;
 }
 
@@ -2335,7 +2360,7 @@ a.project-card {
     backdrop-filter: var(--glass-blur);
     font-size: 14px;
     font-weight: 500;
-    z-index: 10000;
+    z-index: var(--z-tooltip);
     opacity: 0;
     pointer-events: none;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -2598,7 +2623,7 @@ a.project-card {
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(var(--color-primary), 0.1) 50%,
+        rgba(233, 84, 32, 0.1) 50%,
         transparent 100%
     );
     animation: shimmerMove 1.2s ease-in-out;
