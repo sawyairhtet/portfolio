@@ -1919,6 +1919,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTrafficLights();
     setupMobileCloseButtons();
     setupTerminal();
+    setupTerminalMobileFix();
     setupThemeToggle();
     setupSoundToggle();
     setupContextMenu();
@@ -1959,3 +1960,26 @@ document.addEventListener('DOMContentLoaded', () => {
         updateOS();
     });
 });
+
+// ============================================
+// MOBILE TERMINAL INPUT FIX
+// ============================================
+
+function setupTerminalMobileFix() {
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalWindow = document.getElementById('terminal-window');
+    
+    if (!terminalInput || !terminalWindow) return;
+    
+    // When input gets focus (keyboard opens), scroll window to ensure input is visible
+    terminalInput.addEventListener('focus', () => {
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                terminalWindow.querySelector('.window-body').scrollTop = terminalWindow.querySelector('.window-body').scrollHeight;
+                // Also scroll window itself into view if needed
+                terminalWindow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300); // Delay for keyboard animation
+        }
+    });
+}
+
