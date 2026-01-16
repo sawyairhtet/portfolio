@@ -903,6 +903,94 @@ function updateClock() {
 }
 
 // ============================================
+// MATRIX EFFECT (Canvas-based Digital Rain)
+// ============================================
+
+let matrixAnimationId = null;
+
+function startMatrixEffect() {
+    const terminalBody = document.querySelector('#terminal-window .terminal-body');
+    if (!terminalBody) return;
+
+    // Add matrix mode class
+    terminalBody.classList.add('matrix-mode');
+
+    // Create canvas
+    const canvas = document.createElement('canvas');
+    canvas.className = 'matrix-canvas';
+    terminalBody.appendChild(canvas);
+
+    // Create exit hint
+    const hint = document.createElement('div');
+    hint.className = 'matrix-exit-hint';
+    hint.textContent = 'Press any key to exit';
+    terminalBody.appendChild(hint);
+
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size
+    function resizeCanvas() {
+        canvas.width = terminalBody.offsetWidth;
+        canvas.height = terminalBody.offsetHeight;
+    }
+    resizeCanvas();
+
+    // Matrix characters
+    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const charArray = chars.split('');
+
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    // Animation loop
+    function draw() {
+        // Semi-transparent black to create trail effect
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#0f0';
+        ctx.font = `${fontSize}px Ubuntu Mono, monospace`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const char = charArray[Math.floor(Math.random() * charArray.length)];
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            // Reset drop randomly after it falls off screen
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+
+        matrixAnimationId = requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    // Exit on keypress (delayed to avoid the Enter key from closing immediately)
+    function exitMatrix(e) {
+        if (matrixAnimationId) {
+            cancelAnimationFrame(matrixAnimationId);
+            matrixAnimationId = null;
+        }
+        canvas.remove();
+        hint.remove();
+        terminalBody.classList.remove('matrix-mode');
+        document.removeEventListener('keydown', exitMatrix);
+        
+        // Re-focus terminal input
+        const terminalInput = document.getElementById('terminal-input');
+        if (terminalInput) terminalInput.focus();
+    }
+
+    // Delay listener attachment to avoid the Enter key immediately closing the effect
+    setTimeout(() => {
+        document.addEventListener('keydown', exitMatrix);
+    }, 100);
+}
+
+// ============================================
 // TERMINAL
 // ============================================
 
@@ -1285,11 +1373,8 @@ But you're not root here. Maybe ask nicely?`;
     },
 
     matrix: () => {
-        return `Wake up, Neo...
-The Matrix has you...
-Follow the white rabbit. 🐇
-
-01001000 01100101 01101100 01101100 01101111`;
+        startMatrixEffect();
+        return 'Entering the Matrix... (Press any key to exit)';
     },
 
     hello: () => {
