@@ -1000,7 +1000,6 @@ let historyIndex = -1;
 // Fake Filesystem - Now with persistence!
 let currentPath = '/home/visitor';
 
-// (Moved to top of file as DEFAULT_FILE_SYSTEM)
 
 // Load filesystem from localStorage or use default
 let fileSystem;
@@ -1020,6 +1019,12 @@ function saveFileSystem() {
 function resetFileSystem() {
     fileSystem = JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
     saveFileSystem();
+}
+
+// Reset app icon positions (clear saved positions from localStorage)
+function resetAppIconPositions() {
+    localStorage.removeItem('appIconPositions');
+    localStorage.removeItem('stickyNotePositions_v2');
 }
 
 function resolvePath(inputPath) {
@@ -1732,7 +1737,6 @@ function injectAnimations() {
 // BOOT SCREEN - Linux Boot Log
 // ============================================
 
-// (Moved to top of file as BOOT_LOG_MESSAGES)
 
 function initBootScreen() {
     const bootScreen = document.getElementById('boot-screen');

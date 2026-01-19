@@ -252,8 +252,6 @@ body {
     padding: 0 var(--spacing-md);
     font-size: 13px;
     font-weight: 500;
-    font-size: 13px;
-    font-weight: 500;
     z-index: var(--z-topbar);
     background: var(--color-topbar-bg);
     border-bottom: 1px solid var(--color-border);
@@ -363,8 +361,6 @@ body {
     right: -20px;
     bottom: -20px;
     background: url('../images/noble-numbat.jpg') center/cover no-repeat;
-    bottom: -20px;
-    background: url('../images/noble-numbat.jpg') center/cover no-repeat;
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px),
@@ -416,8 +412,6 @@ body {
     grid-template-columns: repeat(auto-fill, 100px);
     grid-template-rows: repeat(10, 110px);
     gap: var(--spacing-md);
-    align-content: start;
-    justify-content: start;
     align-content: start;
     justify-content: start;
     z-index: var(--z-desktop-icons);
@@ -744,7 +738,6 @@ body {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
-    min-width: 180px;
     min-width: 180px;
     padding: var(--spacing-xs) 0;
     z-index: var(--z-context-menu);
@@ -1402,8 +1395,6 @@ a.project-card {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
     box-shadow: var(--shadow-sm);
     z-index: 1;
 }
@@ -1900,17 +1891,11 @@ a.project-card {
         border-right: none;
         border-top: 1px solid var(--color-border);
         border-radius: 0;
-        min-height: auto;
-        transform: none;
-        flex-direction: row;
-        border-right: none;
-        border-top: 1px solid var(--color-border);
-        border-radius: 0;
         padding: var(--spacing-sm);
         /* Safe area support for bottom home bar */
         padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
         justify-content: space-around;
-        z-index: 10000; /* Ensure dock stays on top */
+        z-index: var(--z-dock); /* Use CSS variable for consistency */
     }
 
     .dock-item {
@@ -1971,7 +1956,6 @@ a.project-card {
     font-size: 15px;
     line-height: 1.4;
     color: #5D4037;
-    white-space: pre-line;
     white-space: pre-line;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     cursor: grab;
