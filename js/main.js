@@ -1073,12 +1073,12 @@ const terminalCommands = {
   skills        - Display technical skills
   echo [text]   - Echo back your text
   clear         - Clear terminal output
-  reset-icons   - Reset app icons to default positions
-  reset-fs      - Reset filesystem to default
+  date          - Show current date/time
   help          - Show this help message
   
   // Easter eggs:
-  milk, sudo, matrix, hello, neofetch`;
+  cowsay, fortune, coffee, joke, flip, unflip,
+  ping, milk, sudo, matrix, hello, neofetch`;
     },
 
     pwd: () => {
@@ -1415,6 +1415,77 @@ But you're not root here. Maybe ask nicely?`;
            .:looooooooooooool,.         Shell: JavaScript ES6+
              .,:cloooooolc:'.           Theme: Yaru (Dark)
                 ..,,,,,...              Memory: Lots of dreams`;
+    },
+
+    cowsay: (args) => {
+        const message = args.join(' ') || 'Moo!';
+        const line = '─'.repeat(Math.min(message.length + 2, 40));
+        return `
+ ${line}
+< ${message} >
+ ${line}
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||`;
+    },
+
+    fortune: () => {
+        const fortunes = [
+            "A bug in the code is worth two in the documentation.",
+            "Today is a good day to commit and push.",
+            "You will solve that tricky bug before lunch.",
+            "Someone will appreciate your clean code today.",
+            "The semicolon you're missing is on line 42.",
+            "Your next project will be your best yet.",
+            "Coffee + Code = Success",
+            "Remember: It works on my machine is not a valid excuse."
+        ];
+        return fortunes[Math.floor(Math.random() * fortunes.length)];
+    },
+
+    coffee: () => {
+        return `
+       ( (
+        ) )
+      ........
+      |      |]
+      \\      /
+       '----'
+    
+  Here's your coffee! ☕
+  Now get back to coding.`;
+    },
+
+    joke: () => {
+        const jokes = [
+            "Why do programmers prefer dark mode?\nBecause light attracts bugs.",
+            "A SQL query walks into a bar, walks up to two tables and asks...\n'Can I join you?'",
+            "Why do Java developers wear glasses?\nBecause they don't C#.",
+            "!false - It's funny because it's true.",
+            "A programmer's wife tells him: 'Go to the store and buy a loaf of bread. If they have eggs, buy a dozen.'\nHe comes home with 12 loaves of bread.",
+            "There are only 10 types of people in the world:\nThose who understand binary and those who don't."
+        ];
+        return jokes[Math.floor(Math.random() * jokes.length)];
+    },
+
+    flip: () => {
+        return "(╯°□°)╯︵ ┻━┻";
+    },
+
+    unflip: () => {
+        return "┬─┬ノ( º _ ºノ)";
+    },
+
+    ping: () => {
+        return `PING portfolio (127.0.0.1): 56 data bytes
+64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.042 ms
+64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.038 ms
+64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.041 ms
+
+--- portfolio ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss`;
     }
 };
 
