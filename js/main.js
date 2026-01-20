@@ -231,11 +231,11 @@ const DEFAULT_FILE_SYSTEM = {
     },
     '/home/visitor/documents/notes.txt': {
         type: 'file',
-        content: 'TODO:\n- Finish VR project\n- Update portfolio\n- Learn more about AI\n- Call mom 💙'
+        content: 'TODO:\n- Finish VR project\n- Update portfolio\n- Master Godot Engine\n- Call mom 💙'
     },
     '/home/visitor/documents/ideas.md': {
         type: 'file',
-        content: '# Future Project Ideas\n\n1. AI-powered code reviewer\n2. Multiplayer VR escape room\n3. Personal finance tracker with ML predictions'
+        content: '# Future Project Ideas\n\n1. Multiplayer VR escape room\n2. Indie game with procedural generation\n3. Open-source developer tools'
     },
     '/home/visitor/resume.txt': {
         type: 'file',
@@ -1077,8 +1077,8 @@ const terminalCommands = {
   help          - Show this help message
   
   // Easter eggs:
-  cowsay, fortune, coffee, joke, flip, unflip,
-  ping, milk, sudo, matrix, hello, neofetch`;
+  cowsay, fortune, joke, flip, unflip,
+  sudo, matrix, hello, neofetch`;
     },
 
     pwd: () => {
@@ -1177,8 +1177,6 @@ X:        x.com/saulyehtet_`;
 ─────────────────────
 1. Jewelry Shop Robbery VR  - VR heist game for Meta Quest with hand tracking
 2. Ubuntu Portfolio         - This website! GNOME-styled portfolio
-3. AI Image Generator       - Web-based AI image generation (Coming Soon)
-4. Smart Task Manager       - AI-powered task management app (Coming Soon)
 
 Type 'cat /home/visitor/projects/README.md' for more details.`;
     },
@@ -1357,19 +1355,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     // === EASTER EGG COMMANDS ===
-    milk: () => {
-        return `
-    .------.
-   /        \\
-   |  MILK  |
-   |        |
-   |________|
-    \\      /
-     '----'
 
-Pouring some fresh milk... 🥛
-Fun fact: Milk builds strong bones for those long coding sessions!`;
-    },
 
     sudo: () => {
         return `Nice try! 😏
@@ -1445,18 +1431,7 @@ But you're not root here. Maybe ask nicely?`;
         return fortunes[Math.floor(Math.random() * fortunes.length)];
     },
 
-    coffee: () => {
-        return `
-       ( (
-        ) )
-      ........
-      |      |]
-      \\      /
-       '----'
-    
-  Here's your coffee! ☕
-  Now get back to coding.`;
-    },
+
 
     joke: () => {
         const jokes = [
@@ -1476,16 +1451,6 @@ But you're not root here. Maybe ask nicely?`;
 
     unflip: () => {
         return "┬─┬ノ( º _ ºノ)";
-    },
-
-    ping: () => {
-        return `PING portfolio (127.0.0.1): 56 data bytes
-64 bytes from 127.0.0.1: icmp_seq=0 ttl=64 time=0.042 ms
-64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.038 ms
-64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.041 ms
-
---- portfolio ping statistics ---
-3 packets transmitted, 3 packets received, 0.0% packet loss`;
     }
 };
 
