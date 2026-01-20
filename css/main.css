@@ -1281,6 +1281,29 @@ body {
     font-size: 14px;
     outline: none;
     flex: 1;
+    min-width: 0; /* Allow shrinking on mobile */
+}
+
+/* Terminal Submit Button - Mobile only */
+.terminal-submit-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    margin-left: var(--spacing-sm);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.terminal-submit-btn:active {
+    transform: scale(0.95);
+    background: #C74316;
 }
 
 /* Projects Grid */
@@ -2899,5 +2922,108 @@ a.project-card {
 @keyframes matrixBlink {
     0%, 100% { opacity: 0.7; }
     50% { opacity: 0.3; }
+}
+
+/* ============================================
+   MOBILE UX IMPROVEMENTS
+   ============================================ */
+
+/* iOS Smooth Scroll for Window Bodies */
+.window-body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* Prevent pull-to-refresh on the main body */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* Show terminal submit button on mobile/tablet */
+@media (max-width: 1024px) {
+    .terminal-submit-btn {
+        display: flex;
+    }
+    
+    /* Improve terminal input line for mobile */
+    .terminal-input-line {
+        padding: var(--spacing-sm);
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: var(--radius-sm);
+        margin-top: var(--spacing-sm);
+    }
+    
+    /* Shorten prompt on very small screens */
+    @media (max-width: 480px) {
+        .terminal-prompt {
+            font-size: 12px;
+        }
+        
+        .terminal-input {
+            font-size: 14px;
+        }
+    }
+}
+
+/* Improve contact item touch targets on mobile */
+@media (max-width: 767px) {
+    .contact-item {
+        padding: var(--spacing-md);
+        min-height: 56px;
+        border-radius: var(--radius-sm);
+        background: var(--color-card-bg);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .contact-item i {
+        font-size: 20px;
+        width: 32px;
+    }
+    
+    /* Better touch targets for social links */
+    .social-link {
+        min-height: 80px;
+        padding: var(--spacing-md);
+    }
+    
+    /* Improve project card touch feedback */
+    .project-card {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    
+    .project-card:active {
+        transform: scale(0.98);
+    }
+    
+    /* Make tech badges more tappable */
+    .tech-badge {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}
+
+/* Better grid spacing on very small screens */
+@media (max-width: 380px) {
+    .app-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        padding: var(--spacing-sm);
+    }
+    
+    .app-icon {
+        width: 100%;
+        height: 80px;
+    }
+    
+    .app-icon-wrapper {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+    }
+    
+    .app-label {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
 }
 

@@ -1525,20 +1525,26 @@ function addTerminalOutput(command, output) {
 
 function setupTerminal() {
     const terminalInput = document.getElementById('terminal-input');
+    const terminalSubmit = document.getElementById('terminal-submit');
     if (!terminalInput) return;
+
+    // Function to execute command (shared by Enter key and submit button)
+    function runCommand() {
+        const command = terminalInput.value;
+        const output = executeTerminalCommand(command);
+
+        if (command.trim()) {
+            addTerminalOutput(command, output);
+            terminalHistory.push(command);
+            historyIndex = terminalHistory.length;
+        }
+
+        terminalInput.value = '';
+    }
 
     terminalInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-            const command = terminalInput.value;
-            const output = executeTerminalCommand(command);
-
-            if (command.trim()) {
-                addTerminalOutput(command, output);
-                terminalHistory.push(command);
-                historyIndex = terminalHistory.length;
-            }
-
-            terminalInput.value = '';
+            runCommand();
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
             if (historyIndex > 0) {
@@ -1556,6 +1562,14 @@ function setupTerminal() {
             }
         }
     });
+
+    // Mobile submit button
+    if (terminalSubmit) {
+        terminalSubmit.addEventListener('click', () => {
+            runCommand();
+            terminalInput.focus();
+        });
+    }
 }
 
 // ============================================
