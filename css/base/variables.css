@@ -12,21 +12,21 @@
        ======================================== */
     --color-primary: #E95420;
     /* Ubuntu Orange */
-    --color-bg-light: #FAFBFC;
-    /* Clean light background */
-    --color-bg-dark: #F0F2F5;
-    --color-glass-light: rgba(255, 255, 255, 0.75);
-    --color-glass-dark: rgba(255, 255, 255, 0.85);
+    --color-bg-light: #F5F6F8;
+    /* Slightly darker light background for better contrast */
+    --color-bg-dark: #E8EAED;
+    --color-glass-light: rgba(240, 242, 245, 0.85);
+    --color-glass-dark: rgba(230, 232, 235, 0.9);
     --color-text-light: #2D3748;
     /* Softer dark text on light bg */
     --color-text-dark: #4A5568;
-    --color-border: rgba(0, 0, 0, 0.08);
-    --color-card-bg: rgba(255, 255, 255, 0.65);
+    --color-border: rgba(0, 0, 0, 0.12);
+    --color-card-bg: rgba(0, 0, 0, 0.04);
 
-    /* Light Mode Window Colors - Frosted Glass Look */
-    --color-header-bg: rgba(255, 255, 255, 0.85);
+    /* Light Mode Window Colors - Subtle Gray Tint */
+    --color-header-bg: rgba(245, 246, 248, 0.95);
     --color-header-text: #2D3748;
-    --color-window-body-bg: rgba(255, 255, 255, 0.92);
+    --color-window-body-bg: rgba(250, 251, 252, 0.95);
     --color-window-body-text: #2D3748;
     /* Ubuntu Yaru Colors */
     --color-close-bg: #E95420;
