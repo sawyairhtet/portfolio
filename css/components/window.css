@@ -1,0 +1,397 @@
+/* ============================================
+   WINDOWS - GNOME Style
+   ============================================ */
+
+.window {
+    position: absolute;
+    background: var(--color-glass-light);
+    backdrop-filter: var(--glass-blur) var(--glass-saturation) var(--glass-brightness, brightness(1));
+    -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation) var(--glass-brightness, brightness(1));
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    box-shadow: var(--shadow-lg), var(--glass-inner-glow, none);
+    border: 1px solid var(--color-border);
+    display: none;
+    flex-direction: column;
+    width: 600px;
+    min-width: 500px;
+    max-width: 650px;
+    max-height: 80vh;
+    z-index: var(--z-window);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    /* Default position - ensure windows don't overlap dock on desktop */
+    left: calc(var(--dock-width) + 20px);
+    top: 15%;
+}
+
+/* Subtle glow on focused/topmost window */
+.window:focus-within {
+    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(233, 84, 32, 0.15);
+}
+
+/* Window animation states */
+.window.opening {
+    animation: windowBounceIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.window.closing {
+    animation: windowBounceOut 0.25s ease-out forwards;
+}
+
+.window.minimizing {
+    animation: genieMinimize 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    pointer-events: none;
+}
+
+.window.restoring {
+    animation: genieRestore 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ============================================
+   WINDOW RESIZE HANDLES
+   ============================================ */
+
+.window .resize-handle {
+    position: absolute;
+    z-index: 10;
+}
+
+/* Edge handles */
+.window .resize-handle.top {
+    top: -4px;
+    left: 8px;
+    right: 8px;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.window .resize-handle.bottom {
+    bottom: -4px;
+    left: 8px;
+    right: 8px;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.window .resize-handle.left {
+    left: -4px;
+    top: 8px;
+    bottom: 8px;
+    width: 8px;
+    cursor: ew-resize;
+}
+
+.window .resize-handle.right {
+    right: -4px;
+    top: 8px;
+    bottom: 8px;
+    width: 8px;
+    cursor: ew-resize;
+}
+
+/* Corner handles */
+.window .resize-handle.top-left {
+    top: -4px;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nwse-resize;
+}
+
+.window .resize-handle.top-right {
+    top: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nesw-resize;
+}
+
+.window .resize-handle.bottom-left {
+    bottom: -4px;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nesw-resize;
+}
+
+.window .resize-handle.bottom-right {
+    bottom: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nwse-resize;
+}
+
+/* ============================================
+   WINDOW SNAP STATES
+   ============================================ */
+
+.window.snapped-left {
+    top: 28px !important;
+    left: var(--dock-width) !important;
+    width: calc(50vw - var(--dock-width) / 2) !important;
+    height: calc(100vh - 28px) !important;
+    border-radius: 0;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.window.snapped-right {
+    top: 28px !important;
+    left: calc(50vw + var(--dock-width) / 2) !important;
+    width: calc(50vw - var(--dock-width) / 2) !important;
+    height: calc(100vh - 28px) !important;
+    border-radius: 0;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.window.snapped-maximized {
+    top: 28px !important;
+    left: var(--dock-width) !important;
+    width: calc(100vw - var(--dock-width)) !important;
+    height: calc(100vh - 28px) !important;
+    border-radius: 0;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Snap Preview Overlay */
+.snap-preview {
+    position: fixed;
+    top: 28px;
+    background: rgba(233, 84, 32, 0.15);
+    border: 2px dashed var(--color-primary);
+    border-radius: var(--radius-md);
+    z-index: 99;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.snap-preview.visible {
+    opacity: 1;
+}
+
+.snap-preview.snap-left {
+    left: var(--dock-width);
+    width: calc(50vw - var(--dock-width) / 2);
+    height: calc(100vh - 28px);
+}
+
+.snap-preview.snap-right {
+    left: calc(50vw + var(--dock-width) / 2);
+    width: calc(50vw - var(--dock-width) / 2);
+    height: calc(100vh - 28px);
+}
+
+.snap-preview.snap-maximize {
+    left: var(--dock-width);
+    width: calc(100vw - var(--dock-width));
+    height: calc(100vh - 28px);
+}
+
+/* ============================================
+   WINDOW HEADER
+   ============================================ */
+
+.window-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-header-bg);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    cursor: grab;
+}
+
+.window-header:active {
+    cursor: grabbing;
+}
+
+/* GNOME: Title on Left, Controls on Right */
+.window-title {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-header-text);
+    padding-left: var(--spacing-sm);
+    letter-spacing: 0.2px;
+}
+
+/* Ubuntu Yaru Window Controls */
+.window-controls {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+    /* Push to right */
+    padding-right: var(--spacing-sm);
+}
+
+.window-control {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--color-control-bg);
+    color: var(--color-control-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+[data-theme="dark"] .window-control {
+    background: var(--color-control-bg);
+    color: var(--color-control-text);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.window-control:hover {
+    filter: brightness(0.9);
+}
+
+[data-theme="dark"] .window-control:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 12px rgba(255, 107, 61, 0.3);
+}
+
+/* Close button - Gray by default in Modern Yaru */
+.window-control.close {
+    background: var(--color-control-bg);
+    color: var(--color-control-text);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .window-control.close {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hover: Turns Orange */
+.window-control.close:hover {
+    background: #E95420;
+    /* Ubuntu Orange */
+    color: #FFFFFF;
+    border-color: #C74316;
+    box-shadow: 0 2px 4px rgba(233, 84, 32, 0.3);
+    filter: none;
+    /* Reset brightness filter */
+}
+
+/* Icons within controls */
+.window-control i {
+    pointer-events: none;
+    /* Prevent icon from capturing clicks */
+}
+
+.close-btn-mobile {
+    display: none;
+}
+
+/* ============================================
+   WINDOW BODY
+   ============================================ */
+
+.window-body {
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    flex: 1;
+    background: var(--color-window-body-bg);
+    color: var(--color-window-body-text);
+    /* Prevent pull-to-refresh on mobile within windows */
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.window-body h2 {
+    font-size: 24px;
+    margin-bottom: var(--spacing-md);
+}
+
+.window-body h3 {
+    font-size: 18px;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.window-body p {
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+}
+
+.window-body a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.window-body a:hover {
+    color: var(--color-primary);
+}
+
+/* Window loading state */
+.window.loading .window-body {
+    position: relative;
+    overflow: hidden;
+}
+
+.window.loading .window-body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(233, 84, 32, 0.1) 50%,
+        transparent 100%
+    );
+    animation: shimmerMove 1.2s ease-in-out;
+}
+
+/* ============================================
+   WINDOW CONTROLS - MINIMIZE & MAXIMIZE
+   ============================================ */
+
+.window-control.minimize,
+.window-control.maximize {
+    background: var(--color-control-bg);
+    color: var(--color-control-text);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .window-control.minimize,
+[data-theme="dark"] .window-control.maximize {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.window-control.minimize:hover,
+.window-control.maximize:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .window-control.minimize:hover,
+[data-theme="dark"] .window-control.maximize:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   DARK MODE WINDOW CONTROL ENHANCEMENTS
+   ============================================ */
+
+[data-theme="dark"] .window-control {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .window-control:hover {
+    box-shadow: 0 0 8px rgba(233, 84, 32, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .window-control.close:hover {
+    box-shadow: 0 0 12px rgba(233, 84, 32, 0.5),
+                0 2px 4px rgba(233, 84, 32, 0.3);
+}

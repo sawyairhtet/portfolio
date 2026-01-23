@@ -1,0 +1,136 @@
+/* ============================================
+   DOCK - Ubuntu Vertical Left Dock
+   ============================================ */
+
+.dock {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: var(--spacing-sm);
+    width: var(--dock-width);
+    height: auto;
+    min-height: 400px;
+    /* Ensure some height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    background: var(--color-dock-bg);
+    backdrop-filter: var(--glass-blur);
+    padding: var(--spacing-md) 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    z-index: var(--z-dock);
+    box-shadow: var(--shadow-lg);
+    /* Remove full height border */
+    bottom: auto;
+}
+
+.dock-item {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    border-radius: var(--radius-sm);
+    color: #fff;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+/* Colorful dock icon gradients */
+.dock-item[data-app="about"] {
+    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+}
+
+.dock-item[data-app="projects"] {
+    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
+}
+
+.dock-item[data-app="contact"] {
+    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+}
+
+.dock-item[data-app="terminal"] {
+    background: linear-gradient(135deg, #300A24 0%, #2C001E 100%);
+}
+
+.dock-item[data-app="settings"] {
+    background: linear-gradient(135deg, #666666 0%, #333333 100%);
+}
+
+.dock-item:hover {
+    background: var(--color-dock-item-hover);
+    transform: scale(1.15) translateX(4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 16px rgba(233, 84, 32, 0.3);
+}
+
+.dock-item:active {
+    transform: scale(0.95);
+}
+
+/* Active indicator for dock items */
+.dock-item.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    background: var(--color-primary);
+    border-radius: 0 2px 2px 0;
+}
+
+.dock-separator {
+    width: 80%;
+    height: 1px;
+    background: var(--color-border);
+    margin: var(--spacing-sm) 0;
+}
+
+/* ============================================
+   DOCK TOOLTIPS - GNOME Style
+   ============================================ */
+
+.dock-tooltip {
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-window-body-bg);
+    color: var(--color-window-body-text);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+/* Arrow pointing to dock item */
+.dock-tooltip::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-right-color: var(--color-window-body-bg);
+}
+
+.dock-item:hover .dock-tooltip {
+    opacity: 1;
+    visibility: visible;
+}

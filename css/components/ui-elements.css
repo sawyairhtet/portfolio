@@ -1,0 +1,291 @@
+/* ============================================
+   UI ELEMENTS - Hints, Notifications, Boot Screen
+   ============================================ */
+
+/* ============================================
+   FIRST-VISIT NAVIGATION HINT
+   ============================================ */
+
+.nav-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-glass-dark);
+    backdrop-filter: var(--glass-blur);
+    color: var(--color-text-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    max-width: 320px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+}
+
+.nav-hint.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.nav-hint h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+}
+
+.nav-hint p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.9;
+}
+
+.nav-hint-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+    animation: navHintBounce 2s ease-in-out infinite;
+}
+
+.nav-hint-dismiss {
+    background: var(--gradient-btn);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-hint-dismiss:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(233, 84, 32, 0.4);
+}
+
+/* ============================================
+   SWIPE GESTURE HINT
+   ============================================ */
+
+.swipe-hint {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-window-body-bg);
+    color: var(--color-window-body-text);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.swipe-hint.visible {
+    opacity: 1;
+    visibility: visible;
+    animation: swipeHintPulse 2s ease-in-out infinite;
+}
+
+.swipe-hint i {
+    color: var(--color-primary);
+}
+
+/* ============================================
+   TOAST NOTIFICATION
+   ============================================ */
+
+.toast-notification {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--color-window-body-bg);
+    color: var(--color-window-body-text);
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    backdrop-filter: var(--glass-blur);
+    font-size: 14px;
+    font-weight: 500;
+    z-index: var(--z-tooltip);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.toast-notification.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.toast-notification i {
+    color: var(--color-primary);
+}
+
+/* ============================================
+   BOOT SCREEN - Linux Boot Log Style
+   ============================================ */
+
+.boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    z-index: var(--z-context-menu);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+}
+
+.boot-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.boot-log {
+    font-family: 'Ubuntu Mono', 'Courier New', monospace;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    width: 100%;
+}
+
+.boot-log .ok {
+    color: #4E9A06;
+}
+
+.boot-log .fail {
+    color: #CC0000;
+}
+
+.boot-log .info {
+    color: #729FCF;
+}
+
+/* ============================================
+   STICKY NOTES
+   ============================================ */
+
+.sticky-note {
+    position: absolute;
+    width: auto;
+    max-width: 200px;
+    padding: 12px 16px;
+    background: #FFF9C4;
+    font-family: 'Indie Flower', cursive;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #5D4037;
+    white-space: pre-line;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    cursor: grab;
+    z-index: 50;
+    user-select: none;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-normal);
+    /* Entrance animation */
+    opacity: 0;
+    animation: stickyNoteIn 0.6s ease forwards;
+}
+
+/* Staggered entrance for sticky notes */
+.sticky-note:nth-child(1) {
+    animation-delay: 0.5s;
+}
+
+.sticky-note:nth-child(2) {
+    animation-delay: 0.7s;
+}
+
+.sticky-note:nth-child(3) {
+    animation-delay: 0.9s;
+}
+
+.sticky-note:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+    transform: scale(1.02);
+}
+
+.sticky-note.dragging {
+    cursor: grabbing;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+
+/* Different note colors */
+.sticky-note.pink {
+    background: #FFD6E0;
+}
+
+.sticky-note.blue {
+    background: #D4F1F4;
+    color: #1A535C;
+}
+
+.sticky-note.green {
+    background: #D8F3DC;
+    color: #2D6A4F;
+}
+
+/* ============================================
+   SKELETON LOADER / SHIMMER EFFECT
+   ============================================ */
+
+.skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%
+    );
+    animation: shimmerMove 1.5s ease-in-out infinite;
+}
+
+/* ============================================
+   WIDGETS
+   ============================================ */
+
+.widget {
+    background: var(--color-glass-light);
+    backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}

@@ -1,0 +1,103 @@
+/* ============================================
+   TOP BAR (GNOME Panel)
+   ============================================ */
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--spacing-md);
+    font-size: 13px;
+    font-weight: 500;
+    z-index: var(--z-topbar);
+    background: var(--color-topbar-bg);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.menu-bar-left,
+.menu-bar-center,
+.menu-bar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.menu-bar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.activities-btn {
+    color: var(--color-topbar-text);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+    font-family: var(--font-system);
+}
+
+/* Pill Styling for Top Bar Items */
+.pill {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+[data-theme="dark"] .pill {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.pill:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .pill:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Quick Theme Toggle Button */
+.theme-toggle-btn {
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-topbar-text);
+    transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    color: var(--color-primary);
+    transform: rotate(15deg);
+}
+
+.theme-toggle-btn i {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="dark"] .theme-toggle-btn i {
+    transform: rotate(360deg);
+}
+
+/* Status Bar (Mobile/Tablet) - Hidden by default */
+.status-bar {
+    display: none;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-icons {
+    display: flex;
+    gap: 6px;
+    font-size: 12px;
+}
