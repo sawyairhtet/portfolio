@@ -40,8 +40,8 @@
     --color-dock-item-hover: rgba(233, 84, 32, 0.15);
     --color-dock-text: #2D3748;
 
-    /* Light Mode Top Bar - Semi-transparent */
-    --color-topbar-bg: rgba(255, 255, 255, 0.85);
+    /* Light Mode Top Bar - Clean & Bright */
+    --color-topbar-bg: rgba(255, 255, 255, 0.95);
     --color-topbar-text: #2D3748;
 
     /* Spacing */

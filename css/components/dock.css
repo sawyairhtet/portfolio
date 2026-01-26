@@ -42,24 +42,45 @@
     border: 1px solid transparent;
 }
 
-/* Colorful dock icon gradients */
+/* Colorful dock icon gradients - Light Mode Defaults */
 .dock-item[data-app="about"] {
-    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+    background: linear-gradient(135deg, #FF6B3D 0%, #E95420 100%);
 }
 
 .dock-item[data-app="projects"] {
-    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
+    background: linear-gradient(135deg, #5B9BD5 0%, #2E75B6 100%);
 }
 
 .dock-item[data-app="contact"] {
-    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+    background: linear-gradient(135deg, #9B4F96 0%, #77216F 100%);
 }
 
 .dock-item[data-app="terminal"] {
-    background: linear-gradient(135deg, #300A24 0%, #2C001E 100%);
+    background: linear-gradient(135deg, #2AA198 0%, #1A7A72 100%);
 }
 
 .dock-item[data-app="settings"] {
+    background: linear-gradient(135deg, #F5A623 0%, #D4850E 100%);
+}
+
+/* Dark Mode Overrides - Classic Ubuntu Colors */
+[data-theme="dark"] .dock-item[data-app="about"] {
+    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+}
+
+[data-theme="dark"] .dock-item[data-app="projects"] {
+    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
+}
+
+[data-theme="dark"] .dock-item[data-app="contact"] {
+    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+}
+
+[data-theme="dark"] .dock-item[data-app="terminal"] {
+    background: linear-gradient(135deg, #300A24 0%, #2C001E 100%);
+}
+
+[data-theme="dark"] .dock-item[data-app="settings"] {
     background: linear-gradient(135deg, #666666 0%, #333333 100%);
 }
 
@@ -83,8 +104,9 @@
     transform: translateY(-50%);
     width: 3px;
     height: 20px;
-    background: var(--color-primary);
+    background: #FFFFFF;
     border-radius: 0 2px 2px 0;
+    box-shadow: 1px 0 4px rgba(0, 0, 0, 0.3);
 }
 
 .dock-separator {

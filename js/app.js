@@ -220,7 +220,29 @@ function initBootScreen() {
                 bootScreen.classList.add('fade-out');
                 setTimeout(() => {
                     bootScreen.remove();
+                    
+                    // Open About Window - Positioned Left
+                    if (currentOS === 'desktop') {
+                        const aboutWin = document.getElementById('about-window');
+                        if (aboutWin) {
+                            aboutWin.style.top = '15%';
+                            aboutWin.style.left = '120px'; // Dock width + spacing
+                        }
+                    }
                     openWindow('about', currentOS);
+                    
+                    if (currentOS === 'desktop') {
+                        // Open Contact Window - Positioned Right
+                        setTimeout(() => {
+                            const contactWin = document.getElementById('contact-window');
+                            if (contactWin) {
+                                contactWin.style.top = '15%';
+                                contactWin.style.left = '750px'; // 120px + 600px width + 30px gap
+                            }
+                            openWindow('contact', currentOS);
+                        }, 200);
+                    }
+                    
                     SoundManager.playStartupDrum();
                 }, 500);
             }, 500);
