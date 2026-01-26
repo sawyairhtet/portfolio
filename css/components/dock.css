@@ -85,7 +85,7 @@
 }
 
 .dock-item:hover {
-    background: var(--color-dock-item-hover);
+    /* background: var(--color-dock-item-hover);Removed to fix transparency issue */
     transform: scale(1.15) translateX(4px);
     border-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 16px rgba(233, 84, 32, 0.3);

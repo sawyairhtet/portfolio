@@ -128,22 +128,22 @@
 .app-label {
     font-size: 12px;
     text-align: center;
-    /* Light mode defaults - dark text on light background */
-    color: #2D3748;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    /* Base text styles - always white for visibility on wallpaper */
+    color: #FFFFFF;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.4);
     padding: 4px 10px;
     font-weight: 500;
     letter-spacing: 0.3px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 4px;
-    backdrop-filter: blur(4px);
+    /* background: rgba(255, 255, 255, 0.8); Removed */
+    /* border-radius: 4px; Removed */
+    /* backdrop-filter: blur(4px); Removed */
 }
 
 /* Dark mode label overrides */
 [data-theme="dark"] .app-label {
     color: #FFFFFF;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.6);
-    background: rgba(0, 0, 0, 0.35);
+    /* background: rgba(0, 0, 0, 0.35); Removed */
 }
 
 /* ============================================
@@ -207,7 +207,7 @@
 }
 
 [data-theme="dark"] .app-icon[data-app="contact"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+    background: linear-gradient(135deg, #8E24AA 0%, #4A148C 100%);
 }
 
 [data-theme="dark"] .app-icon[data-app="links"] .app-icon-wrapper {
