@@ -5,18 +5,28 @@
 
 const SoundManager = {
     audioContext: null,
-    muted: localStorage.getItem('soundMuted') === 'true',
+    muted: false, // Default pending init
 
     init() {
         if (!this.audioContext) {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        // Lazy load preference safely
+        try {
+            this.muted = localStorage.getItem('soundMuted') === 'true';
+        } catch (e) {
+            console.warn('LocalStorage access blocked', e);
         }
         return this.audioContext;
     },
 
     setMuted(muted) {
         this.muted = muted;
-        localStorage.setItem('soundMuted', muted.toString());
+        try {
+            localStorage.setItem('soundMuted', muted.toString());
+        } catch (e) {
+            // Ignore storage errors
+        }
     },
 
     isMuted() {

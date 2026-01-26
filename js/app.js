@@ -198,6 +198,28 @@ function initBootScreen() {
     let lineIndex = 0;
     const interval = 80;
 
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+        bootScreen.remove();
+        // Immediately open default windows
+        if (currentOS === 'desktop') {
+             const aboutWin = document.getElementById('about-window');
+             if (aboutWin) {
+                 aboutWin.style.top = '15%';
+                 aboutWin.style.left = '120px';
+             }
+             const contactWin = document.getElementById('contact-window');
+             if (contactWin) {
+                 contactWin.style.top = '15%';
+                 contactWin.style.left = '750px';
+             }
+             openWindow('contact', currentOS);
+        }
+        openWindow('about', currentOS);
+        return;
+    }
+
     function addLine() {
         if (lineIndex < BOOT_LOG_MESSAGES.length) {
             const line = BOOT_LOG_MESSAGES[lineIndex];
@@ -442,13 +464,13 @@ function setupSoundToggle() {
     if (!soundToggle) return;
 
     soundToggle.checked = !SoundManager.isMuted();
-    soundToggle.setAttribute('aria-expanded', !SoundManager.isMuted());
+    soundToggle.setAttribute('aria-pressed', !SoundManager.isMuted());
 
     soundToggle.addEventListener('change', () => {
         const isMuted = !soundToggle.checked;
         SoundManager.setMuted(isMuted);
         
-        soundToggle.setAttribute('aria-expanded', !isMuted);
+        soundToggle.setAttribute('aria-pressed', !isMuted);
         
         if (isMuted) {
             showToast('Sound effects muted', 'fa-volume-mute');

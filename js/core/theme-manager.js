@@ -18,14 +18,14 @@ const ThemeManager = {
         
         if (themeToggle) {
             themeToggle.checked = isDark;
-            themeToggle.setAttribute('aria-expanded', isDark);
+            themeToggle.setAttribute('aria-pressed', isDark);
         }
         if (quickToggle) {
             const icon = quickToggle.querySelector('i');
             if (icon) {
                 icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
             }
-            quickToggle.setAttribute('aria-expanded', isDark);
+            quickToggle.setAttribute('aria-pressed', isDark);
         }
     },
 

@@ -24,6 +24,33 @@ export function getCurrentZIndex() {
 // WINDOW OPERATIONS
 // ============================================
 
+function updateAriaModal() {
+    const activeIds = Array.from(activeWindows);
+    if (activeIds.length === 0) return;
+
+    // Find window with highest Z-index
+    let topWindow = null;
+    let maxZ = -1;
+
+    activeIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.removeAttribute('aria-modal');
+            el.setAttribute('aria-hidden', 'true'); // Hide others from screen readers
+            const z = parseInt(el.style.zIndex || 0);
+            if (z > maxZ) {
+                maxZ = z;
+                topWindow = el;
+            }
+        }
+    });
+
+    if (topWindow) {
+        topWindow.setAttribute('aria-modal', 'true');
+        topWindow.removeAttribute('aria-hidden');
+    }
+}
+
 export function openWindow(appName, currentOS = 'desktop') {
     const windowId = `${appName}-window`;
     const windowEl = document.getElementById(windowId);
@@ -81,6 +108,7 @@ export function closeWindow(windowId) {
         windowEl.classList.remove('closing');
         activeWindows.delete(windowId);
         updateDockActiveStates();
+        updateAriaModal(); // Update modal state after closing
     }, 250);
 }
 
@@ -93,6 +121,7 @@ export function closeAllWindows() {
 export function bringToFront(element) {
     currentZIndex++;
     element.style.zIndex = currentZIndex;
+    updateAriaModal(); // Update modal state when focus changes
 }
 
 export function minimizeWindow(windowId) {
@@ -114,6 +143,7 @@ export function minimizeWindow(windowId) {
         windowEl.classList.remove('minimizing');
         activeWindows.delete(windowId);
         updateDockActiveStates();
+        updateAriaModal(); // Update modal state after minimizing
     }, 350);
 }
 
