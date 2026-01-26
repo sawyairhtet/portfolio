@@ -21,7 +21,15 @@ try {
 }
 
 function saveFileSystem() {
-    localStorage.setItem('portfolioFileSystem', JSON.stringify(fileSystem));
+    try {
+        localStorage.setItem('portfolioFileSystem', JSON.stringify(fileSystem));
+    } catch (e) {
+        console.error('Failed to save filesystem:', e);
+        // Import showToast dynamically to avoid circular dependency
+        import('../ui/notifications.js').then(module => {
+            module.showToast('Unable to save changes - storage full', 'fa-exclamation-triangle');
+        });
+    }
 }
 
 function resetFileSystem() {

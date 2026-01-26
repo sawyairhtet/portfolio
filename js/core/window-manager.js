@@ -422,6 +422,30 @@ export function setupWindowControls() {
             if (windowEl) closeWindow(windowEl.id);
         });
     });
+
+    // Escape key to close topmost window
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && activeWindows.size > 0) {
+            // Find the topmost window (highest z-index)
+            let topmostWindow = null;
+            let highestZ = 0;
+            
+            activeWindows.forEach(windowId => {
+                const windowEl = document.getElementById(windowId);
+                if (windowEl) {
+                    const zIndex = parseInt(windowEl.style.zIndex || 0);
+                    if (zIndex > highestZ) {
+                        highestZ = zIndex;
+                        topmostWindow = windowEl;
+                    }
+                }
+            });
+            
+            if (topmostWindow) {
+                closeWindow(topmostWindow.id);
+            }
+        }
+    });
 }
 
 export default {
