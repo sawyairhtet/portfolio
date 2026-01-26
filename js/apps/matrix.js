@@ -21,9 +21,14 @@ export function startMatrixEffect() {
 
     const ctx = canvas.getContext('2d');
 
+    let columns, drops;
+    
     function resizeCanvas() {
         canvas.width = terminalBody.offsetWidth;
         canvas.height = terminalBody.offsetHeight;
+        // Recalculate columns and drops on resize
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(1);
     }
     resizeCanvas();
 
@@ -31,8 +36,6 @@ export function startMatrixEffect() {
     const charArray = chars.split('');
 
     const fontSize = 14;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops = Array(columns).fill(1);
 
     function draw() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';

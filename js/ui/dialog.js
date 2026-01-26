@@ -3,11 +3,8 @@
  * Creates a themed input dialog that matches the OS style
  */
 
-let dialogResolve = null;
-
 export function showInputDialog(title, placeholder = '') {
     return new Promise((resolve) => {
-        dialogResolve = resolve;
 
         // Remove existing dialog if any
         const existing = document.getElementById('custom-input-dialog');
@@ -59,7 +56,6 @@ export function showInputDialog(title, placeholder = '') {
         function cleanup() {
             overlay.classList.add('closing');
             setTimeout(() => overlay.remove(), 200);
-            dialogResolve = null;
         }
 
         confirmBtn.addEventListener('click', submit);

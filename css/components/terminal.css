@@ -3,8 +3,8 @@
    ============================================ */
 
 .terminal-body {
-    background: #300A24;
-    color: #fff;
+    background: var(--color-bg-dark, #300A24);
+    color: var(--color-text-light, #fff);
     font-family: 'Ubuntu Mono', 'Courier New', monospace;
     padding: var(--spacing-md);
     min-height: 400px;

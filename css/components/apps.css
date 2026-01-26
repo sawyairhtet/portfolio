@@ -295,20 +295,17 @@
     transform: scale(1.15);
 }
 
-/* Specific skill icon colors */
-.skill-icon.languages { color: #E95420; }
-.skill-icon.frontend { color: #FF7A45; }
-.skill-icon.backend { color: #77216F; }
-.skill-icon.vr { color: #5E2750; }
-.skill-icon.tools { color: #AEA79F; }
-
-/* Colorful skill icon gradients (alternative) */
+/* Skill icon gradient colors */
 .skill-icon.languages {
     background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+.skill-icon.frontend { color: #FF7A45; }
+.skill-icon.backend { color: #77216F; }
+.skill-icon.vr { color: #5E2750; }
+.skill-icon.tools { color: #AEA79F; }
 
 .skill-card h4 {
     font-size: 14px;

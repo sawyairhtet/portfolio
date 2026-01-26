@@ -37,7 +37,7 @@
     cursor: pointer;
     transition: all var(--transition-smooth);
     border-radius: var(--radius-sm);
-    color: #fff;
+    color: var(--color-text-light, #fff);
     position: relative;
     border: 1px solid transparent;
 }
