@@ -52,7 +52,7 @@ const SoundManager = {
             oscillator.start(ctx.currentTime);
             oscillator.stop(ctx.currentTime + 0.05);
         } catch (e) {
-            console.log('Sound playback failed:', e);
+            // Sound playback failed silently
         }
     },
 
@@ -87,7 +87,7 @@ const SoundManager = {
             
             noise.start(ctx.currentTime);
         } catch (e) {
-            console.log('Sound playback failed:', e);
+            // Sound playback failed silently
         }
     },
 
@@ -128,7 +128,7 @@ const SoundManager = {
                 osc2.stop(ctx.currentTime + 0.25);
             }, 200);
         } catch (e) {
-            console.log('Sound playback failed:', e);
+            // Sound playback failed silently
         }
     }
 };

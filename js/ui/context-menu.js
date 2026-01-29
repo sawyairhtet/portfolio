@@ -56,15 +56,13 @@ async function handleContextMenuAction(action) {
         case 'new-folder':
             const folderName = await showInputDialog('Create New Folder', 'Enter folder name...');
             if (folderName && folderName.trim()) {
-                const result = terminalCommands.mkdir([folderName.trim()]);
-                console.log(result);
+                terminalCommands.mkdir([folderName.trim()]);
             }
             break;
         case 'new-file':
             const fileName = await showInputDialog('Create New File', 'Enter file name...');
             if (fileName && fileName.trim()) {
-                const result = terminalCommands.touch([fileName.trim()]);
-                console.log(result);
+                terminalCommands.touch([fileName.trim()]);
             }
             break;
         case 'refresh':
@@ -77,7 +75,7 @@ async function handleContextMenuAction(action) {
             openWindow('settings');
             break;
         default:
-            console.log('Unknown action:', action);
+            break;
     }
 }
 

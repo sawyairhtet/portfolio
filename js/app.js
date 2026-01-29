@@ -55,7 +55,6 @@ function updateOS() {
     const newOS = detectOS();
     if (newOS !== currentOS) {
         currentOS = newOS;
-        console.log(`OS changed to: ${currentOS}`);
         closeAllWindows();
     }
 }

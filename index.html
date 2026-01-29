@@ -30,6 +30,27 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="assets/icon.png" type="image/png">
+    
+    <!-- Preload Critical Asset (Profile Picture) -->
+    <link rel="preload" href="images/profile-picture.jpg" as="image" fetchpriority="high">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Saw Ye Htet",
+      "url": "https://sawyehtet.com",
+      "image": "https://sawyehtet.com/images/profile-picture.jpg",
+      "sameAs": [
+        "https://github.com/sawyairhtet",
+        "https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/",
+        "https://x.com/saulyehtet_"
+      ],
+      "jobTitle": "Software Engineer",
+      "description": "IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+    }
+    </script>
 </head>
 
 <body>
@@ -185,7 +206,7 @@
         <div class="window-body">
             <div class="about-hero">
                 <div class="about-avatar">
-                    <img src="images/profile-picture.jpg" alt="Saw Ye Htet" class="profile-img" loading="lazy">
+                   <img src="images/profile-picture.jpg" alt="Saw Ye Htet" class="profile-img" width="140" height="140">
                 </div>
                 <h2>Saw Ye Htet</h2>
                 <p class="about-tagline">IT Student & VR Developer</p>
