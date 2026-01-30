@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -21,6 +21,15 @@
     
     <title>Saw Ye Htet - Portfolio</title>
     <link rel="stylesheet" href="css/main.css">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
     <!-- Google Fonts - Inter + Ubuntu -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

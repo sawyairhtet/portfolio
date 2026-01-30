@@ -20,6 +20,7 @@ export function startMatrixEffect() {
     terminalBody.appendChild(hint);
 
     const ctx = canvas.getContext('2d');
+    const fontSize = 14;
 
     let columns, drops;
     
@@ -34,8 +35,6 @@ export function startMatrixEffect() {
 
     const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const charArray = chars.split('');
-
-    const fontSize = 14;
 
     function draw() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';

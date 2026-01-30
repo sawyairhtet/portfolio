@@ -6,10 +6,13 @@
 const ThemeManager = {
     init() {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
+        if (savedTheme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+            this.updateUI(false);
+        } else {
             document.documentElement.setAttribute('data-theme', 'dark');
+            this.updateUI(true);
         }
-        this.updateUI(savedTheme === 'dark');
     },
 
     updateUI(isDark) {

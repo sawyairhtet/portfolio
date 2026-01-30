@@ -437,7 +437,7 @@
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
-        color: #FFFFFF !important;
+        color: var(--color-text-light) !important;
     }
 }
 
@@ -515,7 +515,7 @@
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
-        color: #FFFFFF !important;
+        color: var(--color-text-light) !important;
     }
 
     /* Links grid - 2 columns on mobile, stacked on very small */
@@ -638,7 +638,7 @@
         display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
-        color: #FFFFFF !important;
+        color: var(--color-text-light) !important;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.4);
         width: 100%;
         text-align: center;

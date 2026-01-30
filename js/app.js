@@ -31,6 +31,20 @@ import { showToast } from './ui/notifications.js';
 import { BOOT_LOG_MESSAGES, stickyNotesData } from './config/data.js';
 
 // ============================================
+// CONSTANTS
+// ============================================
+
+// Gesture thresholds for mobile swipe detection
+const SWIPE_CLOSE_THRESHOLD_Y = 80;  // Minimum vertical distance to close window
+const SWIPE_CLOSE_MAX_X = 50;        // Maximum horizontal deviation for vertical swipe
+const SWIPE_SWITCH_THRESHOLD_X = 100; // Minimum horizontal distance to switch windows
+const SWIPE_SWITCH_MAX_Y = 50;        // Maximum vertical deviation for horizontal swipe
+
+// Boot screen timing
+const BOOT_LINE_INTERVAL_MS = 80;
+const BOOT_FADE_DELAY_MS = 500;
+
+// ============================================
 // STATE
 // ============================================
 
@@ -134,10 +148,10 @@ function setupMobileGestures() {
             const diffY = touchEndY - touchStartY;
             const diffX = touchEndX - touchStartX;
 
-            if (diffY > 80 && Math.abs(diffX) < 50) {
+            if (diffY > SWIPE_CLOSE_THRESHOLD_Y && Math.abs(diffX) < SWIPE_CLOSE_MAX_X) {
                 closeWindow(currentWindowEl.id);
             }
-            else if (Math.abs(diffX) > 100 && Math.abs(diffY) < 50) {
+            else if (Math.abs(diffX) > SWIPE_SWITCH_THRESHOLD_X && Math.abs(diffY) < SWIPE_SWITCH_MAX_Y) {
                 const activeWindows = getActiveWindows();
                 const windowsArray = Array.from(activeWindows);
                 if (windowsArray.length <= 1) return;
@@ -195,7 +209,6 @@ function initBootScreen() {
     if (!bootScreen || !bootLog) return;
 
     let lineIndex = 0;
-    const interval = 80;
 
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -235,7 +248,7 @@ function initBootScreen() {
             bootLog.appendChild(lineEl);
             bootLog.scrollTop = bootLog.scrollHeight;
             lineIndex++;
-            setTimeout(addLine, interval);
+            setTimeout(addLine, BOOT_LINE_INTERVAL_MS);
         } else {
             setTimeout(() => {
                 bootScreen.classList.add('fade-out');
