@@ -331,10 +331,10 @@ function createStickyNotes() {
 function makeStickyDraggable(element) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-    element.onmousedown = dragMouseDown;
+    element.addEventListener('mousedown', dragMouseDown);
 
     function dragMouseDown(e) {
-        e = e || window.event;
+        // e = e || window.event; // Not strictly needed with modern browsers + addEventListener
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
@@ -342,8 +342,8 @@ function makeStickyDraggable(element) {
         element.classList.add('dragging');
         element.style.zIndex = 999;
 
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
+        document.addEventListener('mouseup', closeDragElement);
+        document.addEventListener('mousemove', elementDrag);
     }
 
     function elementDrag(e) {
@@ -363,8 +363,8 @@ function makeStickyDraggable(element) {
     function closeDragElement() {
         element.classList.remove('dragging');
         element.style.zIndex = 50;
-        document.onmouseup = null;
-        document.onmousemove = null;
+        document.removeEventListener('mouseup', closeDragElement);
+        document.removeEventListener('mousemove', elementDrag);
 
         const noteIndex = element.getAttribute('data-note-index');
         if (noteIndex !== null) {

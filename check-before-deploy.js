@@ -8,7 +8,7 @@ console.log('Running pre-deployment safety checks...\n');
 let hasErrors = false;
 
 // Check 1: Verify main files exist
-const requiredFiles = ['index.html', 'css/main.css', 'js/main.js', '404.html'];
+const requiredFiles = ['index.html', 'css/main.css', 'js/app.js', '404.html'];
 requiredFiles.forEach((file) => {
   if (!fs.existsSync(file)) {
     console.log(`[ERROR] Missing required file: ${file}`);
@@ -63,7 +63,7 @@ try {
 
 // Check 4: Verify JavaScript syntax (very basic)
 try {
-  const jsContent = fs.readFileSync('js/main.js', 'utf8');
+  const jsContent = fs.readFileSync('js/app.js', 'utf8');
   const openBraces = (jsContent.match(/\{/g) || []).length;
   const closeBraces = (jsContent.match(/\}/g) || []).length;
   if (openBraces !== closeBraces) {

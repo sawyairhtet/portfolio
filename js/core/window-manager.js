@@ -205,13 +205,13 @@ export function makeDraggable(element, currentOS) {
 
     if (!header) return;
 
-    header.onmousedown = dragMouseDown;
+    header.addEventListener('mousedown', dragMouseDown);
 
     function dragMouseDown(e) {
         if (currentOS !== 'desktop') return;
         if (e.target.closest('.window-control')) return;
 
-        e = e || window.event;
+        // Use standard event object
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
@@ -235,8 +235,8 @@ export function makeDraggable(element, currentOS) {
 
         bringToFront(element);
 
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
+        document.addEventListener('mouseup', closeDragElement);
+        document.addEventListener('mousemove', elementDrag);
     }
 
     function elementDrag(e) {
@@ -300,8 +300,8 @@ export function makeDraggable(element, currentOS) {
 
         snapPreview.classList.remove('visible', 'snap-left', 'snap-right', 'snap-maximize');
 
-        document.onmouseup = null;
-        document.onmousemove = null;
+        document.removeEventListener('mouseup', closeDragElement);
+        document.removeEventListener('mousemove', elementDrag);
     }
 }
 
