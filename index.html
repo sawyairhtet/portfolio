@@ -2,8 +2,17 @@
 <html lang="en" data-theme="dark">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date());
+      gtag('config', 'G-EXTTVBFZCK');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;">
     <meta name="description"
         content="Saw Ye Htet - IT Student & VR Developer at Singapore Polytechnic. Specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
     
@@ -19,6 +28,7 @@
     <meta name="twitter:description" content="Full Stack Java Developer specializing in web development and software engineering.">
     <meta name="twitter:image" content="https://sawyehtet.com/images/og-preview.png">
     
+    <link rel="canonical" href="https://sawyehtet.com/">
     <title>Saw Ye Htet - Portfolio</title>
     <link rel="stylesheet" href="css/main.css">
     <!-- Theme Init (prevents flash of wrong theme) -->
@@ -30,15 +40,19 @@
             }
         })();
     </script>
-    <!-- Google Fonts - Inter + Ubuntu -->
+    <!-- Google Fonts - Ubuntu + Indie Flower (for sticky notes) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="assets/icon.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E95420">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <!-- Preload Critical Asset (Profile Picture) -->
     <link rel="preload" href="images/profile-picture.jpg" as="image" fetchpriority="high">
@@ -68,8 +82,9 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Boot Screen (Linux Boot Log Style) -->
-    <div class="boot-screen" id="boot-screen">
+    <div class="boot-screen" id="boot-screen" role="status" aria-label="System booting">
         <div class="boot-log" id="boot-log"></div>
+        <div class="boot-skip-hint">Press any key or click to skip</div>
     </div>
 
     <!-- Sticky Notes Container -->
@@ -116,6 +131,7 @@
         <div class="menu-bar-right">
             <button class="theme-toggle-btn pill" id="quick-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                 <i class="fas fa-moon"></i>
+                <span class="theme-tooltip">Toggle Dark Mode</span>
             </button>
             <div class="status-menu pill">
                 <i class="fas fa-network-wired"></i>
@@ -127,6 +143,8 @@
 
     <!-- Main Content Area -->
     <main id="main-content" class="main-content" role="main">
+        <!-- Visually hidden h1 for SEO/accessibility -->
+        <h1 class="sr-only">Saw Ye Htet - IT Student & Software Engineer Portfolio</h1>
 
         <!-- Desktop Wallpaper (macOS only) -->
         <div class="wallpaper"></div>
@@ -223,15 +241,38 @@
 
             <div class="about-content">
                 <div class="about-section">
+                    <h3><i class="fas fa-user"></i> About Me</h3>
+                    <p>I'm a passionate IT student with a keen interest in creating immersive digital experiences. 
+                        From building interactive VR games to crafting polished web applications, I love turning ideas 
+                        into reality through code. Always eager to learn new technologies and push the boundaries of 
+                        what's possible.</p>
+                </div>
+
+                <div class="about-section">
                     <h3><i class="fas fa-graduation-cap"></i> Education</h3>
                     <p><strong>Singapore Polytechnic</strong><br>
-                        Diploma in Information Technology</p>
+                        Diploma in Information Technology<br>
+                        <em>Expected Graduation: 2026</em></p>
+                </div>
+
+                <div class="about-section">
+                    <h3><i class="fas fa-book"></i> Key Coursework</h3>
+                    <p>Object-Oriented Programming • Data Structures & Algorithms • Database Management • 
+                        Web Development • Mobile Application Development • User Experience Design • 
+                        Cloud Computing Fundamentals</p>
                 </div>
 
                 <div class="about-section">
                     <h3><i class="fas fa-briefcase"></i> Experience</h3>
                     <p><strong>VR Developer</strong><br>
-                        Developed immersive VR experiences using Unity and Meta Quest hand tracking technology.</p>
+                        Developed immersive VR experiences using Unity and Meta Quest hand tracking technology. 
+                        Created game mechanics, optimized performance, and implemented intuitive gesture controls.</p>
+                </div>
+
+                <div class="about-section">
+                    <h3><i class="fas fa-heart"></i> Interests</h3>
+                    <p>Virtual Reality & Spatial Computing • Game Development • Open Source • 
+                        Linux & System Customization • UI/UX Design • Competitive Programming</p>
                 </div>
             </div>
         </div>
@@ -257,35 +298,42 @@
                     <div class="skill-icon languages"><i class="fas fa-code"></i></div>
                     <h4>Languages</h4>
                     <p>JavaScript, Python, C#, Java, SQL</p>
-                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 85%"></div></div>
+                    <span class="skill-level proficient">Proficient</span>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon frontend"><i class="fas fa-palette"></i></div>
                     <h4>Frontend</h4>
                     <p>HTML5, CSS3, React, Responsive Design</p>
-                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 90%"></div></div>
+                    <span class="skill-level proficient">Proficient</span>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon backend"><i class="fas fa-server"></i></div>
                     <h4>Backend</h4>
                     <p>REST APIs, Node.js, Database Integration</p>
-                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 75%"></div></div>
+                    <span class="skill-level familiar">Familiar</span>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon vr"><i class="fas fa-vr-cardboard"></i></div>
                     <h4>VR Development</h4>
                     <p>Unity, Meta Quest, Hand Tracking</p>
-                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 80%"></div></div>
+                    <span class="skill-level proficient">Proficient</span>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-icon tools"><i class="fas fa-tools"></i></div>
                     <h4>Tools</h4>
                     <p>Git, VS Code, Figma, Chrome DevTools</p>
-                    <div class="skill-progress"><div class="skill-progress-bar" style="--progress: 88%"></div></div>
+                    <span class="skill-level proficient">Proficient</span>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon" style="color: #00D4FF;"><i class="fas fa-cloud"></i></div>
+                    <h4>Cloud & DevOps</h4>
+                    <p>GitHub Actions, CI/CD, Basic AWS</p>
+                    <span class="skill-level learning">Learning</span>
                 </div>
             </div>
         </div>
@@ -339,6 +387,54 @@
                         <span class="project-link"><i class="fab fa-github"></i> View on GitHub</span>
                     </div>
                 </a>
+
+                <div class="project-card">
+                    <div class="project-preview"><i class="fas fa-users"></i></div>
+                    <h3>VR Multiplayer Framework</h3>
+                    <p>A multiplayer VR networking solution using FishNet. Features real-time player synchronization, 
+                        hand tracking replication, and spatial voice chat.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Unity</span>
+                        <span class="tech-badge">FishNet</span>
+                        <span class="tech-badge">XR Toolkit</span>
+                        <span class="tech-badge">Netcode</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-platform"><i class="fas fa-vr-cardboard"></i> VR Multiplayer</span>
+                        <span class="project-link"><i class="fas fa-code-branch"></i> In Development</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-preview"><i class="fas fa-tasks"></i></div>
+                    <h3>TaskFlow Manager</h3>
+                    <p>A full-stack task management app built for a school project. Features user authentication, 
+                        drag-and-drop Kanban boards, and real-time collaboration.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">MongoDB</span>
+                        <span class="tech-badge">Socket.io</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-platform"><i class="fas fa-globe"></i> Full Stack</span>
+                        <span class="project-link"><i class="fas fa-graduation-cap"></i> School Project</span>
+                    </div>
+                </div>
+
+                <div class="project-card coming-soon">
+                    <div class="project-preview" style="opacity: 0.6;"><i class="fas fa-rocket"></i></div>
+                    <h3>More Coming Soon</h3>
+                    <p>Currently working on exciting new projects including AI experiments, 
+                        mobile apps, and more VR experiences. Stay tuned!</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">???</span>
+                        <span class="tech-badge">TBD</span>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-platform"><i class="fas fa-clock"></i> In Progress</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -498,6 +594,17 @@
     </div>
 
     <script type="module" src="js/app.js"></script>
+    
+    <!-- Service Worker Registration for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('[SW] Registered:', reg.scope))
+                    .catch(err => console.log('[SW] Registration failed:', err));
+            });
+        }
+    </script>
 </body>
 
 </html>

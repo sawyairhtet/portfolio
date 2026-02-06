@@ -10,6 +10,20 @@ let currentZIndex = 1100;
 let activeWindows = new Set();
 const windowSnapState = new Map();
 const minimizedWindows = new Map();
+let lastFocusedElement = null; // Track element that opened window for focus restoration
+let currentFocusTrap = null; // Track active focus trap handler
+let cascadeCounter = 0; // Static counter for window cascade positioning (#22)
+
+// Cache CSS variable to avoid reading on every drag call (#20)
+let cachedDockWidth = 60;
+function updateCachedDockWidth() {
+    cachedDockWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
+}
+// Update on load and resize
+if (typeof window !== 'undefined') {
+    updateCachedDockWidth();
+    window.addEventListener('resize', updateCachedDockWidth);
+}
 
 // Getters for external access
 export function getActiveWindows() {
@@ -26,7 +40,16 @@ export function getCurrentZIndex() {
 
 function updateAriaModal() {
     const activeIds = Array.from(activeWindows);
-    if (activeIds.length === 0) return;
+    const backgroundElements = document.querySelectorAll('.main-content, .dock, .top-bar');
+    
+    // Hide/show background elements from screen readers
+    if (activeIds.length === 0) {
+        backgroundElements.forEach(el => el.removeAttribute('aria-hidden'));
+        return;
+    }
+    
+    // Hide background when any window is open
+    backgroundElements.forEach(el => el.setAttribute('aria-hidden', 'true'));
 
     // Find window with highest Z-index
     let topWindow = null;
@@ -62,13 +85,17 @@ export function openWindow(appName, currentOS = 'desktop') {
         return;
     }
 
+    // Store element that triggered the open for focus restoration
+    lastFocusedElement = document.activeElement;
+
     windowEl.style.display = 'flex';
     activeWindows.add(windowId);
     bringToFront(windowEl);
     
-    // Apply cascade offset for desktop
+    // Apply cascade offset for desktop (only for new windows, use static counter #22)
     if (currentOS === 'desktop' && !windowEl.style.top) {
-        const cascadeOffset = activeWindows.size * 25;
+        cascadeCounter++;
+        const cascadeOffset = (cascadeCounter % 10) * 25; // Reset after 10 to prevent going too far
         const randomX = Math.floor(Math.random() * 30) - 15;
         const randomY = Math.floor(Math.random() * 20) - 10;
         windowEl.style.top = `calc(15% + ${cascadeOffset + randomY}px)`;
@@ -85,13 +112,18 @@ export function openWindow(appName, currentOS = 'desktop') {
         windowEl.classList.remove('opening');
     }, 400);
 
-    // Auto-focus terminal input
-    if (appName === 'terminal') {
-        setTimeout(() => {
+    // Setup focus trap and auto-focus
+    setTimeout(() => {
+        setupFocusTrap(windowEl);
+        // Focus first focusable element or terminal input
+        if (appName === 'terminal') {
             const terminalInput = document.getElementById('terminal-input');
             if (terminalInput) terminalInput.focus();
-        }, 100);
-    }
+        } else {
+            const firstFocusable = getFocusableElements(windowEl)[0];
+            if (firstFocusable) firstFocusable.focus();
+        }
+    }, 100);
 }
 
 export function closeWindow(windowId) {
@@ -99,6 +131,9 @@ export function closeWindow(windowId) {
     if (!windowEl) return;
 
     SoundManager.playWhoosh();
+    
+    // Remove focus trap
+    removeFocusTrap();
 
     windowEl.classList.remove('opening');
     windowEl.classList.add('closing');
@@ -107,8 +142,19 @@ export function closeWindow(windowId) {
         windowEl.style.display = 'none';
         windowEl.classList.remove('closing');
         activeWindows.delete(windowId);
+        
+        // Clean up snap and minimize state (#23)
+        windowSnapState.delete(windowId);
+        minimizedWindows.delete(windowId);
+        
         updateDockActiveStates();
         updateAriaModal(); // Update modal state after closing
+        
+        // Restore focus to element that opened the window
+        if (activeWindows.size === 0 && lastFocusedElement) {
+            lastFocusedElement.focus();
+            lastFocusedElement = null;
+        }
     }, 250);
 }
 
@@ -206,6 +252,16 @@ export function makeDraggable(element, currentOS) {
     if (!header) return;
 
     header.addEventListener('mousedown', dragMouseDown);
+    // Touch support for tablets (#48)
+    header.addEventListener('touchstart', dragTouchStart, { passive: false });
+
+    // Helper to get client coordinates from mouse or touch event
+    function getEventCoords(e) {
+        if (e.touches && e.touches.length > 0) {
+            return { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY };
+        }
+        return { clientX: e.clientX, clientY: e.clientY };
+    }
 
     function dragMouseDown(e) {
         if (currentOS !== 'desktop') return;
@@ -216,6 +272,28 @@ export function makeDraggable(element, currentOS) {
         pos3 = e.clientX;
         pos4 = e.clientY;
 
+        handleDragStart(e);
+
+        document.addEventListener('mouseup', closeDragElement);
+        document.addEventListener('mousemove', elementDrag);
+    }
+
+    function dragTouchStart(e) {
+        if (currentOS !== 'desktop') return;
+        if (e.target.closest('.window-control')) return;
+
+        e.preventDefault();
+        const coords = getEventCoords(e);
+        pos3 = coords.clientX;
+        pos4 = coords.clientY;
+
+        handleDragStart(e);
+
+        document.addEventListener('touchend', closeDragTouch, { passive: false });
+        document.addEventListener('touchmove', elementDragTouch, { passive: false });
+    }
+
+    function handleDragStart(e) {
         // Unsnap if snapped
         if (element.classList.contains('snapped-left') || 
             element.classList.contains('snapped-right') ||
@@ -226,27 +304,31 @@ export function makeDraggable(element, currentOS) {
                 element.classList.remove('snapped-left', 'snapped-right', 'snapped-maximized');
                 element.style.width = originalState.width;
                 element.style.height = originalState.height;
-                element.style.left = (e.clientX - parseInt(originalState.width) / 2) + 'px';
-                element.style.top = e.clientY + 'px';
-                pos3 = e.clientX;
-                pos4 = e.clientY;
+                element.style.left = (pos3 - parseInt(originalState.width) / 2) + 'px';
+                element.style.top = pos4 + 'px';
             }
         }
 
         bringToFront(element);
-
-        document.addEventListener('mouseup', closeDragElement);
-        document.addEventListener('mousemove', elementDrag);
     }
 
     function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
+        doElementDrag(e.clientX, e.clientY);
+    }
 
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+    function elementDragTouch(e) {
+        e.preventDefault();
+        const coords = getEventCoords(e);
+        doElementDrag(coords.clientX, coords.clientY);
+    }
+
+    function doElementDrag(clientX, clientY) {
+        pos1 = pos3 - clientX;
+        pos2 = pos4 - clientY;
+        pos3 = clientX;
+        pos4 = clientY;
 
         let newTop = element.offsetTop - pos2;
         let newLeft = element.offsetLeft - pos1;
@@ -254,7 +336,8 @@ export function makeDraggable(element, currentOS) {
         const minY = 28;
         const minX = 0;
         const maxY = window.innerHeight - 50;
-        const maxX = window.innerWidth - 100;
+        // Fix #21: account for window width so it can't be dragged mostly off-screen
+        const maxX = window.innerWidth - element.offsetWidth + 100;
 
         newTop = Math.max(minY, Math.min(newTop, maxY));
         newLeft = Math.max(minX, Math.min(newLeft, maxX));
@@ -262,23 +345,37 @@ export function makeDraggable(element, currentOS) {
         element.style.top = newTop + "px";
         element.style.left = newLeft + "px";
 
-        // Snap detection
+        // Snap detection (using cached dock width #20)
         const snapThreshold = 50;
-        const dockWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
 
         snapPreview.classList.remove('visible', 'snap-left', 'snap-right', 'snap-maximize');
 
-        if (e.clientX <= dockWidth + snapThreshold) {
+        if (clientX <= cachedDockWidth + snapThreshold) {
             snapPreview.classList.add('visible', 'snap-left');
-        } else if (e.clientX >= window.innerWidth - snapThreshold) {
+        } else if (clientX >= window.innerWidth - snapThreshold) {
             snapPreview.classList.add('visible', 'snap-right');
-        } else if (e.clientY <= 28 + snapThreshold / 2) {
+        } else if (clientY <= 28 + snapThreshold / 2) {
             snapPreview.classList.add('visible', 'snap-maximize');
         }
     }
 
     function closeDragElement(e) {
-        const dockWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
+        doCloseDrag(e?.clientX, e?.clientY);
+        document.removeEventListener('mouseup', closeDragElement);
+        document.removeEventListener('mousemove', elementDrag);
+    }
+
+    function closeDragTouch(e) {
+        const coords = e.changedTouches ? 
+            { clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY } : 
+            { clientX: 0, clientY: 0 };
+        doCloseDrag(coords.clientX, coords.clientY);
+        document.removeEventListener('touchend', closeDragTouch);
+        document.removeEventListener('touchmove', elementDragTouch);
+    }
+
+    function doCloseDrag(clientX, clientY) {
+        // Using cached dock width (#20)
         const snapThreshold = 50;
 
         if (!windowSnapState.has(element.id)) {
@@ -290,18 +387,27 @@ export function makeDraggable(element, currentOS) {
             });
         }
 
-        if (e && e.clientX <= dockWidth + snapThreshold) {
+        // Clear inline styles for position/size before applying snap class (#33)
+        // This allows CSS rules to take effect without !important
+        function clearInlinePositionStyles(el) {
+            el.style.top = '';
+            el.style.left = '';
+            el.style.width = '';
+            el.style.height = '';
+        }
+
+        if (clientX && clientX <= cachedDockWidth + snapThreshold) {
+            clearInlinePositionStyles(element);
             element.classList.add('snapped-left');
-        } else if (e && e.clientX >= window.innerWidth - snapThreshold) {
+        } else if (clientX && clientX >= window.innerWidth - snapThreshold) {
+            clearInlinePositionStyles(element);
             element.classList.add('snapped-right');
-        } else if (e && e.clientY <= 28 + snapThreshold / 2) {
+        } else if (clientY && clientY <= 28 + snapThreshold / 2) {
+            clearInlinePositionStyles(element);
             element.classList.add('snapped-maximized');
         }
 
         snapPreview.classList.remove('visible', 'snap-left', 'snap-right', 'snap-maximize');
-
-        document.removeEventListener('mouseup', closeDragElement);
-        document.removeEventListener('mousemove', elementDrag);
     }
 }
 
@@ -475,7 +581,85 @@ export function setupWindowControls() {
                 closeWindow(topmostWindow.id);
             }
         }
+        
+        // Ctrl+Tab to cycle through active windows (#46)
+        if (e.key === 'Tab' && e.ctrlKey && activeWindows.size > 1) {
+            e.preventDefault();
+            
+            // Get windows sorted by z-index
+            const windowsArray = Array.from(activeWindows).map(id => {
+                const el = document.getElementById(id);
+                return { id, zIndex: parseInt(el?.style.zIndex || 0), el };
+            }).sort((a, b) => b.zIndex - a.zIndex);
+            
+            // Find current topmost and bring next to front
+            if (windowsArray.length > 1) {
+                // Shift+Ctrl+Tab goes backwards
+                const nextIndex = e.shiftKey ? 0 : windowsArray.length - 1;
+                const nextWindow = windowsArray[nextIndex];
+                if (nextWindow?.el) {
+                    bringToFront(nextWindow.el);
+                    SoundManager.playClick();
+                }
+            }
+        }
     });
+}
+
+// ============================================
+// FOCUS TRAP (Accessibility)
+// ============================================
+
+function getFocusableElements(container) {
+    const focusableSelectors = [
+        'button:not([disabled])',
+        'a[href]',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        '[tabindex]:not([tabindex="-1"])',
+        '[contenteditable="true"]'
+    ].join(', ');
+    
+    return Array.from(container.querySelectorAll(focusableSelectors))
+        .filter(el => el.offsetParent !== null); // Only visible elements
+}
+
+function setupFocusTrap(windowEl) {
+    removeFocusTrap(); // Clear any existing trap
+    
+    currentFocusTrap = (e) => {
+        if (e.key !== 'Tab') return;
+        
+        const focusable = getFocusableElements(windowEl);
+        if (focusable.length === 0) return;
+        
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        
+        if (e.shiftKey) {
+            // Shift+Tab: if on first element, wrap to last
+            if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            // Tab: if on last element, wrap to first
+            if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    };
+    
+    document.addEventListener('keydown', currentFocusTrap);
+}
+
+function removeFocusTrap() {
+    if (currentFocusTrap) {
+        document.removeEventListener('keydown', currentFocusTrap);
+        currentFocusTrap = null;
+    }
 }
 
 export default {

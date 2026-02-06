@@ -209,6 +209,8 @@ function initBootScreen() {
     if (!bootScreen || !bootLog) return;
 
     let lineIndex = 0;
+    let bootInterval = null;
+    let isSkipped = false;
 
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -232,7 +234,73 @@ function initBootScreen() {
         return;
     }
 
+    // Function to complete boot and show desktop
+    function completeBoot() {
+        if (isSkipped) return;
+        isSkipped = true;
+        
+        // Clear any pending interval
+        if (bootInterval) {
+            clearTimeout(bootInterval);
+        }
+        
+        // Remove skip listeners
+        document.removeEventListener('keydown', skipBoot);
+        bootScreen.removeEventListener('click', skipBoot);
+        
+        bootScreen.classList.add('fade-out');
+        setTimeout(() => {
+            bootScreen.remove();
+            
+            // Open About Window - Positioned Left
+            if (currentOS === 'desktop') {
+                const aboutWin = document.getElementById('about-window');
+                if (aboutWin) {
+                    aboutWin.style.top = '15%';
+                    aboutWin.style.left = '120px';
+                }
+            }
+            openWindow('about', currentOS);
+            
+            if (currentOS === 'desktop') {
+                // Open Contact Window - Positioned Right
+                setTimeout(() => {
+                    const contactWin = document.getElementById('contact-window');
+                    if (contactWin) {
+                        contactWin.style.top = '15%';
+                        contactWin.style.left = '750px';
+                    }
+                    openWindow('contact', currentOS);
+                }, 200);
+            }
+            
+            // Defer startup drum to first user gesture to comply with autoplay policy (#24)
+            const playDrumOnce = () => {
+                SoundManager.playStartupDrum();
+                document.removeEventListener('click', playDrumOnce);
+                document.removeEventListener('keydown', playDrumOnce);
+            };
+            document.addEventListener('click', playDrumOnce, { once: true });
+            document.addEventListener('keydown', playDrumOnce, { once: true });
+        }, 300);
+    }
+
+    // Skip handler for key press or click
+    function skipBoot(e) {
+        // Ignore modifier keys alone
+        if (e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta') {
+            return;
+        }
+        completeBoot();
+    }
+
+    // Add skip listeners
+    document.addEventListener('keydown', skipBoot);
+    bootScreen.addEventListener('click', skipBoot);
+
     function addLine() {
+        if (isSkipped) return;
+        
         if (lineIndex < BOOT_LOG_MESSAGES.length) {
             const line = BOOT_LOG_MESSAGES[lineIndex];
             const lineEl = document.createElement('div');
@@ -248,38 +316,9 @@ function initBootScreen() {
             bootLog.appendChild(lineEl);
             bootLog.scrollTop = bootLog.scrollHeight;
             lineIndex++;
-            setTimeout(addLine, BOOT_LINE_INTERVAL_MS);
+            bootInterval = setTimeout(addLine, BOOT_LINE_INTERVAL_MS);
         } else {
-            setTimeout(() => {
-                bootScreen.classList.add('fade-out');
-                setTimeout(() => {
-                    bootScreen.remove();
-                    
-                    // Open About Window - Positioned Left
-                    if (currentOS === 'desktop') {
-                        const aboutWin = document.getElementById('about-window');
-                        if (aboutWin) {
-                            aboutWin.style.top = '15%';
-                            aboutWin.style.left = '120px'; // Dock width + spacing
-                        }
-                    }
-                    openWindow('about', currentOS);
-                    
-                    if (currentOS === 'desktop') {
-                        // Open Contact Window - Positioned Right
-                        setTimeout(() => {
-                            const contactWin = document.getElementById('contact-window');
-                            if (contactWin) {
-                                contactWin.style.top = '15%';
-                                contactWin.style.left = '750px'; // 120px + 600px width + 30px gap
-                            }
-                            openWindow('contact', currentOS);
-                        }, 200);
-                    }
-                    
-                    SoundManager.playStartupDrum();
-                }, 500);
-            }, 500);
+            setTimeout(completeBoot, 500);
         }
     }
 
@@ -290,6 +329,11 @@ function initBootScreen() {
 // STICKY NOTES
 // ============================================
 
+// Generate stable key from note text (#27)
+function getNoteKey(noteText) {
+    return noteText.slice(0, 30).replace(/\s+/g, '_');
+}
+
 function createStickyNotes() {
     if (currentOS !== 'desktop') return;
 
@@ -298,18 +342,19 @@ function createStickyNotes() {
 
     let savedPositions = {};
     try {
-        savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v2') || '{}');
+        savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v3') || '{}');
     } catch (e) {
         console.error('Failed to load sticky note positions:', e);
         savedPositions = {};
     }
 
-    stickyNotesData.forEach((note, index) => {
+    stickyNotesData.forEach((note) => {
         const noteEl = document.createElement('div');
         noteEl.className = `sticky-note ${note.color !== 'yellow' ? note.color : ''}`;
         noteEl.style.transform = `rotate(${note.rotation}deg)`;
 
-        const saved = savedPositions[index];
+        const noteKey = getNoteKey(note.text);
+        const saved = savedPositions[noteKey];
         if (saved) {
             noteEl.style.top = saved.top;
             noteEl.style.left = saved.left;
@@ -320,7 +365,12 @@ function createStickyNotes() {
         }
 
         noteEl.textContent = note.text;
-        noteEl.setAttribute('data-note-index', index);
+        noteEl.setAttribute('data-note-key', noteKey);
+        
+        // Accessibility: add role and label for screen readers
+        noteEl.setAttribute('role', 'note');
+        const preview = note.text.substring(0, 50) + (note.text.length > 50 ? '...' : '');
+        noteEl.setAttribute('aria-label', `Sticky note: ${preview}`);
 
         makeStickyDraggable(noteEl);
 
@@ -334,7 +384,6 @@ function makeStickyDraggable(element) {
     element.addEventListener('mousedown', dragMouseDown);
 
     function dragMouseDown(e) {
-        // e = e || window.event; // Not strictly needed with modern browsers + addEventListener
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
@@ -366,14 +415,15 @@ function makeStickyDraggable(element) {
         document.removeEventListener('mouseup', closeDragElement);
         document.removeEventListener('mousemove', elementDrag);
 
-        const noteIndex = element.getAttribute('data-note-index');
-        if (noteIndex !== null) {
-            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v2') || '{}');
-            savedPositions[noteIndex] = {
+        // Use text-based key instead of numeric index (#27)
+        const noteKey = element.getAttribute('data-note-key');
+        if (noteKey) {
+            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v3') || '{}');
+            savedPositions[noteKey] = {
                 top: element.style.top,
                 left: element.style.left
             };
-            localStorage.setItem('stickyNotePositions_v2', JSON.stringify(savedPositions));
+            localStorage.setItem('stickyNotePositions_v3', JSON.stringify(savedPositions));
         }
     }
 }
@@ -565,12 +615,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Update clock
+    // Update clock (store interval ID for cleanup #49)
     updateClock();
-    setInterval(updateClock, 1000);
+    const clockIntervalId = setInterval(updateClock, 1000);
+    
+    // Clear interval on page unload for code hygiene (#49)
+    window.addEventListener('beforeunload', () => {
+        clearInterval(clockIntervalId);
+    });
 
-    // Listen for window resize
+    // Listen for window resize (debounced to avoid excessive closeAllWindows calls)
+    let resizeTimeout = null;
     window.addEventListener('resize', () => {
-        updateOS();
+        if (resizeTimeout) {
+            clearTimeout(resizeTimeout);
+        }
+        resizeTimeout = setTimeout(() => {
+            updateOS();
+            resizeTimeout = null;
+        }, 300);
     });
 });

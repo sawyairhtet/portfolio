@@ -10,19 +10,27 @@ This is my portfolio website featuring an **Ubuntu GNOME (Yaru)** desktop theme.
 
 ```plaintext
 portfolio/
-├── index.html              # Main OS simulation (Single Page App)
-├── 404.html                # Custom 404 Error Page
-├── check-before-deploy.js  # Pre-deployment safety check script
+├── index.html                  # Main OS simulation (Single Page App)
+├── 404.html                    # Custom 404 Error Page
+├── manifest.json               # PWA manifest
+├── sw.js                       # Service Worker for offline support
+├── sitemap.xml                 # SEO sitemap
+├── robots.txt                  # Search engine directives
+├── check-before-deploy.js      # Pre-deployment safety check script
+├── build.js                    # CSS build script
 ├── css/
-│   └── main.css            # Global styles and Ubuntu theme logic
+│   ├── main.css                # CSS entry point (imports all styles)
+│   ├── base/                   # Reset, variables, typography
+│   └── components/             # Window, dock, terminal, dialog styles
 ├── js/
-│   └── main.js             # OS logic, window management, terminal
-├── pages/                  # Static pages (Fallbacks/Legacy)
-│   ├── about.html
-│   └── newsletter-success.html
-└── assets/
-    ├── favicon.svg
-    └── images/             # Project assets and wallpapers
+│   ├── app.js                  # Main entry point & orchestration
+│   ├── apps/                   # App-specific logic (terminal, sticky notes)
+│   ├── config/                 # Boot messages configuration
+│   ├── core/                   # Window manager, audio, storage
+│   └── ui/                     # Dialog, context menu, theme toggle
+├── assets/                     # Favicon and icons
+├── images/                     # Profile picture, wallpapers
+└── resume/                     # Downloadable resume PDF
 ```
 
 ## Features

@@ -1,8 +1,5 @@
-/* Import handwriting font for sticky notes - must be at top */
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-
 /* ============================================
    TYPOGRAPHY
    ============================================ */
 
-/* Note: Main fonts (Ubuntu, Inter, Ubuntu Mono) are loaded in index.html */
+/* Note: All fonts (Ubuntu, Ubuntu Mono, Indie Flower) are loaded in index.html */

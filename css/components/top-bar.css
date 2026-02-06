@@ -88,6 +88,36 @@
     transform: rotate(360deg);
 }
 
+/* Theme Toggle Tooltip (#47) */
+.theme-tooltip {
+    position: absolute;
+    bottom: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-surface);
+    color: var(--color-text);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    box-shadow: var(--shadow-md);
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.theme-toggle-btn {
+    position: relative;
+}
+
+.theme-toggle-btn:hover .theme-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
 /* Status Bar (Mobile/Tablet) - Hidden by default */
 .status-bar {
     display: none;

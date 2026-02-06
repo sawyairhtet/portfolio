@@ -1,0 +1,26 @@
+{
+    "name": "Saw Ye Htet - Portfolio",
+    "short_name": "SYH Portfolio",
+    "description": "IT Student & VR Developer - Portfolio Website",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#2C001E",
+    "theme_color": "#E95420",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "assets/icon.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["portfolio", "personal"],
+    "lang": "en"
+}

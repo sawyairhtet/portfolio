@@ -94,6 +94,40 @@ try {
   console.log('[WARN] Could not check image paths:', error.message);
 }
 
+// Check 6: Auto-update sitemap.xml lastmod date
+try {
+  const sitemapPath = 'sitemap.xml';
+  if (fs.existsSync(sitemapPath)) {
+    let sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    const lastmodRegex = /<lastmod>[^<]*<\/lastmod>/g;
+
+    if (sitemapContent.includes('<lastmod>')) {
+      sitemapContent = sitemapContent.replace(lastmodRegex, `<lastmod>${today}</lastmod>`);
+      fs.writeFileSync(sitemapPath, sitemapContent, 'utf8');
+      console.log(`[OK] Updated sitemap.xml lastmod to ${today}`);
+    } else {
+      console.log('[WARN] No <lastmod> tag found in sitemap.xml');
+    }
+  } else {
+    console.log('[WARN] sitemap.xml not found');
+  }
+} catch (error) {
+  console.log('[WARN] Could not update sitemap.xml:', error.message);
+}
+
+// Check 7: Verify Google Analytics tag is present (#50)
+try {
+  const htmlContent = fs.readFileSync('index.html', 'utf8');
+  if (htmlContent.includes('googletagmanager.com/gtag/js') || htmlContent.includes('google-analytics.com')) {
+    console.log('[OK] Google Analytics snippet found');
+  } else {
+    console.log('[WARN] Google Analytics snippet not found in index.html');
+  }
+} catch (error) {
+  console.log('[WARN] Could not check for Google Analytics:', error.message);
+}
+
 console.log('\n' + '='.repeat(50));
 if (hasErrors) {
   console.log('[ERROR] CRITICAL ISSUES FOUND - DO NOT DEPLOY!');

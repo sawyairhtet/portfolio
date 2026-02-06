@@ -25,7 +25,7 @@
 }
 
 .terminal-prompt {
-    color: #4E9A06;
+    color: #8AE234; /* Brighter green for WCAG AA contrast against dark bg */
     margin-right: var(--spacing-sm);
 }
 

@@ -388,6 +388,37 @@ export function executeTerminalCommand(input) {
     const trimmedInput = input.trim();
     if (!trimmedInput) return '';
 
+    // Check for output redirect (#26): echo "text" > file
+    const redirectMatch = trimmedInput.match(/^(.+?)\s*>\s*(.+)$/);
+    if (redirectMatch) {
+        const [, commandPart, filePath] = redirectMatch;
+        const [cmd, ...args] = commandPart.trim().split(' ');
+        const command = cmd.toLowerCase();
+        
+        // Only echo supports redirect for now
+        if (command === 'echo') {
+            const content = args.join(' ').replace(/^["']|["']$/g, ''); // Remove quotes
+            const resolvedPath = resolvePath(filePath.trim());
+            const pathParts = resolvedPath.split('/').filter(p => p);
+            const fileName = pathParts.pop();
+            
+            // Navigate to parent directory
+            let current = fileSystem;
+            for (const part of pathParts) {
+                if (current[part] && typeof current[part] === 'object') {
+                    current = current[part];
+                } else {
+                    return `No such directory: ${pathParts.join('/')}`;
+                }
+            }
+            
+            // Write file
+            current[fileName] = content;
+            saveFileSystem();
+            return ''; // No output on success
+        }
+    }
+
     const [cmd, ...args] = trimmedInput.split(' ');
     const command = cmd.toLowerCase();
 
@@ -409,10 +440,13 @@ export function addTerminalOutput(command, output) {
     terminalOutput.appendChild(commandLine);
 
     if (output) {
-        const outputDiv = document.createElement('div');
-        outputDiv.className = 'terminal-line';
-        outputDiv.textContent = output;
-        terminalOutput.appendChild(outputDiv);
+        // Use pre element for ASCII art preservation (#25)
+        const outputEl = document.createElement('pre');
+        outputEl.className = 'terminal-line';
+        outputEl.style.margin = '0';
+        outputEl.style.fontFamily = 'inherit';
+        outputEl.textContent = output;
+        terminalOutput.appendChild(outputEl);
     }
 
     terminalOutput.parentElement.scrollTop = terminalOutput.parentElement.scrollHeight;

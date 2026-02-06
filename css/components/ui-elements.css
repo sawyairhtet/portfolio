@@ -175,6 +175,24 @@
     line-height: 1.6;
     white-space: pre-wrap;
     width: 100%;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.boot-skip-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Ubuntu Mono', 'Courier New', monospace;
+    font-size: 13px;
+    animation: bootHintPulse 2s ease-in-out infinite;
+}
+
+@keyframes bootHintPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
 }
 
 .boot-log .ok {

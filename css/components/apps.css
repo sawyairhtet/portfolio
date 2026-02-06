@@ -322,27 +322,34 @@
     margin: 0;
 }
 
-/* Skill Progress Bars */
-.skill-progress {
-    width: 100%;
-    height: 6px;
-    background: var(--color-border);
-    border-radius: 3px;
+/* Skill Proficiency Level Labels */
+.skill-level {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-top: var(--spacing-sm);
-    overflow: hidden;
 }
 
-.skill-progress-bar {
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, var(--color-primary) 0%, #FF7A45 100%);
-    border-radius: 3px;
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+.skill-level.proficient {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(56, 142, 60, 0.2) 100%);
+    color: #4CAF50;
+    border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
-/* Animate progress bars when visible */
-.window[data-app="skills"][style*="display: flex"] .skill-progress-bar {
-    width: var(--progress);
+.skill-level.familiar {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.2) 0%, rgba(245, 124, 0, 0.2) 100%);
+    color: #FF9800;
+    border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.skill-level.learning {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(25, 118, 210, 0.2) 100%);
+    color: #2196F3;
+    border: 1px solid rgba(33, 150, 243, 0.3);
 }
 
 /* ============================================

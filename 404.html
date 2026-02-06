@@ -11,6 +11,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;" />
     <meta name="theme-color" id="theme-color" content="#667eea" />
     <title>404 — Page Not Found | Saw Ye Htet</title>
     <meta name="description" content="The page you're looking for doesn't exist. Return to the homepage or explore other pages." />
@@ -272,10 +273,10 @@
                         <i class="fas fa-home"></i>
                         Go Home
                     </a>
-                    <a href="javascript:history.back()" class="error-btn error-btn-secondary">
+                    <button onclick="history.back()" class="error-btn error-btn-secondary">
                         <i class="fas fa-arrow-left"></i>
                         Go Back
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

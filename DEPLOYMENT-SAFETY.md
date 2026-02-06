@@ -31,7 +31,7 @@ git status
 git diff
 
 # Add files (be specific, avoid git add .)
-git add index.html css/main.css js/main.js
+git add index.html css/main.css js/app.js
 
 # Write descriptive commit message
 git commit -m "Add new VR project section with hand tracking details"

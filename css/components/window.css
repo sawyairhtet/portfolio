@@ -123,31 +123,32 @@
 
 /* ============================================
    WINDOW SNAP STATES
+   Note: Inline styles are cleared in JS before applying these classes (#33)
    ============================================ */
 
 .window.snapped-left {
-    top: 28px !important;
-    left: var(--dock-width) !important;
-    width: calc(50vw - var(--dock-width) / 2) !important;
-    height: calc(100vh - 28px) !important;
+    top: 28px;
+    left: var(--dock-width);
+    width: calc(50vw - var(--dock-width) / 2);
+    height: calc(100vh - 28px);
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .window.snapped-right {
-    top: 28px !important;
-    left: calc(50vw + var(--dock-width) / 2) !important;
-    width: calc(50vw - var(--dock-width) / 2) !important;
-    height: calc(100vh - 28px) !important;
+    top: 28px;
+    left: calc(50vw + var(--dock-width) / 2);
+    width: calc(50vw - var(--dock-width) / 2);
+    height: calc(100vh - 28px);
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .window.snapped-maximized {
-    top: 28px !important;
-    left: var(--dock-width) !important;
-    width: calc(100vw - var(--dock-width)) !important;
-    height: calc(100vh - 28px) !important;
+    top: 28px;
+    left: var(--dock-width);
+    width: calc(100vw - var(--dock-width));
+    height: calc(100vh - 28px);
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
