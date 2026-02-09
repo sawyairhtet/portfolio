@@ -11,7 +11,7 @@ let activeWindows = new Set();
 const windowSnapState = new Map();
 const minimizedWindows = new Map();
 let lastFocusedElement = null; // Track element that opened window for focus restoration
-let currentFocusTrap = null; // Track active focus trap handler
+const focusTrapHandlers = new Map(); // Track focus trap handlers per window
 let cascadeCounter = 0; // Static counter for window cascade positioning (#22)
 
 // Cache CSS variable to avoid reading on every drag call (#20)
@@ -59,7 +59,9 @@ function updateAriaModal() {
         const el = document.getElementById(id);
         if (el) {
             el.removeAttribute('aria-modal');
-            el.setAttribute('aria-hidden', 'true'); // Hide others from screen readers
+            // Don't hide non-top windows from screen readers - they're still visible
+            // Just mark them as not the primary focus with inert-like behavior
+            el.removeAttribute('aria-hidden');
             const z = parseInt(el.style.zIndex || 0);
             if (z > maxZ) {
                 maxZ = z;
@@ -70,7 +72,6 @@ function updateAriaModal() {
 
     if (topWindow) {
         topWindow.setAttribute('aria-modal', 'true');
-        topWindow.removeAttribute('aria-hidden');
     }
 }
 
@@ -132,8 +133,8 @@ export function closeWindow(windowId) {
 
     SoundManager.playWhoosh();
     
-    // Remove focus trap
-    removeFocusTrap();
+    // Remove focus trap for this window
+    removeFocusTrap(windowId);
 
     windowEl.classList.remove('opening');
     windowEl.classList.add('closing');
@@ -159,7 +160,8 @@ export function closeWindow(windowId) {
 }
 
 export function closeAllWindows() {
-    activeWindows.forEach(windowId => {
+    // Snapshot the Set to avoid iteration-while-modifying issues (#closeAllWindows-fix)
+    Array.from(activeWindows).forEach(windowId => {
         closeWindow(windowId);
     });
 }
@@ -193,11 +195,17 @@ export function minimizeWindow(windowId) {
     }, 350);
 }
 
-export function restoreWindow(appName) {
+export function restoreWindow(appName, currentOS = null) {
     const windowId = `${appName}-window`;
     const windowEl = document.getElementById(windowId);
     
     if (!windowEl) return;
+    
+    // Detect currentOS if not provided
+    if (!currentOS) {
+        const width = window.innerWidth;
+        currentOS = width <= 767 ? 'mobile' : (width <= 1024 ? 'tablet' : 'desktop');
+    }
     
     if (minimizedWindows.has(windowId)) {
         windowEl.style.display = 'flex';
@@ -215,7 +223,7 @@ export function restoreWindow(appName) {
         
         minimizedWindows.delete(windowId);
     } else {
-        openWindow(appName);
+        openWindow(appName, currentOS);
     }
 }
 
@@ -626,9 +634,12 @@ function getFocusableElements(container) {
 }
 
 function setupFocusTrap(windowEl) {
-    removeFocusTrap(); // Clear any existing trap
+    const windowId = windowEl.id;
     
-    currentFocusTrap = (e) => {
+    // Remove existing trap for this window if any
+    removeFocusTrap(windowId);
+    
+    const handler = (e) => {
         if (e.key !== 'Tab') return;
         
         const focusable = getFocusableElements(windowEl);
@@ -652,13 +663,15 @@ function setupFocusTrap(windowEl) {
         }
     };
     
-    document.addEventListener('keydown', currentFocusTrap);
+    focusTrapHandlers.set(windowId, handler);
+    document.addEventListener('keydown', handler);
 }
 
-function removeFocusTrap() {
-    if (currentFocusTrap) {
-        document.removeEventListener('keydown', currentFocusTrap);
-        currentFocusTrap = null;
+function removeFocusTrap(windowId) {
+    if (windowId && focusTrapHandlers.has(windowId)) {
+        const handler = focusTrapHandlers.get(windowId);
+        document.removeEventListener('keydown', handler);
+        focusTrapHandlers.delete(windowId);
     }
 }
 

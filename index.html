@@ -19,13 +19,13 @@
     <!-- Open Graph / facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Saw Ye Htet - Portfolio">
-    <meta property="og:description" content="Full Stack Java Developer specializing in web development and software engineering.">
+    <meta property="og:description" content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
     <meta property="og:image" content="https://sawyehtet.com/images/og-preview.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Saw Ye Htet - Portfolio">
-    <meta name="twitter:description" content="Full Stack Java Developer specializing in web development and software engineering.">
+    <meta name="twitter:description" content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
     <meta name="twitter:image" content="https://sawyehtet.com/images/og-preview.png">
     
     <link rel="canonical" href="https://sawyehtet.com/">
@@ -70,7 +70,7 @@
         "https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/",
         "https://x.com/saulyehtet_"
       ],
-      "jobTitle": "Software Engineer",
+      "jobTitle": "IT Student & VR Developer",
       "description": "IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
     }
     </script>
@@ -108,8 +108,8 @@
     <div class="top-bar">
         <!-- GNOME Panel Left - Activities -->
         <div class="menu-bar-left">
-            <span class="personal-brand">SYH</span>
-            <button class="activities-btn pill">Activities</button>
+            <span class="personal-brand" aria-label="Saw Ye Htet - Personal Brand">SYH</span>
+            <button class="activities-btn pill" aria-disabled="true" title="Activities overview (decorative)">Activities</button>
         </div>
 
         <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
@@ -131,12 +131,11 @@
         <div class="menu-bar-right">
             <button class="theme-toggle-btn pill" id="quick-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                 <i class="fas fa-moon"></i>
-                <span class="theme-tooltip">Toggle Dark Mode</span>
             </button>
-            <div class="status-menu pill">
-                <i class="fas fa-network-wired"></i>
-                <i class="fas fa-volume-up"></i>
-                <i class="fas fa-power-off"></i>
+            <div class="status-menu pill" role="presentation" aria-label="System status indicators (decorative)">
+                <i class="fas fa-network-wired" aria-hidden="true"></i>
+                <i class="fas fa-volume-up" aria-hidden="true"></i>
+                <i class="fas fa-power-off" aria-hidden="true"></i>
             </div>
         </div>
     </div>
@@ -389,19 +388,6 @@
                 </a>
 
 
-                <div class="project-card coming-soon">
-                    <div class="project-preview" style="opacity: 0.6;"><i class="fas fa-rocket"></i></div>
-                    <h3>More Coming Soon</h3>
-                    <p>Currently working on exciting new projects including AI experiments, 
-                        mobile apps, and more VR experiences. Stay tuned!</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">???</span>
-                        <span class="tech-badge">TBD</span>
-                    </div>
-                    <div class="project-meta">
-                        <span class="project-platform"><i class="fas fa-clock"></i> In Progress</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -566,7 +552,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then(reg => console.log('[SW] Registered:', reg.scope))
                     .catch(err => console.log('[SW] Registration failed:', err));
             });

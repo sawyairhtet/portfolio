@@ -11,9 +11,9 @@ const DIST_DIR = path.join(__dirname, 'dist');
 
 // CSS files in dependency order (matching main.css @import order)
 const CSS_FILES = [
-    // Base Styles
-    'base/typography.css',
+    // Base Styles (variables must be first as other files depend on them)
     'base/variables.css',
+    'base/typography.css',
     'base/reset.css',
     'base/animations.css',
     // Component Styles

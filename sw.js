@@ -3,7 +3,9 @@
  * Caches static assets for offline access
  */
 
-const CACHE_NAME = 'syh-portfolio-v1';
+// Cache version - update BUILD_VERSION on each deploy for cache-busting
+const BUILD_VERSION = '20260209';
+const CACHE_NAME = `syh-portfolio-v1-${BUILD_VERSION}`;
 const STATIC_ASSETS = [
     '/',
     '/index.html',
@@ -20,7 +22,8 @@ const STATIC_ASSETS = [
     '/images/profile-picture.jpg',
     '/images/noble-numbat.jpg',
     '/assets/icon.png',
-    '/manifest.json'
+    '/manifest.json',
+    '/offline.html'
 ];
 
 // Install - cache static assets
@@ -42,7 +45,7 @@ self.addEventListener('activate', (event) => {
             .then((cacheNames) => {
                 return Promise.all(
                     cacheNames
-                        .filter((name) => name !== CACHE_NAME)
+                        .filter((name) => name.startsWith('syh-portfolio-') && name !== CACHE_NAME)
                         .map((name) => caches.delete(name))
                 );
             })
@@ -83,10 +86,13 @@ self.addEventListener('fetch', (event) => {
                     })
                     .catch(() => {
                         // Offline fallback for HTML pages
-                        if (event.request.headers.get('accept').includes('text/html')) {
-                            return caches.match('/index.html');
+                        // Guard against null accept header to prevent crash
+                        const acceptHeader = event.request.headers.get('accept');
+                        if (acceptHeader && acceptHeader.includes('text/html')) {
+                            return caches.match('/offline.html');
                         }
                     });
             })
     );
 });
+

@@ -16,7 +16,7 @@ export function startMatrixEffect() {
 
     const hint = document.createElement('div');
     hint.className = 'matrix-exit-hint';
-    hint.textContent = 'Press any key to exit';
+    hint.textContent = 'Press any key or tap to exit';
     terminalBody.appendChild(hint);
 
     const ctx = canvas.getContext('2d');
@@ -67,6 +67,8 @@ export function startMatrixEffect() {
         hint.remove();
         terminalBody.classList.remove('matrix-mode');
         document.removeEventListener('keydown', exitMatrix);
+        canvas.removeEventListener('click', exitMatrix);
+        canvas.removeEventListener('touchstart', exitMatrix);
         
         const terminalInput = document.getElementById('terminal-input');
         if (terminalInput) terminalInput.focus();
@@ -74,7 +76,8 @@ export function startMatrixEffect() {
 
     setTimeout(() => {
         document.addEventListener('keydown', exitMatrix);
+        // Add touch/click support for mobile exit (#matrix-mobile-exit)
+        canvas.addEventListener('click', exitMatrix);
+        canvas.addEventListener('touchstart', exitMatrix, { passive: true });
     }, 100);
 }
-
-export default { startMatrixEffect };

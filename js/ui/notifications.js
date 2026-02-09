@@ -12,7 +12,15 @@ export function showToast(message, icon = 'fa-info-circle') {
     toast.className = 'toast-notification';
     toast.setAttribute('role', 'status');
     toast.setAttribute('aria-live', 'polite');
-    toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+    
+    // Create icon element safely (avoid innerHTML XSS)
+    const iconEl = document.createElement('i');
+    iconEl.className = `fas ${icon}`;
+    toast.appendChild(iconEl);
+    
+    // Create text node to safely escape message content
+    toast.appendChild(document.createTextNode(' ' + message));
+    
     document.body.appendChild(toast);
 
     requestAnimationFrame(() => {
@@ -24,5 +32,3 @@ export function showToast(message, icon = 'fa-info-circle') {
         setTimeout(() => toast.remove(), 300);
     }, 2000);
 }
-
-export default { showToast };

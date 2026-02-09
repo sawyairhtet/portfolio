@@ -24,7 +24,6 @@ import { setupTerminal, setupTerminalMobileFix } from './apps/terminal.js';
 
 // UI modules
 import { setupContextMenu } from './ui/context-menu.js';
-import { injectDialogStyles } from './ui/dialog.js';
 import { showToast } from './ui/notifications.js';
 
 // Config
@@ -367,12 +366,14 @@ function createStickyNotes() {
         noteEl.textContent = note.text;
         noteEl.setAttribute('data-note-key', noteKey);
         
-        // Accessibility: add role and label for screen readers
+        // Accessibility: add role, label, and tabindex for keyboard users
         noteEl.setAttribute('role', 'note');
+        noteEl.setAttribute('tabindex', '0');
         const preview = note.text.substring(0, 50) + (note.text.length > 50 ? '...' : '');
-        noteEl.setAttribute('aria-label', `Sticky note: ${preview}`);
+        noteEl.setAttribute('aria-label', `Sticky note: ${preview}. Use arrow keys to move.`);
 
         makeStickyDraggable(noteEl);
+        makeStickyKeyboardAccessible(noteEl);
 
         container.appendChild(noteEl);
     });
@@ -426,6 +427,55 @@ function makeStickyDraggable(element) {
             localStorage.setItem('stickyNotePositions_v3', JSON.stringify(savedPositions));
         }
     }
+}
+
+// Keyboard accessibility for sticky notes
+function makeStickyKeyboardAccessible(element) {
+    const MOVE_STEP = 10; // pixels to move per keypress
+    
+    element.addEventListener('keydown', (e) => {
+        if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+        
+        e.preventDefault();
+        
+        // Ensure element has computed position
+        if (!element.style.left || element.style.left === 'auto') {
+            element.style.left = element.offsetLeft + 'px';
+        }
+        if (!element.style.top) {
+            element.style.top = element.offsetTop + 'px';
+        }
+        element.style.right = 'auto';
+        
+        const currentTop = parseInt(element.style.top) || 0;
+        const currentLeft = parseInt(element.style.left) || 0;
+        
+        switch (e.key) {
+            case 'ArrowUp':
+                element.style.top = Math.max(0, currentTop - MOVE_STEP) + 'px';
+                break;
+            case 'ArrowDown':
+                element.style.top = Math.min(window.innerHeight - 100, currentTop + MOVE_STEP) + 'px';
+                break;
+            case 'ArrowLeft':
+                element.style.left = Math.max(0, currentLeft - MOVE_STEP) + 'px';
+                break;
+            case 'ArrowRight':
+                element.style.left = Math.min(window.innerWidth - 100, currentLeft + MOVE_STEP) + 'px';
+                break;
+        }
+        
+        // Save position after keyboard move
+        const noteKey = element.getAttribute('data-note-key');
+        if (noteKey) {
+            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v3') || '{}');
+            savedPositions[noteKey] = {
+                top: element.style.top,
+                left: element.style.left
+            };
+            localStorage.setItem('stickyNotePositions_v3', JSON.stringify(savedPositions));
+        }
+    });
 }
 
 // ============================================
@@ -542,30 +592,6 @@ function setupSoundToggle() {
     });
 }
 
-// ============================================
-// ANIMATIONS
-// ============================================
-
-function injectAnimations() {
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-    `;
-    document.head.appendChild(style);
-}
 
 // ============================================
 // INITIALIZATION
@@ -578,9 +604,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Detect initial OS
     updateOS();
 
-    // Inject styles
-    injectAnimations();
-    injectDialogStyles();
 
     // Initialize theme
     ThemeManager.init();
@@ -615,9 +638,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Update clock (store interval ID for cleanup #49)
+    // Update clock - only needs 60s interval since we display hours:minutes only
     updateClock();
-    const clockIntervalId = setInterval(updateClock, 1000);
+    const clockIntervalId = setInterval(updateClock, 60000);
     
     // Clear interval on page unload for code hygiene (#49)
     window.addEventListener('beforeunload', () => {

@@ -399,21 +399,29 @@ export function executeTerminalCommand(input) {
         if (command === 'echo') {
             const content = args.join(' ').replace(/^["']|["']$/g, ''); // Remove quotes
             const resolvedPath = resolvePath(filePath.trim());
-            const pathParts = resolvedPath.split('/').filter(p => p);
-            const fileName = pathParts.pop();
+            const fileName = resolvedPath.split('/').pop();
+            const parentPath = resolvedPath.substring(0, resolvedPath.lastIndexOf('/')) || '/';
+            const parentNode = fileSystem[parentPath];
             
-            // Navigate to parent directory
-            let current = fileSystem;
-            for (const part of pathParts) {
-                if (current[part] && typeof current[part] === 'object') {
-                    current = current[part];
-                } else {
-                    return `No such directory: ${pathParts.join('/')}`;
-                }
+            // Check parent directory exists
+            if (!parentNode || parentNode.type !== 'dir') {
+                return `No such directory: ${parentPath}`;
             }
             
-            // Write file
-            current[fileName] = content;
+            // Write file using flat path key
+            if (!fileSystem[resolvedPath]) {
+                // New file - add to parent's children
+                fileSystem[resolvedPath] = { type: 'file', content: content };
+                if (!parentNode.children.includes(fileName)) {
+                    parentNode.children.push(fileName);
+                }
+            } else if (fileSystem[resolvedPath].type === 'file') {
+                // Overwrite existing file
+                fileSystem[resolvedPath].content = content;
+            } else {
+                return `Cannot write to directory: ${resolvedPath}`;
+            }
+            
             saveFileSystem();
             return ''; // No output on success
         }
@@ -517,11 +525,3 @@ export function setupTerminalMobileFix() {
 
 // Export terminal commands for context menu use
 export { terminalCommands };
-
-export default {
-    executeTerminalCommand,
-    addTerminalOutput,
-    setupTerminal,
-    setupTerminalMobileFix,
-    terminalCommands
-};

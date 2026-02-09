@@ -94,10 +94,4 @@ export function showInputDialog(title, placeholder = '') {
     });
 }
 
-// Dialog styles are now in css/components/dialog.css (#34)
-// This function is kept for backwards compatibility but does nothing
-export function injectDialogStyles() {
-    // Styles moved to CSS file - no injection needed
-}
-
-export default { showInputDialog, injectDialogStyles };
+export default { showInputDialog };

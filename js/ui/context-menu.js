@@ -122,5 +122,3 @@ async function handleContextMenuAction(action) {
             break;
     }
 }
-
-export default { setupContextMenu };
