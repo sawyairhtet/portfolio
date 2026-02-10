@@ -26,6 +26,7 @@ const CSS_FILES = [
     'components/terminal.css',
     'components/apps.css',
     'components/ui-elements.css',
+    'components/dialog.css',
     // Responsive (must be last)
     'components/responsive.css'
 ];

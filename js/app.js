@@ -180,6 +180,7 @@ function setupMobileGestures() {
 // CLOCK
 // ============================================
 
+/** Update system clock in top bar. NOTE: DUPLICATED in 404.html (standalone page) */
 function updateClock() {
     const now = new Date();
     const hours = now.getHours();

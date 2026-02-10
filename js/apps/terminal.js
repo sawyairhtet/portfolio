@@ -328,7 +328,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
 
     'reset-icons': () => {
         localStorage.removeItem('appIconPositions');
-        localStorage.removeItem('stickyNotePositions_v2');
+        localStorage.removeItem('stickyNotePositions_v3');
         return 'Desktop icons reset to default positions.\nRefresh the page to see changes.';
     },
 

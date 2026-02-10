@@ -227,9 +227,9 @@
         </div>
         
         <!-- Status Bar (Mobile/Tablet only) -->
-        <div class="status-bar">
-            <div class="status-time"></div>
-            <div class="status-icons">
+        <div class="status-bar" role="presentation" aria-label="Status bar (decorative)">
+            <div class="status-time" aria-hidden="true"></div>
+            <div class="status-icons" aria-hidden="true">
                 <i class="fas fa-signal"></i>
                 <i class="fas fa-wifi"></i>
                 <i class="fas fa-battery-three-quarters"></i>
@@ -273,7 +273,7 @@
                         <i class="fas fa-home"></i>
                         Go Home
                     </a>
-                    <button onclick="history.back()" class="error-btn error-btn-secondary">
+                    <button id="go-back-btn" class="error-btn error-btn-secondary">
                         <i class="fas fa-arrow-left"></i>
                         Go Back
                     </button>
@@ -309,7 +309,10 @@
             }
         }
         updateClock();
-        setInterval(updateClock, 1000);
+        setInterval(updateClock, 60000); // Only display HH:MM, no need for 1s interval
+        
+        // Go Back button - avoid inline onclick for CSP compliance
+        document.getElementById('go-back-btn').addEventListener('click', () => history.back());
     </script>
 </body>
 </html>

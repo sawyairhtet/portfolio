@@ -1,57 +1,63 @@
 /**
  * Custom Dialog - Replacement for browser's prompt()
  * Creates a themed input dialog that matches the OS style
+ * Uses safe DOM APIs (createElement/textContent) to prevent XSS
  */
 
 /**
- * Escape HTML entities to prevent XSS attacks
- * @param {string} str - String to escape
- * @returns {string} Escaped string safe for HTML insertion
+ * Helper to create an element with optional className, attributes, and text
  */
-function escapeHtml(str) {
-    if (typeof str !== 'string') return '';
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+function createEl(tag, className, textContent) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (textContent) el.textContent = textContent;
+    return el;
 }
 
 export function showInputDialog(title, placeholder = '') {
     return new Promise((resolve) => {
-        // Escape user-provided inputs to prevent XSS
-        const safeTitle = escapeHtml(title);
-        const safePlaceholder = escapeHtml(placeholder);
-
         // Remove existing dialog if any
         const existing = document.getElementById('custom-input-dialog');
         if (existing) existing.remove();
 
-        // Create dialog elements
-        const overlay = document.createElement('div');
+        // Build dialog DOM safely with createElement (no innerHTML)
+        const overlay = createEl('div', 'dialog-overlay');
         overlay.id = 'custom-input-dialog';
-        overlay.className = 'dialog-overlay';
-        overlay.innerHTML = `
-            <div class="dialog-window">
-                <div class="dialog-header">
-                    <span class="dialog-title">${safeTitle}</span>
-                    <button class="dialog-close" aria-label="Close"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="dialog-body">
-                    <input type="text" class="dialog-input" placeholder="${safePlaceholder}" autofocus />
-                </div>
-                <div class="dialog-footer">
-                    <button class="dialog-btn dialog-cancel">Cancel</button>
-                    <button class="dialog-btn dialog-confirm">OK</button>
-                </div>
-            </div>
-        `;
 
+        const dialogWindow = createEl('div', 'dialog-window');
+
+        // Header
+        const header = createEl('div', 'dialog-header');
+        const titleSpan = createEl('span', 'dialog-title', title);
+        const closeBtn = createEl('button', 'dialog-close');
+        closeBtn.setAttribute('aria-label', 'Close');
+        const closeIcon = createEl('i', 'fas fa-times');
+        closeBtn.appendChild(closeIcon);
+        header.appendChild(titleSpan);
+        header.appendChild(closeBtn);
+
+        // Body
+        const body = createEl('div', 'dialog-body');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'dialog-input';
+        input.placeholder = placeholder;
+        input.autofocus = true;
+        body.appendChild(input);
+
+        // Footer
+        const footer = createEl('div', 'dialog-footer');
+        const cancelBtn = createEl('button', 'dialog-btn dialog-cancel', 'Cancel');
+        const confirmBtn = createEl('button', 'dialog-btn dialog-confirm', 'OK');
+        footer.appendChild(cancelBtn);
+        footer.appendChild(confirmBtn);
+
+        // Assemble
+        dialogWindow.appendChild(header);
+        dialogWindow.appendChild(body);
+        dialogWindow.appendChild(footer);
+        overlay.appendChild(dialogWindow);
         document.body.appendChild(overlay);
-
-        // Get elements
-        const input = overlay.querySelector('.dialog-input');
-        const confirmBtn = overlay.querySelector('.dialog-confirm');
-        const cancelBtn = overlay.querySelector('.dialog-cancel');
-        const closeBtn = overlay.querySelector('.dialog-close');
 
         // Focus input
         setTimeout(() => input.focus(), 50);

@@ -18,6 +18,7 @@
     
     <!-- Open Graph / facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sawyehtet.com/">
     <meta property="og:title" content="Saw Ye Htet - Portfolio">
     <meta property="og:description" content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
     <meta property="og:image" content="https://sawyehtet.com/images/og-preview.png">
@@ -30,7 +31,8 @@
     
     <link rel="canonical" href="https://sawyehtet.com/">
     <title>Saw Ye Htet - Portfolio</title>
-    <link rel="stylesheet" href="css/main.css">
+    <!-- Production: bundled CSS eliminates @import waterfall (15 sequential requests → 1) -->
+    <link rel="stylesheet" href="dist/bundle.min.css">
     <!-- Theme Init (prevents flash of wrong theme) -->
     <script>
         (function() {
@@ -43,9 +45,12 @@
     <!-- Google Fonts - Ubuntu + Indie Flower (for sticky notes) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Non-render-blocking: swap media to 'all' after load -->
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap">
     <link
         href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.media='all'">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="assets/icon.png" type="image/png">
@@ -71,7 +76,12 @@
         "https://x.com/saulyehtet_"
       ],
       "jobTitle": "IT Student & VR Developer",
-      "description": "IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+      "description": "IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.",
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Singapore Polytechnic"
+      },
+      "knowsAbout": ["VR Development", "Unity", "JavaScript", "Web Development", "Meta Quest", "Hand Tracking"]
     }
     </script>
 </head>
@@ -232,7 +242,10 @@
         <div class="window-body">
             <div class="about-hero">
                 <div class="about-avatar">
-                   <img src="images/profile-picture.jpg" alt="Saw Ye Htet" class="profile-img" width="140" height="140">
+                   <picture>
+                       <source srcset="images/profile-picture.webp" type="image/webp">
+                       <img src="images/profile-picture.jpg" alt="Saw Ye Htet" class="profile-img" width="140" height="140">
+                   </picture>
                 </div>
                 <h2>Saw Ye Htet</h2>
                 <p class="about-tagline">IT Student & VR Developer</p>
