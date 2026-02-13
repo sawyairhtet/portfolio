@@ -48,7 +48,13 @@ function concatenateCSS() {
     for (const file of CSS_FILES) {
         const filePath = path.join(CSS_DIR, file);
         try {
-            const content = fs.readFileSync(filePath, 'utf8');
+            let content = fs.readFileSync(filePath, 'utf8');
+
+            // Rewrite relative paths (fix for dist folder)
+            // CSS files in /css/components/ refer to images as ../../images/
+            // Bundled CSS in /dist/ refers to images as ../images/
+            content = content.replace(/url\(['"]?(\.\.\/\.\.\/)([^'"]+)['"]?\)/g, "url('../$2')");
+            
             bundledCSS += `/* === ${file} === */\n${content}\n\n`;
             console.log(`  ✓ ${file}`);
         } catch (err) {

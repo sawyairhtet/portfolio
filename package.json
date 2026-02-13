@@ -4,11 +4,11 @@
   "description": "A clean, modern, and responsive portfolio website built with vanilla HTML, CSS, and JavaScript",
   "main": "index.html",
   "scripts": {
-    "start": "npx serve .",
+    "start": "npm run build && npx serve .",
     "dev": "npx live-server --port=3000",
     "check": "node check-before-deploy.js",
     "safe-deploy": "npm run check && git status",
-    "deploy": "npm run check && npx gh-pages -d . -e . --dotfiles",
+    "deploy": "npm run prod && npm run check && npx gh-pages -d . -e . --dotfiles",
     "build": "node build.js",
     "build:css": "node build.js",
     "minify:js": "npx terser js/app.js -o dist/app.min.js -c -m",

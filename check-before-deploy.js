@@ -55,10 +55,29 @@ try {
   if (cssContent.trim().length === 0) {
     console.log('[WARN] CSS file is empty');
   } else {
-    console.log('[OK] CSS file has content');
+    console.log('[OK] Source CSS file has content');
   }
 } catch (error) {
   console.log('[WARN] Could not read CSS file:', error.message);
+}
+
+// Check 3b: Verify Build Artifacts (dist/bundle.min.css)
+try {
+    if (fs.existsSync('dist/bundle.min.css')) {
+        const stats = fs.statSync('dist/bundle.min.css');
+        if (stats.size > 0) {
+            console.log('[OK] Build artifact found (dist/bundle.min.css)');
+        } else {
+            console.log('[ERROR] Build artifact is empty (dist/bundle.min.css)');
+            hasErrors = true;
+        }
+    } else {
+        console.log('[ERROR] Build artifact missing (dist/bundle.min.css). Run "npm run build" first.');
+        hasErrors = true;
+    }
+} catch (error) {
+    console.log('[ERROR] Could not check build artifacts:', error.message);
+    hasErrors = true;
 }
 
 // Check 4: Verify JavaScript syntax (very basic)
