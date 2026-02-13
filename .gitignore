@@ -33,7 +33,6 @@ Thumbs.db
 .env.production.local
 
 # Build outputs (if any)
-dist/
 build/
 
 # Logs
