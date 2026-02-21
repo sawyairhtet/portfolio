@@ -9,46 +9,45 @@
    ============================================ */
 
 :root {
-
     /* Primary Font - Ubuntu with fallbacks */
-    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     /* ========================================
        LIGHT MODE (Default) - Clean & Modern
        ======================================== */
-    --color-primary: #E95420;
+    --color-primary: #e95420;
     /* Ubuntu Orange */
-    --color-bg-light: #F5F6F8;
+    --color-bg-light: #f5f6f8;
     /* Slightly darker light background for better contrast */
-    --color-bg-dark: #E8EAED;
+    --color-bg-dark: #e8eaed;
     --color-glass-light: rgba(240, 242, 245, 0.85);
     --color-glass-dark: rgba(230, 232, 235, 0.9);
-    --color-text-light: #2D3748;
+    --color-text-light: #2d3748;
     /* Softer dark text on light bg */
-    --color-text-dark: #4A5568;
+    --color-text-dark: #4a5568;
     --color-border: rgba(0, 0, 0, 0.12);
     --color-card-bg: rgba(0, 0, 0, 0.04);
 
     /* Light Mode Window Colors - Subtle Gray Tint */
     --color-header-bg: rgba(245, 246, 248, 0.95);
-    --color-header-text: #2D3748;
+    --color-header-text: #2d3748;
     --color-window-body-bg: rgba(250, 251, 252, 0.95);
-    --color-window-body-text: #2D3748;
+    --color-window-body-text: #2d3748;
     /* Ubuntu Yaru Colors */
-    --color-close-bg: #E95420;
-    --color-close-text: #FFFFFF;
+    --color-close-bg: #e95420;
+    --color-close-text: #ffffff;
     --color-control-bg: rgba(0, 0, 0, 0.06);
-    --color-control-text: #5E5E5E;
+    --color-control-text: #5e5e5e;
 
     /* Light Mode Dock - Subtle frosted glass */
     --color-dock-bg: rgba(255, 255, 255, 0.7);
     --color-dock-item-bg: rgba(0, 0, 0, 0.04);
     --color-dock-item-hover: rgba(233, 84, 32, 0.15);
-    --color-dock-text: #2D3748;
+    --color-dock-text: #2d3748;
 
     /* Light Mode Top Bar - Clean & Bright */
     --color-topbar-bg: rgba(255, 255, 255, 0.95);
-    --color-topbar-text: #2D3748;
+    --color-topbar-text: #2d3748;
 
     /* Spacing */
     --spacing-xs: 4px;
@@ -77,8 +76,8 @@
 
     /* Light Theme Gradients - Warm Sunset Palette */
     --gradient-wallpaper: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    --gradient-accent: linear-gradient(135deg, #E95420 0%, #FF6B6B 50%, #C74316 100%);
-    --gradient-btn: linear-gradient(135deg, #E95420 0%, #FF7A45 100%);
+    --gradient-accent: linear-gradient(135deg, #e95420 0%, #ff6b6b 50%, #c74316 100%);
+    --gradient-btn: linear-gradient(135deg, #e95420 0%, #ff7a45 100%);
 
     /* Animation Timing */
     --transition-fast: 0.15s ease;
@@ -100,40 +99,40 @@
 /* ========================================
    DARK MODE - Ubuntu Aubergine Aesthetic
    ======================================== */
-[data-theme="dark"] {
+[data-theme='dark'] {
     /* Dark Ubuntu Colors */
-    --color-primary: #FF6B3D;
-    --color-bg-light: #2C001E;
+    --color-primary: #ff6b3d;
+    --color-bg-light: #2c001e;
     /* Canonical Aubergine */
     --color-bg-dark: #1a0012;
     --color-glass-light: rgba(44, 0, 30, 0.75);
     --color-glass-dark: rgba(26, 0, 18, 0.85);
-    --color-text-light: #FFFFFF;
-    --color-text-dark: #F5F5F7;
+    --color-text-light: #ffffff;
+    --color-text-dark: #f5f5f7;
     --color-border: rgba(255, 255, 255, 0.12);
     --color-border-glow: rgba(255, 255, 255, 0.25);
     --color-card-bg: rgba(255, 255, 255, 0.08);
 
     /* Dark Mode Window Colors */
-    --color-header-bg: #3D3D3D;
-    --color-header-text: #FFFFFF;
+    --color-header-bg: #3d3d3d;
+    --color-header-text: #ffffff;
     --color-window-body-bg: rgba(60, 60, 60, 0.95);
-    --color-window-body-text: #FFFFFF;
+    --color-window-body-text: #ffffff;
     /* Dark Mode Yaru Colors */
-    --color-close-bg: #E95420;
-    --color-close-text: #FFFFFF;
-    --color-control-bg: #3E3E3E;
-    --color-control-text: #CCCCCC;
+    --color-close-bg: #e95420;
+    --color-close-text: #ffffff;
+    --color-control-bg: #3e3e3e;
+    --color-control-text: #cccccc;
 
     /* Dark Mode Dock */
     --color-dock-bg: rgba(0, 0, 0, 0.7);
     --color-dock-item-bg: rgba(255, 255, 255, 0.05);
     --color-dock-item-hover: rgba(255, 255, 255, 0.2);
-    --color-dock-text: #FFFFFF;
+    --color-dock-text: #ffffff;
 
     /* Dark Mode Top Bar */
     --color-topbar-bg: #1a0012;
-    --color-topbar-text: #FFFFFF;
+    --color-topbar-text: #ffffff;
 
     /* Shadows - Darker for dark mode */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -151,9 +150,9 @@
     --dock-width: 60px;
 
     /* Dark Ubuntu Gradients */
-    --gradient-wallpaper: linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
-    --gradient-accent: linear-gradient(135deg, #C74316 0%, #5E2750 100%);
-    --gradient-btn: linear-gradient(135deg, #C74316 0%, #9E3610 100%);
+    --gradient-wallpaper: linear-gradient(135deg, #2c001e 0%, #77216f 50%, #5e2750 100%);
+    --gradient-accent: linear-gradient(135deg, #c74316 0%, #5e2750 100%);
+    --gradient-btn: linear-gradient(135deg, #c74316 0%, #9e3610 100%);
 }
 
 
@@ -203,15 +202,15 @@
     background-clip: padding-box;
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-track {
+[data-theme='dark'] ::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
     background: rgba(255, 107, 61, 0.5);
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 107, 61, 0.7);
 }
 
@@ -221,7 +220,7 @@
     scrollbar-color: rgba(233, 84, 32, 0.5) rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] * {
+[data-theme='dark'] * {
     scrollbar-color: rgba(255, 107, 61, 0.5) rgba(255, 255, 255, 0.05);
 }
 
@@ -244,7 +243,10 @@ body {
     min-height: 100dvh; /* Dynamic viewport height for mobile */
     width: 100vw;
     /* Custom Ubuntu-style cursor */
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E95420' d='M5.5 3.21V20.8l5.7-5.69h8.3L5.5 3.21z'/%3E%3Cpath fill='%23fff' d='M6.5 5.83v11.99l3.96-3.96h5.77L6.5 5.83z'/%3E%3C/svg%3E") 0 0, auto;
+    cursor:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E95420' d='M5.5 3.21V20.8l5.7-5.69h8.3L5.5 3.21z'/%3E%3Cpath fill='%23fff' d='M6.5 5.83v11.99l3.96-3.96h5.77L6.5 5.83z'/%3E%3C/svg%3E")
+            0 0,
+        auto;
     /* Prevent pull-to-refresh on the main body */
     overscroll-behavior-y: contain;
 }
@@ -327,21 +329,31 @@ body {
 
 /* Avatar Pulse Glow */
 @keyframes avatarPulseGlow {
-    0%, 100% { 
-        box-shadow: 0 0 20px rgba(233, 84, 32, 0.3), 
-                    0 0 40px rgba(233, 84, 32, 0.1); 
+    0%,
+    100% {
+        box-shadow:
+            0 0 20px rgba(233, 84, 32, 0.3),
+            0 0 40px rgba(233, 84, 32, 0.1);
     }
-    50% { 
-        box-shadow: 0 0 30px rgba(233, 84, 32, 0.5), 
-                    0 0 60px rgba(233, 84, 32, 0.2); 
+    50% {
+        box-shadow:
+            0 0 30px rgba(233, 84, 32, 0.5),
+            0 0 60px rgba(233, 84, 32, 0.2);
     }
 }
 
 /* Construction Bounce */
 @keyframes constructionBounce {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-3px) rotate(-5deg); }
-    75% { transform: translateY(-3px) rotate(5deg); }
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-3px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(-3px) rotate(5deg);
+    }
 }
 
 /* Sticky Note In */
@@ -431,20 +443,34 @@ body {
 
 /* Shimmer Move */
 @keyframes shimmerMove {
-    0% { left: -100%; }
-    100% { left: 100%; }
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 /* Swipe Hint Pulse */
 @keyframes swipeHintPulse {
-    0%, 100% { transform: translateX(-50%) scale(1); }
-    50% { transform: translateX(-50%) scale(1.02); }
+    0%,
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.02);
+    }
 }
 
 /* Nav Hint Bounce */
 @keyframes navHintBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 /* Content Slide In */
@@ -461,15 +487,26 @@ body {
 
 /* Matrix Blink */
 @keyframes matrixBlink {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 0.3; }
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.3;
+    }
 }
 
 /* Dock Bounce (Mobile) */
 @keyframes dockBounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.85); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.85);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 
@@ -495,8 +532,7 @@ body {
     background: url('../images/noble-numbat.jpg') center/cover no-repeat;
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
-    transform: translate(calc(var(--mouse-x, 0) * -8px),
-            calc(var(--mouse-y, 0) * -8px));
+    transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
     transition: transform 0.3s ease-out;
     will-change: transform;
 }
@@ -603,7 +639,7 @@ body {
     transition: background 0.2s;
 }
 
-[data-theme="dark"] .pill {
+[data-theme='dark'] .pill {
     background: rgba(255, 255, 255, 0.1);
 }
 
@@ -611,7 +647,7 @@ body {
     background: rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="dark"] .pill:hover {
+[data-theme='dark'] .pill:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
@@ -620,7 +656,9 @@ body {
     cursor: pointer;
     font-size: 14px;
     color: var(--color-topbar-text);
-    transition: transform 0.3s ease, color 0.2s ease;
+    transition:
+        transform 0.3s ease,
+        color 0.2s ease;
 }
 
 .theme-toggle-btn:hover {
@@ -632,7 +670,7 @@ body {
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-[data-theme="dark"] .theme-toggle-btn i {
+[data-theme='dark'] .theme-toggle-btn i {
     transform: rotate(360deg);
 }
 
@@ -651,7 +689,9 @@ body {
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.15s ease, visibility 0.15s ease;
+    transition:
+        opacity 0.15s ease,
+        visibility 0.15s ease;
     box-shadow: var(--shadow-md);
     pointer-events: none;
     z-index: 10000;
@@ -727,44 +767,44 @@ body {
 }
 
 /* Colorful dock icon gradients - Light Mode Defaults */
-.dock-item[data-app="about"] {
-    background: linear-gradient(135deg, #FF6B3D 0%, #E95420 100%);
+.dock-item[data-app='about'] {
+    background: linear-gradient(135deg, #ff6b3d 0%, #e95420 100%);
 }
 
-.dock-item[data-app="projects"] {
-    background: linear-gradient(135deg, #5B9BD5 0%, #2E75B6 100%);
+.dock-item[data-app='projects'] {
+    background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
 }
 
-.dock-item[data-app="contact"] {
-    background: linear-gradient(135deg, #9B4F96 0%, #77216F 100%);
+.dock-item[data-app='contact'] {
+    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
 }
 
-.dock-item[data-app="terminal"] {
-    background: linear-gradient(135deg, #2AA198 0%, #1A7A72 100%);
+.dock-item[data-app='terminal'] {
+    background: linear-gradient(135deg, #2aa198 0%, #1a7a72 100%);
 }
 
-.dock-item[data-app="settings"] {
-    background: linear-gradient(135deg, #F5A623 0%, #D4850E 100%);
+.dock-item[data-app='settings'] {
+    background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
 }
 
 /* Dark Mode Overrides - Classic Ubuntu Colors */
-[data-theme="dark"] .dock-item[data-app="about"] {
-    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+[data-theme='dark'] .dock-item[data-app='about'] {
+    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
 }
 
-[data-theme="dark"] .dock-item[data-app="projects"] {
-    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
+[data-theme='dark'] .dock-item[data-app='projects'] {
+    background: linear-gradient(135deg, #aea79f 0%, #5e5750 100%);
 }
 
-[data-theme="dark"] .dock-item[data-app="contact"] {
-    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+[data-theme='dark'] .dock-item[data-app='contact'] {
+    background: linear-gradient(135deg, #2c001e 0%, #5e2750 100%);
 }
 
-[data-theme="dark"] .dock-item[data-app="terminal"] {
-    background: linear-gradient(135deg, #300A24 0%, #2C001E 100%);
+[data-theme='dark'] .dock-item[data-app='terminal'] {
+    background: linear-gradient(135deg, #300a24 0%, #2c001e 100%);
 }
 
-[data-theme="dark"] .dock-item[data-app="settings"] {
+[data-theme='dark'] .dock-item[data-app='settings'] {
     background: linear-gradient(135deg, #666666 0%, #333333 100%);
 }
 
@@ -788,7 +828,7 @@ body {
     transform: translateY(-50%);
     width: 3px;
     height: 20px;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 0 2px 2px 0;
     box-shadow: 1px 0 4px rgba(0, 0, 0, 0.3);
 }
@@ -820,7 +860,9 @@ body {
     border: 1px solid var(--color-border);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
     z-index: 1001;
     pointer-events: none;
 }
@@ -850,8 +892,10 @@ body {
 .window {
     position: absolute;
     background: var(--color-glass-light);
-    backdrop-filter: var(--glass-blur) var(--glass-saturation) var(--glass-brightness, brightness(1));
-    -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation) var(--glass-brightness, brightness(1));
+    backdrop-filter: var(--glass-blur) var(--glass-saturation)
+        var(--glass-brightness, brightness(1));
+    -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation)
+        var(--glass-brightness, brightness(1));
     border-radius: var(--radius-md) var(--radius-md) 0 0;
     box-shadow: var(--shadow-lg), var(--glass-inner-glow, none);
     border: 1px solid var(--color-border);
@@ -862,7 +906,9 @@ body {
     max-width: 650px;
     max-height: 80vh;
     z-index: var(--z-window);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
     /* Default position - ensure windows don't overlap dock on desktop */
     left: calc(var(--dock-width) + 20px);
     top: 15%;
@@ -870,7 +916,9 @@ body {
 
 /* Subtle glow on focused/topmost window */
 .window:focus-within {
-    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(233, 84, 32, 0.15);
+    box-shadow:
+        var(--shadow-lg),
+        0 0 0 2px rgba(233, 84, 32, 0.15);
 }
 
 /* Window animation states */
@@ -1008,7 +1056,9 @@ body {
     z-index: 99;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .snap-preview.visible {
@@ -1086,18 +1136,20 @@ body {
     transition: all 0.2s;
 }
 
-[data-theme="dark"] .window-control {
+[data-theme='dark'] .window-control {
     background: var(--color-control-bg);
     color: var(--color-control-text);
     border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .window-control:hover {
     filter: brightness(0.9);
 }
 
-[data-theme="dark"] .window-control:hover {
+[data-theme='dark'] .window-control:hover {
     filter: brightness(1.2);
     box-shadow: 0 0 12px rgba(255, 107, 61, 0.3);
 }
@@ -1109,16 +1161,16 @@ body {
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .window-control.close {
+[data-theme='dark'] .window-control.close {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Hover: Turns Orange */
 .window-control.close:hover {
-    background: #E95420;
+    background: #e95420;
     /* Ubuntu Orange */
-    color: #FFFFFF;
-    border-color: #C74316;
+    color: #ffffff;
+    border-color: #c74316;
     box-shadow: 0 2px 4px rgba(233, 84, 32, 0.3);
     filter: none;
     /* Reset brightness filter */
@@ -1208,8 +1260,8 @@ body {
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .window-control.minimize,
-[data-theme="dark"] .window-control.maximize {
+[data-theme='dark'] .window-control.minimize,
+[data-theme='dark'] .window-control.maximize {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -1218,8 +1270,8 @@ body {
     background: rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="dark"] .window-control.minimize:hover,
-[data-theme="dark"] .window-control.maximize:hover {
+[data-theme='dark'] .window-control.minimize:hover,
+[data-theme='dark'] .window-control.maximize:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
@@ -1227,19 +1279,22 @@ body {
    DARK MODE WINDOW CONTROL ENHANCEMENTS
    ============================================ */
 
-[data-theme="dark"] .window-control {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+[data-theme='dark'] .window-control {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="dark"] .window-control:hover {
-    box-shadow: 0 0 8px rgba(233, 84, 32, 0.4),
-                0 0 0 1px rgba(255, 255, 255, 0.2);
+[data-theme='dark'] .window-control:hover {
+    box-shadow:
+        0 0 8px rgba(233, 84, 32, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
-[data-theme="dark"] .window-control.close:hover {
-    box-shadow: 0 0 12px rgba(233, 84, 32, 0.5),
-                0 2px 4px rgba(233, 84, 32, 0.3);
+[data-theme='dark'] .window-control.close:hover {
+    box-shadow:
+        0 0 12px rgba(233, 84, 32, 0.5),
+        0 2px 4px rgba(233, 84, 32, 0.3);
 }
 
 
@@ -1271,7 +1326,9 @@ body {
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
-    transition: transform var(--transition-smooth), filter var(--transition-normal);
+    transition:
+        transform var(--transition-smooth),
+        filter var(--transition-normal);
     width: 100px;
     height: 110px;
     padding: var(--spacing-sm);
@@ -1331,43 +1388,49 @@ body {
     justify-content: center;
     font-size: 32px;
     margin-bottom: var(--spacing-sm);
-    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+        var(--shadow-md),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     color: #fff;
     border: 1px solid transparent;
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    transition:
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal);
 }
 
 .app-icon:hover .app-icon-wrapper {
     border-color: var(--color-border-glow);
-    box-shadow: var(--shadow-lg), 0 0 12px rgba(233, 84, 32, 0.25);
+    box-shadow:
+        var(--shadow-lg),
+        0 0 12px rgba(233, 84, 32, 0.25);
 }
 
 /* App Icon Gradients - Ubuntu Style */
-.app-icon[data-app="about"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+.app-icon[data-app='about'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
 }
 
-.app-icon[data-app="skills"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #77216F 0%, #5E2750 100%);
+.app-icon[data-app='skills'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #77216f 0%, #5e2750 100%);
 }
 
-.app-icon[data-app="projects"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #AEA79F 0%, #5E5750 100%);
+.app-icon[data-app='projects'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #aea79f 0%, #5e5750 100%);
 }
 
-.app-icon[data-app="contact"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #2C001E 0%, #5E2750 100%);
+.app-icon[data-app='contact'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #2c001e 0%, #5e2750 100%);
 }
 
-.app-icon[data-app="links"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #E95420 0%, #FF7A45 100%);
+.app-icon[data-app='links'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #e95420 0%, #ff7a45 100%);
 }
 
-.app-icon[data-app="terminal"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #300A24 0%, #2C001E 100%);
+.app-icon[data-app='terminal'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #300a24 0%, #2c001e 100%);
 }
 
-.app-icon[data-app="settings"] .app-icon-wrapper {
+.app-icon[data-app='settings'] .app-icon-wrapper {
     background: linear-gradient(135deg, #666666 0%, #333333 100%);
 }
 
@@ -1375,8 +1438,10 @@ body {
     font-size: 12px;
     text-align: center;
     /* Base text styles - always white for visibility on wallpaper */
-    color: #FFFFFF;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.6),
+        0 0 2px rgba(0, 0, 0, 0.4);
     padding: 4px 10px;
     font-weight: 500;
     letter-spacing: 0.3px;
@@ -1386,9 +1451,11 @@ body {
 }
 
 /* Dark mode label overrides */
-[data-theme="dark"] .app-label {
-    color: #FFFFFF;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.6);
+[data-theme='dark'] .app-label {
+    color: #ffffff;
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.9),
+        0 2px 6px rgba(0, 0, 0, 0.6);
     /* background: rgba(0, 0, 0, 0.35); Removed */
 }
 
@@ -1399,36 +1466,38 @@ body {
 
 /* Light mode app icon wrappers - add subtle border */
 .app-icon-wrapper {
-    box-shadow: var(--shadow-md), 0 0 0 1px rgba(0, 0, 0, 0.06);
+    box-shadow:
+        var(--shadow-md),
+        0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 /* Light mode icon gradients - brighter versions */
-.app-icon[data-app="about"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #FF6B3D 0%, #E95420 100%);
+.app-icon[data-app='about'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #ff6b3d 0%, #e95420 100%);
 }
 
-.app-icon[data-app="skills"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #9B4F96 0%, #77216F 100%);
+.app-icon[data-app='skills'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
 }
 
-.app-icon[data-app="projects"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #5B9BD5 0%, #2E75B6 100%);
+.app-icon[data-app='projects'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
 }
 
-.app-icon[data-app="contact"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #9B4F96 0%, #77216F 100%);
+.app-icon[data-app='contact'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
 }
 
-.app-icon[data-app="links"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #FF8A5C 0%, #E95420 100%);
+.app-icon[data-app='links'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #ff8a5c 0%, #e95420 100%);
 }
 
-.app-icon[data-app="terminal"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #2AA198 0%, #1A7A72 100%);
+.app-icon[data-app='terminal'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #2aa198 0%, #1a7a72 100%);
 }
 
-.app-icon[data-app="settings"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #F5A623 0%, #D4850E 100%);
+.app-icon[data-app='settings'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
 }
 
 /* ============================================
@@ -1436,36 +1505,38 @@ body {
    Original Ubuntu-style colors for dark mode
    ============================================ */
 
-[data-theme="dark"] .app-icon-wrapper {
-    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+[data-theme='dark'] .app-icon-wrapper {
+    box-shadow:
+        var(--shadow-md),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="dark"] .app-icon[data-app="about"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+[data-theme='dark'] .app-icon[data-app='about'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
 }
 
-[data-theme="dark"] .app-icon[data-app="skills"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #77216F 0%, #5E2750 100%);
+[data-theme='dark'] .app-icon[data-app='skills'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #77216f 0%, #5e2750 100%);
 }
 
-[data-theme="dark"] .app-icon[data-app="projects"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #4A90C7 0%, #2563A0 100%);
+[data-theme='dark'] .app-icon[data-app='projects'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #4a90c7 0%, #2563a0 100%);
 }
 
-[data-theme="dark"] .app-icon[data-app="contact"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #8E24AA 0%, #4A148C 100%);
+[data-theme='dark'] .app-icon[data-app='contact'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #8e24aa 0%, #4a148c 100%);
 }
 
-[data-theme="dark"] .app-icon[data-app="links"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #E95420 0%, #FF7A45 100%);
+[data-theme='dark'] .app-icon[data-app='links'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #e95420 0%, #ff7a45 100%);
 }
 
-[data-theme="dark"] .app-icon[data-app="terminal"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #1F8C85 0%, #165F5A 100%);
+[data-theme='dark'] .app-icon[data-app='terminal'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #1f8c85 0%, #165f5a 100%);
 }
 
-[data-theme="dark"] .app-icon[data-app="settings"] .app-icon-wrapper {
-    background: linear-gradient(135deg, #E09515 0%, #B8720B 100%);
+[data-theme='dark'] .app-icon[data-app='settings'] .app-icon-wrapper {
+    background: linear-gradient(135deg, #e09515 0%, #b8720b 100%);
 }
 
 
@@ -1527,7 +1598,7 @@ body {
    ============================================ */
 
 .terminal-body {
-    background: var(--color-bg-dark, #300A24);
+    background: var(--color-bg-dark, #300a24);
     color: var(--color-text-light, #fff);
     font-family: 'Ubuntu Mono', 'Courier New', monospace;
     padding: var(--spacing-md);
@@ -1549,7 +1620,7 @@ body {
 }
 
 .terminal-prompt {
-    color: #8AE234; /* Brighter green for WCAG AA contrast against dark bg */
+    color: #8ae234; /* Brighter green for WCAG AA contrast against dark bg */
     margin-right: var(--spacing-sm);
 }
 
@@ -1578,12 +1649,14 @@ body {
     margin-left: var(--spacing-sm);
     cursor: pointer;
     flex-shrink: 0;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
 }
 
 .terminal-submit-btn:active {
     transform: scale(0.95);
-    background: #C74316;
+    background: #c74316;
 }
 
 /* ============================================
@@ -1653,7 +1726,9 @@ body {
     margin: 0 auto var(--spacing-md);
     font-size: 48px;
     border: 3px solid rgba(255, 255, 255, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .about-avatar:hover {
@@ -1681,6 +1756,7 @@ body {
     border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
 
@@ -1746,7 +1822,9 @@ body {
     background: var(--color-card-bg);
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .contact-item:hover {
@@ -1785,7 +1863,7 @@ body {
 }
 
 .contact-item .status-available {
-    color: #4CAF50;
+    color: #4caf50;
     font-size: 10px;
 }
 
@@ -1810,19 +1888,23 @@ body {
     gap: var(--spacing-sm);
     padding: 12px 24px;
     background: var(--gradient-btn);
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    transition:
+        transform var(--transition-normal),
+        box-shadow var(--transition-normal);
 }
 
 .resume-download-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg), 0 0 16px rgba(233, 84, 32, 0.3);
-    color: #FFFFFF;
+    box-shadow:
+        var(--shadow-lg),
+        0 0 16px rgba(233, 84, 32, 0.3);
+    color: #ffffff;
 }
 
 .resume-download-btn:active {
@@ -1841,13 +1923,15 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
     color: #fff;
     padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 500;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
 }
 
 .window-body .resume-btn:hover {
@@ -1911,7 +1995,9 @@ body {
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .skill-card:hover {
@@ -1932,15 +2018,23 @@ body {
 
 /* Skill icon gradient colors */
 .skill-icon.languages {
-    background: linear-gradient(135deg, #E95420 0%, #C74316 100%);
+    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-.skill-icon.frontend { color: #FF7A45; }
-.skill-icon.backend { color: #77216F; }
-.skill-icon.vr { color: #5E2750; }
-.skill-icon.tools { color: #AEA79F; }
+.skill-icon.frontend {
+    color: #ff7a45;
+}
+.skill-icon.backend {
+    color: #77216f;
+}
+.skill-icon.vr {
+    color: #5e2750;
+}
+.skill-icon.tools {
+    color: #aea79f;
+}
 
 .skill-card h4 {
     font-size: 14px;
@@ -1954,6 +2048,33 @@ body {
     line-height: 1.5;
     opacity: 0.85;
     margin: 0;
+}
+
+/* Skill Progress Bar */
+.skill-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--color-border);
+    border-radius: 2px;
+    margin: var(--spacing-sm) 0;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), #ff7a45);
+    border-radius: 2px;
+    width: 0;
+    transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.skill-card:hover .skill-progress {
+    filter: brightness(1.2);
+}
+
+/* Animate on scroll into view */
+.skill-card.in-view .skill-progress {
+    width: var(--progress);
 }
 
 /* Skill Proficiency Level Labels */
@@ -1970,19 +2091,19 @@ body {
 
 .skill-level.proficient {
     background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(56, 142, 60, 0.2) 100%);
-    color: #4CAF50;
+    color: #4caf50;
     border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
 .skill-level.familiar {
     background: linear-gradient(135deg, rgba(255, 152, 0, 0.2) 0%, rgba(245, 124, 0, 0.2) 100%);
-    color: #FF9800;
+    color: #ff9800;
     border: 1px solid rgba(255, 152, 0, 0.3);
 }
 
 .skill-level.learning {
     background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(25, 118, 210, 0.2) 100%);
-    color: #2196F3;
+    color: #2196f3;
     border: 1px solid rgba(33, 150, 243, 0.3);
 }
 
@@ -2001,7 +2122,8 @@ body {
     border-radius: var(--radius-sm);
     padding: var(--spacing-md);
     border: 1px solid var(--color-border);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
         box-shadow 0.3s ease,
         border-color 0.3s ease;
     cursor: pointer;
@@ -2183,15 +2305,18 @@ a.project-card {
     text-decoration: none;
     color: inherit;
     text-align: center;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                box-shadow 0.2s ease,
-                border-color 0.2s ease;
+    transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .social-link i {
     font-size: 24px;
     color: var(--color-primary);
-    transition: transform 0.3s ease, color 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
 }
 
 .social-link:hover {
@@ -2202,7 +2327,7 @@ a.project-card {
 
 .social-link:hover i {
     transform: scale(1.2);
-    color: #FF7A45;
+    color: #ff7a45;
 }
 
 /* ============================================
@@ -2242,26 +2367,36 @@ a.project-card {
 .window.opening .project-card:nth-child(1),
 .window.opening .about-section:nth-child(1),
 .window.opening .contact-item:nth-child(1),
-.window.opening .social-link:nth-child(1) { animation-delay: 0.1s; }
+.window.opening .social-link:nth-child(1) {
+    animation-delay: 0.1s;
+}
 
 .window.opening .skill-card:nth-child(2),
 .window.opening .project-card:nth-child(2),
 .window.opening .about-section:nth-child(2),
 .window.opening .contact-item:nth-child(2),
-.window.opening .social-link:nth-child(2) { animation-delay: 0.15s; }
+.window.opening .social-link:nth-child(2) {
+    animation-delay: 0.15s;
+}
 
 .window.opening .skill-card:nth-child(3),
 .window.opening .project-card:nth-child(3),
 .window.opening .about-section:nth-child(3),
 .window.opening .contact-item:nth-child(3),
-.window.opening .social-link:nth-child(3) { animation-delay: 0.2s; }
+.window.opening .social-link:nth-child(3) {
+    animation-delay: 0.2s;
+}
 
 .window.opening .skill-card:nth-child(4),
 .window.opening .project-card:nth-child(4),
-.window.opening .contact-item:nth-child(4) { animation-delay: 0.25s; }
+.window.opening .contact-item:nth-child(4) {
+    animation-delay: 0.25s;
+}
 
 .window.opening .skill-card:nth-child(5),
-.window.opening .project-card:nth-child(5) { animation-delay: 0.3s; }
+.window.opening .project-card:nth-child(5) {
+    animation-delay: 0.3s;
+}
 
 
 /* === components/ui-elements.css === */
@@ -2290,7 +2425,10 @@ a.project-card {
     z-index: 2000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease,
+        transform 0.4s ease;
 }
 
 .nav-hint.visible {
@@ -2328,7 +2466,9 @@ a.project-card {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .nav-hint-dismiss:hover {
@@ -2354,7 +2494,9 @@ a.project-card {
     border: 1px solid var(--color-border);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
     z-index: 1500;
     display: flex;
     align-items: center;
@@ -2392,7 +2534,9 @@ a.project-card {
     z-index: var(--z-tooltip);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -2458,20 +2602,25 @@ a.project-card {
 }
 
 @keyframes bootHintPulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 .boot-log .ok {
-    color: #4E9A06;
+    color: #4e9a06;
 }
 
 .boot-log .fail {
-    color: #CC0000;
+    color: #cc0000;
 }
 
 .boot-log .info {
-    color: #729FCF;
+    color: #729fcf;
 }
 
 /* ============================================
@@ -2483,17 +2632,19 @@ a.project-card {
     width: auto;
     max-width: 200px;
     padding: 12px 16px;
-    background: #FFF9C4;
+    background: #fff9c4;
     font-family: 'Indie Flower', cursive;
     font-size: 15px;
     line-height: 1.4;
-    color: #5D4037;
+    color: #5d4037;
     white-space: pre-line;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     cursor: grab;
     z-index: 50;
     user-select: none;
-    transition: transform var(--transition-smooth), box-shadow var(--transition-normal);
+    transition:
+        transform var(--transition-smooth),
+        box-shadow var(--transition-normal);
     /* Entrance animation */
     opacity: 0;
     animation: stickyNoteIn 0.6s ease forwards;
@@ -2525,17 +2676,17 @@ a.project-card {
 
 /* Different note colors */
 .sticky-note.pink {
-    background: #FFD6E0;
+    background: #ffd6e0;
 }
 
 .sticky-note.blue {
-    background: #D4F1F4;
-    color: #1A535C;
+    background: #d4f1f4;
+    color: #1a535c;
 }
 
 .sticky-note.green {
-    background: #D8F3DC;
-    color: #2D6A4F;
+    background: #d8f3dc;
+    color: #2d6a4f;
 }
 
 /* ============================================
@@ -2666,7 +2817,7 @@ a.project-card {
 }
 
 .dialog-input:focus {
-    border-color: var(--color-primary, #E95420);
+    border-color: var(--color-primary, #e95420);
 }
 
 .dialog-footer {
@@ -2698,12 +2849,106 @@ a.project-card {
 }
 
 .dialog-confirm {
-    background: var(--color-primary, #E95420);
+    background: var(--color-primary, #e95420);
     color: #fff;
 }
 
 .dialog-confirm:hover {
     filter: brightness(1.1);
+}
+
+
+/* === components/skeleton.css === */
+/* ============================================
+   SKELETON LOADING STATES
+   ============================================ */
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-card-bg) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        var(--color-card-bg) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+}
+
+[data-theme='dark'] .skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeleton-text {
+    height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.skeleton-text:last-child {
+    width: 80%;
+}
+
+.skeleton-title {
+    height: 1.5em;
+    width: 60%;
+    margin-bottom: 1em;
+}
+
+.skeleton-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.skeleton-card {
+    height: 120px;
+    border-radius: var(--radius-md);
+}
+
+/* Pulse animation variant */
+.skeleton-pulse {
+    animation: skeleton-pulse 2s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Content fade-in after loading */
+.content-loaded {
+    animation: content-fade-in 0.4s ease-out;
+}
+
+@keyframes content-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
@@ -2713,7 +2958,6 @@ a.project-card {
    ============================================ */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-
     /* Hide GNOME menu items */
     .menu-bar-left,
     .menu-bar-center,
@@ -2734,7 +2978,6 @@ a.project-card {
         right: 0;
         width: 100%;
         height: auto;
-        min-height: auto;
         flex-direction: row;
         border-right: none;
         border-top: 1px solid var(--color-border);
@@ -2805,6 +3048,7 @@ a.project-card {
 
     .widget {
         background: var(--color-glass-light);
+        -webkit-backdrop-filter: var(--glass-blur);
         backdrop-filter: var(--glass-blur);
         border-radius: var(--radius-md);
         padding: var(--spacing-lg);
@@ -2860,7 +3104,7 @@ a.project-card {
         bottom: calc(100% + 12px);
         transform: translateX(-50%);
     }
-    
+
     .dock-tooltip::before {
         right: auto;
         left: 50%;
@@ -2876,7 +3120,6 @@ a.project-card {
    ============================================ */
 
 @media (max-width: 767px) {
-
     /* Hide GNOME menu items */
     .menu-bar-left,
     .menu-bar-center,
@@ -2905,25 +3148,49 @@ a.project-card {
     /* App Grid - 4 columns */
     .app-grid {
         position: static;
-        left: 0;
         grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(auto-fill, auto);
         padding: var(--spacing-lg);
-        gap: var(--spacing-lg);
+        gap: var(--spacing-sm);
         margin-top: 40px;
+        justify-items: center;
     }
 
     .app-icon {
-        width: 100%;
+        width: 80px;
+        height: auto;
+        min-height: 110px;
+        overflow: visible !important;
+        contain: none !important;
+    }
+
+    .app-icon-placeholder {
+        width: 80px;
+        height: auto;
+        min-height: 110px;
     }
 
     .app-icon-wrapper {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
+        width: 52px;
+        height: 52px;
+        font-size: 26px;
     }
 
     .app-label {
         font-size: 11px;
+        padding: 3px 8px;
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        color: var(--color-text-light) !important;
+        width: 100%;
+        text-align: center;
+        z-index: 20;
+        position: relative;
+        transform: translateZ(0);
+        text-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.8),
+            0 0 2px rgba(0, 0, 0, 0.4);
     }
 
     /* Windows become full-screen */
@@ -2981,6 +3248,7 @@ a.project-card {
 
     .widget {
         background: var(--color-glass-light);
+        -webkit-backdrop-filter: var(--glass-blur);
         backdrop-filter: var(--glass-blur);
         border-radius: var(--radius-md);
         padding: var(--spacing-md);
@@ -2996,7 +3264,6 @@ a.project-card {
         right: 0;
         width: 100%;
         height: auto;
-        min-height: auto;
         transform: none;
         flex-direction: row;
         border-right: none;
@@ -3038,7 +3305,7 @@ a.project-card {
     .dock-item:active {
         animation: dockBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    
+
     /* Active app glow indicator on mobile dock */
     .dock-item.active {
         box-shadow: 0 0 12px rgba(233, 84, 32, 0.5);
@@ -3051,13 +3318,13 @@ a.project-card {
         margin: var(--spacing-md);
         box-shadow: var(--shadow-md);
     }
-    
+
     .widget h3 {
         font-size: 16px;
         font-weight: 600;
         margin-bottom: var(--spacing-xs);
     }
-    
+
     .widget p {
         font-size: 14px;
         opacity: 0.9;
@@ -3071,27 +3338,29 @@ a.project-card {
         background: var(--color-card-bg);
         margin-bottom: var(--spacing-sm);
     }
-    
+
     .contact-item i {
         font-size: 20px;
         width: 32px;
     }
-    
+
     /* Better touch targets for social links */
     .social-link {
         min-height: 80px;
         padding: var(--spacing-md);
     }
-    
+
     /* Improve project card touch feedback */
     .project-card {
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
     }
-    
+
     .project-card:active {
         transform: scale(0.98);
     }
-    
+
     /* Make tech badges more tappable */
     .tech-badge {
         padding: 6px 12px;
@@ -3102,7 +3371,7 @@ a.project-card {
     .sticky-notes-container {
         display: none;
     }
-    
+
     /* Larger touch targets for mobile dock */
     .dock-item {
         width: 54px;
@@ -3116,7 +3385,7 @@ a.project-card {
     .links-list {
         grid-template-columns: 1fr;
     }
-    
+
     .skills-grid {
         grid-template-columns: 1fr;
     }
@@ -3129,18 +3398,18 @@ a.project-card {
         gap: 6px;
         padding: var(--spacing-sm);
     }
-    
+
     .app-icon {
         width: 100%;
         height: 115px;
     }
-    
+
     .app-icon-wrapper {
         width: 44px;
         height: 44px;
         font-size: 22px;
     }
-    
+
     .app-label {
         font-size: 10px;
         padding: 2px 4px;
@@ -3161,7 +3430,7 @@ a.project-card {
     .terminal-submit-btn {
         display: flex;
     }
-    
+
     /* Improve terminal input line for mobile */
     .terminal-input-line {
         padding: var(--spacing-sm);
@@ -3177,7 +3446,7 @@ a.project-card {
         bottom: calc(100% + 12px);
         transform: translateX(-50%);
     }
-    
+
     .dock-tooltip::before {
         right: auto;
         left: 50%;
@@ -3193,7 +3462,7 @@ a.project-card {
     .terminal-prompt {
         font-size: 12px;
     }
-    
+
     .terminal-input {
         font-size: 14px;
     }
@@ -3233,28 +3502,28 @@ a.project-card {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-sm);
     }
-    
+
     /* Skills grid - 2 columns */
     .skills-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-sm);
     }
-    
+
     /* Compact skill cards on mobile */
     .skill-card {
         padding: var(--spacing-sm);
     }
-    
+
     .skill-icon {
         font-size: 24px;
         margin-bottom: 4px;
     }
-    
+
     .skill-card h4 {
         font-size: 13px;
         margin-bottom: 4px;
     }
-    
+
     .skill-card p {
         font-size: 11px;
         line-height: 1.3;
@@ -3266,7 +3535,6 @@ a.project-card {
    ============================================ */
 
 @media (min-width: 1025px) {
-
     /* App grid positioned in 2 columns */
     .app-grid {
         grid-template-columns: repeat(2, 100px);
@@ -3307,67 +3575,13 @@ a.project-card {
     }
 }
 
-/* Mobile Layout (under 768px) — matches mobile breakpoint at max-width: 767px */
+/* Mobile Layout grid updates (projects grid) */
 @media screen and (max-width: 767px) {
-    .main-content {
-        padding-left: 0;
-    }
-
-    .app-grid {
-        left: 10px;
-        right: 10px;
-        top: 40px;
-        bottom: 70px;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(auto-fill, auto);
-        gap: var(--spacing-sm);
-        justify-items: center;
-    }
-
-    .app-icon {
-        width: 80px;
-        height: auto;
-        min-height: 110px;
-    }
-
-    .app-icon-placeholder {
-        width: 80px;
-        height: auto;
-        min-height: 110px;
-    }
-
-    .app-icon-wrapper {
-        width: 52px;
-        height: 52px;
-        font-size: 26px;
-    }
-
-    .app-label {
-        font-size: 11px;
-        padding: 3px 8px;
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        color: var(--color-text-light) !important;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 2px rgba(0, 0, 0, 0.4);
-        width: 100%;
-        text-align: center;
-        z-index: 20;
-        position: relative;
-        transform: translateZ(0);
-        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-    }
-
-    .app-icon {
-        overflow: visible !important;
-        contain: none !important;
-    }
-
     /* Projects grid - single column on mobile */
     .projects-grid {
         grid-template-columns: 1fr;
     }
-    
+
     /* Featured project takes full width */
     .project-card.featured-project {
         grid-column: 1;
@@ -3384,7 +3598,7 @@ a.project-card {
         /* Disable noise grain texture on mobile for GPU savings */
         display: none;
     }
-    
+
     .wallpaper::before {
         /* Simplify radial gradients on mobile */
         opacity: 0.5;
@@ -3404,19 +3618,19 @@ a.project-card {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
-    
+
     .wallpaper {
         transform: none !important;
         transition: none !important;
     }
-    
+
     .app-icon,
     .dock-item,
     .window,
     .sticky-note {
         animation: none !important;
     }
-    
+
     .skill-progress-bar {
         transition: none !important;
         width: var(--progress) !important;
@@ -3433,12 +3647,12 @@ a.project-card {
         .dock {
             padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
         }
-        
+
         /* Windows account for safe areas */
         .window {
             padding-bottom: env(safe-area-inset-bottom);
         }
-        
+
         /* Full-screen mobile windows */
         @media (max-width: 767px) {
             .window {
