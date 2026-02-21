@@ -41,7 +41,7 @@ jobs:
       - name: Check for broken links
         uses: lycheeverse/lychee-action@v1
         with:
-          args: --timeout 30 --retry 3 .
+          args: --timeout 30 .
           fail: true
 
   deploy:
