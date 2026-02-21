@@ -13,6 +13,7 @@
         </script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta name="author" content="Saw Ye Htet" />
         <meta
             http-equiv="Content-Security-Policy"
             content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;"
@@ -158,7 +159,8 @@
                 <span class="personal-brand" aria-label="Saw Ye Htet - Personal Brand">SYH</span>
                 <button
                     class="activities-btn pill"
-                    aria-disabled="true"
+                    disabled
+                    tabindex="-1"
                     title="Activities overview (decorative)"
                 >
                     Activities
@@ -166,9 +168,9 @@
             </div>
 
             <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
-            <div class="status-bar">
-                <div class="status-time"></div>
-                <div class="status-icons">
+            <div class="status-bar" role="presentation" aria-label="Status bar (decorative)">
+                <div class="status-time" aria-hidden="true"></div>
+                <div class="status-icons" aria-hidden="true">
                     <i class="fas fa-signal"></i>
                     <i class="fas fa-wifi"></i>
                     <i class="fas fa-battery-three-quarters"></i>
@@ -872,6 +874,74 @@
             </p>
             <button class="nav-hint-dismiss" id="nav-hint-dismiss">Got it!</button>
         </div>
+
+        <!-- Fallback for users with JavaScript disabled -->
+        <noscript>
+            <style>
+                .boot-screen,
+                .app-grid,
+                .dock,
+                .sticky-notes-container,
+                .nav-hint {
+                    display: none !important;
+                }
+                .noscript-fallback {
+                    position: fixed;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                    padding: 2rem;
+                }
+                .noscript-card {
+                    background: var(--color-card-bg, #2d2d2d);
+                    border: 1px solid var(--color-border, #444);
+                    border-radius: 16px;
+                    padding: 2.5rem;
+                    max-width: 480px;
+                    text-align: center;
+                    color: var(--color-text-light, #e0e0e0);
+                    font-family: 'Ubuntu', sans-serif;
+                }
+                .noscript-card h2 {
+                    margin-bottom: 1rem;
+                }
+                .noscript-card p {
+                    margin-bottom: 1.5rem;
+                    opacity: 0.8;
+                }
+                .noscript-card a {
+                    color: #e95420;
+                    text-decoration: none;
+                }
+            </style>
+            <div class="noscript-fallback">
+                <div class="noscript-card">
+                    <h2>Saw Ye Htet — Portfolio</h2>
+                    <p>
+                        This interactive portfolio requires JavaScript to run. Please enable
+                        JavaScript in your browser to experience the full desktop-style interface.
+                    </p>
+                    <p>
+                        In the meantime, you can find me on
+                        <a
+                            href="https://github.com/sawyairhtet"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >GitHub</a
+                        >
+                        or
+                        <a
+                            href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >LinkedIn</a
+                        >.
+                    </p>
+                </div>
+            </div>
+        </noscript>
 
         <script type="module" src="js/app.js"></script>
 
