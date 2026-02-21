@@ -41,6 +41,8 @@
         />
         <meta name="twitter:image" content="https://sawyehtet.com/images/og-preview.png" />
 
+        <meta name="author" content="Saw Ye Htet" />
+
         <link rel="canonical" href="https://sawyehtet.com/" />
         <title>Saw Ye Htet - Portfolio</title>
         <!-- Production: bundled CSS eliminates @import waterfall (15 sequential requests → 1) -->
@@ -75,8 +77,8 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
         <link rel="icon" href="assets/icon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="assets/icon.png" />
         <link rel="manifest" href="manifest.json" />
+        <meta name="theme-color" content="#E95420" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -159,6 +161,7 @@
                 <button
                     class="activities-btn pill"
                     aria-disabled="true"
+                    disabled
                     title="Activities overview (decorative)"
                 >
                     Activities
@@ -166,9 +169,9 @@
             </div>
 
             <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
-            <div class="status-bar">
-                <div class="status-time"></div>
-                <div class="status-icons">
+            <div class="status-bar" role="presentation" aria-label="Status bar (decorative)">
+                <div class="status-time" aria-hidden="true"></div>
+                <div class="status-icons" aria-hidden="true">
                     <i class="fas fa-signal"></i>
                     <i class="fas fa-wifi"></i>
                     <i class="fas fa-battery-three-quarters"></i>
@@ -403,65 +406,47 @@
                 <h2><i class="fas fa-laptop-code"></i> Skills & Tools</h2>
 
                 <div class="skills-grid">
-                    <div class="skill-card" data-skill="javascript">
-                        <div class="skill-icon languages"><i class="fab fa-js"></i></div>
-                        <h4>JavaScript</h4>
-                        <p>ES6+, TypeScript, Node.js, DOM manipulation</p>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="--progress: 90%"></div>
-                        </div>
+                    <div class="skill-card">
+                        <div class="skill-icon languages"><i class="fas fa-code"></i></div>
+                        <h4>Languages</h4>
+                        <p>JavaScript, Python, C#, Java, SQL</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
 
-                    <div class="skill-card" data-skill="react">
-                        <div class="skill-icon frontend"><i class="fab fa-react"></i></div>
-                        <h4>React</h4>
-                        <p>Hooks, Context, Redux, Next.js</p>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="--progress: 85%"></div>
-                        </div>
+                    <div class="skill-card">
+                        <div class="skill-icon frontend"><i class="fas fa-palette"></i></div>
+                        <h4>Frontend</h4>
+                        <p>HTML5, CSS3, React, Responsive Design</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
 
-                    <div class="skill-card" data-skill="unity">
+                    <div class="skill-card">
+                        <div class="skill-icon backend"><i class="fas fa-server"></i></div>
+                        <h4>Backend</h4>
+                        <p>REST APIs, Node.js, Database Integration</p>
+                        <span class="skill-level familiar">Familiar</span>
+                    </div>
+
+                    <div class="skill-card">
                         <div class="skill-icon vr"><i class="fas fa-vr-cardboard"></i></div>
-                        <h4>Unity & VR</h4>
-                        <p>C#, Meta Quest, Hand Tracking, Oculus SDK</p>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="--progress: 88%"></div>
-                        </div>
+                        <h4>VR Development</h4>
+                        <p>Unity, Meta Quest, Hand Tracking</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
 
-                    <div class="skill-card" data-skill="python">
-                        <div class="skill-icon backend"><i class="fab fa-python"></i></div>
-                        <h4>Python</h4>
-                        <p>Flask, Data Processing, Automation</p>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="--progress: 75%"></div>
-                        </div>
+                    <div class="skill-card">
+                        <div class="skill-icon tools"><i class="fas fa-tools"></i></div>
+                        <h4>Tools</h4>
+                        <p>Git, VS Code, Figma, Chrome DevTools</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
 
-                    <div class="skill-card" data-skill="css">
-                        <div class="skill-icon frontend"><i class="fab fa-css3-alt"></i></div>
-                        <h4>CSS & Design</h4>
-                        <p>Flexbox, Grid, Animations, Tailwind</p>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="--progress: 92%"></div>
-                        </div>
-                        <span class="skill-level proficient">Proficient</span>
-                    </div>
-
-                    <div class="skill-card" data-skill="devops">
+                    <div class="skill-card">
                         <div class="skill-icon" style="color: #00d4ff">
                             <i class="fas fa-cloud"></i>
                         </div>
-                        <h4>DevOps</h4>
-                        <p>GitHub Actions, Docker, CI/CD, AWS Basics</p>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="--progress: 65%"></div>
-                        </div>
+                        <h4>Cloud & DevOps</h4>
+                        <p>GitHub Actions, CI/CD, Basic AWS</p>
                         <span class="skill-level learning">Learning</span>
                     </div>
                 </div>
@@ -551,76 +536,6 @@
                             >
                         </div>
                     </a>
-
-                    <a
-                        href="https://github.com/sawyairhtet"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="project-card"
-                    >
-                        <div class="project-preview"><i class="fas fa-robot"></i></div>
-                        <h3>AI Chat Interface</h3>
-                        <p>
-                            A modern chat interface for AI interactions with markdown support, code
-                            highlighting, and conversation history.
-                        </p>
-                        <div class="tech-stack">
-                            <span class="tech-badge">React</span>
-                            <span class="tech-badge">TypeScript</span>
-                            <span class="tech-badge">Tailwind CSS</span>
-                            <span class="tech-badge">OpenAI API</span>
-                        </div>
-                        <div class="project-meta">
-                            <span class="project-platform"
-                                ><i class="fas fa-globe"></i> Web Application</span
-                            >
-                            <span class="project-link"
-                                ><i class="fab fa-github"></i> View on GitHub</span
-                            >
-                        </div>
-                    </a>
-
-                    <a
-                        href="https://github.com/sawyairhtet"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="project-card"
-                    >
-                        <div class="project-preview"><i class="fas fa-mobile-alt"></i></div>
-                        <h3>Task Manager App</h3>
-                        <p>
-                            A productivity app with drag-and-drop task management, Pomodoro timer,
-                            and progress tracking.
-                        </p>
-                        <div class="tech-stack">
-                            <span class="tech-badge">React Native</span>
-                            <span class="tech-badge">Firebase</span>
-                            <span class="tech-badge">Redux</span>
-                        </div>
-                        <div class="project-meta">
-                            <span class="project-platform"
-                                ><i class="fas fa-mobile-alt"></i> Mobile App</span
-                            >
-                            <span class="project-link"
-                                ><i class="fab fa-github"></i> View on GitHub</span
-                            >
-                        </div>
-                    </a>
-
-                    <div class="project-card coming-soon">
-                        <div class="project-preview"><i class="fas fa-gamepad"></i></div>
-                        <h3>Multiplayer VR Escape Room</h3>
-                        <p>
-                            Coming soon! A collaborative VR puzzle experience built with Unity and
-                            Photon networking.
-                        </p>
-                        <div class="tech-stack">
-                            <span class="tech-badge">Unity</span>
-                            <span class="tech-badge">C#</span>
-                            <span class="tech-badge">Photon</span>
-                            <span class="tech-badge">VR</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -786,7 +701,6 @@
                         spellcheck="false"
                         inputmode="text"
                         enterkeyhint="send"
-                        aria-label="Terminal input command"
                     />
                     <button
                         class="terminal-submit-btn"
@@ -886,5 +800,79 @@
                 });
             }
         </script>
+
+        <noscript>
+            <style>
+                .boot-screen,
+                .sticky-notes-container,
+                .context-menu,
+                .window,
+                .dock,
+                .nav-hint {
+                    display: none !important;
+                }
+                .app-grid {
+                    pointer-events: none;
+                    opacity: 0.5;
+                }
+            </style>
+            <div style="
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--color-bg, #1a1a1a);
+                color: var(--color-text-light, #f0f0f0);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                font-family: 'Ubuntu', sans-serif;
+                padding: 20px;
+            ">
+                <div style="
+                    text-align: center;
+                    max-width: 500px;
+                    background: var(--color-card-bg, #2d2d2d);
+                    padding: 48px;
+                    border-radius: 16px;
+                    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+                ">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        background: linear-gradient(135deg, #E95420 0%, #d44d1d 100%);
+                        border-radius: 16px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 24px;
+                        font-size: 40px;
+                        color: #fff;
+                    ">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h1 style="font-size: 24px; margin-bottom: 12px; font-weight: 600;">JavaScript Required</h1>
+                    <p style="opacity: 0.8; line-height: 1.6; margin-bottom: 24px;">
+                        This portfolio website is an interactive Ubuntu desktop experience that requires JavaScript to function.
+                    </p>
+                    <a href="mailto:minwn2244@gmail.com" style="
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 12px 24px;
+                        background: linear-gradient(135deg, #E95420 0%, #d44d1d 100%);
+                        color: #fff;
+                        text-decoration: none;
+                        border-radius: 8px;
+                        font-weight: 500;
+                        transition: transform 0.2s;
+                    ">
+                        <i class="fas fa-envelope"></i> Contact via Email
+                    </a>
+                </div>
+            </div>
+        </noscript>
     </body>
 </html>

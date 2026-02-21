@@ -10,18 +10,18 @@ import {
     terminalJokes,
     terminalGreetings,
 } from '../config/data.js';
-import { escapeHtml, isValidFileName, safeJsonParse } from '../core/security.js';
 
 // State
-const terminalHistory = [];
+let terminalHistory = [];
 let historyIndex = -1;
 let currentPath = '/home/visitor';
 
 // Load filesystem from localStorage or use default
 let fileSystem;
 try {
-    const stored = localStorage.getItem('portfolioFileSystem');
-    fileSystem = safeJsonParse(stored, null) || JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
+    fileSystem =
+        JSON.parse(localStorage.getItem('portfolioFileSystem')) ||
+        JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
 } catch (e) {
     console.error('Failed to load filesystem from localStorage:', e);
     fileSystem = JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
@@ -45,18 +45,12 @@ function resetFileSystem() {
 }
 
 function resolvePath(inputPath) {
-    if (!inputPath) {
-        return currentPath;
-    }
+    if (!inputPath) return currentPath;
 
     let path = inputPath;
 
-    if (path === '~') {
-        return '/home/visitor';
-    }
-    if (path.startsWith('~/')) {
-        path = '/home/visitor' + path.slice(1);
-    }
+    if (path === '~') return '/home/visitor';
+    if (path.startsWith('~/')) path = '/home/visitor' + path.slice(1);
 
     if (!path.startsWith('/')) {
         path = currentPath + '/' + path;
@@ -215,9 +209,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
 
     clear: () => {
         const output = document.getElementById('terminal-output');
-        if (output) {
-            output.innerHTML = '';
-        }
+        if (output) output.innerHTML = '';
         return '';
     },
 
@@ -225,13 +217,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
 
     // File operations
     touch: args => {
-        if (!args[0]) {
-            return 'Usage: touch <filename>';
-        }
-
-        if (!isValidFileName(args[0])) {
-            return `touch: invalid filename '${args[0]}'`;
-        }
+        if (!args[0]) return 'Usage: touch <filename>';
 
         const targetPath = resolvePath(args[0]);
         const fileName = targetPath.split('/').pop();
@@ -254,13 +240,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     mkdir: args => {
-        if (!args[0]) {
-            return 'Usage: mkdir <dirname>';
-        }
-
-        if (!isValidFileName(args[0])) {
-            return `mkdir: invalid directory name '${args[0]}'`;
-        }
+        if (!args[0]) return 'Usage: mkdir <dirname>';
 
         const targetPath = resolvePath(args[0]);
         const dirName = targetPath.split('/').pop();
@@ -283,9 +263,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     rm: args => {
-        if (!args[0]) {
-            return 'Usage: rm <filename>';
-        }
+        if (!args[0]) return 'Usage: rm <filename>';
 
         const targetPath = resolvePath(args[0]);
         const node = fileSystem[targetPath];
@@ -317,9 +295,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     rmdir: args => {
-        if (!args[0]) {
-            return 'Usage: rmdir <dirname>';
-        }
+        if (!args[0]) return 'Usage: rmdir <dirname>';
 
         const targetPath = resolvePath(args[0]);
         const node = fileSystem[targetPath];
@@ -419,9 +395,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
 
 export function executeTerminalCommand(input) {
     const trimmedInput = input.trim();
-    if (!trimmedInput) {
-        return '';
-    }
+    if (!trimmedInput) return '';
 
     // Check for output redirect (#26): echo "text" > file
     const redirectMatch = trimmedInput.match(/^(.+?)\s*>\s*(.+)$/);
@@ -475,13 +449,11 @@ Type 'help' for available commands.`;
 
 export function addTerminalOutput(command, output) {
     const terminalOutput = document.getElementById('terminal-output');
-    if (!terminalOutput) {
-        return;
-    }
+    if (!terminalOutput) return;
 
     const commandLine = document.createElement('div');
     commandLine.className = 'terminal-line terminal-command';
-    commandLine.textContent = `visitor@portfolio:~$ ${escapeHtml(command)}`;
+    commandLine.textContent = `visitor@portfolio:~$ ${command}`;
     terminalOutput.appendChild(commandLine);
 
     if (output) {
@@ -490,7 +462,7 @@ export function addTerminalOutput(command, output) {
         outputEl.className = 'terminal-line';
         outputEl.style.margin = '0';
         outputEl.style.fontFamily = 'inherit';
-        outputEl.textContent = output; // Output is already escaped by individual commands
+        outputEl.textContent = output;
         terminalOutput.appendChild(outputEl);
     }
 
@@ -498,13 +470,9 @@ export function addTerminalOutput(command, output) {
 }
 
 export function setupTerminal() {
-    const terminalInput = /** @type {HTMLInputElement} */ (
-        document.getElementById('terminal-input')
-    );
+    const terminalInput = document.getElementById('terminal-input');
     const terminalSubmit = document.getElementById('terminal-submit');
-    if (!terminalInput) {
-        return;
-    }
+    if (!terminalInput) return;
 
     function runCommand() {
         const command = terminalInput.value;
@@ -549,14 +517,10 @@ export function setupTerminal() {
 }
 
 export function setupTerminalMobileFix() {
-    const terminalInput = /** @type {HTMLInputElement} */ (
-        document.getElementById('terminal-input')
-    );
+    const terminalInput = document.getElementById('terminal-input');
     const terminalWindow = document.getElementById('terminal-window');
 
-    if (!terminalInput || !terminalWindow) {
-        return;
-    }
+    if (!terminalInput || !terminalWindow) return;
 
     terminalInput.addEventListener('focus', () => {
         if (window.innerWidth <= 768) {

@@ -17,13 +17,15 @@
             http-equiv="Content-Security-Policy"
             content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;"
         />
+        <meta name="theme-color" id="theme-color" content="#667eea" />
         <title>404 — Page Not Found | Saw Ye Htet</title>
         <meta
             name="description"
             content="The page you're looking for doesn't exist. Return to the homepage or explore other pages."
         />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="stylesheet" href="css/main.css" />
+        <meta name="author" content="Saw Ye Htet" />
+        <link rel="stylesheet" href="dist/bundle.min.css" />
         <link rel="icon" href="assets/icon.png" type="image/png" />
         <!-- Google Fonts - Inter -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -62,8 +64,8 @@
 
             .error-card {
                 background: var(--color-glass-light);
-                -webkit-backdrop-filter: blur(40px) saturate(180%);
                 backdrop-filter: blur(40px) saturate(180%);
+                -webkit-backdrop-filter: blur(40px) saturate(180%);
                 border-radius: 20px;
                 padding: 48px;
                 text-align: center;
@@ -177,8 +179,8 @@
                 display: flex;
                 gap: 8px;
                 background: var(--color-glass-light);
-                -webkit-backdrop-filter: blur(40px) saturate(180%);
                 backdrop-filter: blur(40px) saturate(180%);
+                -webkit-backdrop-filter: blur(40px) saturate(180%);
                 padding: 8px;
                 border-radius: 20px;
                 border: 1px solid var(--color-border);
@@ -235,15 +237,7 @@
         <div class="top-bar">
             <!-- GNOME Panel Left - Activities -->
             <div class="menu-bar-left">
-                <button
-                    class="activities-btn"
-                    aria-hidden="true"
-                    disabled
-                    tabindex="-1"
-                    title="For visual purposes only"
-                >
-                    Activities
-                </button>
+                <button class="activities-btn" aria-disabled="true" disabled title="Activities overview (decorative)">Activities</button>
             </div>
 
             <!-- Status Bar (Mobile/Tablet only) -->
@@ -263,16 +257,11 @@
 
             <!-- GNOME Panel Right - Status Indicators -->
             <div class="menu-bar-right">
-                <div
-                    class="status-menu"
-                    role="presentation"
-                    aria-label="System status indicators (decorative)"
-                    title="For visual purposes only"
-                >
-                    <i class="fas fa-wifi" aria-hidden="true"></i>
-                    <i class="fas fa-volume-up" aria-hidden="true"></i>
-                    <i class="fas fa-battery-three-quarters" aria-hidden="true"></i>
-                    <i class="fas fa-power-off" aria-hidden="true"></i>
+                <div class="status-menu">
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-volume-up"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                    <i class="fas fa-power-off"></i>
                 </div>
             </div>
         </div>
@@ -310,17 +299,12 @@
         <!-- Mini Dock -->
         <div class="dock-404">
             <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
-            <a
-                href="https://github.com/sawyairhtet"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="GitHub"
+            <a href="https://github.com/sawyairhtet" target="_blank" title="GitHub"
                 ><i class="fab fa-github"></i
             ></a>
             <a
                 href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/"
                 target="_blank"
-                rel="noopener noreferrer"
                 title="LinkedIn"
                 ><i class="fab fa-linkedin"></i
             ></a>
