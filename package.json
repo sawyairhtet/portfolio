@@ -1,56 +1,69 @@
 {
-  "name": "clean-portfolio-website",
-  "version": "1.0.0",
-  "description": "A clean, modern, and responsive portfolio website built with vanilla HTML, CSS, and JavaScript",
-  "main": "index.html",
-  "scripts": {
-    "start": "npm run build && npx serve .",
-    "dev": "npx live-server --port=3000",
-    "check": "node check-before-deploy.js",
-    "safe-deploy": "npm run check && git status",
-    "deploy": "npm run prod && npm run check && npx gh-pages -d . -e . --dotfiles",
-    "build": "node build.js",
-    "build:css": "node build.js",
-    "minify:js": "npx terser js/app.js -o dist/app.min.js -c -m",
-    "prod": "npm run build && npm run minify:js"
-  },
-  "keywords": [
-    "portfolio",
-    "clean-design",
-    "minimalist",
-    "responsive",
-    "vanilla-javascript",
-    "web-portfolio",
-    "modern-css",
-    "typography",
-    "professional",
-    "javascript",
-    "css3",
-    "html5"
-  ],
-  "author": "Saw Ye Htet <minwn2244@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "clean-css-cli": "^5.6.3",
-    "gh-pages": "^6.3.0",
-    "live-server": "^1.2.0",
-    "serve": "^14.2.1",
-    "terser": "^5.27.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sawyairhtet/portfolio.git"
-  },
-  "homepage": "https://sawyehtet.com",
-  "bugs": {
-    "url": "https://github.com/sawyairhtet/portfolio/issues"
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "name": "clean-portfolio-website",
+    "version": "1.0.0",
+    "description": "A clean, modern, and responsive portfolio website built with vanilla HTML, CSS, and JavaScript",
+    "type": "module",
+    "main": "index.html",
+    "scripts": {
+        "start": "npm run build && npx serve .",
+        "dev": "npx live-server --port=3000",
+        "check": "node check-before-deploy.js",
+        "safe-deploy": "npm run check && git status",
+        "deploy": "npm run prod && npm run check && npx gh-pages -d . -e . --dotfiles",
+        "build": "node build.js",
+        "build:css": "node build.js",
+        "minify:js": "npx terser js/app.js -o dist/app.min.js -c -m",
+        "prod": "npm run build && npm run minify:js",
+        "lint": "eslint js/",
+        "lint:fix": "eslint js/ --fix",
+        "format": "prettier --write \"**/*.{js,css,html,json,md}\"",
+        "format:check": "prettier --check \"**/*.{js,css,html,json,md}\"",
+        "test": "node --test test/**/*.test.js",
+        "test:watch": "node --test --watch test/**/*.test.js",
+        "typecheck": "tsc -p jsconfig.json --noEmit",
+        "validate": "npm run lint && npm run format:check && npm run typecheck && npm run test && npm run check"
+    },
+    "keywords": [
+        "portfolio",
+        "clean-design",
+        "minimalist",
+        "responsive",
+        "vanilla-javascript",
+        "web-portfolio",
+        "modern-css",
+        "typography",
+        "professional",
+        "javascript",
+        "css3",
+        "html5"
+    ],
+    "author": "Saw Ye Htet <minwn2244@gmail.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "clean-css-cli": "^5.6.3",
+        "eslint": "^9.0.0",
+        "gh-pages": "^6.3.0",
+        "globals": "^14.0.0",
+        "live-server": "^1.2.0",
+        "prettier": "^3.2.0",
+        "serve": "^14.2.1",
+        "terser": "^5.27.0",
+        "typescript": "^5.4.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sawyairhtet/portfolio.git"
+    },
+    "homepage": "https://sawyehtet.com",
+    "bugs": {
+        "url": "https://github.com/sawyairhtet/portfolio/issues"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
 }

@@ -4,17 +4,24 @@
  */
 
 import { startMatrixEffect } from './matrix.js';
-import { DEFAULT_FILE_SYSTEM, terminalFortunes, terminalJokes, terminalGreetings } from '../config/data.js';
+import {
+    DEFAULT_FILE_SYSTEM,
+    terminalFortunes,
+    terminalJokes,
+    terminalGreetings,
+} from '../config/data.js';
+import { escapeHtml, isValidFileName, safeJsonParse } from '../core/security.js';
 
 // State
-let terminalHistory = [];
+const terminalHistory = [];
 let historyIndex = -1;
 let currentPath = '/home/visitor';
 
 // Load filesystem from localStorage or use default
 let fileSystem;
 try {
-    fileSystem = JSON.parse(localStorage.getItem('portfolioFileSystem')) || JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
+    const stored = localStorage.getItem('portfolioFileSystem');
+    fileSystem = safeJsonParse(stored, null) || JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
 } catch (e) {
     console.error('Failed to load filesystem from localStorage:', e);
     fileSystem = JSON.parse(JSON.stringify(DEFAULT_FILE_SYSTEM));
@@ -38,12 +45,18 @@ function resetFileSystem() {
 }
 
 function resolvePath(inputPath) {
-    if (!inputPath) return currentPath;
+    if (!inputPath) {
+        return currentPath;
+    }
 
     let path = inputPath;
 
-    if (path === '~') return '/home/visitor';
-    if (path.startsWith('~/')) path = '/home/visitor' + path.slice(1);
+    if (path === '~') {
+        return '/home/visitor';
+    }
+    if (path.startsWith('~/')) {
+        path = '/home/visitor' + path.slice(1);
+    }
 
     if (!path.startsWith('/')) {
         path = currentPath + '/' + path;
@@ -91,7 +104,7 @@ const terminalCommands = {
 
     pwd: () => currentPath,
 
-    ls: (args) => {
+    ls: args => {
         const targetPath = resolvePath(args[0]);
         const node = fileSystem[targetPath];
 
@@ -107,18 +120,20 @@ const terminalCommands = {
             return '';
         }
 
-        return node.children.map(child => {
-            const childPath = targetPath === '/' ? '/' + child : targetPath + '/' + child;
-            const childNode = fileSystem[childPath];
-            if (childNode && childNode.type === 'dir') {
-                return '📁 ' + child + '/';
-            } else {
-                return '📄 ' + child;
-            }
-        }).join('\n');
+        return node.children
+            .map(child => {
+                const childPath = targetPath === '/' ? '/' + child : targetPath + '/' + child;
+                const childNode = fileSystem[childPath];
+                if (childNode && childNode.type === 'dir') {
+                    return '📁 ' + child + '/';
+                } else {
+                    return '📄 ' + child;
+                }
+            })
+            .join('\n');
     },
 
-    cd: (args) => {
+    cd: args => {
         if (!args[0] || args[0] === '~') {
             currentPath = '/home/visitor';
             return '';
@@ -139,7 +154,7 @@ const terminalCommands = {
         return '';
     },
 
-    cat: (args) => {
+    cat: args => {
         if (!args[0]) {
             return 'Usage: cat <filename>';
         }
@@ -196,19 +211,27 @@ Tools:        Git, VS Code, Unity, Figma
 Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
-    echo: (args) => args.join(' ') || 'Usage: echo [text]',
+    echo: args => args.join(' ') || 'Usage: echo [text]',
 
     clear: () => {
         const output = document.getElementById('terminal-output');
-        if (output) output.innerHTML = '';
+        if (output) {
+            output.innerHTML = '';
+        }
         return '';
     },
 
     date: () => new Date().toString(),
 
     // File operations
-    touch: (args) => {
-        if (!args[0]) return 'Usage: touch <filename>';
+    touch: args => {
+        if (!args[0]) {
+            return 'Usage: touch <filename>';
+        }
+
+        if (!isValidFileName(args[0])) {
+            return `touch: invalid filename '${args[0]}'`;
+        }
 
         const targetPath = resolvePath(args[0]);
         const fileName = targetPath.split('/').pop();
@@ -230,8 +253,14 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
         return `Created file: ${fileName}`;
     },
 
-    mkdir: (args) => {
-        if (!args[0]) return 'Usage: mkdir <dirname>';
+    mkdir: args => {
+        if (!args[0]) {
+            return 'Usage: mkdir <dirname>';
+        }
+
+        if (!isValidFileName(args[0])) {
+            return `mkdir: invalid directory name '${args[0]}'`;
+        }
 
         const targetPath = resolvePath(args[0]);
         const dirName = targetPath.split('/').pop();
@@ -253,8 +282,10 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
         return `Created directory: ${dirName}`;
     },
 
-    rm: (args) => {
-        if (!args[0]) return 'Usage: rm <filename>';
+    rm: args => {
+        if (!args[0]) {
+            return 'Usage: rm <filename>';
+        }
 
         const targetPath = resolvePath(args[0]);
         const node = fileSystem[targetPath];
@@ -285,8 +316,10 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
         return `Removed: ${args[0]}`;
     },
 
-    rmdir: (args) => {
-        if (!args[0]) return 'Usage: rmdir <dirname>';
+    rmdir: args => {
+        if (!args[0]) {
+            return 'Usage: rmdir <dirname>';
+        }
 
         const targetPath = resolvePath(args[0]);
         const node = fileSystem[targetPath];
@@ -361,7 +394,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
              .,:cloooooolc:'.           Theme: Yaru (Dark)
                 ..,,,,,...              Memory: Lots of dreams`,
 
-    cowsay: (args) => {
+    cowsay: args => {
         const message = args.join(' ') || 'Moo!';
         const line = '─'.repeat(Math.min(message.length + 2, 40));
         return `
@@ -379,14 +412,16 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
 
     joke: () => terminalJokes[Math.floor(Math.random() * terminalJokes.length)],
 
-    flip: () => "(╯°□°)╯︵ ┻━┻",
+    flip: () => '(╯°□°)╯︵ ┻━┻',
 
-    unflip: () => "┬─┬ノ( º _ ºノ)"
+    unflip: () => '┬─┬ノ( º _ ºノ)',
 };
 
 export function executeTerminalCommand(input) {
     const trimmedInput = input.trim();
-    if (!trimmedInput) return '';
+    if (!trimmedInput) {
+        return '';
+    }
 
     // Check for output redirect (#26): echo "text" > file
     const redirectMatch = trimmedInput.match(/^(.+?)\s*>\s*(.+)$/);
@@ -394,7 +429,7 @@ export function executeTerminalCommand(input) {
         const [, commandPart, filePath] = redirectMatch;
         const [cmd, ...args] = commandPart.trim().split(' ');
         const command = cmd.toLowerCase();
-        
+
         // Only echo supports redirect for now
         if (command === 'echo') {
             const content = args.join(' ').replace(/^["']|["']$/g, ''); // Remove quotes
@@ -402,12 +437,12 @@ export function executeTerminalCommand(input) {
             const fileName = resolvedPath.split('/').pop();
             const parentPath = resolvedPath.substring(0, resolvedPath.lastIndexOf('/')) || '/';
             const parentNode = fileSystem[parentPath];
-            
+
             // Check parent directory exists
             if (!parentNode || parentNode.type !== 'dir') {
                 return `No such directory: ${parentPath}`;
             }
-            
+
             // Write file using flat path key
             if (!fileSystem[resolvedPath]) {
                 // New file - add to parent's children
@@ -421,7 +456,7 @@ export function executeTerminalCommand(input) {
             } else {
                 return `Cannot write to directory: ${resolvedPath}`;
             }
-            
+
             saveFileSystem();
             return ''; // No output on success
         }
@@ -440,11 +475,13 @@ Type 'help' for available commands.`;
 
 export function addTerminalOutput(command, output) {
     const terminalOutput = document.getElementById('terminal-output');
-    if (!terminalOutput) return;
+    if (!terminalOutput) {
+        return;
+    }
 
     const commandLine = document.createElement('div');
     commandLine.className = 'terminal-line terminal-command';
-    commandLine.textContent = `visitor@portfolio:~$ ${command}`;
+    commandLine.textContent = `visitor@portfolio:~$ ${escapeHtml(command)}`;
     terminalOutput.appendChild(commandLine);
 
     if (output) {
@@ -453,7 +490,7 @@ export function addTerminalOutput(command, output) {
         outputEl.className = 'terminal-line';
         outputEl.style.margin = '0';
         outputEl.style.fontFamily = 'inherit';
-        outputEl.textContent = output;
+        outputEl.textContent = output; // Output is already escaped by individual commands
         terminalOutput.appendChild(outputEl);
     }
 
@@ -461,9 +498,13 @@ export function addTerminalOutput(command, output) {
 }
 
 export function setupTerminal() {
-    const terminalInput = document.getElementById('terminal-input');
+    const terminalInput = /** @type {HTMLInputElement} */ (
+        document.getElementById('terminal-input')
+    );
     const terminalSubmit = document.getElementById('terminal-submit');
-    if (!terminalInput) return;
+    if (!terminalInput) {
+        return;
+    }
 
     function runCommand() {
         const command = terminalInput.value;
@@ -478,7 +519,7 @@ export function setupTerminal() {
         terminalInput.value = '';
     }
 
-    terminalInput.addEventListener('keydown', (e) => {
+    terminalInput.addEventListener('keydown', e => {
         if (e.key === 'Enter') {
             runCommand();
         } else if (e.key === 'ArrowUp') {
@@ -508,15 +549,20 @@ export function setupTerminal() {
 }
 
 export function setupTerminalMobileFix() {
-    const terminalInput = document.getElementById('terminal-input');
+    const terminalInput = /** @type {HTMLInputElement} */ (
+        document.getElementById('terminal-input')
+    );
     const terminalWindow = document.getElementById('terminal-window');
-    
-    if (!terminalInput || !terminalWindow) return;
-    
+
+    if (!terminalInput || !terminalWindow) {
+        return;
+    }
+
     terminalInput.addEventListener('focus', () => {
         if (window.innerWidth <= 768) {
             setTimeout(() => {
-                terminalWindow.querySelector('.window-body').scrollTop = terminalWindow.querySelector('.window-body').scrollHeight;
+                terminalWindow.querySelector('.window-body').scrollTop =
+                    terminalWindow.querySelector('.window-body').scrollHeight;
                 terminalWindow.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 300);
         }

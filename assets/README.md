@@ -32,6 +32,7 @@ assets/
 The abstract wallpaper is designed to work as a responsive background cover.
 
 **CSS Implementation:**
+
 ```css
 .wallpaper {
     background-image: url('../assets/wallpaper-abstract.png');
@@ -43,6 +44,7 @@ The abstract wallpaper is designed to work as a responsive background cover.
 
 **New to the project?**
 When adding an image, reference it relative to the `css/` or `index.html` file.
+
 - From CSS: `../assets/imagename.ext`
 - From HTML: `assets/imagename.ext`
 
@@ -51,6 +53,7 @@ When adding an image, reference it relative to the `css/` or `index.html` file.
 ## 📐 Best Practices & Guidelines
 
 ### File Naming Conventions
+
 Consistency is key. Please adhere to the `kebab-case` naming standard.
 
 - **Bad:** `Profile pic.jpg`, `MyProject_FINAL.png`, `IMG_2024.jpg`
@@ -59,6 +62,7 @@ Consistency is key. Please adhere to the `kebab-case` naming standard.
 **Structure:** `category-description-variant.extension`
 
 ### Recommended Folder Hierarchy (Future Proofing)
+
 As the project grows, organize new assets into these sub-folders:
 
 ```
@@ -75,10 +79,12 @@ assets/
 To ensure the portfolio remains fast (`Lighthouse Score > 90`), all assets must be optimized before committing.
 
 ### Image Formats
+
 - **Photos/Wallpapers:** Use **JPG** or **WebP** (Quality: 80-90%).
 - **UI Elements/Screenshots:** Use **PNG** or **WebP**.
 - **Icons:** Use **SVG** whenever possible for scalability.
 
 ### Tools we use
+
 1.  **[Squoosh.app](https://squoosh.app/)**: For manual compression and resizing.
 2.  **[TinyPNG](https://tinypng.com/)**: Quick optimization for PNG/JPG.

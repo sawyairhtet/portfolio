@@ -30,21 +30,31 @@
 
 /* Avatar Pulse Glow */
 @keyframes avatarPulseGlow {
-    0%, 100% { 
-        box-shadow: 0 0 20px rgba(233, 84, 32, 0.3), 
-                    0 0 40px rgba(233, 84, 32, 0.1); 
+    0%,
+    100% {
+        box-shadow:
+            0 0 20px rgba(233, 84, 32, 0.3),
+            0 0 40px rgba(233, 84, 32, 0.1);
     }
-    50% { 
-        box-shadow: 0 0 30px rgba(233, 84, 32, 0.5), 
-                    0 0 60px rgba(233, 84, 32, 0.2); 
+    50% {
+        box-shadow:
+            0 0 30px rgba(233, 84, 32, 0.5),
+            0 0 60px rgba(233, 84, 32, 0.2);
     }
 }
 
 /* Construction Bounce */
 @keyframes constructionBounce {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-3px) rotate(-5deg); }
-    75% { transform: translateY(-3px) rotate(5deg); }
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-3px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(-3px) rotate(5deg);
+    }
 }
 
 /* Sticky Note In */
@@ -134,20 +144,34 @@
 
 /* Shimmer Move */
 @keyframes shimmerMove {
-    0% { left: -100%; }
-    100% { left: 100%; }
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 /* Swipe Hint Pulse */
 @keyframes swipeHintPulse {
-    0%, 100% { transform: translateX(-50%) scale(1); }
-    50% { transform: translateX(-50%) scale(1.02); }
+    0%,
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.02);
+    }
 }
 
 /* Nav Hint Bounce */
 @keyframes navHintBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 /* Content Slide In */
@@ -164,13 +188,24 @@
 
 /* Matrix Blink */
 @keyframes matrixBlink {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 0.3; }
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.3;
+    }
 }
 
 /* Dock Bounce (Mobile) */
 @keyframes dockBounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.85); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.85);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

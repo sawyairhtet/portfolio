@@ -20,6 +20,7 @@
 @import url('components/apps.css');
 @import url('components/ui-elements.css');
 @import url('components/dialog.css');
+@import url('components/skeleton.css');
 
 /* Responsive / Media Queries (must be last) */
 @import url('components/responsive.css');

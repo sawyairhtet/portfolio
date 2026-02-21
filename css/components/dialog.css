@@ -87,7 +87,7 @@
 }
 
 .dialog-input:focus {
-    border-color: var(--color-primary, #E95420);
+    border-color: var(--color-primary, #e95420);
 }
 
 .dialog-footer {
@@ -119,7 +119,7 @@
 }
 
 .dialog-confirm {
-    background: var(--color-primary, #E95420);
+    background: var(--color-primary, #e95420);
     color: #fff;
 }
 

@@ -7,7 +7,7 @@ import SoundManager from './sound-manager.js';
 
 // State
 let currentZIndex = 1100;
-let activeWindows = new Set();
+const activeWindows = new Set();
 const windowSnapState = new Map();
 const minimizedWindows = new Map();
 let lastFocusedElement = null; // Track element that opened window for focus restoration
@@ -17,7 +17,8 @@ let cascadeCounter = 0; // Static counter for window cascade positioning (#22)
 // Cache CSS variable to avoid reading on every drag call (#20)
 let cachedDockWidth = 60;
 function updateCachedDockWidth() {
-    cachedDockWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
+    cachedDockWidth =
+        parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
 }
 // Update on load and resize
 if (typeof window !== 'undefined') {
@@ -41,18 +42,18 @@ export function getCurrentZIndex() {
 function updateAriaModal() {
     const activeIds = Array.from(activeWindows);
     const backgroundElements = document.querySelectorAll('.main-content, .dock, .top-bar');
-    
+
     // Hide/show background elements from screen readers
     if (activeIds.length === 0) {
         backgroundElements.forEach(el => el.removeAttribute('aria-hidden'));
         return;
     }
-    
+
     // Hide background when any window is open
     backgroundElements.forEach(el => el.setAttribute('aria-hidden', 'true'));
 
     // Find window with highest Z-index
-    let topWindow = null;
+    let topWindow = /** @type {HTMLElement | null} */ (null);
     let maxZ = -1;
 
     activeIds.forEach(id => {
@@ -62,7 +63,7 @@ function updateAriaModal() {
             // Don't hide non-top windows from screen readers - they're still visible
             // Just mark them as not the primary focus with inert-like behavior
             el.removeAttribute('aria-hidden');
-            const z = parseInt(el.style.zIndex || 0);
+            const z = parseInt(el.style.zIndex || '0');
             if (z > maxZ) {
                 maxZ = z;
                 topWindow = el;
@@ -79,7 +80,9 @@ export function openWindow(appName, currentOS = 'desktop') {
     const windowId = `${appName}-window`;
     const windowEl = document.getElementById(windowId);
 
-    if (!windowEl) return;
+    if (!windowEl) {
+        return;
+    }
 
     if (activeWindows.has(windowId)) {
         bringToFront(windowEl);
@@ -92,7 +95,7 @@ export function openWindow(appName, currentOS = 'desktop') {
     windowEl.style.display = 'flex';
     activeWindows.add(windowId);
     bringToFront(windowEl);
-    
+
     // Apply cascade offset for desktop (only for new windows, use static counter #22)
     if (currentOS === 'desktop' && !windowEl.style.top) {
         cascadeCounter++;
@@ -119,20 +122,26 @@ export function openWindow(appName, currentOS = 'desktop') {
         // Focus first focusable element or terminal input
         if (appName === 'terminal') {
             const terminalInput = document.getElementById('terminal-input');
-            if (terminalInput) terminalInput.focus();
+            if (terminalInput) {
+                terminalInput.focus();
+            }
         } else {
             const firstFocusable = getFocusableElements(windowEl)[0];
-            if (firstFocusable) firstFocusable.focus();
+            if (firstFocusable) {
+                firstFocusable.focus();
+            }
         }
     }, 100);
 }
 
 export function closeWindow(windowId) {
     const windowEl = document.getElementById(windowId);
-    if (!windowEl) return;
+    if (!windowEl) {
+        return;
+    }
 
     SoundManager.playWhoosh();
-    
+
     // Remove focus trap for this window
     removeFocusTrap(windowId);
 
@@ -143,14 +152,14 @@ export function closeWindow(windowId) {
         windowEl.style.display = 'none';
         windowEl.classList.remove('closing');
         activeWindows.delete(windowId);
-        
+
         // Clean up snap and minimize state (#23)
         windowSnapState.delete(windowId);
         minimizedWindows.delete(windowId);
-        
+
         updateDockActiveStates();
         updateAriaModal(); // Update modal state after closing
-        
+
         // Restore focus to element that opened the window
         if (activeWindows.size === 0 && lastFocusedElement) {
             lastFocusedElement.focus();
@@ -174,13 +183,15 @@ export function bringToFront(element) {
 
 export function minimizeWindow(windowId) {
     const windowEl = document.getElementById(windowId);
-    if (!windowEl) return;
+    if (!windowEl) {
+        return;
+    }
 
     SoundManager.playWhoosh();
 
     minimizedWindows.set(windowId, {
         top: windowEl.style.top,
-        left: windowEl.style.left
+        left: windowEl.style.left,
     });
 
     windowEl.classList.add('minimizing');
@@ -198,29 +209,31 @@ export function minimizeWindow(windowId) {
 export function restoreWindow(appName, currentOS = null) {
     const windowId = `${appName}-window`;
     const windowEl = document.getElementById(windowId);
-    
-    if (!windowEl) return;
-    
+
+    if (!windowEl) {
+        return;
+    }
+
     // Detect currentOS if not provided
     if (!currentOS) {
         const width = window.innerWidth;
-        currentOS = width <= 767 ? 'mobile' : (width <= 1024 ? 'tablet' : 'desktop');
+        currentOS = width <= 767 ? 'mobile' : width <= 1024 ? 'tablet' : 'desktop';
     }
-    
+
     if (minimizedWindows.has(windowId)) {
         windowEl.style.display = 'flex';
         windowEl.classList.add('restoring');
-        
+
         SoundManager.playClick();
-        
+
         activeWindows.add(windowId);
         bringToFront(windowEl);
         updateDockActiveStates();
-        
+
         setTimeout(() => {
             windowEl.classList.remove('restoring');
         }, 350);
-        
+
         minimizedWindows.delete(windowId);
     } else {
         openWindow(appName, currentOS);
@@ -234,7 +247,7 @@ export function restoreWindow(appName, currentOS = null) {
 export function updateDockActiveStates() {
     const dockItems = document.querySelectorAll('.dock-item');
     dockItems.forEach(item => {
-        const appName = item.dataset.app;
+        const appName = /** @type {HTMLElement} */ (item).dataset.app;
         if (appName) {
             const windowId = `${appName}-window`;
             if (activeWindows.has(windowId)) {
@@ -251,13 +264,20 @@ export function updateDockActiveStates() {
 // ============================================
 
 export function makeDraggable(element, currentOS) {
-    if (currentOS !== 'desktop') return;
+    if (currentOS !== 'desktop') {
+        return;
+    }
 
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
     const header = element.querySelector('.window-header');
     const snapPreview = document.getElementById('snap-preview');
 
-    if (!header) return;
+    if (!header) {
+        return;
+    }
 
     header.addEventListener('mousedown', dragMouseDown);
     // Touch support for tablets (#48)
@@ -272,47 +292,56 @@ export function makeDraggable(element, currentOS) {
     }
 
     function dragMouseDown(e) {
-        if (currentOS !== 'desktop') return;
-        if (e.target.closest('.window-control')) return;
+        if (currentOS !== 'desktop') {
+            return;
+        }
+        if (e.target.closest('.window-control')) {
+            return;
+        }
 
         // Use standard event object
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
 
-        handleDragStart(e);
+        handleDragStart();
 
         document.addEventListener('mouseup', closeDragElement);
         document.addEventListener('mousemove', elementDrag);
     }
 
     function dragTouchStart(e) {
-        if (currentOS !== 'desktop') return;
-        if (e.target.closest('.window-control')) return;
+        if (currentOS !== 'desktop') {
+            return;
+        }
+        if (e.target.closest('.window-control')) {
+            return;
+        }
 
         e.preventDefault();
         const coords = getEventCoords(e);
         pos3 = coords.clientX;
         pos4 = coords.clientY;
 
-        handleDragStart(e);
+        handleDragStart();
 
         document.addEventListener('touchend', closeDragTouch, { passive: false });
         document.addEventListener('touchmove', elementDragTouch, { passive: false });
     }
 
-    function handleDragStart(e) {
+    function handleDragStart() {
         // Unsnap if snapped
-        if (element.classList.contains('snapped-left') || 
+        if (
+            element.classList.contains('snapped-left') ||
             element.classList.contains('snapped-right') ||
-            element.classList.contains('snapped-maximized')) {
-            
+            element.classList.contains('snapped-maximized')
+        ) {
             const originalState = windowSnapState.get(element.id);
             if (originalState) {
                 element.classList.remove('snapped-left', 'snapped-right', 'snapped-maximized');
                 element.style.width = originalState.width;
                 element.style.height = originalState.height;
-                element.style.left = (pos3 - parseInt(originalState.width) / 2) + 'px';
+                element.style.left = pos3 - parseInt(originalState.width) / 2 + 'px';
                 element.style.top = pos4 + 'px';
             }
         }
@@ -350,8 +379,8 @@ export function makeDraggable(element, currentOS) {
         newTop = Math.max(minY, Math.min(newTop, maxY));
         newLeft = Math.max(minX, Math.min(newLeft, maxX));
 
-        element.style.top = newTop + "px";
-        element.style.left = newLeft + "px";
+        element.style.top = newTop + 'px';
+        element.style.left = newLeft + 'px';
 
         // Snap detection (using cached dock width #20)
         const snapThreshold = 50;
@@ -374,9 +403,9 @@ export function makeDraggable(element, currentOS) {
     }
 
     function closeDragTouch(e) {
-        const coords = e.changedTouches ? 
-            { clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY } : 
-            { clientX: 0, clientY: 0 };
+        const coords = e.changedTouches
+            ? { clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY }
+            : { clientX: 0, clientY: 0 };
         doCloseDrag(coords.clientX, coords.clientY);
         document.removeEventListener('touchend', closeDragTouch);
         document.removeEventListener('touchmove', elementDragTouch);
@@ -391,7 +420,7 @@ export function makeDraggable(element, currentOS) {
                 width: element.style.width || getComputedStyle(element).width,
                 height: element.style.height || getComputedStyle(element).height,
                 top: element.style.top,
-                left: element.style.left
+                left: element.style.left,
             });
         }
 
@@ -424,12 +453,23 @@ export function makeDraggable(element, currentOS) {
 // ============================================
 
 export function makeResizable(element, currentOS) {
-    if (currentOS !== 'desktop') return;
+    if (currentOS !== 'desktop') {
+        return;
+    }
 
     const minWidth = 400;
     const minHeight = 300;
 
-    const handles = ['top', 'bottom', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'];
+    const handles = [
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'top-left',
+        'top-right',
+        'bottom-left',
+        'bottom-right',
+    ];
     handles.forEach(pos => {
         const handle = document.createElement('div');
         handle.className = `resize-handle ${pos}`;
@@ -512,27 +552,31 @@ export function makeResizable(element, currentOS) {
 export function setupWindowControls() {
     // Close buttons
     document.querySelectorAll('.window-control.close').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', e => {
             e.stopPropagation();
             const windowEl = btn.closest('.window');
-            if (windowEl) closeWindow(windowEl.id);
+            if (windowEl) {
+                closeWindow(windowEl.id);
+            }
         });
     });
 
     // Minimize buttons
     document.querySelectorAll('.window-control.minimize').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', e => {
             e.stopPropagation();
-            const windowEl = btn.closest('.window');
-            if (windowEl) minimizeWindow(windowEl.id);
+            const windowEl = /** @type {HTMLElement | null} */ (btn.closest('.window'));
+            if (windowEl) {
+                minimizeWindow(windowEl.id);
+            }
         });
     });
 
     // Maximize buttons
     document.querySelectorAll('.window-control.maximize').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', e => {
             e.stopPropagation();
-            const windowEl = btn.closest('.window');
+            const windowEl = /** @type {HTMLElement | null} */ (btn.closest('.window'));
             if (windowEl) {
                 if (windowEl.classList.contains('snapped-maximized')) {
                     windowEl.classList.remove('snapped-maximized');
@@ -549,7 +593,7 @@ export function setupWindowControls() {
                             width: windowEl.style.width || getComputedStyle(windowEl).width,
                             height: windowEl.style.height || getComputedStyle(windowEl).height,
                             top: windowEl.style.top,
-                            left: windowEl.style.left
+                            left: windowEl.style.left,
                         });
                     }
                     windowEl.classList.add('snapped-maximized');
@@ -560,46 +604,50 @@ export function setupWindowControls() {
 
     // Mobile close buttons
     document.querySelectorAll('.close-btn-mobile').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', e => {
             e.stopPropagation();
             const windowEl = btn.closest('.window');
-            if (windowEl) closeWindow(windowEl.id);
+            if (windowEl) {
+                closeWindow(windowEl.id);
+            }
         });
     });
 
     // Escape key to close topmost window
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && activeWindows.size > 0) {
             // Find the topmost window (highest z-index)
-            let topmostWindow = null;
+            let topmostWindow = /** @type {HTMLElement | null} */ (null);
             let highestZ = 0;
-            
+
             activeWindows.forEach(windowId => {
                 const windowEl = document.getElementById(windowId);
                 if (windowEl) {
-                    const zIndex = parseInt(windowEl.style.zIndex || 0);
+                    const zIndex = parseInt(windowEl.style.zIndex || '0');
                     if (zIndex > highestZ) {
                         highestZ = zIndex;
                         topmostWindow = windowEl;
                     }
                 }
             });
-            
+
             if (topmostWindow) {
                 closeWindow(topmostWindow.id);
             }
         }
-        
+
         // Ctrl+Tab to cycle through active windows (#46)
         if (e.key === 'Tab' && e.ctrlKey && activeWindows.size > 1) {
             e.preventDefault();
-            
+
             // Get windows sorted by z-index
-            const windowsArray = Array.from(activeWindows).map(id => {
-                const el = document.getElementById(id);
-                return { id, zIndex: parseInt(el?.style.zIndex || 0), el };
-            }).sort((a, b) => b.zIndex - a.zIndex);
-            
+            const windowsArray = Array.from(activeWindows)
+                .map(id => {
+                    const el = document.getElementById(id);
+                    return { id, zIndex: parseInt(el?.style.zIndex || '0'), el };
+                })
+                .sort((a, b) => b.zIndex - a.zIndex);
+
             // Find current topmost and bring next to front
             if (windowsArray.length > 1) {
                 // Shift+Ctrl+Tab goes backwards
@@ -626,28 +674,33 @@ function getFocusableElements(container) {
         'select:not([disabled])',
         'textarea:not([disabled])',
         '[tabindex]:not([tabindex="-1"])',
-        '[contenteditable="true"]'
+        '[contenteditable="true"]',
     ].join(', ');
-    
-    return Array.from(container.querySelectorAll(focusableSelectors))
-        .filter(el => el.offsetParent !== null); // Only visible elements
+
+    return Array.from(container.querySelectorAll(focusableSelectors)).filter(
+        el => el.offsetParent !== null
+    ); // Only visible elements
 }
 
 function setupFocusTrap(windowEl) {
     const windowId = windowEl.id;
-    
+
     // Remove existing trap for this window if any
     removeFocusTrap(windowId);
-    
-    const handler = (e) => {
-        if (e.key !== 'Tab') return;
-        
+
+    const handler = e => {
+        if (e.key !== 'Tab') {
+            return;
+        }
+
         const focusable = getFocusableElements(windowEl);
-        if (focusable.length === 0) return;
-        
+        if (focusable.length === 0) {
+            return;
+        }
+
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
-        
+
         if (e.shiftKey) {
             // Shift+Tab: if on first element, wrap to last
             if (document.activeElement === first) {
@@ -662,7 +715,7 @@ function setupFocusTrap(windowEl) {
             }
         }
     };
-    
+
     focusTrapHandlers.set(windowId, handler);
     document.addEventListener('keydown', handler);
 }
@@ -687,5 +740,5 @@ export default {
     makeResizable,
     setupWindowControls,
     getActiveWindows,
-    getCurrentZIndex
+    getCurrentZIndex,
 };

@@ -1,576 +1,890 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en" data-theme="dark">
-
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);} 
-      gtag('js', new Date());
-      gtag('config', 'G-EXTTVBFZCK');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;">
-    <meta name="description"
-        content="Saw Ye Htet - IT Student & VR Developer at Singapore Polytechnic. Specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
-    
-    <!-- Open Graph / facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sawyehtet.com/">
-    <meta property="og:title" content="Saw Ye Htet - Portfolio">
-    <meta property="og:description" content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
-    <meta property="og:image" content="https://sawyehtet.com/images/og-preview.png">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Saw Ye Htet - Portfolio">
-    <meta name="twitter:description" content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.">
-    <meta name="twitter:image" content="https://sawyehtet.com/images/og-preview.png">
-    
-    <link rel="canonical" href="https://sawyehtet.com/">
-    <title>Saw Ye Htet - Portfolio</title>
-    <!-- Production: bundled CSS eliminates @import waterfall (15 sequential requests → 1) -->
-    <link rel="stylesheet" href="dist/bundle.min.css">
-    <!-- Theme Init (prevents flash of wrong theme) -->
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.documentElement.removeAttribute('data-theme');
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
             }
-        })();
-    </script>
-    <!-- Google Fonts - Ubuntu + Indie Flower (for sticky notes) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Non-render-blocking: swap media to 'all' after load -->
-    <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap"
-        rel="stylesheet" media="print" onload="this.media='all'">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="assets/icon.png" type="image/png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#E95420">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- Preload Critical Asset (Profile Picture) -->
-    <link rel="preload" href="images/profile-picture.jpg" as="image" fetchpriority="high">
+            gtag('js', new Date());
+            gtag('config', 'G-EXTTVBFZCK');
+        </script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;"
+        />
+        <meta
+            name="description"
+            content="Saw Ye Htet - IT Student & VR Developer at Singapore Polytechnic. Specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+        />
 
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Saw Ye Htet",
-      "url": "https://sawyehtet.com",
-      "image": "https://sawyehtet.com/images/profile-picture.jpg",
-      "sameAs": [
-        "https://github.com/sawyairhtet",
-        "https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/",
-        "https://x.com/saulyehtet_"
-      ],
-      "jobTitle": "IT Student & VR Developer",
-      "description": "IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.",
-      "alumniOf": {
-        "@type": "EducationalOrganization",
-        "name": "Singapore Polytechnic"
-      },
-      "knowsAbout": ["VR Development", "Unity", "JavaScript", "Web Development", "Meta Quest", "Hand Tracking"]
-    }
-    </script>
-</head>
+        <!-- Open Graph / facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://sawyehtet.com/" />
+        <meta property="og:title" content="Saw Ye Htet - Portfolio" />
+        <meta
+            property="og:description"
+            content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+        />
+        <meta property="og:image" content="https://sawyehtet.com/images/og-preview.png" />
 
-<body>
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Saw Ye Htet - Portfolio" />
+        <meta
+            name="twitter:description"
+            content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+        />
+        <meta name="twitter:image" content="https://sawyehtet.com/images/og-preview.png" />
 
-    <!-- Skip Link for Accessibility -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+        <link rel="canonical" href="https://sawyehtet.com/" />
+        <title>Saw Ye Htet - Portfolio</title>
+        <!-- Production: bundled CSS eliminates @import waterfall (15 sequential requests → 1) -->
+        <link rel="stylesheet" href="dist/bundle.min.css" />
+        <!-- Theme Init (prevents flash of wrong theme) -->
+        <script>
+            (function () {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'light') {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            })();
+        </script>
+        <!-- Google Fonts - Ubuntu + Indie Flower (for sticky notes) -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <!-- Non-render-blocking: swap media to 'all' after load -->
+        <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu+Mono:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap"
+            rel="stylesheet"
+            media="print"
+            onload="this.media = 'all'"
+        />
+        <!-- Font Awesome for icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="icon" href="assets/icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="assets/icon.png" />
+        <link rel="manifest" href="manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <!-- Boot Screen (Linux Boot Log Style) -->
-    <div class="boot-screen" id="boot-screen" role="status" aria-label="System booting">
-        <div class="boot-log" id="boot-log"></div>
-        <div class="boot-skip-hint">Press any key or click to skip</div>
-    </div>
+        <!-- Preload Critical Asset (Profile Picture) -->
+        <link rel="preload" href="images/profile-picture.jpg" as="image" fetchpriority="high" />
 
-    <!-- Sticky Notes Container -->
-    <div class="sticky-notes-container" id="sticky-notes"></div>
+        <!-- Structured Data (JSON-LD) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Saw Ye Htet",
+                "url": "https://sawyehtet.com",
+                "image": "https://sawyehtet.com/images/profile-picture.jpg",
+                "sameAs": [
+                    "https://github.com/sawyairhtet",
+                    "https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/",
+                    "https://x.com/saulyehtet_"
+                ],
+                "jobTitle": "IT Student & VR Developer",
+                "description": "IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development.",
+                "alumniOf": {
+                    "@type": "EducationalOrganization",
+                    "name": "Singapore Polytechnic"
+                },
+                "knowsAbout": [
+                    "VR Development",
+                    "Unity",
+                    "JavaScript",
+                    "Web Development",
+                    "Meta Quest",
+                    "Hand Tracking"
+                ]
+            }
+        </script>
+    </head>
 
-    <!-- Snap Preview Overlay (for window snapping) -->
-    <div class="snap-preview" id="snap-preview"></div>
+    <body>
+        <!-- Skip Link for Accessibility -->
+        <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Context Menu -->
-    <div class="context-menu" id="context-menu">
-        <div class="context-menu-item" data-action="new-folder"><i class="fas fa-folder-plus"></i> New Folder</div>
-        <div class="context-menu-item" data-action="new-file"><i class="fas fa-file-plus"></i> New File</div>
-        <div class="context-menu-separator"></div>
-        <div class="context-menu-item" data-action="refresh"><i class="fas fa-sync-alt"></i> Refresh</div>
-        <div class="context-menu-item" data-action="terminal"><i class="fas fa-terminal"></i> Open Terminal</div>
-        <div class="context-menu-separator"></div>
-        <div class="context-menu-item" data-action="settings"><i class="fas fa-cog"></i> Settings</div>
-    </div>
-
-    <!-- Top Bar (GNOME Panel) -->
-    <div class="top-bar">
-        <!-- GNOME Panel Left - Activities -->
-        <div class="menu-bar-left">
-            <span class="personal-brand" aria-label="Saw Ye Htet - Personal Brand">SYH</span>
-            <button class="activities-btn pill" aria-disabled="true" title="Activities overview (decorative)">Activities</button>
+        <!-- Boot Screen (Linux Boot Log Style) -->
+        <div class="boot-screen" id="boot-screen" role="status" aria-label="System booting">
+            <div class="boot-log" id="boot-log"></div>
+            <div class="boot-skip-hint">Press any key or click to skip</div>
         </div>
 
-        <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
-        <div class="status-bar">
-            <div class="status-time"></div>
-            <div class="status-icons">
-                <i class="fas fa-signal"></i>
-                <i class="fas fa-wifi"></i>
-                <i class="fas fa-battery-three-quarters"></i>
+        <!-- Sticky Notes Container -->
+        <div class="sticky-notes-container" id="sticky-notes"></div>
+
+        <!-- Snap Preview Overlay (for window snapping) -->
+        <div class="snap-preview" id="snap-preview"></div>
+
+        <!-- Context Menu -->
+        <div class="context-menu" id="context-menu">
+            <div class="context-menu-item" data-action="new-folder">
+                <i class="fas fa-folder-plus"></i> New Folder
+            </div>
+            <div class="context-menu-item" data-action="new-file">
+                <i class="fas fa-file-plus"></i> New File
+            </div>
+            <div class="context-menu-separator"></div>
+            <div class="context-menu-item" data-action="refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </div>
+            <div class="context-menu-item" data-action="terminal">
+                <i class="fas fa-terminal"></i> Open Terminal
+            </div>
+            <div class="context-menu-separator"></div>
+            <div class="context-menu-item" data-action="settings">
+                <i class="fas fa-cog"></i> Settings
             </div>
         </div>
 
-        <!-- GNOME Panel Center - Clock -->
-        <div class="menu-bar-center">
-            <div class="menu-clock pill"></div>
-        </div>
-
-        <!-- GNOME Panel Right - Status Indicators -->
-        <div class="menu-bar-right">
-            <button class="theme-toggle-btn pill" id="quick-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-                <i class="fas fa-moon"></i>
-            </button>
-            <div class="status-menu pill" role="presentation" aria-label="System status indicators (decorative)">
-                <i class="fas fa-network-wired" aria-hidden="true"></i>
-                <i class="fas fa-volume-up" aria-hidden="true"></i>
-                <i class="fas fa-power-off" aria-hidden="true"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content Area -->
-    <main id="main-content" class="main-content" role="main">
-        <!-- Visually hidden h1 for SEO/accessibility -->
-        <h1 class="sr-only">Saw Ye Htet - IT Student & Software Engineer Portfolio</h1>
-
-        <!-- Desktop Wallpaper (macOS only) -->
-        <div class="wallpaper"></div>
-
-        <!-- App Icons Grid (All layouts) -->
-        <div class="app-grid">
-            <!-- About App -->
-            <button class="app-icon" data-app="about" aria-label="About">
-                <div class="app-icon-wrapper">
-                    <i class="fas fa-user-circle"></i>
-                </div>
-                <div class="app-label">About</div>
-            </button>
-
-            <!-- Skills App -->
-            <button class="app-icon" data-app="skills" aria-label="Skills">
-                <div class="app-icon-wrapper">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <div class="app-label">Skills</div>
-            </button>
-
-            <!-- Projects App -->
-            <button class="app-icon" data-app="projects" aria-label="Projects">
-                <div class="app-icon-wrapper">
-                    <i class="fas fa-folder"></i>
-                </div>
-                <div class="app-label">Projects</div>
-            </button>
-
-            <!-- Contact App -->
-            <button class="app-icon" data-app="contact" aria-label="Contact">
-                <div class="app-icon-wrapper">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="app-label">Contact</div>
-            </button>
-
-            <!-- Links App -->
-            <button class="app-icon" data-app="links" aria-label="Links">
-                <div class="app-icon-wrapper">
-                    <i class="fas fa-link"></i>
-                </div>
-                <div class="app-label">Links</div>
-            </button>
-
-            <!-- Terminal App -->
-            <button class="app-icon" data-app="terminal" aria-label="Terminal">
-                <div class="app-icon-wrapper">
-                    <i class="fas fa-terminal"></i>
-                </div>
-                <div class="app-label">Terminal</div>
-            </button>
-
-            <!-- Settings App -->
-            <button class="app-icon" data-app="settings" aria-label="Settings">
-                <div class="app-icon-wrapper">
-                    <i class="fas fa-cog"></i>
-                </div>
-                <div class="app-label">Settings</div>
-            </button>
-        </div>
-
-        <!-- Widget Container (iPad/iOS) -->
-        <div class="widget-container">
-            <div class="widget widget-about">
-                <h3>About Me</h3>
-                <p>Saw Ye Htet - IT Student & Software Engineer</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- Windows/Apps Content -->
-
-    <!-- About Window/App -->
-    <div class="window" id="about-window" data-app="about" role="dialog" aria-labelledby="about-window-title">
-        <div class="window-header">
-            <div class="window-title" id="about-window-title">About</div>
-            <button class="close-btn-mobile" aria-label="Close"><i class="fas fa-times"></i></button>
-            <div class="window-controls">
-                <button class="window-control minimize" aria-label="Minimize"><i class="fas fa-minus"></i></button>
-                <button class="window-control maximize" aria-label="Maximize"><i class="fas fa-expand"></i></button>
-                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
-            </div>
-        </div>
-        <div class="window-body">
-            <div class="about-hero">
-                <div class="about-avatar">
-                   <picture>
-                       <source srcset="images/profile-picture.webp" type="image/webp">
-                       <img src="images/profile-picture.jpg" alt="Saw Ye Htet" class="profile-img" width="140" height="140">
-                   </picture>
-                </div>
-                <h2>Saw Ye Htet</h2>
-                <p class="about-tagline">IT Student & VR Developer</p>
+        <!-- Top Bar (GNOME Panel) -->
+        <div class="top-bar">
+            <!-- GNOME Panel Left - Activities -->
+            <div class="menu-bar-left">
+                <span class="personal-brand" aria-label="Saw Ye Htet - Personal Brand">SYH</span>
+                <button
+                    class="activities-btn pill"
+                    aria-disabled="true"
+                    title="Activities overview (decorative)"
+                >
+                    Activities
+                </button>
             </div>
 
-            <div class="about-content">
-                <div class="about-section">
-                    <h3><i class="fas fa-user"></i> About Me</h3>
-                    <p>I'm a passionate IT student with a keen interest in creating immersive digital experiences. 
-                        From building interactive VR games to crafting polished web applications, I love turning ideas 
-                        into reality through code. Always eager to learn new technologies and push the boundaries of 
-                        what's possible.</p>
+            <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
+            <div class="status-bar">
+                <div class="status-time"></div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
                 </div>
+            </div>
 
-                <div class="about-section">
-                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
-                    <p><strong>Singapore Polytechnic</strong><br>
-                        Diploma in Information Technology<br>
-                        <em>Expected Graduation: 2026</em></p>
-                </div>
+            <!-- GNOME Panel Center - Clock -->
+            <div class="menu-bar-center">
+                <div class="menu-clock pill"></div>
+            </div>
 
-                <div class="about-section">
-                    <h3><i class="fas fa-book"></i> Key Coursework</h3>
-                    <p>Object-Oriented Programming • Data Structures & Algorithms • Database Management • 
-                        Web Development • Mobile Application Development • User Experience Design • 
-                        Cloud Computing Fundamentals</p>
-                </div>
-
-                <div class="about-section">
-                    <h3><i class="fas fa-briefcase"></i> Experience</h3>
-                    <p><strong>VR Developer</strong><br>
-                        Developed immersive VR experiences using Unity and Meta Quest hand tracking technology. 
-                        Created game mechanics, optimized performance, and implemented intuitive gesture controls.</p>
-                </div>
-
-                <div class="about-section">
-                    <h3><i class="fas fa-heart"></i> Interests</h3>
-                    <p>Virtual Reality & Spatial Computing • Game Development • Open Source • 
-                        Linux & System Customization • UI/UX Design • Competitive Programming</p>
+            <!-- GNOME Panel Right - Status Indicators -->
+            <div class="menu-bar-right">
+                <button
+                    class="theme-toggle-btn pill"
+                    id="quick-theme-toggle"
+                    aria-label="Toggle dark mode"
+                    title="Toggle dark mode"
+                >
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div
+                    class="status-menu pill"
+                    role="presentation"
+                    aria-label="System status indicators (decorative)"
+                >
+                    <i class="fas fa-network-wired" aria-hidden="true"></i>
+                    <i class="fas fa-volume-up" aria-hidden="true"></i>
+                    <i class="fas fa-power-off" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
-    </div>
 
+        <!-- Main Content Area -->
+        <main id="main-content" class="main-content" role="main">
+            <!-- Visually hidden h1 for SEO/accessibility -->
+            <h1 class="sr-only">Saw Ye Htet - IT Student & Software Engineer Portfolio</h1>
 
-    <!-- Skills Window/App -->
-    <div class="window" id="skills-window" data-app="skills" role="dialog" aria-labelledby="skills-window-title">
-        <div class="window-header">
-            <div class="window-title" id="skills-window-title">Skills</div>
-            <button class="close-btn-mobile" aria-label="Close"><i class="fas fa-times"></i></button>
-            <div class="window-controls">
-                <button class="window-control minimize" aria-label="Minimize"><i class="fas fa-minus"></i></button>
-                <button class="window-control maximize" aria-label="Maximize"><i class="fas fa-expand"></i></button>
-                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
-            </div>
-        </div>
-        <div class="window-body">
-            <h2><i class="fas fa-laptop-code"></i> Skills & Tools</h2>
+            <!-- Desktop Wallpaper (macOS only) -->
+            <div class="wallpaper"></div>
 
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon languages"><i class="fas fa-code"></i></div>
-                    <h4>Languages</h4>
-                    <p>JavaScript, Python, C#, Java, SQL</p>
-                    <span class="skill-level proficient">Proficient</span>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon frontend"><i class="fas fa-palette"></i></div>
-                    <h4>Frontend</h4>
-                    <p>HTML5, CSS3, React, Responsive Design</p>
-                    <span class="skill-level proficient">Proficient</span>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon backend"><i class="fas fa-server"></i></div>
-                    <h4>Backend</h4>
-                    <p>REST APIs, Node.js, Database Integration</p>
-                    <span class="skill-level familiar">Familiar</span>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon vr"><i class="fas fa-vr-cardboard"></i></div>
-                    <h4>VR Development</h4>
-                    <p>Unity, Meta Quest, Hand Tracking</p>
-                    <span class="skill-level proficient">Proficient</span>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon tools"><i class="fas fa-tools"></i></div>
-                    <h4>Tools</h4>
-                    <p>Git, VS Code, Figma, Chrome DevTools</p>
-                    <span class="skill-level proficient">Proficient</span>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon" style="color: #00D4FF;"><i class="fas fa-cloud"></i></div>
-                    <h4>Cloud & DevOps</h4>
-                    <p>GitHub Actions, CI/CD, Basic AWS</p>
-                    <span class="skill-level learning">Learning</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Projects Window/App -->
-    <div class="window" id="projects-window" data-app="projects" role="dialog" aria-labelledby="projects-window-title">
-        <div class="window-header">
-            <div class="window-title" id="projects-window-title">Projects</div>
-            <button class="close-btn-mobile" aria-label="Close"><i class="fas fa-times"></i></button>
-            <div class="window-controls">
-                <button class="window-control minimize" aria-label="Minimize"><i class="fas fa-minus"></i></button>
-                <button class="window-control maximize" aria-label="Maximize"><i class="fas fa-expand"></i></button>
-                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
-            </div>
-        </div>
-        <div class="window-body">
-            <div class="projects-grid">
-                <a href="https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking"
-                    target="_blank" rel="noopener noreferrer" class="project-card featured-project">
-                    <div class="project-badge">Featured</div>
-                    <div class="project-preview"><i class="fas fa-vr-cardboard"></i></div>
-                    <h3>Jewelry Shop Robbery VR</h3>
-                    <p>An immersive VR heist game for Meta Quest with full hand tracking support. Grab precious gems,
-                        avoid security, and escape with the loot!</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">Unity</span>
-                        <span class="tech-badge">C#</span>
-                        <span class="tech-badge">Meta Quest</span>
-                        <span class="tech-badge">Hand Tracking</span>
+            <!-- App Icons Grid (All layouts) -->
+            <div class="app-grid">
+                <!-- About App -->
+                <button class="app-icon" data-app="about" aria-label="About">
+                    <div class="app-icon-wrapper">
+                        <i class="fas fa-user-circle"></i>
                     </div>
-                    <div class="project-meta">
-                        <span class="project-platform"><i class="fas fa-vr-cardboard"></i> Meta Quest 2/3/Pro</span>
-                        <span class="project-link"><i class="fab fa-github"></i> View on GitHub</span>
-                    </div>
-                </a>
+                    <div class="app-label">About</div>
+                </button>
 
-                <a href="https://github.com/sawyairhtet/portfolio" target="_blank" rel="noopener noreferrer" class="project-card">
-                    <div class="project-preview"><i class="fas fa-desktop"></i></div>
-                    <h3>Ubuntu Portfolio Website</h3>
-                    <p>This very website! A unique Ubuntu GNOME-styled portfolio with draggable windows, working
-                        terminal, boot animation, and sticky notes.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">HTML5</span>
-                        <span class="tech-badge">CSS3</span>
-                        <span class="tech-badge">JavaScript</span>
-                        <span class="tech-badge">Ubuntu Theme</span>
+                <!-- Skills App -->
+                <button class="app-icon" data-app="skills" aria-label="Skills">
+                    <div class="app-icon-wrapper">
+                        <i class="fas fa-tools"></i>
                     </div>
-                    <div class="project-meta">
-                        <span class="project-platform"><i class="fas fa-desktop"></i> Web Application</span>
-                        <span class="project-link"><i class="fab fa-github"></i> View on GitHub</span>
+                    <div class="app-label">Skills</div>
+                </button>
+
+                <!-- Projects App -->
+                <button class="app-icon" data-app="projects" aria-label="Projects">
+                    <div class="app-icon-wrapper">
+                        <i class="fas fa-folder"></i>
                     </div>
-                </a>
+                    <div class="app-label">Projects</div>
+                </button>
 
+                <!-- Contact App -->
+                <button class="app-icon" data-app="contact" aria-label="Contact">
+                    <div class="app-icon-wrapper">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="app-label">Contact</div>
+                </button>
 
+                <!-- Links App -->
+                <button class="app-icon" data-app="links" aria-label="Links">
+                    <div class="app-icon-wrapper">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div class="app-label">Links</div>
+                </button>
+
+                <!-- Terminal App -->
+                <button class="app-icon" data-app="terminal" aria-label="Terminal">
+                    <div class="app-icon-wrapper">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <div class="app-label">Terminal</div>
+                </button>
+
+                <!-- Settings App -->
+                <button class="app-icon" data-app="settings" aria-label="Settings">
+                    <div class="app-icon-wrapper">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="app-label">Settings</div>
+                </button>
             </div>
-        </div>
-    </div>
 
-    <!-- Contact Window/App -->
-    <div class="window" id="contact-window" data-app="contact" role="dialog" aria-labelledby="contact-window-title">
-        <div class="window-header">
-            <div class="window-title" id="contact-window-title">Contact</div>
-            <button class="close-btn-mobile" aria-label="Close"><i class="fas fa-times"></i></button>
-            <div class="window-controls">
-                <button class="window-control minimize" aria-label="Minimize"><i class="fas fa-minus"></i></button>
-                <button class="window-control maximize" aria-label="Maximize"><i class="fas fa-expand"></i></button>
-                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+            <!-- Widget Container (iPad/iOS) -->
+            <div class="widget-container">
+                <div class="widget widget-about">
+                    <h3>About Me</h3>
+                    <p>Saw Ye Htet - IT Student & Software Engineer</p>
+                </div>
             </div>
-        </div>
-        <div class="window-body">
-            <h2>Get in Touch</h2>
-            <div class="contact-items">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
-                        <strong>Email</strong>
-                        <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a>
-                    </div>
+        </main>
+
+        <!-- Windows/Apps Content -->
+
+        <!-- About Window/App -->
+        <div
+            class="window"
+            id="about-window"
+            data-app="about"
+            role="dialog"
+            aria-labelledby="about-window-title"
+        >
+            <div class="window-header">
+                <div class="window-title" id="about-window-title">About</div>
+                <button class="close-btn-mobile" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="window-controls">
+                    <button class="window-control minimize" aria-label="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-control maximize" aria-label="Maximize">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="window-control close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <strong>Location</strong>
-                        <span>Singapore</span>
+            </div>
+            <div class="window-body">
+                <div class="about-hero">
+                    <div class="about-avatar">
+                        <picture>
+                            <source srcset="images/profile-picture.webp" type="image/webp" />
+                            <img
+                                src="images/profile-picture.jpg"
+                                alt="Saw Ye Htet"
+                                class="profile-img"
+                                width="140"
+                                height="140"
+                            />
+                        </picture>
                     </div>
+                    <h2>Saw Ye Htet</h2>
+                    <p class="about-tagline">IT Student & VR Developer</p>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-circle status-available"></i>
-                    <div>
-                        <strong>Status</strong>
-                        <span>Available for opportunities</span>
+
+                <div class="about-content">
+                    <div class="about-section">
+                        <h3><i class="fas fa-user"></i> About Me</h3>
+                        <p>
+                            I'm a passionate IT student with a keen interest in creating immersive
+                            digital experiences. From building interactive VR games to crafting
+                            polished web applications, I love turning ideas into reality through
+                            code. Always eager to learn new technologies and push the boundaries of
+                            what's possible.
+                        </p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                        <p>
+                            <strong>Singapore Polytechnic</strong><br />
+                            Diploma in Information Technology<br />
+                            <em>Expected Graduation: 2026</em>
+                        </p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3><i class="fas fa-book"></i> Key Coursework</h3>
+                        <p>
+                            Object-Oriented Programming • Data Structures & Algorithms • Database
+                            Management • Web Development • Mobile Application Development • User
+                            Experience Design • Cloud Computing Fundamentals
+                        </p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3><i class="fas fa-briefcase"></i> Experience</h3>
+                        <p>
+                            <strong>VR Developer</strong><br />
+                            Developed immersive VR experiences using Unity and Meta Quest hand
+                            tracking technology. Created game mechanics, optimized performance, and
+                            implemented intuitive gesture controls.
+                        </p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3><i class="fas fa-heart"></i> Interests</h3>
+                        <p>
+                            Virtual Reality & Spatial Computing • Game Development • Open Source •
+                            Linux & System Customization • UI/UX Design • Competitive Programming
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="resume-section">
-                <h3><i class="fas fa-file-alt"></i> Resume</h3>
-                <a href="resume/SYH_resume.pdf" download class="resume-download-btn">
-                    <i class="fas fa-download"></i> Download Resume
-                </a>
+        </div>
+
+        <!-- Skills Window/App -->
+        <div
+            class="window"
+            id="skills-window"
+            data-app="skills"
+            role="dialog"
+            aria-labelledby="skills-window-title"
+        >
+            <div class="window-header">
+                <div class="window-title" id="skills-window-title">Skills</div>
+                <button class="close-btn-mobile" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="window-controls">
+                    <button class="window-control minimize" aria-label="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-control maximize" aria-label="Maximize">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="window-control close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h2><i class="fas fa-laptop-code"></i> Skills & Tools</h2>
+
+                <div class="skills-grid">
+                    <div class="skill-card" data-skill="javascript">
+                        <div class="skill-icon languages"><i class="fab fa-js"></i></div>
+                        <h4>JavaScript</h4>
+                        <p>ES6+, TypeScript, Node.js, DOM manipulation</p>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress: 90%"></div>
+                        </div>
+                        <span class="skill-level proficient">Proficient</span>
+                    </div>
+
+                    <div class="skill-card" data-skill="react">
+                        <div class="skill-icon frontend"><i class="fab fa-react"></i></div>
+                        <h4>React</h4>
+                        <p>Hooks, Context, Redux, Next.js</p>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress: 85%"></div>
+                        </div>
+                        <span class="skill-level proficient">Proficient</span>
+                    </div>
+
+                    <div class="skill-card" data-skill="unity">
+                        <div class="skill-icon vr"><i class="fas fa-vr-cardboard"></i></div>
+                        <h4>Unity & VR</h4>
+                        <p>C#, Meta Quest, Hand Tracking, Oculus SDK</p>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress: 88%"></div>
+                        </div>
+                        <span class="skill-level proficient">Proficient</span>
+                    </div>
+
+                    <div class="skill-card" data-skill="python">
+                        <div class="skill-icon backend"><i class="fab fa-python"></i></div>
+                        <h4>Python</h4>
+                        <p>Flask, Data Processing, Automation</p>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress: 75%"></div>
+                        </div>
+                        <span class="skill-level proficient">Proficient</span>
+                    </div>
+
+                    <div class="skill-card" data-skill="css">
+                        <div class="skill-icon frontend"><i class="fab fa-css3-alt"></i></div>
+                        <h4>CSS & Design</h4>
+                        <p>Flexbox, Grid, Animations, Tailwind</p>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress: 92%"></div>
+                        </div>
+                        <span class="skill-level proficient">Proficient</span>
+                    </div>
+
+                    <div class="skill-card" data-skill="devops">
+                        <div class="skill-icon" style="color: #00d4ff">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h4>DevOps</h4>
+                        <p>GitHub Actions, Docker, CI/CD, AWS Basics</p>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--progress: 65%"></div>
+                        </div>
+                        <span class="skill-level learning">Learning</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Links Window/App -->
-    <div class="window" id="links-window" data-app="links" role="dialog" aria-labelledby="links-window-title">
-        <div class="window-header">
-            <div class="window-title" id="links-window-title">Links</div>
-            <button class="close-btn-mobile" aria-label="Close"><i class="fas fa-times"></i></button>
-            <div class="window-controls">
-                <button class="window-control minimize" aria-label="Minimize"><i class="fas fa-minus"></i></button>
-                <button class="window-control maximize" aria-label="Maximize"><i class="fas fa-expand"></i></button>
-                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+        <!-- Projects Window/App -->
+        <div
+            class="window"
+            id="projects-window"
+            data-app="projects"
+            role="dialog"
+            aria-labelledby="projects-window-title"
+        >
+            <div class="window-header">
+                <div class="window-title" id="projects-window-title">Projects</div>
+                <button class="close-btn-mobile" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="window-controls">
+                    <button class="window-control minimize" aria-label="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-control maximize" aria-label="Maximize">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="window-control close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="projects-grid">
+                    <a
+                        href="https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-card featured-project"
+                    >
+                        <div class="project-badge">Featured</div>
+                        <div class="project-preview"><i class="fas fa-vr-cardboard"></i></div>
+                        <h3>Jewelry Shop Robbery VR</h3>
+                        <p>
+                            An immersive VR heist game for Meta Quest with full hand tracking
+                            support. Grab precious gems, avoid security, and escape with the loot!
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Unity</span>
+                            <span class="tech-badge">C#</span>
+                            <span class="tech-badge">Meta Quest</span>
+                            <span class="tech-badge">Hand Tracking</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-platform"
+                                ><i class="fas fa-vr-cardboard"></i> Meta Quest 2/3/Pro</span
+                            >
+                            <span class="project-link"
+                                ><i class="fab fa-github"></i> View on GitHub</span
+                            >
+                        </div>
+                    </a>
+
+                    <a
+                        href="https://github.com/sawyairhtet/portfolio"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-card"
+                    >
+                        <div class="project-preview"><i class="fas fa-desktop"></i></div>
+                        <h3>Ubuntu Portfolio Website</h3>
+                        <p>
+                            This very website! A unique Ubuntu GNOME-styled portfolio with draggable
+                            windows, working terminal, boot animation, and sticky notes.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">Ubuntu Theme</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-platform"
+                                ><i class="fas fa-desktop"></i> Web Application</span
+                            >
+                            <span class="project-link"
+                                ><i class="fab fa-github"></i> View on GitHub</span
+                            >
+                        </div>
+                    </a>
+
+                    <a
+                        href="https://github.com/sawyairhtet"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-card"
+                    >
+                        <div class="project-preview"><i class="fas fa-robot"></i></div>
+                        <h3>AI Chat Interface</h3>
+                        <p>
+                            A modern chat interface for AI interactions with markdown support, code
+                            highlighting, and conversation history.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">TypeScript</span>
+                            <span class="tech-badge">Tailwind CSS</span>
+                            <span class="tech-badge">OpenAI API</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-platform"
+                                ><i class="fas fa-globe"></i> Web Application</span
+                            >
+                            <span class="project-link"
+                                ><i class="fab fa-github"></i> View on GitHub</span
+                            >
+                        </div>
+                    </a>
+
+                    <a
+                        href="https://github.com/sawyairhtet"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-card"
+                    >
+                        <div class="project-preview"><i class="fas fa-mobile-alt"></i></div>
+                        <h3>Task Manager App</h3>
+                        <p>
+                            A productivity app with drag-and-drop task management, Pomodoro timer,
+                            and progress tracking.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">React Native</span>
+                            <span class="tech-badge">Firebase</span>
+                            <span class="tech-badge">Redux</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-platform"
+                                ><i class="fas fa-mobile-alt"></i> Mobile App</span
+                            >
+                            <span class="project-link"
+                                ><i class="fab fa-github"></i> View on GitHub</span
+                            >
+                        </div>
+                    </a>
+
+                    <div class="project-card coming-soon">
+                        <div class="project-preview"><i class="fas fa-gamepad"></i></div>
+                        <h3>Multiplayer VR Escape Room</h3>
+                        <p>
+                            Coming soon! A collaborative VR puzzle experience built with Unity and
+                            Photon networking.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Unity</span>
+                            <span class="tech-badge">C#</span>
+                            <span class="tech-badge">Photon</span>
+                            <span class="tech-badge">VR</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="window-body">
-            <h2>Social Links</h2>
-            <div class="links-list">
-                <a href="https://github.com/sawyairhtet" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="https://x.com/saulyehtet_" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <i class="fab fa-x-twitter"></i> X
-                </a>
+
+        <!-- Contact Window/App -->
+        <div
+            class="window"
+            id="contact-window"
+            data-app="contact"
+            role="dialog"
+            aria-labelledby="contact-window-title"
+        >
+            <div class="window-header">
+                <div class="window-title" id="contact-window-title">Contact</div>
+                <button class="close-btn-mobile" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="window-controls">
+                    <button class="window-control minimize" aria-label="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-control maximize" aria-label="Maximize">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="window-control close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h2>Get in Touch</h2>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong>
+                            <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Location</strong>
+                            <span>Singapore</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-circle status-available"></i>
+                        <div>
+                            <strong>Status</strong>
+                            <span>Available for opportunities</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="resume-section">
+                    <h3><i class="fas fa-file-alt"></i> Resume</h3>
+                    <a href="resume/SYH_resume.pdf" download class="resume-download-btn">
+                        <i class="fas fa-download"></i> Download Resume
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Terminal Window/App -->
-    <div class="window" id="terminal-window" data-app="terminal" role="dialog" aria-labelledby="terminal-window-title">
-        <div class="window-header">
-            <div class="window-title" id="terminal-window-title">Terminal</div>
-            <button class="close-btn-mobile" aria-label="Close"><i class="fas fa-times"></i></button>
-            <div class="window-controls">
-                <button class="window-control minimize" aria-label="Minimize"><i class="fas fa-minus"></i></button>
-                <button class="window-control maximize" aria-label="Maximize"><i class="fas fa-expand"></i></button>
-                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+        <!-- Links Window/App -->
+        <div
+            class="window"
+            id="links-window"
+            data-app="links"
+            role="dialog"
+            aria-labelledby="links-window-title"
+        >
+            <div class="window-header">
+                <div class="window-title" id="links-window-title">Links</div>
+                <button class="close-btn-mobile" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="window-controls">
+                    <button class="window-control minimize" aria-label="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-control maximize" aria-label="Maximize">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="window-control close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h2>Social Links</h2>
+                <div class="links-list">
+                    <a
+                        href="https://github.com/sawyairhtet"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link"
+                    >
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link"
+                    >
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a
+                        href="https://x.com/saulyehtet_"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link"
+                    >
+                        <i class="fab fa-x-twitter"></i> X
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="window-body terminal-body">
-            <div class="terminal-output" id="terminal-output" aria-live="polite" aria-label="Terminal output">
-                <div class="terminal-line">Welcome to Saw Ye Htet's Portfolio Terminal</div>
-                <div class="terminal-line">Type 'help' to see available commands</div>
-                <div class="terminal-line">─────────────────────────────────────────</div>
+
+        <!-- Terminal Window/App -->
+        <div
+            class="window"
+            id="terminal-window"
+            data-app="terminal"
+            role="dialog"
+            aria-labelledby="terminal-window-title"
+        >
+            <div class="window-header">
+                <div class="window-title" id="terminal-window-title">Terminal</div>
+                <button class="close-btn-mobile" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="window-controls">
+                    <button class="window-control minimize" aria-label="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-control maximize" aria-label="Maximize">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="window-control close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
-            <div class="terminal-input-line">
-                <span class="terminal-prompt">visitor@portfolio:~$</span>
-                <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" spellcheck="false" inputmode="text" enterkeyhint="send" />
-                <button class="terminal-submit-btn" id="terminal-submit" aria-label="Run command"><i class="fas fa-arrow-right"></i></button>
+            <div class="window-body terminal-body">
+                <div
+                    class="terminal-output"
+                    id="terminal-output"
+                    aria-live="polite"
+                    aria-label="Terminal output"
+                >
+                    <div class="terminal-line">Welcome to Saw Ye Htet's Portfolio Terminal</div>
+                    <div class="terminal-line">Type 'help' to see available commands</div>
+                    <div class="terminal-line">─────────────────────────────────────────</div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">visitor@portfolio:~$</span>
+                    <input
+                        type="text"
+                        class="terminal-input"
+                        id="terminal-input"
+                        autocomplete="off"
+                        spellcheck="false"
+                        inputmode="text"
+                        enterkeyhint="send"
+                        aria-label="Terminal input command"
+                    />
+                    <button
+                        class="terminal-submit-btn"
+                        id="terminal-submit"
+                        aria-label="Run command"
+                    >
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Settings Window/App -->
-    <div class="window" id="settings-window" data-app="settings" role="dialog" aria-labelledby="settings-window-title">
-        <div class="window-header">
-            <div class="window-title" id="settings-window-title">Settings</div>
-            <button class="close-btn-mobile" aria-label="Close"><i class="fas fa-times"></i></button>
-            <div class="window-controls">
-                <button class="window-control minimize" aria-label="Minimize"><i class="fas fa-minus"></i></button>
-                <button class="window-control maximize" aria-label="Maximize"><i class="fas fa-expand"></i></button>
-                <button class="window-control close" aria-label="Close"><i class="fas fa-times"></i></button>
+        <!-- Settings Window/App -->
+        <div
+            class="window"
+            id="settings-window"
+            data-app="settings"
+            role="dialog"
+            aria-labelledby="settings-window-title"
+        >
+            <div class="window-header">
+                <div class="window-title" id="settings-window-title">Settings</div>
+                <button class="close-btn-mobile" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="window-controls">
+                    <button class="window-control minimize" aria-label="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-control maximize" aria-label="Maximize">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="window-control close" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h2>Preferences</h2>
+                <div class="setting-item">
+                    <label for="theme-toggle">Dark Mode</label>
+                    <input type="checkbox" id="theme-toggle" class="toggle-switch" />
+                </div>
+                <div class="setting-item">
+                    <label for="sound-toggle">Sound Effects</label>
+                    <input type="checkbox" id="sound-toggle" class="toggle-switch" checked />
+                </div>
             </div>
         </div>
-        <div class="window-body">
-            <h2>Preferences</h2>
-            <div class="setting-item">
-                <label for="theme-toggle">Dark Mode</label>
-                <input type="checkbox" id="theme-toggle" class="toggle-switch">
-            </div>
-            <div class="setting-item">
-                <label for="sound-toggle">Sound Effects</label>
-                <input type="checkbox" id="sound-toggle" class="toggle-switch" checked>
-            </div>
+
+        <!-- Dock -->
+        <div class="dock">
+            <button class="dock-item" data-app="about" aria-label="About">
+                <i class="fas fa-user-circle"></i>
+                <span class="dock-tooltip">About Me</span>
+            </button>
+            <button class="dock-item" data-app="projects" aria-label="Projects">
+                <i class="fas fa-folder"></i>
+                <span class="dock-tooltip">Projects</span>
+            </button>
+            <button class="dock-item" data-app="contact" aria-label="Contact">
+                <i class="fas fa-envelope"></i>
+                <span class="dock-tooltip">Contact</span>
+            </button>
+            <div class="dock-separator"></div>
+            <button class="dock-item" data-app="terminal" aria-label="Terminal">
+                <i class="fas fa-terminal"></i>
+                <span class="dock-tooltip">Terminal</span>
+            </button>
+            <button class="dock-item" data-app="settings" aria-label="Settings">
+                <i class="fas fa-cog"></i>
+                <span class="dock-tooltip">Settings</span>
+            </button>
         </div>
-    </div>
 
-    <!-- Dock -->
-    <div class="dock">
-        <button class="dock-item" data-app="about" aria-label="About">
-            <i class="fas fa-user-circle"></i>
-            <span class="dock-tooltip">About Me</span>
-        </button>
-        <button class="dock-item" data-app="projects" aria-label="Projects">
-            <i class="fas fa-folder"></i>
-            <span class="dock-tooltip">Projects</span>
-        </button>
-        <button class="dock-item" data-app="contact" aria-label="Contact">
-            <i class="fas fa-envelope"></i>
-            <span class="dock-tooltip">Contact</span>
-        </button>
-        <div class="dock-separator"></div>
-        <button class="dock-item" data-app="terminal" aria-label="Terminal">
-            <i class="fas fa-terminal"></i>
-            <span class="dock-tooltip">Terminal</span>
-        </button>
-        <button class="dock-item" data-app="settings" aria-label="Settings">
-            <i class="fas fa-cog"></i>
-            <span class="dock-tooltip">Settings</span>
-        </button>
-    </div>
+        <!-- First-Visit Navigation Hint -->
+        <div class="nav-hint" id="nav-hint">
+            <div class="nav-hint-icon">👆</div>
+            <h3>Welcome to My Desktop!</h3>
+            <p>
+                Click on the app icons above or use the dock on the left to explore my portfolio.
+                Try dragging these windows around!
+            </p>
+            <button class="nav-hint-dismiss" id="nav-hint-dismiss">Got it!</button>
+        </div>
 
-    <!-- First-Visit Navigation Hint -->
-    <div class="nav-hint" id="nav-hint">
-        <div class="nav-hint-icon">👆</div>
-        <h3>Welcome to My Desktop!</h3>
-        <p>Click on the app icons above or use the dock on the left to explore my portfolio. Try dragging these windows around!</p>
-        <button class="nav-hint-dismiss" id="nav-hint-dismiss">Got it!</button>
-    </div>
+        <script type="module" src="js/app.js"></script>
 
-    <script type="module" src="js/app.js"></script>
-    
-    <!-- Service Worker Registration for PWA -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('[SW] Registered:', reg.scope))
-                    .catch(err => console.log('[SW] Registration failed:', err));
-            });
-        }
-    </script>
-</body>
-
+        <!-- Service Worker Registration for PWA -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker
+                        .register('./sw.js')
+                        .then(reg => console.log('[SW] Registered:', reg.scope))
+                        .catch(err => console.log('[SW] Registration failed:', err));
+                });
+            }
+        </script>
+    </body>
 </html>

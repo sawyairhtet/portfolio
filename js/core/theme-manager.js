@@ -16,19 +16,21 @@ const ThemeManager = {
     },
 
     updateUI(isDark) {
-        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggle = /** @type {HTMLInputElement} */ (
+            document.getElementById('theme-toggle')
+        );
         const quickToggle = document.getElementById('quick-theme-toggle');
-        
+
         if (themeToggle) {
             themeToggle.checked = isDark;
-            themeToggle.setAttribute('aria-pressed', isDark);
+            themeToggle.setAttribute('aria-pressed', String(isDark));
         }
         if (quickToggle) {
             const icon = quickToggle.querySelector('i');
             if (icon) {
                 icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
             }
-            quickToggle.setAttribute('aria-pressed', isDark);
+            quickToggle.setAttribute('aria-pressed', String(isDark));
         }
     },
 
@@ -52,11 +54,11 @@ const ThemeManager = {
         if (themeToggle) {
             themeToggle.addEventListener('change', () => this.toggle());
         }
-        
+
         if (quickToggle) {
             quickToggle.addEventListener('click', () => this.toggle());
         }
-    }
+    },
 };
 
 export default ThemeManager;

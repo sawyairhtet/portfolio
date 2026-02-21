@@ -5,8 +5,12 @@
 let matrixAnimationId = null;
 
 export function startMatrixEffect() {
-    const terminalBody = document.querySelector('#terminal-window .terminal-body');
-    if (!terminalBody) return;
+    const terminalBody = /** @type {HTMLElement} */ (
+        document.querySelector('#terminal-window .terminal-body')
+    );
+    if (!terminalBody) {
+        return;
+    }
 
     terminalBody.classList.add('matrix-mode');
 
@@ -23,7 +27,7 @@ export function startMatrixEffect() {
     const fontSize = 14;
 
     let columns, drops;
-    
+
     function resizeCanvas() {
         canvas.width = terminalBody.offsetWidth;
         canvas.height = terminalBody.offsetHeight;
@@ -33,7 +37,8 @@ export function startMatrixEffect() {
     }
     resizeCanvas();
 
-    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const chars =
+        'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const charArray = chars.split('');
 
     function draw() {
@@ -58,7 +63,7 @@ export function startMatrixEffect() {
 
     draw();
 
-    function exitMatrix(e) {
+    function exitMatrix() {
         if (matrixAnimationId) {
             cancelAnimationFrame(matrixAnimationId);
             matrixAnimationId = null;
@@ -69,9 +74,11 @@ export function startMatrixEffect() {
         document.removeEventListener('keydown', exitMatrix);
         canvas.removeEventListener('click', exitMatrix);
         canvas.removeEventListener('touchstart', exitMatrix);
-        
+
         const terminalInput = document.getElementById('terminal-input');
-        if (terminalInput) terminalInput.focus();
+        if (terminalInput) {
+            terminalInput.focus();
+        }
     }
 
     setTimeout(() => {

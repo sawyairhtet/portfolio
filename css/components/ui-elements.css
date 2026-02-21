@@ -23,7 +23,10 @@
     z-index: 2000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease,
+        transform 0.4s ease;
 }
 
 .nav-hint.visible {
@@ -61,7 +64,9 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .nav-hint-dismiss:hover {
@@ -87,7 +92,9 @@
     border: 1px solid var(--color-border);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
     z-index: 1500;
     display: flex;
     align-items: center;
@@ -125,7 +132,9 @@
     z-index: var(--z-tooltip);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -191,20 +200,25 @@
 }
 
 @keyframes bootHintPulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 .boot-log .ok {
-    color: #4E9A06;
+    color: #4e9a06;
 }
 
 .boot-log .fail {
-    color: #CC0000;
+    color: #cc0000;
 }
 
 .boot-log .info {
-    color: #729FCF;
+    color: #729fcf;
 }
 
 /* ============================================
@@ -216,17 +230,19 @@
     width: auto;
     max-width: 200px;
     padding: 12px 16px;
-    background: #FFF9C4;
+    background: #fff9c4;
     font-family: 'Indie Flower', cursive;
     font-size: 15px;
     line-height: 1.4;
-    color: #5D4037;
+    color: #5d4037;
     white-space: pre-line;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     cursor: grab;
     z-index: 50;
     user-select: none;
-    transition: transform var(--transition-smooth), box-shadow var(--transition-normal);
+    transition:
+        transform var(--transition-smooth),
+        box-shadow var(--transition-normal);
     /* Entrance animation */
     opacity: 0;
     animation: stickyNoteIn 0.6s ease forwards;
@@ -258,17 +274,17 @@
 
 /* Different note colors */
 .sticky-note.pink {
-    background: #FFD6E0;
+    background: #ffd6e0;
 }
 
 .sticky-note.blue {
-    background: #D4F1F4;
-    color: #1A535C;
+    background: #d4f1f4;
+    color: #1a535c;
 }
 
 .sticky-note.green {
-    background: #D8F3DC;
-    color: #2D6A4F;
+    background: #d8f3dc;
+    color: #2d6a4f;
 }
 
 /* ============================================

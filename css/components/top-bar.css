@@ -55,7 +55,7 @@
     transition: background 0.2s;
 }
 
-[data-theme="dark"] .pill {
+[data-theme='dark'] .pill {
     background: rgba(255, 255, 255, 0.1);
 }
 
@@ -63,7 +63,7 @@
     background: rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="dark"] .pill:hover {
+[data-theme='dark'] .pill:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
@@ -72,7 +72,9 @@
     cursor: pointer;
     font-size: 14px;
     color: var(--color-topbar-text);
-    transition: transform 0.3s ease, color 0.2s ease;
+    transition:
+        transform 0.3s ease,
+        color 0.2s ease;
 }
 
 .theme-toggle-btn:hover {
@@ -84,7 +86,7 @@
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-[data-theme="dark"] .theme-toggle-btn i {
+[data-theme='dark'] .theme-toggle-btn i {
     transform: rotate(360deg);
 }
 
@@ -103,7 +105,9 @@
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.15s ease, visibility 0.15s ease;
+    transition:
+        opacity 0.15s ease,
+        visibility 0.15s ease;
     box-shadow: var(--shadow-md);
     pointer-events: none;
     z-index: 10000;

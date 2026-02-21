@@ -75,8 +75,6 @@ npm run dev
 - Vanilla JavaScript
 - No build process or frameworks
 
-
-
 ## Deployment
 
 The site is deployed at [sawyehtet.com](https://sawyehtet.com) and automatically updates when changes are pushed to the main branch.

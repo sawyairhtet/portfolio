@@ -19,8 +19,7 @@
     background: url('../../images/noble-numbat.jpg') center/cover no-repeat;
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
-    transform: translate(calc(var(--mouse-x, 0) * -8px),
-            calc(var(--mouse-y, 0) * -8px));
+    transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
     transition: transform 0.3s ease-out;
     will-change: transform;
 }

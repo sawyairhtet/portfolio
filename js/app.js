@@ -6,17 +6,16 @@
 // Core modules
 import SoundManager from './core/sound-manager.js';
 import ThemeManager from './core/theme-manager.js';
-import { 
-    openWindow, 
-    closeWindow, 
-    closeAllWindows, 
+import {
+    openWindow,
+    closeWindow,
+    closeAllWindows,
     bringToFront,
-    updateDockActiveStates,
     makeDraggable,
     makeResizable,
     setupWindowControls,
     getActiveWindows,
-    getCurrentZIndex
+    getCurrentZIndex,
 } from './core/window-manager.js';
 
 // App modules
@@ -25,6 +24,7 @@ import { setupTerminal, setupTerminalMobileFix } from './apps/terminal.js';
 // UI modules
 import { setupContextMenu } from './ui/context-menu.js';
 import { showToast } from './ui/notifications.js';
+import { initMicroInteractions } from './ui/micro-interactions.js';
 
 // Config
 import { BOOT_LOG_MESSAGES, stickyNotesData } from './config/data.js';
@@ -34,14 +34,13 @@ import { BOOT_LOG_MESSAGES, stickyNotesData } from './config/data.js';
 // ============================================
 
 // Gesture thresholds for mobile swipe detection
-const SWIPE_CLOSE_THRESHOLD_Y = 80;  // Minimum vertical distance to close window
-const SWIPE_CLOSE_MAX_X = 50;        // Maximum horizontal deviation for vertical swipe
+const SWIPE_CLOSE_THRESHOLD_Y = 80; // Minimum vertical distance to close window
+const SWIPE_CLOSE_MAX_X = 50; // Maximum horizontal deviation for vertical swipe
 const SWIPE_SWITCH_THRESHOLD_X = 100; // Minimum horizontal distance to switch windows
-const SWIPE_SWITCH_MAX_Y = 50;        // Maximum vertical deviation for horizontal swipe
+const SWIPE_SWITCH_MAX_Y = 50; // Maximum vertical deviation for horizontal swipe
 
 // Boot screen timing
 const BOOT_LINE_INTERVAL_MS = 80;
-const BOOT_FADE_DELAY_MS = 500;
 
 // ============================================
 // STATE
@@ -77,18 +76,22 @@ function updateOS() {
 // ============================================
 
 function handleAppIconClick(appName) {
-    if (!appName) return;
+    if (!appName) {
+        return;
+    }
 
     const windowId = `${appName}-window`;
     const windowEl = document.getElementById(windowId);
 
-    if (!windowEl) return;
+    if (!windowEl) {
+        return;
+    }
 
     const activeWindows = getActiveWindows();
-    
+
     if (activeWindows.has(windowId)) {
-        const zIndex = parseInt(windowEl.style.zIndex || 0);
-        
+        const zIndex = parseInt(windowEl.style.zIndex || '0');
+
         if (zIndex === getCurrentZIndex()) {
             closeWindow(windowId);
         } else {
@@ -102,18 +105,18 @@ function handleAppIconClick(appName) {
 function setupAppIcons() {
     const appIcons = document.querySelectorAll('.app-icon');
     appIcons.forEach(icon => {
-        icon.addEventListener('click', (e) => {
+        icon.addEventListener('click', e => {
             e.preventDefault();
-            const appName = icon.dataset.app;
+            const appName = /** @type {HTMLElement} */ (icon).dataset.app;
             handleAppIconClick(appName);
         });
     });
 
     const dockItems = document.querySelectorAll('.dock-item');
     dockItems.forEach(item => {
-        item.addEventListener('click', (e) => {
+        item.addEventListener('click', e => {
             e.preventDefault();
-            const appName = item.dataset.app;
+            const appName = /** @type {HTMLElement} */ (item).dataset.app;
             if (appName) {
                 handleAppIconClick(appName);
             }
@@ -126,53 +129,71 @@ function setupAppIcons() {
 // ============================================
 
 function setupMobileGestures() {
-    if (currentOS === 'desktop') return;
+    if (currentOS === 'desktop') {
+        return;
+    }
 
     let touchStartY = 0;
     let touchStartX = 0;
     let currentWindowEl = null;
 
     document.querySelectorAll('.window-header').forEach(header => {
-        header.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-            currentWindowEl = header.closest('.window');
-        }, { passive: true });
+        header.addEventListener(
+            'touchstart',
+            e => {
+                const te = /** @type {TouchEvent} */ (e);
+                touchStartY = te.touches[0].clientY;
+                touchStartX = te.touches[0].clientX;
+                currentWindowEl = header.closest('.window');
+            },
+            { passive: true }
+        );
 
-        header.addEventListener('touchend', (e) => {
-            if (!currentWindowEl) return;
-
-            const touchEndY = e.changedTouches[0].clientY;
-            const touchEndX = e.changedTouches[0].clientX;
-            const diffY = touchEndY - touchStartY;
-            const diffX = touchEndX - touchStartX;
-
-            if (diffY > SWIPE_CLOSE_THRESHOLD_Y && Math.abs(diffX) < SWIPE_CLOSE_MAX_X) {
-                closeWindow(currentWindowEl.id);
-            }
-            else if (Math.abs(diffX) > SWIPE_SWITCH_THRESHOLD_X && Math.abs(diffY) < SWIPE_SWITCH_MAX_Y) {
-                const activeWindows = getActiveWindows();
-                const windowsArray = Array.from(activeWindows);
-                if (windowsArray.length <= 1) return;
-
-                const currentIndex = windowsArray.indexOf(currentWindowEl.id);
-                let newIndex;
-
-                if (diffX > 0) {
-                    newIndex = currentIndex > 0 ? currentIndex - 1 : windowsArray.length - 1;
-                } else {
-                    newIndex = currentIndex < windowsArray.length - 1 ? currentIndex + 1 : 0;
+        header.addEventListener(
+            'touchend',
+            e => {
+                if (!currentWindowEl) {
+                    return;
                 }
 
-                const nextWindowId = windowsArray[newIndex];
-                const nextWindowEl = document.getElementById(nextWindowId);
-                if (nextWindowEl) {
-                    bringToFront(nextWindowEl);
-                }
-            }
+                const te = /** @type {TouchEvent} */ (e);
+                const touchEndY = te.changedTouches[0].clientY;
+                const touchEndX = te.changedTouches[0].clientX;
+                const diffY = touchEndY - touchStartY;
+                const diffX = touchEndX - touchStartX;
 
-            currentWindowEl = null;
-        }, { passive: true });
+                if (diffY > SWIPE_CLOSE_THRESHOLD_Y && Math.abs(diffX) < SWIPE_CLOSE_MAX_X) {
+                    closeWindow(currentWindowEl.id);
+                } else if (
+                    Math.abs(diffX) > SWIPE_SWITCH_THRESHOLD_X &&
+                    Math.abs(diffY) < SWIPE_SWITCH_MAX_Y
+                ) {
+                    const activeWindows = getActiveWindows();
+                    const windowsArray = Array.from(activeWindows);
+                    if (windowsArray.length <= 1) {
+                        return;
+                    }
+
+                    const currentIndex = windowsArray.indexOf(currentWindowEl.id);
+                    let newIndex;
+
+                    if (diffX > 0) {
+                        newIndex = currentIndex > 0 ? currentIndex - 1 : windowsArray.length - 1;
+                    } else {
+                        newIndex = currentIndex < windowsArray.length - 1 ? currentIndex + 1 : 0;
+                    }
+
+                    const nextWindowId = windowsArray[newIndex];
+                    const nextWindowEl = document.getElementById(nextWindowId);
+                    if (nextWindowEl) {
+                        bringToFront(nextWindowEl);
+                    }
+                }
+
+                currentWindowEl = null;
+            },
+            { passive: true }
+        );
     });
 }
 
@@ -206,7 +227,9 @@ function updateClock() {
 function initBootScreen() {
     const bootScreen = document.getElementById('boot-screen');
     const bootLog = document.getElementById('boot-log');
-    if (!bootScreen || !bootLog) return;
+    if (!bootScreen || !bootLog) {
+        return;
+    }
 
     let lineIndex = 0;
     let bootInterval = null;
@@ -218,17 +241,17 @@ function initBootScreen() {
         bootScreen.remove();
         // Immediately open default windows
         if (currentOS === 'desktop') {
-             const aboutWin = document.getElementById('about-window');
-             if (aboutWin) {
-                 aboutWin.style.top = '15%';
-                 aboutWin.style.left = '120px';
-             }
-             const contactWin = document.getElementById('contact-window');
-             if (contactWin) {
-                 contactWin.style.top = '15%';
-                 contactWin.style.left = '750px';
-             }
-             openWindow('contact', currentOS);
+            const aboutWin = document.getElementById('about-window');
+            if (aboutWin) {
+                aboutWin.style.top = '15%';
+                aboutWin.style.left = '120px';
+            }
+            const contactWin = document.getElementById('contact-window');
+            if (contactWin) {
+                contactWin.style.top = '15%';
+                contactWin.style.left = '750px';
+            }
+            openWindow('contact', currentOS);
         }
         openWindow('about', currentOS);
         return;
@@ -236,22 +259,24 @@ function initBootScreen() {
 
     // Function to complete boot and show desktop
     function completeBoot() {
-        if (isSkipped) return;
+        if (isSkipped) {
+            return;
+        }
         isSkipped = true;
-        
+
         // Clear any pending interval
         if (bootInterval) {
             clearTimeout(bootInterval);
         }
-        
+
         // Remove skip listeners
         document.removeEventListener('keydown', skipBoot);
         bootScreen.removeEventListener('click', skipBoot);
-        
+
         bootScreen.classList.add('fade-out');
         setTimeout(() => {
             bootScreen.remove();
-            
+
             // Open About Window - Positioned Left
             if (currentOS === 'desktop') {
                 const aboutWin = document.getElementById('about-window');
@@ -261,7 +286,7 @@ function initBootScreen() {
                 }
             }
             openWindow('about', currentOS);
-            
+
             if (currentOS === 'desktop') {
                 // Open Contact Window - Positioned Right
                 setTimeout(() => {
@@ -273,7 +298,7 @@ function initBootScreen() {
                     openWindow('contact', currentOS);
                 }, 200);
             }
-            
+
             // Defer startup drum to first user gesture to comply with autoplay policy (#24)
             const playDrumOnce = () => {
                 SoundManager.playStartupDrum();
@@ -299,8 +324,10 @@ function initBootScreen() {
     bootScreen.addEventListener('click', skipBoot);
 
     function addLine() {
-        if (isSkipped) return;
-        
+        if (isSkipped) {
+            return;
+        }
+
         if (lineIndex < BOOT_LOG_MESSAGES.length) {
             const line = BOOT_LOG_MESSAGES[lineIndex];
             const lineEl = document.createElement('div');
@@ -335,10 +362,14 @@ function getNoteKey(noteText) {
 }
 
 function createStickyNotes() {
-    if (currentOS !== 'desktop') return;
+    if (currentOS !== 'desktop') {
+        return;
+    }
 
     const container = document.getElementById('sticky-notes');
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
     let savedPositions = {};
     try {
@@ -348,7 +379,7 @@ function createStickyNotes() {
         savedPositions = {};
     }
 
-    stickyNotesData.forEach((note) => {
+    stickyNotesData.forEach(note => {
         const noteEl = document.createElement('div');
         noteEl.className = `sticky-note ${note.color !== 'yellow' ? note.color : ''}`;
         noteEl.style.transform = `rotate(${note.rotation}deg)`;
@@ -366,7 +397,7 @@ function createStickyNotes() {
 
         noteEl.textContent = note.text;
         noteEl.setAttribute('data-note-key', noteKey);
-        
+
         // Accessibility: add role, label, and tabindex for keyboard users
         noteEl.setAttribute('role', 'note');
         noteEl.setAttribute('tabindex', '0');
@@ -381,7 +412,10 @@ function createStickyNotes() {
 }
 
 function makeStickyDraggable(element) {
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
 
     element.addEventListener('mousedown', dragMouseDown);
 
@@ -406,8 +440,8 @@ function makeStickyDraggable(element) {
         pos3 = e.clientX;
         pos4 = e.clientY;
 
-        element.style.top = (element.offsetTop - pos2) + "px";
-        element.style.left = (element.offsetLeft - pos1) + "px";
+        element.style.top = element.offsetTop - pos2 + 'px';
+        element.style.left = element.offsetLeft - pos1 + 'px';
         element.style.right = 'auto';
     }
 
@@ -420,10 +454,12 @@ function makeStickyDraggable(element) {
         // Use text-based key instead of numeric index (#27)
         const noteKey = element.getAttribute('data-note-key');
         if (noteKey) {
-            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v3') || '{}');
+            const savedPositions = JSON.parse(
+                localStorage.getItem('stickyNotePositions_v3') || '{}'
+            );
             savedPositions[noteKey] = {
                 top: element.style.top,
-                left: element.style.left
+                left: element.style.left,
             };
             localStorage.setItem('stickyNotePositions_v3', JSON.stringify(savedPositions));
         }
@@ -433,12 +469,14 @@ function makeStickyDraggable(element) {
 // Keyboard accessibility for sticky notes
 function makeStickyKeyboardAccessible(element) {
     const MOVE_STEP = 10; // pixels to move per keypress
-    
-    element.addEventListener('keydown', (e) => {
-        if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
-        
+
+    element.addEventListener('keydown', e => {
+        if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            return;
+        }
+
         e.preventDefault();
-        
+
         // Ensure element has computed position
         if (!element.style.left || element.style.left === 'auto') {
             element.style.left = element.offsetLeft + 'px';
@@ -447,32 +485,36 @@ function makeStickyKeyboardAccessible(element) {
             element.style.top = element.offsetTop + 'px';
         }
         element.style.right = 'auto';
-        
+
         const currentTop = parseInt(element.style.top) || 0;
         const currentLeft = parseInt(element.style.left) || 0;
-        
+
         switch (e.key) {
             case 'ArrowUp':
                 element.style.top = Math.max(0, currentTop - MOVE_STEP) + 'px';
                 break;
             case 'ArrowDown':
-                element.style.top = Math.min(window.innerHeight - 100, currentTop + MOVE_STEP) + 'px';
+                element.style.top =
+                    Math.min(window.innerHeight - 100, currentTop + MOVE_STEP) + 'px';
                 break;
             case 'ArrowLeft':
                 element.style.left = Math.max(0, currentLeft - MOVE_STEP) + 'px';
                 break;
             case 'ArrowRight':
-                element.style.left = Math.min(window.innerWidth - 100, currentLeft + MOVE_STEP) + 'px';
+                element.style.left =
+                    Math.min(window.innerWidth - 100, currentLeft + MOVE_STEP) + 'px';
                 break;
         }
-        
+
         // Save position after keyboard move
         const noteKey = element.getAttribute('data-note-key');
         if (noteKey) {
-            const savedPositions = JSON.parse(localStorage.getItem('stickyNotePositions_v3') || '{}');
+            const savedPositions = JSON.parse(
+                localStorage.getItem('stickyNotePositions_v3') || '{}'
+            );
             savedPositions[noteKey] = {
                 top: element.style.top,
-                left: element.style.left
+                left: element.style.left,
             };
             localStorage.setItem('stickyNotePositions_v3', JSON.stringify(savedPositions));
         }
@@ -484,23 +526,29 @@ function makeStickyKeyboardAccessible(element) {
 // ============================================
 
 function setupParallaxWallpaper() {
-    if (currentOS !== 'desktop') return;
-    
-    const wallpaper = document.querySelector('.wallpaper');
-    if (!wallpaper) return;
-    
+    if (currentOS !== 'desktop') {
+        return;
+    }
+
+    const wallpaper = /** @type {HTMLElement} */ (document.querySelector('.wallpaper'));
+    if (!wallpaper) {
+        return;
+    }
+
     let rafId = null;
-    
-    document.addEventListener('mousemove', (e) => {
-        if (rafId) return;
-        
+
+    document.addEventListener('mousemove', e => {
+        if (rafId) {
+            return;
+        }
+
         rafId = requestAnimationFrame(() => {
             const x = (e.clientX / window.innerWidth - 0.5) * 2;
             const y = (e.clientY / window.innerHeight - 0.5) * 2;
-            
+
             wallpaper.style.setProperty('--mouse-x', x.toFixed(3));
             wallpaper.style.setProperty('--mouse-y', y.toFixed(3));
-            
+
             rafId = null;
         });
     });
@@ -513,58 +561,73 @@ function setupParallaxWallpaper() {
 function setupNavigationHint() {
     const navHint = document.getElementById('nav-hint');
     const dismissBtn = document.getElementById('nav-hint-dismiss');
-    
-    if (!navHint || !dismissBtn) return;
-    
+
+    if (!navHint || !dismissBtn) {
+        return;
+    }
+
     const hasSeenHint = localStorage.getItem('hasSeenNavHint');
-    
+
     if (!hasSeenHint && currentOS === 'desktop') {
         setTimeout(() => {
             navHint.classList.add('visible');
         }, 4000);
     }
-    
+
     dismissBtn.addEventListener('click', () => {
         navHint.classList.remove('visible');
         localStorage.setItem('hasSeenNavHint', 'true');
     });
-    
+
     document.querySelectorAll('.app-icon, .dock-item').forEach(el => {
-        el.addEventListener('click', () => {
-            if (navHint.classList.contains('visible')) {
-                navHint.classList.remove('visible');
-                localStorage.setItem('hasSeenNavHint', 'true');
-            }
-        }, { once: true });
+        el.addEventListener(
+            'click',
+            () => {
+                if (navHint.classList.contains('visible')) {
+                    navHint.classList.remove('visible');
+                    localStorage.setItem('hasSeenNavHint', 'true');
+                }
+            },
+            { once: true }
+        );
     });
 }
 
 function setupSwipeHint() {
-    if (currentOS === 'desktop') return;
-    
+    if (currentOS === 'desktop') {
+        return;
+    }
+
     const hasSeenSwipeHint = localStorage.getItem('hasSeenSwipeHint');
-    if (hasSeenSwipeHint) return;
-    
+    if (hasSeenSwipeHint) {
+        return;
+    }
+
     const swipeHint = document.createElement('div');
     swipeHint.className = 'swipe-hint';
-    swipeHint.innerHTML = '<i class="fas fa-hand-pointer"></i> Swipe down on window header to close';
+    swipeHint.innerHTML =
+        '<i class="fas fa-hand-pointer"></i> Swipe down on window header to close';
     document.body.appendChild(swipeHint);
-    
+
     let windowOpenCount = 0;
-    
+
     document.querySelectorAll('.app-icon, .dock-item').forEach(el => {
-        el.addEventListener('click', () => {
-            windowOpenCount++;
-            if (windowOpenCount === 1 && !hasSeenSwipeHint) {
-                setTimeout(() => {
-                    swipeHint.classList.add('visible');
+        el.addEventListener(
+            'click',
+            () => {
+                windowOpenCount++;
+                if (windowOpenCount === 1 && !hasSeenSwipeHint) {
                     setTimeout(() => {
-                        swipeHint.classList.remove('visible');
-                        localStorage.setItem('hasSeenSwipeHint', 'true');
-                    }, 5000);
-                }, 1000);
-            }
-        }, { once: true });
+                        swipeHint.classList.add('visible');
+                        setTimeout(() => {
+                            swipeHint.classList.remove('visible');
+                            localStorage.setItem('hasSeenSwipeHint', 'true');
+                        }, 5000);
+                    }, 1000);
+                }
+            },
+            { once: true }
+        );
     });
 }
 
@@ -573,18 +636,20 @@ function setupSwipeHint() {
 // ============================================
 
 function setupSoundToggle() {
-    const soundToggle = document.getElementById('sound-toggle');
-    if (!soundToggle) return;
+    const soundToggle = /** @type {HTMLInputElement} */ (document.getElementById('sound-toggle'));
+    if (!soundToggle) {
+        return;
+    }
 
     soundToggle.checked = !SoundManager.isMuted();
-    soundToggle.setAttribute('aria-pressed', !SoundManager.isMuted());
+    soundToggle.setAttribute('aria-pressed', String(!SoundManager.isMuted()));
 
     soundToggle.addEventListener('change', () => {
         const isMuted = !soundToggle.checked;
         SoundManager.setMuted(isMuted);
-        
-        soundToggle.setAttribute('aria-pressed', !isMuted);
-        
+
+        soundToggle.setAttribute('aria-pressed', String(!isMuted));
+
         if (isMuted) {
             showToast('Sound effects muted', 'fa-volume-mute');
         } else {
@@ -592,7 +657,6 @@ function setupSoundToggle() {
         }
     });
 }
-
 
 // ============================================
 // INITIALIZATION
@@ -604,7 +668,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Detect initial OS
     updateOS();
-
 
     // Initialize theme
     ThemeManager.init();
@@ -624,11 +687,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Setup parallax wallpaper effect (desktop only)
     setupParallaxWallpaper();
-    
+
     // Setup navigation hints
     setupNavigationHint();
     setupSwipeHint();
-    
+
+    // Initialize micro-interactions
+    initMicroInteractions();
+
     // Make all windows draggable and resizable
     document.querySelectorAll('.window').forEach(win => {
         makeDraggable(win, currentOS);
@@ -642,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update clock - only needs 60s interval since we display hours:minutes only
     updateClock();
     const clockIntervalId = setInterval(updateClock, 60000);
-    
+
     // Clear interval on page unload for code hygiene (#49)
     window.addEventListener('beforeunload', () => {
         clearInterval(clockIntervalId);

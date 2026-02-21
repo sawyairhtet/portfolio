@@ -9,34 +9,43 @@ import { openWindow } from '../core/window-manager.js';
 
 export function setupContextMenu(currentOS) {
     const contextMenu = document.getElementById('context-menu');
-    if (!contextMenu) return;
+    if (!contextMenu) {
+        return;
+    }
 
     // Accessibility: Add ARIA roles
     contextMenu.setAttribute('role', 'menu');
     contextMenu.setAttribute('aria-hidden', 'true');
-    
+
     const menuItems = contextMenu.querySelectorAll('.context-menu-item');
     menuItems.forEach(item => {
         item.setAttribute('role', 'menuitem');
         item.setAttribute('tabindex', '-1'); // Manage focus manually
     });
 
-    document.querySelector('.main-content').addEventListener('contextmenu', (e) => {
-        if (currentOS !== 'desktop') return;
-        
-        if (e.target.closest('.window') || e.target.closest('.app-icon') || e.target.closest('.dock')) {
+    document.querySelector('.main-content').addEventListener('contextmenu', e => {
+        if (currentOS !== 'desktop') {
+            return;
+        }
+
+        const target = /** @type {Element} */ (e.target);
+        if (target.closest('.window') || target.closest('.app-icon') || target.closest('.dock')) {
             return;
         }
 
         e.preventDefault();
-
-        let x = e.clientX;
-        let y = e.clientY;
+        const me = /** @type {MouseEvent} */ (e);
+        let x = me.clientX;
+        let y = me.clientY;
 
         const menuWidth = 180;
         const menuHeight = 200;
-        if (x + menuWidth > window.innerWidth) x -= menuWidth;
-        if (y + menuHeight > window.innerHeight) y -= menuHeight;
+        if (x + menuWidth > window.innerWidth) {
+            x -= menuWidth;
+        }
+        if (y + menuHeight > window.innerHeight) {
+            y -= menuHeight;
+        }
 
         contextMenu.style.left = x + 'px';
         contextMenu.style.top = y + 'px';
@@ -44,7 +53,9 @@ export function setupContextMenu(currentOS) {
         contextMenu.setAttribute('aria-hidden', 'false');
 
         // Accessibility: Focus first item
-        const firstItem = contextMenu.querySelector('.context-menu-item');
+        const firstItem = /** @type {HTMLElement} */ (
+            contextMenu.querySelector('.context-menu-item')
+        );
         if (firstItem) {
             firstItem.focus();
         }
@@ -59,9 +70,11 @@ export function setupContextMenu(currentOS) {
     document.addEventListener('scroll', closeMenu);
 
     // Keyboard Navigation
-    contextMenu.addEventListener('keydown', (e) => {
-        const items = Array.from(contextMenu.querySelectorAll('.context-menu-item'));
-        const currentIndex = items.indexOf(document.activeElement);
+    contextMenu.addEventListener('keydown', e => {
+        const items = /** @type {HTMLElement[]} */ (
+            Array.from(contextMenu.querySelectorAll('.context-menu-item'))
+        );
+        const currentIndex = items.indexOf(/** @type {HTMLElement} */ (document.activeElement));
 
         if (e.key === 'ArrowDown') {
             e.preventDefault();
@@ -83,13 +96,13 @@ export function setupContextMenu(currentOS) {
     });
 
     menuItems.forEach(item => {
-        item.addEventListener('click', async (e) => {
+        item.addEventListener('click', async e => {
             e.stopPropagation();
-            const action = item.dataset.action;
+            const action = /** @type {HTMLElement} */ (item).dataset.action;
             await handleContextMenuAction(action);
             closeMenu();
         });
-        
+
         // Allow triggering via Enter key (if standard button behavior doesn't catch it)
         // But the container keydown handles 'Enter' for menuitems mostly.
     });
@@ -97,18 +110,20 @@ export function setupContextMenu(currentOS) {
 
 async function handleContextMenuAction(action) {
     switch (action) {
-        case 'new-folder':
+        case 'new-folder': {
             const folderName = await showInputDialog('Create New Folder', 'Enter folder name...');
             if (folderName && folderName.trim()) {
                 terminalCommands.mkdir([folderName.trim()]);
             }
             break;
-        case 'new-file':
+        }
+        case 'new-file': {
             const fileName = await showInputDialog('Create New File', 'Enter file name...');
             if (fileName && fileName.trim()) {
                 terminalCommands.touch([fileName.trim()]);
             }
             break;
+        }
         case 'refresh':
             window.location.reload();
             break;

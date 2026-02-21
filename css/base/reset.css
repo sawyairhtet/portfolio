@@ -35,15 +35,15 @@
     background-clip: padding-box;
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-track {
+[data-theme='dark'] ::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
     background: rgba(255, 107, 61, 0.5);
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 107, 61, 0.7);
 }
 
@@ -53,7 +53,7 @@
     scrollbar-color: rgba(233, 84, 32, 0.5) rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] * {
+[data-theme='dark'] * {
     scrollbar-color: rgba(255, 107, 61, 0.5) rgba(255, 255, 255, 0.05);
 }
 
@@ -76,7 +76,10 @@ body {
     min-height: 100dvh; /* Dynamic viewport height for mobile */
     width: 100vw;
     /* Custom Ubuntu-style cursor */
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E95420' d='M5.5 3.21V20.8l5.7-5.69h8.3L5.5 3.21z'/%3E%3Cpath fill='%23fff' d='M6.5 5.83v11.99l3.96-3.96h5.77L6.5 5.83z'/%3E%3C/svg%3E") 0 0, auto;
+    cursor:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E95420' d='M5.5 3.21V20.8l5.7-5.69h8.3L5.5 3.21z'/%3E%3Cpath fill='%23fff' d='M6.5 5.83v11.99l3.96-3.96h5.77L6.5 5.83z'/%3E%3C/svg%3E")
+            0 0,
+        auto;
     /* Prevent pull-to-refresh on the main body */
     overscroll-behavior-y: contain;
 }

@@ -9,16 +9,22 @@
  */
 function createEl(tag, className, textContent) {
     const el = document.createElement(tag);
-    if (className) el.className = className;
-    if (textContent) el.textContent = textContent;
+    if (className) {
+        el.className = className;
+    }
+    if (textContent) {
+        el.textContent = textContent;
+    }
     return el;
 }
 
 export function showInputDialog(title, placeholder = '') {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         // Remove existing dialog if any
         const existing = document.getElementById('custom-input-dialog');
-        if (existing) existing.remove();
+        if (existing) {
+            existing.remove();
+        }
 
         // Build dialog DOM safely with createElement (no innerHTML)
         const overlay = createEl('div', 'dialog-overlay');
@@ -83,14 +89,20 @@ export function showInputDialog(title, placeholder = '') {
         cancelBtn.addEventListener('click', cancel);
         closeBtn.addEventListener('click', cancel);
 
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') submit();
-            if (e.key === 'Escape') cancel();
+        input.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                submit();
+            }
+            if (e.key === 'Escape') {
+                cancel();
+            }
         });
 
         // Click outside to cancel
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) cancel();
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) {
+                cancel();
+            }
         });
 
         // Animate in

@@ -3,46 +3,45 @@
    ============================================ */
 
 :root {
-
     /* Primary Font - Ubuntu with fallbacks */
-    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     /* ========================================
        LIGHT MODE (Default) - Clean & Modern
        ======================================== */
-    --color-primary: #E95420;
+    --color-primary: #e95420;
     /* Ubuntu Orange */
-    --color-bg-light: #F5F6F8;
+    --color-bg-light: #f5f6f8;
     /* Slightly darker light background for better contrast */
-    --color-bg-dark: #E8EAED;
+    --color-bg-dark: #e8eaed;
     --color-glass-light: rgba(240, 242, 245, 0.85);
     --color-glass-dark: rgba(230, 232, 235, 0.9);
-    --color-text-light: #2D3748;
+    --color-text-light: #2d3748;
     /* Softer dark text on light bg */
-    --color-text-dark: #4A5568;
+    --color-text-dark: #4a5568;
     --color-border: rgba(0, 0, 0, 0.12);
     --color-card-bg: rgba(0, 0, 0, 0.04);
 
     /* Light Mode Window Colors - Subtle Gray Tint */
     --color-header-bg: rgba(245, 246, 248, 0.95);
-    --color-header-text: #2D3748;
+    --color-header-text: #2d3748;
     --color-window-body-bg: rgba(250, 251, 252, 0.95);
-    --color-window-body-text: #2D3748;
+    --color-window-body-text: #2d3748;
     /* Ubuntu Yaru Colors */
-    --color-close-bg: #E95420;
-    --color-close-text: #FFFFFF;
+    --color-close-bg: #e95420;
+    --color-close-text: #ffffff;
     --color-control-bg: rgba(0, 0, 0, 0.06);
-    --color-control-text: #5E5E5E;
+    --color-control-text: #5e5e5e;
 
     /* Light Mode Dock - Subtle frosted glass */
     --color-dock-bg: rgba(255, 255, 255, 0.7);
     --color-dock-item-bg: rgba(0, 0, 0, 0.04);
     --color-dock-item-hover: rgba(233, 84, 32, 0.15);
-    --color-dock-text: #2D3748;
+    --color-dock-text: #2d3748;
 
     /* Light Mode Top Bar - Clean & Bright */
     --color-topbar-bg: rgba(255, 255, 255, 0.95);
-    --color-topbar-text: #2D3748;
+    --color-topbar-text: #2d3748;
 
     /* Spacing */
     --spacing-xs: 4px;
@@ -71,8 +70,8 @@
 
     /* Light Theme Gradients - Warm Sunset Palette */
     --gradient-wallpaper: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    --gradient-accent: linear-gradient(135deg, #E95420 0%, #FF6B6B 50%, #C74316 100%);
-    --gradient-btn: linear-gradient(135deg, #E95420 0%, #FF7A45 100%);
+    --gradient-accent: linear-gradient(135deg, #e95420 0%, #ff6b6b 50%, #c74316 100%);
+    --gradient-btn: linear-gradient(135deg, #e95420 0%, #ff7a45 100%);
 
     /* Animation Timing */
     --transition-fast: 0.15s ease;
@@ -94,40 +93,40 @@
 /* ========================================
    DARK MODE - Ubuntu Aubergine Aesthetic
    ======================================== */
-[data-theme="dark"] {
+[data-theme='dark'] {
     /* Dark Ubuntu Colors */
-    --color-primary: #FF6B3D;
-    --color-bg-light: #2C001E;
+    --color-primary: #ff6b3d;
+    --color-bg-light: #2c001e;
     /* Canonical Aubergine */
     --color-bg-dark: #1a0012;
     --color-glass-light: rgba(44, 0, 30, 0.75);
     --color-glass-dark: rgba(26, 0, 18, 0.85);
-    --color-text-light: #FFFFFF;
-    --color-text-dark: #F5F5F7;
+    --color-text-light: #ffffff;
+    --color-text-dark: #f5f5f7;
     --color-border: rgba(255, 255, 255, 0.12);
     --color-border-glow: rgba(255, 255, 255, 0.25);
     --color-card-bg: rgba(255, 255, 255, 0.08);
 
     /* Dark Mode Window Colors */
-    --color-header-bg: #3D3D3D;
-    --color-header-text: #FFFFFF;
+    --color-header-bg: #3d3d3d;
+    --color-header-text: #ffffff;
     --color-window-body-bg: rgba(60, 60, 60, 0.95);
-    --color-window-body-text: #FFFFFF;
+    --color-window-body-text: #ffffff;
     /* Dark Mode Yaru Colors */
-    --color-close-bg: #E95420;
-    --color-close-text: #FFFFFF;
-    --color-control-bg: #3E3E3E;
-    --color-control-text: #CCCCCC;
+    --color-close-bg: #e95420;
+    --color-close-text: #ffffff;
+    --color-control-bg: #3e3e3e;
+    --color-control-text: #cccccc;
 
     /* Dark Mode Dock */
     --color-dock-bg: rgba(0, 0, 0, 0.7);
     --color-dock-item-bg: rgba(255, 255, 255, 0.05);
     --color-dock-item-hover: rgba(255, 255, 255, 0.2);
-    --color-dock-text: #FFFFFF;
+    --color-dock-text: #ffffff;
 
     /* Dark Mode Top Bar */
     --color-topbar-bg: #1a0012;
-    --color-topbar-text: #FFFFFF;
+    --color-topbar-text: #ffffff;
 
     /* Shadows - Darker for dark mode */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -145,7 +144,7 @@
     --dock-width: 60px;
 
     /* Dark Ubuntu Gradients */
-    --gradient-wallpaper: linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%);
-    --gradient-accent: linear-gradient(135deg, #C74316 0%, #5E2750 100%);
-    --gradient-btn: linear-gradient(135deg, #C74316 0%, #9E3610 100%);
+    --gradient-wallpaper: linear-gradient(135deg, #2c001e 0%, #77216f 50%, #5e2750 100%);
+    --gradient-accent: linear-gradient(135deg, #c74316 0%, #5e2750 100%);
+    --gradient-btn: linear-gradient(135deg, #c74316 0%, #9e3610 100%);
 }

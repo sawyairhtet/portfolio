@@ -3,7 +3,7 @@
    ============================================ */
 
 .terminal-body {
-    background: var(--color-bg-dark, #300A24);
+    background: var(--color-bg-dark, #300a24);
     color: var(--color-text-light, #fff);
     font-family: 'Ubuntu Mono', 'Courier New', monospace;
     padding: var(--spacing-md);
@@ -25,7 +25,7 @@
 }
 
 .terminal-prompt {
-    color: #8AE234; /* Brighter green for WCAG AA contrast against dark bg */
+    color: #8ae234; /* Brighter green for WCAG AA contrast against dark bg */
     margin-right: var(--spacing-sm);
 }
 
@@ -54,12 +54,14 @@
     margin-left: var(--spacing-sm);
     cursor: pointer;
     flex-shrink: 0;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
 }
 
 .terminal-submit-btn:active {
     transform: scale(0.95);
-    background: #C74316;
+    background: #c74316;
 }
 
 /* ============================================

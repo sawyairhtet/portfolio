@@ -5,8 +5,10 @@
 .window {
     position: absolute;
     background: var(--color-glass-light);
-    backdrop-filter: var(--glass-blur) var(--glass-saturation) var(--glass-brightness, brightness(1));
-    -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation) var(--glass-brightness, brightness(1));
+    backdrop-filter: var(--glass-blur) var(--glass-saturation)
+        var(--glass-brightness, brightness(1));
+    -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation)
+        var(--glass-brightness, brightness(1));
     border-radius: var(--radius-md) var(--radius-md) 0 0;
     box-shadow: var(--shadow-lg), var(--glass-inner-glow, none);
     border: 1px solid var(--color-border);
@@ -17,7 +19,9 @@
     max-width: 650px;
     max-height: 80vh;
     z-index: var(--z-window);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
     /* Default position - ensure windows don't overlap dock on desktop */
     left: calc(var(--dock-width) + 20px);
     top: 15%;
@@ -25,7 +29,9 @@
 
 /* Subtle glow on focused/topmost window */
 .window:focus-within {
-    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(233, 84, 32, 0.15);
+    box-shadow:
+        var(--shadow-lg),
+        0 0 0 2px rgba(233, 84, 32, 0.15);
 }
 
 /* Window animation states */
@@ -163,7 +169,9 @@
     z-index: 99;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .snap-preview.visible {
@@ -241,18 +249,20 @@
     transition: all 0.2s;
 }
 
-[data-theme="dark"] .window-control {
+[data-theme='dark'] .window-control {
     background: var(--color-control-bg);
     color: var(--color-control-text);
     border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .window-control:hover {
     filter: brightness(0.9);
 }
 
-[data-theme="dark"] .window-control:hover {
+[data-theme='dark'] .window-control:hover {
     filter: brightness(1.2);
     box-shadow: 0 0 12px rgba(255, 107, 61, 0.3);
 }
@@ -264,16 +274,16 @@
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .window-control.close {
+[data-theme='dark'] .window-control.close {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Hover: Turns Orange */
 .window-control.close:hover {
-    background: #E95420;
+    background: #e95420;
     /* Ubuntu Orange */
-    color: #FFFFFF;
-    border-color: #C74316;
+    color: #ffffff;
+    border-color: #c74316;
     box-shadow: 0 2px 4px rgba(233, 84, 32, 0.3);
     filter: none;
     /* Reset brightness filter */
@@ -363,8 +373,8 @@
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .window-control.minimize,
-[data-theme="dark"] .window-control.maximize {
+[data-theme='dark'] .window-control.minimize,
+[data-theme='dark'] .window-control.maximize {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -373,8 +383,8 @@
     background: rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="dark"] .window-control.minimize:hover,
-[data-theme="dark"] .window-control.maximize:hover {
+[data-theme='dark'] .window-control.minimize:hover,
+[data-theme='dark'] .window-control.maximize:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
@@ -382,17 +392,20 @@
    DARK MODE WINDOW CONTROL ENHANCEMENTS
    ============================================ */
 
-[data-theme="dark"] .window-control {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+[data-theme='dark'] .window-control {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="dark"] .window-control:hover {
-    box-shadow: 0 0 8px rgba(233, 84, 32, 0.4),
-                0 0 0 1px rgba(255, 255, 255, 0.2);
+[data-theme='dark'] .window-control:hover {
+    box-shadow:
+        0 0 8px rgba(233, 84, 32, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
-[data-theme="dark"] .window-control.close:hover {
-    box-shadow: 0 0 12px rgba(233, 84, 32, 0.5),
-                0 2px 4px rgba(233, 84, 32, 0.3);
+[data-theme='dark'] .window-control.close:hover {
+    box-shadow:
+        0 0 12px rgba(233, 84, 32, 0.5),
+        0 2px 4px rgba(233, 84, 32, 0.3);
 }
