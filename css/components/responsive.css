@@ -23,6 +23,7 @@
         right: 0;
         width: 100%;
         height: auto;
+        min-height: 0;
         flex-direction: row;
         border-right: none;
         border-top: 1px solid var(--color-border);
@@ -142,22 +143,6 @@
         background: rgba(233, 84, 32, 0.3);
     }
 
-    /* Mobile/Tablet: tooltips appear above */
-    .dock-tooltip {
-        left: 50%;
-        top: auto;
-        bottom: calc(100% + 12px);
-        transform: translateX(-50%);
-    }
-
-    .dock-tooltip::before {
-        right: auto;
-        left: 50%;
-        top: 100%;
-        transform: translateX(-50%);
-        border: 6px solid transparent;
-        border-top-color: var(--color-window-body-bg);
-    }
 }
 
 /* ============================================
@@ -186,8 +171,8 @@
         padding-left: 0;
         padding-right: 0;
         /* Safe area support for notch/dynamic island */
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
     }
 
     /* App Grid - 4 columns */
@@ -197,7 +182,7 @@
         grid-template-rows: repeat(auto-fill, auto);
         padding: var(--spacing-lg);
         gap: var(--spacing-sm);
-        margin-top: 40px;
+        margin-top: 16px;
         justify-items: center;
     }
 
@@ -241,18 +226,20 @@
     /* Windows become full-screen */
     .window {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 64px;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 64px !important;
         /* Account for mobile dock height */
-        width: 100%;
-        max-width: 100%;
-        min-width: 100%;
-        max-height: calc(100% - 64px);
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        max-height: none !important;
         /* Subtract dock height */
         border-radius: 0;
-        margin-top: 44px;
+        margin-top: 44px !important;
+        transform: none !important;
+        height: calc(100vh - 44px - 64px) !important;
     }
 
     /* Hide window controls */
@@ -309,6 +296,7 @@
         right: 0;
         width: 100%;
         height: auto;
+        min-height: 0;
         transform: none;
         flex-direction: row;
         border-right: none;
@@ -471,6 +459,11 @@
         display: none;
     }
 
+    /* Override desktop dock min-height for horizontal layout */
+    .dock {
+        min-height: 0 !important;
+    }
+
     /* Show terminal submit button on mobile/tablet */
     .terminal-submit-btn {
         display: flex;
@@ -593,7 +586,7 @@
 }
 
 /* Tablet Layout (768px - 1024px) */
-@media screen and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
     .app-grid {
         left: calc(var(--dock-width) + 10px);
         right: 10px;
