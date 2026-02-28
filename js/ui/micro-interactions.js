@@ -14,7 +14,6 @@ export function initMicroInteractions() {
     setupHoverSounds();
     setupMagneticButtons();
     setupTiltEffect();
-    setupTypingIndicator();
     setupSkillBarAnimations();
 }
 
@@ -156,61 +155,6 @@ function setupTiltEffect() {
     });
 }
 
-/**
- * Typing indicator for terminal
- */
-function setupTypingIndicator() {
-    const terminalInput = /** @type {HTMLInputElement} */ (
-        document.getElementById('terminal-input')
-    );
-    const output = document.getElementById('terminal-output');
-
-    if (!terminalInput || !output) {
-        return;
-    }
-
-    let typingTimeout;
-    const indicator = document.createElement('div');
-    indicator.className = 'typing-indicator';
-    indicator.innerHTML = '<span></span><span></span><span></span>';
-    indicator.style.cssText = `
-        display: none;
-        gap: 4px;
-        padding: 8px 0;
-    `;
-
-    const style = document.createElement('style');
-    style.textContent = `
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-        }
-        .typing-indicator span {
-            width: 6px;
-            height: 6px;
-            background: var(--color-primary);
-            border-radius: 50%;
-            animation: typing-bounce 1.4s ease-in-out infinite both;
-        }
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typing-bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-    `;
-    document.head.appendChild(style);
-
-    terminalInput.addEventListener('input', () => {
-        clearTimeout(typingTimeout);
-
-        if (terminalInput.value.length > 0) {
-            typingTimeout = setTimeout(() => {
-                // Could show suggestions here
-            }, 500);
-        }
-    });
-}
 
 /**
  * Celebrate achievements with confetti

@@ -38,6 +38,9 @@ build/
 # Logs
 logs
 *.log
+*.utf8.log
+lint_output.txt
+validate.log
 
 # Runtime data
 pids

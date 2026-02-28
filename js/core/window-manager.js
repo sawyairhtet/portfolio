@@ -728,17 +728,4 @@ function removeFocusTrap(windowId) {
     }
 }
 
-export default {
-    openWindow,
-    closeWindow,
-    closeAllWindows,
-    bringToFront,
-    minimizeWindow,
-    restoreWindow,
-    updateDockActiveStates,
-    makeDraggable,
-    makeResizable,
-    setupWindowControls,
-    getActiveWindows,
-    getCurrentZIndex,
-};
+

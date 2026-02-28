@@ -11,7 +11,6 @@
         "safe-deploy": "npm run check && git status",
         "deploy": "npm run prod && npm run check && npx gh-pages -d . -e . --dotfiles",
         "build": "node build.js",
-        "build:css": "node build.js",
         "minify:js": "npx terser js/app.js -o dist/app.min.js -c -m",
         "prod": "npm run build && npm run minify:js",
         "lint": "eslint js/",
