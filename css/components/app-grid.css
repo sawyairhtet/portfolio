@@ -104,73 +104,13 @@
         0 0 12px rgba(233, 84, 32, 0.25);
 }
 
-/* App Icon Gradients - Ubuntu Style */
-.app-icon[data-app='about'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
-}
-
-.app-icon[data-app='skills'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #77216f 0%, #5e2750 100%);
-}
-
-.app-icon[data-app='projects'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #aea79f 0%, #5e5750 100%);
-}
-
-.app-icon[data-app='contact'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #2c001e 0%, #5e2750 100%);
-}
-
-.app-icon[data-app='links'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #e95420 0%, #ff7a45 100%);
-}
-
-.app-icon[data-app='terminal'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #300a24 0%, #2c001e 100%);
-}
-
-.app-icon[data-app='settings'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #666666 0%, #333333 100%);
-}
-
-.app-label {
-    font-size: 12px;
-    text-align: center;
-    /* Base text styles - always white for visibility on wallpaper */
-    color: #ffffff;
-    text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.6),
-        0 0 2px rgba(0, 0, 0, 0.4);
-    padding: 4px 10px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    /* background: rgba(255, 255, 255, 0.8); Removed */
-    /* border-radius: 4px; Removed */
-    /* backdrop-filter: blur(4px); Removed */
-}
-
-/* Dark mode label overrides */
-[data-theme='dark'] .app-label {
-    color: #ffffff;
-    text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.9),
-        0 2px 6px rgba(0, 0, 0, 0.6);
-    /* background: rgba(0, 0, 0, 0.35); Removed */
-}
-
-/* ============================================
-   LIGHT MODE APP ICON GRADIENTS
-   Brighter, more vibrant colors for light mode
-   ============================================ */
-
-/* Light mode app icon wrappers - add subtle border */
+/* App Icon Gradients - Vibrant Light Mode */
 .app-icon-wrapper {
     box-shadow:
         var(--shadow-md),
         0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
-/* Light mode icon gradients - brighter versions */
 .app-icon[data-app='about'] .app-icon-wrapper {
     background: linear-gradient(135deg, #ff6b3d 0%, #e95420 100%);
 }
@@ -199,41 +139,21 @@
     background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
 }
 
-/* ============================================
-   DARK MODE APP ICON GRADIENTS
-   Original Ubuntu-style colors for dark mode
-   ============================================ */
-
-[data-theme='dark'] .app-icon-wrapper {
-    box-shadow:
-        var(--shadow-md),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+.app-label {
+    font-size: 12px;
+    text-align: center;
+    /* Base text styles - always white for visibility on wallpaper */
+    color: #ffffff;
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.6),
+        0 0 2px rgba(0, 0, 0, 0.4);
+    padding: 4px 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    /* background: rgba(255, 255, 255, 0.8); Removed */
+    /* border-radius: 4px; Removed */
+    /* backdrop-filter: blur(4px); Removed */
 }
 
-[data-theme='dark'] .app-icon[data-app='about'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
-}
 
-[data-theme='dark'] .app-icon[data-app='skills'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #77216f 0%, #5e2750 100%);
-}
 
-[data-theme='dark'] .app-icon[data-app='projects'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #4a90c7 0%, #2563a0 100%);
-}
-
-[data-theme='dark'] .app-icon[data-app='contact'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #8e24aa 0%, #4a148c 100%);
-}
-
-[data-theme='dark'] .app-icon[data-app='links'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #e95420 0%, #ff7a45 100%);
-}
-
-[data-theme='dark'] .app-icon[data-app='terminal'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #1f8c85 0%, #165f5a 100%);
-}
-
-[data-theme='dark'] .app-icon[data-app='settings'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #e09515 0%, #b8720b 100%);
-}

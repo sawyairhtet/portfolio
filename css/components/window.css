@@ -249,22 +249,8 @@
     transition: all 0.2s;
 }
 
-[data-theme='dark'] .window-control {
-    background: var(--color-control-bg);
-    color: var(--color-control-text);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow:
-        0 0 8px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
 .window-control:hover {
     filter: brightness(0.9);
-}
-
-[data-theme='dark'] .window-control:hover {
-    filter: brightness(1.2);
-    box-shadow: 0 0 12px rgba(255, 107, 61, 0.3);
 }
 
 /* Close button - Gray by default in Modern Yaru */
@@ -274,9 +260,7 @@
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme='dark'] .window-control.close {
-    border-color: rgba(255, 255, 255, 0.1);
-}
+
 
 /* Hover: Turns Orange */
 .window-control.close:hover {
@@ -373,39 +357,7 @@
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme='dark'] .window-control.minimize,
-[data-theme='dark'] .window-control.maximize {
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
 .window-control.minimize:hover,
 .window-control.maximize:hover {
     background: rgba(0, 0, 0, 0.15);
-}
-
-[data-theme='dark'] .window-control.minimize:hover,
-[data-theme='dark'] .window-control.maximize:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* ============================================
-   DARK MODE WINDOW CONTROL ENHANCEMENTS
-   ============================================ */
-
-[data-theme='dark'] .window-control {
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-[data-theme='dark'] .window-control:hover {
-    box-shadow:
-        0 0 8px rgba(233, 84, 32, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.2);
-}
-
-[data-theme='dark'] .window-control.close:hover {
-    box-shadow:
-        0 0 12px rgba(233, 84, 32, 0.5),
-        0 2px 4px rgba(233, 84, 32, 0.3);
 }

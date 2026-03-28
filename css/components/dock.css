@@ -37,7 +37,7 @@
     cursor: pointer;
     transition: all var(--transition-smooth);
     border-radius: var(--radius-sm);
-    color: var(--color-text-light, #fff);
+    color: #ffffff;
     position: relative;
     border: 1px solid transparent;
 }
@@ -63,26 +63,6 @@
     background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
 }
 
-/* Dark Mode Overrides - Classic Ubuntu Colors */
-[data-theme='dark'] .dock-item[data-app='about'] {
-    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
-}
-
-[data-theme='dark'] .dock-item[data-app='projects'] {
-    background: linear-gradient(135deg, #aea79f 0%, #5e5750 100%);
-}
-
-[data-theme='dark'] .dock-item[data-app='contact'] {
-    background: linear-gradient(135deg, #2c001e 0%, #5e2750 100%);
-}
-
-[data-theme='dark'] .dock-item[data-app='terminal'] {
-    background: linear-gradient(135deg, #300a24 0%, #2c001e 100%);
-}
-
-[data-theme='dark'] .dock-item[data-app='settings'] {
-    background: linear-gradient(135deg, #666666 0%, #333333 100%);
-}
 
 .dock-item:hover {
     /* background: var(--color-dock-item-hover);Removed to fix transparency issue */

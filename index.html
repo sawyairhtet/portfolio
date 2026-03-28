@@ -1,5 +1,5 @@
-﻿<!doctype html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
     <head>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
@@ -47,15 +47,7 @@
         <title>Saw Ye Htet - Portfolio</title>
         <!-- Production: bundled CSS eliminates @import waterfall (15 sequential requests → 1) -->
         <link rel="stylesheet" href="dist/bundle.min.css" />
-        <!-- Theme Init (prevents flash of wrong theme) -->
-        <script>
-            (function () {
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'light') {
-                    document.documentElement.removeAttribute('data-theme');
-                }
-            })();
-        </script>
+
         <!-- Google Fonts - Ubuntu + Indie Flower (for sticky notes) -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -185,14 +177,6 @@
 
             <!-- GNOME Panel Right - Status Indicators -->
             <div class="menu-bar-right">
-                <button
-                    class="theme-toggle-btn pill"
-                    id="quick-theme-toggle"
-                    aria-label="Toggle dark mode"
-                    title="Toggle dark mode"
-                >
-                    <i class="fas fa-moon"></i>
-                </button>
                 <div
                     class="status-menu pill"
                     role="presentation"
@@ -740,10 +724,7 @@
             </div>
             <div class="window-body">
                 <h2>Preferences</h2>
-                <div class="setting-item">
-                    <label for="theme-toggle">Dark Mode</label>
-                    <input type="checkbox" id="theme-toggle" class="toggle-switch" />
-                </div>
+
                 <div class="setting-item">
                     <label for="sound-toggle">Sound Effects</label>
                     <input type="checkbox" id="sound-toggle" class="toggle-switch" checked />

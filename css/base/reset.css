@@ -35,26 +35,10 @@
     background-clip: padding-box;
 }
 
-[data-theme='dark'] ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-[data-theme='dark'] ::-webkit-scrollbar-thumb {
-    background: rgba(255, 107, 61, 0.5);
-}
-
-[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 107, 61, 0.7);
-}
-
 /* Firefox Scrollbars */
 * {
     scrollbar-width: thin;
     scrollbar-color: rgba(233, 84, 32, 0.5) rgba(0, 0, 0, 0.1);
-}
-
-[data-theme='dark'] * {
-    scrollbar-color: rgba(255, 107, 61, 0.5) rgba(255, 255, 255, 0.05);
 }
 
 button {

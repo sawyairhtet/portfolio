@@ -383,7 +383,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
          cooooooooooo:,cooooooooc       Host: Saw Ye Htet's Portfolio
           ,looooooooooooooooool.        Uptime: Since you landed here
            .:looooooooooooool,.         Shell: JavaScript ES6+
-             .,:cloooooolc:'.           Theme: Yaru (Dark)
+             .,:cloooooolc:'.           Theme: Yaru (Light)
                 ..,,,,,...              Memory: Lots of dreams`,
 
     cowsay: args => {
