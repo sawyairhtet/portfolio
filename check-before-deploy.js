@@ -24,7 +24,7 @@ requiredFiles.forEach(file => {
 try {
     const htmlContent = fs.readFileSync('index.html', 'utf8');
 
-    if (!htmlContent.includes('<!DOCTYPE html>')) {
+    if (!htmlContent.toLowerCase().includes('<!doctype html>')) {
         console.log('[WARN] Missing DOCTYPE declaration');
     }
 
