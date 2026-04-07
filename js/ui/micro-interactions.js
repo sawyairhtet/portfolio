@@ -155,7 +155,6 @@ function setupTiltEffect() {
     });
 }
 
-
 /**
  * Celebrate achievements with confetti
  * @param {HTMLElement} element - Element to celebrate at

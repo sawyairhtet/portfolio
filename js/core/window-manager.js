@@ -727,5 +727,3 @@ function removeFocusTrap(windowId) {
         focusTrapHandlers.delete(windowId);
     }
 }
-
-
