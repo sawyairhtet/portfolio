@@ -103,7 +103,12 @@
                 It looks like you've lost your internet connection. Some features may be unavailable
                 until you're back online.
             </p>
-            <button class="retry-btn" onclick="location.reload()">Try Again</button>
+            <button class="retry-btn" id="retry-btn">Try Again</button>
+            <script>
+                document.getElementById('retry-btn').addEventListener('click', function () {
+                    location.reload();
+                });
+            </script>
             <div class="brand">SYH Portfolio</div>
         </div>
     </body>

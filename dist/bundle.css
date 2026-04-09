@@ -24,7 +24,7 @@
     --color-glass-dark: rgba(230, 232, 235, 0.9);
     --color-text-light: #2d3748;
     /* Softer dark text on light bg */
-    --color-text-dark: #4a5568;
+    --color-text-dark: #374151;
     --color-border: rgba(0, 0, 0, 0.12);
     --color-card-bg: rgba(0, 0, 0, 0.04);
 
@@ -459,7 +459,6 @@ body {
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
     transition: transform 0.3s ease-out;
-    will-change: transform;
 }
 
 /* Subtle pattern overlay for wallpaper depth */
@@ -1807,19 +1806,19 @@ body {
 
 .skill-level.proficient {
     background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(56, 142, 60, 0.2) 100%);
-    color: #4caf50;
+    color: #15803d;
     border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
 .skill-level.familiar {
     background: linear-gradient(135deg, rgba(255, 152, 0, 0.2) 0%, rgba(245, 124, 0, 0.2) 100%);
-    color: #ff9800;
+    color: #b45309;
     border: 1px solid rgba(255, 152, 0, 0.3);
 }
 
 .skill-level.learning {
     background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(25, 118, 210, 0.2) 100%);
-    color: #2196f3;
+    color: #1d4ed8;
     border: 1px solid rgba(33, 150, 243, 0.3);
 }
 

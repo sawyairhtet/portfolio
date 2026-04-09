@@ -536,11 +536,21 @@ function setupParallaxWallpaper() {
     }
 
     let rafId = null;
+    let idleTimeout = null;
 
     document.addEventListener('mousemove', e => {
         if (rafId) {
             return;
         }
+
+        // Promote to GPU layer only while actively moving
+        wallpaper.style.willChange = 'transform';
+        if (idleTimeout) {
+            clearTimeout(idleTimeout);
+        }
+        idleTimeout = setTimeout(() => {
+            wallpaper.style.willChange = 'auto';
+        }, 500);
 
         rafId = requestAnimationFrame(() => {
             const x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -694,6 +704,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize micro-interactions
     initMicroInteractions();
+
+    // Mark all Font Awesome icons as decorative for screen readers
+    document.querySelectorAll('.fas, .fab, .far').forEach(icon => {
+        icon.setAttribute('aria-hidden', 'true');
+    });
 
     // Make all windows draggable and resizable
     document.querySelectorAll('.window').forEach(win => {

@@ -8,8 +8,10 @@
             function gtag() {
                 dataLayer.push(arguments);
             }
-            gtag('js', new Date());
-            gtag('config', 'G-EXTTVBFZCK');
+            (window.requestIdleCallback || setTimeout)(function () {
+                gtag('js', new Date());
+                gtag('config', 'G-EXTTVBFZCK');
+            });
         </script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -144,23 +146,23 @@
         <div class="snap-preview" id="snap-preview"></div>
 
         <!-- Context Menu -->
-        <div class="context-menu" id="context-menu">
-            <div class="context-menu-item" data-action="new-folder">
-                <i class="fas fa-folder-plus"></i> New Folder
+        <div class="context-menu" id="context-menu" role="menu">
+            <div class="context-menu-item" data-action="new-folder" role="menuitem">
+                <i class="fas fa-folder-plus" aria-hidden="true"></i> New Folder
             </div>
-            <div class="context-menu-item" data-action="new-file">
-                <i class="fas fa-file-plus"></i> New File
+            <div class="context-menu-item" data-action="new-file" role="menuitem">
+                <i class="fas fa-file-plus" aria-hidden="true"></i> New File
             </div>
-            <div class="context-menu-separator"></div>
-            <div class="context-menu-item" data-action="refresh">
-                <i class="fas fa-sync-alt"></i> Refresh
+            <div class="context-menu-separator" role="separator"></div>
+            <div class="context-menu-item" data-action="refresh" role="menuitem">
+                <i class="fas fa-sync-alt" aria-hidden="true"></i> Refresh
             </div>
-            <div class="context-menu-item" data-action="terminal">
-                <i class="fas fa-terminal"></i> Open Terminal
+            <div class="context-menu-item" data-action="terminal" role="menuitem">
+                <i class="fas fa-terminal" aria-hidden="true"></i> Open Terminal
             </div>
-            <div class="context-menu-separator"></div>
-            <div class="context-menu-item" data-action="settings">
-                <i class="fas fa-cog"></i> Settings
+            <div class="context-menu-separator" role="separator"></div>
+            <div class="context-menu-item" data-action="settings" role="menuitem">
+                <i class="fas fa-cog" aria-hidden="true"></i> Settings
             </div>
         </div>
 
@@ -289,6 +291,7 @@
             id="about-window"
             data-app="about"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="about-window-title"
         >
             <div class="window-header">
@@ -383,6 +386,7 @@
             id="skills-window"
             data-app="skills"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="skills-window-title"
         >
             <div class="window-header">
@@ -459,6 +463,7 @@
             id="projects-window"
             data-app="projects"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="projects-window-title"
         >
             <div class="window-header">
@@ -546,6 +551,7 @@
             id="contact-window"
             data-app="contact"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="contact-window-title"
         >
             <div class="window-header">
@@ -605,6 +611,7 @@
             id="links-window"
             data-app="links"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="links-window-title"
         >
             <div class="window-header">
@@ -661,6 +668,7 @@
             id="terminal-window"
             data-app="terminal"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="terminal-window-title"
         >
             <div class="window-header">
@@ -721,6 +729,7 @@
             id="settings-window"
             data-app="settings"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="settings-window-title"
         >
             <div class="window-header">

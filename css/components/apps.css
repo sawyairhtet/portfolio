@@ -362,19 +362,19 @@
 
 .skill-level.proficient {
     background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(56, 142, 60, 0.2) 100%);
-    color: #4caf50;
+    color: #15803d;
     border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
 .skill-level.familiar {
     background: linear-gradient(135deg, rgba(255, 152, 0, 0.2) 0%, rgba(245, 124, 0, 0.2) 100%);
-    color: #ff9800;
+    color: #b45309;
     border: 1px solid rgba(255, 152, 0, 0.3);
 }
 
 .skill-level.learning {
     background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(25, 118, 210, 0.2) 100%);
-    color: #2196f3;
+    color: #1d4ed8;
     border: 1px solid rgba(33, 150, 243, 0.3);
 }
 
