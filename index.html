@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
+        <script defer src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag() {
@@ -107,6 +107,24 @@
                 ]
             }
         </script>
+        <noscript>
+            <style>
+                .boot-screen,
+                .top-bar,
+                .dock,
+                .main-content,
+                .sticky-notes-container,
+                .context-menu,
+                .window,
+                .nav-hint {
+                    display: none !important;
+                }
+                .app-grid {
+                    pointer-events: none;
+                    opacity: 0.5;
+                }
+            </style>
+        </noscript>
     </head>
 
     <body>
@@ -150,10 +168,11 @@
         <div class="top-bar">
             <!-- GNOME Panel Left - Activities -->
             <div class="menu-bar-left">
-                <span class="personal-brand" aria-label="Saw Ye Htet - Personal Brand">SYH</span>
+                <span class="personal-brand" role="img" aria-label="Saw Ye Htet - Personal Brand"
+                    >SYH</span
+                >
                 <button
                     class="activities-btn pill"
-                    aria-disabled="true"
                     disabled
                     title="Activities overview (decorative)"
                 >
@@ -162,9 +181,9 @@
             </div>
 
             <!-- iOS/iPad Status Bar Items (Mobile/Tablet only) -->
-            <div class="status-bar" role="presentation" aria-label="Status bar (decorative)">
-                <div class="status-time" aria-hidden="true"></div>
-                <div class="status-icons" aria-hidden="true">
+            <div class="status-bar" role="presentation" aria-hidden="true">
+                <div class="status-time"></div>
+                <div class="status-icons">
                     <i class="fas fa-signal"></i>
                     <i class="fas fa-wifi"></i>
                     <i class="fas fa-battery-three-quarters"></i>
@@ -178,20 +197,16 @@
 
             <!-- GNOME Panel Right - Status Indicators -->
             <div class="menu-bar-right">
-                <div
-                    class="status-menu pill"
-                    role="presentation"
-                    aria-label="System status indicators (decorative)"
-                >
-                    <i class="fas fa-network-wired" aria-hidden="true"></i>
-                    <i class="fas fa-volume-up" aria-hidden="true"></i>
-                    <i class="fas fa-power-off" aria-hidden="true"></i>
+                <div class="status-menu pill" role="presentation" aria-hidden="true">
+                    <i class="fas fa-network-wired"></i>
+                    <i class="fas fa-volume-up"></i>
+                    <i class="fas fa-power-off"></i>
                 </div>
             </div>
         </div>
 
         <!-- Main Content Area -->
-        <main id="main-content" class="main-content" role="main">
+        <main id="main-content" class="main-content">
             <!-- Visually hidden h1 for SEO/accessibility -->
             <h1 class="sr-only">Saw Ye Htet - IT Student & Software Engineer Portfolio</h1>
 
@@ -202,65 +217,65 @@
             <div class="app-grid">
                 <!-- About App -->
                 <button class="app-icon" data-app="about" aria-label="About">
-                    <div class="app-icon-wrapper">
+                    <span class="app-icon-wrapper">
                         <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="app-label">About</div>
+                    </span>
+                    <span class="app-label">About</span>
                 </button>
 
                 <!-- Skills App -->
                 <button class="app-icon" data-app="skills" aria-label="Skills">
-                    <div class="app-icon-wrapper">
+                    <span class="app-icon-wrapper">
                         <i class="fas fa-tools"></i>
-                    </div>
-                    <div class="app-label">Skills</div>
+                    </span>
+                    <span class="app-label">Skills</span>
                 </button>
 
                 <!-- Projects App -->
                 <button class="app-icon" data-app="projects" aria-label="Projects">
-                    <div class="app-icon-wrapper">
+                    <span class="app-icon-wrapper">
                         <i class="fas fa-folder"></i>
-                    </div>
-                    <div class="app-label">Projects</div>
+                    </span>
+                    <span class="app-label">Projects</span>
                 </button>
 
                 <!-- Contact App -->
                 <button class="app-icon" data-app="contact" aria-label="Contact">
-                    <div class="app-icon-wrapper">
+                    <span class="app-icon-wrapper">
                         <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="app-label">Contact</div>
+                    </span>
+                    <span class="app-label">Contact</span>
                 </button>
 
                 <!-- Links App -->
                 <button class="app-icon" data-app="links" aria-label="Links">
-                    <div class="app-icon-wrapper">
+                    <span class="app-icon-wrapper">
                         <i class="fas fa-link"></i>
-                    </div>
-                    <div class="app-label">Links</div>
+                    </span>
+                    <span class="app-label">Links</span>
                 </button>
 
                 <!-- Terminal App -->
                 <button class="app-icon" data-app="terminal" aria-label="Terminal">
-                    <div class="app-icon-wrapper">
+                    <span class="app-icon-wrapper">
                         <i class="fas fa-terminal"></i>
-                    </div>
-                    <div class="app-label">Terminal</div>
+                    </span>
+                    <span class="app-label">Terminal</span>
                 </button>
 
                 <!-- Settings App -->
                 <button class="app-icon" data-app="settings" aria-label="Settings">
-                    <div class="app-icon-wrapper">
+                    <span class="app-icon-wrapper">
                         <i class="fas fa-cog"></i>
-                    </div>
-                    <div class="app-label">Settings</div>
+                    </span>
+                    <span class="app-label">Settings</span>
                 </button>
             </div>
 
             <!-- Widget Container (iPad/iOS) -->
             <div class="widget-container">
                 <div class="widget widget-about">
-                    <h3>About Me</h3>
+                    <h2>About Me</h2>
                     <p>Saw Ye Htet - IT Student & Software Engineer</p>
                 </div>
             </div>
@@ -393,35 +408,35 @@
                 <div class="skills-grid">
                     <div class="skill-card">
                         <div class="skill-icon languages"><i class="fas fa-code"></i></div>
-                        <h4>Languages</h4>
+                        <h3>Languages</h3>
                         <p>JavaScript, Python, C#, Java, SQL</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
 
                     <div class="skill-card">
                         <div class="skill-icon frontend"><i class="fas fa-palette"></i></div>
-                        <h4>Frontend</h4>
+                        <h3>Frontend</h3>
                         <p>HTML5, CSS3, React, Responsive Design</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
 
                     <div class="skill-card">
                         <div class="skill-icon backend"><i class="fas fa-server"></i></div>
-                        <h4>Backend</h4>
+                        <h3>Backend & Cloud</h3>
                         <p>REST APIs, Node.js, Database Integration</p>
                         <span class="skill-level familiar">Familiar</span>
                     </div>
 
                     <div class="skill-card">
                         <div class="skill-icon vr"><i class="fas fa-vr-cardboard"></i></div>
-                        <h4>VR Development</h4>
+                        <h3>VR Development</h3>
                         <p>Unity, Meta Quest, Hand Tracking</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
 
                     <div class="skill-card">
                         <div class="skill-icon tools"><i class="fas fa-tools"></i></div>
-                        <h4>Tools</h4>
+                        <h3>Tools & OS</h3>
                         <p>Git, VS Code, Figma, Chrome DevTools</p>
                         <span class="skill-level proficient">Proficient</span>
                     </div>
@@ -430,7 +445,7 @@
                         <div class="skill-icon" style="color: #00d4ff">
                             <i class="fas fa-cloud"></i>
                         </div>
-                        <h4>Cloud & DevOps</h4>
+                        <h3>Cloud & DevOps</h3>
                         <p>GitHub Actions, CI/CD, Basic AWS</p>
                         <span class="skill-level learning">Learning</span>
                     </div>
@@ -669,6 +684,7 @@
                 <div
                     class="terminal-output"
                     id="terminal-output"
+                    role="log"
                     aria-live="polite"
                     aria-label="Terminal output"
                 >
@@ -682,6 +698,7 @@
                         type="text"
                         class="terminal-input"
                         id="terminal-input"
+                        aria-label="Terminal command input"
                         autocomplete="off"
                         spellcheck="false"
                         inputmode="text"
@@ -784,66 +801,53 @@
         </script>
 
         <noscript>
-            <style>
-                .boot-screen,
-                .sticky-notes-container,
-                .context-menu,
-                .window,
-                .dock,
-                .nav-hint {
-                    display: none !important;
-                }
-                .app-grid {
-                    pointer-events: none;
-                    opacity: 0.5;
-                }
-            </style>
             <div
                 style="
                     position: fixed;
                     top: 0;
                     left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background: var(--color-bg, #1a1a1a);
-                    color: var(--color-text-light, #f0f0f0);
+                    width: 100vw;
+                    height: 100vh;
+                    background: #2c001e;
+                    color: white;
                     display: flex;
+                    flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    z-index: 10000;
+                    z-index: 999999;
                     font-family: 'Ubuntu', sans-serif;
+                    text-align: center;
                     padding: 20px;
                 "
             >
                 <div
                     style="
-                        text-align: center;
-                        max-width: 500px;
-                        background: var(--color-card-bg, #2d2d2d);
-                        padding: 48px;
-                        border-radius: 16px;
-                        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+                        max-width: 600px;
+                        background: rgba(0, 0, 0, 0.4);
+                        padding: 40px;
+                        border-radius: 12px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
                     "
                 >
                     <div
                         style="
                             width: 80px;
                             height: 80px;
-                            background: linear-gradient(135deg, #e95420 0%, #d44d1d 100%);
-                            border-radius: 16px;
+                            background: #e95420;
+                            border-radius: 50%;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             margin: 0 auto 24px;
                             font-size: 40px;
-                            color: #fff;
+                            color: white;
                         "
                     >
                         <i class="fas fa-code"></i>
                     </div>
-                    <h1 style="font-size: 24px; margin-bottom: 12px; font-weight: 600">
+                    <h2 style="font-size: 24px; margin-bottom: 12px; font-weight: 600">
                         JavaScript Required
-                    </h1>
+                    </h2>
                     <p style="opacity: 0.8; line-height: 1.6; margin-bottom: 24px">
                         This portfolio website is an interactive Ubuntu desktop experience that
                         requires JavaScript to function.
@@ -854,16 +858,16 @@
                             display: inline-flex;
                             align-items: center;
                             gap: 8px;
-                            padding: 12px 24px;
-                            background: linear-gradient(135deg, #e95420 0%, #d44d1d 100%);
-                            color: #fff;
+                            background: #e95420;
+                            color: white;
                             text-decoration: none;
-                            border-radius: 8px;
+                            padding: 12px 24px;
+                            border-radius: 6px;
                             font-weight: 500;
-                            transition: transform 0.2s;
+                            transition: background 0.2s;
                         "
                     >
-                        <i class="fas fa-envelope"></i> Contact via Email
+                        <i class="fas fa-envelope"></i> Contact Me
                     </a>
                 </div>
             </div>
