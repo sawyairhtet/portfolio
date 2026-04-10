@@ -78,7 +78,16 @@ body {
 .window-control:focus-visible,
 .activities-btn:focus-visible,
 .social-link:focus-visible,
-.project-card:focus-visible {
+.project-card:focus-visible,
+.close-btn-mobile:focus-visible,
+.resume-download-btn:focus-visible,
+.toggle-switch:focus-visible,
+.terminal-input:focus-visible,
+.terminal-submit-btn:focus-visible,
+.context-menu-item:focus-visible,
+.nav-hint-dismiss:focus-visible,
+.dialog-btn:focus-visible,
+.dialog-input:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }

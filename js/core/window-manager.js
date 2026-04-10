@@ -157,6 +157,10 @@ export function closeWindow(windowId) {
         windowSnapState.delete(windowId);
         minimizedWindows.delete(windowId);
 
+        // Clear inline position so cascade offset recalculates on next open
+        windowEl.style.top = '';
+        windowEl.style.left = '';
+
         updateDockActiveStates();
         updateAriaModal(); // Update modal state after closing
 
@@ -192,6 +196,8 @@ export function minimizeWindow(windowId) {
     minimizedWindows.set(windowId, {
         top: windowEl.style.top,
         left: windowEl.style.left,
+        width: windowEl.style.width || getComputedStyle(windowEl).width,
+        height: windowEl.style.height || getComputedStyle(windowEl).height,
     });
 
     windowEl.classList.add('minimizing');
@@ -690,6 +696,11 @@ function setupFocusTrap(windowEl) {
 
     const handler = e => {
         if (e.key !== 'Tab') {
+            return;
+        }
+
+        // Only trap focus when the active element is inside THIS window
+        if (!windowEl.contains(document.activeElement)) {
             return;
         }
 

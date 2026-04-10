@@ -216,7 +216,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     clear: () => {
         const output = document.getElementById('terminal-output');
         if (output) {
-            output.innerHTML = '';
+            output.replaceChildren();
         }
         return '';
     },
@@ -426,6 +426,12 @@ export function executeTerminalCommand(input) {
         if (command === 'echo') {
             const content = args.join(' ').replace(/^["']|["']$/g, ''); // Remove quotes
             const resolvedPath = resolvePath(filePath.trim());
+
+            // Security: restrict writes to /home/visitor/ to prevent path traversal
+            if (!resolvedPath.startsWith('/home/visitor/')) {
+                return `Permission denied: cannot write outside /home/visitor/`;
+            }
+
             const fileName = resolvedPath.split('/').pop();
             const parentPath = resolvedPath.substring(0, resolvedPath.lastIndexOf('/')) || '/';
             const parentNode = fileSystem[parentPath];
@@ -486,7 +492,10 @@ export function addTerminalOutput(command, output) {
         terminalOutput.appendChild(outputEl);
     }
 
-    terminalOutput.parentElement.scrollTop = terminalOutput.parentElement.scrollHeight;
+    const terminalBody = terminalOutput.parentElement;
+    if (terminalBody) {
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
 }
 
 export function setupTerminal() {

@@ -34,14 +34,4 @@ export function createRipple(e, element) {
     setTimeout(() => ripple.remove(), 600);
 }
 
-// Add ripple animation to CSS
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-    @keyframes ripple-effect {
-        to {
-            transform: scale(2.5);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(rippleStyle);
+// NOTE: @keyframes ripple-effect is defined in css/base/animations.css

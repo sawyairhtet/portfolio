@@ -186,7 +186,16 @@ body {
 .window-control:focus-visible,
 .activities-btn:focus-visible,
 .social-link:focus-visible,
-.project-card:focus-visible {
+.project-card:focus-visible,
+.close-btn-mobile:focus-visible,
+.resume-download-btn:focus-visible,
+.toggle-switch:focus-visible,
+.terminal-input:focus-visible,
+.terminal-submit-btn:focus-visible,
+.context-menu-item:focus-visible,
+.nav-hint-dismiss:focus-visible,
+.dialog-btn:focus-visible,
+.dialog-input:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }
@@ -431,6 +440,14 @@ body {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* Ripple Effect (moved from JS runtime injection in transitions.js) */
+@keyframes ripple-effect {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
     }
 }
 
@@ -3339,33 +3356,7 @@ a.project-card {
     }
 }
 
-/* Tablet Layout (768px - 1024px) */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-    .app-grid {
-        left: calc(var(--dock-width) + 10px);
-        right: 10px;
-        top: 50px;
-        grid-template-columns: repeat(auto-fill, 90px);
-        grid-template-rows: repeat(auto-fill, 100px);
-        gap: var(--spacing-sm);
-    }
-
-    .app-icon {
-        width: 90px;
-        height: 100px;
-    }
-
-    .app-icon-placeholder {
-        width: 90px;
-        height: 100px;
-    }
-
-    .app-icon-wrapper {
-        width: 56px;
-        height: 56px;
-        font-size: 28px;
-    }
-}
+/* NOTE: Tablet layout styles are in the main tablet block at the top of this file */
 
 /* Mobile Layout grid updates (projects grid) */
 @media screen and (max-width: 767px) {

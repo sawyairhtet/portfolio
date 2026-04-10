@@ -23,6 +23,7 @@
             name="description"
             content="Saw Ye Htet - IT Student & VR Developer at Singapore Polytechnic. Specializing in Unity, Meta Quest hand tracking, and full-stack web development."
         />
+        <meta name="robots" content="index, follow" />
 
         <!-- Open Graph / facebook -->
         <meta property="og:type" content="website" />
@@ -33,6 +34,8 @@
             content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
         />
         <meta property="og:image" content="https://sawyehtet.com/images/og-preview.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
@@ -65,10 +68,17 @@
             media="print"
             onload="this.media = 'all'"
         />
-        <!-- Font Awesome for icons -->
+        <!-- Font Awesome for icons (non-render-blocking) -->
         <link
-            rel="stylesheet"
+            rel="preload"
+            as="style"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet"
+            media="print"
+            onload="this.media = 'all'"
         />
         <link rel="icon" href="assets/icon.png" type="image/png" />
         <link rel="apple-touch-icon" href="assets/icon.png" />
@@ -754,13 +764,13 @@
 
                 <div class="setting-item">
                     <label for="sound-toggle">Sound Effects</label>
-                    <input type="checkbox" id="sound-toggle" class="toggle-switch" checked />
+                    <input type="checkbox" id="sound-toggle" class="toggle-switch" role="switch" aria-checked="true" checked />
                 </div>
             </div>
         </div>
 
         <!-- Dock -->
-        <div class="dock">
+        <nav class="dock" aria-label="Application dock">
             <button class="dock-item" data-app="about" aria-label="About">
                 <i class="fas fa-user-circle"></i>
                 <span class="dock-tooltip">About Me</span>
@@ -782,7 +792,7 @@
                 <i class="fas fa-cog"></i>
                 <span class="dock-tooltip">Settings</span>
             </button>
-        </div>
+        </nav>
 
         <!-- First-Visit Navigation Hint -->
         <div class="nav-hint" id="nav-hint">

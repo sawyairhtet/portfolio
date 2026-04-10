@@ -432,7 +432,6 @@ function makeStickyDraggable(element) {
     }
 
     function elementDrag(e) {
-        e = e || window.event;
         e.preventDefault();
 
         pos1 = pos3 - e.clientX;
@@ -652,13 +651,13 @@ function setupSoundToggle() {
     }
 
     soundToggle.checked = !SoundManager.isMuted();
-    soundToggle.setAttribute('aria-pressed', String(!SoundManager.isMuted()));
+    soundToggle.setAttribute('aria-checked', String(!SoundManager.isMuted()));
 
     soundToggle.addEventListener('change', () => {
         const isMuted = !soundToggle.checked;
         SoundManager.setMuted(isMuted);
 
-        soundToggle.setAttribute('aria-pressed', String(!isMuted));
+        soundToggle.setAttribute('aria-checked', String(!isMuted));
 
         if (isMuted) {
             showToast('Sound effects muted', 'fa-volume-mute');
