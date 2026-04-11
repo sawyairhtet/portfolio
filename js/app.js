@@ -25,9 +25,16 @@ import { setupTerminal, setupTerminalMobileFix } from './apps/terminal.js';
 import { setupContextMenu } from './ui/context-menu.js';
 import { showToast } from './ui/notifications.js';
 import { initMicroInteractions } from './ui/micro-interactions.js';
+import { setupCommandPalette } from './ui/command-palette.js';
+
+// Core features
+import { Achievements } from './core/achievements.js';
 
 // Config
 import { BOOT_LOG_MESSAGES, stickyNotesData } from './config/data.js';
+
+// Track load time for uptime command
+/** @type {any} */ (window).__portfolioLoadTime = Date.now();
 
 // ============================================
 // CONSTANTS
@@ -99,6 +106,7 @@ function handleAppIconClick(appName) {
         }
     } else {
         openWindow(appName, currentOS);
+        Achievements.onAppOpen(appName, getActiveWindows().size);
     }
 }
 
@@ -237,8 +245,12 @@ function initBootScreen() {
 
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches) {
+    const isReturningVisitor = localStorage.getItem('hasVisitedBefore');
+
+    if (mediaQuery.matches || isReturningVisitor) {
         bootScreen.remove();
+        // Mark as visited
+        localStorage.setItem('hasVisitedBefore', 'true');
         // Immediately open default windows
         if (currentOS === 'desktop') {
             const aboutWin = document.getElementById('about-window');
@@ -274,6 +286,7 @@ function initBootScreen() {
         bootScreen.removeEventListener('click', skipBoot);
 
         bootScreen.classList.add('fade-out');
+        localStorage.setItem('hasVisitedBefore', 'true');
         setTimeout(() => {
             bootScreen.remove();
 
@@ -668,6 +681,163 @@ function setupSoundToggle() {
 }
 
 // ============================================
+// CONTACT FORM (Formspree)
+// ============================================
+
+function setupContactForm() {
+    const form = /** @type {HTMLFormElement | null} */ (document.getElementById('contact-form'));
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn = /** @type {HTMLButtonElement} */ (document.getElementById('contact-submit-btn'));
+        const status = document.getElementById('form-status');
+        if (!btn || !status) {
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        status.textContent = '';
+        status.className = 'form-status';
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(/** @type {HTMLFormElement} */ (form)),
+                headers: { Accept: 'application/json' },
+            });
+
+            if (response.ok) {
+                status.textContent = 'Message sent! I\'ll get back to you soon.';
+                status.classList.add('success');
+                /** @type {HTMLFormElement} */ (form).reset();
+                showToast('Message sent successfully!', 'fa-check-circle');
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (_err) {
+            status.textContent = 'Oops! Something went wrong. Try emailing me directly.';
+            status.classList.add('error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        }
+    });
+}
+
+// ============================================
+// WALLPAPER CUSTOMIZATION
+// ============================================
+
+const WALLPAPERS = [
+    { id: 'default', label: 'Default Gradient', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' },
+    { id: 'ubuntu', label: 'Ubuntu Aubergine', gradient: 'linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%)' },
+    { id: 'sunset', label: 'Sunset Orange', gradient: 'linear-gradient(135deg, #e95420 0%, #ff6b6b 50%, #feca57 100%)' },
+    { id: 'ocean', label: 'Ocean Blue', gradient: 'linear-gradient(135deg, #0c3547 0%, #1a6b8a 50%, #11998e 100%)' },
+    { id: 'midnight', label: 'Midnight', gradient: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' },
+];
+
+function setupWallpaperCustomization() {
+    const settingsBody = document.querySelector('#settings-window .window-body');
+    if (!settingsBody) {
+        return;
+    }
+
+    // Create wallpaper setting section
+    const wallpaperSection = document.createElement('div');
+    wallpaperSection.className = 'setting-item wallpaper-setting';
+    wallpaperSection.innerHTML = `
+        <label>Wallpaper</label>
+        <div class="wallpaper-options">
+            ${WALLPAPERS.map(w => `
+                <button class="wallpaper-option" data-wallpaper="${w.id}" aria-label="${w.label}" title="${w.label}" style="background: ${w.gradient}"></button>
+            `).join('')}
+        </div>
+    `;
+    settingsBody.appendChild(wallpaperSection);
+
+    // Load saved wallpaper
+    const savedWallpaper = localStorage.getItem('portfolioWallpaper');
+    if (savedWallpaper) {
+        const wp = WALLPAPERS.find(w => w.id === savedWallpaper);
+        if (wp) {
+            applyWallpaper(wp);
+        }
+    }
+
+    // Click handlers
+    wallpaperSection.querySelectorAll('.wallpaper-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const wpId = /** @type {HTMLElement} */ (btn).dataset.wallpaper;
+            const wp = WALLPAPERS.find(w => w.id === wpId);
+            if (wp) {
+                applyWallpaper(wp);
+                localStorage.setItem('portfolioWallpaper', wp.id);
+                showToast(`Wallpaper: ${wp.label}`, 'fa-image');
+
+                // Mark active
+                wallpaperSection.querySelectorAll('.wallpaper-option').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        });
+    });
+
+    // Mark current as active
+    const currentId = savedWallpaper || 'default';
+    const activeBtn = wallpaperSection.querySelector(`[data-wallpaper="${currentId}"]`);
+    if (activeBtn) {
+        activeBtn.classList.add('active');
+    }
+}
+
+function applyWallpaper(wp) {
+    document.documentElement.style.setProperty('--gradient-wallpaper', wp.gradient);
+}
+
+// ============================================
+// SKILL BAR ANIMATION
+// ============================================
+
+function setupSkillBarAnimation() {
+    // Use IntersectionObserver to animate bars when visible
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.skill-progress-bar').forEach(bar => {
+        observer.observe(bar);
+    });
+}
+
+// ============================================
+// TERMINAL ACHIEVEMENT TRACKING
+// ============================================
+
+function setupTerminalAchievementTracking() {
+    const terminalInput = document.getElementById('terminal-input');
+    if (!terminalInput) {
+        return;
+    }
+
+    terminalInput.addEventListener('keydown', e => {
+        if (/** @type {KeyboardEvent} */ (e).key === 'Enter') {
+            const value = /** @type {HTMLInputElement} */ (terminalInput).value;
+            if (value.trim()) {
+                Achievements.onTerminalCommand(value.trim());
+            }
+        }
+    });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -703,6 +873,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize micro-interactions
     initMicroInteractions();
+
+    // Initialize achievements system
+    Achievements.init();
+
+    // Initialize command palette (Ctrl+K)
+    setupCommandPalette();
+
+    // Setup contact form
+    setupContactForm();
+
+    // Setup wallpaper customization
+    setupWallpaperCustomization();
+
+    // Animate skill progress bars when skills window opens
+    setupSkillBarAnimation();
+
+    // Track terminal commands for achievements
+    setupTerminalAchievementTracking();
 
     // Mark all Font Awesome icons as decorative for screen readers
     document.querySelectorAll('.fas, .fab, .far').forEach(icon => {

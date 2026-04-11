@@ -14,6 +14,27 @@ let lastFocusedElement = null; // Track element that opened window for focus res
 const focusTrapHandlers = new Map(); // Track focus trap handlers per window
 let cascadeCounter = 0; // Static counter for window cascade positioning (#22)
 
+// Window state persistence
+const WINDOW_STATE_KEY = 'portfolioWindowStates';
+
+function loadWindowStates() {
+    try {
+        return JSON.parse(localStorage.getItem(WINDOW_STATE_KEY) || '{}');
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveWindowState(windowId, state) {
+    try {
+        const states = loadWindowStates();
+        states[windowId] = state;
+        localStorage.setItem(WINDOW_STATE_KEY, JSON.stringify(states));
+    } catch (e) {
+        // Storage full or unavailable
+    }
+}
+
 // Cache CSS variable to avoid reading on every drag call (#20)
 let cachedDockWidth = 60;
 function updateCachedDockWidth() {
@@ -96,14 +117,22 @@ export function openWindow(appName, currentOS = 'desktop') {
     activeWindows.add(windowId);
     bringToFront(windowEl);
 
-    // Apply cascade offset for desktop (only for new windows, use static counter #22)
+    // Restore saved position/size if available, otherwise cascade
     if (currentOS === 'desktop' && !windowEl.style.top) {
-        cascadeCounter++;
-        const cascadeOffset = (cascadeCounter % 10) * 25; // Reset after 10 to prevent going too far
-        const randomX = Math.floor(Math.random() * 30) - 15;
-        const randomY = Math.floor(Math.random() * 20) - 10;
-        windowEl.style.top = `calc(15% + ${cascadeOffset + randomY}px)`;
-        windowEl.style.left = `calc(var(--dock-width) + 10% + ${cascadeOffset + randomX}px)`;
+        const saved = loadWindowStates()[windowId];
+        if (saved) {
+            windowEl.style.top = saved.top;
+            windowEl.style.left = saved.left;
+            if (saved.width) windowEl.style.width = saved.width;
+            if (saved.height) windowEl.style.height = saved.height;
+        } else {
+            cascadeCounter++;
+            const cascadeOffset = (cascadeCounter % 10) * 25;
+            const randomX = Math.floor(Math.random() * 30) - 15;
+            const randomY = Math.floor(Math.random() * 20) - 10;
+            windowEl.style.top = `calc(15% + ${cascadeOffset + randomY}px)`;
+            windowEl.style.left = `calc(var(--dock-width) + 10% + ${cascadeOffset + randomX}px)`;
+        }
     }
 
     SoundManager.playClick();
@@ -156,6 +185,16 @@ export function closeWindow(windowId) {
         // Clean up snap and minimize state (#23)
         windowSnapState.delete(windowId);
         minimizedWindows.delete(windowId);
+
+        // Save window position before clearing
+        if (windowEl.style.top && windowEl.style.left) {
+            saveWindowState(windowId, {
+                top: windowEl.style.top,
+                left: windowEl.style.left,
+                width: windowEl.style.width || '',
+                height: windowEl.style.height || '',
+            });
+        }
 
         // Clear inline position so cascade offset recalculates on next open
         windowEl.style.top = '';

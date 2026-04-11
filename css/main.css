@@ -21,6 +21,7 @@
 @import url('components/ui-elements.css');
 @import url('components/dialog.css');
 @import url('components/skeleton.css');
+@import url('components/command-palette.css');
 
 /* Responsive / Media Queries (must be last) */
 @import url('components/responsive.css');

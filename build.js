@@ -32,6 +32,7 @@ const CSS_FILES = [
     'components/ui-elements.css',
     'components/dialog.css',
     'components/skeleton.css',
+    'components/command-palette.css',
     // Responsive (must be last)
     'components/responsive.css',
 ];
