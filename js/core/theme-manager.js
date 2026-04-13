@@ -1,25 +1,41 @@
 /**
  * Theme Manager
- * Light mode only - dark mode has been removed
+ * Handles dark/light mode via data-theme attribute
  */
 
 const ThemeManager = {
     init() {
-        // Ensure light mode is always active
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
+        // Restore saved theme preference
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
     },
 
     updateUI() {
-        // No-op: dark mode removed
+        // Sync toggle switch if present
+        const toggle = /** @type {HTMLInputElement | null} */ (document.getElementById('theme-toggle'));
+        if (toggle) {
+            toggle.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+        }
     },
 
     toggle() {
-        // No-op: dark mode removed
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+        this.updateUI();
     },
 
     setupListeners() {
-        // No-op: dark mode removed
+        // No-op: listeners are handled in setupSettingsPanel()
     },
 };
 

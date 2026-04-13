@@ -1,6 +1,6 @@
 /* ============================================
    MAIN CSS - Import Manifest
-   Portfolio Website - Ubuntu GNOME Theme
+   Portfolio Website - Fedora 43 / GNOME 49
    ============================================ */
 
 /* Base Styles (variables must be first as other files depend on them) */
@@ -22,6 +22,11 @@
 @import url('components/dialog.css');
 @import url('components/skeleton.css');
 @import url('components/command-palette.css');
+@import url('components/focus-mode.css');
+@import url('components/lock-screen.css');
+@import url('components/settings.css');
+@import url('components/screenshot-tool.css');
+@import url('components/notification-center.css');
 
 /* Responsive / Media Queries (must be last) */
 @import url('components/responsive.css');

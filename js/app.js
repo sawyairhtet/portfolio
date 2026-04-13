@@ -20,15 +20,16 @@ import {
 
 // App modules
 import { setupTerminal, setupTerminalMobileFix } from './apps/terminal.js';
+import { setupFocusMode } from './apps/focus-mode.js';
 
 // UI modules
 import { setupContextMenu } from './ui/context-menu.js';
-import { showToast } from './ui/notifications.js';
+import { showToast, setupNotificationCenter } from './ui/notifications.js';
 import { initMicroInteractions } from './ui/micro-interactions.js';
 import { setupCommandPalette } from './ui/command-palette.js';
+import { setupLockScreen } from './ui/lock-screen.js';
+import { setupScreenshotTool } from './ui/screenshot-tool.js';
 
-// Core features
-import { Achievements } from './core/achievements.js';
 
 // Config
 import { BOOT_LOG_MESSAGES, stickyNotesData } from './config/data.js';
@@ -106,7 +107,6 @@ function handleAppIconClick(appName) {
         }
     } else {
         openWindow(appName, currentOS);
-        Achievements.onAppOpen(appName, getActiveWindows().size);
     }
 }
 
@@ -733,63 +733,118 @@ function setupContactForm() {
 // ============================================
 
 const WALLPAPERS = [
-    { id: 'default', label: 'Default Gradient', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' },
-    { id: 'ubuntu', label: 'Ubuntu Aubergine', gradient: 'linear-gradient(135deg, #2C001E 0%, #77216F 50%, #5E2750 100%)' },
-    { id: 'sunset', label: 'Sunset Orange', gradient: 'linear-gradient(135deg, #e95420 0%, #ff6b6b 50%, #feca57 100%)' },
+    { id: 'default', label: 'Fedora Blue', gradient: 'linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%)' },
+    { id: 'adwaita-dark', label: 'Adwaita Dark', gradient: 'linear-gradient(135deg, #1e1e2e 0%, #2d2d3f 50%, #1e1e2e 100%)' },
+    { id: 'aurora', label: 'Aurora', gradient: 'linear-gradient(135deg, #0d2137 0%, #9141ac 40%, #3584e4 70%, #2ec27e 100%)' },
     { id: 'ocean', label: 'Ocean Blue', gradient: 'linear-gradient(135deg, #0c3547 0%, #1a6b8a 50%, #11998e 100%)' },
     { id: 'midnight', label: 'Midnight', gradient: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' },
 ];
 
-function setupWallpaperCustomization() {
-    const settingsBody = document.querySelector('#settings-window .window-body');
-    if (!settingsBody) {
-        return;
-    }
+function setupSettingsPanel() {
+    // ── Sidebar navigation ──
+    const navItems = document.querySelectorAll('.settings-nav-item');
+    const panels = document.querySelectorAll('.settings-panel');
 
-    // Create wallpaper setting section
-    const wallpaperSection = document.createElement('div');
-    wallpaperSection.className = 'setting-item wallpaper-setting';
-    wallpaperSection.innerHTML = `
-        <label>Wallpaper</label>
-        <div class="wallpaper-options">
-            ${WALLPAPERS.map(w => `
-                <button class="wallpaper-option" data-wallpaper="${w.id}" aria-label="${w.label}" title="${w.label}" style="background: ${w.gradient}"></button>
-            `).join('')}
-        </div>
-    `;
-    settingsBody.appendChild(wallpaperSection);
-
-    // Load saved wallpaper
-    const savedWallpaper = localStorage.getItem('portfolioWallpaper');
-    if (savedWallpaper) {
-        const wp = WALLPAPERS.find(w => w.id === savedWallpaper);
-        if (wp) {
-            applyWallpaper(wp);
-        }
-    }
-
-    // Click handlers
-    wallpaperSection.querySelectorAll('.wallpaper-option').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const wpId = /** @type {HTMLElement} */ (btn).dataset.wallpaper;
-            const wp = WALLPAPERS.find(w => w.id === wpId);
-            if (wp) {
-                applyWallpaper(wp);
-                localStorage.setItem('portfolioWallpaper', wp.id);
-                showToast(`Wallpaper: ${wp.label}`, 'fa-image');
-
-                // Mark active
-                wallpaperSection.querySelectorAll('.wallpaper-option').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const panelId = /** @type {HTMLElement} */ (item).dataset.panel;
+            navItems.forEach(n => n.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+            item.classList.add('active');
+            const target = document.getElementById(`settings-panel-${panelId}`);
+            if (target) {
+                target.classList.add('active');
             }
         });
     });
 
-    // Mark current as active
-    const currentId = savedWallpaper || 'default';
-    const activeBtn = wallpaperSection.querySelector(`[data-wallpaper="${currentId}"]`);
-    if (activeBtn) {
-        activeBtn.classList.add('active');
+    // ── Wallpaper grid ──
+    const wallpaperGrid = document.getElementById('wallpaper-grid');
+    if (wallpaperGrid) {
+        WALLPAPERS.forEach(w => {
+            const btn = document.createElement('button');
+            btn.className = 'wallpaper-option';
+            btn.dataset.wallpaper = w.id;
+            btn.setAttribute('aria-label', w.label);
+            btn.setAttribute('title', w.label);
+            btn.style.background = w.gradient;
+            btn.addEventListener('click', () => {
+                applyWallpaper(w);
+                localStorage.setItem('portfolioWallpaper', w.id);
+                showToast(`Wallpaper: ${w.label}`, 'fa-image');
+                wallpaperGrid.querySelectorAll('.wallpaper-option').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+            wallpaperGrid.appendChild(btn);
+        });
+
+        // Load saved wallpaper
+        const savedWallpaper = localStorage.getItem('portfolioWallpaper');
+        if (savedWallpaper) {
+            const wp = WALLPAPERS.find(w => w.id === savedWallpaper);
+            if (wp) {
+                applyWallpaper(wp);
+            }
+        }
+
+        const currentId = savedWallpaper || 'default';
+        const activeBtn = wallpaperGrid.querySelector(`[data-wallpaper="${currentId}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
+    }
+
+    // ── Accent color picker ──
+    const accentOptions = document.getElementById('accent-color-options');
+    if (accentOptions) {
+        const savedAccent = localStorage.getItem('portfolioAccent');
+        if (savedAccent) {
+            document.documentElement.style.setProperty('--fedora-blue', savedAccent);
+            document.documentElement.style.setProperty('--color-primary', savedAccent);
+        }
+
+        accentOptions.querySelectorAll('.accent-swatch').forEach(swatch => {
+            // Mark saved as active
+            if (savedAccent && /** @type {HTMLElement} */ (swatch).dataset.accent === savedAccent) {
+                accentOptions.querySelectorAll('.accent-swatch').forEach(s => s.classList.remove('active'));
+                swatch.classList.add('active');
+            }
+
+            swatch.addEventListener('click', () => {
+                const color = /** @type {HTMLElement} */ (swatch).dataset.accent;
+                if (!color) {
+                    return;
+                }
+                document.documentElement.style.setProperty('--fedora-blue', color);
+                document.documentElement.style.setProperty('--color-primary', color);
+                localStorage.setItem('portfolioAccent', color);
+                accentOptions.querySelectorAll('.accent-swatch').forEach(s => s.classList.remove('active'));
+                swatch.classList.add('active');
+                showToast('Accent color updated', 'fa-palette');
+            });
+        });
+    }
+
+    // ── Dark mode toggle ──
+    const themeToggle = /** @type {HTMLInputElement | null} */ (document.getElementById('theme-toggle'));
+    if (themeToggle) {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                showToast('Dark mode enabled', 'fa-moon');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                showToast('Light mode enabled', 'fa-sun');
+            }
+        });
     }
 }
 
@@ -817,25 +872,6 @@ function setupSkillBarAnimation() {
     });
 }
 
-// ============================================
-// TERMINAL ACHIEVEMENT TRACKING
-// ============================================
-
-function setupTerminalAchievementTracking() {
-    const terminalInput = document.getElementById('terminal-input');
-    if (!terminalInput) {
-        return;
-    }
-
-    terminalInput.addEventListener('keydown', e => {
-        if (/** @type {KeyboardEvent} */ (e).key === 'Enter') {
-            const value = /** @type {HTMLInputElement} */ (terminalInput).value;
-            if (value.trim()) {
-                Achievements.onTerminalCommand(value.trim());
-            }
-        }
-    });
-}
 
 // ============================================
 // INITIALIZATION
@@ -874,23 +910,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize micro-interactions
     initMicroInteractions();
 
-    // Initialize achievements system
-    Achievements.init();
-
     // Initialize command palette (Ctrl+K)
     setupCommandPalette();
 
     // Setup contact form
     setupContactForm();
 
-    // Setup wallpaper customization
-    setupWallpaperCustomization();
+    // Setup wallpaper customization (new Settings panel)
+    setupSettingsPanel();
 
     // Animate skill progress bars when skills window opens
     setupSkillBarAnimation();
 
-    // Track terminal commands for achievements
-    setupTerminalAchievementTracking();
+    // Phase 2 — GNOME 49 Features
+    setupFocusMode();
+    setupLockScreen();
+    setupScreenshotTool();
+    setupNotificationCenter();
 
     // Mark all Font Awesome icons as decorative for screen readers
     document.querySelectorAll('.fas, .fab, .far').forEach(icon => {

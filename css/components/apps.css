@@ -201,7 +201,7 @@
     transform: translateY(-2px);
     box-shadow:
         var(--shadow-lg),
-        0 0 16px rgba(233, 84, 32, 0.3);
+        0 0 16px rgba(53, 132, 228, 0.3);
     color: #ffffff;
 }
 
@@ -221,7 +221,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
+    background: linear-gradient(135deg, var(--fedora-blue) 0%, var(--fedora-blue-dark) 100%);
     color: #fff;
     padding: 12px 24px;
     border-radius: 8px;
@@ -234,7 +234,7 @@
 
 .window-body .resume-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(233, 84, 32, 0.3);
+    box-shadow: 0 8px 20px rgba(53, 132, 228, 0.3);
     color: #fff;
 }
 
@@ -245,7 +245,7 @@
 
 /* Resume Status Message */
 .resume-status {
-    background: linear-gradient(135deg, rgba(233, 84, 32, 0.1) 0%, rgba(119, 33, 111, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(53, 132, 228, 0.1) 0%, rgba(145, 65, 172, 0.1) 100%);
     border: 1px dashed var(--color-primary);
     border-radius: var(--radius-sm);
     padding: var(--spacing-md);
@@ -334,7 +334,7 @@
 .form-group textarea:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(233, 84, 32, 0.15);
+    box-shadow: 0 0 0 3px rgba(53, 132, 228, 0.15);
 }
 
 .contact-submit-btn {
@@ -357,7 +357,7 @@
 
 .contact-submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg), 0 0 16px rgba(233, 84, 32, 0.3);
+    box-shadow: var(--shadow-lg), 0 0 16px rgba(53, 132, 228, 0.3);
 }
 
 .contact-submit-btn:active {
@@ -424,7 +424,7 @@
 
 /* Skill icon gradient colors */
 .skill-icon.languages {
-    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
+    background: linear-gradient(135deg, var(--fedora-blue) 0%, var(--fedora-blue-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -433,7 +433,7 @@
     color: #ff7a45;
 }
 .skill-icon.backend {
-    color: #77216f;
+    color: var(--fedora-purple);
 }
 .skill-icon.vr {
     color: #5e2750;
@@ -635,15 +635,15 @@ a.project-card {
 .project-card.featured-project {
     position: relative;
     grid-column: 1 / -1;
-    background: linear-gradient(135deg, rgba(233, 84, 32, 0.15) 0%, rgba(119, 33, 111, 0.15) 100%);
-    border: 2px solid var(--color-primary);
+    background: linear-gradient(135deg, rgba(53, 132, 228, 0.15) 0%, rgba(145, 65, 172, 0.15) 100%);
+    border: 2px solid var(--fedora-blue);
     text-decoration: none;
     color: inherit;
     display: block;
 }
 
 .project-card.featured-project:hover {
-    background: linear-gradient(135deg, rgba(233, 84, 32, 0.25) 0%, rgba(119, 33, 111, 0.25) 100%);
+    background: linear-gradient(135deg, rgba(53, 132, 228, 0.25) 0%, rgba(145, 65, 172, 0.25) 100%);
     transform: translateY(-8px) scale(1.01);
 }
 

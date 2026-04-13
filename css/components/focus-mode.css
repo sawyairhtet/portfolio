@@ -1,0 +1,224 @@
+/* ============================================
+   FOCUS MODE - GNOME 49 Pomodoro Timer
+   ============================================ */
+
+.focus-mode-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+}
+
+/* Timer Section */
+.focus-timer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.focus-mode-label {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--fedora-blue);
+}
+
+/* Timer Ring */
+.focus-timer-ring {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.focus-progress-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.focus-progress-bg {
+    fill: none;
+    stroke: var(--surface-3);
+    stroke-width: 6;
+}
+
+.focus-progress-fill {
+    fill: none;
+    stroke: var(--fedora-blue);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.focus-timer-display {
+    font-size: 48px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    z-index: 1;
+}
+
+/* Presets */
+.focus-presets {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.focus-preset-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.focus-preset-btn:hover {
+    border-color: var(--fedora-blue);
+    background: var(--surface-2);
+}
+
+.focus-preset-btn.active {
+    background: var(--fedora-blue);
+    color: var(--text-on-accent);
+    border-color: var(--fedora-blue);
+}
+
+/* Controls */
+.focus-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.focus-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+}
+
+.focus-btn:active {
+    transform: scale(0.96);
+}
+
+.focus-btn-primary {
+    background: var(--fedora-blue);
+    color: var(--text-on-accent);
+    box-shadow: 0 2px 8px rgba(53, 132, 228, 0.3);
+}
+
+.focus-btn-primary:hover {
+    box-shadow: 0 4px 16px rgba(53, 132, 228, 0.4);
+}
+
+.focus-btn-secondary {
+    background: var(--surface-3);
+    color: var(--text-primary);
+}
+
+.focus-btn-secondary:hover {
+    background: var(--surface-4);
+}
+
+.focus-btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.focus-btn-ghost:hover {
+    background: var(--surface-1);
+    color: var(--text-primary);
+}
+
+/* Stats */
+.focus-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--surface-1);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.focus-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.focus-stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--fedora-blue);
+    font-family: var(--font-mono);
+}
+
+.focus-stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Dim effect on other windows during focus */
+.window.focus-dimmed {
+    opacity: 0.3;
+    filter: blur(2px);
+    pointer-events: none;
+    transition: opacity var(--transition-slow), filter var(--transition-slow);
+}
+
+/* Top bar Focus Mode label */
+.topbar-focus-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    background: rgba(53, 132, 228, 0.2);
+    color: var(--fedora-blue-light);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: var(--spacing-sm);
+    animation: focusPulse 2s ease-in-out infinite;
+}
+
+@keyframes focusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .focus-progress-fill {
+        transition: none;
+    }
+    .topbar-focus-label {
+        animation: none;
+    }
+    .window.focus-dimmed {
+        transition: none;
+    }
+}

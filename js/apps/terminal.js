@@ -4,7 +4,6 @@
  */
 
 import { startMatrixEffect } from './matrix.js';
-import { Achievements } from '../core/achievements.js';
 import {
     DEFAULT_FILE_SYSTEM,
     terminalFortunes,
@@ -436,7 +435,6 @@ rtt min/avg/max = ${ms()}/${ms()}/${ms()} ms`;
         if (sub === 'log' || (sub === 'log' && args[1] === '--oneline')) {
             return `\x1b[33mf4a2c1e\x1b[0m add wallpaper customization to settings
 \x1b[33m3b1d7f2\x1b[0m finally fix that one CSS bug (attempt #47)
-\x1b[33ma9e8c4d\x1b[0m add achievement system - gamify everything
 \x1b[33m7c5b3a1\x1b[0m implement command palette (ctrl+k supremacy)
 \x1b[33m2f8d6e9\x1b[0m 3am commit: "it works, don't ask how"
 \x1b[33me1c4a7b\x1b[0m refactor terminal to feel like a real shell
@@ -461,10 +459,6 @@ nothing to commit, working tree clean
     sudo: args => {
         const subCommand = args.join(' ').toLowerCase();
         if (subCommand === 'hire me') {
-            // Trigger confetti if available
-            if (/** @type {any} */ (window).__triggerConfetti) {
-                /** @type {any} */ (window).__triggerConfetti();
-            }
             return `
 ╔═══════════════════════════════════════════════╗
 ║                                               ║
@@ -540,16 +534,6 @@ nothing to commit, working tree clean
 
     unflip: () => '┬─┬ノ( º _ ºノ)',
 
-    achievements: () => {
-        const all = Achievements.getAll();
-        const header = `🏆 Achievements (${Achievements.getProgress()})\n${'─'.repeat(40)}`;
-        const lines = all.map(a => {
-            const icon = a.unlocked ? a.icon : '🔒';
-            const check = a.unlocked ? ' ✓' : '';
-            return `${icon} ${a.title} — ${a.desc}${check}`;
-        });
-        return `${header}\n${lines.join('\n')}`;
-    },
 };
 
 export function executeTerminalCommand(input) {

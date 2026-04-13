@@ -1,123 +1,113 @@
 /* ============================================
-   DOCK - Ubuntu Vertical Left Dock
+   DOCK — Dash-to-Dock / GNOME 49
    ============================================ */
 
 .dock {
     position: fixed;
+    left: 8px;
     top: 50%;
     transform: translateY(-50%);
-    left: var(--spacing-sm);
     width: var(--dock-width);
-    height: auto;
-    min-height: 400px;
-    /* Ensure some height */
+    background: var(--dock-bg);
+    backdrop-filter: var(--dock-blur);
+    -webkit-backdrop-filter: var(--dock-blur);
+    border-radius: var(--dock-border-radius);
+    padding: var(--dock-padding);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-md);
-    background: var(--color-dock-bg);
-    backdrop-filter: var(--glass-blur);
-    padding: var(--spacing-md) 0;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    gap: var(--dock-gap);
+    border: var(--dock-border);
     z-index: var(--z-dock);
-    box-shadow: var(--shadow-lg);
-    /* Remove full height border */
-    bottom: auto;
+    box-shadow: var(--shadow-popover);
 }
 
 .dock-item {
-    width: 48px;
-    height: 48px;
+    width: var(--dock-icon-size);
+    height: var(--dock-icon-size);
+    border-radius: var(--border-radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
-    transition: all var(--transition-smooth);
-    border-radius: var(--radius-sm);
-    color: #ffffff;
     position: relative;
-    border: 1px solid transparent;
-}
-
-/* Colorful dock icon gradients - Light Mode Defaults */
-.dock-item[data-app='about'] {
-    background: linear-gradient(135deg, #ff6b3d 0%, #e95420 100%);
-}
-
-.dock-item[data-app='projects'] {
-    background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
-}
-
-.dock-item[data-app='contact'] {
-    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
-}
-
-.dock-item[data-app='terminal'] {
-    background: linear-gradient(135deg, #2aa198 0%, #1a7a72 100%);
-}
-
-.dock-item[data-app='settings'] {
-    background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
+    color: #ffffff;
+    transition: transform var(--transition-fast);
 }
 
 .dock-item:hover {
-    /* background: var(--color-dock-item-hover);Removed to fix transparency issue */
-    transform: scale(1.15) translateX(4px);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 16px rgba(233, 84, 32, 0.3);
+    transform: scale(1.12);
+    background: var(--dock-hover-bg);
 }
 
 .dock-item:active {
-    transform: scale(0.95);
+    transform: scale(0.96);
 }
 
-/* Active indicator for dock items */
+/* Adwaita-style dock icon backgrounds */
+.dock-item[data-app='about'] {
+    background: linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%);
+}
+
+.dock-item[data-app='projects'] {
+    background: linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%);
+}
+
+.dock-item[data-app='contact'] {
+    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
+}
+
+.dock-item[data-app='terminal'] {
+    background: linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%);
+}
+
+.dock-item[data-app='settings'] {
+    background: linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%);
+}
+
+/* Blue dot indicator below active app */
 .dock-item.active::after {
     content: '';
     position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 20px;
-    background: #ffffff;
-    border-radius: 0 2px 2px 0;
-    box-shadow: 1px 0 4px rgba(0, 0, 0, 0.3);
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--dock-active-dot);
 }
 
 .dock-separator {
     width: 80%;
     height: 1px;
-    background: var(--color-border);
-    margin: var(--spacing-sm) 0;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 4px 0;
 }
 
 /* ============================================
-   DOCK TOOLTIPS - GNOME Style
+   DOCK TOOLTIPS — GNOME 49 Style
    ============================================ */
 
 .dock-tooltip {
     position: absolute;
-    left: calc(100% + 12px);
+    left: calc(100% + 10px);
     top: 50%;
     transform: translateY(-50%);
-    background: var(--color-window-body-bg);
-    color: var(--color-window-body-text);
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
+    background: rgba(30, 30, 46, 0.92);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 4px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-popover);
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
+        opacity 0.15s ease,
+        visibility 0.15s ease;
     z-index: 1001;
     pointer-events: none;
 }
@@ -129,8 +119,8 @@
     right: 100%;
     top: 50%;
     transform: translateY(-50%);
-    border: 6px solid transparent;
-    border-right-color: var(--color-window-body-bg);
+    border: 5px solid transparent;
+    border-right-color: rgba(30, 30, 46, 0.92);
 }
 
 .dock-item:hover .dock-tooltip {

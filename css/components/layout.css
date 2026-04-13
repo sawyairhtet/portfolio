@@ -5,7 +5,7 @@
 .main-content {
     position: relative;
     height: 100vh;
-    padding-top: 28px;
+    padding-top: var(--topbar-height);
     padding-left: var(--dock-width);
 }
 
@@ -16,7 +16,10 @@
     left: -20px;
     right: -20px;
     bottom: -20px;
-    background: url('../../images/noble-numbat.jpg') center/cover no-repeat;
+    /* Fedora 43 default: image with gradient fallback */
+    background:
+        url('../../images/wallpapers/fedora-43-default.jpg') center/cover no-repeat,
+        linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%);
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
@@ -34,7 +37,7 @@
     background-image:
         radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
         radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
-        radial-gradient(circle at 60% 30%, rgba(233, 84, 32, 0.05) 0%, transparent 30%);
+        radial-gradient(circle at 60% 30%, rgba(53, 132, 228, 0.05) 0%, transparent 30%);
     pointer-events: none;
 }
 
@@ -58,10 +61,11 @@
 
 /* Personal Brand */
 .personal-brand {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--color-topbar-text);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-on-accent);
     display: flex;
     align-items: center;
     line-height: 1;
+    letter-spacing: 0.5px;
 }

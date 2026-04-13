@@ -82,7 +82,7 @@ function checkAchievements() {
 }
 
 function triggerConfetti() {
-    const colors = ['#e95420', '#ff7a45', '#77216f', '#5e2750', '#4caf50', '#2196f3'];
+    const colors = ['#3584e4', '#62a0ea', '#9141ac', '#2ec27e', '#f5c211', '#e01b24'];
     const container = document.createElement('div');
     container.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:99999;overflow:hidden;';
     document.body.appendChild(container);

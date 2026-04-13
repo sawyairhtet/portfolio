@@ -1,17 +1,17 @@
 /* ============================================
-   WINDOWS - GNOME Style
+   WINDOWS - GNOME 49 / Adwaita Style
    ============================================ */
 
 .window {
     position: absolute;
-    background: var(--color-glass-light);
+    background: var(--window-body-bg);
     backdrop-filter: var(--glass-blur) var(--glass-saturation)
         var(--glass-brightness, brightness(1));
     -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation)
         var(--glass-brightness, brightness(1));
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    box-shadow: var(--shadow-lg), var(--glass-inner-glow, none);
-    border: 1px solid var(--color-border);
+    border-radius: var(--window-border-radius);
+    box-shadow: var(--window-shadow);
+    border: 1px solid var(--border-color);
     display: none;
     flex-direction: column;
     width: 600px;
@@ -19,6 +19,7 @@
     max-width: 650px;
     max-height: 80vh;
     z-index: var(--z-window);
+    overflow: hidden;
     transition:
         box-shadow 0.2s ease,
         transform 0.2s ease;
@@ -30,8 +31,8 @@
 /* Subtle glow on focused/topmost window */
 .window:focus-within {
     box-shadow:
-        var(--shadow-lg),
-        0 0 0 2px rgba(233, 84, 32, 0.15);
+        var(--window-shadow),
+        0 0 0 2px rgba(53, 132, 228, 0.15);
 }
 
 /* Window animation states */
@@ -133,28 +134,28 @@
    ============================================ */
 
 .window.snapped-left {
-    top: 28px;
+    top: var(--topbar-height);
     left: var(--dock-width);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .window.snapped-right {
-    top: 28px;
+    top: var(--topbar-height);
     left: calc(50vw + var(--dock-width) / 2);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .window.snapped-maximized {
-    top: 28px;
+    top: var(--topbar-height);
     left: var(--dock-width);
     width: calc(100vw - var(--dock-width));
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -162,9 +163,9 @@
 /* Snap Preview Overlay */
 .snap-preview {
     position: fixed;
-    top: 28px;
-    background: rgba(233, 84, 32, 0.15);
-    border: 2px dashed var(--color-primary);
+    top: var(--topbar-height);
+    background: rgba(53, 132, 228, 0.15);
+    border: 2px dashed var(--fedora-blue);
     border-radius: var(--radius-md);
     z-index: 99;
     pointer-events: none;
@@ -181,100 +182,94 @@
 .snap-preview.snap-left {
     left: var(--dock-width);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
 }
 
 .snap-preview.snap-right {
     left: calc(50vw + var(--dock-width) / 2);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
 }
 
 .snap-preview.snap-maximize {
     left: var(--dock-width);
     width: calc(100vw - var(--dock-width));
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
 }
 
 /* ============================================
-   WINDOW HEADER
+   WINDOW HEADER — GNOME 49
    ============================================ */
 
 .window-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--color-header-bg);
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    height: var(--window-header-height);
+    padding: 0 14px;
+    background: var(--window-header-bg);
+    border-bottom: 1px solid var(--window-header-border);
     cursor: grab;
+    user-select: none;
 }
 
 .window-header:active {
     cursor: grabbing;
 }
 
-/* GNOME: Title on Left, Controls on Right */
+/* GNOME 49: Title CENTERED */
 .window-title {
     flex: 1;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--color-header-text);
-    padding-left: var(--spacing-sm);
-    letter-spacing: 0.2px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
-/* Ubuntu Yaru Window Controls */
+/* GNOME 49 Window Controls — RIGHT side */
 .window-controls {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: var(--btn-gap);
     margin-left: auto;
-    /* Push to right */
-    padding-right: var(--spacing-sm);
 }
 
 .window-control {
-    width: 24px;
-    height: 24px;
+    width: var(--btn-size);
+    height: var(--btn-size);
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: var(--color-control-bg);
-    color: var(--color-control-text);
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 9px;
+    color: transparent;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: filter var(--transition-fast);
 }
 
-.window-control:hover {
-    filter: brightness(0.9);
+/* Show symbols on parent hover */
+.window-controls:hover .window-control {
+    color: rgba(0, 0, 0, 0.6);
 }
 
-/* Close button - Gray by default in Modern Yaru */
+/* Close button — solid red circle */
 .window-control.close {
-    background: var(--color-control-bg);
-    color: var(--color-control-text);
-    border-color: rgba(0, 0, 0, 0.1);
+    background: var(--btn-close-color);
 }
 
-/* Hover: Turns Orange */
+/* Close hover */
 .window-control.close:hover {
-    background: #e95420;
-    /* Ubuntu Orange */
-    color: #ffffff;
-    border-color: #c74316;
-    box-shadow: 0 2px 4px rgba(233, 84, 32, 0.3);
-    filter: none;
-    /* Reset brightness filter */
+    filter: brightness(0.85);
+}
+
+.window-control:active {
+    filter: brightness(0.7);
+    transform: scale(0.92);
 }
 
 /* Icons within controls */
 .window-control i {
     pointer-events: none;
-    /* Prevent icon from capturing clicks */
 }
 
 .close-btn-mobile {
@@ -289,8 +284,8 @@
     padding: var(--spacing-lg);
     overflow-y: auto;
     flex: 1;
-    background: var(--color-window-body-bg);
-    color: var(--color-window-body-text);
+    background: var(--window-body-bg);
+    color: var(--text-primary);
     /* Prevent pull-to-refresh on mobile within windows */
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
@@ -319,7 +314,7 @@
 }
 
 .window-body a:hover {
-    color: var(--color-primary);
+    color: var(--fedora-blue);
 }
 
 /* Window loading state */
@@ -338,7 +333,7 @@
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(233, 84, 32, 0.1) 50%,
+        rgba(53, 132, 228, 0.1) 50%,
         transparent 100%
     );
     animation: shimmerMove 1.2s ease-in-out;
@@ -348,14 +343,15 @@
    WINDOW CONTROLS - MINIMIZE & MAXIMIZE
    ============================================ */
 
-.window-control.minimize,
+.window-control.minimize {
+    background: var(--btn-min-color);
+}
+
 .window-control.maximize {
-    background: var(--color-control-bg);
-    color: var(--color-control-text);
-    border-color: rgba(0, 0, 0, 0.1);
+    background: var(--btn-max-color);
 }
 
 .window-control.minimize:hover,
 .window-control.maximize:hover {
-    background: rgba(0, 0, 0, 0.15);
+    filter: brightness(0.85);
 }

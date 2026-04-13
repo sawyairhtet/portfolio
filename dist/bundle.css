@@ -4,105 +4,218 @@
    ============================================ */
 
 /* === base/variables.css === */
-/* ============================================
-   CSS VARIABLES & THEMING - UBUNTU YARU
-   ============================================ */
+/* ── Fedora 43 / GNOME 49 / Adwaita Design Tokens ── */
 
 :root {
-    /* Primary Font - Ubuntu with fallbacks */
-    --font-system: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* ── Accent & Brand ── */
+  --fedora-blue:        #3584e4;
+  --fedora-blue-dark:   #1c6fcf;
+  --fedora-blue-light:  #62a0ea;
+  --fedora-blue-pale:   #dde8f8;
+  --fedora-red:         #e01b24;
+  --fedora-green:       #2ec27e;
+  --fedora-yellow:      #f5c211;
+  --fedora-purple:      #9141ac;
+  --fedora-teal:        #2190a4;
 
-    /* ========================================
-       LIGHT MODE (Default) - Clean & Modern
-       ======================================== */
-    --color-primary: #e95420;
-    /* Ubuntu Orange */
-    --color-bg-light: #f5f6f8;
-    /* Slightly darker light background for better contrast */
-    --color-bg-dark: #e8eaed;
-    --color-glass-light: rgba(240, 242, 245, 0.85);
-    --color-glass-dark: rgba(230, 232, 235, 0.9);
-    --color-text-light: #2d3748;
-    /* Softer dark text on light bg */
-    --color-text-dark: #374151;
-    --color-border: rgba(0, 0, 0, 0.12);
-    --color-card-bg: rgba(0, 0, 0, 0.04);
+  /* ── Light Mode Surfaces (Adwaita) ── */
+  --surface-0:          #ffffff;
+  --surface-1:          #f6f5f4;
+  --surface-2:          #edeceb;
+  --surface-3:          #deddda;
+  --surface-4:          #c0bfbc;
 
-    /* Light Mode Window Colors - Subtle Gray Tint */
-    --color-header-bg: rgba(245, 246, 248, 0.95);
-    --color-header-text: #2d3748;
-    --color-window-body-bg: rgba(250, 251, 252, 0.95);
-    --color-window-body-text: #2d3748;
-    /* Ubuntu Yaru Colors */
-    --color-close-bg: #e95420;
-    --color-close-text: #ffffff;
-    --color-control-bg: rgba(0, 0, 0, 0.06);
-    --color-control-text: #5e5e5e;
+  /* ── Light Mode Text ── */
+  --text-primary:       rgba(0, 0, 0, 0.87);
+  --text-secondary:     rgba(0, 0, 0, 0.55);
+  --text-disabled:      rgba(0, 0, 0, 0.38);
+  --text-on-accent:     #ffffff;
 
-    /* Light Mode Dock - Subtle frosted glass */
-    --color-dock-bg: rgba(255, 255, 255, 0.7);
-    --color-dock-item-bg: rgba(0, 0, 0, 0.04);
-    --color-dock-item-hover: rgba(233, 84, 32, 0.15);
-    --color-dock-text: #2d3748;
+  /* ── Light Mode UI ── */
+  --border-color:       rgba(0, 0, 0, 0.12);
+  --border-focus:       var(--fedora-blue);
+  --shadow-window:      0 4px 24px rgba(0, 0, 0, 0.22);
+  --shadow-popover:     0 2px 12px rgba(0, 0, 0, 0.18);
 
-    /* Light Mode Top Bar - Clean & Bright */
-    --color-topbar-bg: rgba(255, 255, 255, 0.95);
-    --color-topbar-text: #2d3748;
+  /* ── Typography ── */
+  --font-ui:   'Cantarell', 'Noto Sans', system-ui, sans-serif;
+  --font-mono: 'Source Code Pro', 'Fira Code', 'DejaVu Sans Mono', monospace;
+  --font-size-base: 11pt;
+  --font-size-sm:   9.75pt;
+  --font-size-lg:   13pt;
+  --font-size-xl:   15pt;
 
-    /* Spacing */
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
+  /* ── Window Chrome ── */
+  --window-header-height:  47px;
+  --window-border-radius:  12px;
+  --window-shadow:         var(--shadow-window);
+  --window-header-bg:      var(--surface-1);
+  --window-header-border:  var(--surface-3);
+  --window-body-bg:        var(--surface-0);
+  --btn-close-color:       var(--fedora-red);
+  --btn-min-color:         var(--fedora-yellow);
+  --btn-max-color:         var(--fedora-green);
+  --btn-size:              14px;
+  --btn-gap:               8px;
 
-    /* Border Radius - More Angular for GNOME */
-    --radius-sm: 6px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
+  /* ── Top Bar ── */
+  --topbar-height:         32px;
+  --topbar-bg:             rgba(36, 36, 50, 0.92);
+  --topbar-bg-light:       rgba(237, 236, 235, 0.94);
+  --topbar-blur:           blur(20px);
 
-    /* Shadows - Softer for light mode with slight color tint */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+  /* ── Dock (Dash-to-Dock style) ── */
+  --dock-bg:               rgba(30, 30, 46, 0.78);
+  --dock-blur:             blur(24px);
+  --dock-border-radius:    16px;
+  --dock-padding:          8px 6px;
+  --dock-icon-size:        48px;
+  --dock-gap:              4px;
+  --dock-border:           1px solid rgba(255, 255, 255, 0.08);
+  --dock-active-dot:       var(--fedora-blue);
+  --dock-hover-bg:         rgba(255, 255, 255, 0.1);
 
-    /* Glassmorphism - Enhanced for light mode */
-    --glass-blur: blur(24px);
-    --glass-saturation: saturate(180%);
+  /* ── Terminal ── */
+  --terminal-bg:           #1e1e2e;
+  --terminal-text:         #cdd6f4;
+  --terminal-prompt:       var(--fedora-blue);
+  --terminal-cursor:       var(--fedora-blue);
+  --terminal-selection:    rgba(53, 132, 228, 0.35);
+  --terminal-font-size:    13px;
 
-    /* Ubuntu Dock Width */
-    --dock-width: 60px;
+  /* ── Misc ── */
+  --border-radius-sm:   6px;
+  --border-radius-md:   8px;
+  --border-radius-lg:   12px;
+  --border-radius-xl:   16px;
+  --transition-fast:    0.12s ease;
+  --transition-base:    0.2s ease;
+  --transition-slow:    0.35s ease;
 
-    /* Light Theme Gradients - Warm Sunset Palette */
-    --gradient-wallpaper: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    --gradient-accent: linear-gradient(135deg, #e95420 0%, #ff6b6b 50%, #c74316 100%);
-    --gradient-btn: linear-gradient(135deg, #e95420 0%, #ff7a45 100%);
+  /* ── Legacy Aliases (map old variable names → new tokens) ──
+     These keep existing component CSS working during migration.
+     Remove each alias once the referencing file is updated. */
+  --font-system:            var(--font-ui);
+  --color-primary:          var(--fedora-blue);
+  --color-bg-light:         var(--surface-1);
+  --color-bg-dark:          var(--surface-2);
+  --color-glass-light:      rgba(246, 245, 244, 0.85);
+  --color-glass-dark:       rgba(237, 236, 235, 0.9);
+  --color-text-light:       var(--text-primary);
+  --color-text-dark:        var(--text-secondary);
+  --color-border:           var(--border-color);
+  --color-card-bg:          rgba(0, 0, 0, 0.04);
+  --color-header-bg:        var(--window-header-bg);
+  --color-header-text:      var(--text-primary);
+  --color-window-body-bg:   var(--window-body-bg);
+  --color-window-body-text: var(--text-primary);
+  --color-close-bg:         var(--fedora-red);
+  --color-close-text:       var(--text-on-accent);
+  --color-control-bg:       rgba(0, 0, 0, 0.06);
+  --color-control-text:     var(--text-secondary);
+  --color-dock-bg:          var(--dock-bg);
+  --color-dock-item-bg:     rgba(0, 0, 0, 0.04);
+  --color-dock-item-hover:  rgba(53, 132, 228, 0.15);
+  --color-dock-text:        var(--text-primary);
+  --color-topbar-bg:        var(--topbar-bg);
+  --color-topbar-text:      var(--text-on-accent);
 
-    /* Animation Timing */
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.25s ease;
-    --transition-smooth: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Legacy spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
 
-    /* Z-Index Layer Map */
-    --z-wallpaper: 0;
-    --z-desktop-icons: 10;
-    --z-window: 100;
-    --z-dock: 1000;
-    --z-topbar: 1100;
-    --z-modal: 2000;
-    --z-context-menu: 9999;
-    --z-tooltip: 10000;
-    --z-skip-link: 10001;
+  /* Legacy radii */
+  --radius-sm: var(--border-radius-sm);
+  --radius-md: var(--border-radius-md);
+  --radius-lg: var(--border-radius-lg);
+  --radius-xl: var(--border-radius-xl);
+
+  /* Legacy shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+
+  /* Legacy glass */
+  --glass-blur:       blur(24px);
+  --glass-saturation: saturate(180%);
+
+  /* Legacy dock width */
+  --dock-width: 60px;
+
+  /* Legacy gradients — now Fedora blue-based */
+  --gradient-wallpaper: linear-gradient(135deg, #3584e4 0%, #9141ac 50%, #62a0ea 100%);
+  --gradient-accent:    linear-gradient(135deg, #3584e4 0%, #62a0ea 50%, #1c6fcf 100%);
+  --gradient-btn:       linear-gradient(135deg, #3584e4 0%, #62a0ea 100%);
+
+  /* Legacy transitions */
+  --transition-normal: var(--transition-base);
+  --transition-smooth: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-Index Layer Map */
+  --z-wallpaper: 0;
+  --z-desktop-icons: 10;
+  --z-window: 100;
+  --z-dock: 1000;
+  --z-topbar: 1100;
+  --z-modal: 2000;
+  --z-context-menu: 9999;
+  --z-tooltip: 10000;
+  --z-skip-link: 10001;
+}
+
+/* ── Dark Mode (Adwaita Dark) ── */
+[data-theme="dark"], .dark {
+  --surface-0:          #1e1e2e;
+  --surface-1:          #242432;
+  --surface-2:          #2d2d3f;
+  --surface-3:          #3d3d50;
+  --surface-4:          #585869;
+
+  --text-primary:       rgba(255, 255, 255, 0.87);
+  --text-secondary:     rgba(255, 255, 255, 0.55);
+  --text-disabled:      rgba(255, 255, 255, 0.38);
+
+  --border-color:       rgba(255, 255, 255, 0.10);
+  --window-header-bg:   #2d2d3f;
+  --window-header-border: rgba(255, 255, 255, 0.08);
+  --window-body-bg:     #1e1e2e;
+  --shadow-window:      0 4px 32px rgba(0, 0, 0, 0.5);
+
+  /* Legacy dark mode aliases */
+  --color-glass-light:      rgba(36, 36, 50, 0.85);
+  --color-glass-dark:       rgba(45, 45, 63, 0.9);
+  --color-header-bg:        var(--window-header-bg);
+  --color-header-text:      var(--text-primary);
+  --color-window-body-bg:   var(--window-body-bg);
+  --color-window-body-text: var(--text-primary);
+  --color-dock-bg:          rgba(30, 30, 46, 0.88);
+  --color-dock-item-hover:  rgba(53, 132, 228, 0.2);
+  --color-dock-text:        var(--text-primary);
+  --color-topbar-bg:        rgba(30, 30, 46, 0.95);
+  --color-topbar-text:      var(--text-primary);
+  --color-border:           var(--border-color);
+  --color-card-bg:          rgba(255, 255, 255, 0.04);
 }
 
 
 /* === base/typography.css === */
 /* ============================================
-   TYPOGRAPHY
+   TYPOGRAPHY — Fedora 43 / GNOME 49 / Adwaita
    ============================================ */
 
-/* Note: All fonts (Ubuntu, Ubuntu Mono, Indie Flower) are loaded in index.html */
+body {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .terminal, .terminal * {
+  font-family: var(--font-mono);
+}
 
 
 /* === base/reset.css === */
@@ -132,21 +245,21 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(233, 84, 32, 0.5);
+    background: rgba(53, 132, 228, 0.5);
     border-radius: 5px;
     border: 2px solid transparent;
     background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(233, 84, 32, 0.7);
+    background: rgba(53, 132, 228, 0.7);
     background-clip: padding-box;
 }
 
 /* Firefox Scrollbars */
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(233, 84, 32, 0.5) rgba(0, 0, 0, 0.1);
+    scrollbar-color: rgba(53, 132, 228, 0.5) rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -167,9 +280,9 @@ body {
     min-height: 100vh; /* Changed from height to prevent iOS address bar jank (#32) */
     min-height: 100dvh; /* Dynamic viewport height for mobile */
     width: 100vw;
-    /* Custom Ubuntu-style cursor */
+    /* Custom Fedora-style cursor */
     cursor:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23E95420' d='M5.5 3.21V20.8l5.7-5.69h8.3L5.5 3.21z'/%3E%3Cpath fill='%23fff' d='M6.5 5.83v11.99l3.96-3.96h5.77L6.5 5.83z'/%3E%3C/svg%3E")
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%233584e4' d='M5.5 3.21V20.8l5.7-5.69h8.3L5.5 3.21z'/%3E%3Cpath fill='%23fff' d='M6.5 5.83v11.99l3.96-3.96h5.77L6.5 5.83z'/%3E%3C/svg%3E")
             0 0,
         auto;
     /* Prevent pull-to-refresh on the main body */
@@ -266,13 +379,13 @@ body {
     0%,
     100% {
         box-shadow:
-            0 0 20px rgba(233, 84, 32, 0.3),
-            0 0 40px rgba(233, 84, 32, 0.1);
+            0 0 20px rgba(53, 132, 228, 0.3),
+            0 0 40px rgba(53, 132, 228, 0.1);
     }
     50% {
         box-shadow:
-            0 0 30px rgba(233, 84, 32, 0.5),
-            0 0 60px rgba(233, 84, 32, 0.2);
+            0 0 30px rgba(53, 132, 228, 0.5),
+            0 0 60px rgba(53, 132, 228, 0.2);
     }
 }
 
@@ -460,7 +573,7 @@ body {
 .main-content {
     position: relative;
     height: 100vh;
-    padding-top: 28px;
+    padding-top: var(--topbar-height);
     padding-left: var(--dock-width);
 }
 
@@ -471,7 +584,10 @@ body {
     left: -20px;
     right: -20px;
     bottom: -20px;
-    background: url('../images/noble-numbat.jpg') center/cover no-repeat;
+    /* Fedora 43 default: image with gradient fallback */
+    background:
+        url('../images/wallpapers/fedora-43-default.jpg') center/cover no-repeat,
+        linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%);
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
@@ -489,7 +605,7 @@ body {
     background-image:
         radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
         radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
-        radial-gradient(circle at 60% 30%, rgba(233, 84, 32, 0.05) 0%, transparent 30%);
+        radial-gradient(circle at 60% 30%, rgba(53, 132, 228, 0.05) 0%, transparent 30%);
     pointer-events: none;
 }
 
@@ -513,18 +629,19 @@ body {
 
 /* Personal Brand */
 .personal-brand {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--color-topbar-text);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-on-accent);
     display: flex;
     align-items: center;
     line-height: 1;
+    letter-spacing: 0.5px;
 }
 
 
 /* === components/top-bar.css === */
 /* ============================================
-   TOP BAR (GNOME Panel)
+   TOP BAR — GNOME 49 Panel
    ============================================ */
 
 .top-bar {
@@ -532,56 +649,91 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    height: 28px;
+    height: var(--topbar-height);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 var(--spacing-md);
+    padding: 0 8px;
     font-size: 13px;
     font-weight: 500;
     z-index: var(--z-topbar);
-    background: var(--color-topbar-bg);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: var(--shadow-sm);
+    background: var(--topbar-bg);
+    backdrop-filter: var(--topbar-blur);
+    -webkit-backdrop-filter: var(--topbar-blur);
+    color: var(--text-on-accent);
 }
 
-.menu-bar-left,
-.menu-bar-center,
-.menu-bar-right {
+/* Left section: Activities + App name */
+.menu-bar-left {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: 8px;
+    flex: 1;
 }
 
+/* Center section: Clock — perfectly centered */
 .menu-bar-center {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 13px;
 }
 
+/* Right section: System tray */
+.menu-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+
+/* Personal brand label */
+.personal-brand {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    padding: 0 4px;
+}
+
+/* Activities button — GNOME pill hover */
 .activities-btn {
-    color: var(--color-topbar-text);
-    font-size: 14px;
+    color: var(--text-on-accent);
+    font-size: 13px;
     font-weight: 500;
-    transition: background 0.2s;
-    font-family: var(--font-system);
+    font-family: var(--font-ui);
+    padding: 4px 10px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.activities-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
 }
 
 /* Pill Styling for Top Bar Items */
 .pill {
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 100px;
-    padding: 4px 14px;
-    margin: 4px 0;
+    background: transparent;
+    border-radius: var(--border-radius-sm);
+    padding: 4px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: background 0.2s;
+    transition: background var(--transition-fast);
 }
 
 .pill:hover {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Status menu (system tray icons) */
+.status-menu {
+    font-size: 12px;
+    gap: 10px;
+    cursor: pointer;
 }
 
 .theme-toggle-btn i {
@@ -594,10 +746,10 @@ body {
     bottom: -36px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--color-surface);
-    color: var(--color-text);
+    background: var(--surface-2);
+    color: var(--text-primary);
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
     font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
@@ -606,7 +758,7 @@ body {
     transition:
         opacity 0.15s ease,
         visibility 0.15s ease;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-popover);
     pointer-events: none;
     z-index: 10000;
 }
@@ -637,125 +789,115 @@ body {
 
 /* === components/dock.css === */
 /* ============================================
-   DOCK - Ubuntu Vertical Left Dock
+   DOCK — Dash-to-Dock / GNOME 49
    ============================================ */
 
 .dock {
     position: fixed;
+    left: 8px;
     top: 50%;
     transform: translateY(-50%);
-    left: var(--spacing-sm);
     width: var(--dock-width);
-    height: auto;
-    min-height: 400px;
-    /* Ensure some height */
+    background: var(--dock-bg);
+    backdrop-filter: var(--dock-blur);
+    -webkit-backdrop-filter: var(--dock-blur);
+    border-radius: var(--dock-border-radius);
+    padding: var(--dock-padding);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-md);
-    background: var(--color-dock-bg);
-    backdrop-filter: var(--glass-blur);
-    padding: var(--spacing-md) 0;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    gap: var(--dock-gap);
+    border: var(--dock-border);
     z-index: var(--z-dock);
-    box-shadow: var(--shadow-lg);
-    /* Remove full height border */
-    bottom: auto;
+    box-shadow: var(--shadow-popover);
 }
 
 .dock-item {
-    width: 48px;
-    height: 48px;
+    width: var(--dock-icon-size);
+    height: var(--dock-icon-size);
+    border-radius: var(--border-radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
-    transition: all var(--transition-smooth);
-    border-radius: var(--radius-sm);
-    color: #ffffff;
     position: relative;
-    border: 1px solid transparent;
-}
-
-/* Colorful dock icon gradients - Light Mode Defaults */
-.dock-item[data-app='about'] {
-    background: linear-gradient(135deg, #ff6b3d 0%, #e95420 100%);
-}
-
-.dock-item[data-app='projects'] {
-    background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
-}
-
-.dock-item[data-app='contact'] {
-    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
-}
-
-.dock-item[data-app='terminal'] {
-    background: linear-gradient(135deg, #2aa198 0%, #1a7a72 100%);
-}
-
-.dock-item[data-app='settings'] {
-    background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
+    color: #ffffff;
+    transition: transform var(--transition-fast);
 }
 
 .dock-item:hover {
-    /* background: var(--color-dock-item-hover);Removed to fix transparency issue */
-    transform: scale(1.15) translateX(4px);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 16px rgba(233, 84, 32, 0.3);
+    transform: scale(1.12);
+    background: var(--dock-hover-bg);
 }
 
 .dock-item:active {
-    transform: scale(0.95);
+    transform: scale(0.96);
 }
 
-/* Active indicator for dock items */
+/* Adwaita-style dock icon backgrounds */
+.dock-item[data-app='about'] {
+    background: linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%);
+}
+
+.dock-item[data-app='projects'] {
+    background: linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%);
+}
+
+.dock-item[data-app='contact'] {
+    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
+}
+
+.dock-item[data-app='terminal'] {
+    background: linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%);
+}
+
+.dock-item[data-app='settings'] {
+    background: linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%);
+}
+
+/* Blue dot indicator below active app */
 .dock-item.active::after {
     content: '';
     position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 20px;
-    background: #ffffff;
-    border-radius: 0 2px 2px 0;
-    box-shadow: 1px 0 4px rgba(0, 0, 0, 0.3);
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--dock-active-dot);
 }
 
 .dock-separator {
     width: 80%;
     height: 1px;
-    background: var(--color-border);
-    margin: var(--spacing-sm) 0;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 4px 0;
 }
 
 /* ============================================
-   DOCK TOOLTIPS - GNOME Style
+   DOCK TOOLTIPS — GNOME 49 Style
    ============================================ */
 
 .dock-tooltip {
     position: absolute;
-    left: calc(100% + 12px);
+    left: calc(100% + 10px);
     top: 50%;
     transform: translateY(-50%);
-    background: var(--color-window-body-bg);
-    color: var(--color-window-body-text);
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
+    background: rgba(30, 30, 46, 0.92);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 4px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-popover);
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
+        opacity 0.15s ease,
+        visibility 0.15s ease;
     z-index: 1001;
     pointer-events: none;
 }
@@ -767,8 +909,8 @@ body {
     right: 100%;
     top: 50%;
     transform: translateY(-50%);
-    border: 6px solid transparent;
-    border-right-color: var(--color-window-body-bg);
+    border: 5px solid transparent;
+    border-right-color: rgba(30, 30, 46, 0.92);
 }
 
 .dock-item:hover .dock-tooltip {
@@ -779,19 +921,19 @@ body {
 
 /* === components/window.css === */
 /* ============================================
-   WINDOWS - GNOME Style
+   WINDOWS - GNOME 49 / Adwaita Style
    ============================================ */
 
 .window {
     position: absolute;
-    background: var(--color-glass-light);
+    background: var(--window-body-bg);
     backdrop-filter: var(--glass-blur) var(--glass-saturation)
         var(--glass-brightness, brightness(1));
     -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation)
         var(--glass-brightness, brightness(1));
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    box-shadow: var(--shadow-lg), var(--glass-inner-glow, none);
-    border: 1px solid var(--color-border);
+    border-radius: var(--window-border-radius);
+    box-shadow: var(--window-shadow);
+    border: 1px solid var(--border-color);
     display: none;
     flex-direction: column;
     width: 600px;
@@ -799,6 +941,7 @@ body {
     max-width: 650px;
     max-height: 80vh;
     z-index: var(--z-window);
+    overflow: hidden;
     transition:
         box-shadow 0.2s ease,
         transform 0.2s ease;
@@ -810,8 +953,8 @@ body {
 /* Subtle glow on focused/topmost window */
 .window:focus-within {
     box-shadow:
-        var(--shadow-lg),
-        0 0 0 2px rgba(233, 84, 32, 0.15);
+        var(--window-shadow),
+        0 0 0 2px rgba(53, 132, 228, 0.15);
 }
 
 /* Window animation states */
@@ -913,28 +1056,28 @@ body {
    ============================================ */
 
 .window.snapped-left {
-    top: 28px;
+    top: var(--topbar-height);
     left: var(--dock-width);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .window.snapped-right {
-    top: 28px;
+    top: var(--topbar-height);
     left: calc(50vw + var(--dock-width) / 2);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .window.snapped-maximized {
-    top: 28px;
+    top: var(--topbar-height);
     left: var(--dock-width);
     width: calc(100vw - var(--dock-width));
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -942,9 +1085,9 @@ body {
 /* Snap Preview Overlay */
 .snap-preview {
     position: fixed;
-    top: 28px;
-    background: rgba(233, 84, 32, 0.15);
-    border: 2px dashed var(--color-primary);
+    top: var(--topbar-height);
+    background: rgba(53, 132, 228, 0.15);
+    border: 2px dashed var(--fedora-blue);
     border-radius: var(--radius-md);
     z-index: 99;
     pointer-events: none;
@@ -961,100 +1104,94 @@ body {
 .snap-preview.snap-left {
     left: var(--dock-width);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
 }
 
 .snap-preview.snap-right {
     left: calc(50vw + var(--dock-width) / 2);
     width: calc(50vw - var(--dock-width) / 2);
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
 }
 
 .snap-preview.snap-maximize {
     left: var(--dock-width);
     width: calc(100vw - var(--dock-width));
-    height: calc(100vh - 28px);
+    height: calc(100vh - var(--topbar-height));
 }
 
 /* ============================================
-   WINDOW HEADER
+   WINDOW HEADER — GNOME 49
    ============================================ */
 
 .window-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--color-header-bg);
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    height: var(--window-header-height);
+    padding: 0 14px;
+    background: var(--window-header-bg);
+    border-bottom: 1px solid var(--window-header-border);
     cursor: grab;
+    user-select: none;
 }
 
 .window-header:active {
     cursor: grabbing;
 }
 
-/* GNOME: Title on Left, Controls on Right */
+/* GNOME 49: Title CENTERED */
 .window-title {
     flex: 1;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--color-header-text);
-    padding-left: var(--spacing-sm);
-    letter-spacing: 0.2px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
-/* Ubuntu Yaru Window Controls */
+/* GNOME 49 Window Controls — RIGHT side */
 .window-controls {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: var(--btn-gap);
     margin-left: auto;
-    /* Push to right */
-    padding-right: var(--spacing-sm);
 }
 
 .window-control {
-    width: 24px;
-    height: 24px;
+    width: var(--btn-size);
+    height: var(--btn-size);
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: var(--color-control-bg);
-    color: var(--color-control-text);
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 9px;
+    color: transparent;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: filter var(--transition-fast);
 }
 
-.window-control:hover {
-    filter: brightness(0.9);
+/* Show symbols on parent hover */
+.window-controls:hover .window-control {
+    color: rgba(0, 0, 0, 0.6);
 }
 
-/* Close button - Gray by default in Modern Yaru */
+/* Close button — solid red circle */
 .window-control.close {
-    background: var(--color-control-bg);
-    color: var(--color-control-text);
-    border-color: rgba(0, 0, 0, 0.1);
+    background: var(--btn-close-color);
 }
 
-/* Hover: Turns Orange */
+/* Close hover */
 .window-control.close:hover {
-    background: #e95420;
-    /* Ubuntu Orange */
-    color: #ffffff;
-    border-color: #c74316;
-    box-shadow: 0 2px 4px rgba(233, 84, 32, 0.3);
-    filter: none;
-    /* Reset brightness filter */
+    filter: brightness(0.85);
+}
+
+.window-control:active {
+    filter: brightness(0.7);
+    transform: scale(0.92);
 }
 
 /* Icons within controls */
 .window-control i {
     pointer-events: none;
-    /* Prevent icon from capturing clicks */
 }
 
 .close-btn-mobile {
@@ -1069,8 +1206,8 @@ body {
     padding: var(--spacing-lg);
     overflow-y: auto;
     flex: 1;
-    background: var(--color-window-body-bg);
-    color: var(--color-window-body-text);
+    background: var(--window-body-bg);
+    color: var(--text-primary);
     /* Prevent pull-to-refresh on mobile within windows */
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
@@ -1099,7 +1236,7 @@ body {
 }
 
 .window-body a:hover {
-    color: var(--color-primary);
+    color: var(--fedora-blue);
 }
 
 /* Window loading state */
@@ -1118,7 +1255,7 @@ body {
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(233, 84, 32, 0.1) 50%,
+        rgba(53, 132, 228, 0.1) 50%,
         transparent 100%
     );
     animation: shimmerMove 1.2s ease-in-out;
@@ -1128,16 +1265,17 @@ body {
    WINDOW CONTROLS - MINIMIZE & MAXIMIZE
    ============================================ */
 
-.window-control.minimize,
+.window-control.minimize {
+    background: var(--btn-min-color);
+}
+
 .window-control.maximize {
-    background: var(--color-control-bg);
-    color: var(--color-control-text);
-    border-color: rgba(0, 0, 0, 0.1);
+    background: var(--btn-max-color);
 }
 
 .window-control.minimize:hover,
 .window-control.maximize:hover {
-    background: rgba(0, 0, 0, 0.15);
+    filter: brightness(0.85);
 }
 
 
@@ -1213,7 +1351,7 @@ body {
 
 .app-icon:hover {
     transform: scale(1.12) translateY(-4px);
-    filter: drop-shadow(0 8px 16px rgba(233, 84, 32, 0.3));
+    filter: drop-shadow(0 8px 16px rgba(53, 132, 228, 0.3));
 }
 
 .app-icon:active {
@@ -1223,9 +1361,9 @@ body {
 .app-icon-wrapper {
     width: 64px;
     height: 64px;
-    background: var(--color-glass-light);
+    background: var(--surface-2);
     backdrop-filter: var(--glass-blur) var(--glass-saturation);
-    border-radius: var(--radius-md);
+    border-radius: var(--border-radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1242,10 +1380,10 @@ body {
 }
 
 .app-icon:hover .app-icon-wrapper {
-    border-color: var(--color-border-glow);
+    border-color: rgba(53, 132, 228, 0.3);
     box-shadow:
         var(--shadow-lg),
-        0 0 12px rgba(233, 84, 32, 0.25);
+        0 0 12px rgba(53, 132, 228, 0.25);
 }
 
 /* App Icon Gradients - Vibrant Light Mode */
@@ -1255,32 +1393,33 @@ body {
         0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
+/* Adwaita-style icon backgrounds */
 .app-icon[data-app='about'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #ff6b3d 0%, #e95420 100%);
+    background: linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%);
 }
 
 .app-icon[data-app='skills'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
+    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
 }
 
 .app-icon[data-app='projects'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
+    background: linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%);
 }
 
 .app-icon[data-app='contact'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
+    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
 }
 
 .app-icon[data-app='links'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #ff8a5c 0%, #e95420 100%);
+    background: linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-teal) 100%);
 }
 
 .app-icon[data-app='terminal'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #2aa198 0%, #1a7a72 100%);
+    background: linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%);
 }
 
 .app-icon[data-app='settings'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
+    background: linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%);
 }
 
 .app-label {
@@ -1662,7 +1801,7 @@ body {
     transform: translateY(-2px);
     box-shadow:
         var(--shadow-lg),
-        0 0 16px rgba(233, 84, 32, 0.3);
+        0 0 16px rgba(53, 132, 228, 0.3);
     color: #ffffff;
 }
 
@@ -1682,7 +1821,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
+    background: linear-gradient(135deg, var(--fedora-blue) 0%, var(--fedora-blue-dark) 100%);
     color: #fff;
     padding: 12px 24px;
     border-radius: 8px;
@@ -1695,7 +1834,7 @@ body {
 
 .window-body .resume-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(233, 84, 32, 0.3);
+    box-shadow: 0 8px 20px rgba(53, 132, 228, 0.3);
     color: #fff;
 }
 
@@ -1706,7 +1845,7 @@ body {
 
 /* Resume Status Message */
 .resume-status {
-    background: linear-gradient(135deg, rgba(233, 84, 32, 0.1) 0%, rgba(119, 33, 111, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(53, 132, 228, 0.1) 0%, rgba(145, 65, 172, 0.1) 100%);
     border: 1px dashed var(--color-primary);
     border-radius: var(--radius-sm);
     padding: var(--spacing-md);
@@ -1795,7 +1934,7 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(233, 84, 32, 0.15);
+    box-shadow: 0 0 0 3px rgba(53, 132, 228, 0.15);
 }
 
 .contact-submit-btn {
@@ -1818,7 +1957,7 @@ body {
 
 .contact-submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg), 0 0 16px rgba(233, 84, 32, 0.3);
+    box-shadow: var(--shadow-lg), 0 0 16px rgba(53, 132, 228, 0.3);
 }
 
 .contact-submit-btn:active {
@@ -1885,7 +2024,7 @@ body {
 
 /* Skill icon gradient colors */
 .skill-icon.languages {
-    background: linear-gradient(135deg, #e95420 0%, #c74316 100%);
+    background: linear-gradient(135deg, var(--fedora-blue) 0%, var(--fedora-blue-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1894,7 +2033,7 @@ body {
     color: #ff7a45;
 }
 .skill-icon.backend {
-    color: #77216f;
+    color: var(--fedora-purple);
 }
 .skill-icon.vr {
     color: #5e2750;
@@ -2096,15 +2235,15 @@ a.project-card {
 .project-card.featured-project {
     position: relative;
     grid-column: 1 / -1;
-    background: linear-gradient(135deg, rgba(233, 84, 32, 0.15) 0%, rgba(119, 33, 111, 0.15) 100%);
-    border: 2px solid var(--color-primary);
+    background: linear-gradient(135deg, rgba(53, 132, 228, 0.15) 0%, rgba(145, 65, 172, 0.15) 100%);
+    border: 2px solid var(--fedora-blue);
     text-decoration: none;
     color: inherit;
     display: block;
 }
 
 .project-card.featured-project:hover {
-    background: linear-gradient(135deg, rgba(233, 84, 32, 0.25) 0%, rgba(119, 33, 111, 0.25) 100%);
+    background: linear-gradient(135deg, rgba(53, 132, 228, 0.25) 0%, rgba(145, 65, 172, 0.25) 100%);
     transform: translateY(-8px) scale(1.01);
 }
 
@@ -2403,7 +2542,7 @@ a.project-card {
 
 .nav-hint-dismiss:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(233, 84, 32, 0.4);
+    box-shadow: 0 4px 12px rgba(53, 132, 228, 0.4);
 }
 
 /* ============================================
@@ -2747,7 +2886,7 @@ a.project-card {
 }
 
 .dialog-input:focus {
-    border-color: var(--color-primary, #e95420);
+    border-color: var(--fedora-blue);
 }
 
 .dialog-footer {
@@ -2779,7 +2918,7 @@ a.project-card {
 }
 
 .dialog-confirm {
-    background: var(--color-primary, #e95420);
+    background: var(--fedora-blue);
     color: #fff;
 }
 
@@ -2924,7 +3063,7 @@ a.project-card {
 }
 
 .command-palette-input-wrap i {
-    color: var(--color-primary, #e95420);
+    color: var(--fedora-blue);
     font-size: 16px;
     opacity: 0.6;
 }
@@ -2965,13 +3104,13 @@ a.project-card {
 }
 
 .command-palette-item.selected {
-    background: rgba(233, 84, 32, 0.1);
+    background: rgba(53, 132, 228, 0.1);
 }
 
 .command-palette-item i {
     width: 20px;
     text-align: center;
-    color: var(--color-primary, #e95420);
+    color: var(--fedora-blue);
     font-size: 14px;
 }
 
@@ -3090,7 +3229,7 @@ a.project-card {
 }
 
 .achievement-item.unlocked {
-    background: rgba(233, 84, 32, 0.08);
+    background: rgba(53, 132, 228, 0.08);
 }
 
 .achievement-icon {
@@ -3116,7 +3255,7 @@ a.project-card {
     width: calc(100% - 32px);
     margin: 8px 16px 16px;
     padding: 10px;
-    background: var(--gradient-btn, linear-gradient(135deg, #e95420, #ff7a45));
+    background: var(--gradient-btn);
     color: #fff;
     border: none;
     border-radius: var(--radius-sm, 6px);
@@ -3143,6 +3282,1167 @@ a.project-card {
     100% {
         transform: translateY(100vh) rotate(720deg);
         opacity: 0;
+    }
+}
+
+
+/* === components/focus-mode.css === */
+/* ============================================
+   FOCUS MODE - GNOME 49 Pomodoro Timer
+   ============================================ */
+
+.focus-mode-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+}
+
+/* Timer Section */
+.focus-timer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.focus-mode-label {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--fedora-blue);
+}
+
+/* Timer Ring */
+.focus-timer-ring {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.focus-progress-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.focus-progress-bg {
+    fill: none;
+    stroke: var(--surface-3);
+    stroke-width: 6;
+}
+
+.focus-progress-fill {
+    fill: none;
+    stroke: var(--fedora-blue);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.focus-timer-display {
+    font-size: 48px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    z-index: 1;
+}
+
+/* Presets */
+.focus-presets {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.focus-preset-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.focus-preset-btn:hover {
+    border-color: var(--fedora-blue);
+    background: var(--surface-2);
+}
+
+.focus-preset-btn.active {
+    background: var(--fedora-blue);
+    color: var(--text-on-accent);
+    border-color: var(--fedora-blue);
+}
+
+/* Controls */
+.focus-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.focus-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+}
+
+.focus-btn:active {
+    transform: scale(0.96);
+}
+
+.focus-btn-primary {
+    background: var(--fedora-blue);
+    color: var(--text-on-accent);
+    box-shadow: 0 2px 8px rgba(53, 132, 228, 0.3);
+}
+
+.focus-btn-primary:hover {
+    box-shadow: 0 4px 16px rgba(53, 132, 228, 0.4);
+}
+
+.focus-btn-secondary {
+    background: var(--surface-3);
+    color: var(--text-primary);
+}
+
+.focus-btn-secondary:hover {
+    background: var(--surface-4);
+}
+
+.focus-btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.focus-btn-ghost:hover {
+    background: var(--surface-1);
+    color: var(--text-primary);
+}
+
+/* Stats */
+.focus-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--surface-1);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.focus-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.focus-stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--fedora-blue);
+    font-family: var(--font-mono);
+}
+
+.focus-stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Dim effect on other windows during focus */
+.window.focus-dimmed {
+    opacity: 0.3;
+    filter: blur(2px);
+    pointer-events: none;
+    transition: opacity var(--transition-slow), filter var(--transition-slow);
+}
+
+/* Top bar Focus Mode label */
+.topbar-focus-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    background: rgba(53, 132, 228, 0.2);
+    color: var(--fedora-blue-light);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: var(--spacing-sm);
+    animation: focusPulse 2s ease-in-out infinite;
+}
+
+@keyframes focusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .focus-progress-fill {
+        transition: none;
+    }
+    .topbar-focus-label {
+        animation: none;
+    }
+    .window.focus-dimmed {
+        transition: none;
+    }
+}
+
+
+/* === components/lock-screen.css === */
+/* ============================================
+   LOCK SCREEN - GNOME 49
+   ============================================ */
+
+.lock-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(30, 30, 46, 0.85);
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    cursor: pointer;
+}
+
+.lock-screen.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lock-screen-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+    color: #ffffff;
+    user-select: none;
+}
+
+/* Clock */
+.lock-clock {
+    text-align: center;
+}
+
+.lock-time {
+    font-size: 80px;
+    font-weight: 700;
+    font-family: var(--font-ui);
+    letter-spacing: -2px;
+    line-height: 1;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.lock-date {
+    font-size: 20px;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-top: var(--spacing-sm);
+}
+
+/* Media Card */
+.lock-media-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(20px);
+    min-width: 300px;
+}
+
+.lock-media-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--fedora-blue) 0%, var(--fedora-purple) 100%);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.lock-media-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.lock-media-title {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lock-media-artist {
+    font-size: 12px;
+    opacity: 0.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lock-media-controls {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.lock-media-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: background var(--transition-fast);
+}
+
+.lock-media-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lock-media-play {
+    width: 36px;
+    height: 36px;
+    background: var(--fedora-blue);
+    font-size: 14px;
+}
+
+.lock-media-play:hover {
+    background: var(--fedora-blue-dark);
+}
+
+/* Unlock Hint */
+.lock-unlock-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 14px;
+    opacity: 0.5;
+    margin-top: var(--spacing-lg);
+    animation: lockHintPulse 3s ease-in-out infinite;
+}
+
+.lock-unlock-hint i {
+    font-size: 16px;
+}
+
+@keyframes lockHintPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lock-screen {
+        transition: none;
+    }
+    .lock-unlock-hint {
+        animation: none;
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+    .lock-time {
+        font-size: 56px;
+    }
+    .lock-date {
+        font-size: 16px;
+    }
+    .lock-media-card {
+        min-width: unset;
+        max-width: 90vw;
+    }
+}
+
+
+/* === components/settings.css === */
+/* ============================================
+   SETTINGS - GNOME 49 Two-Panel Layout
+   ============================================ */
+
+/* Two-panel layout */
+.settings-body {
+    display: flex !important;
+    flex-direction: row !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.settings-sidebar {
+    width: 200px;
+    min-width: 200px;
+    background: var(--surface-1);
+    border-right: 1px solid var(--border-color);
+    padding: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+}
+
+.settings-nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 10px 14px;
+    border: none;
+    border-radius: var(--border-radius-md);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.settings-nav-item:hover {
+    background: var(--surface-2);
+    color: var(--text-primary);
+}
+
+.settings-nav-item.active {
+    background: var(--fedora-blue);
+    color: var(--text-on-accent);
+}
+
+.settings-nav-item i {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Content area */
+.settings-content {
+    flex: 1;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+}
+
+.settings-panel {
+    display: none;
+}
+
+.settings-panel.active {
+    display: block;
+}
+
+.settings-panel h2 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+/* Card sections (GNOME 49 card style) */
+.settings-card {
+    background: var(--surface-0);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.settings-card h3 {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Settings row */
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+
+.settings-row span {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.settings-row i {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Accent color swatches */
+.accent-color-options {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.accent-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    position: relative;
+}
+
+.accent-swatch:hover {
+    transform: scale(1.15);
+}
+
+.accent-swatch.active {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 2px var(--surface-0), 0 0 0 4px currentColor;
+}
+
+.accent-swatch.active::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 12px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Wallpaper grid in settings */
+.wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.wallpaper-grid .wallpaper-option {
+    width: 100%;
+    height: 56px;
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.wallpaper-grid .wallpaper-option:hover {
+    transform: scale(1.05);
+    border-color: var(--fedora-blue);
+}
+
+.wallpaper-grid .wallpaper-option.active {
+    border-color: var(--fedora-blue);
+    box-shadow: 0 0 0 2px var(--fedora-blue);
+}
+
+/* Volume slider */
+.settings-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: var(--surface-3);
+    border-radius: 3px;
+    outline: none;
+}
+
+.settings-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--fedora-blue);
+    cursor: pointer;
+    border: 2px solid var(--surface-0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: transform var(--transition-fast);
+}
+
+.settings-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.settings-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--fedora-blue);
+    cursor: pointer;
+    border: 2px solid var(--surface-0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* About system card */
+.about-system-card {
+    text-align: center;
+}
+
+.about-system-logo {
+    font-size: 64px;
+    color: var(--fedora-blue);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-system-card h3 {
+    text-transform: none;
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.about-system-info {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.about-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.about-info-row:last-child {
+    border-bottom: none;
+}
+
+.about-info-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.about-info-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Toggle switch styling (shared) */
+.toggle-switch {
+    width: 42px;
+    height: 24px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--surface-4);
+    border-radius: 12px;
+    position: relative;
+    outline: none;
+    border: none;
+    transition: background var(--transition-fast);
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--surface-0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform var(--transition-fast);
+}
+
+.toggle-switch:checked {
+    background: var(--fedora-blue);
+}
+
+.toggle-switch:checked::after {
+    transform: translateX(18px);
+}
+
+/* Responsive: stack sidebar on small screens */
+@media (max-width: 600px) {
+    .settings-body {
+        flex-direction: column !important;
+    }
+    .settings-sidebar {
+        width: 100%;
+        min-width: unset;
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        overflow-x: auto;
+    }
+    .settings-nav-item {
+        white-space: nowrap;
+    }
+}
+
+
+/* === components/screenshot-tool.css === */
+/* ============================================
+   SCREENSHOT TOOL - GNOME 49 Floating Toolbar
+   ============================================ */
+
+.screenshot-toolbar {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 8px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    box-shadow: var(--shadow-window);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
+}
+
+.screenshot-toolbar.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.screenshot-modes {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    background: var(--surface-1);
+    border-radius: 20px;
+}
+
+.screenshot-mode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 18px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.screenshot-mode-btn:hover {
+    background: var(--surface-3);
+    color: var(--text-primary);
+}
+
+.screenshot-mode-btn.active {
+    background: var(--fedora-blue);
+    color: var(--text-on-accent);
+}
+
+.screenshot-mode-btn i {
+    font-size: 14px;
+}
+
+.screenshot-capture-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--fedora-blue);
+    color: var(--text-on-accent);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.screenshot-capture-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 12px rgba(53, 132, 228, 0.4);
+}
+
+.screenshot-capture-btn:active {
+    transform: scale(0.95);
+}
+
+.screenshot-close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.screenshot-close-btn:hover {
+    background: rgba(224, 27, 36, 0.15);
+    color: var(--fedora-red);
+}
+
+/* Camera flash effect */
+.screenshot-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.screenshot-flash.active {
+    animation: screenshotFlash 0.3s ease-out forwards;
+}
+
+@keyframes screenshotFlash {
+    0% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .screenshot-toolbar {
+        transition: none;
+    }
+    .screenshot-flash.active {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+/* Mobile: hide screenshot toolbar (no PrintScreen on mobile) */
+@media (max-width: 767px) {
+    .screenshot-toolbar {
+        display: none;
+    }
+}
+
+
+/* === components/notification-center.css === */
+/* ============================================
+   NOTIFICATION CENTER - GNOME 49
+   Grouped notifications with DND toggle
+   ============================================ */
+
+/* Notification Panel (slides from top-right) */
+.notification-center {
+    position: fixed;
+    top: var(--topbar-height);
+    right: 12px;
+    width: 380px;
+    max-height: calc(100vh - var(--topbar-height) - 24px);
+    z-index: var(--z-modal);
+    background: var(--surface-1);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-window);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
+}
+
+.notification-center.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Header */
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.notification-header-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.notification-header-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+/* DND Toggle */
+.dnd-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.dnd-toggle:hover {
+    background: var(--surface-2);
+}
+
+.dnd-toggle.active {
+    background: rgba(224, 27, 36, 0.1);
+    color: var(--fedora-red);
+    border-color: rgba(224, 27, 36, 0.3);
+}
+
+.clear-all-btn {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 16px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.clear-all-btn:hover {
+    background: var(--surface-2);
+    color: var(--text-primary);
+}
+
+/* Notification List */
+.notification-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+}
+
+.notification-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    color: var(--text-disabled);
+    text-align: center;
+    gap: var(--spacing-sm);
+}
+
+.notification-empty i {
+    font-size: 32px;
+    opacity: 0.5;
+}
+
+.notification-empty span {
+    font-size: 13px;
+}
+
+/* Notification Group */
+.notification-group {
+    margin-bottom: var(--spacing-sm);
+}
+
+.notification-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+}
+
+.notification-group-name {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+}
+
+.notification-group-count {
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--surface-3);
+    border-radius: 10px;
+    color: var(--text-secondary);
+}
+
+.notification-group-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.notification-group.collapsed .notification-group-items {
+    display: none;
+}
+
+/* Individual Notification */
+.notification-item {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--surface-0);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    animation: notificationSlideIn 0.3s ease-out forwards;
+    cursor: default;
+    transition: background var(--transition-fast);
+}
+
+.notification-item:hover {
+    background: var(--surface-2);
+}
+
+.notification-item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius-sm);
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--fedora-blue);
+    flex-shrink: 0;
+}
+
+.notification-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notification-item-body {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.notification-item-time {
+    font-size: 10px;
+    color: var(--text-disabled);
+    margin-top: 2px;
+}
+
+.notification-item-dismiss {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--text-disabled);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 10px;
+    opacity: 0;
+    transition: opacity var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.notification-item:hover .notification-item-dismiss {
+    opacity: 1;
+}
+
+.notification-item-dismiss:hover {
+    background: rgba(224, 27, 36, 0.1);
+    color: var(--fedora-red);
+}
+
+@keyframes notificationSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .notification-center {
+        transition: none;
+    }
+    .notification-item {
+        animation: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .notification-center {
+        right: 4px;
+        left: 4px;
+        width: auto;
     }
 }
 
@@ -3296,11 +4596,11 @@ a.project-card {
     }
 
     .close-btn-mobile:hover {
-        background: rgba(233, 84, 32, 0.15);
+        background: rgba(53, 132, 228, 0.15);
     }
 
     .close-btn-mobile:active {
-        background: rgba(233, 84, 32, 0.3);
+        background: rgba(53, 132, 228, 0.3);
     }
 }
 
@@ -3443,8 +4743,8 @@ a.project-card {
     }
 
     .close-btn-mobile:active {
-        background: rgba(233, 84, 32, 0.25);
-        color: #e95420;
+        background: rgba(53, 132, 228, 0.25);
+        color: var(--fedora-blue);
         transform: scale(0.9);
     }
 
@@ -3542,7 +4842,7 @@ a.project-card {
 
     /* Active app glow indicator on mobile dock */
     .dock-item.active {
-        box-shadow: 0 0 14px rgba(233, 84, 32, 0.4);
+        box-shadow: 0 0 14px rgba(53, 132, 228, 0.4);
     }
 
     /* Widget polish */

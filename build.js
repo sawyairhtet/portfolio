@@ -33,6 +33,11 @@ const CSS_FILES = [
     'components/dialog.css',
     'components/skeleton.css',
     'components/command-palette.css',
+    'components/focus-mode.css',
+    'components/lock-screen.css',
+    'components/settings.css',
+    'components/screenshot-tool.css',
+    'components/notification-center.css',
     // Responsive (must be last)
     'components/responsive.css',
 ];

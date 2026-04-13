@@ -1,5 +1,5 @@
 /* ============================================
-   TOP BAR (GNOME Panel)
+   TOP BAR — GNOME 49 Panel
    ============================================ */
 
 .top-bar {
@@ -7,56 +7,91 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 28px;
+    height: var(--topbar-height);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 var(--spacing-md);
+    padding: 0 8px;
     font-size: 13px;
     font-weight: 500;
     z-index: var(--z-topbar);
-    background: var(--color-topbar-bg);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: var(--shadow-sm);
+    background: var(--topbar-bg);
+    backdrop-filter: var(--topbar-blur);
+    -webkit-backdrop-filter: var(--topbar-blur);
+    color: var(--text-on-accent);
 }
 
-.menu-bar-left,
-.menu-bar-center,
-.menu-bar-right {
+/* Left section: Activities + App name */
+.menu-bar-left {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: 8px;
+    flex: 1;
 }
 
+/* Center section: Clock — perfectly centered */
 .menu-bar-center {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 13px;
 }
 
+/* Right section: System tray */
+.menu-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+}
+
+/* Personal brand label */
+.personal-brand {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    padding: 0 4px;
+}
+
+/* Activities button — GNOME pill hover */
 .activities-btn {
-    color: var(--color-topbar-text);
-    font-size: 14px;
+    color: var(--text-on-accent);
+    font-size: 13px;
     font-weight: 500;
-    transition: background 0.2s;
-    font-family: var(--font-system);
+    font-family: var(--font-ui);
+    padding: 4px 10px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.activities-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
 }
 
 /* Pill Styling for Top Bar Items */
 .pill {
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 100px;
-    padding: 4px 14px;
-    margin: 4px 0;
+    background: transparent;
+    border-radius: var(--border-radius-sm);
+    padding: 4px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: background 0.2s;
+    transition: background var(--transition-fast);
 }
 
 .pill:hover {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Status menu (system tray icons) */
+.status-menu {
+    font-size: 12px;
+    gap: 10px;
+    cursor: pointer;
 }
 
 .theme-toggle-btn i {
@@ -69,10 +104,10 @@
     bottom: -36px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--color-surface);
-    color: var(--color-text);
+    background: var(--surface-2);
+    color: var(--text-primary);
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
     font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
@@ -81,7 +116,7 @@
     transition:
         opacity 0.15s ease,
         visibility 0.15s ease;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-popover);
     pointer-events: none;
     z-index: 10000;
 }

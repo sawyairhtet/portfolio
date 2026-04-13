@@ -1,5 +1,14 @@
 /* ============================================
-   TYPOGRAPHY
+   TYPOGRAPHY — Fedora 43 / GNOME 49 / Adwaita
    ============================================ */
 
-/* Note: All fonts (Ubuntu, Ubuntu Mono, Indie Flower) are loaded in index.html */
+body {
+  font-family: var(--font-ui);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .terminal, .terminal * {
+  font-family: var(--font-mono);
+}

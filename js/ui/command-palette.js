@@ -4,7 +4,6 @@
  */
 
 import { openWindow, closeAllWindows } from '../core/window-manager.js';
-import { Achievements } from '../core/achievements.js';
 
 const COMMANDS = [
     { id: 'about', label: 'Open About', icon: 'fa-user-circle', category: 'Apps', action: () => openWindow('about', getOS()) },
@@ -15,7 +14,6 @@ const COMMANDS = [
     { id: 'terminal', label: 'Open Terminal', icon: 'fa-terminal', category: 'Apps', action: () => openWindow('terminal', getOS()) },
     { id: 'settings', label: 'Open Settings', icon: 'fa-cog', category: 'Apps', action: () => openWindow('settings', getOS()) },
     { id: 'close-all', label: 'Close All Windows', icon: 'fa-times-circle', category: 'Actions', action: () => closeAllWindows() },
-    { id: 'achievements', label: 'View Achievements', icon: 'fa-trophy', category: 'Actions', action: showAchievementsPanel },
     { id: 'github', label: 'Visit GitHub', icon: 'fa-github', category: 'Links', action: () => window.open('https://github.com/sawyairhtet', '_blank') },
     { id: 'linkedin', label: 'Visit LinkedIn', icon: 'fa-linkedin', category: 'Links', action: () => window.open('https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/', '_blank') },
     { id: 'resume', label: 'Download Resume', icon: 'fa-download', category: 'Actions', action: () => { const a = document.querySelector('a[download]'); if (a) /** @type {HTMLElement} */ (a).click(); } },
@@ -31,44 +29,6 @@ let isOpen = false;
 function getOS() {
     const w = window.innerWidth;
     return w <= 767 ? 'mobile' : w <= 1024 ? 'tablet' : 'desktop';
-}
-
-function showAchievementsPanel() {
-    const all = Achievements.getAll();
-    const lines = all.map(a => `${a.unlocked ? a.icon : '🔒'} ${a.title} — ${a.desc} ${a.unlocked ? '✓' : ''}`).join('\n');
-
-    // Show in a toast-like overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'achievements-overlay';
-    overlay.innerHTML = `
-        <div class="achievements-panel">
-            <h3><i class="fas fa-trophy" aria-hidden="true"></i> Achievements (${Achievements.getProgress()})</h3>
-            <div class="achievements-list">${all.map(a => `
-                <div class="achievement-item ${a.unlocked ? 'unlocked' : 'locked'}">
-                    <span class="achievement-icon">${a.unlocked ? a.icon : '🔒'}</span>
-                    <div>
-                        <strong>${a.title}</strong>
-                        <small>${a.desc}</small>
-                    </div>
-                </div>`).join('')}
-            </div>
-            <button class="achievements-close" aria-label="Close">Got it!</button>
-        </div>`;
-
-    document.body.appendChild(overlay);
-    requestAnimationFrame(() => overlay.classList.add('visible'));
-
-    const closeBtn = overlay.querySelector('.achievements-close');
-    closeBtn.addEventListener('click', () => {
-        overlay.classList.remove('visible');
-        setTimeout(() => overlay.remove(), 300);
-    });
-    overlay.addEventListener('click', e => {
-        if (e.target === overlay) {
-            overlay.classList.remove('visible');
-            setTimeout(() => overlay.remove(), 300);
-        }
-    });
 }
 
 function createPalette() {

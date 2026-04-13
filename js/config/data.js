@@ -113,7 +113,7 @@ export const DEFAULT_FILE_SYSTEM = {
     '/home/visitor/projects/portfolio/main.css': {
         type: 'file',
         content:
-            '/* Ubuntu Yaru Theme */\n:root {\n    --color-primary: #E95420;\n    --color-bg: #2C001E;\n}\n/* ... 1000+ more lines of CSS magic */',
+            '/* Fedora 43 / Adwaita Theme */\n:root {\n    --fedora-blue: #3584e4;\n    --surface-0: #ffffff;\n}\n/* ... 1000+ more lines of CSS magic */',
     },
     '/home/visitor/projects/portfolio/main.js': {
         type: 'file',

@@ -69,7 +69,7 @@
 
 .app-icon:hover {
     transform: scale(1.12) translateY(-4px);
-    filter: drop-shadow(0 8px 16px rgba(233, 84, 32, 0.3));
+    filter: drop-shadow(0 8px 16px rgba(53, 132, 228, 0.3));
 }
 
 .app-icon:active {
@@ -79,9 +79,9 @@
 .app-icon-wrapper {
     width: 64px;
     height: 64px;
-    background: var(--color-glass-light);
+    background: var(--surface-2);
     backdrop-filter: var(--glass-blur) var(--glass-saturation);
-    border-radius: var(--radius-md);
+    border-radius: var(--border-radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,10 +98,10 @@
 }
 
 .app-icon:hover .app-icon-wrapper {
-    border-color: var(--color-border-glow);
+    border-color: rgba(53, 132, 228, 0.3);
     box-shadow:
         var(--shadow-lg),
-        0 0 12px rgba(233, 84, 32, 0.25);
+        0 0 12px rgba(53, 132, 228, 0.25);
 }
 
 /* App Icon Gradients - Vibrant Light Mode */
@@ -111,32 +111,33 @@
         0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
+/* Adwaita-style icon backgrounds */
 .app-icon[data-app='about'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #ff6b3d 0%, #e95420 100%);
+    background: linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%);
 }
 
 .app-icon[data-app='skills'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
+    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
 }
 
 .app-icon[data-app='projects'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
+    background: linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%);
 }
 
 .app-icon[data-app='contact'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #9b4f96 0%, #77216f 100%);
+    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
 }
 
 .app-icon[data-app='links'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #ff8a5c 0%, #e95420 100%);
+    background: linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-teal) 100%);
 }
 
 .app-icon[data-app='terminal'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #2aa198 0%, #1a7a72 100%);
+    background: linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%);
 }
 
 .app-icon[data-app='settings'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #f5a623 0%, #d4850e 100%);
+    background: linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%);
 }
 
 .app-label {
