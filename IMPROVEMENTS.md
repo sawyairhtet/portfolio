@@ -53,7 +53,6 @@ npm run validate      # Run all checks
 - **Magnetic buttons** that follow cursor
 - **3D tilt effect** on cards
 - **Typing indicator** for terminal
-- **Confetti celebration** for achievements
 
 ### Enhanced CSS
 
@@ -105,28 +104,6 @@ npm run validate      # Run all checks
 
 ## Phase 5: Innovation & Unique Features ✅
 
-### Achievement System (`js/core/achievements.js`)
-
-Gamification with 10 achievements:
-
-1. 🖱️ Getting Started - Open first app
-2. 🗺️ Explorer - Open all 7 apps
-3. 💻 Terminal Master - 10 commands
-4. 🥚 Curious Mind - Find easter egg
-5. 🦉 Night Owl - Visit 12am-5am
-6. 📝 Sticky Note Mover - Move all notes
-7. 🪟 Multitasker - 3 windows open
-8. 🌓 Day & Night - Switch themes 3x
-9. ⚡ Speed Runner - 3 apps in 10s
-10. 📄 Interested - Download resume
-
-Features:
-
-- Confetti celebration on unlock
-- Toast notifications
-- Progress persistence
-- Custom events
-
 ### Command Palette (`js/ui/command-palette.js`)
 
 Spotlight-style quick actions:
@@ -163,21 +140,8 @@ npm run dev
 
 ```javascript
 import { initMicroInteractions } from './ui/micro-interactions.js';
-import { Achievements } from './core/achievements.js';
 import { commandPalette } from './ui/command-palette.js';
 ```
-
-### Window Manager Integration
-
-Call `Achievements.onAppOpen(appName)` when opening windows.
-
-### Terminal Integration
-
-Call `Achievements.onTerminalCommand()` when executing commands.
-
-### Theme Toggle Integration
-
-Call `Achievements.onThemeSwitch()` when toggling themes.
 
 ## Browser Support
 
@@ -201,4 +165,4 @@ Expected improvements:
 - ARIA labels on all interactive elements
 - Reduced motion support
 - Keyboard navigation in command palette
-- Achievement notifications announced to screen readers
+- Notifications announced to screen readers

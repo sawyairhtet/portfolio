@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
     <head>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
@@ -25,13 +25,13 @@
         />
         <meta name="robots" content="noindex, nofollow" />
         <meta name="author" content="Saw Ye Htet" />
-        <link rel="stylesheet" href="dist/bundle.min.css" />
+        <link rel="stylesheet" href="css/main.css" />
         <link rel="icon" href="assets/icon.png" type="image/png" />
         <!-- Google Fonts - Inter -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400&display=swap"
             rel="stylesheet"
         />
         <!-- Font Awesome for icons -->
@@ -39,7 +39,15 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
-
+        <!-- Theme Init (prevents flash of wrong theme) -->
+        <script>
+            (function () {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'light') {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            })();
+        </script>
         <style>
             /* 404 Page Specific Styles */
             .error-page {
@@ -148,7 +156,7 @@
 
             .error-btn-primary:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 8px 24px rgba(233, 84, 32, 0.4);
+                box-shadow: 0 8px 24px rgba(53, 132, 228, 0.4);
             }
 
             .error-btn-secondary {
@@ -298,17 +306,14 @@
         <!-- Mini Dock -->
         <div class="dock-404">
             <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
-            <a href="https://github.com/sawyairhtet" target="_blank" rel="noopener noreferrer" title="GitHub"
-                ><i class="fab fa-github" aria-hidden="true"></i
-                ><span class="sr-only"> (opens in new tab)</span
+            <a href="https://github.com/sawyairhtet" target="_blank" title="GitHub"
+                ><i class="fab fa-github"></i
             ></a>
             <a
                 href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/"
                 target="_blank"
-                rel="noopener noreferrer"
                 title="LinkedIn"
-                ><i class="fab fa-linkedin" aria-hidden="true"></i
-                ><span class="sr-only"> (opens in new tab)</span
+                ><i class="fab fa-linkedin"></i
             ></a>
         </div>
 
@@ -332,10 +337,7 @@
                 }
             }
             updateClock();
-            var clockId = setInterval(updateClock, 60000);
-            window.addEventListener('beforeunload', function () {
-                clearInterval(clockId);
-            });
+            setInterval(updateClock, 60000); // Only display HH:MM, no need for 1s interval
 
             // Go Back button - avoid inline onclick for CSP compliance
             document.getElementById('go-back-btn').addEventListener('click', () => history.back());

@@ -46,7 +46,7 @@ export function startMatrixEffect() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = '#0f0';
-        ctx.font = `${fontSize}px Ubuntu Mono, monospace`;
+        ctx.font = `${fontSize}px 'Source Code Pro', monospace`;
 
         for (let i = 0; i < drops.length; i++) {
             const char = charArray[Math.floor(Math.random() * charArray.length)];

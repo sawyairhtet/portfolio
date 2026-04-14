@@ -4,7 +4,7 @@
  */
 
 // Cache version - update BUILD_VERSION on each deploy for cache-busting
-const BUILD_VERSION = '20260401';
+const BUILD_VERSION = '20260210';
 const CACHE_NAME = `syh-portfolio-v1-${BUILD_VERSION}`;
 const STATIC_ASSETS = [
     '/',
@@ -14,17 +14,13 @@ const STATIC_ASSETS = [
     '/js/core/sound-manager.js',
     '/js/core/theme-manager.js',
     '/js/core/window-manager.js',
-    '/js/core/transitions.js',
     '/js/apps/terminal.js',
     '/js/apps/matrix.js',
     '/js/ui/context-menu.js',
     '/js/ui/dialog.js',
     '/js/ui/notifications.js',
-    '/js/ui/micro-interactions.js',
     '/js/config/data.js',
-    '/js/types.js',
     '/images/profile-picture.jpg',
-    '/images/noble-numbat.jpg',
     '/assets/icon.png',
     '/manifest.json',
     '/offline.html',

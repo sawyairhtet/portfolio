@@ -17,6 +17,7 @@ let cascadeCounter = 0; // Static counter for window cascade positioning (#22)
 // Window state persistence
 const WINDOW_STATE_KEY = 'portfolioWindowStates';
 
+/** @returns {Record<string, {top: string, left: string, width: string, height: string}>} */
 function loadWindowStates() {
     try {
         return JSON.parse(localStorage.getItem(WINDOW_STATE_KEY) || '{}');
@@ -25,6 +26,10 @@ function loadWindowStates() {
     }
 }
 
+/**
+ * @param {string} windowId
+ * @param {{top: string, left: string, width: string, height: string}} state
+ */
 function saveWindowState(windowId, state) {
     try {
         const states = loadWindowStates();
@@ -37,6 +42,7 @@ function saveWindowState(windowId, state) {
 
 // Cache CSS variable to avoid reading on every drag call (#20)
 let cachedDockWidth = 60;
+/** @returns {void} */
 function updateCachedDockWidth() {
     cachedDockWidth =
         parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dock-width')) || 60;
@@ -48,10 +54,18 @@ if (typeof window !== 'undefined') {
 }
 
 // Getters for external access
+/**
+ * Returns the set of currently active (open) window IDs.
+ * @returns {Set<string>}
+ */
 export function getActiveWindows() {
     return activeWindows;
 }
 
+/**
+ * Returns the current highest z-index value.
+ * @returns {number}
+ */
 export function getCurrentZIndex() {
     return currentZIndex;
 }
@@ -60,6 +74,7 @@ export function getCurrentZIndex() {
 // WINDOW OPERATIONS
 // ============================================
 
+/** @returns {void} */
 function updateAriaModal() {
     const activeIds = Array.from(activeWindows);
     const backgroundElements = document.querySelectorAll('.main-content, .dock, .top-bar');
@@ -97,6 +112,12 @@ function updateAriaModal() {
     }
 }
 
+/**
+ * Opens a window by app name. If already open, brings it to front.
+ * @param {string} appName - The application identifier (e.g. 'about', 'terminal')
+ * @param {string} [currentOS='desktop'] - Current device mode ('desktop' | 'tablet' | 'mobile')
+ * @returns {void}
+ */
 export function openWindow(appName, currentOS = 'desktop') {
     const windowId = `${appName}-window`;
     const windowEl = document.getElementById(windowId);
@@ -123,8 +144,8 @@ export function openWindow(appName, currentOS = 'desktop') {
         if (saved) {
             windowEl.style.top = saved.top;
             windowEl.style.left = saved.left;
-            if (saved.width) windowEl.style.width = saved.width;
-            if (saved.height) windowEl.style.height = saved.height;
+            if (saved.width) {windowEl.style.width = saved.width;}
+            if (saved.height) {windowEl.style.height = saved.height;}
         } else {
             cascadeCounter++;
             const cascadeOffset = (cascadeCounter % 10) * 25;
@@ -163,6 +184,11 @@ export function openWindow(appName, currentOS = 'desktop') {
     }, 100);
 }
 
+/**
+ * Closes a window with a fade-out animation and removes it from active set.
+ * @param {string} windowId - The DOM id of the window element (e.g. 'about-window')
+ * @returns {void}
+ */
 export function closeWindow(windowId) {
     const windowEl = document.getElementById(windowId);
     if (!windowEl) {
@@ -211,6 +237,10 @@ export function closeWindow(windowId) {
     }, 250);
 }
 
+/**
+ * Closes all currently active windows.
+ * @returns {void}
+ */
 export function closeAllWindows() {
     // Snapshot the Set to avoid iteration-while-modifying issues (#closeAllWindows-fix)
     Array.from(activeWindows).forEach(windowId => {
@@ -218,12 +248,22 @@ export function closeAllWindows() {
     });
 }
 
+/**
+ * Raises a window element to the top of the stacking order.
+ * @param {HTMLElement} element - The window DOM element to bring to front
+ * @returns {void}
+ */
 export function bringToFront(element) {
     currentZIndex++;
-    element.style.zIndex = currentZIndex;
+    element.style.zIndex = String(currentZIndex);
     updateAriaModal(); // Update modal state when focus changes
 }
 
+/**
+ * Minimizes a window with animation, saving its position for later restore.
+ * @param {string} windowId - The DOM id of the window element
+ * @returns {void}
+ */
 export function minimizeWindow(windowId) {
     const windowEl = document.getElementById(windowId);
     if (!windowEl) {
@@ -251,6 +291,12 @@ export function minimizeWindow(windowId) {
     }, 350);
 }
 
+/**
+ * Restores a previously minimized window, or opens it if not minimized.
+ * @param {string} appName - The application identifier
+ * @param {string | null} [currentOS=null] - Current device mode (auto-detected if null)
+ * @returns {void}
+ */
 export function restoreWindow(appName, currentOS = null) {
     const windowId = `${appName}-window`;
     const windowEl = document.getElementById(windowId);
@@ -289,6 +335,10 @@ export function restoreWindow(appName, currentOS = null) {
 // DOCK ACTIVE STATE
 // ============================================
 
+/**
+ * Syncs dock item active indicators with the current set of open windows.
+ * @returns {void}
+ */
 export function updateDockActiveStates() {
     const dockItems = document.querySelectorAll('.dock-item');
     dockItems.forEach(item => {
@@ -308,6 +358,12 @@ export function updateDockActiveStates() {
 // DRAGGABLE WINDOWS
 // ============================================
 
+/**
+ * Makes a window element draggable via its header, with snap-to-edge support.
+ * @param {HTMLElement} element - The window DOM element
+ * @param {string} currentOS - Current device mode ('desktop' | 'tablet' | 'mobile')
+ * @returns {void}
+ */
 export function makeDraggable(element, currentOS) {
     if (currentOS !== 'desktop') {
         return;
@@ -497,6 +553,12 @@ export function makeDraggable(element, currentOS) {
 // RESIZABLE WINDOWS
 // ============================================
 
+/**
+ * Makes a window element resizable from all edges and corners.
+ * @param {HTMLElement} element - The window DOM element
+ * @param {string} currentOS - Current device mode ('desktop' | 'tablet' | 'mobile')
+ * @returns {void}
+ */
 export function makeResizable(element, currentOS) {
     if (currentOS !== 'desktop') {
         return;
@@ -594,6 +656,11 @@ export function makeResizable(element, currentOS) {
 // WINDOW CONTROLS SETUP
 // ============================================
 
+/**
+ * Wires up click handlers for all window control buttons (close, minimize, maximize)
+ * and keyboard shortcuts (Escape to close, Ctrl+Tab to cycle).
+ * @returns {void}
+ */
 export function setupWindowControls() {
     // Close buttons
     document.querySelectorAll('.window-control.close').forEach(btn => {
@@ -711,6 +778,10 @@ export function setupWindowControls() {
 // FOCUS TRAP (Accessibility)
 // ============================================
 
+/**
+ * @param {HTMLElement} container
+ * @returns {HTMLElement[]}
+ */
 function getFocusableElements(container) {
     const focusableSelectors = [
         'button:not([disabled])',
@@ -722,11 +793,12 @@ function getFocusableElements(container) {
         '[contenteditable="true"]',
     ].join(', ');
 
-    return Array.from(container.querySelectorAll(focusableSelectors)).filter(
-        el => el.offsetParent !== null
-    ); // Only visible elements
+    return /** @type {HTMLElement[]} */ (Array.from(container.querySelectorAll(focusableSelectors)).filter(
+        el => /** @type {HTMLElement} */ (el).offsetParent !== null
+    )); // Only visible elements
 }
 
+/** @param {HTMLElement} windowEl */
 function setupFocusTrap(windowEl) {
     const windowId = windowEl.id;
 
@@ -770,6 +842,7 @@ function setupFocusTrap(windowEl) {
     document.addEventListener('keydown', handler);
 }
 
+/** @param {string} windowId */
 function removeFocusTrap(windowId) {
     if (windowId && focusTrapHandlers.has(windowId)) {
         const handler = focusTrapHandlers.get(windowId);

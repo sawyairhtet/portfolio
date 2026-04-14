@@ -935,11 +935,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Make all windows draggable and resizable
     document.querySelectorAll('.window').forEach(win => {
-        makeDraggable(win, currentOS);
-        makeResizable(win, currentOS);
+        const windowEl = /** @type {HTMLElement} */ (win);
+        makeDraggable(windowEl, currentOS);
+        makeResizable(windowEl, currentOS);
 
-        win.addEventListener('mousedown', () => {
-            bringToFront(win);
+        windowEl.addEventListener('mousedown', () => {
+            bringToFront(windowEl);
         });
     });
 

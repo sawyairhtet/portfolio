@@ -16,7 +16,7 @@ const COMMANDS = [
     { id: 'close-all', label: 'Close All Windows', icon: 'fa-times-circle', category: 'Actions', action: () => closeAllWindows() },
     { id: 'github', label: 'Visit GitHub', icon: 'fa-github', category: 'Links', action: () => window.open('https://github.com/sawyairhtet', '_blank') },
     { id: 'linkedin', label: 'Visit LinkedIn', icon: 'fa-linkedin', category: 'Links', action: () => window.open('https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/', '_blank') },
-    { id: 'resume', label: 'Download Resume', icon: 'fa-download', category: 'Actions', action: () => { const a = document.querySelector('a[download]'); if (a) /** @type {HTMLElement} */ (a).click(); } },
+    { id: 'resume', label: 'Download Resume', icon: 'fa-download', category: 'Actions', action: () => { const a = document.querySelector('a[download]'); if (a) (/** @type {HTMLElement} */ (a)).click(); } },
 ];
 
 let paletteEl = null;
@@ -32,7 +32,7 @@ function getOS() {
 }
 
 function createPalette() {
-    if (paletteEl) return;
+    if (paletteEl) {return;}
 
     paletteEl = document.createElement('div');
     paletteEl.className = 'command-palette-overlay';
@@ -100,7 +100,7 @@ function filterCommands(query) {
 }
 
 function renderList() {
-    if (!listEl) return;
+    if (!listEl) {return;}
 
     listEl.innerHTML = filteredCommands.map((cmd, i) => {
         const iconPrefix = cmd.icon.startsWith('fa-github') || cmd.icon.startsWith('fa-linkedin') ? 'fab' : 'fas';
@@ -143,7 +143,7 @@ function executeSelected() {
 }
 
 export function openPalette() {
-    if (isOpen) return;
+    if (isOpen) {return;}
     createPalette();
     isOpen = true;
     filteredCommands = [...COMMANDS];
@@ -158,7 +158,7 @@ export function openPalette() {
 }
 
 export function closePalette() {
-    if (!isOpen || !paletteEl) return;
+    if (!isOpen || !paletteEl) {return;}
     isOpen = false;
     paletteEl.classList.remove('visible');
 }

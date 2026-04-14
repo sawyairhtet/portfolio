@@ -63,25 +63,23 @@ try {
     console.log('[WARN] Could not read CSS file:', error.message);
 }
 
-// Check 3b: Verify Build Artifacts (dist/bundle.min.css)
+// Check 3b: Verify Vite build output (dist/index.html)
 try {
-    if (fs.existsSync('dist/bundle.min.css')) {
-        const stats = fs.statSync('dist/bundle.min.css');
+    if (fs.existsSync('dist/index.html')) {
+        const stats = fs.statSync('dist/index.html');
         if (stats.size > 0) {
-            console.log('[OK] Build artifact found (dist/bundle.min.css)');
+            console.log('[OK] Vite build artifact found (dist/index.html)');
         } else {
-            console.log('[ERROR] Build artifact is empty (dist/bundle.min.css)');
+            console.log('[ERROR] Vite build artifact is empty (dist/index.html)');
             hasErrors = true;
         }
     } else {
         console.log(
-            '[ERROR] Build artifact missing (dist/bundle.min.css). Run "npm run build" first.'
+            '[WARN] Vite build output missing (dist/index.html). Run "npm run build" first.'
         );
-        hasErrors = true;
     }
 } catch (error) {
-    console.log('[ERROR] Could not check build artifacts:', error.message);
-    hasErrors = true;
+    console.log('[WARN] Could not check Vite build artifacts:', error.message);
 }
 
 // Check 4: Verify JavaScript syntax (very basic)

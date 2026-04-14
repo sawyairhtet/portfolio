@@ -178,7 +178,7 @@
 }
 
 .boot-log {
-    font-family: 'Ubuntu Mono', 'Courier New', monospace;
+    font-family: var(--font-mono);
     font-size: 14px;
     color: #fff;
     line-height: 1.6;
@@ -194,7 +194,7 @@
     left: 50%;
     transform: translateX(-50%);
     color: rgba(255, 255, 255, 0.6);
-    font-family: 'Ubuntu Mono', 'Courier New', monospace;
+    font-family: var(--font-mono);
     font-size: 13px;
     animation: bootHintPulse 2s ease-in-out infinite;
 }

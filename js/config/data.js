@@ -11,26 +11,24 @@
 // ============================================
 
 export const BOOT_LOG_MESSAGES = [
-    '[    0.000000] Linux version 6.8.0-45-generic (buildd@lcy02-amd64-056)',
-    '[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-45-generic',
-    '[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable',
-    '[    0.000000] ACPI: RSDP 0x00000000000F05B0 000024 (v02 LENOVO)',
-    '[    0.045632] CPU: AMD Ryzen 9 9900X @ 5.60GHz',
-    '[    0.076234] Memory: 32GB DDR5 CL30',
-    '[ OK ] Started Journal Service.',
-    '[ OK ] Reached target Basic System.',
-    '[ OK ] Started D-Bus System Message Bus.',
-    '[ OK ] Started Network Manager.',
-    '[ OK ] Reached target Network.',
-    '[ OK ] Started GNOME Display Manager.',
-    '[ OK ] Started User Manager for UID 1000.',
-    '[ OK ] Started Session Service of user visitor.',
-    '[ OK ] Reached target Graphical Interface.',
+    '[    0.000000] Linux version 6.11.4-301.fc43.x86_64 (mockbuild@fedora)',
+    '[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.11.4-301.fc43.x86_64 root=/dev/sda1',
+    '[    0.183421] ACPI: Core revision 20230628',
+    '[    0.541209] PCI: Using configuration type 1 for base access',
+    '[    0.891234] systemd[1]: Fedora Linux 43 (Workstation Edition)',
+    '[    1.021445] systemd[1]: Detected virtualization none.',
+    '[  OK  ] Started systemd-journald.service - Journal Service',
+    '[  OK  ] Started systemd-udevd.service - Rule-based Manager',
+    '[  OK  ] Started NetworkManager.service - Network Manager',
+    '[  OK  ] Started pipewire.service - PipeWire Multimedia Service',
+    '[  OK  ] Started pipewire-pulse.service - PipeWire PulseAudio',
+    '[  OK  ] Started flatpak-system-helper.service',
+    '[  OK  ] Started gdm.service - GNOME Display Manager',
+    '[  OK  ] Reached target graphical.target - Graphical Interface',
     '',
-    'Ubuntu 24.04 LTS portfolio tty1',
+    '         Fedora Linux 43 (Workstation Edition)',
+    '         Kernel 6.11.4-301.fc43.x86_64 on Wayland',
     '',
-    'portfolio login: visitor',
-    'Password: ********',
     "Welcome to Saw Ye Htet's Portfolio!",
     '',
 ];
@@ -77,77 +75,77 @@ export const DEFAULT_FILE_SYSTEM = {
     },
     '/home': {
         type: 'dir',
-        children: ['visitor'],
+        children: ['sawyehtet'],
     },
-    '/home/visitor': {
+    '/home/sawyehtet': {
         type: 'dir',
         children: ['projects', 'documents', 'resume.txt', '.bashrc'],
     },
-    '/home/visitor/projects': {
+    '/home/sawyehtet/projects': {
         type: 'dir',
         children: ['jewelry-vr', 'portfolio', 'README.md'],
     },
-    '/home/visitor/projects/jewelry-vr': {
+    '/home/sawyehtet/projects/jewelry-vr': {
         type: 'dir',
         children: ['main.cs', 'HandTracking.cs'],
     },
-    '/home/visitor/projects/jewelry-vr/main.cs': {
+    '/home/sawyehtet/projects/jewelry-vr/main.cs': {
         type: 'file',
         content:
             '// Unity VR Game - Main Entry Point\nusing UnityEngine;\n\npublic class JewelryHeist : MonoBehaviour {\n    void Start() {\n        Debug.Log("Welcome to Jewelry Shop Robbery VR!");\n    }\n}',
     },
-    '/home/visitor/projects/jewelry-vr/HandTracking.cs': {
+    '/home/sawyehtet/projects/jewelry-vr/HandTracking.cs': {
         type: 'file',
         content:
             '// Meta Quest Hand Tracking Integration\nusing Oculus.Interaction;\n\npublic class HandGrabber : MonoBehaviour {\n    // Grab gems with your bare hands!\n}',
     },
-    '/home/visitor/projects/portfolio': {
+    '/home/sawyehtet/projects/portfolio': {
         type: 'dir',
         children: ['index.html', 'main.css', 'main.js'],
     },
-    '/home/visitor/projects/portfolio/index.html': {
+    '/home/sawyehtet/projects/portfolio/index.html': {
         type: 'file',
         content:
             '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <title>Saw Ye Htet - Portfolio</title>\n</head>\n<body>\n    <!-- You are here! -->\n</body>\n</html>',
     },
-    '/home/visitor/projects/portfolio/main.css': {
+    '/home/sawyehtet/projects/portfolio/main.css': {
         type: 'file',
         content:
             '/* Fedora 43 / Adwaita Theme */\n:root {\n    --fedora-blue: #3584e4;\n    --surface-0: #ffffff;\n}\n/* ... 1000+ more lines of CSS magic */',
     },
-    '/home/visitor/projects/portfolio/main.js': {
+    '/home/sawyehtet/projects/portfolio/main.js': {
         type: 'file',
         content:
             '// The very code running this terminal!\n// Written with ❤️ by Saw Ye Htet\nconsole.log("Hello, curious visitor!");',
     },
-    '/home/visitor/projects/README.md': {
+    '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
             '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: VR Heist Game for Meta Quest\n- **portfolio**: This website!\n\nFeel free to explore with `cd` and `cat`.',
     },
-    '/home/visitor/documents': {
+    '/home/sawyehtet/documents': {
         type: 'dir',
         children: ['notes.txt', 'ideas.md'],
     },
-    '/home/visitor/documents/notes.txt': {
+    '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
         content:
             'TODO:\n- Finish VR project\n- Update portfolio\n- Master Godot Engine\n- Call mom 💙',
     },
-    '/home/visitor/documents/ideas.md': {
+    '/home/sawyehtet/documents/ideas.md': {
         type: 'file',
         content:
             '# Future Project Ideas\n\n1. Multiplayer VR escape room\n2. Indie game with procedural generation\n3. Open-source developer tools',
     },
-    '/home/visitor/resume.txt': {
+    '/home/sawyehtet/resume.txt': {
         type: 'file',
         content:
             '╔═══════════════════════════════════════╗\n║         SAW YE HTET - RESUME          ║\n╠═══════════════════════════════════════╣\n║ Education: Singapore Polytechnic      ║\n║ Major: Information Technology         ║\n║ Skills: Unity, C#, JavaScript, Python ║\n║ Focus: VR Development, Full-Stack     ║\n╚═══════════════════════════════════════╝\n\nContact: minwn2244@gmail.com',
     },
-    '/home/visitor/.bashrc': {
+    '/home/sawyehtet/.bashrc': {
         type: 'file',
         content:
-            '# ~/.bashrc\nexport PS1="visitor@portfolio:~$ "\nalias ll="ls -la"\nalias cls="clear"\n\n# Secret: You found the hidden config!',
+            '# ~/.bashrc\nexport PS1="sawyehtet@fedora:~$ "\nalias ll="ls -la"\nalias cls="clear"\n\n# Secret: You found the hidden config!',
     },
     '/etc': {
         type: 'dir',
@@ -155,12 +153,12 @@ export const DEFAULT_FILE_SYSTEM = {
     },
     '/etc/hostname': {
         type: 'file',
-        content: 'portfolio',
+        content: 'fedora',
     },
     '/etc/os-release': {
         type: 'file',
         content:
-            'NAME="Ubuntu"\nVERSION="24.04 LTS (Noble Numbat)"\nID=ubuntu\nPRETTY_NAME="Saw Ye Htet Portfolio OS"',
+            'NAME="Fedora Linux"\nVERSION="43 (Workstation Edition)"\nID=fedora\nPRETTY_NAME="Fedora Linux 43 (Workstation Edition)"',
     },
     '/var': {
         type: 'dir',

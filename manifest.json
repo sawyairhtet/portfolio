@@ -4,8 +4,8 @@
     "description": "IT Student & VR Developer - Portfolio Website",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#2C001E",
-    "theme_color": "#E95420",
+    "background_color": "#1e1e2e",
+    "theme_color": "#3584e4",
     "orientation": "any",
     "icons": [
         {

@@ -32,7 +32,8 @@ Thumbs.db
 .env.test.local
 .env.production.local
 
-# Build outputs (if any)
+# Build outputs (Vite generates dist/ on build)
+dist/
 build/
 
 # Logs

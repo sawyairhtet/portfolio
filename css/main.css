@@ -1,32 +1,39 @@
 /* ============================================
    MAIN CSS - Import Manifest
    Portfolio Website - Fedora 43 / GNOME 49
+   CSS @layer architecture for specificity control
    ============================================ */
 
-/* Base Styles (variables must be first as other files depend on them) */
-@import url('base/variables.css');
-@import url('base/typography.css');
-@import url('base/reset.css');
-@import url('base/animations.css');
+@layer reset, tokens, base, components, utilities;
 
-/* Component Styles */
-@import url('components/layout.css');
-@import url('components/top-bar.css');
-@import url('components/dock.css');
-@import url('components/window.css');
-@import url('components/app-grid.css');
-@import url('components/context-menu.css');
-@import url('components/terminal.css');
-@import url('components/apps.css');
-@import url('components/ui-elements.css');
-@import url('components/dialog.css');
-@import url('components/skeleton.css');
-@import url('components/command-palette.css');
-@import url('components/focus-mode.css');
-@import url('components/lock-screen.css');
-@import url('components/settings.css');
-@import url('components/screenshot-tool.css');
-@import url('components/notification-center.css');
+/* Reset */
+@import url('base/reset.css') layer(reset);
 
-/* Responsive / Media Queries (must be last) */
-@import url('components/responsive.css');
+/* Design Tokens */
+@import url('base/variables.css') layer(tokens);
+
+/* Base Styles */
+@import url('base/typography.css') layer(base);
+@import url('base/animations.css') layer(base);
+
+/* Components */
+@import url('components/layout.css') layer(components);
+@import url('components/top-bar.css') layer(components);
+@import url('components/dock.css') layer(components);
+@import url('components/window.css') layer(components);
+@import url('components/app-grid.css') layer(components);
+@import url('components/context-menu.css') layer(components);
+@import url('components/terminal.css') layer(components);
+@import url('components/apps.css') layer(components);
+@import url('components/ui-elements.css') layer(components);
+@import url('components/dialog.css') layer(components);
+@import url('components/skeleton.css') layer(components);
+@import url('components/command-palette.css') layer(components);
+@import url('components/focus-mode.css') layer(components);
+@import url('components/lock-screen.css') layer(components);
+@import url('components/settings.css') layer(components);
+@import url('components/screenshot-tool.css') layer(components);
+@import url('components/notification-center.css') layer(components);
+
+/* Responsive / Utilities (must be last — highest layer priority) */
+@import url('components/responsive.css') layer(utilities);
