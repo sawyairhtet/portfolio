@@ -4,6 +4,8 @@
  */
 
 import { openWindow, closeAllWindows } from '../core/window-manager.js';
+import { lock } from './lock-screen.js';
+import { executeTerminalCommand, addTerminalOutput } from '../apps/terminal.js';
 
 const COMMANDS = [
     { id: 'about', label: 'Open About', icon: 'fa-user-circle', category: 'Apps', action: () => openWindow('about', getOS()) },
@@ -13,7 +15,33 @@ const COMMANDS = [
     { id: 'links', label: 'Open Links', icon: 'fa-link', category: 'Apps', action: () => openWindow('links', getOS()) },
     { id: 'terminal', label: 'Open Terminal', icon: 'fa-terminal', category: 'Apps', action: () => openWindow('terminal', getOS()) },
     { id: 'settings', label: 'Open Settings', icon: 'fa-cog', category: 'Apps', action: () => openWindow('settings', getOS()) },
+    { id: 'focus-mode', label: 'Open Focus Mode', icon: 'fa-eye', category: 'Apps', action: () => openWindow('focus-mode', getOS()) },
     { id: 'close-all', label: 'Close All Windows', icon: 'fa-times-circle', category: 'Actions', action: () => closeAllWindows() },
+    { id: 'theme-toggle', label: 'Toggle Dark Mode', icon: 'fa-moon', category: 'Actions', action: () => {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            html.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+        const toggle = /** @type {HTMLInputElement | null} */ (document.getElementById('theme-toggle'));
+        if (toggle) { toggle.checked = !isDark; }
+    }},
+    { id: 'lock-screen', label: 'Lock Screen', icon: 'fa-lock', category: 'Actions', action: () => lock() },
+    { id: 'clear-terminal', label: 'Clear Terminal', icon: 'fa-eraser', category: 'Actions', action: () => {
+        const output = document.getElementById('terminal-output');
+        if (output) { output.innerHTML = ''; }
+    }},
+    { id: 'neofetch', label: 'Run Neofetch', icon: 'fa-info-circle', category: 'Actions', action: () => {
+        openWindow('terminal', getOS());
+        setTimeout(() => {
+            const result = executeTerminalCommand('neofetch');
+            addTerminalOutput('neofetch', result);
+        }, 150);
+    }},
     { id: 'github', label: 'Visit GitHub', icon: 'fa-github', category: 'Links', action: () => window.open('https://github.com/sawyairhtet', '_blank') },
     { id: 'linkedin', label: 'Visit LinkedIn', icon: 'fa-linkedin', category: 'Links', action: () => window.open('https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/', '_blank') },
     { id: 'resume', label: 'Download Resume', icon: 'fa-download', category: 'Actions', action: () => { const a = document.querySelector('a[download]'); if (a) (/** @type {HTMLElement} */ (a)).click(); } },

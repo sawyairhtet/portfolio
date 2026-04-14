@@ -546,6 +546,16 @@ export function makeDraggable(element, currentOS) {
         }
 
         snapPreview.classList.remove('visible', 'snap-left', 'snap-right', 'snap-maximize');
+
+        // Save position after drag (#persistence)
+        if (element.style.top && element.style.left) {
+            saveWindowState(element.id, {
+                top: element.style.top,
+                left: element.style.left,
+                width: element.style.width || '',
+                height: element.style.height || '',
+            });
+        }
     }
 }
 
@@ -649,6 +659,16 @@ export function makeResizable(element, currentOS) {
         currentHandle = null;
         document.removeEventListener('mousemove', doResize);
         document.removeEventListener('mouseup', stopResize);
+
+        // Save position/size after resize (#persistence)
+        if (element.style.top && element.style.left) {
+            saveWindowState(element.id, {
+                top: element.style.top,
+                left: element.style.left,
+                width: element.style.width || '',
+                height: element.style.height || '',
+            });
+        }
     }
 }
 
