@@ -107,7 +107,7 @@
     left: calc(100% + 10px);
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(30, 30, 46, 0.92);
+    background: rgba(36, 36, 36, 0.94);
     color: rgba(255, 255, 255, 0.9);
     padding: 4px 10px;
     border-radius: var(--border-radius-sm);
@@ -132,7 +132,7 @@
     top: 50%;
     transform: translateY(-50%);
     border: 5px solid transparent;
-    border-right-color: rgba(30, 30, 46, 0.92);
+    border-right-color: rgba(36, 36, 36, 0.94);
 }
 
 .dock-item:hover .dock-tooltip {

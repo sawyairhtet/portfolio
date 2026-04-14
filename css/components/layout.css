@@ -9,21 +9,34 @@
     padding-left: var(--dock-width);
 }
 
-/* Wallpaper (Desktop only) */
+/* Wallpaper (Desktop only) — Fedora 43 day/night */
 .wallpaper {
     position: absolute;
     top: -20px;
     left: -20px;
     right: -20px;
     bottom: -20px;
-    /* Fedora 43 default: image with gradient fallback */
+    /* Day wallpaper (default, 6am–5:59pm) */
     background:
-        url('../../images/wallpapers/fedora-43-default.jpg') center/cover no-repeat,
-        linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%);
+        url('../../images/wallpapers/1200px-F43-DAY_final_day_(small).png') center/cover no-repeat,
+        var(--gradient-wallpaper);
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
     transition: transform 0.3s ease-out;
+}
+
+/* Night wallpaper (6pm–5:59am) */
+body[data-time="night"] .wallpaper {
+    background:
+        url('../../images/wallpapers/1200px-F43-DAY_final_night_(small).png') center/cover no-repeat,
+        var(--gradient-wallpaper);
+}
+
+/* Custom wallpaper override (user picked from Settings) — needs body prefix to
+   beat body[data-time="night"] .wallpaper specificity (0,2,1) via source order */
+body .wallpaper.custom-wallpaper {
+    background: var(--custom-wallpaper-bg);
 }
 
 /* Subtle pattern overlay for wallpaper depth */

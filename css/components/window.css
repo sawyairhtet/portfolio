@@ -234,36 +234,38 @@
 }
 
 .window-control {
-    width: var(--btn-size);
-    height: var(--btn-size);
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     border: none;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 9px;
-    color: transparent;
+    font-size: 11px;
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: filter var(--transition-fast);
+    transition: background var(--transition-fast), color var(--transition-fast);
 }
 
-/* Show symbols on parent hover */
-.window-controls:hover .window-control {
-    color: rgba(0, 0, 0, 0.6);
+/* GNOME 49: icon buttons — always visible, subtle hover */
+.window-control:hover {
+    background: var(--surface-3);
+    color: var(--text-primary);
 }
 
-/* Close button — solid red circle */
+/* Close button — transparent by default, red on hover */
 .window-control.close {
-    background: var(--btn-close-color);
+    background: transparent;
 }
 
-/* Close hover */
 .window-control.close:hover {
-    filter: brightness(0.85);
+    background: var(--fedora-red);
+    color: var(--text-on-accent);
 }
 
 .window-control:active {
-    filter: brightness(0.7);
+    opacity: 0.7;
     transform: scale(0.92);
 }
 
@@ -344,14 +346,15 @@
    ============================================ */
 
 .window-control.minimize {
-    background: var(--btn-min-color);
+    background: transparent;
 }
 
 .window-control.maximize {
-    background: var(--btn-max-color);
+    background: transparent;
 }
 
 .window-control.minimize:hover,
 .window-control.maximize:hover {
-    filter: brightness(0.85);
+    background: var(--surface-3);
+    color: var(--text-primary);
 }

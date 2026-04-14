@@ -1,6 +1,13 @@
 /* ============================================
-   APP GRID - Responsive Multi-Column Layout
+   APP GRID — Desktop Application Grid
    ============================================ */
+
+/* GNOME 49: clean desktop on large screens — apps accessed via dock & Activities */
+@media (min-width: 1025px) {
+    .app-grid {
+        display: none !important;
+    }
+}
 
 .app-grid {
     position: absolute;

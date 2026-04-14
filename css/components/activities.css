@@ -1,0 +1,222 @@
+/* ============================================
+   ACTIVITIES OVERVIEW — GNOME 49
+   ============================================ */
+
+.activities-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: calc(var(--topbar-height) + 32px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.activities-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Search bar */
+.activities-search {
+    width: 100%;
+    max-width: 580px;
+    margin-bottom: 40px;
+}
+
+.activities-search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--border-radius-xl);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.activities-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.activities-search-input:focus {
+    border-color: var(--fedora-blue);
+    box-shadow: 0 0 0 3px rgba(53, 132, 228, 0.25);
+}
+
+/* Window thumbnails area */
+.activities-windows {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    max-width: 1000px;
+    width: 100%;
+    padding: 0 24px;
+    overflow-y: auto;
+}
+
+.activities-window-thumb {
+    width: 280px;
+    height: 180px;
+    background: var(--surface-1);
+    border-radius: var(--border-radius-lg);
+    border: 2px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.activities-window-thumb:hover {
+    transform: scale(1.05);
+    border-color: var(--fedora-blue);
+}
+
+.activities-thumb-header {
+    height: 28px;
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.activities-thumb-body {
+    flex: 1;
+    background: var(--surface-0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: var(--text-disabled);
+}
+
+.activities-thumb-close {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--fedora-red);
+    color: var(--text-on-accent);
+    border: none;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.activities-window-thumb:hover .activities-thumb-close {
+    opacity: 1;
+}
+
+.activities-thumb-close:hover {
+    transform: scale(1.15);
+}
+
+/* No windows message */
+.activities-no-windows {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 16px;
+    text-align: center;
+    padding: 40px;
+}
+
+/* App grid at bottom */
+.activities-app-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    padding: 32px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    width: 100%;
+    max-width: 800px;
+}
+
+.activities-app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.9);
+    transition: transform var(--transition-fast);
+}
+
+.activities-app-item:hover {
+    transform: scale(1.12);
+}
+
+.activities-app-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--text-on-accent);
+}
+
+.activities-app-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Hide when searching with no matches */
+.activities-app-item.hidden {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .activities-overlay {
+        transition: none;
+    }
+    .activities-window-thumb,
+    .activities-app-item {
+        transition: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .activities-overlay {
+        padding-top: calc(var(--topbar-height) + 16px);
+    }
+    .activities-search {
+        padding: 0 var(--spacing-md);
+    }
+    .activities-window-thumb {
+        width: 200px;
+        height: 130px;
+    }
+    .activities-app-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+}

@@ -15,8 +15,7 @@
     font-weight: 500;
     z-index: var(--z-topbar);
     background: var(--topbar-bg);
-    backdrop-filter: var(--topbar-blur);
-    -webkit-backdrop-filter: var(--topbar-blur);
+    /* GNOME 49: solid opaque panel, no blur */
     color: var(--text-on-accent);
 }
 
@@ -62,13 +61,16 @@
     font-weight: 500;
     font-family: var(--font-ui);
     padding: 4px 10px;
+    border: none;
     border-radius: var(--border-radius-sm);
+    background: transparent;
     cursor: pointer;
     transition: background var(--transition-fast);
 }
 
-.activities-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
+.activities-btn:hover,
+.activities-btn.active {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* Pill Styling for Top Bar Items */

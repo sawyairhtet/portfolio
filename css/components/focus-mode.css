@@ -70,6 +70,8 @@
 /* Presets */
 .focus-presets {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-sm);
 }
 

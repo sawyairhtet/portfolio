@@ -5,13 +5,14 @@
 
 const ThemeManager = {
     init() {
-        // Restore saved theme preference
+        // Restore saved theme preference (keep HTML default if nothing saved)
         const saved = localStorage.getItem('theme');
         if (saved === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
+        } else if (saved === 'light') {
             document.documentElement.removeAttribute('data-theme');
         }
+        // If no saved preference, keep the HTML default (data-theme="dark")
     },
 
     updateUI() {

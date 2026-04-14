@@ -49,6 +49,7 @@ const SWIPE_SWITCH_MAX_Y = 50; // Maximum vertical deviation for horizontal swip
 
 // Boot screen timing
 const BOOT_LINE_INTERVAL_MS = 80;
+const PLYMOUTH_DURATION_MS = 2000;
 
 // ============================================
 // STATE
@@ -235,6 +236,7 @@ function updateClock() {
 function initBootScreen() {
     const bootScreen = document.getElementById('boot-screen');
     const bootLog = document.getElementById('boot-log');
+    const plymouthSplash = document.getElementById('plymouth-splash');
     if (!bootScreen || !bootLog) {
         return;
     }
@@ -249,9 +251,7 @@ function initBootScreen() {
 
     if (mediaQuery.matches || isReturningVisitor) {
         bootScreen.remove();
-        // Mark as visited
         localStorage.setItem('hasVisitedBefore', 'true');
-        // Immediately open default windows
         if (currentOS === 'desktop') {
             const aboutWin = document.getElementById('about-window');
             if (aboutWin) {
@@ -276,12 +276,10 @@ function initBootScreen() {
         }
         isSkipped = true;
 
-        // Clear any pending interval
         if (bootInterval) {
             clearTimeout(bootInterval);
         }
 
-        // Remove skip listeners
         document.removeEventListener('keydown', skipBoot);
         bootScreen.removeEventListener('click', skipBoot);
 
@@ -290,7 +288,6 @@ function initBootScreen() {
         setTimeout(() => {
             bootScreen.remove();
 
-            // Open About Window - Positioned Left
             if (currentOS === 'desktop') {
                 const aboutWin = document.getElementById('about-window');
                 if (aboutWin) {
@@ -301,7 +298,6 @@ function initBootScreen() {
             openWindow('about', currentOS);
 
             if (currentOS === 'desktop') {
-                // Open Contact Window - Positioned Right
                 setTimeout(() => {
                     const contactWin = document.getElementById('contact-window');
                     if (contactWin) {
@@ -312,7 +308,11 @@ function initBootScreen() {
                 }, 200);
             }
 
-            // Defer startup drum to first user gesture to comply with autoplay policy (#24)
+            // Show welcome notification after boot
+            setTimeout(() => {
+                showToast('Welcome to Fedora 43 Desktop', 'fa-fedora fab');
+            }, 800);
+
             const playDrumOnce = () => {
                 SoundManager.playStartupDrum();
                 document.removeEventListener('click', playDrumOnce);
@@ -323,18 +323,36 @@ function initBootScreen() {
         }, 300);
     }
 
-    // Skip handler for key press or click
     function skipBoot(e) {
-        // Ignore modifier keys alone
         if (e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta') {
             return;
         }
         completeBoot();
     }
 
-    // Add skip listeners
     document.addEventListener('keydown', skipBoot);
     bootScreen.addEventListener('click', skipBoot);
+
+    // Phase 1: Plymouth splash (Fedora logo + spinner)
+    // Phase 2: After PLYMOUTH_DURATION_MS, fade to text boot log
+    function startTextBoot() {
+        if (isSkipped) {
+            return;
+        }
+        if (plymouthSplash) {
+            plymouthSplash.classList.add('fade-out');
+            setTimeout(() => {
+                plymouthSplash.style.display = 'none';
+                bootLog.style.display = '';
+                addLine();
+            }, 500);
+        } else {
+            bootLog.style.display = '';
+            addLine();
+        }
+    }
+
+    setTimeout(startTextBoot, PLYMOUTH_DURATION_MS);
 
     function addLine() {
         if (isSkipped) {
@@ -361,8 +379,6 @@ function initBootScreen() {
             setTimeout(completeBoot, 500);
         }
     }
-
-    addLine();
 }
 
 // ============================================
@@ -729,14 +745,213 @@ function setupContactForm() {
 }
 
 // ============================================
+// WALLPAPER TIME-OF-DAY
+// ============================================
+
+function setWallpaperByTime() {
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 18) {
+        document.body.setAttribute('data-time', 'day');
+    } else {
+        document.body.setAttribute('data-time', 'night');
+    }
+}
+
+// ============================================
+// ACTIVITIES OVERVIEW (GNOME 49)
+// ============================================
+
+function setupActivities() {
+    const activitiesBtn = document.getElementById('activities-btn');
+    const overlay = document.getElementById('activities-overlay');
+    const searchInput = /** @type {HTMLInputElement | null} */ (document.getElementById('activities-search-input'));
+    const windowsContainer = document.getElementById('activities-windows');
+    const appItems = document.querySelectorAll('.activities-app-item');
+
+    if (!activitiesBtn || !overlay) {
+        return;
+    }
+
+    let isOpen = false;
+
+    function openActivities() {
+        if (isOpen) {
+            return;
+        }
+        isOpen = true;
+        overlay.classList.add('visible');
+        activitiesBtn.classList.add('active');
+        updateWindowThumbnails();
+        if (searchInput) {
+            setTimeout(() => searchInput.focus(), 100);
+        }
+    }
+
+    function closeActivities() {
+        if (!isOpen) {
+            return;
+        }
+        isOpen = false;
+        overlay.classList.remove('visible');
+        activitiesBtn.classList.remove('active');
+        if (searchInput) {
+            searchInput.value = '';
+            filterApps('');
+        }
+    }
+
+    function toggleActivities() {
+        if (isOpen) {
+            closeActivities();
+        } else {
+            openActivities();
+        }
+    }
+
+    // Build window thumbnails from currently open windows
+    function updateWindowThumbnails() {
+        if (!windowsContainer) {
+            return;
+        }
+        windowsContainer.innerHTML = '';
+
+        const activeWindows = getActiveWindows();
+        if (activeWindows.size === 0) {
+            const noWin = document.createElement('div');
+            noWin.className = 'activities-no-windows';
+            noWin.textContent = 'No open windows';
+            windowsContainer.appendChild(noWin);
+            return;
+        }
+
+        activeWindows.forEach(winId => {
+            const winEl = document.getElementById(winId);
+            if (!winEl) {
+                return;
+            }
+            const appName = winEl.dataset.app || '';
+            const title = winEl.querySelector('.window-title');
+            const titleText = title ? title.textContent : appName;
+
+            // Get the icon from the dock item for this app
+            const dockItem = document.querySelector(`.dock-item[data-app="${appName}"] i`);
+            const iconClass = dockItem ? dockItem.className : 'fas fa-window-maximize';
+
+            const thumb = document.createElement('div');
+            thumb.className = 'activities-window-thumb';
+            thumb.setAttribute('role', 'button');
+            thumb.setAttribute('aria-label', `Switch to ${titleText}`);
+
+            const header = document.createElement('div');
+            header.className = 'activities-thumb-header';
+            header.textContent = titleText;
+
+            const body = document.createElement('div');
+            body.className = 'activities-thumb-body';
+            const icon = document.createElement('i');
+            icon.className = iconClass;
+            body.appendChild(icon);
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'activities-thumb-close';
+            closeBtn.setAttribute('aria-label', `Close ${titleText}`);
+            closeBtn.innerHTML = '<i class=\"fas fa-times\"></i>';
+
+            closeBtn.addEventListener('click', e => {
+                e.stopPropagation();
+                closeWindow(winId);
+                updateWindowThumbnails();
+            });
+
+            thumb.addEventListener('click', () => {
+                bringToFront(winEl);
+                closeActivities();
+            });
+
+            thumb.appendChild(closeBtn);
+            thumb.appendChild(header);
+            thumb.appendChild(body);
+            windowsContainer.appendChild(thumb);
+        });
+    }
+
+    // Filter apps by search
+    function filterApps(query) {
+        const q = query.toLowerCase().trim();
+        appItems.forEach(item => {
+            const label = item.querySelector('.activities-app-label');
+            const name = label ? label.textContent.toLowerCase() : '';
+            if (q === '' || name.includes(q)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    }
+
+    // Event listeners
+    activitiesBtn.addEventListener('click', toggleActivities);
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && isOpen) {
+            closeActivities();
+        }
+    });
+
+    // Close when clicking overlay background (not children)
+    overlay.addEventListener('click', e => {
+        if (e.target === overlay) {
+            closeActivities();
+        }
+    });
+
+    // Search filtering
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            filterApps(searchInput.value);
+        });
+    }
+
+    // App grid items in Activities
+    appItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const appName = /** @type {HTMLElement} */ (item).dataset.app;
+            if (appName) {
+                closeActivities();
+                handleAppIconClick(appName);
+            }
+        });
+    });
+
+    // Hot corner: move mouse to top-left to trigger Activities
+    let hotCornerTimeout = null;
+    document.addEventListener('mousemove', e => {
+        if (e.clientX <= 1 && e.clientY <= 1) {
+            if (!hotCornerTimeout) {
+                hotCornerTimeout = setTimeout(() => {
+                    if (!isOpen) {
+                        openActivities();
+                    }
+                    hotCornerTimeout = null;
+                }, 200);
+            }
+        } else if (hotCornerTimeout) {
+            clearTimeout(hotCornerTimeout);
+            hotCornerTimeout = null;
+        }
+    });
+}
+
+// ============================================
 // WALLPAPER CUSTOMIZATION
 // ============================================
 
 const WALLPAPERS = [
-    { id: 'default', label: 'Fedora Blue', gradient: 'linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%)' },
-    { id: 'adwaita-dark', label: 'Adwaita Dark', gradient: 'linear-gradient(135deg, #1e1e2e 0%, #2d2d3f 50%, #1e1e2e 100%)' },
-    { id: 'gnome-blobs', label: 'GNOME Blobs', gradient: 'radial-gradient(ellipse at 20% 50%, #3584e4 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #9141ac 0%, transparent 40%), radial-gradient(ellipse at 70% 80%, #2ec27e 0%, transparent 45%), linear-gradient(135deg, #1e1e2e 0%, #242432 100%)' },
-    { id: 'fedora-dark', label: 'Fedora Dark', gradient: 'linear-gradient(160deg, #0d1b2a 0%, #1b2838 30%, #2d2d3f 60%, #1e1e2e 100%)' },
+    { id: 'default', label: 'Fedora 43 (Time)', gradient: null },
+    { id: 'adwaita-dark', label: 'Adwaita Dark', gradient: 'linear-gradient(135deg, #242424 0%, #303030 50%, #242424 100%)' },
+    { id: 'gnome-blobs', label: 'GNOME Blobs', gradient: 'radial-gradient(ellipse at 20% 50%, #3584e4 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #9141ac 0%, transparent 40%), radial-gradient(ellipse at 70% 80%, #2ec27e 0%, transparent 45%), linear-gradient(135deg, #242424 0%, #303030 100%)' },
+    { id: 'fedora-dark', label: 'Fedora Dark', gradient: 'linear-gradient(160deg, #0d1b2a 0%, #1b2838 30%, #303030 60%, #242424 100%)' },
     { id: 'aurora', label: 'Aurora', gradient: 'linear-gradient(135deg, #0d2137 0%, #9141ac 40%, #3584e4 70%, #2ec27e 100%)' },
     { id: 'ocean', label: 'Ocean Blue', gradient: 'linear-gradient(135deg, #0c3547 0%, #1a6b8a 50%, #11998e 100%)' },
     { id: 'midnight', label: 'Midnight', gradient: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' },
@@ -769,7 +984,14 @@ function setupSettingsPanel() {
             btn.dataset.wallpaper = w.id;
             btn.setAttribute('aria-label', w.label);
             btn.setAttribute('title', w.label);
-            btn.style.background = w.gradient;
+
+            if (w.gradient) {
+                btn.style.background = w.gradient;
+            } else {
+                // Default Fedora 43 time-based wallpaper preview
+                btn.style.background = 'url(\"images/wallpapers/1200px-F43-DAY_final_day_(small).png\") center/cover';
+            }
+
             btn.addEventListener('click', () => {
                 applyWallpaper(w);
                 localStorage.setItem('portfolioWallpaper', w.id);
@@ -830,11 +1052,9 @@ function setupSettingsPanel() {
     // ── Dark mode toggle ──
     const themeToggle = /** @type {HTMLInputElement | null} */ (document.getElementById('theme-toggle'));
     if (themeToggle) {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggle.checked = true;
-        }
+        // Sync with actual attribute (respects HTML default + localStorage)
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        themeToggle.checked = isDark;
 
         themeToggle.addEventListener('change', () => {
             if (themeToggle.checked) {
@@ -851,7 +1071,20 @@ function setupSettingsPanel() {
 }
 
 function applyWallpaper(wp) {
-    document.documentElement.style.setProperty('--gradient-wallpaper', wp.gradient);
+    const wallpaperEl = document.querySelector('.wallpaper');
+    if (!wallpaperEl) {
+        return;
+    }
+
+    if (wp.gradient) {
+        // Custom gradient wallpaper — override time-based images
+        wallpaperEl.classList.add('custom-wallpaper');
+        /** @type {HTMLElement} */ (wallpaperEl).style.setProperty('--custom-wallpaper-bg', wp.gradient);
+    } else {
+        // Default: restore Fedora 43 time-based wallpaper
+        wallpaperEl.classList.remove('custom-wallpaper');
+        /** @type {HTMLElement} */ (wallpaperEl).style.removeProperty('--custom-wallpaper-bg');
+    }
 }
 
 // ============================================
@@ -918,11 +1151,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup contact form
     setupContactForm();
 
+    // Set wallpaper based on time of day (6am–5:59pm = day, else night)
+    setWallpaperByTime();
+
     // Setup wallpaper customization (new Settings panel)
     setupSettingsPanel();
 
     // Animate skill progress bars when skills window opens
     setupSkillBarAnimation();
+
+    // GNOME 49 Activities overview
+    setupActivities();
 
     // Phase 2 — GNOME 49 Features
     setupFocusMode();
