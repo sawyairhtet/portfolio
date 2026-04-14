@@ -15,36 +15,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' ws://localhost:* https://www.google-analytics.com https://www.googletagmanager.com;"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' ws://localhost:* https://www.google-analytics.com https://www.googletagmanager.com https://formspree.io;"
         />
         <meta
             name="description"
-            content="Saw Ye Htet - IT Student & VR Developer at Singapore Polytechnic. Specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+            content="Saw Ye Htet — IT Student & VR Developer. Portfolio simulating a Fedora 43 GNOME 49 desktop experience in the browser."
         />
 
         <!-- Open Graph / facebook -->
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://sawyehtet.com/" />
-        <meta property="og:title" content="Saw Ye Htet - Portfolio" />
+        <meta property="og:title" content="Saw Ye Htet — Portfolio | Fedora 43 Desktop" />
         <meta
             property="og:description"
-            content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+            content="IT Student & VR Developer. Interactive portfolio simulating a Fedora 43 GNOME 49 desktop — built with vanilla JS, HTML & CSS."
         />
         <meta property="og:image" content="https://sawyehtet.com/images/og-preview.png" />
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Saw Ye Htet - Portfolio" />
+        <meta name="twitter:title" content="Saw Ye Htet — Portfolio | Fedora 43 Desktop" />
         <meta
             name="twitter:description"
-            content="IT Student & VR Developer specializing in Unity, Meta Quest hand tracking, and full-stack web development."
+            content="IT Student & VR Developer. Interactive portfolio simulating a Fedora 43 GNOME 49 desktop — built with vanilla JS, HTML & CSS."
         />
         <meta name="twitter:image" content="https://sawyehtet.com/images/og-preview.png" />
 
         <meta name="author" content="Saw Ye Htet" />
 
         <link rel="canonical" href="https://sawyehtet.com/" />
-        <title>Saw Ye Htet - Portfolio</title>
+        <title>Saw Ye Htet — Portfolio | Fedora 43 Desktop</title>
         <!-- CSS entry point — Vite serves source in dev, bundles in production -->
         <link rel="stylesheet" href="css/main.css" />
         <!-- Theme Init (prevents flash of wrong theme) -->
@@ -208,7 +208,7 @@
         <!-- Main Content Area -->
         <main id="main-content" class="main-content" role="main">
             <!-- Visually hidden h1 for SEO/accessibility -->
-            <h1 class="sr-only">Saw Ye Htet - IT Student & Software Engineer Portfolio</h1>
+            <h1 class="sr-only">Saw Ye Htet — IT Student &amp; VR Developer | Fedora 43 Desktop Portfolio</h1>
 
             <!-- Desktop Wallpaper (macOS only) -->
             <div class="wallpaper"></div>
@@ -330,11 +330,13 @@
                     <div class="about-section">
                         <h3><i class="fas fa-user"></i> About Me</h3>
                         <p>
-                            I'm a passionate IT student with a keen interest in creating immersive
-                            digital experiences. From building interactive VR games to crafting
-                            polished web applications, I love turning ideas into reality through
-                            code. Always eager to learn new technologies and push the boundaries of
-                            what's possible.
+                            I build things that feel real — whether that's a VR heist game
+                            where you grab jewels with your bare hands, or this portfolio
+                            that simulates a full Fedora 43 desktop in the browser. I got
+                            hooked on VR after implementing Meta Quest hand tracking and
+                            realising gesture input could replace controllers entirely. When
+                            I'm not in Unity, I'm usually deep in vanilla JS, Linux configs,
+                            or figuring out how to make CSS do something it probably shouldn't.
                         </p>
                     </div>
 
@@ -348,29 +350,21 @@
                     </div>
 
                     <div class="about-section">
-                        <h3><i class="fas fa-book"></i> Key Coursework</h3>
-                        <p>
-                            Object-Oriented Programming • Data Structures & Algorithms • Database
-                            Management • Web Development • Mobile Application Development • User
-                            Experience Design • Cloud Computing Fundamentals
-                        </p>
-                    </div>
-
-                    <div class="about-section">
                         <h3><i class="fas fa-briefcase"></i> Experience</h3>
                         <p>
                             <strong>VR Developer</strong><br />
-                            Developed immersive VR experiences using Unity and Meta Quest hand
-                            tracking technology. Created game mechanics, optimized performance, and
-                            implemented intuitive gesture controls.
+                            Built a jewelry heist VR game for Meta Quest using Unity and C#.
+                            Implemented full hand tracking — grab, throw, and interact with
+                            objects using bare hands. Optimised rendering for 72fps on
+                            standalone hardware.
                         </p>
                     </div>
 
                     <div class="about-section">
                         <h3><i class="fas fa-heart"></i> Interests</h3>
                         <p>
-                            Virtual Reality & Spatial Computing • Game Development • Open Source •
-                            Linux & System Customization • UI/UX Design • Competitive Programming
+                            VR &amp; Spatial Computing • Game Development • Open Source •
+                            Linux &amp; System Customization • UI/UX Design
                         </p>
                     </div>
                 </div>
@@ -403,51 +397,116 @@
                 </div>
             </div>
             <div class="window-body">
-                <h2><i class="fas fa-laptop-code"></i> Skills & Tools</h2>
+                <h2><i class="fas fa-laptop-code"></i> Skills &amp; Tools</h2>
 
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-icon languages"><i class="fas fa-code"></i></div>
-                        <h4>Languages</h4>
-                        <p>JavaScript, Python, C#, Java, SQL</p>
-                        <span class="skill-level proficient">Proficient</span>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon frontend"><i class="fas fa-palette"></i></div>
-                        <h4>Frontend</h4>
-                        <p>HTML5, CSS3, React, Responsive Design</p>
-                        <span class="skill-level proficient">Proficient</span>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon backend"><i class="fas fa-server"></i></div>
-                        <h4>Backend</h4>
-                        <p>REST APIs, Node.js, Database Integration</p>
-                        <span class="skill-level familiar">Familiar</span>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon vr"><i class="fas fa-vr-cardboard"></i></div>
-                        <h4>VR Development</h4>
-                        <p>Unity, Meta Quest, Hand Tracking</p>
-                        <span class="skill-level proficient">Proficient</span>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon tools"><i class="fas fa-tools"></i></div>
-                        <h4>Tools</h4>
-                        <p>Git, VS Code, Figma, Chrome DevTools</p>
-                        <span class="skill-level proficient">Proficient</span>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon" style="color: #00d4ff">
-                            <i class="fas fa-cloud"></i>
+                <div class="skills-groups">
+                    <div class="skill-group">
+                        <h3 class="skill-group-title">Languages</h3>
+                        <div class="skill-icon-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-js"></i>
+                                <span class="skill-name">JavaScript</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-python"></i>
+                                <span class="skill-name">Python</span>
+                                <span class="skill-dots" aria-label="3 out of 5">●●●○○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-code"></i>
+                                <span class="skill-name">C#</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-java"></i>
+                                <span class="skill-name">Java</span>
+                                <span class="skill-dots" aria-label="3 out of 5">●●●○○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-database"></i>
+                                <span class="skill-name">SQL</span>
+                                <span class="skill-dots" aria-label="3 out of 5">●●●○○</span>
+                            </div>
                         </div>
-                        <h4>Cloud & DevOps</h4>
-                        <p>GitHub Actions, CI/CD, Basic AWS</p>
-                        <span class="skill-level learning">Learning</span>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-group-title">Frontend</h3>
+                        <div class="skill-icon-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-html5"></i>
+                                <span class="skill-name">HTML5</span>
+                                <span class="skill-dots" aria-label="5 out of 5">●●●●●</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-css3-alt"></i>
+                                <span class="skill-name">CSS3</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-react"></i>
+                                <span class="skill-name">React</span>
+                                <span class="skill-dots" aria-label="3 out of 5">●●●○○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-node-js"></i>
+                                <span class="skill-name">Node.js</span>
+                                <span class="skill-dots" aria-label="3 out of 5">●●●○○</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-group-title">VR / Game Dev</h3>
+                        <div class="skill-icon-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-unity"></i>
+                                <span class="skill-name">Unity</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-vr-cardboard"></i>
+                                <span class="skill-name">Meta Quest</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-hand-paper"></i>
+                                <span class="skill-name">Hand Tracking</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-group-title">Tools</h3>
+                        <div class="skill-icon-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-git-alt"></i>
+                                <span class="skill-name">Git</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-code"></i>
+                                <span class="skill-name">VS Code</span>
+                                <span class="skill-dots" aria-label="4 out of 5">●●●●○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-figma"></i>
+                                <span class="skill-name">Figma</span>
+                                <span class="skill-dots" aria-label="3 out of 5">●●●○○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-linux"></i>
+                                <span class="skill-name">Linux</span>
+                                <span class="skill-dots" aria-label="3 out of 5">●●●○○</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-github"></i>
+                                <span class="skill-name">GitHub Actions</span>
+                                <span class="skill-dots" aria-label="2 out of 5">●●○○○</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -590,6 +649,51 @@
                         </div>
                     </div>
                 </div>
+
+                <form
+                    id="contact-form"
+                    action="https://formspree.io/f/YOUR_FORM_ID"
+                    method="POST"
+                    class="contact-form"
+                >
+                    <div class="form-group">
+                        <label for="contact-name">Name</label>
+                        <input
+                            type="text"
+                            id="contact-name"
+                            name="name"
+                            placeholder="Your name"
+                            required
+                            autocomplete="name"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input
+                            type="email"
+                            id="contact-email"
+                            name="email"
+                            placeholder="Your email"
+                            required
+                            autocomplete="email"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Message</label>
+                        <textarea
+                            id="contact-message"
+                            name="message"
+                            placeholder="Your message"
+                            required
+                            rows="5"
+                        ></textarea>
+                    </div>
+                    <button type="submit" id="contact-submit-btn" class="contact-submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <div id="form-status" class="form-status" aria-live="polite"></div>
+                </form>
+
                 <div class="resume-section">
                     <h3><i class="fas fa-file-alt"></i> Resume</h3>
                     <a href="resume/SYH_resume.pdf" download class="resume-download-btn">
