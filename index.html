@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' ws://localhost:* https://www.google-analytics.com https://www.googletagmanager.com https://formspree.io;"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' ws://localhost:* https://www.google-analytics.com https://www.googletagmanager.com https://formspree.io https://plausible.io;"
         />
         <meta
             name="description"
@@ -893,17 +893,41 @@
 
         <script type="module" src="js/app.js"></script>
 
-        <!-- Service Worker Registration for PWA -->
+        <!-- Service Worker Registration + PWA Install Prompt -->
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker
-                        .register('./sw.js')
-                        .then(reg => console.log('[SW] Registered:', reg.scope))
-                        .catch(err => console.log('[SW] Registration failed:', err));
+                    navigator.serviceWorker.register('./sw.js').catch(() => {});
                 });
             }
+
+            let deferredPrompt = null;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                const banner = document.createElement('div');
+                banner.className = 'pwa-install-banner';
+                banner.innerHTML =
+                    '<span><i class="fas fa-download" aria-hidden="true"></i> Install this app on your device</span>' +
+                    '<button id="pwa-install-btn">Install</button>' +
+                    '<button id="pwa-dismiss-btn" aria-label="Dismiss">&times;</button>';
+                document.body.appendChild(banner);
+                requestAnimationFrame(() => banner.classList.add('visible'));
+
+                document.getElementById('pwa-install-btn').addEventListener('click', () => {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+                    banner.remove();
+                });
+                document.getElementById('pwa-dismiss-btn').addEventListener('click', () => {
+                    banner.remove();
+                });
+            });
         </script>
+
+        <!-- Plausible Analytics (replace YOUR_DOMAIN after signup) -->
+        <script defer data-domain="sawyehtet.com"
+            src="https://plausible.io/js/script.js"></script>
 
         <noscript>
             <style>

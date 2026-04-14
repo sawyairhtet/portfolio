@@ -735,6 +735,8 @@ function setupContactForm() {
 const WALLPAPERS = [
     { id: 'default', label: 'Fedora Blue', gradient: 'linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%)' },
     { id: 'adwaita-dark', label: 'Adwaita Dark', gradient: 'linear-gradient(135deg, #1e1e2e 0%, #2d2d3f 50%, #1e1e2e 100%)' },
+    { id: 'gnome-blobs', label: 'GNOME Blobs', gradient: 'radial-gradient(ellipse at 20% 50%, #3584e4 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #9141ac 0%, transparent 40%), radial-gradient(ellipse at 70% 80%, #2ec27e 0%, transparent 45%), linear-gradient(135deg, #1e1e2e 0%, #242432 100%)' },
+    { id: 'fedora-dark', label: 'Fedora Dark', gradient: 'linear-gradient(160deg, #0d1b2a 0%, #1b2838 30%, #2d2d3f 60%, #1e1e2e 100%)' },
     { id: 'aurora', label: 'Aurora', gradient: 'linear-gradient(135deg, #0d2137 0%, #9141ac 40%, #3584e4 70%, #2ec27e 100%)' },
     { id: 'ocean', label: 'Ocean Blue', gradient: 'linear-gradient(135deg, #0c3547 0%, #1a6b8a 50%, #11998e 100%)' },
     { id: 'midnight', label: 'Midnight', gradient: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' },

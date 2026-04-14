@@ -66,6 +66,18 @@
     background: linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%);
 }
 
+.dock-item[data-app='skills'] {
+    background: linear-gradient(135deg, #33d17a 0%, var(--fedora-teal) 100%);
+}
+
+.dock-item[data-app='links'] {
+    background: linear-gradient(135deg, #f5c211 0%, #e5a50a 100%);
+}
+
+.dock-item[data-app='focus-mode'] {
+    background: linear-gradient(135deg, #ff7800 0%, #e5611a 100%);
+}
+
 /* Blue dot indicator below active app */
 .dock-item.active::after {
     content: '';
