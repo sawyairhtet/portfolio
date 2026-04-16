@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     gap: 48px;
-    background: #000000;
+    background: var(--boot-bg);
     z-index: 2;
     transition: opacity 0.5s ease;
 }
@@ -22,7 +22,7 @@
 /* Fedora logo */
 .plymouth-logo {
     font-size: 80px;
-    color: #3584e4;
+    color: var(--fedora-blue);
     transition: opacity 0.3s ease;
 }
 
@@ -61,7 +61,7 @@
     40% {
         opacity: 1;
         transform: scale(1);
-        background: #3584e4;
+        background: var(--fedora-blue);
     }
 }
 

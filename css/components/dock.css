@@ -32,7 +32,7 @@
     font-size: 22px;
     cursor: pointer;
     position: relative;
-    color: #ffffff;
+    color: var(--text-on-accent);
     transition: transform var(--transition-fast);
 }
 
@@ -51,31 +51,31 @@
 }
 
 .dock-item[data-app='projects'] {
-    background: linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%);
+    background: linear-gradient(135deg, var(--icon-projects) 0%, var(--fedora-blue-dark) 100%);
 }
 
 .dock-item[data-app='contact'] {
-    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
+    background: linear-gradient(135deg, var(--icon-contact) 0%, var(--fedora-purple) 100%);
 }
 
 .dock-item[data-app='terminal'] {
-    background: linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%);
+    background: linear-gradient(135deg, var(--icon-terminal) 0%, var(--fedora-green) 100%);
 }
 
 .dock-item[data-app='settings'] {
-    background: linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%);
+    background: linear-gradient(135deg, var(--icon-settings-start) 0%, var(--icon-settings-end) 100%);
 }
 
 .dock-item[data-app='skills'] {
-    background: linear-gradient(135deg, #33d17a 0%, var(--fedora-teal) 100%);
+    background: linear-gradient(135deg, var(--icon-skills) 0%, var(--fedora-teal) 100%);
 }
 
 .dock-item[data-app='links'] {
-    background: linear-gradient(135deg, #f5c211 0%, #e5a50a 100%);
+    background: linear-gradient(135deg, var(--icon-links-start) 0%, var(--icon-links-end) 100%);
 }
 
 .dock-item[data-app='focus-mode'] {
-    background: linear-gradient(135deg, #ff7800 0%, #e5611a 100%);
+    background: linear-gradient(135deg, var(--icon-focus-start) 0%, var(--icon-focus-end) 100%);
 }
 
 /* Blue dot indicator below active app */

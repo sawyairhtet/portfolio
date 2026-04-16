@@ -115,9 +115,7 @@
     position: fixed;
     inset: 0;
     z-index: 999999;
-    background: #ffffff;
-    opacity: 0;
-    pointer-events: none;
+    background: var(--screenshot-flash);
 }
 
 .screenshot-flash.active {

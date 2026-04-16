@@ -13,7 +13,7 @@ import {
 } from '../config/data.js';
 
 // State
-let terminalHistory = [];
+const terminalHistory = [];
 let historyIndex = -1;
 let currentPath = '/home/sawyehtet';
 
@@ -53,12 +53,12 @@ function resetFileSystem() {
  * @returns {string}
  */
 function resolvePath(inputPath) {
-    if (!inputPath) return currentPath;
+    if (!inputPath) {return currentPath;}
 
     let path = inputPath;
 
-    if (path === '~') return '/home/sawyehtet';
-    if (path.startsWith('~/')) path = '/home/sawyehtet' + path.slice(1);
+    if (path === '~') {return '/home/sawyehtet';}
+    if (path.startsWith('~/')) {path = '/home/sawyehtet' + path.slice(1);}
 
     if (!path.startsWith('/')) {
         path = currentPath + '/' + path;
@@ -247,7 +247,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     echo: args => {
-        if (!args || args.length === 0) return 'Usage: echo [text]';
+        if (!args || args.length === 0) {return 'Usage: echo [text]';}
         const text = args.join(' ');
         const envVars = {
             '$SHELL': '/bin/bash',
@@ -260,14 +260,14 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
             '$PATH': '/usr/local/bin:/usr/bin:/bin',
         };
         // Direct env var lookup
-        if (envVars[text]) return envVars[text];
+        if (envVars[text]) {return envVars[text];}
         // Replace env vars in text
         return text.replace(/\$[A-Z_]+/g, match => envVars[match] || match);
     },
 
     clear: () => {
         const output = document.getElementById('terminal-output');
-        if (output) output.innerHTML = '';
+        if (output) {output.innerHTML = '';}
         return '';
     },
 
@@ -275,7 +275,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
 
     // File operations
     touch: args => {
-        if (!args[0]) return 'Usage: touch <filename>';
+        if (!args[0]) {return 'Usage: touch <filename>';}
 
         const targetPath = resolvePath(args[0]);
         const fileName = targetPath.split('/').pop();
@@ -298,7 +298,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     mkdir: args => {
-        if (!args[0]) return 'Usage: mkdir <dirname>';
+        if (!args[0]) {return 'Usage: mkdir <dirname>';}
 
         const targetPath = resolvePath(args[0]);
         const dirName = targetPath.split('/').pop();
@@ -321,7 +321,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     rm: args => {
-        if (!args[0]) return 'Usage: rm <filename>';
+        if (!args[0]) {return 'Usage: rm <filename>';}
 
         const targetPath = resolvePath(args[0]);
         const node = fileSystem[targetPath];
@@ -353,7 +353,7 @@ Specialties:  VR Development, Responsive Web Design, UI/UX`;
     },
 
     rmdir: args => {
-        if (!args[0]) return 'Usage: rmdir <dirname>';
+        if (!args[0]) {return 'Usage: rmdir <dirname>';}
 
         const targetPath = resolvePath(args[0]);
         const node = fileSystem[targetPath];
@@ -660,12 +660,12 @@ Complete!`;
 
     neofetch: () => {
         const uptimeStr = terminalCommands.uptime();
-        return `        /:-------------:\           sawyehtet@fedora
+        return `        /:-------------:\\           sawyehtet@fedora
        :-------------------::        ────────────────
-     :-----------/shhOHbmp---:\      OS: Fedora Linux 43 (Workstation Edition)
+     :-----------/shhOHbmp---:\\      OS: Fedora Linux 43 (Workstation Edition)
    /-----------omMMMNNNMMD  ---:     Kernel: 6.11.4-301.fc43.x86_64
   :-----------sMMMMNMNMP.    ---:    Uptime: ${uptimeStr}
- :-----------:MMMdP-------    ---\   Shell: bash 5.2.21
+ :-----------:MMMdP-------    ---\\   Shell: bash 5.2.21
 ,------------:MMMd--------    ---:   DE: GNOME 49
 :------------:MMMd-------    .---:   WM: Mutter (Wayland)
 :----    oNMMMMMMMMMNho     .----:   Theme: Adwaita [GTK4]
@@ -709,7 +709,7 @@ Complete!`;
  */
 export function executeTerminalCommand(input) {
     const trimmedInput = input.trim();
-    if (!trimmedInput) return '';
+    if (!trimmedInput) {return '';}
 
     // Check for output redirect (#26): echo "text" > file
     const redirectMatch = trimmedInput.match(/^(.+?)\s*>\s*(.+)$/);
@@ -769,7 +769,7 @@ Type 'help' for available commands.`;
  */
 export function addTerminalOutput(command, output) {
     const terminalOutput = document.getElementById('terminal-output');
-    if (!terminalOutput) return;
+    if (!terminalOutput) {return;}
 
     const commandLine = document.createElement('div');
     commandLine.className = 'terminal-line terminal-command';
@@ -796,7 +796,7 @@ export function addTerminalOutput(command, output) {
 export function setupTerminal() {
     const terminalInput = /** @type {HTMLInputElement | null} */ (document.getElementById('terminal-input'));
     const terminalSubmit = document.getElementById('terminal-submit');
-    if (!terminalInput) return;
+    if (!terminalInput) {return;}
 
     function runCommand() {
         const command = terminalInput.value;
@@ -848,7 +848,7 @@ export function setupTerminalMobileFix() {
     const terminalInput = document.getElementById('terminal-input');
     const terminalWindow = document.getElementById('terminal-window');
 
-    if (!terminalInput || !terminalWindow) return;
+    if (!terminalInput || !terminalWindow) {return;}
 
     terminalInput.addEventListener('focus', () => {
         if (window.innerWidth <= 768) {

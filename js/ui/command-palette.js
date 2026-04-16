@@ -44,7 +44,7 @@ const COMMANDS = [
     }},
     { id: 'github', label: 'Visit GitHub', icon: 'fa-github', category: 'Links', action: () => window.open('https://github.com/sawyairhtet', '_blank') },
     { id: 'linkedin', label: 'Visit LinkedIn', icon: 'fa-linkedin', category: 'Links', action: () => window.open('https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/', '_blank') },
-    { id: 'resume', label: 'Download Resume', icon: 'fa-download', category: 'Actions', action: () => { const a = document.querySelector('a[download]'); if (a) (/** @type {HTMLElement} */ (a)).click(); } },
+    { id: 'resume', label: 'Download Resume', icon: 'fa-download', category: 'Actions', action: () => { const a = document.querySelector('a[download]'); if (a) {(/** @type {HTMLElement} */ (a)).click();} } },
 ];
 
 let paletteEl = null;

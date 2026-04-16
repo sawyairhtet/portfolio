@@ -57,7 +57,7 @@
 
 .nav-hint-dismiss {
     background: var(--gradient-btn);
-    color: #fff;
+    color: var(--text-on-accent);
     border: none;
     padding: 10px 24px;
     border-radius: var(--radius-md);
@@ -160,7 +160,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: #000;
+    background: var(--boot-bg);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -180,7 +180,7 @@
 .boot-log {
     font-family: var(--font-mono);
     font-size: 14px;
-    color: #fff;
+    color: var(--boot-text);
     line-height: 1.6;
     white-space: pre-wrap;
     width: 100%;
@@ -210,15 +210,15 @@
 }
 
 .boot-log .ok {
-    color: #4e9a06;
+    color: var(--boot-ok);
 }
 
 .boot-log .fail {
-    color: #cc0000;
+    color: var(--boot-fail);
 }
 
 .boot-log .info {
-    color: #729fcf;
+    color: var(--boot-info);
 }
 
 /* ============================================
@@ -230,11 +230,11 @@
     width: auto;
     max-width: 200px;
     padding: 12px 16px;
-    background: #fff9c4;
+    background: var(--sticky-bg);
     font-family: 'Indie Flower', cursive;
     font-size: 15px;
     line-height: 1.4;
-    color: #5d4037;
+    color: var(--sticky-text);
     white-space: pre-line;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     cursor: grab;
@@ -274,17 +274,17 @@
 
 /* Different note colors */
 .sticky-note.pink {
-    background: #ffd6e0;
+    background: var(--sticky-pink);
 }
 
 .sticky-note.blue {
-    background: #d4f1f4;
-    color: #1a535c;
+    background: var(--sticky-blue-bg);
+    color: var(--sticky-blue-text);
 }
 
 .sticky-note.green {
-    background: #d8f3dc;
-    color: #2d6a4f;
+    background: var(--sticky-green-bg);
+    color: var(--sticky-green-text);
 }
 
 /* ============================================

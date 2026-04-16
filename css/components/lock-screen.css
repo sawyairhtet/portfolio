@@ -28,7 +28,7 @@
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-xl);
-    color: #ffffff;
+    color: var(--text-on-accent);
     user-select: none;
 }
 
@@ -109,7 +109,7 @@
     height: 32px;
     border: none;
     background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    color: var(--text-on-accent);
     border-radius: 50%;
     cursor: pointer;
     display: flex;

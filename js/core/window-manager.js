@@ -21,7 +21,7 @@ const WINDOW_STATE_KEY = 'portfolioWindowStates';
 function loadWindowStates() {
     try {
         return JSON.parse(localStorage.getItem(WINDOW_STATE_KEY) || '{}');
-    } catch (e) {
+    } catch {
         return {};
     }
 }
@@ -35,7 +35,7 @@ function saveWindowState(windowId, state) {
         const states = loadWindowStates();
         states[windowId] = state;
         localStorage.setItem(WINDOW_STATE_KEY, JSON.stringify(states));
-    } catch (e) {
+    } catch {
         // Storage full or unavailable
     }
 }

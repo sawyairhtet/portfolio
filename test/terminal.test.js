@@ -82,9 +82,9 @@ describe('Terminal Commands', () => {
     it('unknown commands should return Command not found', () => {
         expect(executeTerminalCommand('history')).toContain('Command not found');
         expect(executeTerminalCommand('ping example.com')).toContain('Command not found');
-        expect(executeTerminalCommand('man')).toContain('Command not found');
-        expect(executeTerminalCommand('man ls')).toContain('Command not found');
-        expect(executeTerminalCommand('ssh')).toContain('Command not found');
+        expect(executeTerminalCommand('vim')).toContain('Command not found');
+        expect(executeTerminalCommand('wget')).toContain('Command not found');
+        expect(executeTerminalCommand('curl')).toContain('Command not found');
     });
 
     it('cowsay should draw a cow', () => {

@@ -734,7 +734,7 @@ function setupContactForm() {
             } else {
                 throw new Error('Form submission failed');
             }
-        } catch (_err) {
+        } catch {
             status.textContent = 'Oops! Something went wrong. Try emailing me directly.';
             status.classList.add('error');
         } finally {
@@ -855,7 +855,7 @@ function setupActivities() {
             const closeBtn = document.createElement('button');
             closeBtn.className = 'activities-thumb-close';
             closeBtn.setAttribute('aria-label', `Close ${titleText}`);
-            closeBtn.innerHTML = '<i class=\"fas fa-times\"></i>';
+            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
             closeBtn.addEventListener('click', e => {
                 e.stopPropagation();
@@ -989,7 +989,7 @@ function setupSettingsPanel() {
                 btn.style.background = w.gradient;
             } else {
                 // Default Fedora 43 time-based wallpaper preview
-                btn.style.background = 'url(\"images/wallpapers/1200px-F43-DAY_final_day_(small).png\") center/cover';
+                btn.style.background = 'url("images/wallpapers/1200px-F43-DAY_final_day_(small).png") center/cover';
             }
 
             btn.addEventListener('click', () => {

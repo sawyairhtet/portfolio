@@ -28,8 +28,8 @@
 .command-palette {
     width: 520px;
     max-width: 90vw;
-    background: var(--color-window-body-bg, #fff);
-    border-radius: var(--radius-lg, 12px);
+    background: var(--color-window-body-bg);
+    border-radius: var(--radius-lg);
     box-shadow: 0 16px 64px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
     overflow: hidden;
     transform: scale(0.95) translateY(-10px);
@@ -60,7 +60,7 @@
     background: transparent;
     font-size: 16px;
     font-family: var(--font-ui);
-    color: var(--color-window-body-text, #2d3748);
+    color: var(--color-window-body-text);
     outline: none;
 }
 

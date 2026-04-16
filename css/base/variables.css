@@ -72,10 +72,51 @@
   /* ── Terminal ── */
   --terminal-bg:           #1e1e1e;
   --terminal-text:         #cdd6f4;
-  --terminal-prompt:       var(--fedora-blue);
+  --terminal-prompt:       #8ae234;
   --terminal-cursor:       var(--fedora-blue);
   --terminal-selection:    rgba(53, 132, 228, 0.35);
   --terminal-font-size:    13px;
+
+  /* ── Boot / Plymouth ── */
+  --boot-bg:            #000000;
+  --boot-text:          #ffffff;
+  --boot-ok:            #4e9a06;
+  --boot-fail:          #cc0000;
+  --boot-info:          #729fcf;
+
+  /* ── Matrix Effect ── */
+  --matrix-bg:          #000000;
+  --matrix-text:        #00ff00;
+  --matrix-exit-text:   #00ff00;
+
+  /* ── Sticky Notes ── */
+  --sticky-bg:          #fff9c4;
+  --sticky-text:        #5d4037;
+  --sticky-pink:        #ffd6e0;
+  --sticky-blue-bg:     #d4f1f4;
+  --sticky-blue-text:   #1a535c;
+  --sticky-green-bg:    #d8f3dc;
+  --sticky-green-text:  #2d6a4f;
+
+  /* ── App Icon Gradients (Dock + Activities) ── */
+  --icon-projects:       #5b9bd5;
+  --icon-contact:        #c061cb;
+  --icon-terminal:       #57e389;
+  --icon-settings-start: #c0bfbc;
+  --icon-settings-end:   #9a9996;
+  --icon-skills:         #33d17a;
+  --icon-links-start:    #f5c211;
+  --icon-links-end:      #e5a50a;
+  --icon-focus-start:    #ff7800;
+  --icon-focus-end:      #e5611a;
+
+  /* ── Status Indicators ── */
+  --status-available:    #4caf50;
+  --disabled-start:      #888888;
+  --disabled-end:        #666666;
+
+  /* ── Screenshot Flash ── */
+  --screenshot-flash:    #ffffff;
 
   /* ── Wallpaper ── */
   --gradient-wallpaper: linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%);

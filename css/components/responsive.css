@@ -84,7 +84,7 @@
 
     .app-label {
         font-size: 14px;
-        color: #ffffff !important;
+        color: var(--text-on-accent) !important;
         text-shadow:
             0 2px 4px rgba(0, 0, 0, 0.8),
             0 0 4px rgba(0, 0, 0, 0.8);
@@ -232,7 +232,7 @@
         display: inline-block !important;
         opacity: 1 !important;
         visibility: visible !important;
-        color: #ffffff !important;
+        color: var(--text-on-accent) !important;
         text-align: center;
         z-index: 20;
         position: relative;
@@ -540,7 +540,7 @@
         display: inline-block !important;
         opacity: 1 !important;
         visibility: visible !important;
-        color: #ffffff !important;
+        color: var(--text-on-accent) !important;
         background: rgba(0, 0, 0, 0.6);
         border-radius: 10px;
         overflow: visible !important;
@@ -629,7 +629,7 @@
         display: inline-block !important;
         opacity: 1 !important;
         visibility: visible !important;
-        color: #ffffff !important;
+        color: var(--text-on-accent) !important;
         background: rgba(0, 0, 0, 0.6);
         border-radius: 10px;
         overflow: visible !important;

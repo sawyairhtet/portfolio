@@ -97,7 +97,7 @@
     box-shadow:
         var(--shadow-md),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    color: #fff;
+    color: var(--text-on-accent);
     border: 1px solid transparent;
     transition:
         border-color var(--transition-normal),
@@ -124,15 +124,15 @@
 }
 
 .app-icon[data-app='skills'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
+    background: linear-gradient(135deg, var(--icon-contact) 0%, var(--fedora-purple) 100%);
 }
 
 .app-icon[data-app='projects'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%);
+    background: linear-gradient(135deg, var(--icon-projects) 0%, var(--fedora-blue-dark) 100%);
 }
 
 .app-icon[data-app='contact'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%);
+    background: linear-gradient(135deg, var(--icon-contact) 0%, var(--fedora-purple) 100%);
 }
 
 .app-icon[data-app='links'] .app-icon-wrapper {
@@ -140,18 +140,18 @@
 }
 
 .app-icon[data-app='terminal'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%);
+    background: linear-gradient(135deg, var(--icon-terminal) 0%, var(--fedora-green) 100%);
 }
 
 .app-icon[data-app='settings'] .app-icon-wrapper {
-    background: linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%);
+    background: linear-gradient(135deg, var(--icon-settings-start) 0%, var(--icon-settings-end) 100%);
 }
 
 .app-label {
     font-size: 12px;
     text-align: center;
     /* Base text styles - always white for visibility on wallpaper */
-    color: #ffffff;
+    color: var(--text-on-accent);
     text-shadow:
         0 1px 3px rgba(0, 0, 0, 0.6),
         0 0 2px rgba(0, 0, 0, 0.4);

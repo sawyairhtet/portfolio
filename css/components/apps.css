@@ -10,7 +10,7 @@
     background: var(--gradient-accent);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-lg);
-    color: #fff;
+    color: var(--text-on-accent);
 }
 
 .about-avatar {
@@ -39,7 +39,7 @@
     font-size: 28px;
     font-weight: 700;
     margin-bottom: var(--spacing-xs);
-    color: #fff;
+    color: var(--text-on-accent);
 }
 
 .about-tagline {
@@ -161,7 +161,7 @@
 }
 
 .contact-item .status-available {
-    color: #4caf50;
+    color: var(--status-available);
     font-size: 10px;
 }
 
@@ -223,7 +223,7 @@
     gap: var(--spacing-sm);
     padding: 12px 24px;
     background: var(--gradient-btn);
-    color: var(--text-on-accent, #ffffff);
+    color: var(--text-on-accent);
     border: none;
     border-radius: var(--radius-md);
     font-family: var(--font-ui);
@@ -259,14 +259,14 @@
 }
 
 .form-status.success {
-    color: var(--fedora-green, #2ec27e);
+    color: var(--fedora-green);
     background: rgba(46, 194, 126, 0.1);
     padding: var(--spacing-sm) var(--spacing-md);
     border: 1px solid rgba(46, 194, 126, 0.3);
 }
 
 .form-status.error {
-    color: var(--fedora-red, #e01b24);
+    color: var(--fedora-red);
     background: rgba(224, 27, 36, 0.1);
     padding: var(--spacing-sm) var(--spacing-md);
     border: 1px solid rgba(224, 27, 36, 0.3);
@@ -293,7 +293,7 @@
     gap: var(--spacing-sm);
     padding: 12px 24px;
     background: var(--gradient-btn);
-    color: #ffffff;
+    color: var(--text-on-accent);
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
@@ -309,7 +309,7 @@
     box-shadow:
         var(--shadow-lg),
         0 0 16px rgba(53, 132, 228, 0.3);
-    color: #ffffff;
+    color: var(--text-on-accent);
 }
 
 .resume-download-btn:active {
@@ -329,7 +329,7 @@
     align-items: center;
     gap: 8px;
     background: var(--gradient-btn);
-    color: #fff;
+    color: var(--text-on-accent);
     padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
@@ -342,7 +342,7 @@
 .window-body .resume-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(53, 132, 228, 0.3);
-    color: #fff;
+    color: var(--text-on-accent);
 }
 
 .resume-btn:active {
@@ -373,7 +373,7 @@
 
 /* Disabled Resume Button */
 .resume-btn.disabled {
-    background: linear-gradient(135deg, #888 0%, #666 100%);
+    background: linear-gradient(135deg, var(--disabled-start) 0%, var(--disabled-end) 100%);
     cursor: not-allowed;
     opacity: 0.7;
 }
@@ -538,7 +538,7 @@ a.project-card {
 
 .tech-badge {
     background: var(--color-primary);
-    color: #fff;
+    color: var(--text-on-accent);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 11px;
@@ -566,7 +566,7 @@ a.project-card {
     top: 12px;
     left: 12px;
     background: var(--gradient-btn);
-    color: #fff;
+    color: var(--text-on-accent);
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 11px;
