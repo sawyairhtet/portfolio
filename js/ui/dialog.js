@@ -111,5 +111,3 @@ export function showInputDialog(title, placeholder = '') {
         });
     });
 }
-
-export default { showInputDialog };

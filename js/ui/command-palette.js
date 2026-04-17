@@ -170,7 +170,7 @@ function executeSelected() {
     }
 }
 
-export function openPalette() {
+function openPalette() {
     if (isOpen) {return;}
     createPalette();
     isOpen = true;
@@ -185,7 +185,7 @@ export function openPalette() {
     });
 }
 
-export function closePalette() {
+function closePalette() {
     if (!isOpen || !paletteEl) {return;}
     isOpen = false;
     paletteEl.classList.remove('visible');
