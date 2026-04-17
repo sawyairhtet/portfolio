@@ -81,9 +81,11 @@
     transition: transform var(--transition-fast), border-color var(--transition-fast);
 }
 
-.activities-window-thumb:hover {
-    transform: scale(1.05);
-    border-color: var(--fedora-blue);
+@media (hover: hover) {
+    .activities-window-thumb:hover {
+        transform: scale(1.05);
+        border-color: var(--fedora-blue);
+    }
 }
 
 .activities-thumb-header {
@@ -127,12 +129,14 @@
     transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
-.activities-window-thumb:hover .activities-thumb-close {
-    opacity: 1;
-}
+@media (hover: hover) {
+    .activities-window-thumb:hover .activities-thumb-close {
+        opacity: 1;
+    }
 
-.activities-thumb-close:hover {
-    transform: scale(1.15);
+    .activities-thumb-close:hover {
+        transform: scale(1.15);
+    }
 }
 
 /* No windows message */
@@ -167,8 +171,10 @@
     transition: transform var(--transition-fast);
 }
 
-.activities-app-item:hover {
-    transform: scale(1.12);
+@media (hover: hover) {
+    .activities-app-item:hover {
+        transform: scale(1.12);
+    }
 }
 
 .activities-app-icon {

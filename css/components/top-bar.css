@@ -68,9 +68,14 @@
     transition: background var(--transition-fast);
 }
 
-.activities-btn:hover,
 .activities-btn.active {
     background: rgba(255, 255, 255, 0.15);
+}
+
+@media (hover: hover) {
+    .activities-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
 }
 
 /* Pill Styling for Top Bar Items */
@@ -85,8 +90,10 @@
     transition: background var(--transition-fast);
 }
 
-.pill:hover {
-    background: rgba(255, 255, 255, 0.12);
+@media (hover: hover) {
+    .pill:hover {
+        background: rgba(255, 255, 255, 0.12);
+    }
 }
 
 /* Status menu (system tray icons) */
@@ -127,9 +134,11 @@
     position: relative;
 }
 
-.theme-toggle-btn:hover .theme-tooltip {
-    opacity: 1;
-    visibility: visible;
+@media (hover: hover) {
+    .theme-toggle-btn:hover .theme-tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */

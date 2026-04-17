@@ -31,9 +31,11 @@
     transition: background 0.15s ease;
 }
 
-.context-menu-item:hover {
-    background: var(--color-primary);
-    color: var(--text-on-accent);
+@media (hover: hover) {
+    .context-menu-item:hover {
+        background: var(--color-primary);
+        color: var(--text-on-accent);
+    }
 }
 
 .context-menu-item i {

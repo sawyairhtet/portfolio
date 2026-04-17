@@ -249,9 +249,11 @@
 }
 
 /* GNOME 49: icon buttons — always visible, subtle hover */
-.window-control:hover {
-    background: var(--surface-3);
-    color: var(--text-primary);
+@media (hover: hover) {
+    .window-control:hover {
+        background: var(--surface-3);
+        color: var(--text-primary);
+    }
 }
 
 /* Close button — transparent by default, red on hover */
@@ -259,9 +261,11 @@
     background: transparent;
 }
 
-.window-control.close:hover {
-    background: var(--fedora-red);
-    color: var(--text-on-accent);
+@media (hover: hover) {
+    .window-control.close:hover {
+        background: var(--fedora-red);
+        color: var(--text-on-accent);
+    }
 }
 
 .window-control:active {

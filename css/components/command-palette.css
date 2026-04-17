@@ -84,9 +84,14 @@
     transition: background 0.1s ease;
 }
 
-.command-palette-item:hover,
 .command-palette-item.selected {
     background: var(--color-card-bg, rgba(0, 0, 0, 0.06));
+}
+
+@media (hover: hover) {
+    .command-palette-item:hover {
+        background: var(--color-card-bg, rgba(0, 0, 0, 0.06));
+    }
 }
 
 .command-palette-item.selected {

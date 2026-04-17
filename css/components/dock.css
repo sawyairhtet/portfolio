@@ -36,9 +36,11 @@
     transition: transform var(--transition-fast);
 }
 
-.dock-item:hover {
-    transform: scale(1.12);
-    background: var(--dock-hover-bg);
+@media (hover: hover) {
+    .dock-item:hover {
+        transform: scale(1.12);
+        background: var(--dock-hover-bg);
+    }
 }
 
 .dock-item:active {
@@ -135,7 +137,9 @@
     border-right-color: rgba(36, 36, 36, 0.94);
 }
 
-.dock-item:hover .dock-tooltip {
-    opacity: 1;
-    visibility: visible;
+@media (hover: hover) {
+    .dock-item:hover .dock-tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
 }
