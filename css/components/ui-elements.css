@@ -12,7 +12,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--color-glass-dark);
-    backdrop-filter: var(--glass-blur);
     color: var(--color-text-light);
     padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
@@ -70,7 +69,7 @@
 }
 
 .nav-hint-dismiss:hover {
-    transform: translateY(-2px);
+    filter: brightness(1.07);
     box-shadow: 0 4px 12px rgba(53, 132, 228, 0.4);
 }
 
@@ -126,7 +125,6 @@
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--color-border);
-    backdrop-filter: var(--glass-blur);
     font-size: 14px;
     font-weight: 500;
     z-index: var(--z-tooltip);
@@ -224,6 +222,16 @@
 /* ============================================
    STICKY NOTES
    ============================================ */
+
+/* Sticky notes hidden by default (non-GNOME feature).
+   Enable via body.show-sticky-notes */
+#sticky-notes {
+    display: none;
+}
+
+body.show-sticky-notes #sticky-notes {
+    display: block;
+}
 
 .sticky-note {
     position: absolute;
@@ -374,7 +382,6 @@
 
 .widget {
     background: var(--color-glass-light);
-    backdrop-filter: var(--glass-blur);
     border-radius: var(--radius-md);
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-md);

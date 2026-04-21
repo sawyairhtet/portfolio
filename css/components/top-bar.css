@@ -46,12 +46,16 @@
     margin-left: auto;
 }
 
-/* Personal brand label */
-.personal-brand {
-    font-weight: 700;
+/* Focused app name — GNOME shows current app name in top bar */
+.focused-app-name {
+    font-weight: 500;
     font-size: 13px;
-    letter-spacing: 0.5px;
     padding: 0 4px;
+    opacity: 0.9;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Activities button — GNOME pill hover */

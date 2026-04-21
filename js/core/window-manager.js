@@ -152,7 +152,7 @@ export function openWindow(appName, currentOS = 'desktop') {
             const randomX = Math.floor(Math.random() * 30) - 15;
             const randomY = Math.floor(Math.random() * 20) - 10;
             windowEl.style.top = `calc(15% + ${cascadeOffset + randomY}px)`;
-            windowEl.style.left = `calc(var(--dock-width) + 10% + ${cascadeOffset + randomX}px)`;
+            windowEl.style.left = `calc(10% + ${cascadeOffset + randomX}px)`;
         }
     }
 

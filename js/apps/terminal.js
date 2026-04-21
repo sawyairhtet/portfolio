@@ -773,7 +773,7 @@ export function addTerminalOutput(command, output) {
 
     const commandLine = document.createElement('div');
     commandLine.className = 'terminal-line terminal-command';
-    commandLine.textContent = `sawyehtet@fedora:~$ ${command}`;
+    commandLine.textContent = `[sawyehtet@fedora ~]$ ${command}`;
     terminalOutput.appendChild(commandLine);
 
     if (output) {

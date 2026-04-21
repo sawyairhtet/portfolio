@@ -56,17 +56,17 @@
                 }
             })();
         </script>
-        <!-- Google Fonts - Cantarell + Source Code Pro + Indie Flower (for sticky notes) -->
+        <!-- Google Fonts - Inter (Adwaita Sans fallback) + JetBrains Mono (Adwaita Mono fallback) + Indie Flower (sticky notes) -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <!-- Non-render-blocking: swap media to 'all' after load -->
         <link
             rel="preload"
             as="style"
-            href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;500&family=Indie+Flower&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Indie+Flower&display=swap"
         />
         <link
-            href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;500&family=Indie+Flower&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Indie+Flower&display=swap"
             rel="stylesheet"
             media="print"
             onload="this.media = 'all'"
@@ -167,7 +167,7 @@
         <div class="top-bar">
             <!-- GNOME Panel Left - Activities -->
             <div class="menu-bar-left">
-                <span class="personal-brand" aria-label="Saw Ye Htet - Personal Brand">SYH</span>
+                <span class="focused-app-name" id="focused-app-name" aria-label="Focused application name"></span>
                 <button
                     class="activities-btn pill"
                     id="activities-btn"
@@ -208,9 +208,9 @@
                     role="presentation"
                     aria-label="System status indicators (decorative)"
                 >
-                    <i class="fas fa-network-wired" aria-hidden="true"></i>
+                    <i class="fas fa-wifi" aria-hidden="true"></i>
                     <i class="fas fa-volume-up" aria-hidden="true"></i>
-                    <i class="fas fa-power-off" aria-hidden="true"></i>
+                    <i class="fas fa-battery-three-quarters" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
@@ -302,7 +302,17 @@
                     autocomplete="off"
                 />
             </div>
-            <div class="activities-windows" id="activities-windows"></div>
+            <div class="activities-main">
+                <div class="activities-windows" id="activities-windows"></div>
+                <div class="activities-workspaces" id="activities-workspaces">
+                    <div class="workspace-thumb active" data-workspace="1" aria-label="Workspace 1">
+                        <span class="workspace-label">1</span>
+                    </div>
+                    <div class="workspace-thumb" data-workspace="2" aria-label="Workspace 2">
+                        <span class="workspace-label">2</span>
+                    </div>
+                </div>
+            </div>
             <div class="activities-app-grid" id="activities-app-grid">
                 <button class="activities-app-item" data-app="about">
                     <div class="activities-app-icon" style="background: linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%);">
@@ -877,7 +887,7 @@
                     <div class="terminal-line">─────────────────────────────────────────</div>
                 </div>
                 <div class="terminal-input-line">
-                    <span class="terminal-prompt">sawyehtet@fedora:~$</span>
+                    <span class="terminal-prompt">[sawyehtet@fedora ~]$</span>
                     <input
                         type="text"
                         class="terminal-input"
@@ -986,12 +996,28 @@
                                 <button class="accent-swatch" data-accent="#9141ac" style="background: #9141ac;" aria-label="Purple" title="Purple"></button>
                                 <button class="accent-swatch" data-accent="#2190a4" style="background: #2190a4;" aria-label="Teal" title="Teal"></button>
                                 <button class="accent-swatch" data-accent="#ff7800" style="background: #ff7800;" aria-label="Orange" title="Orange"></button>
+                                <button class="accent-swatch" data-accent="#d971b0" style="background: #d971b0;" aria-label="Pink" title="Pink"></button>
+                                <button class="accent-swatch" data-accent="#8c8c8c" style="background: #8c8c8c;" aria-label="Slate" title="Slate"></button>
                             </div>
                         </div>
                         <div class="settings-card">
                             <h3>Background</h3>
                             <div class="wallpaper-grid" id="wallpaper-grid">
                                 <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <h3>Window Buttons</h3>
+                            <div class="settings-row">
+                                <span><i class="fas fa-window-maximize"></i> Show Minimize &amp; Maximize</span>
+                                <input type="checkbox" id="show-window-buttons" class="toggle-switch" />
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <h3>Dock</h3>
+                            <div class="settings-row">
+                                <span><i class="fas fa-grip-lines-vertical"></i> Always Show Dock</span>
+                                <input type="checkbox" id="show-dock-toggle" class="toggle-switch" />
                             </div>
                         </div>
                     </div>
@@ -1044,8 +1070,11 @@
             </div>
         </div>
 
+        <!-- Dock trigger zone (intellihide) -->
+        <div class="dock-trigger" id="dock-trigger"></div>
+
         <!-- Dock (Dash-to-Dock — GNOME 49) -->
-        <div class="dock">
+        <div class="dock" id="dock">
             <button class="dock-item" data-app="about" aria-label="About">
                 <i class="fas fa-user-circle"></i>
                 <span class="dock-tooltip">About Me</span>
@@ -1154,7 +1183,7 @@
                     align-items: center;
                     justify-content: center;
                     z-index: 10000;
-                    font-family: 'Cantarell', system-ui, sans-serif;
+                    font-family: 'Inter', 'Cantarell', system-ui, sans-serif;
                     padding: 20px;
                 "
             >

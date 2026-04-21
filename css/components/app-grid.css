@@ -76,8 +76,8 @@
 
 @media (hover: hover) {
     .app-icon:hover {
-        transform: scale(1.12) translateY(-4px);
-        filter: drop-shadow(0 8px 16px rgba(53, 132, 228, 0.3));
+        transform: scale(1.08);
+        filter: drop-shadow(0 4px 12px rgba(53, 132, 228, 0.2));
     }
 }
 
@@ -89,7 +89,6 @@
     width: 64px;
     height: 64px;
     background: var(--surface-2);
-    backdrop-filter: var(--glass-blur) var(--glass-saturation);
     border-radius: var(--border-radius-lg);
     display: flex;
     align-items: center;

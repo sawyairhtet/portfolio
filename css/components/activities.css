@@ -52,6 +52,63 @@
     box-shadow: 0 0 0 3px rgba(53, 132, 228, 0.25);
 }
 
+/* Main area — windows + workspace strip */
+.activities-main {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    gap: 16px;
+    padding: 0 24px;
+    overflow: hidden;
+}
+
+/* Workspace thumbnails strip (right side, GNOME 49 style) */
+.activities-workspaces {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 0;
+    flex-shrink: 0;
+}
+
+.workspace-thumb {
+    width: 120px;
+    height: 72px;
+    border-radius: var(--border-radius-md);
+    background: rgba(255, 255, 255, 0.06);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+    position: relative;
+}
+
+.workspace-thumb.active {
+    border-color: var(--fedora-blue);
+    background: rgba(53, 132, 228, 0.12);
+}
+
+@media (hover: hover) {
+    .workspace-thumb:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+
+.workspace-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.workspace-thumb.active .workspace-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
 /* Window thumbnails area */
 .activities-windows {
     display: flex;
@@ -62,7 +119,6 @@
     flex: 1;
     max-width: 1000px;
     width: 100%;
-    padding: 0 24px;
     overflow-y: auto;
 }
 
@@ -215,6 +271,12 @@
     }
     .activities-search {
         padding: 0 var(--spacing-md);
+    }
+    .activities-main {
+        padding: 0 var(--spacing-md);
+    }
+    .activities-workspaces {
+        display: none;
     }
     .activities-window-thumb {
         width: 200px;

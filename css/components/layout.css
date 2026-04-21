@@ -6,7 +6,7 @@
     position: relative;
     height: 100vh;
     padding-top: var(--topbar-height);
-    padding-left: var(--dock-width);
+    padding-left: 0;
 }
 
 /* Wallpaper (Desktop only) — Fedora 43 day/night */
@@ -18,7 +18,7 @@
     bottom: -20px;
     /* Day wallpaper (default, 6am–5:59pm) */
     background:
-        url('../../images/wallpapers/1200px-F43-DAY_final_day_(small).png') center/cover no-repeat,
+        url('../../images/wallpapers/1200px-F43-DAY_final_day_(small).svg') center/cover no-repeat,
         var(--gradient-wallpaper);
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
@@ -29,7 +29,7 @@
 /* Night wallpaper (6pm–5:59am) */
 body[data-time="night"] .wallpaper {
     background:
-        url('../../images/wallpapers/1200px-F43-DAY_final_night_(small).png') center/cover no-repeat,
+        url('../../images/wallpapers/1200px-F43-DAY_final_night_(small).svg') center/cover no-repeat,
         var(--gradient-wallpaper);
 }
 
@@ -72,13 +72,7 @@ body .wallpaper.custom-wallpaper {
     display: none;
 }
 
-/* Personal Brand */
-.personal-brand {
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--text-on-accent);
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    letter-spacing: 0.5px;
+/* Show dock class restores dock offset */
+body.show-dock .main-content {
+    padding-left: var(--dock-width);
 }

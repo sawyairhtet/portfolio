@@ -210,22 +210,29 @@ function setupMobileGestures() {
 // CLOCK
 // ============================================
 
-/** Update system clock in top bar. NOTE: DUPLICATED in 404.html (standalone page) */
+/** Update system clock in top bar — GNOME 49 format: Mon 12:00 */
 function updateClock() {
     const now = new Date();
-    const hours = now.getHours();
+    const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const displayHours = hours % 12 || 12;
+    const day = now.toLocaleDateString('en-US', { weekday: 'short' });
 
     const menuClock = document.querySelector('.menu-clock');
     if (menuClock) {
-        menuClock.textContent = `${displayHours}:${minutes} ${ampm}`;
+        menuClock.textContent = `${day} ${hours}:${minutes}`;
     }
 
     const statusTime = document.querySelector('.status-time');
     if (statusTime) {
-        statusTime.textContent = `${displayHours}:${minutes}`;
+        statusTime.textContent = `${hours}:${minutes}`;
+    }
+}
+
+/** Update focused app name in top bar (GNOME shows focused app name left of center) */
+function updateFocusedAppName(appName) {
+    const el = document.getElementById('focused-app-name');
+    if (el) {
+        el.textContent = appName ? appName.charAt(0).toUpperCase() + appName.slice(1) : '';
     }
 }
 
@@ -256,12 +263,12 @@ function initBootScreen() {
             const aboutWin = document.getElementById('about-window');
             if (aboutWin) {
                 aboutWin.style.top = '15%';
-                aboutWin.style.left = '120px';
+                aboutWin.style.left = '60px';
             }
             const contactWin = document.getElementById('contact-window');
             if (contactWin) {
                 contactWin.style.top = '15%';
-                contactWin.style.left = '750px';
+                contactWin.style.left = '700px';
             }
             openWindow('contact', currentOS);
         }
@@ -292,7 +299,7 @@ function initBootScreen() {
                 const aboutWin = document.getElementById('about-window');
                 if (aboutWin) {
                     aboutWin.style.top = '15%';
-                    aboutWin.style.left = '120px';
+                    aboutWin.style.left = '60px';
                 }
             }
             openWindow('about', currentOS);
@@ -302,7 +309,7 @@ function initBootScreen() {
                     const contactWin = document.getElementById('contact-window');
                     if (contactWin) {
                         contactWin.style.top = '15%';
-                        contactWin.style.left = '750px';
+                        contactWin.style.left = '700px';
                     }
                     openWindow('contact', currentOS);
                 }, 200);
@@ -547,6 +554,36 @@ function makeStickyKeyboardAccessible(element) {
             localStorage.setItem('stickyNotePositions_v3', JSON.stringify(savedPositions));
         }
     });
+}
+
+// ============================================
+// DOCK INTELLIHIDE
+// ============================================
+
+function setupDockIntellihide() {
+    if (currentOS !== 'desktop') return;
+
+    const dock = document.getElementById('dock');
+    const trigger = document.getElementById('dock-trigger');
+    if (!dock || !trigger) return;
+
+    let hideTimeout = null;
+
+    function showDock() {
+        if (hideTimeout) { clearTimeout(hideTimeout); hideTimeout = null; }
+        dock.classList.add('visible');
+    }
+
+    function scheduleDockHide() {
+        hideTimeout = setTimeout(() => {
+            dock.classList.remove('visible');
+        }, 400);
+    }
+
+    trigger.addEventListener('mouseenter', showDock);
+    dock.addEventListener('mouseenter', showDock);
+    dock.addEventListener('mouseleave', scheduleDockHide);
+    trigger.addEventListener('mouseleave', scheduleDockHide);
 }
 
 // ============================================
@@ -989,7 +1026,7 @@ function setupSettingsPanel() {
                 btn.style.background = w.gradient;
             } else {
                 // Default Fedora 43 time-based wallpaper preview
-                btn.style.background = 'url("images/wallpapers/1200px-F43-DAY_final_day_(small).png") center/cover';
+                btn.style.background = 'url("images/wallpapers/1200px-F43-DAY_final_day_(small).svg") center/cover';
             }
 
             btn.addEventListener('click', () => {
@@ -1046,6 +1083,34 @@ function setupSettingsPanel() {
                 swatch.classList.add('active');
                 showToast('Accent color updated', 'fa-palette');
             });
+        });
+    }
+
+    // ── Window Buttons toggle (GNOME Tweaks) ──
+    const windowBtnsToggle = /** @type {HTMLInputElement | null} */ (document.getElementById('show-window-buttons'));
+    if (windowBtnsToggle) {
+        const savedWB = localStorage.getItem('showWindowButtons') === 'true';
+        windowBtnsToggle.checked = savedWB;
+        if (savedWB) document.body.classList.add('show-window-buttons');
+
+        windowBtnsToggle.addEventListener('change', () => {
+            document.body.classList.toggle('show-window-buttons', windowBtnsToggle.checked);
+            localStorage.setItem('showWindowButtons', String(windowBtnsToggle.checked));
+            showToast(windowBtnsToggle.checked ? 'Window buttons enabled' : 'Window buttons hidden', 'fa-window-maximize');
+        });
+    }
+
+    // ── Dock visibility toggle ──
+    const dockToggle = /** @type {HTMLInputElement | null} */ (document.getElementById('show-dock-toggle'));
+    if (dockToggle) {
+        const savedDock = localStorage.getItem('showDock') === 'true';
+        dockToggle.checked = savedDock;
+        if (savedDock) document.body.classList.add('show-dock');
+
+        dockToggle.addEventListener('change', () => {
+            document.body.classList.toggle('show-dock', dockToggle.checked);
+            localStorage.setItem('showDock', String(dockToggle.checked));
+            showToast(dockToggle.checked ? 'Dock always visible' : 'Dock auto-hides', 'fa-grip-lines-vertical');
         });
     }
 
@@ -1132,6 +1197,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupContextMenu(currentOS);
     setupMobileGestures();
 
+    // Setup dock intellihide (desktop only)
+    setupDockIntellihide();
+
     // Create sticky notes (desktop only)
     createStickyNotes();
 
@@ -1182,8 +1250,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         windowEl.addEventListener('mousedown', () => {
             bringToFront(windowEl);
+            updateFocusedAppName(windowEl.dataset.app || '');
         });
     });
+
+    // Update focused app name when windows open/close
+    const docObserver = new MutationObserver(() => {
+        // Find topmost visible window
+        let topWindow = /** @type {HTMLElement | null} */ (null);
+        let maxZ = -1;
+        getActiveWindows().forEach(id => {
+            const el = document.getElementById(id);
+            if (el && el.style.display !== 'none') {
+                const z = parseInt(el.style.zIndex || '0');
+                if (z > maxZ) { maxZ = z; topWindow = el; }
+            }
+        });
+        updateFocusedAppName(topWindow ? (topWindow.dataset.app || '') : '');
+    });
+    docObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
 
     // Update clock - only needs 60s interval since we display hours:minutes only
     updateClock();

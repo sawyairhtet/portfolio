@@ -5,10 +5,6 @@
 .window {
     position: absolute;
     background: var(--window-body-bg);
-    backdrop-filter: var(--glass-blur) var(--glass-saturation)
-        var(--glass-brightness, brightness(1));
-    -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturation)
-        var(--glass-brightness, brightness(1));
     border-radius: var(--window-border-radius);
     box-shadow: var(--window-shadow);
     border: 1px solid var(--border-color);
@@ -23,8 +19,8 @@
     transition:
         box-shadow 0.2s ease,
         transform 0.2s ease;
-    /* Default position - ensure windows don't overlap dock on desktop */
-    left: calc(var(--dock-width) + 20px);
+    /* Default position */
+    left: 20px;
     top: 15%;
 }
 
@@ -35,22 +31,22 @@
         0 0 0 2px rgba(53, 132, 228, 0.15);
 }
 
-/* Window animation states */
+/* Window animation states — Mutter-style easing (no overshoot) */
 .window.opening {
-    animation: windowBounceIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: windowBounceIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .window.closing {
-    animation: windowBounceOut 0.25s ease-out forwards;
+    animation: windowBounceOut 0.2s ease-out forwards;
 }
 
 .window.minimizing {
-    animation: genieMinimize 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: mutterMinimize 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     pointer-events: none;
 }
 
 .window.restoring {
-    animation: genieRestore 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: mutterRestore 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 /* ============================================
@@ -135,8 +131,8 @@
 
 .window.snapped-left {
     top: var(--topbar-height);
-    left: var(--dock-width);
-    width: calc(50vw - var(--dock-width) / 2);
+    left: 0;
+    width: 50vw;
     height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -144,8 +140,8 @@
 
 .window.snapped-right {
     top: var(--topbar-height);
-    left: calc(50vw + var(--dock-width) / 2);
-    width: calc(50vw - var(--dock-width) / 2);
+    left: 50vw;
+    width: 50vw;
     height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -153,8 +149,8 @@
 
 .window.snapped-maximized {
     top: var(--topbar-height);
-    left: var(--dock-width);
-    width: calc(100vw - var(--dock-width));
+    left: 0;
+    width: 100vw;
     height: calc(100vh - var(--topbar-height));
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -180,20 +176,20 @@
 }
 
 .snap-preview.snap-left {
-    left: var(--dock-width);
-    width: calc(50vw - var(--dock-width) / 2);
+    left: 0;
+    width: 50vw;
     height: calc(100vh - var(--topbar-height));
 }
 
 .snap-preview.snap-right {
-    left: calc(50vw + var(--dock-width) / 2);
-    width: calc(50vw - var(--dock-width) / 2);
+    left: 50vw;
+    width: 50vw;
     height: calc(100vh - var(--topbar-height));
 }
 
 .snap-preview.snap-maximize {
-    left: var(--dock-width);
-    width: calc(100vw - var(--dock-width));
+    left: 0;
+    width: 100vw;
     height: calc(100vh - var(--topbar-height));
 }
 
@@ -225,12 +221,26 @@
     color: var(--text-primary);
 }
 
-/* GNOME 49 Window Controls — RIGHT side */
+/* GNOME 49 Window Controls — RIGHT side
+   Stock GNOME only shows Close by default.
+   Minimize & Maximize require GNOME Tweaks. */
 .window-controls {
     display: flex;
     align-items: center;
     gap: var(--btn-gap);
     margin-left: auto;
+}
+
+/* Hide minimize & maximize by default (stock GNOME) */
+.window-control.minimize,
+.window-control.maximize {
+    display: none;
+}
+
+/* Show when user enables via Settings (GNOME Tweaks equivalent) */
+body.show-window-buttons .window-control.minimize,
+body.show-window-buttons .window-control.maximize {
+    display: flex;
 }
 
 .window-control {
@@ -273,9 +283,37 @@
     transform: scale(0.92);
 }
 
-/* Icons within controls */
+/* Hide FA icons — use CSS shapes for Adwaita fidelity */
 .window-control i {
-    pointer-events: none;
+    display: none;
+}
+
+/* Adwaita close: × shape */
+.window-control.close::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") center/contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Adwaita minimize: horizontal line */
+.window-control.minimize::before {
+    content: '';
+    width: 10px;
+    height: 1px;
+    background: currentColor;
+    border-radius: 1px;
+}
+
+/* Adwaita maximize: square outline */
+.window-control.maximize::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border: 1.5px solid currentColor;
+    border-radius: 2px;
 }
 
 .close-btn-mobile {

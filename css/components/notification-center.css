@@ -7,7 +7,8 @@
 .notification-center {
     position: fixed;
     top: var(--topbar-height);
-    right: 12px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
     width: 380px;
     max-height: calc(100vh - var(--topbar-height) - 24px);
     z-index: var(--z-modal);
@@ -20,14 +21,14 @@
     flex-direction: column;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px);
+    transform: translateX(-50%) translateY(-10px);
     transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
 }
 
 .notification-center.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
 /* Header */

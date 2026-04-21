@@ -75,25 +75,20 @@
     }
 }
 
-/* Window Bounce In */
+/* Window Open — Mutter-style (subtle scale + fade, no bounce) */
 @keyframes windowBounceIn {
     0% {
         opacity: 0;
-        transform: scale(0.8) translateY(20px);
-    }
-
-    60% {
-        opacity: 1;
-        transform: scale(1.05) translateY(-5px);
+        transform: scale(0.95);
     }
 
     100% {
         opacity: 1;
-        transform: scale(1) translateY(0);
+        transform: scale(1);
     }
 }
 
-/* Window Bounce Out */
+/* Window Close — Mutter-style */
 @keyframes windowBounceOut {
     0% {
         opacity: 1;
@@ -102,38 +97,28 @@
 
     100% {
         opacity: 0;
-        transform: scale(0.9) translateY(30px);
+        transform: scale(0.95);
     }
 }
 
-/* Genie Minimize Animation */
-@keyframes genieMinimize {
+/* Mutter Minimize Animation (scale-down + fade) */
+@keyframes mutterMinimize {
     0% {
         opacity: 1;
         transform: scale(1);
     }
 
-    50% {
-        opacity: 0.8;
-        transform: scale(0.5) translateY(50vh);
-    }
-
     100% {
         opacity: 0;
-        transform: scale(0.1) translateY(100vh) translateX(var(--genie-target-x, 0));
+        transform: scale(0.6) translateY(40vh);
     }
 }
 
-/* Genie Restore Animation */
-@keyframes genieRestore {
+/* Mutter Restore Animation (scale-up + fade) */
+@keyframes mutterRestore {
     0% {
         opacity: 0;
-        transform: scale(0.1) translateY(100vh);
-    }
-
-    50% {
-        opacity: 0.8;
-        transform: scale(0.5) translateY(50vh);
+        transform: scale(0.6) translateY(40vh);
     }
 
     100% {
