@@ -1029,7 +1029,7 @@ function setupSettingsPanel() {
                 btn.style.background = w.gradient;
             } else {
                 // Default Fedora 43 time-based wallpaper preview
-                btn.style.background = 'url("images/wallpapers/1200px-F43-DAY_final_day_(small).svg") center/cover';
+                btn.style.background = 'var(--gradient-wallpaper)';
             }
 
             btn.addEventListener('click', () => {

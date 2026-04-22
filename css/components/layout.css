@@ -17,9 +17,7 @@
     right: -20px;
     bottom: -20px;
     /* Day wallpaper (default, 6am–5:59pm) */
-    background:
-        url('../../images/wallpapers/1200px-F43-DAY_final_day_(small).svg') center/cover no-repeat,
-        var(--gradient-wallpaper);
+    background: var(--gradient-wallpaper);
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
@@ -28,9 +26,7 @@
 
 /* Night wallpaper (6pm–5:59am) */
 body[data-time="night"] .wallpaper {
-    background:
-        url('../../images/wallpapers/1200px-F43-DAY_final_night_(small).svg') center/cover no-repeat,
-        var(--gradient-wallpaper);
+    background: var(--gradient-wallpaper);
 }
 
 /* Custom wallpaper override (user picked from Settings) — needs body prefix to
