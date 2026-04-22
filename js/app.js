@@ -232,7 +232,10 @@ function updateClock() {
 function updateFocusedAppName(appName) {
     const el = document.getElementById('focused-app-name');
     if (el) {
-        el.textContent = appName ? appName.charAt(0).toUpperCase() + appName.slice(1) : '';
+        const newText = appName ? appName.charAt(0).toUpperCase() + appName.slice(1) : '';
+        if (el.textContent !== newText) {
+            el.textContent = newText;
+        }
     }
 }
 
@@ -1255,7 +1258,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Update focused app name when windows open/close
-    const docObserver = new MutationObserver(() => {
+    const docObserver = new MutationObserver((mutations) => {
+        // Ignore mutations that are only from the parallax wallpaper to prevent CPU drain
+        const isOnlyWallpaper = mutations.every(m => 
+            m.target && m.target.classList && m.target.classList.contains('wallpaper')
+        );
+        if (isOnlyWallpaper) return;
+
         // Find topmost visible window
         let topWindow = /** @type {HTMLElement | null} */ (null);
         let maxZ = -1;
