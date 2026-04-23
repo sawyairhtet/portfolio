@@ -87,18 +87,12 @@ describe('Terminal Commands', () => {
         expect(executeTerminalCommand('curl')).toContain('Command not found');
     });
 
-    it('cowsay should draw a cow', () => {
-        const result = executeTerminalCommand('cowsay hello');
-        expect(result).toContain('(oo)');
-        expect(result).toContain('hello');
-    });
-
-    it('flip should return table flip', () => {
-        expect(executeTerminalCommand('flip')).toContain('╯');
-    });
-
-    it('unflip should return table unflip', () => {
-        expect(executeTerminalCommand('unflip')).toContain('┬─┬');
+    it('removed easter egg commands should return Command not found', () => {
+        expect(executeTerminalCommand('cowsay hello')).toContain('Command not found');
+        expect(executeTerminalCommand('flip')).toContain('Command not found');
+        expect(executeTerminalCommand('unflip')).toContain('Command not found');
+        expect(executeTerminalCommand('matrix')).toContain('Command not found');
+        expect(executeTerminalCommand('hello')).toContain('Command not found');
     });
 
     it('fortune should return a random fortune', () => {

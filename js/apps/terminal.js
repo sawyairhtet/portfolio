@@ -3,14 +3,12 @@
  * Handles all terminal commands and filesystem operations
  */
 
-import { startMatrixEffect } from './matrix.js';
 import { showToast } from '../ui/notifications.js';
 import {
     DEFAULT_FILE_SYSTEM,
     BOOT_LOG_MESSAGES,
     terminalFortunes,
     terminalJokes,
-    terminalGreetings,
 } from '../config/data.js';
 
 // State
@@ -130,9 +128,8 @@ const terminalCommands = {
     clear           Clear terminal
     reboot          Restart the desktop
 
-  Easter Eggs:
-    cowsay, fortune, joke, flip, unflip,
-    sudo hire me, matrix, hello`;
+    Easter Eggs:
+        fortune, joke, sudo hire me`;
     },
 
     pwd: () => currentPath,
@@ -649,13 +646,6 @@ Complete!`;
         return 'Nice try! 😏\n\nBut you\'re not root here.\nHint: try "sudo hire me"';
     },
 
-    matrix: () => {
-        startMatrixEffect();
-        return 'Entering the Matrix... (Press any key to exit)';
-    },
-
-    hello: () => terminalGreetings[Math.floor(Math.random() * terminalGreetings.length)],
-
     neofetch: () => {
         const uptimeStr = terminalCommands.uptime();
         return `        /:-------------:\\           sawyehtet@fedora
@@ -675,29 +665,9 @@ Complete!`;
 :---:sdNMMMMNds:------------:
 :------:://:-------------::`;
     },
-
-
-    cowsay: args => {
-        const message = args.join(' ') || 'Moo!';
-        const line = '─'.repeat(Math.min(message.length + 2, 40));
-        return `
- ${line}
-< ${message} >
- ${line}
-        \\   ^__^
-         \\  (oo)\\_______
-            (__)\\       )\\/\\
-                ||----w |
-                ||     ||`;
-    },
-
     fortune: () => terminalFortunes[Math.floor(Math.random() * terminalFortunes.length)],
 
     joke: () => terminalJokes[Math.floor(Math.random() * terminalJokes.length)],
-
-    flip: () => '(╯°□°)╯︵ ┻━┻',
-
-    unflip: () => '┬─┬ノ( º _ ºノ)',
 };
 
 /**
