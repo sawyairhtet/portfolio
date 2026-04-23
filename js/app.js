@@ -661,7 +661,7 @@ function makeStickyKeyboardAccessible(element) {
 }
 
 // ============================================
-// DOCK INTELLIHIDE
+// DESKTOP DOCK
 // ============================================
 
 function setupDockIntellihide() {
@@ -670,28 +670,12 @@ function setupDockIntellihide() {
     }
 
     const dock = document.getElementById('dock');
-    const trigger = document.getElementById('dock-trigger');
-    if (!dock || !trigger) {
+    if (!dock) {
         return;
     }
 
-    let hideTimeout = null;
-
-    function showDock() {
-        if (hideTimeout) { clearTimeout(hideTimeout); hideTimeout = null; }
-        dock.classList.add('visible');
-    }
-
-    function scheduleDockHide() {
-        hideTimeout = setTimeout(() => {
-            dock.classList.remove('visible');
-        }, 400);
-    }
-
-    trigger.addEventListener('mouseenter', showDock);
-    dock.addEventListener('mouseenter', showDock);
-    dock.addEventListener('mouseleave', scheduleDockHide);
-    trigger.addEventListener('mouseleave', scheduleDockHide);
+    dock.classList.add('visible');
+    document.body.classList.add('show-dock');
 }
 
 // ============================================
@@ -1258,20 +1242,13 @@ function setupSettingsPanel() {
         });
     }
 
-    // ── Dock visibility toggle ──
+    // ── Dock layout is fixed to match the desktop shell ──
     const dockToggle = /** @type {HTMLInputElement | null} */ (document.getElementById('show-dock-toggle'));
     if (dockToggle) {
-        const savedDock = localStorage.getItem('showDock') === 'true';
-        dockToggle.checked = savedDock;
-        if (savedDock) {
-            document.body.classList.add('show-dock');
-        }
-
-        dockToggle.addEventListener('change', () => {
-            document.body.classList.toggle('show-dock', dockToggle.checked);
-            localStorage.setItem('showDock', String(dockToggle.checked));
-            showToast(dockToggle.checked ? 'Dock always visible' : 'Dock auto-hides', 'fa-grip-lines-vertical');
-        });
+        dockToggle.checked = true;
+        dockToggle.disabled = true;
+        document.body.classList.add('show-dock');
+        localStorage.setItem('showDock', 'true');
     }
 
     // ── Dark mode toggle ──

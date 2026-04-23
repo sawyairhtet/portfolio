@@ -70,11 +70,11 @@ body .wallpaper.custom-wallpaper {
 
 /* Quick recruiter actions */
 .quick-access {
+    display: none;
     position: absolute;
     top: calc(var(--topbar-height) + 14px);
     right: 24px;
     z-index: 40;
-    display: flex;
     gap: 10px;
 }
 
@@ -104,7 +104,7 @@ body .wallpaper.custom-wallpaper {
     outline-offset: 2px;
 }
 
-/* Show dock class restores dock offset */
+/* Desktop shell uses a centered bottom dock, so content keeps full width */
 body.show-dock .main-content {
-    padding-left: var(--dock-width);
+    padding-left: 0;
 }

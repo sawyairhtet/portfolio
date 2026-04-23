@@ -4,46 +4,29 @@
 
 .dock {
     position: fixed;
-    left: 8px;
-    top: 50%;
-    transform: translateY(-50%) translateX(-100%);
-    width: var(--dock-width);
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: min(calc(100vw - 32px), 720px);
     background: var(--dock-bg);
     backdrop-filter: var(--dock-blur);
     -webkit-backdrop-filter: var(--dock-blur);
     border-radius: var(--dock-border-radius);
-    padding: var(--dock-padding);
+    padding: 8px 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: var(--dock-gap);
     border: var(--dock-border);
     z-index: var(--z-dock);
     box-shadow: var(--shadow-popover);
-    opacity: 0;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-/* Intellihide: show dock on hover at left edge */
-.dock:hover,
-.dock.visible {
-    transform: translateY(-50%) translateX(0);
     opacity: 1;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Hover trigger zone at left edge */
-.dock-trigger {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 4px;
-    height: 100vh;
-    z-index: var(--z-dock);
-}
-
-/* Always show dock when user enables via Settings */
 body.show-dock .dock {
-    transform: translateY(-50%) translateX(0);
+    transform: translateX(-50%);
     opacity: 1;
 }
 
@@ -112,17 +95,17 @@ body.show-dock .dock {
     bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 8px;
-    height: 3px;
+    width: 18px;
+    height: 4px;
     border-radius: 2px;
     background: var(--dock-active-dot);
 }
 
 .dock-separator {
-    width: 80%;
-    height: 1px;
+    width: 1px;
+    align-self: stretch;
     background: rgba(255, 255, 255, 0.1);
-    margin: 4px 0;
+    margin: 4px 6px;
 }
 
 /* ============================================
@@ -131,9 +114,9 @@ body.show-dock .dock {
 
 .dock-tooltip {
     position: absolute;
-    left: calc(100% + 10px);
-    top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%);
     background: var(--surface-3);
     color: var(--text-primary);
     padding: 4px 10px;

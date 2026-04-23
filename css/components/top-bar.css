@@ -23,7 +23,7 @@
 .menu-bar-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
     flex: 1;
 }
 
@@ -58,18 +58,49 @@
     white-space: nowrap;
 }
 
+.focused-app-name:empty {
+    display: none;
+}
+
 /* Activities button — GNOME pill hover */
 .activities-btn {
-    color: var(--text-on-accent);
-    font-size: 13px;
+    position: relative;
+    width: 34px;
+    min-width: 34px;
+    height: 18px;
+    color: transparent;
+    font-size: 0;
     font-weight: 500;
     font-family: var(--font-ui);
-    padding: 4px 10px;
+    padding: 0;
     border: none;
-    border-radius: var(--border-radius-sm);
+    border-radius: 999px;
     background: transparent;
     cursor: pointer;
     transition: background var(--transition-fast);
+}
+
+.activities-btn::before,
+.activities-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.activities-btn::before {
+    left: 2px;
+    width: 16px;
+    height: 4px;
+    border-radius: 999px;
+}
+
+.activities-btn::after {
+    right: 4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
 }
 
 .activities-btn.active {
@@ -103,8 +134,12 @@
 /* Status menu (system tray icons) */
 .status-menu {
     font-size: 12px;
-    gap: 10px;
+    gap: 8px;
     cursor: pointer;
+}
+
+.theme-toggle-btn {
+    display: none;
 }
 
 .theme-toggle-btn i {
