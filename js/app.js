@@ -133,6 +133,44 @@ function setupAppIcons() {
     });
 }
 
+function setupQuickAccess() {
+    const quickActions = document.querySelectorAll('[data-quick-action]');
+    quickActions.forEach(actionEl => {
+        actionEl.addEventListener('click', e => {
+            const action = /** @type {HTMLElement} */ (actionEl).dataset.quickAction;
+            if (!action) {
+                return;
+            }
+
+            if (action === 'resume') {
+                return;
+            }
+
+            e.preventDefault();
+            handleAppIconClick(action);
+        });
+    });
+
+    // Keyboard shortcuts for recruiter-first flow.
+    // Alt+1 Projects, Alt+2 Contact, Alt+3 Resume
+    document.addEventListener('keydown', e => {
+        if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) {
+            return;
+        }
+
+        if (e.key === '1') {
+            e.preventDefault();
+            handleAppIconClick('projects');
+        } else if (e.key === '2') {
+            e.preventDefault();
+            handleAppIconClick('contact');
+        } else if (e.key === '3') {
+            e.preventDefault();
+            window.open('resume/SYH_resume.pdf', '_blank', 'noopener,noreferrer');
+        }
+    });
+}
+
 // ============================================
 // MOBILE GESTURES
 // ============================================
@@ -564,11 +602,15 @@ function makeStickyKeyboardAccessible(element) {
 // ============================================
 
 function setupDockIntellihide() {
-    if (currentOS !== 'desktop') return;
+    if (currentOS !== 'desktop') {
+        return;
+    }
 
     const dock = document.getElementById('dock');
     const trigger = document.getElementById('dock-trigger');
-    if (!dock || !trigger) return;
+    if (!dock || !trigger) {
+        return;
+    }
 
     let hideTimeout = null;
 
@@ -595,6 +637,11 @@ function setupDockIntellihide() {
 
 function setupParallaxWallpaper() {
     if (currentOS !== 'desktop') {
+        return;
+    }
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (reduceMotion || !hasFinePointer) {
         return;
     }
 
@@ -965,20 +1012,61 @@ function setupActivities() {
     });
 
     // Hot corner: move mouse to top-left to trigger Activities
-    let hotCornerTimeout = null;
-    document.addEventListener('mousemove', e => {
-        if (e.clientX <= 1 && e.clientY <= 1) {
-            if (!hotCornerTimeout) {
-                hotCornerTimeout = setTimeout(() => {
-                    if (!isOpen) {
-                        openActivities();
-                    }
-                    hotCornerTimeout = null;
-                }, 200);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!reduceMotion && hasFinePointer) {
+        let hotCornerTimeout = null;
+        document.addEventListener('mousemove', e => {
+            if (e.clientX <= 1 && e.clientY <= 1) {
+                if (!hotCornerTimeout) {
+                    hotCornerTimeout = setTimeout(() => {
+                        if (!isOpen) {
+                            openActivities();
+                        }
+                        hotCornerTimeout = null;
+                    }, 200);
+                }
+            } else if (hotCornerTimeout) {
+                clearTimeout(hotCornerTimeout);
+                hotCornerTimeout = null;
             }
-        } else if (hotCornerTimeout) {
-            clearTimeout(hotCornerTimeout);
-            hotCornerTimeout = null;
+        });
+    }
+}
+
+function getTopmostActiveWindow() {
+    let topWindow = /** @type {HTMLElement | null} */ (null);
+    let maxZ = -1;
+
+    getActiveWindows().forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.style.display !== 'none') {
+            const z = parseInt(el.style.zIndex || '0');
+            if (z > maxZ) {
+                maxZ = z;
+                topWindow = el;
+            }
+        }
+    });
+    return topWindow;
+}
+
+function setupFocusedAppTracking() {
+    const windows = document.querySelectorAll('.window');
+    const update = () => {
+        const topWindow = getTopmostActiveWindow();
+        updateFocusedAppName(topWindow ? topWindow.dataset.app || '' : '');
+    };
+
+    windows.forEach(win => {
+        const observer = new MutationObserver(() => update());
+        observer.observe(win, { attributes: true, attributeFilter: ['style', 'class'] });
+    });
+
+    document.addEventListener('click', e => {
+        const win = /** @type {HTMLElement | null} */ ((/** @type {HTMLElement} */ (e.target)).closest('.window'));
+        if (win) {
+            updateFocusedAppName(win.dataset.app || '');
         }
     });
 }
@@ -1094,7 +1182,9 @@ function setupSettingsPanel() {
     if (windowBtnsToggle) {
         const savedWB = localStorage.getItem('showWindowButtons') === 'true';
         windowBtnsToggle.checked = savedWB;
-        if (savedWB) document.body.classList.add('show-window-buttons');
+        if (savedWB) {
+            document.body.classList.add('show-window-buttons');
+        }
 
         windowBtnsToggle.addEventListener('change', () => {
             document.body.classList.toggle('show-window-buttons', windowBtnsToggle.checked);
@@ -1108,7 +1198,9 @@ function setupSettingsPanel() {
     if (dockToggle) {
         const savedDock = localStorage.getItem('showDock') === 'true';
         dockToggle.checked = savedDock;
-        if (savedDock) document.body.classList.add('show-dock');
+        if (savedDock) {
+            document.body.classList.add('show-dock');
+        }
 
         dockToggle.addEventListener('change', () => {
             document.body.classList.toggle('show-dock', dockToggle.checked);
@@ -1193,6 +1285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Setup all interactions
     setupAppIcons();
+    setupQuickAccess();
     setupWindowControls();
     setupTerminal();
     setupTerminalMobileFix();
@@ -1257,27 +1350,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Update focused app name when windows open/close
-    const docObserver = new MutationObserver((mutations) => {
-        // Ignore mutations that are only from the parallax wallpaper to prevent CPU drain
-        const isOnlyWallpaper = mutations.every(m => 
-            m.target && m.target.classList && m.target.classList.contains('wallpaper')
-        );
-        if (isOnlyWallpaper) return;
-
-        // Find topmost visible window
-        let topWindow = /** @type {HTMLElement | null} */ (null);
-        let maxZ = -1;
-        getActiveWindows().forEach(id => {
-            const el = document.getElementById(id);
-            if (el && el.style.display !== 'none') {
-                const z = parseInt(el.style.zIndex || '0');
-                if (z > maxZ) { maxZ = z; topWindow = el; }
-            }
-        });
-        updateFocusedAppName(topWindow ? (topWindow.dataset.app || '') : '');
-    });
-    docObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
+    // Keep focused app label in sync with lighter observers.
+    setupFocusedAppTracking();
 
     // Update clock - only needs 60s interval since we display hours:minutes only
     updateClock();

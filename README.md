@@ -4,7 +4,7 @@ My personal portfolio website showcasing my journey as an IT student at Singapor
 
 ## About
 
-This is my portfolio website featuring an **Ubuntu GNOME (Yaru)** desktop theme. It simulates a Linux desktop experience with a GNOME-style top panel, a left-side dock, and draggable windows. Built with vanilla HTML, CSS, and JavaScript to keep things simple and fast.
+This is my portfolio website featuring a **Fedora 43 GNOME 49 (Adwaita-inspired)** desktop theme. It simulates a Linux desktop experience with a GNOME-style top panel, a left-side dock, and draggable windows. Built with vanilla HTML, CSS, and JavaScript to keep things simple and fast.
 
 ## Structure
 
@@ -35,7 +35,7 @@ portfolio/
 
 ## Features
 
-- **Ubuntu GNOME Desktop Theme** with Yaru-inspired colors and font
+- **Fedora 43 GNOME Desktop Theme** with Adwaita-inspired colors and spacing
 - **Simulated Linux Boot Log** on page load
 - **Interactive Terminal** with commands like `neofetch`, `whoami`, and easter eggs
 - **Draggable Windows** on desktop, with mobile-responsive views
@@ -73,7 +73,8 @@ npm run dev
 - HTML5
 - CSS3 (Grid, Flexbox, Custom Properties)
 - Vanilla JavaScript
-- No build process or frameworks
+- Vite for local development and production bundling
+- No frontend frameworks
 
 ## Deployment
 

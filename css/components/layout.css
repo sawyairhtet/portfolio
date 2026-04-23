@@ -17,7 +17,7 @@
     right: -20px;
     bottom: -20px;
     /* Day wallpaper (default, 6am–5:59pm) */
-    background: var(--gradient-wallpaper);
+    background: url('../../images/wallpapers/1200px-F43-DAY_final_day_(small).png') center/cover no-repeat;
     z-index: var(--z-wallpaper);
     /* Parallax support via CSS custom properties */
     transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
@@ -26,7 +26,7 @@
 
 /* Night wallpaper (6pm–5:59am) */
 body[data-time="night"] .wallpaper {
-    background: var(--gradient-wallpaper);
+    background: url('../../images/wallpapers/1200px-F43-DAY_final_night_(small).png') center/cover no-repeat;
 }
 
 /* Custom wallpaper override (user picked from Settings) — needs body prefix to
@@ -66,6 +66,42 @@ body .wallpaper.custom-wallpaper {
 /* Widget Container (Hidden on Desktop) */
 .widget-container {
     display: none;
+}
+
+/* Quick recruiter actions */
+.quick-access {
+    position: absolute;
+    top: calc(var(--topbar-height) + 14px);
+    right: 24px;
+    z-index: 40;
+    display: flex;
+    gap: 10px;
+}
+
+.quick-access-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-glass-light);
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.quick-access-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(53, 132, 228, 0.2);
+}
+
+.quick-access-btn:focus-visible {
+    outline: 2px solid var(--fedora-blue);
+    outline-offset: 2px;
 }
 
 /* Show dock class restores dock offset */

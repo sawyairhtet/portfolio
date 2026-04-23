@@ -3,6 +3,17 @@
    ============================================ */
 
 @media (min-width: 768px) and (max-width: 1024px) {
+    .quick-access {
+        top: 54px;
+        right: 14px;
+        gap: 8px;
+    }
+
+    .quick-access-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
     /* Hide GNOME menu items */
     .menu-bar-left,
     .menu-bar-center,
@@ -30,7 +41,7 @@
         border-radius: 0;
         padding: var(--spacing-sm);
         justify-content: space-around;
-        transform: none;
+        transform: none !important;
     }
 
     .dock-item {
@@ -58,7 +69,8 @@
         border-radius: 2px 2px 0 0;
     }
 
-    .main-content {
+    .main-content,
+    body.show-dock .main-content {
         padding-left: 0;
     }
 
@@ -156,6 +168,24 @@
    ============================================ */
 
 @media (max-width: 767px) {
+    .quick-access {
+        top: 52px;
+        right: 10px;
+        left: 10px;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .quick-access-btn {
+        padding: 7px 10px;
+        font-size: 12px;
+        min-width: 0;
+    }
+
+    .quick-access-btn span {
+        display: none;
+    }
+
     /* Hide GNOME menu items */
     .menu-bar-left,
     .menu-bar-center,
@@ -172,7 +202,8 @@
         height: 44px;
     }
 
-    .main-content {
+    .main-content,
+    body.show-dock .main-content {
         padding-top: 44px;
         padding-left: 0;
         padding-right: 0;
@@ -332,7 +363,7 @@
         width: 100%;
         height: auto;
         min-height: 0;
-        transform: none;
+        transform: none !important;
         flex-direction: row;
         border-right: none;
         border-top: 1px solid var(--border-color);
