@@ -74,7 +74,10 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
             if (isSkippedRef.current) return;
 
             if (lineIndex < BOOT_LOG_MESSAGES.length) {
-                setBootLines((prev) => [...prev, BOOT_LOG_MESSAGES[lineIndex]]);
+                const line = BOOT_LOG_MESSAGES[lineIndex];
+                if (typeof line === 'string') {
+                    setBootLines((prev) => [...prev, line]);
+                }
                 lineIndex++;
                 timeout = setTimeout(addLine, BOOT_LINE_INTERVAL_MS);
             } else {
@@ -117,7 +120,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
 
             {phase === 'bootlog' && (
                 <div className="boot-log" ref={bootLogRef}>
-                    {bootLines.map((line, i) => (
+                    {bootLines.filter((line): line is string => typeof line === 'string').map((line, i) => (
                         <div key={i}>
                             {line.startsWith('[  OK  ]') ? (
                                 <>

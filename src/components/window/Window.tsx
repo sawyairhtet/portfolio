@@ -25,24 +25,33 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     const dragOffset = useRef({ x: 0, y: 0 });
 
     const win = windows.get(appId);
-    if (!win || !win.isOpen) return null;
+    const isOpen = Boolean(win?.isOpen);
+    const snapState = win?.snapState ?? 'none';
+    const isMaximized = Boolean(win?.isMaximized);
+    const isMinimized = Boolean(win?.isMinimized);
+    const zIndex = win?.zIndex ?? 0;
+    const positionTop = win?.position.top;
+    const positionLeft = win?.position.left;
+    const sizeWidth = win?.size.width;
+    const sizeHeight = win?.size.height;
 
     const windowId = `${appId}-window`;
 
-    const snapClass = win.snapState !== 'none' ? ` snapped-${win.snapState}` : '';
-    const maximizedClass = win.isMaximized ? ' snapped-maximized' : '';
+    const snapClass = snapState !== 'none' ? ` snapped-${snapState}` : '';
+    const maximizedClass = isMaximized ? ' snapped-maximized' : '';
 
     useEffect(() => {
+        if (!isOpen || !win) return;
         const element = windowRef.current;
         if (!element) return;
 
-        element.style.zIndex = String(win.zIndex);
+        element.style.zIndex = String(zIndex);
 
-        if (device === 'desktop' && !win.isMaximized && win.snapState === 'none') {
-            element.style.top = win.position.top;
-            element.style.left = win.position.left;
-            element.style.width = win.size.width;
-            element.style.height = win.size.height;
+        if (device === 'desktop' && !isMaximized && snapState === 'none' && positionTop && positionLeft && sizeWidth && sizeHeight) {
+            element.style.top = positionTop;
+            element.style.left = positionLeft;
+            element.style.width = sizeWidth;
+            element.style.height = sizeHeight;
             return;
         }
 
@@ -50,7 +59,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         element.style.removeProperty('left');
         element.style.removeProperty('width');
         element.style.removeProperty('height');
-    }, [device, win.isMaximized, win.position.left, win.position.top, win.size.height, win.size.width, win.snapState, win.zIndex]);
+    }, [device, isMaximized, isOpen, positionLeft, positionTop, sizeHeight, sizeWidth, snapState, win, zIndex]);
 
     // Drag handlers (desktop only)
     const handleMouseDown = useCallback(
@@ -119,10 +128,12 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         [appId, closeWindow],
     );
 
+    if (!isOpen || !win) return null;
+
     return (
         <div
             ref={windowRef}
-            className={`window active${snapClass}${maximizedClass}${win.isMinimized ? ' is-minimized' : ''} ${className}`}
+            className={`window active${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''} ${className}`}
             id={windowId}
             data-app={appId}
             role="dialog"

@@ -41,9 +41,20 @@ export function DesktopShell() {
 
     // Register service worker
     useEffect(() => {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        if (!('serviceWorker' in navigator)) {
+            return;
         }
+
+        if (import.meta.env.DEV) {
+            navigator.serviceWorker.getRegistrations().then((registrations) => {
+                registrations.forEach((registration) => {
+                    registration.unregister().catch(() => {});
+                });
+            }).catch(() => {});
+            return;
+        }
+
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
     }, []);
 
     // Show dock on desktop
