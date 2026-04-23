@@ -14,9 +14,18 @@
     font-size: 13px;
     font-weight: 500;
     z-index: var(--z-topbar);
+    /* Light mode: Adwaita light panel */
+    background: var(--topbar-bg-light);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Dark mode: solid black GNOME panel */
+[data-theme="dark"] .top-bar {
     background: var(--topbar-bg);
-    /* GNOME 49: solid opaque panel, no blur */
     color: var(--text-on-accent);
+    border-bottom-color: rgba(255,255,255,0.04);
 }
 
 /* Left section: Activities + App name */
@@ -86,7 +95,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.92);
+    background: currentColor;
+    opacity: 0.85;
 }
 
 .activities-btn::before {
@@ -104,13 +114,22 @@
 }
 
 .activities-btn.active {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(128, 128, 128, 0.2);
 }
 
 @media (hover: hover) {
     .activities-btn:hover {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(128, 128, 128, 0.18);
     }
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .activities-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .activities-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
 }
 
 /* Pill Styling for Top Bar Items */
@@ -127,19 +146,33 @@
 
 @media (hover: hover) {
     .pill:hover {
+        background: rgba(0, 0, 0, 0.07);
+    }
+
+    [data-theme="dark"] .pill:hover {
         background: rgba(255, 255, 255, 0.12);
     }
 }
 
-/* Status menu (system tray icons) */
+/* Status menu (system tray icons) — now a button */
 .status-menu {
     font-size: 12px;
     gap: 8px;
     cursor: pointer;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-weight: 500;
 }
 
 .theme-toggle-btn {
-    display: none;
+    display: flex;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-size: 14px;
+    background: transparent;
 }
 
 .theme-toggle-btn i {
@@ -178,6 +211,15 @@
         opacity: 1;
         visibility: visible;
     }
+}
+
+/* Clock — clickable, opens notification center */
+.menu-clock[aria-expanded="true"] {
+    background: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="dark"] .menu-clock[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */

@@ -75,52 +75,51 @@
     }
 }
 
-/* Window Open — Mutter-style (subtle scale + fade, no bounce) */
+/* Window Open — GNOME 49 Mutter spring (quad ease-out with slight overshoot) */
 @keyframes windowBounceIn {
     0% {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.92) translateY(6px);
     }
-
+    60% {
+        opacity: 1;
+    }
     100% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
     }
 }
 
-/* Window Close — Mutter-style */
+/* Window Close — GNOME 49 Mutter spring */
 @keyframes windowBounceOut {
     0% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
     }
-
     100% {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.94) translateY(4px);
     }
 }
 
-/* Mutter Minimize Animation (scale-down + fade) */
+/* Mutter Minimize Animation — GNOME 49 (scale-down toward dock) */
 @keyframes mutterMinimize {
     0% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
     }
-
     100% {
         opacity: 0;
-        transform: scale(0.6) translateY(40vh);
+        transform: scale(0.5) translateY(50vh);
     }
 }
 
-/* Mutter Restore Animation (scale-up + fade) */
+/* Mutter Restore Animation — GNOME 49 */
 @keyframes mutterRestore {
     0% {
         opacity: 0;
-        transform: scale(0.6) translateY(40vh);
+        transform: scale(0.5) translateY(50vh);
     }
-
     100% {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -201,6 +200,125 @@
         transform: scale(2.5);
         opacity: 0;
     }
+}
+
+/* Activities Overlay — GNOME 49 zoom-out from desktop */
+@keyframes activitiesOverlayIn {
+    0% {
+        opacity: 0;
+        transform: scale(1.04);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes activitiesOverlayOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.03);
+    }
+}
+
+/* Activities App Grid item staggered entry */
+@keyframes activitiesAppItemIn {
+    0% {
+        opacity: 0;
+        transform: translateY(16px) scale(0.88);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Toast Notification — GNOME 49 scale+fade from top */
+@keyframes toastSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-16px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+@keyframes toastSlideUp {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-12px) scale(0.95);
+    }
+}
+
+/* Notification Center scale-in (GNOME 49 pop-over animation) */
+@keyframes popoverScaleIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.93) translateY(-8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) translateY(0);
+    }
+}
+
+/* Quick Settings panel scale-in from top-right */
+@keyframes quickSettingsIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.93) translateY(-10px);
+        transform-origin: top right;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        transform-origin: top right;
+    }
+}
+
+/* Search ellipse dots (GNOME 49 Overview animated ellipse) */
+@keyframes searchDot {
+    0%, 60%, 100% {
+        opacity: 0.25;
+        transform: scale(0.75);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Dock icon launch bounce */
+@keyframes dockIconLaunch {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(0.82); }
+    60%  { transform: scale(1.18); }
+    80%  { transform: scale(0.96); }
+    100% { transform: scale(1); }
+}
+
+/* Workspace switch slide */
+@keyframes workspaceSlideLeft {
+    from { transform: translateX(0); opacity: 1; }
+    to   { transform: translateX(-60px); opacity: 0; }
+}
+
+@keyframes workspaceSlideRight {
+    from { transform: translateX(60px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
 }
 
 /* ============================================

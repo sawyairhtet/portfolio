@@ -203,35 +203,40 @@
   --z-skip-link: 10001;
 }
 
-/* ── Dark Mode (Adwaita Dark) ── */
+/* ── Dark Mode (Adwaita Dark / GNOME 49) ── */
 [data-theme="dark"], .dark {
-  --surface-0:          #242424;
-  --surface-1:          #303030;
-  --surface-2:          #383838;
-  --surface-3:          #434343;
-  --surface-4:          #585858;
+  /* GNOME 49: "deeper blacks and warmer accents" */
+  --surface-0:          #1e1e1e;
+  --surface-1:          #2b2b2b;
+  --surface-2:          #333333;
+  --surface-3:          #3d3d3d;
+  --surface-4:          #525252;
 
   --text-primary:       rgba(255, 255, 255, 0.87);
   --text-secondary:     rgba(255, 255, 255, 0.55);
-  --text-disabled:      rgba(255, 255, 255, 0.38);
+  --text-disabled:      rgba(255, 255, 255, 0.35);
 
-  --border-color:       rgba(255, 255, 255, 0.06);
-  --window-header-bg:   #303030;
-  --window-header-border: rgba(255, 255, 255, 0.06);
-  --window-body-bg:     #242424;
-  --shadow-window:      0 4px 32px rgba(0, 0, 0, 0.5);
+  --border-color:       rgba(255, 255, 255, 0.08);
+  --window-header-bg:   #2b2b2b;
+  --window-header-border: rgba(255, 255, 255, 0.07);
+  --window-body-bg:     #1e1e1e;
+  --shadow-window:      0 4px 16px rgba(0, 0, 0, 0.4), 0 12px 40px rgba(0, 0, 0, 0.55);
+
+  /* GNOME 49: slightly warmer/brighter accent in dark mode */
+  --fedora-blue:        #4a90e2;
+  --fedora-blue-light:  #74aee8;
 
   /* Legacy dark mode aliases */
-  --color-glass-light:      rgba(36, 36, 36, 0.85);
-  --color-glass-dark:       rgba(48, 48, 48, 0.9);
+  --color-glass-light:      rgba(30, 30, 30, 0.88);
+  --color-glass-dark:       rgba(43, 43, 43, 0.92);
   --color-header-bg:        var(--window-header-bg);
   --color-header-text:      var(--text-primary);
   --color-window-body-bg:   var(--window-body-bg);
   --color-window-body-text: var(--text-primary);
-  --color-dock-bg:          rgba(36, 36, 36, 0.88);
-  --color-dock-item-hover:  rgba(53, 132, 228, 0.2);
+  --color-dock-bg:          rgba(30, 30, 30, 0.9);
+  --color-dock-item-hover:  rgba(74, 144, 226, 0.2);
   --color-dock-text:        var(--text-primary);
-  --color-topbar-bg:        rgba(36, 36, 36, 0.95);
+  --color-topbar-bg:        #000000;
   --color-topbar-text:      var(--text-primary);
   --color-border:           var(--border-color);
   --color-card-bg:          rgba(255, 255, 255, 0.04);

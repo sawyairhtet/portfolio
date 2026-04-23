@@ -118,6 +118,26 @@
         <!-- Snap Preview Overlay (for window snapping) -->
         <div class="snap-preview" id="snap-preview"></div>
 
+        <!-- Window Header Context Menu (GNOME 49 — right-click on titlebar) -->
+        <div class="context-menu" id="window-context-menu" role="menu" aria-label="Window options" aria-hidden="true">
+            <div class="context-menu-item" data-window-action="maximize" role="menuitem" tabindex="-1">
+                <i class="fas fa-expand-alt"></i> Maximize
+            </div>
+            <div class="context-menu-item" data-window-action="minimize" role="menuitem" tabindex="-1">
+                <i class="fas fa-window-minimize"></i> Minimize
+            </div>
+            <div class="context-menu-item" data-window-action="snap-left" role="menuitem" tabindex="-1">
+                <i class="fas fa-columns"></i> Snap Left
+            </div>
+            <div class="context-menu-item" data-window-action="snap-right" role="menuitem" tabindex="-1">
+                <i class="fas fa-columns"></i> Snap Right
+            </div>
+            <div class="context-menu-separator"></div>
+            <div class="context-menu-item destructive" data-window-action="close" role="menuitem" tabindex="-1">
+                <i class="fas fa-times"></i> Close
+            </div>
+        </div>
+
         <!-- Context Menu -->
         <div class="context-menu" id="context-menu">
             <div class="context-menu-item" data-action="new-folder">
@@ -147,7 +167,7 @@
                 <button
                     class="activities-btn pill"
                     id="activities-btn"
-                    title="Open Activities overview"
+                    title="Activities (Super)"
                     aria-label="Activities overview"
                 >
                     Activities
@@ -169,24 +189,113 @@
                 <div class="menu-clock pill"></div>
             </div>
 
-            <!-- GNOME Panel Right - Status Indicators -->
+            <!-- GNOME Panel Right - Quick Settings Button -->
             <div class="menu-bar-right">
                 <button
-                    class="theme-toggle-btn pill"
-                    id="quick-theme-toggle"
-                    aria-label="Toggle dark mode"
-                    title="Toggle dark mode"
-                >
-                    <i class="fas fa-moon"></i>
-                </button>
-                <div
                     class="status-menu pill"
-                    role="presentation"
-                    aria-label="System status indicators (decorative)"
+                    id="quick-settings-btn"
+                    aria-label="Quick Settings"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    title="Quick Settings"
                 >
                     <i class="fas fa-wifi" aria-hidden="true"></i>
                     <i class="fas fa-volume-up" aria-hidden="true"></i>
                     <i class="fas fa-battery-three-quarters" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Settings Panel (GNOME 49) -->
+        <div class="quick-settings-panel" id="quick-settings-panel" role="dialog" aria-label="Quick Settings" aria-modal="false">
+            <div class="qs-tiles">
+                <button class="qs-tile" id="qs-wifi" aria-pressed="true" aria-label="Wi-Fi">
+                    <div class="qs-tile-icon"><i class="fas fa-wifi"></i></div>
+                    <div class="qs-tile-label">Wi-Fi</div>
+                </button>
+                <button class="qs-tile" id="qs-bluetooth" aria-pressed="false" aria-label="Bluetooth">
+                    <div class="qs-tile-icon"><i class="fab fa-bluetooth-b"></i></div>
+                    <div class="qs-tile-label">Bluetooth</div>
+                </button>
+                <button class="qs-tile" id="qs-dark-mode" aria-pressed="true" aria-label="Dark Mode">
+                    <div class="qs-tile-icon"><i class="fas fa-moon"></i></div>
+                    <div class="qs-tile-label">Dark Mode</div>
+                </button>
+                <button class="qs-tile" id="qs-dnd" aria-pressed="false" aria-label="Do Not Disturb">
+                    <div class="qs-tile-icon"><i class="fas fa-bell-slash"></i></div>
+                    <div class="qs-tile-label">Do Not Disturb</div>
+                </button>
+            </div>
+            <div class="qs-sliders">
+                <div class="qs-slider-row">
+                    <i class="fas fa-sun qs-slider-icon" aria-hidden="true"></i>
+                    <input type="range" class="qs-slider" id="qs-brightness" min="20" max="100" value="80" aria-label="Brightness" />
+                </div>
+                <div class="qs-slider-row">
+                    <i class="fas fa-volume-up qs-slider-icon" aria-hidden="true"></i>
+                    <input type="range" class="qs-slider" id="qs-volume" min="0" max="100" value="70" aria-label="Volume" />
+                </div>
+            </div>
+            <div class="qs-footer">
+                <button class="qs-footer-btn" id="qs-settings-btn" aria-label="Open Settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </button>
+                <button class="qs-footer-btn" id="qs-lock-btn" aria-label="Lock Screen">
+                    <i class="fas fa-lock"></i>
+                    <span>Lock</span>
+                </button>
+                <button class="qs-footer-btn" id="qs-power-btn" aria-label="Power options">
+                    <i class="fas fa-power-off"></i>
+                    <span>Power</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Notification Center (GNOME 49 — opened by clicking clock) -->
+        <div class="notification-center" id="notification-center" role="dialog" aria-label="Notification Center" aria-modal="false">
+            <div class="notification-header">
+                <span class="notification-header-title">Notifications</span>
+                <div class="notification-header-actions">
+                    <button class="clear-all-btn" id="nc-clear-all" aria-label="Clear all notifications">
+                        Clear All
+                    </button>
+                </div>
+            </div>
+            <div class="notification-list" id="notification-list">
+                <div class="notification-group">
+                    <div class="notification-group-header">
+                        <span class="notification-group-name">System</span>
+                        <span class="notification-group-count">2</span>
+                    </div>
+                    <div class="notification-group-items">
+                        <div class="notification-item">
+                            <div class="notification-item-icon" style="background: linear-gradient(135deg, var(--fedora-blue-light), var(--fedora-blue)); color: #fff;">
+                                <i class="fab fa-fedora"></i>
+                            </div>
+                            <div class="notification-item-content">
+                                <div class="notification-item-title">Fedora 43 Desktop</div>
+                                <div class="notification-item-body">Welcome! Click any app icon in the dock to get started.</div>
+                                <div class="notification-item-time">Just now</div>
+                            </div>
+                            <button class="notification-item-dismiss" aria-label="Dismiss notification">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-item-icon" style="background: linear-gradient(135deg, var(--fedora-green), var(--fedora-teal)); color: #fff;">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="notification-item-content">
+                                <div class="notification-item-title">System Updated</div>
+                                <div class="notification-item-body">Fedora 43 is up to date. All packages are current.</div>
+                                <div class="notification-item-time">2 min ago</div>
+                            </div>
+                            <button class="notification-item-dismiss" aria-label="Dismiss notification">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -288,9 +397,13 @@
                     type="text"
                     class="activities-search-input"
                     id="activities-search-input"
-                    placeholder="Type to search apps..."
+                    placeholder="Type to search apps…"
                     autocomplete="off"
+                    spellcheck="false"
                 />
+                <div class="activities-search-ellipse" id="activities-search-ellipse" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
             </div>
             <div class="activities-main">
                 <div class="activities-windows" id="activities-windows"></div>

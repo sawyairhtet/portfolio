@@ -36,6 +36,7 @@
 @import url('components/notification-center.css') layer(components);
 @import url('components/activities.css') layer(components);
 @import url('components/plymouth.css') layer(components);
+@import url('components/quick-settings.css') layer(components);
 
 /* Responsive / Utilities (must be last — highest layer priority) */
 @import url('components/responsive.css') layer(utilities);

@@ -331,6 +331,34 @@ export function restoreWindow(appName, currentOS = null) {
     }
 }
 
+/**
+ * Toggles maximize state on a window element (GNOME 49 double-click behaviour).
+ * @param {HTMLElement} windowEl - The window DOM element
+ * @returns {void}
+ */
+export function toggleMaximize(windowEl) {
+    if (windowEl.classList.contains('snapped-maximized')) {
+        windowEl.classList.remove('snapped-maximized');
+        const state = windowSnapState.get(windowEl.id);
+        if (state) {
+            windowEl.style.width = state.width;
+            windowEl.style.height = state.height;
+            windowEl.style.top = state.top;
+            windowEl.style.left = state.left;
+        }
+    } else {
+        if (!windowSnapState.has(windowEl.id)) {
+            windowSnapState.set(windowEl.id, {
+                width: windowEl.style.width || getComputedStyle(windowEl).width,
+                height: windowEl.style.height || getComputedStyle(windowEl).height,
+                top: windowEl.style.top,
+                left: windowEl.style.left,
+            });
+        }
+        windowEl.classList.add('snapped-maximized');
+    }
+}
+
 // ============================================
 // DOCK ACTIVE STATE
 // ============================================
@@ -710,26 +738,21 @@ export function setupWindowControls() {
             e.stopPropagation();
             const windowEl = /** @type {HTMLElement | null} */ (btn.closest('.window'));
             if (windowEl) {
-                if (windowEl.classList.contains('snapped-maximized')) {
-                    windowEl.classList.remove('snapped-maximized');
-                    const state = windowSnapState.get(windowEl.id);
-                    if (state) {
-                        windowEl.style.width = state.width;
-                        windowEl.style.height = state.height;
-                        windowEl.style.top = state.top;
-                        windowEl.style.left = state.left;
-                    }
-                } else {
-                    if (!windowSnapState.has(windowEl.id)) {
-                        windowSnapState.set(windowEl.id, {
-                            width: windowEl.style.width || getComputedStyle(windowEl).width,
-                            height: windowEl.style.height || getComputedStyle(windowEl).height,
-                            top: windowEl.style.top,
-                            left: windowEl.style.left,
-                        });
-                    }
-                    windowEl.classList.add('snapped-maximized');
-                }
+                toggleMaximize(windowEl);
+            }
+        });
+    });
+
+    // GNOME 49: double-click window header to toggle maximize
+    document.querySelectorAll('.window-header').forEach(header => {
+        header.addEventListener('dblclick', e => {
+            if (/** @type {Element} */ (e.target).closest('.window-control') ||
+                /** @type {Element} */ (e.target).closest('.close-btn-mobile')) {
+                return;
+            }
+            const windowEl = /** @type {HTMLElement | null} */ (header.closest('.window'));
+            if (windowEl) {
+                toggleMaximize(windowEl);
             }
         });
     });

@@ -41,18 +41,24 @@ body.show-dock .dock {
     cursor: pointer;
     position: relative;
     color: var(--text-on-accent);
-    transition: transform var(--transition-fast);
+    transition: transform 0.16s cubic-bezier(0.2, 0.82, 0.38, 1), box-shadow 0.16s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 @media (hover: hover) {
     .dock-item:hover {
-        transform: scale(1.12);
-        background: var(--dock-hover-bg);
+        transform: scale(1.22) translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28), 0 2px 4px rgba(0, 0, 0, 0.15);
     }
 }
 
 .dock-item:active {
-    transform: scale(0.96);
+    transform: scale(0.93);
+}
+
+/* Launch animation — added by JS when opening an app */
+.dock-item.launching {
+    animation: dockIconLaunch 0.38s cubic-bezier(0.2, 0.82, 0.38, 1) forwards;
 }
 
 /* Adwaita-style dock icon backgrounds */
@@ -95,10 +101,11 @@ body.show-dock .dock {
     bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 18px;
-    height: 4px;
-    border-radius: 2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
     background: var(--dock-active-dot);
+    box-shadow: 0 0 4px var(--dock-active-dot);
 }
 
 .dock-separator {

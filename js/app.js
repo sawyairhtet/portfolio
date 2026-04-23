@@ -9,6 +9,7 @@ import ThemeManager from './core/theme-manager.js';
 import {
     openWindow,
     closeWindow,
+    minimizeWindow,
     closeAllWindows,
     bringToFront,
     makeDraggable,
@@ -16,6 +17,7 @@ import {
     setupWindowControls,
     getActiveWindows,
     getCurrentZIndex,
+    toggleMaximize,
 } from './core/window-manager.js';
 
 // App modules
@@ -27,7 +29,7 @@ import { setupContextMenu } from './ui/context-menu.js';
 import { showToast, setupNotificationCenter } from './ui/notifications.js';
 import { initMicroInteractions } from './ui/micro-interactions.js';
 import { setupCommandPalette } from './ui/command-palette.js';
-import { setupLockScreen } from './ui/lock-screen.js';
+import { setupLockScreen, lock as lockScreen } from './ui/lock-screen.js';
 import { setupScreenshotTool } from './ui/screenshot-tool.js';
 
 
@@ -147,6 +149,17 @@ function setupInstallPrompt() {
 // APP ICONS & DOCK
 // ============================================
 
+function triggerDockLaunchAnimation(appName) {
+    const dockItem = /** @type {HTMLElement | null} */ (document.querySelector(`.dock-item[data-app="${appName}"]`));
+    if (!dockItem) {
+        return;
+    }
+    dockItem.classList.remove('launching');
+    void dockItem.offsetWidth;
+    dockItem.classList.add('launching');
+    setTimeout(() => dockItem.classList.remove('launching'), 420);
+}
+
 function handleAppIconClick(appName) {
     if (!appName) {
         return;
@@ -167,9 +180,11 @@ function handleAppIconClick(appName) {
         if (zIndex === getCurrentZIndex()) {
             closeWindow(windowId);
         } else {
+            triggerDockLaunchAnimation(appName);
             openWindow(appName, currentOS);
         }
     } else {
+        triggerDockLaunchAnimation(appName);
         openWindow(appName, currentOS);
     }
 }
@@ -899,6 +914,7 @@ function setupActivities() {
     const activitiesBtn = document.getElementById('activities-btn');
     const overlay = document.getElementById('activities-overlay');
     const searchInput = /** @type {HTMLInputElement | null} */ (document.getElementById('activities-search-input'));
+    const searchEllipse = document.getElementById('activities-search-ellipse');
     const windowsContainer = document.getElementById('activities-windows');
     const appItems = document.querySelectorAll('.activities-app-item');
 
@@ -907,10 +923,16 @@ function setupActivities() {
     }
 
     let isOpen = false;
+    let closeTimeout = null;
 
     function openActivities() {
         if (isOpen) {
             return;
+        }
+        if (closeTimeout) {
+            clearTimeout(closeTimeout);
+            closeTimeout = null;
+            overlay.classList.remove('hiding');
         }
         isOpen = true;
         overlay.classList.add('visible');
@@ -918,7 +940,7 @@ function setupActivities() {
         activitiesBtn.classList.add('active');
         updateWindowThumbnails();
         if (searchInput) {
-            setTimeout(() => searchInput.focus(), 100);
+            setTimeout(() => searchInput.focus(), 120);
         }
     }
 
@@ -928,12 +950,20 @@ function setupActivities() {
         }
         isOpen = false;
         overlay.classList.remove('visible');
+        overlay.classList.add('hiding');
         overlay.setAttribute('aria-modal', 'false');
         activitiesBtn.classList.remove('active');
         if (searchInput) {
             searchInput.value = '';
             filterApps('');
+            if (searchEllipse) {
+                searchEllipse.classList.remove('visible');
+            }
         }
+        closeTimeout = setTimeout(() => {
+            overlay.classList.remove('hiding');
+            closeTimeout = null;
+        }, 200);
     }
 
     function toggleActivities() {
@@ -1042,12 +1072,27 @@ function setupActivities() {
         }
     });
 
-    // Search filtering
+    // Search filtering + GNOME 49 animated ellipse
     if (searchInput) {
         searchInput.addEventListener('input', () => {
             filterApps(searchInput.value);
+            if (searchEllipse) {
+                if (searchInput.value.trim().length > 0) {
+                    searchEllipse.classList.add('visible');
+                } else {
+                    searchEllipse.classList.remove('visible');
+                }
+            }
         });
     }
+
+    // Super key opens Activities (GNOME standard)
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Super' || (e.key === 'Meta' && !e.ctrlKey && !e.altKey && !e.shiftKey)) {
+            e.preventDefault();
+            toggleActivities();
+        }
+    });
 
     // App grid items in Activities
     appItems.forEach(item => {
@@ -1290,6 +1335,250 @@ function applyWallpaper(wp) {
 }
 
 // ============================================
+// WINDOW HEADER CONTEXT MENU (GNOME 49)
+// ============================================
+
+function setupWindowContextMenu() {
+    const menu = document.getElementById('window-context-menu');
+    if (!menu) {
+        return;
+    }
+
+    /** @type {HTMLElement | null} */
+    let targetWindow = null;
+
+    const closeMenu = () => {
+        menu.classList.remove('visible');
+        menu.setAttribute('aria-hidden', 'true');
+        targetWindow = null;
+    };
+
+    document.addEventListener('contextmenu', e => {
+        const header = /** @type {Element} */ (e.target).closest('.window-header');
+        if (!header) {
+            return;
+        }
+        e.preventDefault();
+
+        targetWindow = /** @type {HTMLElement | null} */ (header.closest('.window'));
+        if (!targetWindow) {
+            return;
+        }
+
+        const me = /** @type {MouseEvent} */ (e);
+        let x = me.clientX;
+        let y = me.clientY;
+
+        const menuW = 200;
+        const menuH = 180;
+        let originX = 'left';
+        let originY = 'top';
+        if (x + menuW > window.innerWidth) { x -= menuW; originX = 'right'; }
+        if (y + menuH > window.innerHeight) { y -= menuH; originY = 'bottom'; }
+
+        menu.style.left = x + 'px';
+        menu.style.top = y + 'px';
+        menu.style.transformOrigin = `${originY} ${originX}`;
+        menu.classList.add('visible');
+        menu.setAttribute('aria-hidden', 'false');
+
+        const first = /** @type {HTMLElement | null} */ (menu.querySelector('.context-menu-item'));
+        if (first) first.focus();
+    });
+
+    document.addEventListener('click', closeMenu);
+
+    menu.addEventListener('keydown', e => {
+        const ke = /** @type {KeyboardEvent} */ (e);
+        const items = /** @type {HTMLElement[]} */ (Array.from(menu.querySelectorAll('.context-menu-item')));
+        const idx = items.indexOf(/** @type {HTMLElement} */ (document.activeElement));
+        if (ke.key === 'ArrowDown') { e.preventDefault(); items[(idx + 1) % items.length].focus(); }
+        else if (ke.key === 'ArrowUp') { e.preventDefault(); items[(idx - 1 + items.length) % items.length].focus(); }
+        else if (ke.key === 'Escape') { e.preventDefault(); closeMenu(); }
+        else if (ke.key === 'Enter' && idx !== -1) { e.preventDefault(); items[idx].click(); }
+    });
+
+    menu.querySelectorAll('.context-menu-item').forEach(item => {
+        item.addEventListener('click', e => {
+            e.stopPropagation();
+            if (!targetWindow) { closeMenu(); return; }
+            const action = /** @type {HTMLElement} */ (item).dataset.windowAction;
+            const winId = targetWindow.id;
+
+            switch (action) {
+                case 'maximize':
+                    toggleMaximize(targetWindow);
+                    break;
+                case 'minimize':
+                    minimizeWindow(winId);
+                    break;
+                case 'snap-left':
+                    targetWindow.classList.remove('snapped-right', 'snapped-maximized');
+                    targetWindow.classList.add('snapped-left');
+                    break;
+                case 'snap-right':
+                    targetWindow.classList.remove('snapped-left', 'snapped-maximized');
+                    targetWindow.classList.add('snapped-right');
+                    break;
+                case 'close':
+                    closeWindow(winId);
+                    break;
+            }
+            closeMenu();
+        });
+    });
+}
+
+// ============================================
+// QUICK SETTINGS PANEL (GNOME 49)
+// ============================================
+
+function setupQuickSettings() {
+    const btn = document.getElementById('quick-settings-btn');
+    const panel = document.getElementById('quick-settings-panel');
+    if (!btn || !panel) {
+        return;
+    }
+
+    let isOpen = false;
+
+    function openQS() {
+        isOpen = true;
+        panel.classList.add('visible');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.setAttribute('aria-modal', 'true');
+        syncQSTiles();
+    }
+
+    function closeQS() {
+        isOpen = false;
+        panel.classList.remove('visible');
+        btn.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-modal', 'false');
+    }
+
+    btn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (isOpen) {
+            closeQS();
+        } else {
+            openQS();
+        }
+    });
+
+    document.addEventListener('click', e => {
+        if (isOpen && !panel.contains(/** @type {Node} */ (e.target)) && e.target !== btn) {
+            closeQS();
+        }
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && isOpen) {
+            closeQS();
+        }
+    });
+
+    // Sync tile pressed states with actual theme
+    function syncQSTiles() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const darkTile = document.getElementById('qs-dark-mode');
+        if (darkTile) {
+            darkTile.setAttribute('aria-pressed', String(isDark));
+        }
+
+        const dndActive = document.body.classList.contains('dnd-active');
+        const dndTile = document.getElementById('qs-dnd');
+        if (dndTile) {
+            dndTile.setAttribute('aria-pressed', String(dndActive));
+        }
+    }
+
+    // Dark mode tile toggle
+    const darkTile = document.getElementById('qs-dark-mode');
+    if (darkTile) {
+        darkTile.addEventListener('click', () => {
+            ThemeManager.toggle();
+            syncQSTiles();
+            showToast(
+                document.documentElement.getAttribute('data-theme') === 'dark'
+                    ? 'Dark mode enabled'
+                    : 'Light mode enabled',
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'fa-moon' : 'fa-sun'
+            );
+        });
+    }
+
+    // DND tile toggle
+    const dndTile = document.getElementById('qs-dnd');
+    if (dndTile) {
+        dndTile.addEventListener('click', () => {
+            document.body.classList.toggle('dnd-active');
+            const isDND = document.body.classList.contains('dnd-active');
+            dndTile.setAttribute('aria-pressed', String(isDND));
+            showToast(isDND ? 'Do Not Disturb enabled' : 'Do Not Disturb disabled', isDND ? 'fa-bell-slash' : 'fa-bell');
+        });
+    }
+
+    // Wi-Fi tile (decorative toggle)
+    const wifiTile = document.getElementById('qs-wifi');
+    if (wifiTile) {
+        wifiTile.addEventListener('click', () => {
+            const pressed = wifiTile.getAttribute('aria-pressed') === 'true';
+            wifiTile.setAttribute('aria-pressed', String(!pressed));
+        });
+    }
+
+    // Bluetooth tile (decorative toggle)
+    const btTile = document.getElementById('qs-bluetooth');
+    if (btTile) {
+        btTile.addEventListener('click', () => {
+            const pressed = btTile.getAttribute('aria-pressed') === 'true';
+            btTile.setAttribute('aria-pressed', String(!pressed));
+        });
+    }
+
+    // Volume slider syncs with sound manager
+    const volSlider = /** @type {HTMLInputElement | null} */ (document.getElementById('qs-volume'));
+    if (volSlider) {
+        volSlider.addEventListener('input', () => {
+            const isMuted = parseInt(volSlider.value) === 0;
+            SoundManager.setMuted(isMuted);
+        });
+    }
+
+    // Footer: Settings button
+    const settingsBtn = document.getElementById('qs-settings-btn');
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', () => {
+            closeQS();
+            handleAppIconClick('settings');
+        });
+    }
+
+    // Footer: Lock button
+    const lockBtn = document.getElementById('qs-lock-btn');
+    if (lockBtn) {
+        lockBtn.addEventListener('click', () => {
+            closeQS();
+            lockScreen();
+        });
+    }
+
+    // Footer: Power button (just shows toast for now)
+    const powerBtn = document.getElementById('qs-power-btn');
+    if (powerBtn) {
+        powerBtn.addEventListener('click', () => {
+            closeQS();
+            showToast('Power menu not available in browser', 'fa-power-off');
+        });
+    }
+
+    // Keep dark mode tile in sync with external theme changes
+    const themeObserver = new MutationObserver(() => syncQSTiles());
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+}
+
+// ============================================
 // SKILL BAR ANIMATION
 // ============================================
 
@@ -1379,6 +1668,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLockScreen();
     setupScreenshotTool();
     setupNotificationCenter();
+    setupQuickSettings();
+    setupWindowContextMenu();
 
     // Mark all Font Awesome icons as decorative for screen readers
     document.querySelectorAll('.fas, .fab, .far').forEach(icon => {

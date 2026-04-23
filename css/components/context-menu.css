@@ -4,30 +4,45 @@
 
 .context-menu {
     position: fixed;
-    background: var(--color-window-body-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    min-width: 180px;
-    padding: var(--spacing-xs) 0;
+    background: var(--surface-1);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.1),
+        0 12px 32px rgba(0,0,0,0.18);
+    min-width: 190px;
+    padding: 6px 0;
     z-index: var(--z-context-menu);
     display: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+[data-theme="dark"] .context-menu {
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.35),
+        0 12px 32px rgba(0,0,0,0.5);
 }
 
 .context-menu.visible {
     display: block;
-    animation: contextMenuIn 0.15s ease-out;
+    animation: contextMenuIn 0.16s cubic-bezier(0.2, 0.82, 0.38, 1);
+    transform-origin: top left;
 }
 
 .context-menu-item {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
+    gap: 10px;
+    padding: 7px 14px;
     cursor: pointer;
     font-size: 13px;
-    color: var(--color-window-body-text);
-    transition: background 0.15s ease;
+    font-family: var(--font-ui);
+    color: var(--text-primary);
+    border-radius: 0;
+    transition: background 0.1s ease;
+    margin: 0 4px;
+    border-radius: var(--border-radius-sm);
 }
 
 @media (hover: hover) {
@@ -37,14 +52,33 @@
     }
 }
 
+.context-menu-item:active {
+    background: rgba(53, 132, 228, 0.12);
+    color: var(--fedora-blue);
+}
+
+.context-menu-item.destructive {
+    color: var(--fedora-red);
+}
+
+.context-menu-item.destructive:hover {
+    background: rgba(224, 27, 36, 0.1);
+}
+
 .context-menu-item i {
     width: 16px;
     text-align: center;
     font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.context-menu-item:hover i,
+.context-menu-item.destructive i {
+    color: inherit;
 }
 
 .context-menu-separator {
     height: 1px;
-    background: var(--color-border);
-    margin: var(--spacing-xs) 0;
+    background: var(--border-color);
+    margin: 4px 0;
 }

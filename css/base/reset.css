@@ -12,42 +12,47 @@
    CUSTOM SCROLLBARS — Adwaita Overlay Style
    ============================================ */
 
-/* Webkit Scrollbars (Chrome, Safari, Edge) */
+/* Webkit Scrollbars — GNOME 49 thin overlay style */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
 }
 
 ::-webkit-scrollbar-track {
     background: transparent;
+    margin: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.22);
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(0, 0, 0, 0.38);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
 }
 
 /* Dark mode scrollbar */
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.18);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /* Firefox Scrollbars */
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
 }
 
 [data-theme="dark"] * {
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 }
 
 /* ============================================
@@ -85,7 +90,7 @@ body {
    ACCESSIBILITY - FOCUS INDICATORS
    ============================================ */
 
-/* Visible focus outlines for keyboard navigation */
+/* Visible focus outlines for keyboard navigation — Adwaita style */
 .app-icon:focus-visible,
 .dock-item:focus-visible,
 .window-control:focus-visible,
@@ -100,9 +105,15 @@ body {
 .context-menu-item:focus-visible,
 .nav-hint-dismiss:focus-visible,
 .dialog-btn:focus-visible,
-.dialog-input:focus-visible {
-    outline: 2px solid var(--color-primary);
+.dialog-input:focus-visible,
+.qs-tile:focus-visible,
+.qs-footer-btn:focus-visible,
+#quick-settings-btn:focus-visible,
+.settings-nav-item:focus-visible,
+.notification-item-dismiss:focus-visible {
+    outline: 2px solid var(--fedora-blue);
     outline-offset: 2px;
+    border-radius: var(--border-radius-sm);
 }
 
 /* Skip link for accessibility */

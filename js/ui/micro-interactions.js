@@ -102,7 +102,9 @@ function setupMagneticButtons() {
         return;
     }
 
-    const buttons = document.querySelectorAll('.dock-item, .window-control');
+    // Only apply magnetic effect to window controls — dock items use CSS
+    // transforms for hover scaling, which inline transform would override.
+    const buttons = document.querySelectorAll('.window-control');
 
     buttons.forEach(btn => {
         const b = /** @type {HTMLElement} */ (btn);
@@ -112,7 +114,7 @@ function setupMagneticButtons() {
             const x = me.clientX - rect.left - rect.width / 2;
             const y = me.clientY - rect.top - rect.height / 2;
 
-            b.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            b.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
         });
 
         b.addEventListener('mouseleave', () => {

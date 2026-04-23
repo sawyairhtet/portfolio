@@ -801,6 +801,29 @@
    iOS SAFE AREA INSETS
    ============================================ */
 
+/* ============================================
+   QUICK SETTINGS + NOTIFICATION CENTER
+   ============================================ */
+
+/* Hide panels on mobile/tablet — top bar is hidden */
+@media (max-width: 1024px) {
+    .quick-settings-panel,
+    .notification-center {
+        display: none !important;
+    }
+}
+
+/* Narrow desktop: keep panels from overflowing */
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .quick-settings-panel {
+        width: 280px;
+    }
+
+    .notification-center {
+        width: 340px;
+    }
+}
+
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
     @media (max-width: 1024px) {
         /* Dock accounts for home indicator */

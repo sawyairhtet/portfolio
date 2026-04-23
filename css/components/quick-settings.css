@@ -1,0 +1,213 @@
+/* ============================================
+   QUICK SETTINGS PANEL — GNOME 49
+   Slides from top-right with scale animation
+   ============================================ */
+
+.quick-settings-panel {
+    position: fixed;
+    top: calc(var(--topbar-height) + 6px);
+    right: 8px;
+    width: 320px;
+    z-index: calc(var(--z-modal) + 10);
+    background: var(--surface-1);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.1),
+        0 16px 40px rgba(0,0,0,0.22);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.93) translateY(-10px);
+    transform-origin: top right;
+    transition:
+        opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.2s cubic-bezier(0.2, 0.82, 0.38, 1),
+        visibility 0.2s;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+[data-theme="dark"] .quick-settings-panel {
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.38),
+        0 16px 40px rgba(0,0,0,0.6);
+}
+
+.quick-settings-panel.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+/* ── Tiles row ── */
+.qs-tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.qs-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    cursor: pointer;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.12s ease;
+}
+
+.qs-tile:hover {
+    background: var(--surface-2);
+}
+
+.qs-tile:active {
+    transform: scale(0.97);
+}
+
+.qs-tile[aria-pressed="true"] {
+    background: rgba(53, 132, 228, 0.12);
+    border-color: var(--fedora-blue);
+    color: var(--fedora-blue);
+}
+
+[data-theme="dark"] .qs-tile[aria-pressed="true"] {
+    background: rgba(53, 132, 228, 0.18);
+}
+
+.qs-tile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--surface-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background 0.15s ease;
+}
+
+.qs-tile[aria-pressed="true"] .qs-tile-icon {
+    background: var(--fedora-blue);
+    color: #fff;
+}
+
+.qs-tile-label {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* ── Sliders ── */
+.qs-sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.qs-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qs-slider-icon {
+    font-size: 14px;
+    color: var(--text-secondary);
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.qs-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--surface-3);
+    outline: none;
+    cursor: pointer;
+}
+
+.qs-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--fedora-blue);
+    cursor: pointer;
+    border: 2px solid var(--surface-1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    transition: transform 0.12s ease;
+}
+
+.qs-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.qs-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--fedora-blue);
+    cursor: pointer;
+    border: 2px solid var(--surface-1);
+}
+
+/* ── Footer ── */
+.qs-footer {
+    display: flex;
+    gap: 4px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 12px;
+}
+
+.qs-footer-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    border: none;
+    border-radius: var(--border-radius-md);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+}
+
+.qs-footer-btn:hover {
+    background: var(--surface-2);
+    color: var(--text-primary);
+}
+
+.qs-footer-btn:active {
+    transform: scale(0.95);
+}
+
+.qs-footer-btn i {
+    font-size: 15px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .quick-settings-panel {
+        transition: opacity 0.01ms, visibility 0.01ms;
+    }
+}
