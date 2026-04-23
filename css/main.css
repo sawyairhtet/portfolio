@@ -4,8 +4,6 @@
    CSS @layer architecture for specificity control
    ============================================ */
 
-@layer reset, tokens, base, components, utilities;
-
 /* Reset */
 @import url('base/reset.css') layer(reset);
 
@@ -40,3 +38,6 @@
 
 /* Responsive / Utilities (must be last — highest layer priority) */
 @import url('components/responsive.css') layer(utilities);
+
+/* Layer ordering (after all imports for Lightning CSS compatibility) */
+@layer reset, tokens, base, components, utilities;

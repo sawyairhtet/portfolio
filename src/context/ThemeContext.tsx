@@ -1,0 +1,60 @@
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
+
+interface ThemeContextValue {
+    isDark: boolean;
+    toggle: () => void;
+    setDark: (dark: boolean) => void;
+    accentColor: string;
+    setAccentColor: (color: string) => void;
+}
+
+const ThemeContext = createContext<ThemeContextValue>({
+    isDark: true,
+    toggle: () => {},
+    setDark: () => {},
+    accentColor: '#3584e4',
+    setAccentColor: () => {},
+});
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+    const [isDark, setIsDark] = useState<boolean>(() => {
+        const saved = localStorage.getItem('theme');
+        if (saved) return saved === 'dark';
+        return document.documentElement.getAttribute('data-theme') === 'dark';
+    });
+
+    const [accentColor, setAccentColorState] = useState<string>(() => {
+        return localStorage.getItem('portfolioAccent') || '#3584e4';
+    });
+
+    // Sync data-theme attribute with state
+    useEffect(() => {
+        if (isDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }, [isDark]);
+
+    // Sync accent color CSS custom properties
+    useEffect(() => {
+        document.documentElement.style.setProperty('--fedora-blue', accentColor);
+        document.documentElement.style.setProperty('--color-primary', accentColor);
+        localStorage.setItem('portfolioAccent', accentColor);
+    }, [accentColor]);
+
+    const toggle = useCallback(() => setIsDark((prev) => !prev), []);
+    const setDark = useCallback((dark: boolean) => setIsDark(dark), []);
+    const setAccentColor = useCallback((color: string) => setAccentColorState(color), []);
+
+    return (
+        <ThemeContext.Provider value={{ isDark, toggle, setDark, accentColor, setAccentColor }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+}
+
+export function useTheme(): ThemeContextValue {
+    return useContext(ThemeContext);
+}

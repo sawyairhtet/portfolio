@@ -1,185 +1,73 @@
-# 🛡️ Deployment Safety Guide
+# Deployment Safety Guide
 
-## ✅ **Safe Deployment Workflow** (Follow EVERY Time)
+## Safe Workflow
 
-### **Step 1: Local Testing**
+### 1. Validate locally
 
 ```bash
-# Start local development server
-npm run dev  # Opens http://localhost:3000
-
-# Make your changes, test in browser
-# Check all pages work: Home, About, Gallery, Blog
-# Test on different screen sizes (mobile/desktop)
+npm run dev
+npm run validate
+npm run build
 ```
 
-### **Step 2: Pre-Commit Safety Check**
+Before pushing, verify the React desktop shell works on desktop and mobile breakpoints and that `/app/about` style deep links still load.
+
+### 2. Commit the right surface
+
+This repo is deployed from the Vite build output, not the old root-level static files.
 
 ```bash
-# Run automated safety checks
-npm run check
-
-# If PASSED ✅ → Continue to Step 3
-# If FAILED ❌ → Fix issues and run again
-```
-
-### **Step 3: Git Safety Workflow**
-
-```bash
-# Check what you're committing
 git status
-git diff
-
-# Add files (be specific, avoid git add .)
-git add index.html css/main.css js/app.js
-
-# Write descriptive commit message
-git commit -m "Add new VR project section with hand tracking details"
-
-# Push to trigger deployment
-git push origin main
+git diff --stat
+git add src css public package.json vite.config.js netlify.toml README.md DEPLOYMENT-SAFETY.md
 ```
 
-### **Step 4: Verify Deployment**
+Only stage files you intentionally changed.
+
+### 3. Deploy through Netlify
+
+Netlify should use:
 
 ```bash
-# Wait 2-3 minutes, then check:
-# 1. Visit https://sawyehtet.com
-# 2. Test all functionality
-# 3. Check browser console for errors (F12)
+Build command: npm run build
+Publish directory: dist
 ```
 
----
+The checked-in `netlify.toml` keeps these settings in the repo and adds an SPA rewrite for `/app/*` routes.
 
-## 🚨 **Emergency Recovery Strategies**
+### 4. Verify production
 
-### **If You Pushed Broken Code:**
+After deploy completes:
 
-#### **Method 1: Quick Hotfix (Recommended)**
+- Open `https://sawyehtet.com`
+- Refresh an app deep link such as `https://sawyehtet.com/app/about`
+- Confirm the custom `404.html` still renders for unknown non-app routes
+- Check the browser console for runtime errors
 
-```bash
-# Fix the issue locally
-# Test with npm run dev
-# Run npm run check
-# Commit and push fix
-git add .
-git commit -m "🚑 HOTFIX: Fix broken navigation links"
-git push origin main
-```
+## Recovery
 
-#### **Method 2: Rollback to Previous Version**
+If a deployment breaks, prefer a forward fix or `git revert` over history rewrites.
 
 ```bash
-# See recent commits
 git log --oneline -5
-
-# Rollback to previous good commit
 git revert HEAD --no-edit
 git push origin main
-
-# This creates a new commit that undoes the broken one
 ```
 
-#### **Method 3: Nuclear Option (Last Resort)**
+## Common Failure Modes
+
+- Deploying the repo root instead of `dist`, which serves stale static files
+- Passing `build` locally but skipping `validate`, which misses lint or test regressions
+- Breaking deep links by removing the `/app/*` rewrite
+- Updating content or routes without checking the 404 page and metadata
+
+## Quick Reference
 
 ```bash
-# Reset to specific good commit (DANGEROUS!)
-git log --oneline -10        # Find good commit hash
-git reset --hard abc123f     # Replace with actual hash
-git push --force origin main # ⚠️ This rewrites history!
+npm run dev
+npm run validate
+npm run build
+git status
+git diff --stat
+git revert HEAD --no-edit
 ```
-
----
-
-## 🔍 **Common Issues & Prevention**
-
-### **Prevent Broken Images**
-
-- Always check image paths with `npm run check`
-- Use relative paths: `assets/image.jpg` ✅
-- Avoid absolute paths: `/home/user/image.jpg` ❌
-
-### **Prevent CSS/JS Errors**
-
-- Test in multiple browsers
-- Check browser console (F12) for errors
-- Use CSS/JS validators online
-
-### **Prevent Content Issues**
-
-- Spell check important text
-- Test all links work
-- Verify contact information is correct
-
----
-
-## 📊 **Monitoring Your Site**
-
-### **Set Up Alerts (Recommended)**
-
-1. **UptimeRobot** - Free monitoring, emails when site is down
-2. **Google Search Console** - SEO and indexing issues
-3. **Netlify Status** - Check deployment status
-
-### **Weekly Health Check**
-
-```bash
-# Run every Sunday
-npm run check
-# Visit your site from different devices
-# Check Google Analytics for issues
-```
-
----
-
-## 🎯 **Best Practices**
-
-### **Commit Messages**
-
-- ✅ "Add new VR project with hand tracking demo"
-- ✅ "Update timeline with Capella Hotel experience"
-- ✅ "Fix mobile navigation on gallery page"
-- ❌ "updates"
-- ❌ "fix stuff"
-
-### **Testing Checklist**
-
-- [ ] Homepage loads correctly
-- [ ] All navigation links work
-- [ ] Gallery images display
-- [ ] Blog posts are accessible
-- [ ] Mobile responsive design works
-- [ ] No console errors in browser
-- [ ] Contact information is accurate
-
-### **Git Branch Strategy (Optional)**
-
-```bash
-# For major changes, use branches
-git checkout -b feature/new-project-section
-# Make changes, test thoroughly
-git checkout main
-git merge feature/new-project-section
-git push origin main
-```
-
----
-
-## ⚡ **Quick Reference Commands**
-
-```bash
-# Daily workflow
-npm run dev          # Start local testing
-npm run check        # Safety check before commit
-git status           # See what changed
-git add filename.ext # Add specific files
-git commit -m "msg"  # Commit with message
-git push origin main # Deploy to live site
-
-# Emergency commands
-git log --oneline -5 # See recent commits
-git revert HEAD      # Undo last commit
-git reset --hard     # ⚠️ Nuclear reset (dangerous!)
-```
-
-Remember: **Better to delay a deployment than deploy broken code!** 🚀

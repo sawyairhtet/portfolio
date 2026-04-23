@@ -24,6 +24,10 @@
     top: 15%;
 }
 
+.window.is-minimized {
+    display: none;
+}
+
 /* Focused window — GNOME 49 elevated shadow */
 .window:focus-within {
     box-shadow:

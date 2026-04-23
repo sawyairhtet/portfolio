@@ -305,7 +305,7 @@ describe('Window Manager', () => {
 
     it('setupWindowControls Ctrl+Tab cycles windows', () => {
         const el1 = createWindowEl('about');
-        const el2 = createWindowEl('terminal');
+        createWindowEl('terminal');
         setupWindowControls();
         openWindow('about', 'desktop');
         openWindow('terminal', 'desktop');

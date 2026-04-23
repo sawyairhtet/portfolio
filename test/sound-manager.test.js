@@ -36,7 +36,7 @@ function createMockAudioContext() {
         createOscillator: vi.fn(() => createMockOscillator()),
         createGain: vi.fn(() => createMockGain()),
         createBiquadFilter: vi.fn(() => createMockFilter()),
-        createBuffer: vi.fn((channels, length, sampleRate) => ({
+        createBuffer: vi.fn((channels, length, _sampleRate) => ({
             getChannelData: vi.fn(() => new Float32Array(length)),
         })),
         createBufferSource: vi.fn(() => ({
@@ -47,9 +47,13 @@ function createMockAudioContext() {
     };
 }
 
-globalThis.AudioContext = function MockAudioContext() {
-    return createMockAudioContext();
-};
+Object.defineProperty(globalThis, 'AudioContext', {
+    value: function MockAudioContext() {
+        return createMockAudioContext();
+    },
+    writable: true,
+    configurable: true,
+});
 
 const { default: SoundManager } = await import('../js/core/sound-manager.js');
 

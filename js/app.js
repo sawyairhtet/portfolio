@@ -1383,7 +1383,9 @@ function setupWindowContextMenu() {
         menu.setAttribute('aria-hidden', 'false');
 
         const first = /** @type {HTMLElement | null} */ (menu.querySelector('.context-menu-item'));
-        if (first) first.focus();
+        if (first) {
+            first.focus();
+        }
     });
 
     document.addEventListener('click', closeMenu);

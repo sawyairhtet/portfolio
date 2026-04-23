@@ -212,6 +212,16 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.12);
 }
 
+.notification-item-icon-info {
+    background: linear-gradient(135deg, var(--fedora-blue-light), var(--fedora-blue));
+    color: var(--text-on-accent);
+}
+
+.notification-item-icon-success {
+    background: linear-gradient(135deg, var(--fedora-green), var(--fedora-teal));
+    color: var(--text-on-accent);
+}
+
 .notification-item-content {
     flex: 1;
     min-width: 0;

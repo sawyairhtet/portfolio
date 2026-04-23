@@ -1,85 +1,64 @@
 # Personal Portfolio
 
-My personal portfolio website showcasing my journey as an IT student at Singapore Polytechnic.
+Interactive portfolio for Saw Ye Htet, built as a Fedora 43 / GNOME-style desktop experience in the browser.
 
 ## About
 
-This is my portfolio website featuring a **Fedora 43 GNOME 49 (Adwaita-inspired)** desktop theme. It simulates a Linux desktop experience with a GNOME-style top panel, a left-side dock, and draggable windows. Built with vanilla HTML, CSS, and JavaScript to keep things simple and fast.
+The current site is a React and TypeScript application built with Vite. It recreates a desktop shell with a boot sequence, dock, draggable windows, terminal, quick settings, notifications, and deep-linkable app routes.
 
-## Structure
+## Tech Stack
 
-```plaintext
+- React 19
+- TypeScript
+- Vite
+- Vitest
+- ESLint flat config
+- CSS custom properties and layered component styles
+
+## Project Structure
+
+```text
 portfolio/
-├── index.html                  # Main OS simulation (Single Page App)
-├── 404.html                    # Custom 404 Error Page
-├── manifest.json               # PWA manifest
-├── sw.js                       # Service Worker for offline support
-├── sitemap.xml                 # SEO sitemap
-├── robots.txt                  # Search engine directives
-├── check-before-deploy.js      # Pre-deployment safety check script
-├── build.js                    # CSS build script
-├── css/
-│   ├── main.css                # CSS entry point (imports all styles)
-│   ├── base/                   # Reset, variables, typography
-│   └── components/             # Window, dock, terminal, dialog styles
-├── js/
-│   ├── app.js                  # Main entry point & orchestration
-│   ├── apps/                   # App-specific logic (terminal, sticky notes)
-│   ├── config/                 # Boot messages configuration
-│   ├── core/                   # Window manager, audio, storage
-│   └── ui/                     # Dialog, context menu, theme toggle
-├── assets/                     # Favicon and icons
-├── images/                     # Profile picture, wallpapers
-└── resume/                     # Downloadable resume PDF
+├── src/                        # React application source
+│   ├── components/             # Shell, apps, windows, and UI pieces
+│   ├── context/                # App-wide state providers
+│   ├── config/                 # App and content data
+│   ├── lib/                    # Shared utilities
+│   ├── styles/                 # React CSS entry point
+│   └── tests/                  # React-focused test setup
+├── css/                        # Shared design tokens and component styles
+├── js/                         # Legacy vanilla JS modules still under test
+├── public/                     # Static assets copied by Vite
+├── test/                       # Legacy Vitest coverage for vanilla modules
+├── index.html                  # Vite HTML entry
+├── 404.html                    # Static 404 page
+└── netlify.toml                # Netlify build and routing config
 ```
 
-## Features
-
-- **Fedora 43 GNOME Desktop Theme** with Adwaita-inspired colors and spacing
-- **Simulated Linux Boot Log** on page load
-- **Interactive Terminal** with commands like `neofetch`, `whoami`, and easter eggs
-- **Draggable Windows** on desktop, with mobile-responsive views
-- **Left-Side Dock** for quick app access (GNOME-style)
-- Responsive design that works on all devices
-- SEO optimized with proper meta tags
-- Fast loading with vanilla JS
-
-## Local Development
-
-To run locally, you can use any simple HTTP server:
-
-```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node.js (if you have http-server installed)
-npx http-server
-
-# Or just open index.html in your browser
-```
-
-Then visit `http://localhost:8000`
-
-Or use the included dev server:
+## Development
 
 ```bash
 npm install
 npm run dev
-# Opens http://localhost:3000
 ```
 
-## Tech Stack
+The app runs through Vite in development and builds into `dist/` for production.
 
-- HTML5
-- CSS3 (Grid, Flexbox, Custom Properties)
-- Vanilla JavaScript
-- Vite for local development and production bundling
-- No frontend frameworks
+## Validation
+
+```bash
+npm run lint
+npm run typecheck
+npm run test
+npm run build
+```
+
+Or run the full validation chain:
+
+```bash
+npm run validate
+```
 
 ## Deployment
 
-The site is deployed at [sawyehtet.com](https://sawyehtet.com) and automatically updates when changes are pushed to the main branch.
-
-## Contact
-
-Feel free to reach out if you have any questions or want to connect!
+Netlify should build with `npm run build` and publish the `dist/` directory. The included `netlify.toml` also rewrites `/app/*` deep links to the SPA entry so app routes load correctly on refresh.
