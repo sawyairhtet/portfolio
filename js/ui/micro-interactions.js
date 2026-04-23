@@ -13,7 +13,6 @@ export function initMicroInteractions() {
     setupRippleEffects();
     setupHoverSounds();
     setupMagneticButtons();
-    setupTiltEffect();
     setupSkillBarAnimations();
 }
 
@@ -122,36 +121,4 @@ function setupMagneticButtons() {
     });
 }
 
-/**
- * 3D tilt effect for cards
- */
-function setupTiltEffect() {
-    if (window.matchMedia('(pointer: coarse)').matches) {
-        return;
-    }
-
-    const cards = document.querySelectorAll('.project-card, .skill-card');
-
-    cards.forEach(card => {
-        const c = /** @type {HTMLElement} */ (card);
-        c.addEventListener('mousemove', e => {
-            const me = /** @type {MouseEvent} */ (e);
-            const rect = c.getBoundingClientRect();
-            const x = me.clientX - rect.left;
-            const y = me.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-
-            c.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        });
-
-        c.addEventListener('mouseleave', () => {
-            c.style.transform = '';
-        });
-    });
-}
 

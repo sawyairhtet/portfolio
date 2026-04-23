@@ -296,7 +296,7 @@
         top: 44px !important;
         left: 0 !important;
         right: 0 !important;
-        bottom: 72px !important;
+        bottom: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
@@ -348,7 +348,7 @@
 
     /* ---- WINDOW BODY - Extra bottom padding to prevent dock clipping ---- */
     .window-body {
-        padding-bottom: 80px;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     }
 
     /* Widget Container */
@@ -816,7 +816,7 @@
         /* Full-screen mobile windows */
         @media (max-width: 767px) {
             .window {
-                bottom: calc(72px + env(safe-area-inset-bottom)) !important;
+                bottom: 0 !important;
                 height: auto !important;
             }
         }
