@@ -4,6 +4,7 @@
  */
 
 import { startMatrixEffect } from './matrix.js';
+import { showToast } from '../ui/notifications.js';
 import {
     DEFAULT_FILE_SYSTEM,
     BOOT_LOG_MESSAGES,
@@ -34,10 +35,7 @@ function saveFileSystem() {
         localStorage.setItem('portfolioFileSystem', JSON.stringify(fileSystem));
     } catch (e) {
         console.error('Failed to save filesystem:', e);
-        // Import showToast dynamically to avoid circular dependency
-        import('../ui/notifications.js').then(module => {
-            module.showToast('Unable to save changes - storage full', 'fa-exclamation-triangle');
-        });
+        showToast('Unable to save changes - storage full', 'fa-exclamation-triangle');
     }
 }
 

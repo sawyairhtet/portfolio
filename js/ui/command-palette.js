@@ -6,6 +6,7 @@
 import { openWindow, closeAllWindows } from '../core/window-manager.js';
 import { lock } from './lock-screen.js';
 import { executeTerminalCommand, addTerminalOutput } from '../apps/terminal.js';
+import ThemeManager from '../core/theme-manager.js';
 
 const COMMANDS = [
     { id: 'about', label: 'Open About', icon: 'fa-user-circle', category: 'Apps', action: () => openWindow('about', getOS()) },
@@ -18,17 +19,7 @@ const COMMANDS = [
     { id: 'focus-mode', label: 'Open Focus Mode', icon: 'fa-eye', category: 'Apps', action: () => openWindow('focus-mode', getOS()) },
     { id: 'close-all', label: 'Close All Windows', icon: 'fa-times-circle', category: 'Actions', action: () => closeAllWindows() },
     { id: 'theme-toggle', label: 'Toggle Dark Mode', icon: 'fa-moon', category: 'Actions', action: () => {
-        const html = document.documentElement;
-        const isDark = html.getAttribute('data-theme') === 'dark';
-        if (isDark) {
-            html.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-        } else {
-            html.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        }
-        const toggle = /** @type {HTMLInputElement | null} */ (document.getElementById('theme-toggle'));
-        if (toggle) { toggle.checked = !isDark; }
+        ThemeManager.toggle();
     }},
     { id: 'lock-screen', label: 'Lock Screen', icon: 'fa-lock', category: 'Actions', action: () => lock() },
     { id: 'clear-terminal', label: 'Clear Terminal', icon: 'fa-eraser', category: 'Actions', action: () => {

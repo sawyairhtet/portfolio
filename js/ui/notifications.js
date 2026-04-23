@@ -15,7 +15,8 @@ export function showToast(message, icon = 'fa-info-circle') {
 
     // Create icon element safely (avoid innerHTML XSS)
     const iconEl = document.createElement('i');
-    iconEl.className = `fas ${icon}`;
+    // Support full class strings (e.g. 'fab fa-fedora') as well as bare icon names (e.g. 'fa-check')
+    iconEl.className = /^fa[bsrd] /.test(icon) ? icon : `fas ${icon}`;
     toast.appendChild(iconEl);
 
     // Create text node to safely escape message content

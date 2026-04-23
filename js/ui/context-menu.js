@@ -67,7 +67,7 @@ export function setupContextMenu(currentOS) {
     };
 
     document.addEventListener('click', closeMenu);
-    document.addEventListener('scroll', closeMenu);
+    document.addEventListener('scroll', closeMenu, { passive: true });
 
     // Keyboard Navigation
     contextMenu.addEventListener('keydown', e => {

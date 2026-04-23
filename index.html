@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' ws://localhost:* https://formspree.io https://plausible.io;"
+            content="default-src 'self'; script-src 'self' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' ws://localhost:* https://formspree.io https://plausible.io;"
         />
         <meta
             name="description"
@@ -29,44 +29,30 @@
             name="twitter:description"
             content="IT Student & VR Developer. Interactive portfolio simulating a Fedora 43 GNOME 49 desktop — built with vanilla JS, HTML & CSS."
         />
+        <meta name="twitter:url" content="https://sawyehtet.com/" />
         <meta name="twitter:image" content="https://sawyehtet.com/images/og-preview.png" />
 
         <meta name="author" content="Saw Ye Htet" />
 
         <link rel="canonical" href="https://sawyehtet.com/" />
         <title>Saw Ye Htet — Portfolio | Fedora 43 Desktop</title>
+        <script src="/head-bootstrap.js"></script>
         <!-- CSS entry point — Vite serves source in dev, bundles in production -->
         <link rel="stylesheet" href="css/main.css" />
-        <!-- Theme Init (prevents flash of wrong theme) -->
-        <script>
-            (function () {
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'light') {
-                    document.documentElement.removeAttribute('data-theme');
-                }
-            })();
-        </script>
         <!-- Google Fonts - Inter (Adwaita Sans fallback) + JetBrains Mono (Adwaita Mono fallback) + Indie Flower (sticky notes) -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <!-- Non-render-blocking: swap media to 'all' after load -->
-        <link
-            rel="preload"
-            as="style"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Indie+Flower&display=swap"
-        />
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Indie+Flower&display=swap"
             rel="stylesheet"
-            media="print"
-            onload="this.media = 'all'"
         />
         <!-- Font Awesome for icons -->
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
-        <link rel="icon" href="assets/icon.png" type="image/png" />
+        <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180" />
         <link rel="manifest" href="manifest.json" />
         <meta name="theme-color" content="#3584e4" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -296,7 +282,7 @@
         </main>
 
         <!-- Activities Overview (GNOME 49) -->
-        <div class="activities-overlay" id="activities-overlay" role="dialog" aria-label="Activities overview">
+        <div class="activities-overlay" id="activities-overlay" role="dialog" aria-modal="false" aria-label="Activities overview">
             <div class="activities-search">
                 <input
                     type="text"
@@ -1122,38 +1108,6 @@
         </div>
 
         <script type="module" src="js/app.js"></script>
-
-        <!-- Service Worker Registration + PWA Install Prompt -->
-        <script>
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('./sw.js').catch(() => {});
-                });
-            }
-
-            let deferredPrompt = null;
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                const banner = document.createElement('div');
-                banner.className = 'pwa-install-banner';
-                banner.innerHTML =
-                    '<span><i class="fas fa-download" aria-hidden="true"></i> Install this app on your device</span>' +
-                    '<button id="pwa-install-btn">Install</button>' +
-                    '<button id="pwa-dismiss-btn" aria-label="Dismiss">&times;</button>';
-                document.body.appendChild(banner);
-                requestAnimationFrame(() => banner.classList.add('visible'));
-
-                document.getElementById('pwa-install-btn').addEventListener('click', () => {
-                    deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-                    banner.remove();
-                });
-                document.getElementById('pwa-dismiss-btn').addEventListener('click', () => {
-                    banner.remove();
-                });
-            });
-        </script>
 
         <!-- Plausible Analytics (replace YOUR_DOMAIN after signup) -->
         <script defer data-domain="sawyehtet.com"

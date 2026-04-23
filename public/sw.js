@@ -1,35 +1,18 @@
 /**
  * Service Worker - Offline Caching for PWA
- * Caches static assets for offline access
+ * Caches stable URLs that exist in both dev and production output.
  */
 
 // Cache version - update BUILD_VERSION on each deploy for cache-busting
-const BUILD_VERSION = '20260416';
+const BUILD_VERSION = '20260423';
 const CACHE_NAME = `syh-portfolio-v1-${BUILD_VERSION}`;
 const STATIC_ASSETS = [
     '/',
     '/index.html',
-    '/css/main.css',
-    '/js/app.js',
-    '/js/types.js',
-    '/js/core/sound-manager.js',
-    '/js/core/theme-manager.js',
-    '/js/core/window-manager.js',
-    '/js/core/transitions.js',
-    '/js/apps/terminal.js',
-    '/js/apps/matrix.js',
-    '/js/apps/focus-mode.js',
-    '/js/ui/context-menu.js',
-    '/js/ui/dialog.js',
-    '/js/ui/notifications.js',
-    '/js/ui/command-palette.js',
-    '/js/ui/lock-screen.js',
-    '/js/ui/screenshot-tool.js',
-    '/js/ui/micro-interactions.js',
-    '/js/config/data.js',
+    '/404.html',
+    '/sw.js',
     '/images/profile-picture.jpg',
-    '/assets/icon.png',
-    '/manifest.json',
+    '/images/og-preview.png',
     '/offline.html',
 ];
 
@@ -64,11 +47,13 @@ self.addEventListener('activate', event => {
 
 // Fetch - serve from cache, fallback to network
 self.addEventListener('fetch', event => {
-    // Skip non-GET requests
-    if (event.request.method !== 'GET') return;
+    if (event.request.method !== 'GET') {
+        return;
+    }
 
-    // Skip external requests (fonts, analytics, etc.)
-    if (!event.request.url.startsWith(self.location.origin)) return;
+    if (!event.request.url.startsWith(self.location.origin)) {
+        return;
+    }
 
     event.respondWith(
         caches.match(event.request).then(cachedResponse => {
@@ -78,12 +63,10 @@ self.addEventListener('fetch', event => {
 
             return fetch(event.request)
                 .then(response => {
-                    // Don't cache non-successful responses
                     if (!response || response.status !== 200) {
                         return response;
                     }
 
-                    // Clone and cache the response
                     const responseToCache = response.clone();
                     caches.open(CACHE_NAME).then(cache => {
                         cache.put(event.request, responseToCache);
@@ -92,12 +75,12 @@ self.addEventListener('fetch', event => {
                     return response;
                 })
                 .catch(() => {
-                    // Offline fallback for HTML pages
-                    // Guard against null accept header to prevent crash
                     const acceptHeader = event.request.headers.get('accept');
                     if (acceptHeader && acceptHeader.includes('text/html')) {
                         return caches.match('/offline.html');
                     }
+
+                    return undefined;
                 });
         })
     );

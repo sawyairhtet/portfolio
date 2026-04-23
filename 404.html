@@ -3,19 +3,12 @@
     <head>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTTVBFZCK"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', 'G-EXTTVBFZCK');
-        </script>
+        <script src="/404-analytics.js"></script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com;"
+            content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://plausible.io;"
         />
         <meta name="theme-color" id="theme-color" content="#667eea" />
         <title>404 — Page Not Found | Saw Ye Htet</title>
@@ -26,7 +19,7 @@
         <meta name="robots" content="noindex, nofollow" />
         <meta name="author" content="Saw Ye Htet" />
         <link rel="stylesheet" href="css/main.css" />
-        <link rel="icon" href="assets/icon.png" type="image/png" />
+        <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
         <!-- Google Fonts - Inter -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,15 +32,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
-        <!-- Theme Init (prevents flash of wrong theme) -->
-        <script>
-            (function () {
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'light') {
-                    document.documentElement.removeAttribute('data-theme');
-                }
-            })();
-        </script>
+        <script src="/head-bootstrap.js"></script>
         <style>
             /* 404 Page Specific Styles */
             .error-page {
@@ -231,6 +216,9 @@
                 }
             }
         </style>
+        <!-- Plausible Analytics -->
+        <script defer data-domain="sawyehtet.com"
+            src="https://plausible.io/js/script.js"></script>
     </head>
     <body>
         <!-- Top Bar (GNOME Panel) -->
@@ -317,30 +305,6 @@
             ></a>
         </div>
 
-        <script>
-            // Update clock
-            function updateClock() {
-                const now = new Date();
-                const hours = now.getHours();
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                const displayHours = hours % 12 || 12;
-
-                const menuClock = document.querySelector('.menu-clock');
-                if (menuClock) {
-                    menuClock.textContent = `${displayHours}:${minutes} ${ampm}`;
-                }
-
-                const statusTime = document.querySelector('.status-time');
-                if (statusTime) {
-                    statusTime.textContent = `${displayHours}:${minutes}`;
-                }
-            }
-            updateClock();
-            setInterval(updateClock, 60000); // Only display HH:MM, no need for 1s interval
-
-            // Go Back button - avoid inline onclick for CSP compliance
-            document.getElementById('go-back-btn').addEventListener('click', () => history.back());
-        </script>
+        <script src="/404-page.js"></script>
     </body>
 </html>

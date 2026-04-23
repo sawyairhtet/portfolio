@@ -57,6 +57,8 @@ const PLYMOUTH_DURATION_MS = 2000;
 
 let currentOS = 'desktop';
 
+let deferredInstallPrompt = null;
+
 // ============================================
 // DEVICE DETECTION
 // ============================================
@@ -78,6 +80,67 @@ function updateOS() {
         currentOS = newOS;
         closeAllWindows();
     }
+}
+
+function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+        return;
+    }
+
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+}
+
+function dismissInstallBanner(banner) {
+    deferredInstallPrompt = null;
+    banner.remove();
+}
+
+function setupInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', event => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+
+        const existingBanner = document.querySelector('.pwa-install-banner');
+        if (existingBanner) {
+            return;
+        }
+
+        const banner = document.createElement('div');
+        banner.className = 'pwa-install-banner';
+
+        const message = document.createElement('span');
+        message.innerHTML = '<i class="fas fa-download" aria-hidden="true"></i> Install this app on your device';
+
+        const installButton = document.createElement('button');
+        installButton.id = 'pwa-install-btn';
+        installButton.textContent = 'Install';
+
+        const dismissButton = document.createElement('button');
+        dismissButton.id = 'pwa-dismiss-btn';
+        dismissButton.setAttribute('aria-label', 'Dismiss');
+        dismissButton.textContent = '×';
+
+        banner.append(message, installButton, dismissButton);
+        document.body.appendChild(banner);
+        requestAnimationFrame(() => banner.classList.add('visible'));
+
+        installButton.addEventListener('click', async () => {
+            if (!deferredInstallPrompt) {
+                dismissInstallBanner(banner);
+                return;
+            }
+
+            await deferredInstallPrompt.prompt();
+            await deferredInstallPrompt.userChoice;
+            dismissInstallBanner(banner);
+        });
+
+        dismissButton.addEventListener('click', () => {
+            dismissInstallBanner(banner);
+        });
+    });
 }
 
 // ============================================
@@ -358,7 +421,7 @@ function initBootScreen() {
 
             // Show welcome notification after boot
             setTimeout(() => {
-                showToast('Welcome to Fedora 43 Desktop', 'fa-fedora fab');
+                showToast('Welcome to Fedora 43 Desktop', 'fab fa-fedora');
             }, 800);
 
             const playDrumOnce = () => {
@@ -411,8 +474,8 @@ function initBootScreen() {
             const line = BOOT_LOG_MESSAGES[lineIndex];
             const lineEl = document.createElement('div');
 
-            if (line.startsWith('[ OK ]')) {
-                lineEl.innerHTML = '<span class="ok">[ OK ]</span>' + line.substring(6);
+            if (line.startsWith('[  OK  ]')) {
+                lineEl.innerHTML = '<span class="ok">[  OK  ]</span>' + line.substring(8);
             } else if (line.startsWith('[')) {
                 lineEl.innerHTML = '<span class="info">' + line + '</span>';
             } else {
@@ -867,6 +930,7 @@ function setupActivities() {
         }
         isOpen = true;
         overlay.classList.add('visible');
+        overlay.setAttribute('aria-modal', 'true');
         activitiesBtn.classList.add('active');
         updateWindowThumbnails();
         if (searchInput) {
@@ -880,6 +944,7 @@ function setupActivities() {
         }
         isOpen = false;
         overlay.classList.remove('visible');
+        overlay.setAttribute('aria-modal', 'false');
         activitiesBtn.classList.remove('active');
         if (searchInput) {
             searchInput.value = '';
@@ -1273,6 +1338,8 @@ function setupSkillBarAnimation() {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    registerServiceWorker();
+
     // Boot sequence
     initBootScreen();
 
@@ -1311,6 +1378,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize command palette (Ctrl+K)
     setupCommandPalette();
+
+    // Setup PWA install prompt
+    setupInstallPrompt();
 
     // Setup contact form
     setupContactForm();
