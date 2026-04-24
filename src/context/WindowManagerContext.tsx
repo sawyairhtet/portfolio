@@ -49,6 +49,8 @@ const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
     'focus-mode': { width: '500px', height: '450px' },
 };
 
+const MAXIMIZED_Z_FLOOR = 1050;
+
 function createWindowInfo(appId: AppId, zIndex: number): WindowInfo {
     return {
         appId,
@@ -115,20 +117,34 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         setFocusedApp(prev => (prev === appId ? null : prev));
     }, []);
 
-    const toggleMaximize = useCallback((appId: AppId) => {
-        setWindows(prev => {
-            const next = new Map(prev);
-            const win = next.get(appId);
-            if (win) {
-                next.set(appId, {
-                    ...win,
-                    isMaximized: !win.isMaximized,
-                    snapState: 'none',
-                });
-            }
-            return next;
-        });
-    }, []);
+    const toggleMaximize = useCallback(
+        (appId: AppId) => {
+            setWindows(prev => {
+                const next = new Map(prev);
+                const win = next.get(appId);
+                if (win) {
+                    const isMaximizing = !win.isMaximized;
+                    const newZ = isMaximizing
+                        ? Math.max(currentZIndex + 1, MAXIMIZED_Z_FLOOR)
+                        : win.zIndex;
+
+                    next.set(appId, {
+                        ...win,
+                        isMaximized: isMaximizing,
+                        snapState: 'none',
+                        zIndex: newZ,
+                    });
+
+                    if (isMaximizing) {
+                        setCurrentZIndex(newZ);
+                    }
+                }
+                return next;
+            });
+            setFocusedApp(appId);
+        },
+        [currentZIndex]
+    );
 
     const bringToFront = useCallback(
         (appId: AppId) => {

@@ -4,7 +4,7 @@
 
 .main-content {
     position: relative;
-    height: 100vh;
+    height: 100dvh;
     padding-top: var(--topbar-height);
     padding-left: 0;
 }

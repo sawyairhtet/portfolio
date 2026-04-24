@@ -223,8 +223,8 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                 left: rect.left,
                 top: rect.top,
             };
-            const minWidth = 360;
-            const minHeight = 260;
+            const minWidth = 320;
+            const minHeight = 240;
             const maxWidth = Math.max(minWidth, window.innerWidth - 24);
             const maxHeight = Math.max(minHeight, window.innerHeight - getTopbarHeight() - 24);
 

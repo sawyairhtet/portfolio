@@ -11,11 +11,12 @@
     display: none;
     flex-direction: column;
     width: 680px;
-    min-width: 500px;
-    max-width: 960px;
-    max-height: 85vh;
+    min-width: min(320px, calc(100vw - 24px));
+    max-width: min(960px, calc(100vw - 24px));
+    max-height: calc(100dvh - var(--topbar-height) - 24px);
     z-index: var(--z-window);
     overflow: hidden;
+    container: app-window / inline-size;
     transition:
         box-shadow 0.2s ease,
         transform 0.2s ease;
@@ -132,7 +133,10 @@
     top: var(--topbar-height);
     left: 0;
     width: 50vw;
-    height: calc(100vh - var(--topbar-height));
+    height: calc(100dvh - var(--topbar-height));
+    min-width: 0;
+    max-width: none;
+    max-height: none;
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -141,7 +145,10 @@
     top: var(--topbar-height);
     left: 50vw;
     width: 50vw;
-    height: calc(100vh - var(--topbar-height));
+    height: calc(100dvh - var(--topbar-height));
+    min-width: 0;
+    max-width: none;
+    max-height: none;
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -149,8 +156,13 @@
 .window.snapped-maximized {
     top: var(--topbar-height);
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100vw;
-    height: calc(100vh - var(--topbar-height));
+    height: calc(100dvh - var(--topbar-height));
+    min-width: 0;
+    max-width: none;
+    max-height: none;
     border-radius: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -177,19 +189,19 @@
 .snap-preview.snap-left {
     left: 0;
     width: 50vw;
-    height: calc(100vh - var(--topbar-height));
+    height: calc(100dvh - var(--topbar-height));
 }
 
 .snap-preview.snap-right {
     left: 50vw;
     width: 50vw;
-    height: calc(100vh - var(--topbar-height));
+    height: calc(100dvh - var(--topbar-height));
 }
 
 .snap-preview.snap-maximize {
     left: 0;
     width: 100vw;
-    height: calc(100vh - var(--topbar-height));
+    height: calc(100dvh - var(--topbar-height));
 }
 
 /* ============================================
@@ -331,6 +343,7 @@ body.show-window-buttons .window-control.maximize {
     padding: var(--spacing-lg);
     overflow-y: auto;
     flex: 1;
+    min-height: 0;
     background: var(--window-body-bg);
     color: var(--text-primary);
     /* Prevent pull-to-refresh on mobile within windows */

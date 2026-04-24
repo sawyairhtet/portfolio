@@ -196,9 +196,11 @@ body,
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    min-width: 0;
 }
 
 .skill-category {
+    min-width: 0;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
     background: var(--surface-0);
@@ -232,8 +234,13 @@ body,
     display: grid;
     grid-template-columns: 1fr minmax(130px, auto);
     gap: var(--spacing-md);
+    min-width: 0;
     padding: 14px var(--spacing-lg);
     border-top: 1px solid var(--border-color);
+}
+
+.skill-row-card > div {
+    min-width: 0;
 }
 
 .skill-row-card:first-child {
@@ -268,12 +275,14 @@ body,
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+    min-width: 0;
 }
 
 .featured-project-panel {
     display: grid;
     grid-template-columns: minmax(220px, 0.85fr) 1.15fr;
     gap: var(--spacing-lg);
+    min-width: 0;
     padding: var(--spacing-lg);
     border: 1px solid rgba(53, 132, 228, 0.28);
     border-radius: var(--border-radius-lg);
@@ -314,6 +323,11 @@ body,
 
 .project-detail h2 {
     margin: 10px 0 4px;
+}
+
+.project-detail,
+.project-card {
+    min-width: 0;
 }
 
 .featured-project-panel .project-badge {
@@ -370,6 +384,8 @@ body,
 
 .project-card {
     cursor: default;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card .project-actions {
@@ -379,7 +395,7 @@ body,
 /* Contact */
 .contact-primary-actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
     gap: var(--spacing-sm);
 }
 
@@ -437,6 +453,16 @@ body,
     margin-top: var(--spacing-lg);
 }
 
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    min-width: 0;
+}
+
+.contact-submit-btn {
+    align-self: flex-start;
+}
+
 .form-status {
     font-weight: 700;
 }
@@ -446,6 +472,7 @@ body,
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
+    min-width: 0;
 }
 
 .polished-links .social-link {
@@ -593,6 +620,81 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     display: flex;
     min-width: 0;
     flex-direction: column;
+}
+
+@container app-window (max-width: 760px) {
+    .settings-body {
+        flex-direction: column !important;
+    }
+
+    .settings-sidebar {
+        width: 100%;
+        min-width: 0;
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        overflow-x: auto;
+    }
+
+    .settings-nav-item {
+        flex: 0 0 auto;
+    }
+
+    .featured-project-panel,
+    .skill-row-card,
+    .about-grouped-row {
+        grid-template-columns: 1fr;
+    }
+
+    .project-media-frame,
+    .project-media-fallback {
+        min-height: 180px;
+    }
+
+    .used-in-chips {
+        justify-content: flex-start;
+    }
+
+    .contact-submit-btn {
+        width: 100%;
+    }
+
+    .focus-controls,
+    .focus-stats {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .focus-stats {
+        width: 100%;
+        gap: var(--spacing-md);
+    }
+}
+
+@container app-window (max-width: 430px) {
+    .window-body {
+        padding: var(--spacing-md);
+    }
+
+    .about-hero {
+        padding: var(--spacing-lg);
+    }
+
+    .about-avatar {
+        width: 110px;
+        height: 110px;
+    }
+
+    .project-actions,
+    .focus-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .project-action,
+    .focus-btn {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 767px) {
