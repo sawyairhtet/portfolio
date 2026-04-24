@@ -1,15 +1,40 @@
+import { useWindowManager } from '../../context/WindowManagerContext';
+
 export function AboutApp() {
+    const { openWindow } = useWindowManager();
+
     return (
         <>
             <div className="about-hero">
                 <div className="about-avatar">
                     <picture>
-                        <source srcSet="images/profile-picture.webp" type="image/webp" />
-                        <img src="images/profile-picture.jpg" alt="Saw Ye Htet" className="profile-img" width={140} height={140} />
+                        <source srcSet="/images/profile-picture.webp" type="image/webp" />
+                        <img
+                            src="/images/profile-picture.jpg"
+                            alt="Saw Ye Htet"
+                            className="profile-img"
+                            width={140}
+                            height={140}
+                            loading="eager"
+                            onError={(e) => {
+                                // Fallback: hide broken image, show initials via parent's font-size/text
+                                (e.target as HTMLImageElement).style.display = 'none';
+                                const avatar = (e.target as HTMLImageElement).closest('.about-avatar');
+                                if (avatar) avatar.textContent = 'SY';
+                            }}
+                        />
                     </picture>
                 </div>
                 <h2>Saw Ye Htet</h2>
                 <p className="about-tagline">IT Student &amp; VR Developer</p>
+                <div className="about-hero-actions">
+                    <button className="about-cta-btn about-cta-primary" onClick={() => openWindow('contact')}>
+                        <i className="fas fa-envelope" aria-hidden="true" /> Get in Touch
+                    </button>
+                    <a className="about-cta-btn about-cta-secondary" href="resume/SYH_resume.pdf" download>
+                        <i className="fas fa-download" aria-hidden="true" /> Resume
+                    </a>
+                </div>
             </div>
             <div className="about-content">
                 <div className="about-section">

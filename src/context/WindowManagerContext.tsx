@@ -37,7 +37,7 @@ const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
     about: { top: '15%', left: '60px' },
     skills: { top: '10%', left: '20%' },
     projects: { top: '8%', left: '15%' },
-    contact: { top: '15%', left: '700px' },
+    contact: { top: '12%', left: 'calc(50% + 20px)' },
     links: { top: '12%', left: '25%' },
     terminal: { top: '10%', left: '10%' },
     settings: { top: '8%', left: '18%' },

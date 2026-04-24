@@ -10,10 +10,10 @@
     border: 1px solid var(--border-color);
     display: none;
     flex-direction: column;
-    width: 600px;
+    width: 680px;
     min-width: 500px;
-    max-width: 650px;
-    max-height: 80vh;
+    max-width: 960px;
+    max-height: 85vh;
     z-index: var(--z-window);
     overflow: hidden;
     transition:
@@ -22,6 +22,11 @@
     /* Default position */
     left: 20px;
     top: 15%;
+}
+
+/* Explicit rule — don't rely on Tailwind's coincidental .active utility */
+.window.active {
+    display: flex;
 }
 
 .window.is-minimized {

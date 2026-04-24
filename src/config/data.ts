@@ -61,7 +61,7 @@ export const stickyNotesData: StickyNote[] = [
     { text: 'I like coke but \ncoke light is better \u{1F964}', color: 'yellow', rotation: -3, x: 75, y: 15 },
     { text: 'Roses are red.\nViolets are blue.\nUnexpected error in line 52.', color: 'pink', rotation: 2, x: 82, y: 35 },
     { text: 'System.out.println\n("Hi Mom! I love you.");', color: 'blue', rotation: -1, x: 78, y: 55 },
-    { text: 'Press Ctrl+Tab \nto cycle windows! \u{1F4BB}', color: 'green', rotation: 3, x: 70, y: 75 },
+    { text: 'Alt+1 → Projects\nAlt+2 → Contact\nAlt+3 → Resume \u{1F4BB}', color: 'green', rotation: 3, x: 70, y: 75 },
 ];
 
 // ============================================

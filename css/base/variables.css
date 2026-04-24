@@ -185,7 +185,7 @@
 
   /* Legacy gradients — now Fedora blue-based */
   --gradient-accent:    linear-gradient(135deg, #3584e4 0%, #62a0ea 50%, #1c6fcf 100%);
-  --gradient-btn:       var(--fedora-blue);
+  --gradient-btn:       linear-gradient(135deg, #3584e4 0%, #1c6fcf 100%);
 
   /* Legacy transitions */
   --transition-normal: var(--transition-base);

@@ -113,6 +113,12 @@
     border-radius: 50%;
 }
 
+/* Visible focus ring for keyboard navigation */
+.activities-btn:focus-visible {
+    outline: 2px solid var(--fedora-blue);
+    outline-offset: 2px;
+}
+
 .activities-btn.active {
     background: rgba(128, 128, 128, 0.2);
 }
