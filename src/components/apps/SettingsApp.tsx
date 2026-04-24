@@ -90,6 +90,7 @@ export function SettingsApp() {
                                     <button
                                         key={wp.id}
                                         className={`wallpaper-option${preferences.wallpaperId === wp.id ? ' active' : ''}`}
+                                        data-wallpaper={wp.id}
                                         style={{ background: wp.gradient || undefined }}
                                         aria-label={wp.label}
                                         title={wp.label}

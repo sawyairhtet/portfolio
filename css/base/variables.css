@@ -83,15 +83,6 @@
     --boot-ok: #4e9a06;
     --boot-info: #729fcf;
 
-    /* ── Sticky Notes ── */
-    --sticky-bg: #fff9c4;
-    --sticky-text: #5d4037;
-    --sticky-pink: #ffd6e0;
-    --sticky-blue-bg: #d4f1f4;
-    --sticky-blue-text: #1a535c;
-    --sticky-green-bg: #d8f3dc;
-    --sticky-green-text: #2d6a4f;
-
     /* ── App Icon Gradients (Dock + Activities) ── */
     --icon-projects: #5b9bd5;
     --icon-contact: #c061cb;

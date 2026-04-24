@@ -24,13 +24,11 @@ const DEFAULT_PREFERENCES: PortfolioPreferences = {
 interface PreferencesContextValue {
     preferences: PortfolioPreferences;
     updatePreferences: (patch: Partial<PortfolioPreferences>) => void;
-    resetStickyNotes: () => void;
 }
 
 const PreferencesContext = createContext<PreferencesContextValue>({
     preferences: DEFAULT_PREFERENCES,
     updatePreferences: () => {},
-    resetStickyNotes: () => {},
 });
 
 function readPreferences(): PortfolioPreferences {
@@ -76,14 +74,9 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
         setPreferences(prev => ({ ...prev, ...patch }));
     }, []);
 
-    const resetStickyNotes = useCallback(() => {
-        localStorage.removeItem('stickyNotePositions');
-        window.dispatchEvent(new CustomEvent('portfolio:reset-sticky-notes'));
-    }, []);
-
     const value = useMemo(
-        () => ({ preferences, updatePreferences, resetStickyNotes }),
-        [preferences, updatePreferences, resetStickyNotes]
+        () => ({ preferences, updatePreferences }),
+        [preferences, updatePreferences]
     );
 
     return <PreferencesContext.Provider value={value}>{children}</PreferencesContext.Provider>;

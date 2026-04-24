@@ -17,18 +17,6 @@ export type FileSystemNode = FileNode | DirNode;
 export type FileSystem = Record<string, FileSystemNode>;
 
 // ============================================
-// STICKY NOTE TYPES
-// ============================================
-
-export interface StickyNote {
-    text: string;
-    color: 'yellow' | 'pink' | 'blue' | 'green';
-    rotation: number;
-    x: number;
-    y: number;
-}
-
-// ============================================
 // DEVICE / LAYOUT TYPES
 // ============================================
 

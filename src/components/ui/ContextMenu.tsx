@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { usePreferences } from '../../context/PreferencesContext';
 
 interface MenuPosition {
     x: number;
@@ -9,7 +8,6 @@ interface MenuPosition {
 
 export function ContextMenu() {
     const { openWindow } = useWindowManager();
-    const { resetStickyNotes } = usePreferences();
     const [visible, setVisible] = useState(false);
     const [position, setPosition] = useState<MenuPosition>({ x: 0, y: 0 });
 
@@ -75,18 +73,6 @@ export function ContextMenu() {
                 }}
             >
                 <i className="fas fa-terminal" aria-hidden="true" /> Open Terminal
-            </div>
-            <div className="context-menu-separator" />
-            <div
-                className="context-menu-item"
-                role="menuitem"
-                tabIndex={-1}
-                onClick={() => {
-                    resetStickyNotes();
-                    setVisible(false);
-                }}
-            >
-                <i className="fas fa-note-sticky" aria-hidden="true" /> Reset Notes
             </div>
             <div
                 className="context-menu-item"

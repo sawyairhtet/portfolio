@@ -1,5 +1,4 @@
 import type {
-    StickyNote,
     FileSystem,
     AppDefinition,
     WallpaperOption,
@@ -268,41 +267,6 @@ export const BOOT_LOG_MESSAGES: string[] = [
 ];
 
 // ============================================
-// STICKY NOTES DATA
-// ============================================
-
-export const stickyNotesData: StickyNote[] = [
-    {
-        text: 'I like coke but \ncoke light is better \u{1F964}',
-        color: 'yellow',
-        rotation: -3,
-        x: 80,
-        y: 14,
-    },
-    {
-        text: 'Roses are red.\nViolets are blue.\nUnexpected error in line 52.',
-        color: 'pink',
-        rotation: 2,
-        x: 83,
-        y: 36,
-    },
-    {
-        text: 'System.out.println\n("Hi Mom! I love you.");',
-        color: 'blue',
-        rotation: -1,
-        x: 78,
-        y: 58,
-    },
-    {
-        text: 'Alt+1: Projects\nAlt+2: Contact\nAlt+3: Resume',
-        color: 'green',
-        rotation: 3,
-        x: 80,
-        y: 78,
-    },
-];
-
-// ============================================
 // FILE SYSTEM DATA
 // ============================================
 
@@ -495,20 +459,11 @@ export const DEFAULT_NOTIFICATIONS: Notification[] = [
     {
         id: 'welcome',
         title: 'Portfolio Ready',
-        body: 'Start with About, then use Projects, Contact, and Resume shortcuts for the fast path.',
+        body: 'The desktop is ready.',
         icon: 'fab fa-fedora',
         iconBg: 'linear-gradient(135deg, var(--fedora-blue-light), var(--fedora-blue))',
         time: 'Just now',
         group: 'System',
-    },
-    {
-        id: 'shortcuts',
-        title: 'Recruiter Shortcuts',
-        body: 'Alt+1 opens Projects, Alt+2 opens Contact, and Alt+3 opens the resume.',
-        icon: 'fas fa-keyboard',
-        iconBg: 'linear-gradient(135deg, var(--fedora-green), var(--fedora-teal))',
-        time: 'Just now',
-        group: 'Portfolio',
     },
 ];
 

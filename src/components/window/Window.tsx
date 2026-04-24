@@ -367,23 +367,17 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                             className="window-control minimize"
                             aria-label="Minimize"
                             onClick={() => minimizeWindow(appId)}
-                        >
-                            <i className="fas fa-minus" aria-hidden="true" />
-                        </button>
+                        />
                         <button
                             className="window-control maximize"
                             aria-label="Maximize"
                             onClick={() => toggleMaximize(appId)}
-                        >
-                            <i className="fas fa-expand" aria-hidden="true" />
-                        </button>
+                        />
                         <button
                             className="window-control close"
                             aria-label="Close"
                             onClick={() => closeWindow(appId)}
-                        >
-                            <i className="fas fa-times" aria-hidden="true" />
-                        </button>
+                        />
                     </div>
                 </div>
                 <div

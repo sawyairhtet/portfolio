@@ -30,24 +30,6 @@
     }
 }
 
-/* Sticky Note In */
-@keyframes stickyNoteIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-30px) rotate(-5deg) scale(0.8);
-    }
-
-    60% {
-        opacity: 1;
-        transform: translateY(5px) rotate(1deg) scale(1.02);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) rotate(var(--note-rotation, 0deg)) scale(1);
-    }
-}
-
 /* Dock Bounce (Mobile) */
 @keyframes dockBounce {
     0% {

@@ -67,14 +67,9 @@
 }
 
 @media (max-width: 1024px) {
-    .quick-access.visible,
     .quick-settings-panel,
     .notification-center {
         display: none !important;
-    }
-
-    .sticky-notes-container {
-        display: none;
     }
 
     .dock {
@@ -345,8 +340,7 @@
     }
 
     .dock-item,
-    .window,
-    .sticky-note {
+    .window {
         animation: none !important;
     }
 }

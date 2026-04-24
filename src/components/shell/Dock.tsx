@@ -83,7 +83,6 @@ export function Dock() {
                             </span>
                             <span>
                                 <strong>{app.label}</strong>
-                                <small>{app.description}</small>
                             </span>
                         </button>
                     ))}

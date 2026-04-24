@@ -116,7 +116,6 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                             <i className={app.icon} aria-hidden="true" />
                         </div>
                         <span className="activities-app-label">{app.label}</span>
-                        <span className="activities-app-description">{app.description}</span>
                     </button>
                 ))}
             </div>

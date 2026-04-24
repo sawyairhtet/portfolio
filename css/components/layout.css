@@ -65,44 +65,6 @@ body .wallpaper.custom-wallpaper {
     pointer-events: none;
 }
 
-/* Quick recruiter actions */
-.quick-access {
-    display: none;
-    position: absolute;
-    top: calc(var(--topbar-height) + 14px);
-    right: 24px;
-    z-index: 40;
-    gap: 10px;
-}
-
-.quick-access-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-    background: var(--color-glass-light);
-    color: var(--color-text-light);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
-}
-
-.quick-access-btn:hover {
-    transform: translateY(-1px);
-    background: rgba(53, 132, 228, 0.2);
-}
-
-.quick-access-btn:focus-visible {
-    outline: 2px solid var(--fedora-blue);
-    outline-offset: 2px;
-}
-
 /* Desktop shell uses a centered bottom dock, so content keeps full width */
 body.show-dock .main-content {
     padding-left: 0;
