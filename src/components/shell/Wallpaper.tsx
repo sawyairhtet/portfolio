@@ -2,28 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { useDevice } from '../../context/DeviceContext';
 import type { WallpaperOption } from '../../types';
 import { WALLPAPERS } from '../../config/data';
+import { usePreferences } from '../../context/PreferencesContext';
 
 export function Wallpaper() {
     const { device } = useDevice();
+    const { preferences } = usePreferences();
     const wallpaperRef = useRef<HTMLDivElement>(null);
     const [timeOfDay, setTimeOfDay] = useState<'day' | 'night'>('day');
-    const [customWallpaper, setCustomWallpaper] = useState<WallpaperOption | null>(null);
+    const customWallpaper: WallpaperOption | null = WALLPAPERS.find((w) => w.id === preferences.wallpaperId && w.gradient) ?? null;
 
     // Time-of-day detection
     useEffect(() => {
         const hour = new Date().getHours();
         setTimeOfDay(hour >= 6 && hour < 18 ? 'day' : 'night');
-    }, []);
-
-    // Load saved wallpaper
-    useEffect(() => {
-        const saved = localStorage.getItem('portfolioWallpaper');
-        if (saved) {
-            const wp = WALLPAPERS.find((w) => w.id === saved);
-            if (wp && wp.gradient) {
-                setCustomWallpaper(wp);
-            }
-        }
     }, []);
 
     // Set body data-time attribute

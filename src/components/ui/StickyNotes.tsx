@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { stickyNotesData } from '../../config/data';
 
 interface StickyNotePosition {
@@ -16,6 +16,13 @@ export function StickyNotes() {
     });
 
     const dragging = useRef<{ index: number; offsetX: number; offsetY: number } | null>(null);
+    const defaultPositions = useCallback(() => stickyNotesData.map((n) => ({ x: n.x, y: n.y })), []);
+
+    useEffect(() => {
+        const reset = () => setPositions(defaultPositions());
+        window.addEventListener('portfolio:reset-sticky-notes', reset);
+        return () => window.removeEventListener('portfolio:reset-sticky-notes', reset);
+    }, [defaultPositions]);
 
     const handleMouseDown = useCallback((e: React.MouseEvent, index: number) => {
         const el = e.currentTarget as HTMLElement;

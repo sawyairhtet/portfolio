@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
+import { useSound } from '../../context/SoundContext';
+import { usePreferences } from '../../context/PreferencesContext';
 
 interface QuickSettingsPanelProps {
     isOpen: boolean;
@@ -12,24 +14,23 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
     const { isDark, toggle } = useTheme();
     const { isDnd, setDnd } = useNotifications();
     const { openWindow } = useWindowManager();
+    const { isMuted, toggleMute, volume, setVolume } = useSound();
+    const { preferences, updatePreferences } = usePreferences();
     const [wifiOn, setWifiOn] = useState(true);
     const [btOn, setBtOn] = useState(false);
-    const [brightness, setBrightness] = useState(80);
-    const [volume, setVolume] = useState(70);
 
     const handleSettings = useCallback(() => {
         openWindow('settings');
         onClose();
     }, [openWindow, onClose]);
 
-    if (!isOpen) return null;
-
     return (
         <div
-            className="quick-settings-panel active"
+            className={`quick-settings-panel${isOpen ? ' visible' : ''}`}
             role="dialog"
             aria-label="Quick Settings"
             aria-modal="false"
+            aria-hidden={!isOpen}
         >
             <div className="qs-tiles">
                 <button
@@ -60,6 +61,15 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     <div className="qs-tile-label">Dark Mode</div>
                 </button>
                 <button
+                    className={`qs-tile${isMuted ? ' active' : ''}`}
+                    aria-pressed={isMuted}
+                    aria-label="Mute"
+                    onClick={toggleMute}
+                >
+                    <div className="qs-tile-icon"><i className={isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up'} aria-hidden="true" /></div>
+                    <div className="qs-tile-label">{isMuted ? 'Muted' : 'Sound'}</div>
+                </button>
+                <button
                     className={`qs-tile${isDnd ? ' active' : ''}`}
                     aria-pressed={isDnd}
                     aria-label="Do Not Disturb"
@@ -78,8 +88,8 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                         className="qs-slider"
                         min={20}
                         max={100}
-                        value={brightness}
-                        onChange={(e) => setBrightness(Number(e.target.value))}
+                        value={preferences.brightness}
+                        onChange={(e) => updatePreferences({ brightness: Number(e.target.value) })}
                         aria-label="Brightness"
                     />
                 </div>

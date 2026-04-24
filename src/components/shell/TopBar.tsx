@@ -1,12 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
+import { APP_DEFINITIONS } from '../../config/data';
 
 interface TopBarProps {
     onActivitiesToggle: () => void;
     onQuickSettingsToggle: () => void;
     onClockClick: () => void;
     isActivitiesOpen: boolean;
+    isQuickSettingsOpen: boolean;
+    isNotificationCenterOpen: boolean;
 }
 
 export function TopBar({
@@ -14,6 +17,8 @@ export function TopBar({
     onQuickSettingsToggle,
     onClockClick,
     isActivitiesOpen,
+    isQuickSettingsOpen,
+    isNotificationCenterOpen,
 }: TopBarProps) {
     const [clockText, setClockText] = useState('');
     const [statusTime, setStatusTime] = useState('');
@@ -36,7 +41,7 @@ export function TopBar({
     }, [updateClock]);
 
     const focusedAppName = focusedApp
-        ? focusedApp.charAt(0).toUpperCase() + focusedApp.slice(1)
+        ? APP_DEFINITIONS.find((app) => app.id === focusedApp)?.label ?? ''
         : '';
 
     return (
@@ -50,6 +55,8 @@ export function TopBar({
                     className={`activities-btn pill${isActivitiesOpen ? ' active' : ''}`}
                     title="Activities (Super)"
                     aria-label="Activities overview"
+                    aria-expanded={isActivitiesOpen}
+                    aria-haspopup="dialog"
                     onClick={onActivitiesToggle}
                 >
                     Activities
@@ -70,7 +77,13 @@ export function TopBar({
 
             {/* GNOME Panel Center - Clock */}
             <div className="menu-bar-center">
-                <button className="menu-clock pill" onClick={onClockClick} aria-label="Open notification center">
+                <button
+                    className="menu-clock pill"
+                    onClick={onClockClick}
+                    aria-label="Open notification center"
+                    aria-expanded={isNotificationCenterOpen}
+                    aria-haspopup="dialog"
+                >
                     {clockText}
                 </button>
             </div>
@@ -80,8 +93,8 @@ export function TopBar({
                 <button
                     className="status-menu pill"
                     aria-label="Quick Settings"
-                    aria-expanded="false"
-                    aria-haspopup="true"
+                    aria-expanded={isQuickSettingsOpen}
+                    aria-haspopup="dialog"
                     title="Quick Settings"
                     onClick={onQuickSettingsToggle}
                 >

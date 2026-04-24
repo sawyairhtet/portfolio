@@ -1,24 +1,22 @@
 import { useState, useCallback } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useSound } from '../../context/SoundContext';
+import { useNotifications } from '../../context/NotificationContext';
+import { usePreferences } from '../../context/PreferencesContext';
 import { WALLPAPERS, ACCENT_COLORS } from '../../config/data';
 
-type SettingsPanel = 'appearance' | 'sound' | 'about';
+type SettingsPanel = 'appearance' | 'sound' | 'windows' | 'about';
 
 export function SettingsApp() {
     const { isDark, toggle, accentColor, setAccentColor } = useTheme();
-    const { isMuted, toggleMute } = useSound();
+    const { isMuted, toggleMute, volume, setVolume } = useSound();
+    const { isDnd, setDnd } = useNotifications();
+    const { preferences, updatePreferences } = usePreferences();
     const [activePanel, setActivePanel] = useState<SettingsPanel>('appearance');
-    const [selectedWallpaper, setSelectedWallpaper] = useState(() => {
-        return localStorage.getItem('portfolioWallpaper') || 'default';
-    });
 
     const handleWallpaperChange = useCallback((id: string) => {
-        setSelectedWallpaper(id);
-        localStorage.setItem('portfolioWallpaper', id);
-        // Trigger a storage event for Wallpaper component
-        window.dispatchEvent(new Event('storage'));
-    }, []);
+        updatePreferences({ wallpaperId: id });
+    }, [updatePreferences]);
 
     return (
         <>
@@ -34,6 +32,12 @@ export function SettingsApp() {
                     onClick={() => setActivePanel('sound')}
                 >
                     <i className="fas fa-volume-up" aria-hidden="true" /> Sound
+                </button>
+                <button
+                    className={`settings-nav-item${activePanel === 'windows' ? ' active' : ''}`}
+                    onClick={() => setActivePanel('windows')}
+                >
+                    <i className="fas fa-window-restore" aria-hidden="true" /> Windows
                 </button>
                 <button
                     className={`settings-nav-item${activePanel === 'about' ? ' active' : ''}`}
@@ -80,7 +84,7 @@ export function SettingsApp() {
                                 {WALLPAPERS.map((wp) => (
                                     <button
                                         key={wp.id}
-                                        className={`wallpaper-option${selectedWallpaper === wp.id ? ' active' : ''}`}
+                                        className={`wallpaper-option${preferences.wallpaperId === wp.id ? ' active' : ''}`}
                                         style={{ background: wp.gradient || undefined }}
                                         aria-label={wp.label}
                                         title={wp.label}
@@ -105,6 +109,85 @@ export function SettingsApp() {
                                     className="toggle-switch"
                                     checked={!isMuted}
                                     onChange={toggleMute}
+                                />
+                            </div>
+                            <div className="settings-row">
+                                <span><i className="fas fa-volume-high" aria-hidden="true" /> Volume</span>
+                                <input
+                                    type="range"
+                                    className="settings-slider"
+                                    min={0}
+                                    max={100}
+                                    value={volume}
+                                    onChange={(event) => setVolume(Number(event.target.value))}
+                                    aria-label="Sound volume"
+                                />
+                            </div>
+                            <div className="settings-row">
+                                <span><i className="fas fa-bell-slash" aria-hidden="true" /> Do Not Disturb</span>
+                                <input
+                                    type="checkbox"
+                                    className="toggle-switch"
+                                    checked={isDnd}
+                                    onChange={(event) => setDnd(event.target.checked)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Windows Panel */}
+                {activePanel === 'windows' && (
+                    <div className="settings-panel active">
+                        <h2>Windows</h2>
+                        <div className="settings-card">
+                            <h3>Titlebar</h3>
+                            <div className="settings-row">
+                                <span><i className="fas fa-window-minimize" aria-hidden="true" /> Show minimize and maximize</span>
+                                <input
+                                    type="checkbox"
+                                    className="toggle-switch"
+                                    checked={preferences.showWindowButtons}
+                                    onChange={(event) => updatePreferences({ showWindowButtons: event.target.checked })}
+                                />
+                            </div>
+                        </div>
+                        <div className="settings-card">
+                            <h3>Window Management</h3>
+                            <div className="settings-row">
+                                <span><i className="fas fa-table-columns" aria-hidden="true" /> Edge snap</span>
+                                <input
+                                    type="checkbox"
+                                    className="toggle-switch"
+                                    checked={preferences.enableSnap}
+                                    onChange={(event) => updatePreferences({ enableSnap: event.target.checked })}
+                                />
+                            </div>
+                            <div className="settings-row">
+                                <span><i className="fas fa-up-right-and-down-left-from-center" aria-hidden="true" /> Resize handles</span>
+                                <input
+                                    type="checkbox"
+                                    className="toggle-switch"
+                                    checked={preferences.enableResize}
+                                    onChange={(event) => updatePreferences({ enableResize: event.target.checked })}
+                                />
+                            </div>
+                            <div className="settings-row">
+                                <span><i className="fas fa-moon" aria-hidden="true" /> Dim other windows during focus</span>
+                                <input
+                                    type="checkbox"
+                                    className="toggle-switch"
+                                    checked={preferences.focusDim}
+                                    onChange={(event) => updatePreferences({ focusDim: event.target.checked })}
+                                />
+                            </div>
+                            <div className="settings-row">
+                                <span><i className="fas fa-gauge-high" aria-hidden="true" /> Fast boot after first visit</span>
+                                <input
+                                    type="checkbox"
+                                    className="toggle-switch"
+                                    checked={preferences.fastBoot}
+                                    onChange={(event) => updatePreferences({ fastBoot: event.target.checked })}
                                 />
                             </div>
                         </div>

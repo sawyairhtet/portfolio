@@ -1,9 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useNotifications } from '../../context/NotificationContext';
+import { usePreferences } from '../../context/PreferencesContext';
 
-type TimerState = 'idle' | 'work' | 'break';
+type TimerState = 'idle' | 'work' | 'break' | 'paused';
+type ActiveTimerState = 'work' | 'break';
 
-const WORK_DURATION = 25 * 60;
-const BREAK_DURATION = 5 * 60;
+const PRESETS = [
+    { id: 'classic', label: '25 / 5', work: 25 * 60, break: 5 * 60 },
+    { id: 'deep', label: '50 / 10', work: 50 * 60, break: 10 * 60 },
+    { id: 'sprint', label: '15 / 3', work: 15 * 60, break: 3 * 60 },
+];
 
 function formatTime(seconds: number): string {
     const m = Math.floor(seconds / 60);
@@ -11,10 +17,20 @@ function formatTime(seconds: number): string {
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
+function formatMinutes(seconds: number): string {
+    return `${Math.round(seconds / 60)}m`;
+}
+
 export function FocusModeApp() {
+    const { showToast, addNotification } = useNotifications();
+    const { preferences } = usePreferences();
+    const [presetId, setPresetId] = useState(PRESETS[0].id);
+    const preset = PRESETS.find((item) => item.id === presetId) ?? PRESETS[0];
     const [state, setState] = useState<TimerState>('idle');
-    const [timeLeft, setTimeLeft] = useState(WORK_DURATION);
+    const [pausedFrom, setPausedFrom] = useState<ActiveTimerState>('work');
+    const [timeLeft, setTimeLeft] = useState(preset.work);
     const [sessions, setSessions] = useState(0);
+    const [totalFocusSeconds, setTotalFocusSeconds] = useState(0);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const clearTimer = useCallback(() => {
@@ -24,122 +40,176 @@ export function FocusModeApp() {
         }
     }, []);
 
-    // Timer tick
     useEffect(() => {
-        if (state === 'idle') { clearTimer(); return; }
+        if (!preferences.focusDim || (state !== 'work' && state !== 'break')) {
+            document.body.classList.remove('focus-dim-active');
+            return;
+        }
+
+        document.body.classList.add('focus-dim-active');
+        return () => document.body.classList.remove('focus-dim-active');
+    }, [preferences.focusDim, state]);
+
+    useEffect(() => {
+        if (state !== 'work' && state !== 'break') {
+            clearTimer();
+            return;
+        }
 
         intervalRef.current = setInterval(() => {
             setTimeLeft((prev) => {
-                if (prev <= 1) {
-                    clearTimer();
-                    if (state === 'work') {
-                        setSessions((s) => s + 1);
-                        setState('break');
-                        return BREAK_DURATION;
-                    } else {
-                        setState('idle');
-                        return WORK_DURATION;
-                    }
+                if (prev > 1) return prev - 1;
+
+                clearTimer();
+                if (state === 'work') {
+                    setSessions((count) => count + 1);
+                    setTotalFocusSeconds((total) => total + preset.work);
+                    setState('break');
+                    setPausedFrom('break');
+                    showToast('Focus session complete. Break time.', 'fas fa-mug-hot');
+                    addNotification({
+                        title: 'Focus Session Complete',
+                        body: 'Nice work. Take a short break before the next round.',
+                        icon: 'fas fa-clock',
+                        iconBg: 'linear-gradient(135deg, var(--fedora-green), var(--fedora-teal))',
+                        time: 'Just now',
+                        group: 'Focus',
+                    });
+                    return preset.break;
                 }
-                return prev - 1;
+
+                setState('idle');
+                setPausedFrom('work');
+                showToast('Break complete. Ready when you are.', 'fas fa-check-circle');
+                return preset.work;
             });
         }, 1000);
 
         return clearTimer;
-    }, [state, clearTimer]);
+    }, [state, clearTimer, preset.work, preset.break, showToast, addNotification]);
 
-    const start = useCallback(() => {
+    const startOrResume = useCallback(() => {
+        if (state === 'paused') {
+            setState(pausedFrom);
+            return;
+        }
+
         setState('work');
-        setTimeLeft(WORK_DURATION);
-    }, []);
+        setPausedFrom('work');
+        setTimeLeft(preset.work);
+    }, [state, pausedFrom, preset.work]);
 
     const pause = useCallback(() => {
-        setState('idle');
-    }, []);
+        if (state === 'work' || state === 'break') {
+            setPausedFrom(state);
+            setState('paused');
+        }
+    }, [state]);
 
     const skip = useCallback(() => {
         clearTimer();
-        if (state === 'work') {
+        if (state === 'work' || (state === 'paused' && pausedFrom === 'work')) {
             setState('break');
-            setTimeLeft(BREAK_DURATION);
-        } else {
-            setState('idle');
-            setTimeLeft(WORK_DURATION);
+            setPausedFrom('break');
+            setTimeLeft(preset.break);
+            return;
         }
-    }, [state, clearTimer]);
+
+        setState('idle');
+        setPausedFrom('work');
+        setTimeLeft(preset.work);
+    }, [state, pausedFrom, preset.break, preset.work, clearTimer]);
 
     const reset = useCallback(() => {
         clearTimer();
         setState('idle');
-        setTimeLeft(WORK_DURATION);
+        setPausedFrom('work');
+        setTimeLeft(preset.work);
         setSessions(0);
-    }, [clearTimer]);
+        setTotalFocusSeconds(0);
+    }, [clearTimer, preset.work]);
 
-    const progress = state === 'work'
-        ? ((WORK_DURATION - timeLeft) / WORK_DURATION) * 100
-        : state === 'break'
-            ? ((BREAK_DURATION - timeLeft) / BREAK_DURATION) * 100
-            : 0;
+    const changePreset = useCallback((nextPresetId: string) => {
+        const nextPreset = PRESETS.find((item) => item.id === nextPresetId) ?? PRESETS[0];
+        setPresetId(nextPreset.id);
+        if (state === 'idle' || state === 'paused') {
+            setTimeLeft(nextPreset.work);
+            setState('idle');
+            setPausedFrom('work');
+        }
+    }, [state]);
+
+    const duration = state === 'break' || (state === 'paused' && pausedFrom === 'break')
+        ? preset.break
+        : preset.work;
+    const progress = Math.max(0, Math.min(1, (duration - timeLeft) / duration));
+    const circumference = 2 * Math.PI * 90;
 
     return (
-        <div className="focus-mode-content" style={{ textAlign: 'center', padding: '2rem' }}>
-            <h2 style={{ marginBottom: '0.5rem' }}>
-                <i className="fas fa-clock" aria-hidden="true" /> Focus Mode
-            </h2>
-            <p style={{ opacity: 0.7, marginBottom: '2rem' }}>
-                {state === 'work' ? 'Focus time! Stay concentrated.' :
-                 state === 'break' ? 'Take a short break.' :
-                 'Ready to focus?'}
-            </p>
-
-            {/* Timer Circle */}
-            <div style={{ position: 'relative', width: 200, height: 200, margin: '0 auto 2rem' }}>
-                <svg viewBox="0 0 200 200" style={{ transform: 'rotate(-90deg)' }}>
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="var(--color-border, #444)" strokeWidth="6" />
-                    <circle
-                        cx="100" cy="100" r="90" fill="none"
-                        stroke="var(--fedora-blue, #3584e4)"
-                        strokeWidth="6"
-                        strokeDasharray={`${2 * Math.PI * 90}`}
-                        strokeDashoffset={`${2 * Math.PI * 90 * (1 - progress / 100)}`}
-                        strokeLinecap="round"
-                        style={{ transition: 'stroke-dashoffset 0.5s ease' }}
-                    />
-                </svg>
-                <div style={{
-                    position: 'absolute', top: '50%', left: '50%',
-                    transform: 'translate(-50%, -50%)', fontSize: '2.5rem',
-                    fontFamily: 'JetBrains Mono, monospace', fontWeight: 600,
-                }}>
-                    {formatTime(timeLeft)}
+        <div className="focus-mode-container">
+            <div className="focus-timer-section">
+                <div className="focus-mode-label">
+                    {state === 'work' ? 'Focus time' : state === 'break' ? 'Break time' : state === 'paused' ? 'Paused' : 'Ready'}
+                </div>
+                <div className="focus-timer-ring">
+                    <svg viewBox="0 0 200 200" className="focus-progress-svg" aria-hidden="true">
+                        <circle cx="100" cy="100" r="90" className="focus-progress-bg" />
+                        <circle
+                            cx="100"
+                            cy="100"
+                            r="90"
+                            className="focus-progress-fill"
+                            strokeDasharray={circumference}
+                            strokeDashoffset={circumference * (1 - progress)}
+                        />
+                    </svg>
+                    <div className="focus-timer-display">{formatTime(timeLeft)}</div>
                 </div>
             </div>
 
-            <div style={{ marginBottom: '1rem', opacity: 0.7 }}>
-                Sessions completed: {sessions}
+            <div className="focus-presets" aria-label="Focus presets">
+                {PRESETS.map((item) => (
+                    <button
+                        key={item.id}
+                        className={`focus-preset-btn${presetId === item.id ? ' active' : ''}`}
+                        onClick={() => changePreset(item.id)}
+                    >
+                        {item.label}
+                    </button>
+                ))}
             </div>
 
-            {/* Controls */}
-            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                {state === 'idle' ? (
-                    <button onClick={start} className="contact-submit-btn" style={{ padding: '0.75rem 2rem' }}>
-                        <i className="fas fa-play" aria-hidden="true" /> Start
+            <div className="focus-controls">
+                {state === 'work' || state === 'break' ? (
+                    <button onClick={pause} className="focus-btn focus-btn-secondary">
+                        <i className="fas fa-pause" aria-hidden="true" /> Pause
                     </button>
                 ) : (
-                    <>
-                        <button onClick={pause} className="contact-submit-btn" style={{ padding: '0.75rem 1.5rem', background: 'var(--color-border, #555)' }}>
-                            <i className="fas fa-pause" aria-hidden="true" /> Pause
-                        </button>
-                        <button onClick={skip} className="contact-submit-btn" style={{ padding: '0.75rem 1.5rem', background: 'var(--color-border, #555)' }}>
-                            <i className="fas fa-forward" aria-hidden="true" /> Skip
-                        </button>
-                    </>
-                )}
-                {sessions > 0 && (
-                    <button onClick={reset} className="contact-submit-btn" style={{ padding: '0.75rem 1.5rem', background: 'var(--fedora-red, #e01b24)' }}>
-                        <i className="fas fa-redo" aria-hidden="true" /> Reset
+                    <button onClick={startOrResume} className="focus-btn focus-btn-primary">
+                        <i className="fas fa-play" aria-hidden="true" /> {state === 'paused' ? 'Resume' : 'Start'}
                     </button>
                 )}
+                <button onClick={skip} className="focus-btn focus-btn-ghost" disabled={state === 'idle'}>
+                    <i className="fas fa-forward" aria-hidden="true" /> Skip
+                </button>
+                <button onClick={reset} className="focus-btn focus-btn-ghost">
+                    <i className="fas fa-redo" aria-hidden="true" /> Reset
+                </button>
+            </div>
+
+            <div className="focus-stats">
+                <div className="focus-stat">
+                    <span className="focus-stat-value">{sessions}</span>
+                    <span className="focus-stat-label">Sessions</span>
+                </div>
+                <div className="focus-stat">
+                    <span className="focus-stat-value">{formatMinutes(totalFocusSeconds)}</span>
+                    <span className="focus-stat-label">Focused</span>
+                </div>
+                <div className="focus-stat">
+                    <span className="focus-stat-value">{preferences.focusDim ? 'On' : 'Off'}</span>
+                    <span className="focus-stat-label">Dim</span>
+                </div>
             </div>
         </div>
     );

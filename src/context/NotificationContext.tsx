@@ -27,13 +27,14 @@ const NotificationContext = createContext<NotificationContextValue>({
 export function NotificationProvider({ children }: { children: ReactNode }) {
     const [notifications, setNotifications] = useState<Notification[]>(DEFAULT_NOTIFICATIONS);
     const [toasts, setToasts] = useState<Toast[]>([]);
-    const [isDnd, setIsDnd] = useState(false);
+    const [isDnd, setIsDnd] = useState(() => localStorage.getItem('portfolioDnd') === 'true');
     const toastIdRef = useRef(0);
 
     const addNotification = useCallback((notification: Omit<Notification, 'id'>) => {
+        if (isDnd) return;
         const id = `notif-${Date.now()}-${Math.random().toString(36).slice(2)}`;
         setNotifications((prev) => [{ ...notification, id }, ...prev]);
-    }, []);
+    }, [isDnd]);
 
     const dismissNotification = useCallback((id: string) => {
         setNotifications((prev) => prev.filter((n) => n.id !== id));
@@ -58,6 +59,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
     const setDnd = useCallback((dnd: boolean) => {
         setIsDnd(dnd);
+        localStorage.setItem('portfolioDnd', String(dnd));
     }, []);
 
     return (

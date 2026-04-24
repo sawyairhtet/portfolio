@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { BOOT_LOG_MESSAGES, BOOT_LINE_INTERVAL_MS, PLYMOUTH_DURATION_MS } from '../../config/data';
+import { usePreferences } from '../../context/PreferencesContext';
 
 interface BootScreenProps {
     onBootComplete: () => void;
 }
 
 export function BootScreen({ onBootComplete }: BootScreenProps) {
+    const { preferences } = usePreferences();
     const [phase, setPhase] = useState<'plymouth' | 'bootlog' | 'done'>('plymouth');
     const [bootLines, setBootLines] = useState<string[]>([]);
     const [fadeOut, setFadeOut] = useState(false);
@@ -27,7 +29,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
         const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         const isReturningVisitor = localStorage.getItem('hasVisitedBefore');
 
-        if (mediaQuery.matches || isReturningVisitor) {
+        if (mediaQuery.matches || (preferences.fastBoot && isReturningVisitor)) {
             isSkippedRef.current = true;
             setPhase('done');
             localStorage.setItem('hasVisitedBefore', 'true');
@@ -48,7 +50,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
             document.removeEventListener('keydown', skipBoot);
             document.removeEventListener('click', skipBoot);
         };
-    }, [completeBoot, onBootComplete]);
+    }, [completeBoot, onBootComplete, preferences.fastBoot]);
 
     // Plymouth → Boot log transition
     useEffect(() => {

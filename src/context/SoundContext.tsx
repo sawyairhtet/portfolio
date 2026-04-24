@@ -4,6 +4,8 @@ interface SoundContextValue {
     isMuted: boolean;
     setMuted: (muted: boolean) => void;
     toggleMute: () => void;
+    volume: number;
+    setVolume: (volume: number) => void;
     playClick: () => void;
     playStartupDrum: () => void;
 }
@@ -12,6 +14,8 @@ const SoundContext = createContext<SoundContextValue>({
     isMuted: false,
     setMuted: () => {},
     toggleMute: () => {},
+    volume: 70,
+    setVolume: () => {},
     playClick: () => {},
     playStartupDrum: () => {},
 });
@@ -40,6 +44,10 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     const [isMuted, setIsMuted] = useState<boolean>(() => {
         return localStorage.getItem('soundMuted') === 'true';
     });
+    const [volume, setVolumeState] = useState<number>(() => {
+        const saved = Number(localStorage.getItem('soundVolume'));
+        return Number.isFinite(saved) ? Math.min(100, Math.max(0, saved)) : 70;
+    });
 
     const audioCtxRef = useRef<AudioContext | null>(null);
 
@@ -63,30 +71,40 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         });
     }, []);
 
+    const setVolume = useCallback((nextVolume: number) => {
+        const normalized = Math.min(100, Math.max(0, nextVolume));
+        setVolumeState(normalized);
+        localStorage.setItem('soundVolume', String(normalized));
+        if (normalized > 0 && isMuted) {
+            setMuted(false);
+        }
+    }, [isMuted, setMuted]);
+
     const playClick = useCallback(() => {
         if (isMuted) return;
         try {
             const ctx = getAudioCtx();
-            createOscillatorSound(ctx, 800, 0.05, 'sine', 0.05);
+            createOscillatorSound(ctx, 800, 0.05, 'sine', 0.05 * (volume / 100));
         } catch {
             // Audio not available
         }
-    }, [isMuted, getAudioCtx]);
+    }, [isMuted, getAudioCtx, volume]);
 
     const playStartupDrum = useCallback(() => {
         if (isMuted) return;
         try {
             const ctx = getAudioCtx();
-            createOscillatorSound(ctx, 150, 0.3, 'triangle', 0.15);
-            setTimeout(() => createOscillatorSound(ctx, 200, 0.2, 'triangle', 0.1), 150);
-            setTimeout(() => createOscillatorSound(ctx, 300, 0.4, 'sine', 0.08), 300);
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 150, 0.3, 'triangle', 0.15 * gain);
+            setTimeout(() => createOscillatorSound(ctx, 200, 0.2, 'triangle', 0.1 * gain), 150);
+            setTimeout(() => createOscillatorSound(ctx, 300, 0.4, 'sine', 0.08 * gain), 300);
         } catch {
             // Audio not available
         }
-    }, [isMuted, getAudioCtx]);
+    }, [isMuted, getAudioCtx, volume]);
 
     return (
-        <SoundContext.Provider value={{ isMuted, setMuted, toggleMute, playClick, playStartupDrum }}>
+        <SoundContext.Provider value={{ isMuted, setMuted, toggleMute, volume, setVolume, playClick, playStartupDrum }}>
             {children}
         </SoundContext.Provider>
     );

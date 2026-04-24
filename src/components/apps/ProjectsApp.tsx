@@ -1,58 +1,96 @@
-const PROJECTS = [
-    {
-        title: 'Jewelry Shop Robbery VR',
-        description: 'An immersive VR heist game for Meta Quest with full hand tracking support. Grab precious gems, avoid security, and escape with the loot!',
-        url: 'https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking',
-        icon: 'fas fa-vr-cardboard',
-        featured: true,
-        techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking'],
-        platform: 'Meta Quest 2/3/Pro',
-        platformIcon: 'fas fa-vr-cardboard',
-    },
-    {
-        title: 'Fedora Portfolio Website',
-        description: 'This very website! A unique Fedora 43 GNOME 49-styled portfolio with draggable windows, working terminal, boot animation, and sticky notes.',
-        url: 'https://github.com/sawyairhtet/portfolio',
-        icon: 'fas fa-desktop',
-        featured: false,
-        techStack: ['React', 'TypeScript', 'Vite', 'Fedora / Adwaita'],
-        platform: 'Web Application',
-        platformIcon: 'fas fa-desktop',
-    },
-];
+import { PROJECTS } from '../../config/data';
 
 export function ProjectsApp() {
+    const featured = PROJECTS.find((project) => project.featured);
+    const supporting = PROJECTS.filter((project) => !project.featured);
+
     return (
-        <div className="projects-grid">
-            {PROJECTS.map((project) => (
-                <a
-                    key={project.title}
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`project-card${project.featured ? ' featured-project' : ''}`}
-                >
-                    {project.featured && <div className="project-badge">Featured</div>}
-                    <div className="project-preview">
-                        <i className={project.icon} aria-hidden="true" />
+        <div className="projects-app">
+            {featured && (
+                <article className="featured-project-panel">
+                    <div className="project-media-frame">
+                        {featured.media ? (
+                            <img src={featured.media.src} alt={featured.media.alt} />
+                        ) : (
+                            <div className="project-media-fallback">
+                                <i className={featured.icon} aria-hidden="true" />
+                                <span>{featured.platform}</span>
+                            </div>
+                        )}
                     </div>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <div className="tech-stack">
-                        {project.techStack.map((tech) => (
-                            <span key={tech} className="tech-badge">{tech}</span>
-                        ))}
+                    <div className="project-detail">
+                        <span className="project-badge">Featured</span>
+                        <h2>{featured.title}</h2>
+                        <p className="project-role">{featured.role} / {featured.platform}</p>
+                        <p>{featured.summary}</p>
+                        <div className="tech-stack">
+                            {featured.techStack.map((tech) => (
+                                <span key={tech} className="tech-badge">{tech}</span>
+                            ))}
+                        </div>
+                        <ul className="proof-list">
+                            {featured.proofPoints.map((point) => (
+                                <li key={point}>{point}</li>
+                            ))}
+                        </ul>
+                        <div className="project-actions">
+                            {featured.links.map((link) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                    className={`project-action${link.primary ? ' primary' : ''}`}
+                                >
+                                    <i className={link.icon} aria-hidden="true" />
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
                     </div>
-                    <div className="project-meta">
-                        <span className="project-platform">
-                            <i className={project.platformIcon} aria-hidden="true" /> {project.platform}
-                        </span>
-                        <span className="project-link">
-                            <i className="fab fa-github" aria-hidden="true" /> View on GitHub
-                        </span>
-                    </div>
-                </a>
-            ))}
+                </article>
+            )}
+
+            <div className="projects-grid">
+                {supporting.map((project) => (
+                    <article key={project.id} className="project-card">
+                        <div className="project-preview">
+                            {project.media ? (
+                                <img src={project.media.src} alt={project.media.alt} />
+                            ) : (
+                                <i className={project.icon} aria-hidden="true" />
+                            )}
+                        </div>
+                        <h3>{project.title}</h3>
+                        <p className="project-role">{project.role} / {project.platform}</p>
+                        <p>{project.summary}</p>
+                        <div className="tech-stack">
+                            {project.techStack.map((tech) => (
+                                <span key={tech} className="tech-badge">{tech}</span>
+                            ))}
+                        </div>
+                        <ul className="proof-list compact">
+                            {project.proofPoints.slice(0, 2).map((point) => (
+                                <li key={point}>{point}</li>
+                            ))}
+                        </ul>
+                        <div className="project-actions">
+                            {project.links.map((link) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                    className={`project-action${link.primary ? ' primary' : ''}`}
+                                >
+                                    <i className={link.icon} aria-hidden="true" />
+                                    {link.label}
+                                </a>
+                            ))}
+                        </div>
+                    </article>
+                ))}
+            </div>
         </div>
     );
 }

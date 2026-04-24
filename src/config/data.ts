@@ -5,6 +5,8 @@ import type {
     WallpaperOption,
     AccentColor,
     Notification,
+    Project,
+    SkillCategory,
 } from '../types';
 
 // ============================================
@@ -12,19 +14,202 @@ import type {
 // ============================================
 
 export const APP_DEFINITIONS: AppDefinition[] = [
-    { id: 'about', label: 'About', icon: 'fas fa-user-circle', dockTooltip: 'About Me', gradient: 'linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%)' },
-    { id: 'skills', label: 'Skills', icon: 'fas fa-tools', dockTooltip: 'Skills', gradient: 'linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%)' },
-    { id: 'projects', label: 'Projects', icon: 'fas fa-folder', dockTooltip: 'Projects', gradient: 'linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%)' },
-    { id: 'contact', label: 'Contact', icon: 'fas fa-envelope', dockTooltip: 'Contact', gradient: 'linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%)' },
-    { id: 'links', label: 'Links', icon: 'fas fa-link', dockTooltip: 'Links', gradient: 'linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-teal) 100%)' },
-    { id: 'terminal', label: 'Terminal', icon: 'fas fa-terminal', dockTooltip: 'Terminal', gradient: 'linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%)' },
-    { id: 'settings', label: 'Settings', icon: 'fas fa-cog', dockTooltip: 'Settings', gradient: 'linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%)' },
-    { id: 'focus-mode', label: 'Focus', icon: 'fas fa-clock', dockTooltip: 'Focus Mode', gradient: 'linear-gradient(135deg, #ff7800 0%, #e5611a 100%)' },
+    {
+        id: 'about',
+        label: 'About',
+        icon: 'fas fa-user-circle',
+        dockTooltip: 'About Me',
+        gradient: 'linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%)',
+        description: 'Recruiter summary, education, focus, and personality.',
+        aliases: ['bio', 'profile', 'summary', 'saw'],
+        desktopDock: true,
+        mobileDock: true,
+        quickActions: [
+            { label: 'Contact', icon: 'fas fa-envelope', appId: 'contact' },
+            { label: 'Resume', icon: 'fas fa-file-arrow-down', href: 'resume/SYH_resume.pdf' },
+        ],
+    },
+    {
+        id: 'skills',
+        label: 'Skills',
+        icon: 'fas fa-tools',
+        dockTooltip: 'Skills',
+        gradient: 'linear-gradient(135deg, #33d17a 0%, var(--fedora-teal) 100%)',
+        description: 'Technical stack with practical context and project usage.',
+        aliases: ['stack', 'tools', 'technologies', 'tech'],
+        desktopDock: true,
+        mobileDock: true,
+    },
+    {
+        id: 'projects',
+        label: 'Projects',
+        icon: 'fas fa-folder',
+        dockTooltip: 'Projects',
+        gradient: 'linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%)',
+        description: 'Featured work, proof points, tech, platforms, and source links.',
+        aliases: ['work', 'portfolio', 'case studies', 'github'],
+        desktopDock: true,
+        mobileDock: true,
+        quickActions: [
+            { label: 'GitHub', icon: 'fab fa-github', href: 'https://github.com/sawyairhtet' },
+        ],
+    },
+    {
+        id: 'contact',
+        label: 'Contact',
+        icon: 'fas fa-envelope',
+        dockTooltip: 'Contact',
+        gradient: 'linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%)',
+        description: 'Email, resume, availability, and a contact form.',
+        aliases: ['email', 'hire', 'resume', 'availability'],
+        desktopDock: true,
+        mobileDock: true,
+        quickActions: [
+            { label: 'Email', icon: 'fas fa-envelope', href: 'mailto:minwn2244@gmail.com' },
+            { label: 'Resume', icon: 'fas fa-file-arrow-down', href: 'resume/SYH_resume.pdf' },
+        ],
+    },
+    {
+        id: 'links',
+        label: 'Links',
+        icon: 'fas fa-link',
+        dockTooltip: 'Links',
+        gradient: 'linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-teal) 100%)',
+        description: 'GitHub, LinkedIn, and social profiles.',
+        aliases: ['social', 'github', 'linkedin', 'x'],
+        desktopDock: true,
+        mobileDock: false,
+    },
+    {
+        id: 'terminal',
+        label: 'Terminal',
+        icon: 'fas fa-terminal',
+        dockTooltip: 'Terminal',
+        gradient: 'linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%)',
+        description: 'A portfolio terminal with filesystem and app commands.',
+        aliases: ['shell', 'cli', 'bash', 'command'],
+        desktopDock: true,
+        mobileDock: false,
+    },
+    {
+        id: 'settings',
+        label: 'Settings',
+        icon: 'fas fa-cog',
+        dockTooltip: 'Settings',
+        gradient: 'linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%)',
+        description: 'Appearance, sound, windowing, and system preferences.',
+        aliases: ['preferences', 'appearance', 'sound', 'windows'],
+        desktopDock: true,
+        mobileDock: false,
+    },
+    {
+        id: 'focus-mode',
+        label: 'Focus',
+        icon: 'fas fa-clock',
+        dockTooltip: 'Focus Mode',
+        gradient: 'linear-gradient(135deg, #ff7800 0%, #e5611a 100%)',
+        description: 'Pomodoro presets, session stats, and optional focus dimming.',
+        aliases: ['pomodoro', 'timer', 'deep work', 'productivity'],
+        desktopDock: false,
+        mobileDock: false,
+    },
 ];
 
 export const DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(
-    (app) => app.id !== 'focus-mode',
+    (app) => app.desktopDock,
 );
+
+export const MOBILE_DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter((app) => app.mobileDock);
+
+export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter((app) => !app.mobileDock);
+
+// ============================================
+// PORTFOLIO CONTENT DATA
+// ============================================
+
+export const PROJECTS: Project[] = [
+    {
+        id: 'jewelry-vr',
+        title: 'Jewelry Shop Robbery VR',
+        role: 'VR developer',
+        summary: 'A Meta Quest heist prototype focused on bare-hand interaction, object grabbing, throwing, and room-scale feedback.',
+        techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking', 'Oculus Interaction'],
+        platform: 'Meta Quest 2/3/Pro',
+        proofPoints: [
+            'Implemented controller-free grab and throw interactions with Meta Quest hand tracking.',
+            'Designed tactile jewel and prop interactions for standalone VR constraints.',
+            'Kept the experience performance-minded for Quest hardware and fast recruiter demos.',
+        ],
+        links: [
+            {
+                label: 'View Repository',
+                href: 'https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking',
+                icon: 'fab fa-github',
+                primary: true,
+            },
+        ],
+        featured: true,
+        icon: 'fas fa-vr-cardboard',
+    },
+    {
+        id: 'fedora-portfolio',
+        title: 'Fedora Portfolio Website',
+        role: 'Frontend engineer and interaction designer',
+        summary: 'A recruiter-first portfolio wrapped in a Fedora 43 / GNOME 49 desktop with windows, terminal, boot sequence, settings, and responsive app shell.',
+        techStack: ['React', 'TypeScript', 'Vite', 'CSS', 'Adwaita'],
+        platform: 'Responsive web app',
+        proofPoints: [
+            'Built window management, Activities search, quick settings, notifications, and a terminal interface.',
+            'Preserved desktop fidelity while making projects, contact, and resume faster to reach.',
+            'Ships as a Vite app with typecheck, lint, and Vitest validation.',
+        ],
+        links: [
+            {
+                label: 'View Repository',
+                href: 'https://github.com/sawyairhtet/portfolio',
+                icon: 'fab fa-github',
+                primary: true,
+            },
+            {
+                label: 'Download Resume',
+                href: 'resume/SYH_resume.pdf',
+                icon: 'fas fa-file-arrow-down',
+            },
+        ],
+        featured: false,
+        icon: 'fas fa-desktop',
+    },
+];
+
+export const SKILL_CATEGORIES: SkillCategory[] = [
+    {
+        title: 'Frontend Engineering',
+        icon: 'fab fa-react',
+        skills: [
+            { name: 'React + TypeScript', context: 'Component architecture, stateful UI, typed config, and responsive app shells.', usedIn: ['Fedora Portfolio'] },
+            { name: 'CSS / Adwaita UI', context: 'GNOME-inspired layouts, accessibility states, motion, and mobile constraints.', usedIn: ['Fedora Portfolio'] },
+            { name: 'Vite + Testing', context: 'Fast iteration, typecheck/lint/test workflows, and focused interaction tests.', usedIn: ['Fedora Portfolio'] },
+        ],
+    },
+    {
+        title: 'VR And Game Development',
+        icon: 'fas fa-vr-cardboard',
+        skills: [
+            { name: 'Unity + C#', context: 'Gameplay systems, object interaction, and Quest-ready prototypes.', usedIn: ['Jewelry VR'] },
+            { name: 'Meta Quest Hand Tracking', context: 'Bare-hand grabbing and gestural input without physical controllers.', usedIn: ['Jewelry VR'] },
+            { name: 'Performance Awareness', context: 'Standalone VR decisions around feedback, rendering cost, and comfort.', usedIn: ['Jewelry VR'] },
+        ],
+    },
+    {
+        title: 'General Engineering',
+        icon: 'fas fa-code',
+        skills: [
+            { name: 'JavaScript / Python / Java / SQL', context: 'Coursework, tooling, data handling, and small automation tasks.', usedIn: ['Coursework'] },
+            { name: 'Git + GitHub', context: 'Source control, public repositories, and collaboration-ready workflows.', usedIn: ['Fedora Portfolio', 'Jewelry VR'] },
+            { name: 'Linux Workflow', context: 'Daily system fluency, shell habits, and Fedora/GNOME customization.', usedIn: ['Fedora Portfolio'] },
+        ],
+    },
+];
 
 // ============================================
 // BOOT LOG MESSAGES
@@ -58,10 +243,10 @@ export const BOOT_LOG_MESSAGES: string[] = [
 // ============================================
 
 export const stickyNotesData: StickyNote[] = [
-    { text: 'I like coke but \ncoke light is better \u{1F964}', color: 'yellow', rotation: -3, x: 75, y: 15 },
-    { text: 'Roses are red.\nViolets are blue.\nUnexpected error in line 52.', color: 'pink', rotation: 2, x: 82, y: 35 },
-    { text: 'System.out.println\n("Hi Mom! I love you.");', color: 'blue', rotation: -1, x: 78, y: 55 },
-    { text: 'Alt+1 → Projects\nAlt+2 → Contact\nAlt+3 → Resume \u{1F4BB}', color: 'green', rotation: 3, x: 70, y: 75 },
+    { text: 'I like coke but \ncoke light is better \u{1F964}', color: 'yellow', rotation: -3, x: 80, y: 14 },
+    { text: 'Roses are red.\nViolets are blue.\nUnexpected error in line 52.', color: 'pink', rotation: 2, x: 83, y: 36 },
+    { text: 'System.out.println\n("Hi Mom! I love you.");', color: 'blue', rotation: -1, x: 78, y: 58 },
+    { text: 'Alt+1: Projects\nAlt+2: Contact\nAlt+3: Resume', color: 'green', rotation: 3, x: 80, y: 78 },
 ];
 
 // ============================================
@@ -198,21 +383,21 @@ export const ACCENT_COLORS: AccentColor[] = [
 export const DEFAULT_NOTIFICATIONS: Notification[] = [
     {
         id: 'welcome',
-        title: 'Fedora 43 Desktop',
-        body: 'Welcome! Click any app icon in the dock to get started.',
+        title: 'Portfolio Ready',
+        body: 'Start with About, then use Projects, Contact, and Resume shortcuts for the fast path.',
         icon: 'fab fa-fedora',
         iconBg: 'linear-gradient(135deg, var(--fedora-blue-light), var(--fedora-blue))',
         time: 'Just now',
         group: 'System',
     },
     {
-        id: 'updated',
-        title: 'System Updated',
-        body: 'Fedora 43 is up to date. All packages are current.',
-        icon: 'fas fa-check-circle',
+        id: 'shortcuts',
+        title: 'Recruiter Shortcuts',
+        body: 'Alt+1 opens Projects, Alt+2 opens Contact, and Alt+3 opens the resume.',
+        icon: 'fas fa-keyboard',
         iconBg: 'linear-gradient(135deg, var(--fedora-green), var(--fedora-teal))',
-        time: '2 min ago',
-        group: 'System',
+        time: 'Just now',
+        group: 'Portfolio',
     },
 ];
 
@@ -220,8 +405,8 @@ export const DEFAULT_NOTIFICATIONS: Notification[] = [
 // BOOT TIMING CONSTANTS
 // ============================================
 
-export const BOOT_LINE_INTERVAL_MS = 80;
-export const PLYMOUTH_DURATION_MS = 2000;
+export const BOOT_LINE_INTERVAL_MS = 55;
+export const PLYMOUTH_DURATION_MS = 1200;
 
 // ============================================
 // GESTURE THRESHOLDS

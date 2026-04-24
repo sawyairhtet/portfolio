@@ -7,7 +7,7 @@ interface NotificationCenterProps {
 }
 
 export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps) {
-    const { notifications, dismissNotification, clearAllNotifications } = useNotifications();
+    const { notifications, dismissNotification, clearAllNotifications, isDnd, setDnd } = useNotifications();
 
     useEffect(() => {
         if (!isOpen) return;
@@ -42,6 +42,14 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                 <span className="notification-header-title">Notifications</span>
                 <div className="notification-header-actions">
                     <button
+                        className={`dnd-toggle${isDnd ? ' active' : ''}`}
+                        aria-pressed={isDnd}
+                        onClick={() => setDnd(!isDnd)}
+                    >
+                        <i className="fas fa-bell-slash" aria-hidden="true" />
+                        DND
+                    </button>
+                    <button
                         className="clear-all-btn"
                         aria-label="Clear all notifications"
                         onClick={clearAllNotifications}
@@ -53,7 +61,9 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
             <div className="notification-list">
                 {Object.keys(grouped).length === 0 ? (
                     <div className="notification-empty">
-                        <span>No notifications</span>
+                        <i className={isDnd ? 'fas fa-bell-slash' : 'fas fa-bell'} aria-hidden="true" />
+                        <span>{isDnd ? 'Do Not Disturb is on' : 'No notifications'}</span>
+                        <small>{isDnd ? 'Toasts and new notifications are paused.' : 'You are all caught up.'}</small>
                     </div>
                 ) : (
                     Object.entries(grouped).map(([group, items]) => (

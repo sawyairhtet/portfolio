@@ -24,7 +24,14 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
     const filteredApps = useMemo(() => {
         if (!searchQuery.trim()) return APP_DEFINITIONS;
         const q = searchQuery.toLowerCase();
-        return APP_DEFINITIONS.filter((app) => app.label.toLowerCase().includes(q));
+        return APP_DEFINITIONS.filter((app) => {
+            const searchable = [
+                app.label,
+                app.description,
+                ...app.aliases,
+            ].join(' ').toLowerCase();
+            return searchable.includes(q);
+        });
     }, [searchQuery]);
 
     const handleAppClick = useCallback(
@@ -37,17 +44,16 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
 
     // Window thumbnails for activities view
     const openWindowIds = Array.from(windows.entries())
-        .filter(([, w]) => w.isOpen && !w.isMinimized)
+        .filter(([, w]) => w.isOpen)
         .map(([id]) => id);
-
-    if (!isOpen) return null;
 
     return (
         <div
-            className="activities-overlay active"
+            className={`activities-overlay${isOpen ? ' visible' : ''}`}
             role="dialog"
             aria-modal="false"
             aria-label="Activities overview"
+            aria-hidden={!isOpen}
         >
             <div className="activities-search">
                 <input
@@ -71,7 +77,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             <div className="activities-main">
                 <div className="activities-windows">
                     {openWindowIds.length === 0 ? (
-                        <div style={{ opacity: 0.5, textAlign: 'center', padding: '3rem' }}>
+                        <div className="activities-no-windows">
                             No open windows
                         </div>
                     ) : (
@@ -85,19 +91,12 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                                     aria-label={`Switch to ${app?.label || id}`}
                                 >
                                     <i className={app?.icon || 'fas fa-window-maximize'} aria-hidden="true" />
-                                    <span>{app?.label || id}</span>
+                                    <span className="activities-thumb-title">{app?.label || id}</span>
+                                    <small>{windows.get(id)?.isMinimized ? 'Minimized' : 'Open'}</small>
                                 </button>
                             );
                         })
                     )}
-                </div>
-                <div className="activities-workspaces">
-                    <div className="workspace-thumb active" data-workspace="1" aria-label="Workspace 1">
-                        <span className="workspace-label">1</span>
-                    </div>
-                    <div className="workspace-thumb" data-workspace="2" aria-label="Workspace 2">
-                        <span className="workspace-label">2</span>
-                    </div>
                 </div>
             </div>
 
@@ -113,6 +112,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                             <i className={app.icon} aria-hidden="true" />
                         </div>
                         <span className="activities-app-label">{app.label}</span>
+                        <span className="activities-app-description">{app.description}</span>
                     </button>
                 ))}
             </div>

@@ -36,6 +36,20 @@ export function AboutApp() {
                     </a>
                 </div>
             </div>
+            <div className="recruiter-summary" aria-label="Recruiter summary">
+                {[
+                    ['Role', 'IT student / VR developer'],
+                    ['School', 'Singapore Polytechnic'],
+                    ['Location', 'Singapore'],
+                    ['Availability', 'Open to opportunities'],
+                    ['Focus', 'VR, React, interaction design'],
+                ].map(([label, value]) => (
+                    <div key={label} className="summary-row">
+                        <span>{label}</span>
+                        <strong>{value}</strong>
+                    </div>
+                ))}
+            </div>
             <div className="about-content">
                 <div className="about-section">
                     <h3><i className="fas fa-user" aria-hidden="true" /> About Me</h3>
@@ -49,37 +63,19 @@ export function AboutApp() {
                         or figuring out how to make CSS do something it probably shouldn&apos;t.
                     </p>
                 </div>
-                <div className="about-section">
-                    <h3><i className="fas fa-graduation-cap" aria-hidden="true" /> Education</h3>
-                    <p>
-                        <strong>Singapore Polytechnic</strong><br />
-                        Diploma in Information Technology<br />
-                        <em>Expected Graduation: 2026</em>
-                    </p>
-                </div>
-                <div className="about-section">
-                    <h3><i className="fas fa-briefcase" aria-hidden="true" /> Experience</h3>
-                    <p>
-                        <strong>VR Developer — Meta Quest</strong><br />
-                        Built a jewelry heist VR game for Meta Quest using Unity and C#.
-                        Implemented full hand tracking — grab, throw, and interact with
-                        objects using bare hands. Optimised rendering for 72fps on
-                        standalone hardware.
-                    </p>
-                    <p>
-                        <strong>Web Developer — Portfolio</strong><br />
-                        Designed and developed this interactive Fedora 43 desktop
-                        simulation using React, TypeScript, and Vite.
-                        Features include draggable windows, a working terminal, boot
-                        animation, GNOME Activities overview, and PWA support.
-                    </p>
-                </div>
-                <div className="about-section">
-                    <h3><i className="fas fa-heart" aria-hidden="true" /> Interests</h3>
-                    <p>
-                        VR &amp; Spatial Computing &bull; Game Development &bull; Open Source &bull;
-                        Linux &amp; System Customization &bull; UI/UX Design
-                    </p>
+                <div className="about-section about-grouped">
+                    <h3><i className="fas fa-id-card" aria-hidden="true" /> Snapshot</h3>
+                    {[
+                        ['Education', 'Diploma in Information Technology, Singapore Polytechnic. Expected graduation: 2026.'],
+                        ['VR Project', 'Built a Meta Quest jewelry heist prototype with Unity, C#, and bare-hand object interactions.'],
+                        ['Web Project', 'Designed this Fedora desktop portfolio in React, TypeScript, and Vite with shell-level interactions.'],
+                        ['Interests', 'VR, spatial computing, game development, Linux customization, open source, and UI/UX.'],
+                    ].map(([label, value]) => (
+                        <div key={label} className="about-grouped-row">
+                            <span>{label}</span>
+                            <p>{value}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </>

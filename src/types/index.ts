@@ -76,6 +76,61 @@ export interface AppDefinition {
     icon: string;
     dockTooltip: string;
     gradient: string;
+    description: string;
+    aliases: string[];
+    desktopDock: boolean;
+    mobileDock: boolean;
+    quickActions?: AppQuickAction[];
+}
+
+export interface AppQuickAction {
+    label: string;
+    icon: string;
+    appId?: AppId;
+    href?: string;
+}
+
+// ============================================
+// PORTFOLIO CONTENT TYPES
+// ============================================
+
+export interface ProjectLink {
+    label: string;
+    href: string;
+    icon: string;
+    primary?: boolean;
+}
+
+export interface ProjectMedia {
+    type: 'image';
+    src: string;
+    alt: string;
+}
+
+export interface Project {
+    id: string;
+    title: string;
+    role: string;
+    summary: string;
+    techStack: string[];
+    platform: string;
+    proofPoints: string[];
+    links: ProjectLink[];
+    featured: boolean;
+    icon: string;
+    media?: ProjectMedia;
+}
+
+export interface SkillItem {
+    name: string;
+    context: string;
+    usedIn: string[];
+}
+
+export interface SkillCategory {
+    title: string;
+    icon: string;
+    skills: SkillItem[];
 }
 
 // ============================================
@@ -115,6 +170,16 @@ export interface WallpaperOption {
 export interface AccentColor {
     color: string;
     label: string;
+}
+
+export interface PortfolioPreferences {
+    wallpaperId: string;
+    brightness: number;
+    showWindowButtons: boolean;
+    enableSnap: boolean;
+    enableResize: boolean;
+    focusDim: boolean;
+    fastBoot: boolean;
 }
 
 // ============================================

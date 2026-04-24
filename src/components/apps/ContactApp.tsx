@@ -11,11 +11,13 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
+const EMAIL = 'minwn2244@gmail.com';
 
 export function ContactApp() {
     const { showToast } = useNotifications();
     const [statusMsg, setStatusMsg] = useState('');
     const [statusType, setStatusType] = useState<'success' | 'error' | ''>('');
+    const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle');
 
     const {
         register,
@@ -56,30 +58,54 @@ export function ContactApp() {
         }
     };
 
+    const copyEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(EMAIL);
+        } catch {
+            const textArea = document.createElement('textarea');
+            textArea.value = EMAIL;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            textArea.remove();
+        }
+
+        setCopyState('copied');
+        showToast('Email copied', 'fas fa-check-circle');
+        window.setTimeout(() => setCopyState('idle'), 1800);
+    };
+
     return (
         <>
             <h2>Get in Touch</h2>
-            <div className="contact-items">
-                <div className="contact-item">
+            <div className="contact-primary-actions">
+                <a className="contact-action primary" href={`mailto:${EMAIL}`}>
                     <i className="fas fa-envelope" aria-hidden="true" />
-                    <div>
+                    <span>
                         <strong>Email</strong>
-                        <a href="mailto:minwn2244@gmail.com">minwn2244@gmail.com</a>
-                    </div>
-                </div>
-                <div className="contact-item">
-                    <i className="fas fa-map-marker-alt" aria-hidden="true" />
-                    <div>
-                        <strong>Location</strong>
-                        <span>Singapore</span>
-                    </div>
-                </div>
-                <div className="contact-item">
+                        <small>{EMAIL}</small>
+                    </span>
+                </a>
+                <button className="contact-action" onClick={copyEmail} type="button">
+                    <i className={copyState === 'copied' ? 'fas fa-check' : 'fas fa-copy'} aria-hidden="true" />
+                    <span>
+                        <strong>{copyState === 'copied' ? 'Copied' : 'Copy Email'}</strong>
+                        <small>For quick recruiter follow-up</small>
+                    </span>
+                </button>
+                <a className="contact-action" href="resume/SYH_resume.pdf" download>
+                    <i className="fas fa-file-arrow-down" aria-hidden="true" />
+                    <span>
+                        <strong>Resume</strong>
+                        <small>Download PDF</small>
+                    </span>
+                </a>
+                <div className="contact-action availability" aria-label="Availability">
                     <i className="fas fa-circle status-available" aria-hidden="true" />
-                    <div>
-                        <strong>Status</strong>
-                        <span>Available for opportunities</span>
-                    </div>
+                    <span>
+                        <strong>Available</strong>
+                        <small>Singapore / remote-friendly</small>
+                    </span>
                 </div>
             </div>
 
@@ -96,9 +122,10 @@ export function ContactApp() {
                         id="contact-name"
                         placeholder="Your name"
                         autoComplete="name"
+                        aria-invalid={Boolean(errors.name)}
                         {...register('name')}
                     />
-                    {errors.name && <span className="form-error">{errors.name.message}</span>}
+                    {errors.name && <span className="form-error" role="alert">{errors.name.message}</span>}
                 </div>
                 <div className="form-group">
                     <label htmlFor="contact-email">Email</label>
@@ -107,9 +134,10 @@ export function ContactApp() {
                         id="contact-email"
                         placeholder="Your email"
                         autoComplete="email"
+                        aria-invalid={Boolean(errors.email)}
                         {...register('email')}
                     />
-                    {errors.email && <span className="form-error">{errors.email.message}</span>}
+                    {errors.email && <span className="form-error" role="alert">{errors.email.message}</span>}
                 </div>
                 <div className="form-group">
                     <label htmlFor="contact-message">Message</label>
@@ -117,9 +145,10 @@ export function ContactApp() {
                         id="contact-message"
                         placeholder="Your message"
                         rows={5}
+                        aria-invalid={Boolean(errors.message)}
                         {...register('message')}
                     />
-                    {errors.message && <span className="form-error">{errors.message.message}</span>}
+                    {errors.message && <span className="form-error" role="alert">{errors.message.message}</span>}
                 </div>
                 <button type="submit" className="contact-submit-btn" disabled={isSubmitting}>
                     {isSubmitting ? (
@@ -135,12 +164,6 @@ export function ContactApp() {
                 )}
             </form>
 
-            <div className="resume-section">
-                <h3><i className="fas fa-file-alt" aria-hidden="true" /> Resume</h3>
-                <a href="resume/SYH_resume.pdf" download className="resume-download-btn">
-                    <i className="fas fa-download" aria-hidden="true" /> Download Resume
-                </a>
-            </div>
         </>
     );
 }

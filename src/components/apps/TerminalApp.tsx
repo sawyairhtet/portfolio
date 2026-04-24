@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { DEFAULT_FILE_SYSTEM, terminalFortunes, terminalJokes, terminalGreetings } from '../../config/data';
-import type { FileSystem } from '../../types';
+import { APP_DEFINITIONS, DEFAULT_FILE_SYSTEM, PROJECTS, SKILL_CATEGORIES, terminalFortunes, terminalJokes, terminalGreetings } from '../../config/data';
+import { useWindowManager } from '../../context/WindowManagerContext';
+import type { AppId, FileSystem } from '../../types';
 
 function randomPick<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -12,6 +13,7 @@ interface TerminalLine {
 }
 
 export function TerminalApp() {
+    const { openWindow } = useWindowManager();
     const [lines, setLines] = useState<TerminalLine[]>([
         { id: 0, content: "Welcome to Saw Ye Htet's Portfolio Terminal" },
         { id: 1, content: "Type 'help' to see available commands" },
@@ -64,29 +66,35 @@ export function TerminalApp() {
 
         addLine(`[sawyehtet@fedora ${cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop()}]$ ${trimmed}`);
 
-        const [command, ...args] = trimmed.split(/\s+/);
+        const [rawCommand, ...args] = trimmed.split(/\s+/);
+        const command = rawCommand.toLowerCase();
         const fs: FileSystem = DEFAULT_FILE_SYSTEM;
+        const findApp = (input: string): AppId | null => {
+            const q = input.toLowerCase();
+            const app = APP_DEFINITIONS.find((item) => (
+                item.id === q ||
+                item.label.toLowerCase() === q ||
+                item.aliases.some((alias) => alias.toLowerCase() === q)
+            ));
+            return app?.id ?? null;
+        };
 
         switch (command) {
             case 'help':
                 addLines([
                     'Available commands:',
-                    '  help     — Show this help message',
-                    '  ls       — List directory contents',
-                    '  cd       — Change directory',
-                    '  cat      — Display file contents',
-                    '  pwd      — Print working directory',
-                    '  clear    — Clear the terminal',
-                    '  whoami   — Show current user',
-                    '  date     — Show current date/time',
-                    '  uptime   — Show session uptime',
-                    '  echo     — Print text',
-                    '  fortune  — Get a fortune cookie',
-                    '  joke     — Hear a dev joke',
-                    '  hello    — Say hello',
-                    '  neofetch — System info',
-                    '  tree     — Show directory tree',
-                    '  about    — Open About app',
+                    '  help          - Show this help message',
+                    '  projects      - Open Projects and list featured work',
+                    '  skills        - Open Skills and summarize tools',
+                    '  contact       - Open Contact and show email',
+                    '  links         - Open Links',
+                    '  resume        - Open the resume PDF',
+                    '  open <app>    - Open an app by label or alias',
+                    '  about         - Open About',
+                    '  ls/cd/cat/pwd - Browse the portfolio filesystem',
+                    '  clear         - Clear the terminal',
+                    '  whoami/date/uptime/echo/neofetch/tree',
+                    '  fortune/joke/hello',
                 ]);
                 break;
 
@@ -148,6 +156,69 @@ export function TerminalApp() {
             case 'fortune': addLine(randomPick(terminalFortunes)); break;
             case 'joke': addLines(randomPick(terminalJokes).split('\n')); break;
             case 'hello': addLine(randomPick(terminalGreetings)); break;
+            case 'about':
+                openWindow('about');
+                addLine('Opened About.');
+                break;
+
+            case 'projects':
+                openWindow('projects');
+                addLines([
+                    'Projects:',
+                    ...PROJECTS.map((project) => `  ${project.title} - ${project.role}; ${project.platform}`),
+                    'Opened Projects.',
+                ]);
+                break;
+
+            case 'skills':
+                openWindow('skills');
+                addLines([
+                    'Skills:',
+                    ...SKILL_CATEGORIES.map((category) => `  ${category.title}: ${category.skills.map((skill) => skill.name).join(', ')}`),
+                    'Opened Skills.',
+                ]);
+                break;
+
+            case 'contact':
+                openWindow('contact');
+                addLines([
+                    'Contact:',
+                    '  Email: minwn2244@gmail.com',
+                    '  Availability: Open to opportunities',
+                    'Opened Contact.',
+                ]);
+                break;
+
+            case 'links':
+                openWindow('links');
+                addLines([
+                    'Links:',
+                    '  GitHub: github.com/sawyairhtet',
+                    '  LinkedIn: linkedin.com/in/saw-ye-htet-the-man-who-code',
+                    '  X: x.com/saulyehtet_',
+                    'Opened Links.',
+                ]);
+                break;
+
+            case 'resume':
+                window.open('resume/SYH_resume.pdf', '_blank', 'noopener,noreferrer');
+                addLine('Opened resume PDF.');
+                break;
+
+            case 'open': {
+                if (!args[0]) {
+                    addLine('Usage: open <app>');
+                    break;
+                }
+                const appId = findApp(args.join(' '));
+                if (!appId) {
+                    addLine(`open: unknown app '${args.join(' ')}'`);
+                    break;
+                }
+                openWindow(appId);
+                addLine(`Opened ${APP_DEFINITIONS.find((app) => app.id === appId)?.label ?? appId}.`);
+                break;
+            }
 
             case 'neofetch':
                 addLines([
@@ -188,13 +259,13 @@ export function TerminalApp() {
             }
 
             default:
-                addLine(`bash: ${command}: command not found`);
+                addLine(`bash: ${rawCommand}: command not found`);
                 break;
         }
 
         setHistory((prev) => [...prev, trimmed]);
         setHistoryIndex(-1);
-    }, [cwd, addLine, addLines, resolvePath]);
+    }, [cwd, addLine, addLines, resolvePath, openWindow]);
 
     const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {

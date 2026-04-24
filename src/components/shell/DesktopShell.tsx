@@ -3,6 +3,7 @@ import { useDevice } from '../../context/DeviceContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { useNotifications } from '../../context/NotificationContext';
+import { usePreferences } from '../../context/PreferencesContext';
 import { TopBar } from './TopBar';
 import { Dock } from './Dock';
 import { Wallpaper } from './Wallpaper';
@@ -28,6 +29,7 @@ export function DesktopShell() {
     const { openWindow } = useWindowManager();
     const { playStartupDrum } = useSound();
     const { showToast } = useNotifications();
+    const { preferences } = usePreferences();
 
     const [booted, setBooted] = useState(false);
     const [activitiesOpen, setActivitiesOpen] = useState(false);
@@ -57,26 +59,22 @@ export function DesktopShell() {
         navigator.serviceWorker.register('/sw.js').catch(() => {});
     }, []);
 
-    // Show dock on desktop
+    // Show dock once shell is active
     useEffect(() => {
-        if (device === 'desktop') {
-            document.body.classList.add('show-dock');
-        }
+        document.body.classList.add('show-dock');
+        return () => document.body.classList.remove('show-dock');
     }, [device]);
 
     const handleBootComplete = useCallback(() => {
         setBooted(true);
         localStorage.setItem('hasVisitedBefore', 'true');
 
-        // Open About window (and Contact on desktop)
+        // Open About first; recruiter shortcuts stay visible without crowding the desk.
         openWindow('about');
-        if (device === 'desktop') {
-            setTimeout(() => openWindow('contact'), 200);
-        }
 
         // Welcome toast
         setTimeout(() => {
-            showToast('Welcome to Fedora 43 Desktop', 'fab fa-fedora');
+            showToast('Shortcuts: Alt+1 Projects, Alt+2 Contact, Alt+3 Resume', 'fas fa-keyboard');
         }, 800);
 
         // Startup sound on first interaction
@@ -87,7 +85,7 @@ export function DesktopShell() {
         };
         document.addEventListener('click', playOnce, { once: true });
         document.addEventListener('keydown', playOnce, { once: true });
-    }, [device, openWindow, showToast, playStartupDrum]);
+    }, [openWindow, showToast, playStartupDrum]);
 
     // Keyboard shortcuts
     useEffect(() => {
@@ -137,6 +135,8 @@ export function DesktopShell() {
                     setQuickSettingsOpen(false);
                 }}
                 isActivitiesOpen={activitiesOpen}
+                isQuickSettingsOpen={quickSettingsOpen}
+                isNotificationCenterOpen={notifCenterOpen}
             />
 
             {/* Quick Settings Panel */}
@@ -157,7 +157,27 @@ export function DesktopShell() {
                     Saw Ye Htet — IT Student &amp; VR Developer | Fedora 43 Desktop Portfolio
                 </h1>
                 <Wallpaper />
+                <div className="quick-access visible" aria-label="Portfolio shortcuts">
+                    <button className="quick-access-btn" onClick={() => openWindow('projects')}>
+                        <i className="fas fa-folder-open" aria-hidden="true" />
+                        <span>Projects</span>
+                    </button>
+                    <button className="quick-access-btn" onClick={() => openWindow('contact')}>
+                        <i className="fas fa-envelope" aria-hidden="true" />
+                        <span>Contact</span>
+                    </button>
+                    <a className="quick-access-btn" href="resume/SYH_resume.pdf" target="_blank" rel="noopener noreferrer">
+                        <i className="fas fa-file-arrow-down" aria-hidden="true" />
+                        <span>Resume</span>
+                    </a>
+                </div>
             </main>
+
+            <div
+                className="desktop-dim-effect"
+                aria-hidden="true"
+                style={{ opacity: Math.max(0, Math.min(0.55, (100 - preferences.brightness) / 140)) }}
+            />
 
             {/* Sticky Notes (desktop only) */}
             {device === 'desktop' && <StickyNotes />}
@@ -179,7 +199,7 @@ export function DesktopShell() {
             <Window appId="focus-mode" title="Focus Mode"><FocusModeApp /></Window>
 
             {/* Dock */}
-            {device === 'desktop' && <Dock />}
+            <Dock />
 
             {/* Context Menu */}
             <ContextMenu />
