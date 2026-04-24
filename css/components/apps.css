@@ -4,7 +4,7 @@
 
 .about-hero {
     text-align: center;
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     background: var(--gradient-accent);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-lg);
@@ -12,8 +12,8 @@
 }
 
 .about-avatar {
-    width: 140px;
-    height: 140px;
+    width: 116px;
+    height: 116px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     overflow: hidden;
@@ -48,7 +48,7 @@
 }
 
 .about-hero h2 {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
     margin-bottom: var(--spacing-xs);
     color: var(--text-on-accent);
@@ -57,7 +57,7 @@
 .about-tagline {
     font-size: 16px;
     opacity: 0.9;
-    margin-bottom: var(--spacing-md) !important;
+    margin-bottom: var(--spacing-sm) !important;
 }
 
 .about-hero-actions {
@@ -106,7 +106,18 @@
 
 .about-content {
     display: grid;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-lg);
+}
+
+.x-logo-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 1em;
+    height: 1em;
+    color: var(--fedora-blue);
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1;
 }
 
 .about-section {

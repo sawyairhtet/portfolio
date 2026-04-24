@@ -28,7 +28,7 @@ const WindowManagerContext = createContext<WindowManagerContextValue>({
 });
 
 const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
-    about: { top: '15%', left: '60px' },
+    about: { top: '8%', left: '60px' },
     skills: { top: '10%', left: '20%' },
     projects: { top: '8%', left: '15%' },
     contact: { top: '12%', left: 'calc(50% + 20px)' },
@@ -39,7 +39,7 @@ const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
 };
 
 const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
-    about: { width: '600px', height: '500px' },
+    about: { width: '720px', height: '680px' },
     skills: { width: '650px', height: '550px' },
     projects: { width: '700px', height: '500px' },
     contact: { width: '550px', height: '600px' },

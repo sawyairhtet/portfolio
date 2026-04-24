@@ -622,7 +622,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     flex-direction: column;
 }
 
-@container app-window (max-width: 760px) {
+@container app-window (max-width: 560px) {
     .settings-body {
         flex-direction: column !important;
     }

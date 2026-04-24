@@ -37,13 +37,6 @@ export function AboutApp() {
                     >
                         <i className="fas fa-envelope" aria-hidden="true" /> Get in Touch
                     </button>
-                    <a
-                        className="about-cta-btn about-cta-secondary"
-                        href={PROFILE.resumePath}
-                        download
-                    >
-                        <i className="fas fa-download" aria-hidden="true" /> Resume
-                    </a>
                 </div>
             </div>
             <div className="recruiter-summary" aria-label="Recruiter summary">

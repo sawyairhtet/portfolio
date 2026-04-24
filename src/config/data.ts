@@ -149,7 +149,7 @@ export const PROJECTS: Project[] = [
         platform: 'Responsive web app',
         proofPoints: [
             'Built window management, Activities search, quick settings, notifications, and a terminal interface.',
-            'Preserved desktop fidelity while making projects, contact, and resume faster to reach.',
+            'Preserved desktop fidelity while making projects, contact, and social links faster to reach.',
             'Ships as a Vite app with typecheck, lint, and Vitest validation.',
         ],
         links: [
@@ -158,11 +158,6 @@ export const PROJECTS: Project[] = [
                 href: 'https://github.com/sawyairhtet/portfolio',
                 icon: 'fab fa-github',
                 primary: true,
-            },
-            {
-                label: 'Download Resume',
-                href: PROFILE.resumePath,
-                icon: 'fas fa-file-arrow-down',
             },
         ],
         featured: false,

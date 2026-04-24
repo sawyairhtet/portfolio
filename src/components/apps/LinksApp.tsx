@@ -14,7 +14,13 @@ export function LinksApp() {
                         className="social-link"
                     >
                         <span className="social-link-icon">
-                            <i className={link.icon} aria-hidden="true" />
+                            {link.label === 'X' ? (
+                                <span className="x-logo-mark" aria-hidden="true">
+                                    X
+                                </span>
+                            ) : (
+                                <i className={link.icon} aria-hidden="true" />
+                            )}
                         </span>
                         <span className="social-link-copy">
                             <strong>{link.label}</strong>

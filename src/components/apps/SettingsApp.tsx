@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useSound } from '../../context/SoundContext';
 import { useNotifications } from '../../context/NotificationContext';
@@ -13,6 +13,20 @@ export function SettingsApp() {
     const { isDnd, setDnd } = useNotifications();
     const { preferences, updatePreferences } = usePreferences();
     const [activePanel, setActivePanel] = useState<SettingsPanel>('appearance');
+
+    useEffect(() => {
+        const handleSettingsPanelRequest = (event: Event) => {
+            const panel = (event as CustomEvent<SettingsPanel>).detail;
+            if (['appearance', 'sound', 'windows', 'about'].includes(panel)) {
+                setActivePanel(panel);
+            }
+        };
+
+        window.addEventListener('portfolio:settings-panel', handleSettingsPanelRequest);
+        return () => {
+            window.removeEventListener('portfolio:settings-panel', handleSettingsPanelRequest);
+        };
+    }, []);
 
     const handleWallpaperChange = useCallback(
         (id: string) => {
@@ -55,17 +69,19 @@ export function SettingsApp() {
                     <div className="settings-panel active">
                         <h2>Appearance</h2>
                         <div className="settings-card">
-                            <h3>Style</h3>
-                            <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-moon" aria-hidden="true" /> Dark Mode
-                                </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
-                                    checked={isDark}
-                                    onChange={toggle}
-                                />
+                            <h3>Background</h3>
+                            <div className="wallpaper-grid">
+                                {WALLPAPERS.map(wp => (
+                                    <button
+                                        key={wp.id}
+                                        className={`wallpaper-option${preferences.wallpaperId === wp.id ? ' active' : ''}`}
+                                        data-wallpaper={wp.id}
+                                        style={{ background: wp.gradient || undefined }}
+                                        aria-label={wp.label}
+                                        title={wp.label}
+                                        onClick={() => handleWallpaperChange(wp.id)}
+                                    />
+                                ))}
                             </div>
                         </div>
                         <div className="settings-card">
@@ -84,19 +100,17 @@ export function SettingsApp() {
                             </div>
                         </div>
                         <div className="settings-card">
-                            <h3>Background</h3>
-                            <div className="wallpaper-grid">
-                                {WALLPAPERS.map(wp => (
-                                    <button
-                                        key={wp.id}
-                                        className={`wallpaper-option${preferences.wallpaperId === wp.id ? ' active' : ''}`}
-                                        data-wallpaper={wp.id}
-                                        style={{ background: wp.gradient || undefined }}
-                                        aria-label={wp.label}
-                                        title={wp.label}
-                                        onClick={() => handleWallpaperChange(wp.id)}
-                                    />
-                                ))}
+                            <h3>Style</h3>
+                            <div className="settings-row">
+                                <span>
+                                    <i className="fas fa-moon" aria-hidden="true" /> Dark Mode
+                                </span>
+                                <input
+                                    type="checkbox"
+                                    className="toggle-switch"
+                                    checked={isDark}
+                                    onChange={toggle}
+                                />
                             </div>
                         </div>
                     </div>

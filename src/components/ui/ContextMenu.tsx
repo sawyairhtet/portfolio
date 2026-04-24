@@ -16,9 +16,13 @@ export function ContextMenu() {
         const target = e.target;
         if (!(target instanceof Element)) return;
 
+        const isBlankDesktop = Boolean(target.closest('.main-content, .wallpaper'));
+
         if (
+            !isBlankDesktop ||
             target.closest('.window') ||
             target.closest('.dock') ||
+            target.closest('.context-menu') ||
             target.closest('.mobile-launcher') ||
             target.closest('.top-bar') ||
             target.closest('.quick-settings-panel') ||
@@ -58,32 +62,18 @@ export function ContextMenu() {
                 role="menuitem"
                 tabIndex={-1}
                 onClick={() => {
-                    setVisible(false);
-                }}
-            >
-                <i className="fas fa-sync-alt" aria-hidden="true" /> Refresh
-            </div>
-            <div
-                className="context-menu-item"
-                role="menuitem"
-                tabIndex={-1}
-                onClick={() => {
-                    openWindow('terminal');
-                    setVisible(false);
-                }}
-            >
-                <i className="fas fa-terminal" aria-hidden="true" /> Open Terminal
-            </div>
-            <div
-                className="context-menu-item"
-                role="menuitem"
-                tabIndex={-1}
-                onClick={() => {
                     openWindow('settings');
+                    window.setTimeout(() => {
+                        window.dispatchEvent(
+                            new CustomEvent('portfolio:settings-panel', {
+                                detail: 'appearance',
+                            })
+                        );
+                    }, 0);
                     setVisible(false);
                 }}
             >
-                <i className="fas fa-cog" aria-hidden="true" /> Settings
+                <i className="fas fa-image" aria-hidden="true" /> Change Background
             </div>
         </div>
     );
