@@ -36,34 +36,16 @@
 /* Focused window — GNOME 49 elevated shadow */
 .window:focus-within {
     box-shadow:
-        0 2px 6px rgba(0,0,0,0.14),
-        0 16px 48px rgba(0,0,0,0.32),
+        0 2px 6px rgba(0, 0, 0, 0.14),
+        0 16px 48px rgba(0, 0, 0, 0.32),
         0 0 0 1px rgba(53, 132, 228, 0.18);
 }
 
-[data-theme="dark"] .window:focus-within {
+[data-theme='dark'] .window:focus-within {
     box-shadow:
-        0 4px 12px rgba(0,0,0,0.5),
-        0 24px 64px rgba(0,0,0,0.6),
+        0 4px 12px rgba(0, 0, 0, 0.5),
+        0 24px 64px rgba(0, 0, 0, 0.6),
         0 0 0 1px rgba(53, 132, 228, 0.22);
-}
-
-/* Window animation states — GNOME 49 Mutter spring physics */
-.window.opening {
-    animation: windowBounceIn 0.28s cubic-bezier(0.2, 0.82, 0.38, 1) forwards;
-}
-
-.window.closing {
-    animation: windowBounceOut 0.18s cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-
-.window.minimizing {
-    animation: mutterMinimize 0.22s cubic-bezier(0.4, 0, 1, 1) forwards;
-    pointer-events: none;
-}
-
-.window.restoring {
-    animation: mutterRestore 0.28s cubic-bezier(0.2, 0.82, 0.38, 1) forwards;
 }
 
 /* ============================================
@@ -272,7 +254,9 @@ body.show-window-buttons .window-control.maximize {
     font-size: 11px;
     color: var(--text-secondary);
     cursor: pointer;
-    transition: background var(--transition-fast), color var(--transition-fast);
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
 }
 
 /* GNOME 49: icon buttons — always visible, subtle hover */
@@ -311,8 +295,10 @@ body.show-window-buttons .window-control.maximize {
     width: 10px;
     height: 10px;
     background: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") center/contain no-repeat;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")
+        center/contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")
+        center/contain no-repeat;
 }
 
 /* Adwaita minimize: horizontal line */
@@ -376,28 +362,6 @@ body.show-window-buttons .window-control.maximize {
 
 .window-body a:hover {
     color: var(--fedora-blue);
-}
-
-/* Window loading state */
-.window.loading .window-body {
-    position: relative;
-    overflow: hidden;
-}
-
-.window.loading .window-body::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(53, 132, 228, 0.1) 50%,
-        transparent 100%
-    );
-    animation: shimmerMove 1.2s ease-in-out;
 }
 
 /* ============================================

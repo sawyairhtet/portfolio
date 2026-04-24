@@ -25,18 +25,18 @@ export function Dock() {
             setLaunchingApp(appId);
             setTimeout(() => setLaunchingApp(null), 420);
         },
-        [windows, openWindow, bringToFront],
+        [windows, openWindow, bringToFront]
     );
 
     // Split dock apps: main apps and utility apps (after separator)
-    const mainApps = DOCK_APPS.filter((a) => !['terminal', 'settings'].includes(a.id));
-    const utilityApps = DOCK_APPS.filter((a) => ['terminal', 'settings'].includes(a.id));
+    const mainApps = DOCK_APPS.filter(a => !['terminal', 'settings'].includes(a.id));
+    const utilityApps = DOCK_APPS.filter(a => ['terminal', 'settings'].includes(a.id));
 
     if (isMobileShell) {
         return (
             <>
                 <div className="dock visible mobile-dock" id="dock" aria-label="Mobile app dock">
-                    {MOBILE_DOCK_APPS.map((app) => {
+                    {MOBILE_DOCK_APPS.map(app => {
                         const isActive = windows.get(app.id)?.isOpen ?? false;
                         return (
                             <button
@@ -57,21 +57,28 @@ export function Dock() {
                         aria-label="Apps"
                         aria-expanded={launcherOpen}
                         aria-haspopup="dialog"
-                        onClick={() => setLauncherOpen((open) => !open)}
+                        onClick={() => setLauncherOpen(open => !open)}
                     >
                         <i className="fas fa-grip" aria-hidden="true" />
                         <span className="dock-tooltip">Apps</span>
                     </button>
                 </div>
-                <div className={`mobile-launcher${launcherOpen ? ' visible' : ''}`} role="dialog" aria-label="More apps">
-                    {MOBILE_LAUNCHER_APPS.map((app) => (
+                <div
+                    className={`mobile-launcher${launcherOpen ? ' visible' : ''}`}
+                    role="dialog"
+                    aria-label="More apps"
+                >
+                    {MOBILE_LAUNCHER_APPS.map(app => (
                         <button
                             key={app.id}
                             className="mobile-launcher-item"
                             data-app={app.id}
                             onClick={() => handleDockClick(app.id)}
                         >
-                            <span className="mobile-launcher-icon" style={{ background: app.gradient }}>
+                            <span
+                                className="mobile-launcher-icon"
+                                style={{ background: app.gradient }}
+                            >
                                 <i className={app.icon} aria-hidden="true" />
                             </span>
                             <span>
@@ -87,7 +94,7 @@ export function Dock() {
 
     return (
         <div className="dock visible" id="dock" aria-label="Desktop app dock">
-            {mainApps.map((app) => {
+            {mainApps.map(app => {
                 const isActive = windows.get(app.id)?.isOpen ?? false;
                 return (
                     <button
@@ -103,7 +110,7 @@ export function Dock() {
                 );
             })}
             <div className="dock-separator" />
-            {utilityApps.map((app) => {
+            {utilityApps.map(app => {
                 const isActive = windows.get(app.id)?.isOpen ?? false;
                 return (
                     <button

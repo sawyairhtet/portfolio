@@ -7,7 +7,7 @@ export function ToastContainer() {
 
     return (
         <div className="toast-container" aria-live="polite">
-            {toasts.map((toast) => (
+            {toasts.map(toast => (
                 <div key={toast.id} className="toast-notification show">
                     <i className={toast.icon} aria-hidden="true" />
                     <span>{toast.message}</span>

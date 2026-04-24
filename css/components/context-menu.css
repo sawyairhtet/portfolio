@@ -8,8 +8,8 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
     box-shadow:
-        0 2px 8px rgba(0,0,0,0.1),
-        0 12px 32px rgba(0,0,0,0.18);
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 12px 32px rgba(0, 0, 0, 0.18);
     min-width: 190px;
     padding: 6px 0;
     z-index: var(--z-context-menu);
@@ -18,10 +18,10 @@
     -webkit-backdrop-filter: blur(4px);
 }
 
-[data-theme="dark"] .context-menu {
+[data-theme='dark'] .context-menu {
     box-shadow:
-        0 2px 8px rgba(0,0,0,0.35),
-        0 12px 32px rgba(0,0,0,0.5);
+        0 2px 8px rgba(0, 0, 0, 0.35),
+        0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
 .context-menu.visible {
@@ -39,7 +39,6 @@
     font-size: 13px;
     font-family: var(--font-ui);
     color: var(--text-primary);
-    border-radius: 0;
     transition: background 0.1s ease;
     margin: 0 4px;
     border-radius: var(--border-radius-sm);
@@ -57,14 +56,6 @@
     color: var(--fedora-blue);
 }
 
-.context-menu-item.destructive {
-    color: var(--fedora-red);
-}
-
-.context-menu-item.destructive:hover {
-    background: rgba(224, 27, 36, 0.1);
-}
-
 .context-menu-item i {
     width: 16px;
     text-align: center;
@@ -72,8 +63,7 @@
     color: var(--text-secondary);
 }
 
-.context-menu-item:hover i,
-.context-menu-item.destructive i {
+.context-menu-item:hover i {
     color: inherit;
 }
 

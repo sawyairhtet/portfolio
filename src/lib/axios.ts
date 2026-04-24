@@ -3,30 +3,30 @@ import axios from 'axios';
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL || '',
     timeout: 10_000,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { Accept: 'application/json' },
 });
 
-// Request interceptor — attach Authorization header if token exists
+// Request interceptor: attach Authorization header if token exists.
 api.interceptors.request.use(
-    (config) => {
+    config => {
         const token = localStorage.getItem('auth_token');
         if (token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
-    (error) => Promise.reject(error),
+    error => Promise.reject(error)
 );
 
-// Response interceptor — centralised error handling
+// Response interceptor: centralised error handling.
 api.interceptors.response.use(
-    (response) => response,
-    (error) => {
+    response => response,
+    error => {
         if (error.response?.status === 401) {
             localStorage.removeItem('auth_token');
         }
         return Promise.reject(error);
-    },
+    }
 );
 
 export default api;

@@ -22,7 +22,10 @@ function App() {
                                     <NotificationProvider>
                                         <Routes>
                                             <Route path="/" element={<DesktopShell />} />
-                                            <Route path="/app/:appId" element={<DeepLinkHandler />} />
+                                            <Route
+                                                path="/app/:appId"
+                                                element={<DeepLinkHandler />}
+                                            />
                                             <Route path="*" element={<DesktopShell />} />
                                         </Routes>
                                     </NotificationProvider>

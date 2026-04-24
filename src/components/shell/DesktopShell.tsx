@@ -23,6 +23,7 @@ import { NotificationCenter } from '../ui/NotificationCenter';
 import { StickyNotes } from '../ui/StickyNotes';
 import { ToastContainer } from '../ui/ToastContainer';
 import { ContextMenu } from '../ui/ContextMenu';
+import { PROFILE } from '../../config/profile';
 
 export function DesktopShell() {
     const { device } = useDevice();
@@ -48,11 +49,14 @@ export function DesktopShell() {
         }
 
         if (import.meta.env.DEV) {
-            navigator.serviceWorker.getRegistrations().then((registrations) => {
-                registrations.forEach((registration) => {
-                    registration.unregister().catch(() => {});
-                });
-            }).catch(() => {});
+            navigator.serviceWorker
+                .getRegistrations()
+                .then(registrations => {
+                    registrations.forEach(registration => {
+                        registration.unregister().catch(() => {});
+                    });
+                })
+                .catch(() => {});
             return;
         }
 
@@ -93,7 +97,7 @@ export function DesktopShell() {
             // Super key → Activities
             if (e.key === 'Super' || (e.key === 'Meta' && !e.ctrlKey && !e.altKey && !e.shiftKey)) {
                 e.preventDefault();
-                setActivitiesOpen((prev) => !prev);
+                setActivitiesOpen(prev => !prev);
             }
 
             // Escape → close overlays
@@ -105,9 +109,18 @@ export function DesktopShell() {
 
             // Alt+1/2/3 for quick access
             if (e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-                if (e.key === '1') { e.preventDefault(); openWindow('projects'); }
-                if (e.key === '2') { e.preventDefault(); openWindow('contact'); }
-                if (e.key === '3') { e.preventDefault(); window.open('resume/SYH_resume.pdf', '_blank', 'noopener,noreferrer'); }
+                if (e.key === '1') {
+                    e.preventDefault();
+                    openWindow('projects');
+                }
+                if (e.key === '2') {
+                    e.preventDefault();
+                    openWindow('contact');
+                }
+                if (e.key === '3') {
+                    e.preventDefault();
+                    window.open(PROFILE.resumePath, '_blank', 'noopener,noreferrer');
+                }
             }
         };
 
@@ -118,20 +131,22 @@ export function DesktopShell() {
     return (
         <>
             {/* Skip Link */}
-            <a href="#main-content" className="skip-link">Skip to main content</a>
+            <a href="#main-content" className="skip-link">
+                Skip to main content
+            </a>
 
             {/* Boot Screen */}
             {!booted && <BootScreen onBootComplete={handleBootComplete} />}
 
             {/* Top Bar */}
             <TopBar
-                onActivitiesToggle={() => setActivitiesOpen((p) => !p)}
+                onActivitiesToggle={() => setActivitiesOpen(p => !p)}
                 onQuickSettingsToggle={() => {
-                    setQuickSettingsOpen((p) => !p);
+                    setQuickSettingsOpen(p => !p);
                     setNotifCenterOpen(false);
                 }}
                 onClockClick={() => {
-                    setNotifCenterOpen((p) => !p);
+                    setNotifCenterOpen(p => !p);
                     setQuickSettingsOpen(false);
                 }}
                 isActivitiesOpen={activitiesOpen}
@@ -166,7 +181,12 @@ export function DesktopShell() {
                         <i className="fas fa-envelope" aria-hidden="true" />
                         <span>Contact</span>
                     </button>
-                    <a className="quick-access-btn" href="resume/SYH_resume.pdf" target="_blank" rel="noopener noreferrer">
+                    <a
+                        className="quick-access-btn"
+                        href={PROFILE.resumePath}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <i className="fas fa-file-arrow-down" aria-hidden="true" />
                         <span>Resume</span>
                     </a>
@@ -176,27 +196,42 @@ export function DesktopShell() {
             <div
                 className="desktop-dim-effect"
                 aria-hidden="true"
-                style={{ opacity: Math.max(0, Math.min(0.55, (100 - preferences.brightness) / 140)) }}
+                style={{
+                    opacity: Math.max(0, Math.min(0.55, (100 - preferences.brightness) / 140)),
+                }}
             />
 
             {/* Sticky Notes (desktop only) */}
             {device === 'desktop' && <StickyNotes />}
 
             {/* Activities Overlay */}
-            <ActivitiesOverlay
-                isOpen={activitiesOpen}
-                onClose={() => setActivitiesOpen(false)}
-            />
+            <ActivitiesOverlay isOpen={activitiesOpen} onClose={() => setActivitiesOpen(false)} />
 
             {/* Windows */}
-            <Window appId="about" title="About"><AboutApp /></Window>
-            <Window appId="skills" title="Skills"><SkillsApp /></Window>
-            <Window appId="projects" title="Projects"><ProjectsApp /></Window>
-            <Window appId="contact" title="Contact"><ContactApp /></Window>
-            <Window appId="links" title="Links"><LinksApp /></Window>
-            <Window appId="terminal" title="Terminal"><TerminalApp /></Window>
-            <Window appId="settings" title="Settings"><SettingsApp /></Window>
-            <Window appId="focus-mode" title="Focus Mode"><FocusModeApp /></Window>
+            <Window appId="about" title="About">
+                <AboutApp />
+            </Window>
+            <Window appId="skills" title="Skills">
+                <SkillsApp />
+            </Window>
+            <Window appId="projects" title="Projects">
+                <ProjectsApp />
+            </Window>
+            <Window appId="contact" title="Contact">
+                <ContactApp />
+            </Window>
+            <Window appId="links" title="Links">
+                <LinksApp />
+            </Window>
+            <Window appId="terminal" title="Terminal">
+                <TerminalApp />
+            </Window>
+            <Window appId="settings" title="Settings">
+                <SettingsApp />
+            </Window>
+            <Window appId="focus-mode" title="Focus Mode">
+                <FocusModeApp />
+            </Window>
 
             {/* Dock */}
             <Dock />

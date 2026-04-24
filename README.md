@@ -11,6 +11,11 @@ The current site is a React and TypeScript application built with Vite. It recre
 - React 19
 - TypeScript
 - Vite
+- React Router
+- TanStack Query
+- Axios
+- Tailwind CSS v4
+- React Hook Form + Zod
 - Vitest
 - ESLint flat config
 - CSS custom properties and layered component styles
@@ -26,10 +31,8 @@ portfolio/
 │   ├── lib/                    # Shared utilities
 │   ├── styles/                 # React CSS entry point
 │   └── tests/                  # React-focused test setup
-├── css/                        # Shared design tokens and component styles
-├── js/                         # Legacy vanilla JS modules still under test
+├── css/                        # Shared design tokens and layered CSS imported by React
 ├── public/                     # Static assets copied by Vite
-├── test/                       # Legacy Vitest coverage for vanilla modules
 ├── index.html                  # Vite HTML entry
 ├── 404.html                    # Static 404 page
 └── netlify.toml                # Netlify build and routing config

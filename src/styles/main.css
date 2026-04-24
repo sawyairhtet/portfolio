@@ -17,18 +17,12 @@
 @import '../../css/components/top-bar.css' layer(components);
 @import '../../css/components/dock.css' layer(components);
 @import '../../css/components/window.css' layer(components);
-@import '../../css/components/app-grid.css' layer(components);
 @import '../../css/components/context-menu.css' layer(components);
 @import '../../css/components/terminal.css' layer(components);
 @import '../../css/components/apps.css' layer(components);
 @import '../../css/components/ui-elements.css' layer(components);
-@import '../../css/components/dialog.css' layer(components);
-@import '../../css/components/skeleton.css' layer(components);
-@import '../../css/components/command-palette.css' layer(components);
 @import '../../css/components/focus-mode.css' layer(components);
-@import '../../css/components/lock-screen.css' layer(components);
 @import '../../css/components/settings.css' layer(components);
-@import '../../css/components/screenshot-tool.css' layer(components);
 @import '../../css/components/notification-center.css' layer(components);
 @import '../../css/components/activities.css' layer(components);
 @import '../../css/components/plymouth.css' layer(components);
@@ -38,7 +32,7 @@
 @import '../../css/components/responsive.css' layer(utilities);
 
 /* Tailwind CSS v4 */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Layer ordering */
 @layer reset, tokens, base, components, utilities;
@@ -81,33 +75,6 @@
         opacity: 1;
         transform: translateX(0);
     }
-}
-
-/* Activities window thumbnails in React */
-.activities-window-thumb {
-    background: var(--color-card-bg, #2d2d2d);
-    border: 1px solid var(--color-border, #444);
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    min-width: 120px;
-    font-size: 0.85rem;
-    color: var(--color-text, #fff);
-}
-
-.activities-window-thumb:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.activities-window-thumb i {
-    font-size: 1.5rem;
-    opacity: 0.8;
 }
 
 /* Form validation errors */
@@ -599,7 +566,10 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
-    transition: opacity 0.16s ease, visibility 0.16s ease, transform 0.16s ease;
+    transition:
+        opacity 0.16s ease,
+        visibility 0.16s ease,
+        transform 0.16s ease;
 }
 
 .mobile-launcher.visible {

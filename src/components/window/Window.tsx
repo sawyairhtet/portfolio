@@ -2,6 +2,7 @@ import { useRef, useCallback, useEffect, useState, type ReactNode } from 'react'
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
 import { usePreferences } from '../../context/PreferencesContext';
+import { SWIPE_CLOSE_MAX_X, SWIPE_CLOSE_THRESHOLD_Y } from '../../config/data';
 import type { AppId } from '../../types';
 
 interface WindowProps {
@@ -85,7 +86,15 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
 
         element.style.zIndex = String(zIndex);
 
-        if (device === 'desktop' && !isMaximized && snapState === 'none' && positionTop && positionLeft && sizeWidth && sizeHeight) {
+        if (
+            device === 'desktop' &&
+            !isMaximized &&
+            snapState === 'none' &&
+            positionTop &&
+            positionLeft &&
+            sizeWidth &&
+            sizeHeight
+        ) {
             element.style.top = positionTop;
             element.style.left = positionLeft;
             element.style.width = sizeWidth;
@@ -97,13 +106,29 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         element.style.removeProperty('left');
         element.style.removeProperty('width');
         element.style.removeProperty('height');
-    }, [device, isMaximized, isOpen, positionLeft, positionTop, sizeHeight, sizeWidth, snapState, win, zIndex]);
+    }, [
+        device,
+        isMaximized,
+        isOpen,
+        positionLeft,
+        positionTop,
+        sizeHeight,
+        sizeWidth,
+        snapState,
+        win,
+        zIndex,
+    ]);
 
     // Drag handlers (desktop only)
     const handleMouseDown = useCallback(
         (e: React.MouseEvent) => {
             if (device !== 'desktop') return;
-            if ((e.target as HTMLElement).closest('.window-control, .close-btn-mobile, .resize-handle')) return;
+            if (
+                (e.target as HTMLElement).closest(
+                    '.window-control, .close-btn-mobile, .resize-handle'
+                )
+            )
+                return;
 
             e.preventDefault();
             isDragging.current = true;
@@ -170,91 +195,108 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
             snapState,
             isMaximized,
             toggleMaximize,
-        ],
+        ]
     );
 
-    const handleResizeMouseDown = useCallback((
-        direction: ResizeDirection,
-        e: React.MouseEvent<HTMLDivElement>,
-    ) => {
-        if (device !== 'desktop' || !preferences.enableResize || isMaximized || snapState !== 'none') return;
+    const handleResizeMouseDown = useCallback(
+        (direction: ResizeDirection, e: React.MouseEvent<HTMLDivElement>) => {
+            if (
+                device !== 'desktop' ||
+                !preferences.enableResize ||
+                isMaximized ||
+                snapState !== 'none'
+            )
+                return;
 
-        e.preventDefault();
-        e.stopPropagation();
-        bringToFront(appId);
+            e.preventDefault();
+            e.stopPropagation();
+            bringToFront(appId);
 
-        const rect = windowRef.current?.getBoundingClientRect();
-        if (!rect) return;
+            const rect = windowRef.current?.getBoundingClientRect();
+            if (!rect) return;
 
-        const startX = e.clientX;
-        const startY = e.clientY;
-        const start = {
-            width: rect.width,
-            height: rect.height,
-            left: rect.left,
-            top: rect.top,
-        };
-        const minWidth = 360;
-        const minHeight = 260;
-        const maxWidth = Math.max(minWidth, window.innerWidth - 24);
-        const maxHeight = Math.max(minHeight, window.innerHeight - getTopbarHeight() - 24);
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const start = {
+                width: rect.width,
+                height: rect.height,
+                left: rect.left,
+                top: rect.top,
+            };
+            const minWidth = 360;
+            const minHeight = 260;
+            const maxWidth = Math.max(minWidth, window.innerWidth - 24);
+            const maxHeight = Math.max(minHeight, window.innerHeight - getTopbarHeight() - 24);
 
-        const handleMouseMove = (ev: MouseEvent) => {
-            const dx = ev.clientX - startX;
-            const dy = ev.clientY - startY;
-            let nextWidth = start.width;
-            let nextHeight = start.height;
-            let nextLeft = start.left;
-            let nextTop = start.top;
+            const handleMouseMove = (ev: MouseEvent) => {
+                const dx = ev.clientX - startX;
+                const dy = ev.clientY - startY;
+                let nextWidth = start.width;
+                let nextHeight = start.height;
+                let nextLeft = start.left;
+                let nextTop = start.top;
 
-            if (direction.includes('right')) {
-                nextWidth = start.width + dx;
-            }
-            if (direction.includes('left')) {
-                nextWidth = start.width - dx;
-                nextLeft = start.left + dx;
-            }
-            if (direction.includes('bottom')) {
-                nextHeight = start.height + dy;
-            }
-            if (direction.includes('top')) {
-                nextHeight = start.height - dy;
-                nextTop = start.top + dy;
-            }
+                if (direction.includes('right')) {
+                    nextWidth = start.width + dx;
+                }
+                if (direction.includes('left')) {
+                    nextWidth = start.width - dx;
+                    nextLeft = start.left + dx;
+                }
+                if (direction.includes('bottom')) {
+                    nextHeight = start.height + dy;
+                }
+                if (direction.includes('top')) {
+                    nextHeight = start.height - dy;
+                    nextTop = start.top + dy;
+                }
 
-            if (nextWidth < minWidth && direction.includes('left')) {
-                nextLeft -= minWidth - nextWidth;
-            }
-            if (nextHeight < minHeight && direction.includes('top')) {
-                nextTop -= minHeight - nextHeight;
-            }
+                if (nextWidth < minWidth && direction.includes('left')) {
+                    nextLeft -= minWidth - nextWidth;
+                }
+                if (nextHeight < minHeight && direction.includes('top')) {
+                    nextTop -= minHeight - nextHeight;
+                }
 
-            nextWidth = Math.min(maxWidth, Math.max(minWidth, nextWidth));
-            nextHeight = Math.min(maxHeight, Math.max(minHeight, nextHeight));
-            nextLeft = Math.min(window.innerWidth - minWidth - 8, Math.max(8, nextLeft));
-            nextTop = Math.min(window.innerHeight - minHeight - 8, Math.max(getTopbarHeight() + 8, nextTop));
+                nextWidth = Math.min(maxWidth, Math.max(minWidth, nextWidth));
+                nextHeight = Math.min(maxHeight, Math.max(minHeight, nextHeight));
+                nextLeft = Math.min(window.innerWidth - minWidth - 8, Math.max(8, nextLeft));
+                nextTop = Math.min(
+                    window.innerHeight - minHeight - 8,
+                    Math.max(getTopbarHeight() + 8, nextTop)
+                );
 
-            updateWindowSize(appId, `${Math.round(nextWidth)}px`, `${Math.round(nextHeight)}px`);
-            updateWindowPosition(appId, `${Math.round(nextTop)}px`, `${Math.round(nextLeft)}px`);
-        };
+                updateWindowSize(
+                    appId,
+                    `${Math.round(nextWidth)}px`,
+                    `${Math.round(nextHeight)}px`
+                );
+                updateWindowPosition(
+                    appId,
+                    `${Math.round(nextTop)}px`,
+                    `${Math.round(nextLeft)}px`
+                );
+            };
 
-        const handleMouseUp = () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-        };
+            const handleMouseUp = () => {
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+            };
 
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-    }, [
-        device,
-        preferences.enableResize,
-        isMaximized,
-        snapState,
-        bringToFront,
-        appId,
-        updateWindowSize,
-        updateWindowPosition,
-    ]);
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        },
+        [
+            device,
+            preferences.enableResize,
+            isMaximized,
+            snapState,
+            bringToFront,
+            appId,
+            updateWindowSize,
+            updateWindowPosition,
+        ]
+    );
 
     // Double-click to maximize
     const handleDoubleClick = useCallback(() => {
@@ -283,11 +325,11 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
             const diffY = e.changedTouches[0].clientY - touchStart.current.y;
             const diffX = e.changedTouches[0].clientX - touchStart.current.x;
 
-            if (diffY > 80 && Math.abs(diffX) < 50) {
+            if (diffY > SWIPE_CLOSE_THRESHOLD_Y && Math.abs(diffX) < SWIPE_CLOSE_MAX_X) {
                 closeWindow(appId);
             }
         },
-        [appId, closeWindow],
+        [appId, closeWindow]
     );
 
     if (!isOpen || !win) return null;
@@ -344,19 +386,28 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                         </button>
                     </div>
                 </div>
-                <div className={`window-body${appId === 'terminal' ? ' terminal-body' : ''}${appId === 'settings' ? ' settings-body' : ''}`}>
+                <div
+                    className={`window-body${appId === 'terminal' ? ' terminal-body' : ''}${appId === 'settings' ? ' settings-body' : ''}`}
+                >
                     {children}
                 </div>
-                {device === 'desktop' && preferences.enableResize && !isMaximized && snapState === 'none' && RESIZE_DIRECTIONS.map((direction) => (
-                    <div
-                        key={direction}
-                        className={`resize-handle ${direction}`}
-                        onMouseDown={(e) => handleResizeMouseDown(direction, e)}
-                        aria-hidden="true"
-                    />
-                ))}
+                {device === 'desktop' &&
+                    preferences.enableResize &&
+                    !isMaximized &&
+                    snapState === 'none' &&
+                    RESIZE_DIRECTIONS.map(direction => (
+                        <div
+                            key={direction}
+                            className={`resize-handle ${direction}`}
+                            onMouseDown={e => handleResizeMouseDown(direction, e)}
+                            aria-hidden="true"
+                        />
+                    ))}
             </div>
-            <div className={`snap-preview${snapPreview ? ` visible snap-${snapPreview}` : ''}`} aria-hidden="true" />
+            <div
+                className={`snap-preview${snapPreview ? ` visible snap-${snapPreview}` : ''}`}
+                aria-hidden="true"
+            />
         </>
     );
 }

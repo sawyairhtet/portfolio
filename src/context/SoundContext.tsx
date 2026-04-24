@@ -2,21 +2,17 @@ import { createContext, useContext, useState, useCallback, useRef, type ReactNod
 
 interface SoundContextValue {
     isMuted: boolean;
-    setMuted: (muted: boolean) => void;
     toggleMute: () => void;
     volume: number;
     setVolume: (volume: number) => void;
-    playClick: () => void;
     playStartupDrum: () => void;
 }
 
 const SoundContext = createContext<SoundContextValue>({
     isMuted: false,
-    setMuted: () => {},
     toggleMute: () => {},
     volume: 70,
     setVolume: () => {},
-    playClick: () => {},
     playStartupDrum: () => {},
 });
 
@@ -26,7 +22,7 @@ function createOscillatorSound(
     frequency: number,
     duration: number,
     type: OscillatorType = 'sine',
-    volume = 0.1,
+    volume = 0.1
 ) {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -58,37 +54,30 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         return audioCtxRef.current;
     }, []);
 
-    const setMuted = useCallback((muted: boolean) => {
+    const setMutedState = useCallback((muted: boolean) => {
         setIsMuted(muted);
         localStorage.setItem('soundMuted', String(muted));
     }, []);
 
     const toggleMute = useCallback(() => {
-        setIsMuted((prev) => {
+        setIsMuted(prev => {
             const next = !prev;
             localStorage.setItem('soundMuted', String(next));
             return next;
         });
     }, []);
 
-    const setVolume = useCallback((nextVolume: number) => {
-        const normalized = Math.min(100, Math.max(0, nextVolume));
-        setVolumeState(normalized);
-        localStorage.setItem('soundVolume', String(normalized));
-        if (normalized > 0 && isMuted) {
-            setMuted(false);
-        }
-    }, [isMuted, setMuted]);
-
-    const playClick = useCallback(() => {
-        if (isMuted) return;
-        try {
-            const ctx = getAudioCtx();
-            createOscillatorSound(ctx, 800, 0.05, 'sine', 0.05 * (volume / 100));
-        } catch {
-            // Audio not available
-        }
-    }, [isMuted, getAudioCtx, volume]);
+    const setVolume = useCallback(
+        (nextVolume: number) => {
+            const normalized = Math.min(100, Math.max(0, nextVolume));
+            setVolumeState(normalized);
+            localStorage.setItem('soundVolume', String(normalized));
+            if (normalized > 0 && isMuted) {
+                setMutedState(false);
+            }
+        },
+        [isMuted, setMutedState]
+    );
 
     const playStartupDrum = useCallback(() => {
         if (isMuted) return;
@@ -104,7 +93,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     }, [isMuted, getAudioCtx, volume]);
 
     return (
-        <SoundContext.Provider value={{ isMuted, setMuted, toggleMute, volume, setVolume, playClick, playStartupDrum }}>
+        <SoundContext.Provider value={{ isMuted, toggleMute, volume, setVolume, playStartupDrum }}>
             {children}
         </SoundContext.Provider>
     );

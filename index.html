@@ -57,7 +57,13 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         <!-- Preload Critical Asset (Profile Picture) -->
-        <link rel="preload" href="images/profile-picture.jpg" as="image" fetchpriority="high" />
+        <link
+            rel="preload"
+            href="/images/profile-picture.webp"
+            as="image"
+            type="image/webp"
+            fetchpriority="high"
+        />
 
         <!-- Structured Data (JSON-LD) -->
         <script type="application/ld+json">
@@ -66,7 +72,7 @@
                 "@type": "Person",
                 "name": "Saw Ye Htet",
                 "url": "https://sawyehtet.com",
-                "image": "https://sawyehtet.com/images/profile-picture.jpg",
+                "image": "https://sawyehtet.com/images/profile-picture.webp",
                 "sameAs": [
                     "https://github.com/sawyairhtet",
                     "https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/",
@@ -96,8 +102,7 @@
         <script type="module" src="/src/main.tsx"></script>
 
         <!-- Plausible Analytics -->
-        <script defer data-domain="sawyehtet.com"
-            src="https://plausible.io/js/script.js"></script>
+        <script defer data-domain="sawyehtet.com" src="https://plausible.io/js/script.js"></script>
 
         <noscript>
             <div

@@ -1,25 +1,25 @@
 /* ============================================
-   ACTIVITIES OVERVIEW — GNOME 49
+   Activities overview
    ============================================ */
 
 .activities-overlay {
     position: fixed;
     inset: 0;
     z-index: 5000;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(32px) saturate(140%);
-    -webkit-backdrop-filter: blur(32px) saturate(140%);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: calc(var(--topbar-height) + 32px);
+    background: rgba(0, 0, 0, 0.75);
+    -webkit-backdrop-filter: blur(32px) saturate(140%);
+    backdrop-filter: blur(32px) saturate(140%);
     opacity: 0;
     visibility: hidden;
+    transform: scale(1.02);
     transition:
         opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1),
         visibility 0.22s cubic-bezier(0.4, 0, 0.2, 1),
         transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: scale(1.02);
 }
 
 .activities-overlay.visible {
@@ -29,20 +29,16 @@
     animation: activitiesOverlayIn 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.activities-overlay.hiding {
-    animation: activitiesOverlayOut 0.18s cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-
-/* Search bar */
 .activities-search {
+    position: relative;
     width: 100%;
     max-width: 580px;
     margin-bottom: 40px;
-    position: relative;
 }
 
 .activities-search-input {
     width: 100%;
+    box-sizing: border-box;
     padding: 13px 22px;
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: var(--border-radius-xl);
@@ -56,7 +52,6 @@
         border-color 0.15s ease,
         box-shadow 0.15s ease,
         background 0.15s ease;
-    box-sizing: border-box;
 }
 
 .activities-search-input::placeholder {
@@ -69,32 +64,6 @@
     box-shadow: 0 0 0 3px rgba(53, 132, 228, 0.28);
 }
 
-/* GNOME 49: animated ellipse shown when searching in Overview */
-.activities-search-ellipse {
-    display: none;
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.activities-search-ellipse.visible {
-    display: flex;
-}
-
-.activities-search-ellipse span {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
-    animation: searchDot 1.2s ease-in-out infinite;
-}
-
-.activities-search-ellipse span:nth-child(1) { animation-delay: 0s; }
-.activities-search-ellipse span:nth-child(2) { animation-delay: 0.2s; }
-.activities-search-ellipse span:nth-child(3) { animation-delay: 0.4s; }
-
-/* Main area — windows + workspace strip */
 .activities-main {
     display: flex;
     flex: 1;
@@ -105,53 +74,6 @@
     overflow: hidden;
 }
 
-/* Workspace thumbnails strip (right side, GNOME 49 style) */
-.activities-workspaces {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-    padding: 8px 0;
-    flex-shrink: 0;
-}
-
-.workspace-thumb {
-    width: 120px;
-    height: 72px;
-    border-radius: var(--border-radius-md);
-    background: rgba(255, 255, 255, 0.06);
-    border: 2px solid rgba(255, 255, 255, 0.08);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border-color var(--transition-fast), background var(--transition-fast);
-    position: relative;
-}
-
-.workspace-thumb.active {
-    border-color: var(--fedora-blue);
-    background: rgba(53, 132, 228, 0.12);
-}
-
-@media (hover: hover) {
-    .workspace-thumb:hover {
-        border-color: rgba(255, 255, 255, 0.25);
-        background: rgba(255, 255, 255, 0.08);
-    }
-}
-
-.workspace-label {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 500;
-}
-
-.workspace-thumb.active .workspace-label {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* Window thumbnails area */
 .activities-windows {
     display: flex;
     flex-wrap: wrap;
@@ -159,85 +81,40 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-    max-width: 1000px;
     width: 100%;
+    max-width: 1000px;
     overflow-y: auto;
 }
 
 .activities-window-thumb {
-    width: 280px;
-    height: 180px;
-    background: var(--surface-1);
-    border-radius: var(--border-radius-lg);
-    border: 2px solid transparent;
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
+    min-width: 120px;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    transition: transform var(--transition-fast), border-color var(--transition-fast);
-}
-
-@media (hover: hover) {
-    .activities-window-thumb:hover {
-        transform: scale(1.05);
-        border-color: var(--fedora-blue);
-    }
-}
-
-.activities-thumb-header {
-    height: 28px;
-    background: var(--surface-2);
-    display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: var(--text-secondary);
-    font-weight: 500;
-    flex-shrink: 0;
-}
-
-.activities-thumb-body {
-    flex: 1;
-    background: var(--surface-0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    color: var(--text-disabled);
-}
-
-.activities-thumb-close {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--fedora-red);
-    color: var(--text-on-accent);
-    border: none;
-    font-size: 11px;
+    gap: 0.5rem;
+    border: 1px solid var(--color-border, #444);
+    border-radius: 12px;
+    background: var(--color-card-bg, #2d2d2d);
+    color: var(--color-text, #fff);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-@media (hover: hover) {
-    .activities-window-thumb:hover .activities-thumb-close {
-        opacity: 1;
-    }
-
-    .activities-thumb-close:hover {
-        transform: scale(1.15);
-    }
+.activities-window-thumb:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* No windows message */
+.activities-window-thumb i {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
 .activities-no-windows {
     color: rgba(255, 255, 255, 0.4);
     font-size: 16px;
@@ -245,16 +122,15 @@
     padding: 40px;
 }
 
-/* App grid at bottom */
 .activities-app-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
     justify-content: center;
-    padding: 32px 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 24px;
     width: 100%;
     max-width: 800px;
+    padding: 32px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .activities-app-item {
@@ -262,13 +138,13 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
     border: none;
     background: transparent;
     color: rgba(255, 255, 255, 0.9);
-    transition: transform 0.15s cubic-bezier(0.2, 0.82, 0.38, 1);
+    cursor: pointer;
     opacity: 0;
     animation: activitiesAppItemIn 0.28s cubic-bezier(0.2, 0.82, 0.38, 1) forwards;
+    transition: transform 0.15s cubic-bezier(0.2, 0.82, 0.38, 1);
 }
 
 .activities-overlay:not(.visible) .activities-app-item {
@@ -276,41 +152,50 @@
     opacity: 1;
 }
 
-/* Staggered entry for each app icon */
-.activities-app-item:nth-child(1) { animation-delay: 0.04s; }
-.activities-app-item:nth-child(2) { animation-delay: 0.07s; }
-.activities-app-item:nth-child(3) { animation-delay: 0.10s; }
-.activities-app-item:nth-child(4) { animation-delay: 0.13s; }
-.activities-app-item:nth-child(5) { animation-delay: 0.16s; }
-.activities-app-item:nth-child(6) { animation-delay: 0.19s; }
-.activities-app-item:nth-child(7) { animation-delay: 0.22s; }
-.activities-app-item:nth-child(8) { animation-delay: 0.25s; }
+.activities-app-item:nth-child(1) {
+    animation-delay: 0.04s;
+}
+.activities-app-item:nth-child(2) {
+    animation-delay: 0.07s;
+}
+.activities-app-item:nth-child(3) {
+    animation-delay: 0.1s;
+}
+.activities-app-item:nth-child(4) {
+    animation-delay: 0.13s;
+}
+.activities-app-item:nth-child(5) {
+    animation-delay: 0.16s;
+}
+.activities-app-item:nth-child(6) {
+    animation-delay: 0.19s;
+}
+.activities-app-item:nth-child(7) {
+    animation-delay: 0.22s;
+}
+.activities-app-item:nth-child(8) {
+    animation-delay: 0.25s;
+}
 
-@media (hover: hover) {
-    .activities-app-item:hover {
-        transform: scale(1.14);
-    }
-
-    .activities-app-item:active {
-        transform: scale(0.94);
-    }
+.activities-app-item:hover {
+    transform: scale(1.14);
 }
 
 .activities-app-icon {
     width: 60px;
     height: 60px;
-    border-radius: 22.37%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    border-radius: 22.37%;
     color: var(--text-on-accent);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+    font-size: 26px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
     transition: box-shadow 0.15s ease;
 }
 
 .activities-app-item:hover .activities-app-icon {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .activities-app-label {
@@ -319,15 +204,8 @@
     text-align: center;
 }
 
-/* Hide when searching with no matches */
-.activities-app-item.hidden {
-    display: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .activities-overlay {
-        transition: none;
-    }
+    .activities-overlay,
     .activities-window-thumb,
     .activities-app-item {
         transition: none;
@@ -338,19 +216,12 @@
     .activities-overlay {
         padding-top: calc(var(--topbar-height) + 16px);
     }
-    .activities-search {
-        padding: 0 var(--spacing-md);
-    }
+
+    .activities-search,
     .activities-main {
         padding: 0 var(--spacing-md);
     }
-    .activities-workspaces {
-        display: none;
-    }
-    .activities-window-thumb {
-        width: 200px;
-        height: 130px;
-    }
+
     .activities-app-icon {
         width: 48px;
         height: 48px;

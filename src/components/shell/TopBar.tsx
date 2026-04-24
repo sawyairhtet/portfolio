@@ -41,7 +41,7 @@ export function TopBar({
     }, [updateClock]);
 
     const focusedAppName = focusedApp
-        ? APP_DEFINITIONS.find((app) => app.id === focusedApp)?.label ?? ''
+        ? (APP_DEFINITIONS.find(app => app.id === focusedApp)?.label ?? '')
         : '';
 
     return (
@@ -65,8 +65,14 @@ export function TopBar({
 
             {/* Mobile Status Bar Items */}
             {device !== 'desktop' && (
-                <div className="status-bar" role="presentation" aria-label="Status bar (decorative)">
-                    <div className="status-time" aria-hidden="true">{statusTime}</div>
+                <div
+                    className="status-bar"
+                    role="presentation"
+                    aria-label="Status bar (decorative)"
+                >
+                    <div className="status-time" aria-hidden="true">
+                        {statusTime}
+                    </div>
                     <div className="status-icons" aria-hidden="true">
                         <i className="fas fa-signal" aria-hidden="true" />
                         <i className="fas fa-wifi" aria-hidden="true" />

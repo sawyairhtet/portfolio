@@ -30,9 +30,7 @@ function Providers({ children }: { children: ReactNode }) {
                 <PreferencesProvider>
                     <SoundProvider>
                         <WindowManagerProvider>
-                            <NotificationProvider>
-                                {children}
-                            </NotificationProvider>
+                            <NotificationProvider>{children}</NotificationProvider>
                         </WindowManagerProvider>
                     </SoundProvider>
                 </PreferencesProvider>
@@ -54,7 +52,9 @@ function DockStateHarness() {
     return (
         <>
             <Dock />
-            <div data-testid="about-window-state">{windows.get('about')?.isOpen ? 'open' : 'closed'}</div>
+            <div data-testid="about-window-state">
+                {windows.get('about')?.isOpen ? 'open' : 'closed'}
+            </div>
         </>
     );
 }
@@ -65,7 +65,9 @@ function TerminalHarness() {
     return (
         <>
             <TerminalApp />
-            <div data-testid="projects-window-state">{windows.get('projects')?.isOpen ? 'open' : 'closed'}</div>
+            <div data-testid="projects-window-state">
+                {windows.get('projects')?.isOpen ? 'open' : 'closed'}
+            </div>
         </>
     );
 }
@@ -81,7 +83,7 @@ describe('Portfolio React interactions', () => {
         const { rerender } = render(
             <Providers>
                 <ActivitiesOverlay isOpen={false} onClose={() => {}} />
-            </Providers>,
+            </Providers>
         );
 
         expect(document.querySelector('.activities-overlay')).not.toHaveClass('visible');
@@ -89,7 +91,7 @@ describe('Portfolio React interactions', () => {
         rerender(
             <Providers>
                 <ActivitiesOverlay isOpen onClose={() => {}} />
-            </Providers>,
+            </Providers>
         );
 
         expect(screen.getByRole('dialog', { name: /activities overview/i })).toHaveClass('visible');
@@ -101,10 +103,12 @@ describe('Portfolio React interactions', () => {
         render(
             <Providers>
                 <DockStateHarness />
-            </Providers>,
+            </Providers>
         );
 
-        await waitFor(() => expect(screen.getByTestId('about-window-state')).toHaveTextContent('open'));
+        await waitFor(() =>
+            expect(screen.getByTestId('about-window-state')).toHaveTextContent('open')
+        );
         await user.click(screen.getByRole('button', { name: 'About' }));
         await user.click(screen.getByRole('button', { name: 'About' }));
 
@@ -118,7 +122,7 @@ describe('Portfolio React interactions', () => {
         render(
             <Providers>
                 <Dock />
-            </Providers>,
+            </Providers>
         );
 
         expect(screen.getByRole('button', { name: 'About' })).toBeInTheDocument();
@@ -139,7 +143,7 @@ describe('Portfolio React interactions', () => {
             <Providers>
                 <SettingsApp />
                 <Wallpaper />
-            </Providers>,
+            </Providers>
         );
 
         await user.click(screen.getByRole('button', { name: /Windows/i }));
@@ -157,7 +161,7 @@ describe('Portfolio React interactions', () => {
         render(
             <Providers>
                 <FocusModeApp />
-            </Providers>,
+            </Providers>
         );
 
         expect(screen.getByText('25:00')).toBeInTheDocument();
@@ -175,7 +179,7 @@ describe('Portfolio React interactions', () => {
         render(
             <Providers>
                 <TerminalHarness />
-            </Providers>,
+            </Providers>
         );
 
         const input = screen.getByLabelText('Terminal command input');

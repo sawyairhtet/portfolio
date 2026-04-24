@@ -1,47 +1,37 @@
 /* ============================================
-   MEDIA QUERIES - TABLET (iPadOS)
+   Responsive shell rules for the React desktop
    ============================================ */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    .quick-access {
-        top: 54px;
-        right: 14px;
-        gap: 8px;
-    }
-
-    .quick-access-btn {
-        padding: 8px 10px;
-        font-size: 12px;
-    }
-
-    /* Hide GNOME menu items */
     .menu-bar-left,
     .menu-bar-center,
     .menu-bar-right {
         display: none;
     }
 
-    /* Show status bar */
     .status-bar {
         display: flex;
     }
 
-    /* Show dock as bottom bar on tablet (like mobile) */
+    .main-content,
+    body.show-dock .main-content {
+        padding-left: 0;
+    }
+
     .dock {
         top: auto;
         bottom: 0;
         left: 0;
         right: 0;
         width: 100%;
-        height: auto;
+        max-width: none;
         min-height: 0;
-        flex-direction: row;
+        transform: none !important;
+        justify-content: space-around;
         border-right: none;
         border-top: 1px solid var(--color-border);
         border-radius: 0;
         padding: var(--spacing-sm);
-        justify-content: space-around;
-        transform: none !important;
     }
 
     .dock-item {
@@ -50,150 +40,81 @@
         font-size: 26px;
     }
 
-    .dock-item:hover {
-        transform: none;
-    }
-
     .dock-separator {
         display: none;
     }
 
-    /* Active indicator at bottom for horizontal dock */
     .dock-item.active::after {
         left: 50%;
         top: auto;
         bottom: 0;
-        transform: translateX(-50%);
         width: 20px;
         height: 3px;
+        transform: translateX(-50%);
         border-radius: 2px 2px 0 0;
     }
 
-    .main-content,
-    body.show-dock .main-content {
-        padding-left: 0;
-    }
-
-    /* App Grid - 4 columns */
-    .app-grid {
-        position: static;
-        left: 0;
-        grid-template-columns: repeat(4, 1fr);
-        padding: var(--spacing-xl);
-        gap: var(--spacing-xl);
-        margin-top: 80px;
-    }
-
-    .app-icon {
-        width: 100%;
-    }
-
-    .app-icon-wrapper {
-        width: 80px;
-        height: 80px;
-        font-size: 40px;
-    }
-
-    .app-label {
-        font-size: 14px;
-        color: var(--text-on-accent) !important;
-        text-shadow:
-            0 2px 4px rgba(0, 0, 0, 0.8),
-            0 0 4px rgba(0, 0, 0, 0.8);
-        font-weight: 600;
-        background: rgba(0, 0, 0, 0.55);
-        padding: 4px 10px;
-        border-radius: 12px;
-    }
-
-    /* Widget Container */
-    .widget-container {
-        display: block;
-        padding: var(--spacing-xl);
-    }
-
-    .widget {
-        background: var(--surface-1);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-lg);
-        margin-bottom: var(--spacing-md);
-    }
-
-    /* Windows become modals - positioned from top, not center transform */
     .window {
         position: fixed;
         top: 60px !important;
         left: 50% !important;
-        transform: translateX(-50%);
         width: 85%;
         max-width: 600px;
         min-width: 0;
         max-height: calc(100vh - 140px);
-    }
-
-    /* Hide window controls on iPad */
-    .window-controls {
-        display: none;
-    }
-
-    /* Mobile close button - proper touch target */
-    .close-btn-mobile {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        background: none;
-        border: none;
-        font-size: 20px;
-        cursor: pointer;
-        color: var(--color-text-light);
-        margin-left: auto;
-        border-radius: var(--radius-sm);
-        transition: background 0.2s ease;
-    }
-
-    .close-btn-mobile:hover {
-        background: rgba(53, 132, 228, 0.15);
-    }
-
-    .close-btn-mobile:active {
-        background: rgba(53, 132, 228, 0.3);
+        transform: translateX(-50%);
     }
 }
 
-/* ============================================
-   MEDIA QUERIES - MOBILE (iOS)
-   ============================================ */
-
-@media (max-width: 767px) {
-    .quick-access {
-        top: 52px;
-        right: 10px;
-        left: 10px;
-        justify-content: center;
-        gap: 6px;
+@media (max-width: 1024px) {
+    .quick-access.visible,
+    .quick-settings-panel,
+    .notification-center {
+        display: none !important;
     }
 
-    .quick-access-btn {
-        padding: 7px 10px;
-        font-size: 12px;
-        min-width: 0;
-    }
-
-    .quick-access-btn span {
+    .sticky-notes-container {
         display: none;
     }
 
-    /* Hide GNOME menu items */
+    .dock {
+        min-height: 0 !important;
+    }
+
+    .dock-tooltip {
+        left: 50%;
+        top: auto;
+        bottom: calc(100% + 12px);
+        transform: translateX(-50%);
+    }
+
+    .terminal-submit-btn {
+        display: flex;
+    }
+
+    .terminal-input-line {
+        padding: var(--spacing-sm);
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: var(--radius-sm);
+        margin-top: var(--spacing-sm);
+    }
+
+    .wallpaper::after {
+        display: none;
+    }
+
+    .wallpaper::before {
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 767px) {
     .menu-bar-left,
     .menu-bar-center,
     .menu-bar-right {
         display: none;
     }
 
-    /* Show status bar */
     .status-bar {
         display: flex;
     }
@@ -205,127 +126,97 @@
     .main-content,
     body.show-dock .main-content {
         padding-top: 44px;
-        padding-left: 0;
-        padding-right: 0;
-        /* Safe area support for notch/dynamic island */
         padding-left: env(safe-area-inset-left, 0px);
         padding-right: env(safe-area-inset-right, 0px);
     }
 
-    /* ---- APP GRID - Refined Mobile Layout ---- */
-    .app-grid {
-        position: static;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(auto-fill, auto);
-        padding: var(--spacing-lg) var(--spacing-md);
-        gap: var(--spacing-lg) var(--spacing-sm);
-        margin-top: 20px;
-        justify-items: center;
-    }
-
-    .app-icon {
-        width: 80px;
+    .dock {
+        top: auto;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        left: 50%;
+        right: auto;
+        width: auto;
+        min-width: 156px;
+        max-width: calc(100vw - 32px);
         height: auto;
-        min-height: 100px;
-        overflow: visible !important;
-        contain: none !important;
-        gap: 6px;
-        clip-path: none !important;
+        min-height: 0;
+        transform: translateX(-50%) !important;
+        gap: 18px;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 22px;
+        padding: 10px 14px;
+        background: rgba(36, 36, 36, 0.82);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
     }
 
-    .app-icon-placeholder {
-        width: 80px;
-        height: auto;
-        min-height: 100px;
+    .dock-item {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        border-radius: 13px;
     }
 
-    /* Slightly larger icon wrappers for better tap targets */
-    .app-icon-wrapper {
-        display: flex !important;
-        width: 64px;
-        height: 64px;
-        font-size: 30px;
-        border-radius: 16px;
-        opacity: 1 !important;
-        visibility: visible !important;
-        position: relative;
-        z-index: 10;
-        box-shadow:
-            0 4px 12px rgba(0, 0, 0, 0.15),
-            0 1px 3px rgba(0, 0, 0, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    .dock-item:hover {
+        transform: none;
     }
 
-    .app-icon-wrapper i {
-        opacity: 1 !important;
-        visibility: visible !important;
-        color: var(--text-on-accent) !important;
-        display: block;
+    .dock-item:active {
+        animation: dockBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* ---- APP LABELS - Frosted glass pill for legibility ---- */
-    .app-label {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.15px;
-        padding: 4px 10px;
-        display: inline-block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        color: var(--text-on-accent) !important;
-        text-align: center;
-        z-index: 20;
-        position: relative;
-        /* Allow wrapping instead of truncation */
-        overflow: visible !important;
-        max-width: 100% !important;
-        flex-shrink: 0;
-        align-self: center;
-        white-space: normal !important;
-        background: rgba(0, 0, 0, 0.65);
-        border-radius: 12px;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-        line-height: 1.3;
-        margin-top: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    .dock-item.active {
+        box-shadow: 0 0 14px rgba(53, 132, 228, 0.4);
     }
 
-    /* ---- WINDOWS - Full-screen with proper spacing ---- */
+    .dock-item.active::after {
+        left: 50%;
+        top: auto;
+        bottom: -6px;
+        width: 18px;
+        height: 3px;
+        transform: translateX(-50%);
+        border-radius: 2px;
+        background: var(--color-primary);
+    }
+
+    .dock-separator {
+        display: none;
+    }
+
     .window {
         position: fixed;
         top: 44px !important;
         left: 0 !important;
         right: 0 !important;
-        bottom: 0 !important;
+        bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+        height: auto !important;
         max-height: none !important;
-        border-radius: 0;
         margin-top: 0 !important;
         transform: none !important;
-        height: auto !important;
+        border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
     }
 
-    /* Hide window controls */
     .window-controls {
         display: none;
     }
 
-    /* ---- MOBILE CLOSE BUTTON - Larger touch target ---- */
     .close-btn-mobile {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 44px;
         height: 44px;
-        background: rgba(0, 0, 0, 0.08);
+        margin-left: auto;
         border: none;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.08);
+        color: var(--color-text-light);
         font-size: 22px;
         cursor: pointer;
-        color: var(--color-text-light);
-        margin-left: auto;
-        border-radius: 50%;
         transition: all 0.2s ease;
     }
 
@@ -346,141 +237,15 @@
         font-weight: 700;
     }
 
-    /* ---- WINDOW BODY - Extra bottom padding to prevent dock clipping ---- */
     .window-body {
-        padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     }
 
-    /* Widget Container */
-    .widget-container {
-        display: none;
-        padding: var(--spacing-md);
-    }
-
-    .widget {
-        background: var(--surface-1);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-md);
-        margin-bottom: var(--spacing-sm);
-    }
-
-    /* ---- DOCK - Refined bottom bar ---- */
-    .dock {
-        position: fixed;
-        top: auto;
-        bottom: calc(12px + env(safe-area-inset-bottom));
-        left: 50%;
-        right: auto;
-        width: auto;
-        min-width: 156px;
-        max-width: calc(100vw - 32px);
-        height: auto;
-        min-height: 0;
-        transform: translateX(-50%) !important;
-        flex-direction: row;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 22px;
-        padding: 10px 14px;
-        z-index: var(--z-dock);
-        background: rgba(36, 36, 36, 0.82);
-        -webkit-backdrop-filter: blur(24px) saturate(160%);
-        backdrop-filter: blur(24px) saturate(160%);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
-        gap: 18px;
-        justify-content: center;
-    }
-
-    .app-icon[data-app='terminal'],
-    .app-icon[data-app='settings'] {
-        display: none;
-    }
-
-    .dock-item:not([data-app='terminal']):not([data-app='settings']) {
-        display: none;
-    }
-
-    /* ---- DOCK ITEMS - Better sizing and feedback ---- */
-    .dock-item {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        border-radius: 13px;
-        transition:
-            transform 0.15s ease,
-            box-shadow 0.15s ease;
-    }
-
-    .dock-item:hover {
-        transform: none;
-    }
-
-    .dock-separator {
-        display: none;
-    }
-
-    /* Active indicator at bottom for horizontal dock */
-    .dock-item.active::after {
-        left: 50%;
-        top: auto;
-        bottom: -6px;
-        transform: translateX(-50%);
-        width: 18px;
-        height: 3px;
-        border-radius: 2px;
-        background: var(--color-primary);
-    }
-
-    /* Mobile dock bounce effect */
-    .dock-item:active {
-        animation: dockBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    /* Active app glow indicator on mobile dock */
-    .dock-item.active {
-        box-shadow: 0 0 14px rgba(53, 132, 228, 0.4);
-    }
-
-    /* Widget polish */
-    .widget {
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--color-border);
-        margin: var(--spacing-md);
-        box-shadow: var(--shadow-md);
-    }
-
-    .widget h3 {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: var(--spacing-xs);
-    }
-
-    .widget p {
-        font-size: 14px;
-        opacity: 0.9;
-    }
-
-    /* ---- CONTACT - Improved touch targets ---- */
-    .contact-item {
-        padding: var(--spacing-md);
-        min-height: 56px;
-        border-radius: var(--radius-sm);
-        background: var(--color-card-bg);
-        margin-bottom: var(--spacing-sm);
-    }
-
-    .contact-item i {
-        font-size: 20px;
-        width: 32px;
-    }
-
-    /* Better touch targets for social links */
     .social-link {
         min-height: 80px;
         padding: var(--spacing-md);
     }
 
-    /* ---- PROJECTS - Better touch feedback ---- */
     .project-card {
         transition:
             transform 0.15s ease,
@@ -491,18 +256,11 @@
         transform: scale(0.98);
     }
 
-    /* Make tech badges more tappable */
     .tech-badge {
         padding: 6px 12px;
         font-size: 11px;
     }
 
-    /* Hide sticky notes on mobile */
-    .sticky-notes-container {
-        display: none;
-    }
-
-    /* ---- ABOUT HERO - Better mobile sizing ---- */
     .about-hero {
         padding: var(--spacing-lg);
         border-radius: var(--radius-md);
@@ -518,7 +276,6 @@
         height: 110px;
     }
 
-    /* ---- ABOUT SECTIONS - Tighter on mobile ---- */
     .about-section {
         padding: var(--spacing-md);
     }
@@ -532,8 +289,7 @@
         line-height: 1.7;
     }
 
-    /* ---- DARK MODE - Mobile dock override ---- */
-    [data-theme="dark"] .dock,
+    [data-theme='dark'] .dock,
     .dark .dock {
         background: rgba(36, 36, 36, 0.92);
         border-top-color: rgba(255, 255, 255, 0.06);
@@ -541,103 +297,6 @@
     }
 }
 
-/* Very small screens - stack links */
-@media (max-width: 400px) {
-    .links-list {
-        grid-template-columns: 1fr;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .app-label {
-        font-size: 10px;
-        padding: 3px 6px;
-        overflow: visible !important;
-        white-space: normal !important;
-        max-width: 100% !important;
-    }
-}
-
-/* Better grid spacing on very small screens */
-@media (max-width: 380px) {
-    .app-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: var(--spacing-md);
-    }
-
-    .app-icon {
-        width: 100%;
-        min-height: 100px;
-    }
-
-    .app-icon-wrapper {
-        width: 56px;
-        height: 56px;
-        font-size: 26px;
-        border-radius: 14px;
-    }
-
-    .app-label {
-        font-size: 11px;
-        padding: 4px 8px;
-        display: inline-block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        color: var(--text-on-accent) !important;
-        background: rgba(0, 0, 0, 0.6);
-        border-radius: 10px;
-        overflow: visible !important;
-        white-space: normal !important;
-        max-width: 100% !important;
-    }
-}
-
-/* Hide sticky notes on tablet too */
-@media (max-width: 1024px) {
-    .sticky-notes-container {
-        display: none;
-    }
-
-    /* Override desktop dock min-height for horizontal layout */
-    .dock {
-        min-height: 0 !important;
-    }
-
-    /* Show terminal submit button on mobile/tablet */
-    .terminal-submit-btn {
-        display: flex;
-    }
-
-    /* Improve terminal input line for mobile */
-    .terminal-input-line {
-        padding: var(--spacing-sm);
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: var(--radius-sm);
-        margin-top: var(--spacing-sm);
-    }
-
-    /* Mobile/Tablet: tooltips appear above */
-    .dock-tooltip {
-        left: 50%;
-        top: auto;
-        bottom: calc(100% + 12px);
-        transform: translateX(-50%);
-    }
-
-    .dock-tooltip::before {
-        right: auto;
-        left: 50%;
-        top: 100%;
-        transform: translateX(-50%);
-        border: 6px solid transparent;
-        border-top-color: var(--color-window-body-bg);
-    }
-}
-
-/* Shorten prompt on very small screens */
 @media (max-width: 480px) {
     .terminal-prompt {
         font-size: 12px;
@@ -647,127 +306,28 @@
         font-size: 14px;
     }
 
-    .app-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-md);
-    }
-
-    .app-icon {
-        width: 80px;
-        min-height: 100px;
-    }
-
-    .app-icon-placeholder {
-        width: 80px;
-        min-height: 100px;
-    }
-
-    .app-icon-wrapper {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-        border-radius: 14px;
-    }
-
-    .app-label {
-        font-size: 11px;
-        padding: 4px 8px;
-        display: inline-block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        color: var(--text-on-accent) !important;
-        background: rgba(0, 0, 0, 0.6);
-        border-radius: 10px;
-        overflow: visible !important;
-        white-space: normal !important;
-        max-width: 100% !important;
-    }
-
-    /* Links grid - 2 columns on mobile, stacked on very small */
     .links-list {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-sm);
     }
-
-    /* Skills grid - 2 columns */
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-sm);
-    }
-
-    /* Compact skill cards on mobile */
-    .skill-card {
-        padding: var(--spacing-sm);
-    }
-
-    .skill-icon {
-        font-size: 24px;
-        margin-bottom: 4px;
-    }
-
-    .skill-card h4 {
-        font-size: 13px;
-        margin-bottom: 4px;
-    }
-
-    .skill-card p {
-        font-size: 11px;
-        line-height: 1.3;
-    }
 }
 
-/* ============================================
-   DESKTOP SPECIFIC (GNOME)
-   ============================================ */
-
-@media (min-width: 1025px) {
-    /* App grid positioned in 2 columns */
-    .app-grid {
-        grid-template-columns: repeat(2, 100px);
-    }
-
-    /* Windows can be positioned anywhere */
-    .window {
-        top: 15%;
-        left: calc(var(--dock-width) + 10%);
-    }
-}
-
-/* NOTE: Tablet layout styles are in the main tablet block at the top of this file */
-
-/* Mobile Layout grid updates (projects grid) */
-@media screen and (max-width: 767px) {
-    /* Projects grid - single column on mobile */
-    .projects-grid {
+@media (max-width: 400px) {
+    .links-list {
         grid-template-columns: 1fr;
     }
 
-    /* Featured project takes full width */
-    .project-card.featured-project {
-        grid-column: 1;
+    .mobile-dock {
+        gap: 10px;
+        padding: 8px 10px;
+    }
+
+    .mobile-dock .dock-item {
+        width: 44px;
+        height: 44px;
+        font-size: 21px;
     }
 }
-
-/* ============================================
-   PERFORMANCE - MOBILE GPU OPTIMIZATION
-   ============================================ */
-
-/* Disable heavy GPU effects on mobile/tablet for smoother performance */
-@media (max-width: 1024px) {
-    .wallpaper::after {
-        /* Disable noise grain texture on mobile for GPU savings */
-        display: none;
-    }
-
-    .wallpaper::before {
-        /* Simplify radial gradients on mobile */
-        opacity: 0.5;
-    }
-}
-
-/* ============================================
-   ACCESSIBILITY - REDUCED MOTION
-   ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -775,8 +335,8 @@
     *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 
     .wallpaper {
@@ -784,64 +344,21 @@
         transition: none !important;
     }
 
-    .app-icon,
     .dock-item,
     .window,
     .sticky-note {
         animation: none !important;
     }
-
-    .skill-progress-bar {
-        transition: none !important;
-        width: var(--progress) !important;
-    }
-}
-
-/* ============================================
-   iOS SAFE AREA INSETS
-   ============================================ */
-
-/* ============================================
-   QUICK SETTINGS + NOTIFICATION CENTER
-   ============================================ */
-
-/* Hide panels on mobile/tablet — top bar is hidden */
-@media (max-width: 1024px) {
-    .quick-settings-panel,
-    .notification-center {
-        display: none !important;
-    }
-}
-
-/* Narrow desktop: keep panels from overflowing */
-@media (min-width: 1025px) and (max-width: 1200px) {
-    .quick-settings-panel {
-        width: 280px;
-    }
-
-    .notification-center {
-        width: 340px;
-    }
 }
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
     @media (max-width: 1024px) {
-        /* Dock accounts for home indicator */
         .dock {
             padding-bottom: calc(10px + env(safe-area-inset-bottom));
         }
 
-        /* Windows account for safe areas */
         .window {
             padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        /* Full-screen mobile windows */
-        @media (max-width: 767px) {
-            .window {
-                bottom: 0 !important;
-                height: auto !important;
-            }
         }
     }
 }

@@ -8,6 +8,7 @@ import type {
     Project,
     SkillCategory,
 } from '../types';
+import { PROFILE } from './profile';
 
 // ============================================
 // APP DEFINITIONS
@@ -24,10 +25,6 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         aliases: ['bio', 'profile', 'summary', 'saw'],
         desktopDock: true,
         mobileDock: true,
-        quickActions: [
-            { label: 'Contact', icon: 'fas fa-envelope', appId: 'contact' },
-            { label: 'Resume', icon: 'fas fa-file-arrow-down', href: 'resume/SYH_resume.pdf' },
-        ],
     },
     {
         id: 'skills',
@@ -50,9 +47,6 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         aliases: ['work', 'portfolio', 'case studies', 'github'],
         desktopDock: true,
         mobileDock: true,
-        quickActions: [
-            { label: 'GitHub', icon: 'fab fa-github', href: 'https://github.com/sawyairhtet' },
-        ],
     },
     {
         id: 'contact',
@@ -64,10 +58,6 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         aliases: ['email', 'hire', 'resume', 'availability'],
         desktopDock: true,
         mobileDock: true,
-        quickActions: [
-            { label: 'Email', icon: 'fas fa-envelope', href: 'mailto:minwn2244@gmail.com' },
-            { label: 'Resume', icon: 'fas fa-file-arrow-down', href: 'resume/SYH_resume.pdf' },
-        ],
     },
     {
         id: 'links',
@@ -115,13 +105,11 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     },
 ];
 
-export const DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(
-    (app) => app.desktopDock,
-);
+export const DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.desktopDock);
 
-export const MOBILE_DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter((app) => app.mobileDock);
+export const MOBILE_DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.mobileDock);
 
-export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter((app) => !app.mobileDock);
+export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => !app.mobileDock);
 
 // ============================================
 // PORTFOLIO CONTENT DATA
@@ -132,7 +120,8 @@ export const PROJECTS: Project[] = [
         id: 'jewelry-vr',
         title: 'Jewelry Shop Robbery VR',
         role: 'VR developer',
-        summary: 'A Meta Quest heist prototype focused on bare-hand interaction, object grabbing, throwing, and room-scale feedback.',
+        summary:
+            'A Meta Quest heist prototype focused on bare-hand interaction, object grabbing, throwing, and room-scale feedback.',
         techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking', 'Oculus Interaction'],
         platform: 'Meta Quest 2/3/Pro',
         proofPoints: [
@@ -155,7 +144,8 @@ export const PROJECTS: Project[] = [
         id: 'fedora-portfolio',
         title: 'Fedora Portfolio Website',
         role: 'Frontend engineer and interaction designer',
-        summary: 'A recruiter-first portfolio wrapped in a Fedora 43 / GNOME 49 desktop with windows, terminal, boot sequence, settings, and responsive app shell.',
+        summary:
+            'A recruiter-first portfolio wrapped in a Fedora 43 / GNOME 49 desktop with windows, terminal, boot sequence, settings, and responsive app shell.',
         techStack: ['React', 'TypeScript', 'Vite', 'CSS', 'Adwaita'],
         platform: 'Responsive web app',
         proofPoints: [
@@ -172,7 +162,7 @@ export const PROJECTS: Project[] = [
             },
             {
                 label: 'Download Resume',
-                href: 'resume/SYH_resume.pdf',
+                href: PROFILE.resumePath,
                 icon: 'fas fa-file-arrow-down',
             },
         ],
@@ -186,27 +176,66 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
         title: 'Frontend Engineering',
         icon: 'fab fa-react',
         skills: [
-            { name: 'React + TypeScript', context: 'Component architecture, stateful UI, typed config, and responsive app shells.', usedIn: ['Fedora Portfolio'] },
-            { name: 'CSS / Adwaita UI', context: 'GNOME-inspired layouts, accessibility states, motion, and mobile constraints.', usedIn: ['Fedora Portfolio'] },
-            { name: 'Vite + Testing', context: 'Fast iteration, typecheck/lint/test workflows, and focused interaction tests.', usedIn: ['Fedora Portfolio'] },
+            {
+                name: 'React + TypeScript',
+                context:
+                    'Component architecture, stateful UI, typed config, and responsive app shells.',
+                usedIn: ['Fedora Portfolio'],
+            },
+            {
+                name: 'CSS / Adwaita UI',
+                context:
+                    'GNOME-inspired layouts, accessibility states, motion, and mobile constraints.',
+                usedIn: ['Fedora Portfolio'],
+            },
+            {
+                name: 'Vite + Testing',
+                context:
+                    'Fast iteration, typecheck/lint/test workflows, and focused interaction tests.',
+                usedIn: ['Fedora Portfolio'],
+            },
         ],
     },
     {
         title: 'VR And Game Development',
         icon: 'fas fa-vr-cardboard',
         skills: [
-            { name: 'Unity + C#', context: 'Gameplay systems, object interaction, and Quest-ready prototypes.', usedIn: ['Jewelry VR'] },
-            { name: 'Meta Quest Hand Tracking', context: 'Bare-hand grabbing and gestural input without physical controllers.', usedIn: ['Jewelry VR'] },
-            { name: 'Performance Awareness', context: 'Standalone VR decisions around feedback, rendering cost, and comfort.', usedIn: ['Jewelry VR'] },
+            {
+                name: 'Unity + C#',
+                context: 'Gameplay systems, object interaction, and Quest-ready prototypes.',
+                usedIn: ['Jewelry VR'],
+            },
+            {
+                name: 'Meta Quest Hand Tracking',
+                context: 'Bare-hand grabbing and gestural input without physical controllers.',
+                usedIn: ['Jewelry VR'],
+            },
+            {
+                name: 'Performance Awareness',
+                context: 'Standalone VR decisions around feedback, rendering cost, and comfort.',
+                usedIn: ['Jewelry VR'],
+            },
         ],
     },
     {
         title: 'General Engineering',
         icon: 'fas fa-code',
         skills: [
-            { name: 'JavaScript / Python / Java / SQL', context: 'Coursework, tooling, data handling, and small automation tasks.', usedIn: ['Coursework'] },
-            { name: 'Git + GitHub', context: 'Source control, public repositories, and collaboration-ready workflows.', usedIn: ['Fedora Portfolio', 'Jewelry VR'] },
-            { name: 'Linux Workflow', context: 'Daily system fluency, shell habits, and Fedora/GNOME customization.', usedIn: ['Fedora Portfolio'] },
+            {
+                name: 'JavaScript / Python / Java / SQL',
+                context: 'Coursework, tooling, data handling, and small automation tasks.',
+                usedIn: ['Coursework'],
+            },
+            {
+                name: 'Git + GitHub',
+                context: 'Source control, public repositories, and collaboration-ready workflows.',
+                usedIn: ['Fedora Portfolio', 'Jewelry VR'],
+            },
+            {
+                name: 'Linux Workflow',
+                context: 'Daily system fluency, shell habits, and Fedora/GNOME customization.',
+                usedIn: ['Fedora Portfolio'],
+            },
         ],
     },
 ];
@@ -243,10 +272,34 @@ export const BOOT_LOG_MESSAGES: string[] = [
 // ============================================
 
 export const stickyNotesData: StickyNote[] = [
-    { text: 'I like coke but \ncoke light is better \u{1F964}', color: 'yellow', rotation: -3, x: 80, y: 14 },
-    { text: 'Roses are red.\nViolets are blue.\nUnexpected error in line 52.', color: 'pink', rotation: 2, x: 83, y: 36 },
-    { text: 'System.out.println\n("Hi Mom! I love you.");', color: 'blue', rotation: -1, x: 78, y: 58 },
-    { text: 'Alt+1: Projects\nAlt+2: Contact\nAlt+3: Resume', color: 'green', rotation: 3, x: 80, y: 78 },
+    {
+        text: 'I like coke but \ncoke light is better \u{1F964}',
+        color: 'yellow',
+        rotation: -3,
+        x: 80,
+        y: 14,
+    },
+    {
+        text: 'Roses are red.\nViolets are blue.\nUnexpected error in line 52.',
+        color: 'pink',
+        rotation: 2,
+        x: 83,
+        y: 36,
+    },
+    {
+        text: 'System.out.println\n("Hi Mom! I love you.");',
+        color: 'blue',
+        rotation: -1,
+        x: 78,
+        y: 58,
+    },
+    {
+        text: 'Alt+1: Projects\nAlt+2: Contact\nAlt+3: Resume',
+        color: 'green',
+        rotation: 3,
+        x: 80,
+        y: 78,
+    },
 ];
 
 // ============================================
@@ -256,62 +309,95 @@ export const stickyNotesData: StickyNote[] = [
 export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/': { type: 'dir', children: ['home', 'etc', 'var'] },
     '/home': { type: 'dir', children: ['sawyehtet'] },
-    '/home/sawyehtet': { type: 'dir', children: ['projects', 'documents', 'resume.txt', '.bashrc'] },
+    '/home/sawyehtet': {
+        type: 'dir',
+        children: ['projects', 'documents', 'resume.txt', '.bashrc'],
+    },
     '/home/sawyehtet/projects': { type: 'dir', children: ['jewelry-vr', 'portfolio', 'README.md'] },
-    '/home/sawyehtet/projects/jewelry-vr': { type: 'dir', children: ['main.cs', 'HandTracking.cs'] },
+    '/home/sawyehtet/projects/jewelry-vr': {
+        type: 'dir',
+        children: ['main.cs', 'HandTracking.cs'],
+    },
     '/home/sawyehtet/projects/jewelry-vr/main.cs': {
         type: 'file',
-        content: '// Unity VR Game - Main Entry Point\nusing UnityEngine;\n\npublic class JewelryHeist : MonoBehaviour {\n    void Start() {\n        Debug.Log("Welcome to Jewelry Shop Robbery VR!");\n    }\n}',
+        content:
+            '// Unity VR Game - Main Entry Point\nusing UnityEngine;\n\npublic class JewelryHeist : MonoBehaviour {\n    void Start() {\n        Debug.Log("Welcome to Jewelry Shop Robbery VR!");\n    }\n}',
     },
     '/home/sawyehtet/projects/jewelry-vr/HandTracking.cs': {
         type: 'file',
-        content: '// Meta Quest Hand Tracking Integration\nusing Oculus.Interaction;\n\npublic class HandGrabber : MonoBehaviour {\n    // Grab gems with your bare hands!\n}',
+        content:
+            '// Meta Quest Hand Tracking Integration\nusing Oculus.Interaction;\n\npublic class HandGrabber : MonoBehaviour {\n    // Grab gems with your bare hands!\n}',
     },
-    '/home/sawyehtet/projects/portfolio': { type: 'dir', children: ['index.html', 'main.css', 'main.js'] },
+    '/home/sawyehtet/projects/portfolio': {
+        type: 'dir',
+        children: ['src', 'index.html', 'package.json'],
+    },
     '/home/sawyehtet/projects/portfolio/index.html': {
         type: 'file',
-        content: '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <title>Saw Ye Htet - Portfolio</title>\n</head>\n<body>\n    <!-- You are here! -->\n</body>\n</html>',
+        content:
+            '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <title>Saw Ye Htet - Portfolio</title>\n</head>\n<body>\n    <!-- You are here! -->\n</body>\n</html>',
     },
-    '/home/sawyehtet/projects/portfolio/main.css': {
+    '/home/sawyehtet/projects/portfolio/package.json': {
         type: 'file',
-        content: '/* Fedora 43 / Adwaita Theme */\n:root {\n    --fedora-blue: #3584e4;\n    --surface-0: #ffffff;\n}\n/* ... 1000+ more lines of CSS magic */',
+        content:
+            '{\n  "scripts": {\n    "dev": "vite",\n    "build": "tsc -b && vite build",\n    "test": "vitest"\n  },\n  "dependencies": {\n    "react": "^19",\n    "typescript": "^5"\n  }\n}',
     },
-    '/home/sawyehtet/projects/portfolio/main.js': {
+    '/home/sawyehtet/projects/portfolio/src': {
+        type: 'dir',
+        children: ['main.tsx', 'App.tsx', 'components', 'styles'],
+    },
+    '/home/sawyehtet/projects/portfolio/src/main.tsx': {
         type: 'file',
-        content: '// The very code running this terminal!\n// Written with \u2764\uFE0F by Saw Ye Htet\nconsole.log("Hello, curious visitor!");',
+        content:
+            'import { StrictMode } from "react";\nimport { createRoot } from "react-dom/client";\nimport { App } from "./App";\nimport "./styles/main.css";',
     },
+    '/home/sawyehtet/projects/portfolio/src/App.tsx': {
+        type: 'file',
+        content: 'export function App() {\n  return <DesktopShell />;\n}',
+    },
+    '/home/sawyehtet/projects/portfolio/src/components': {
+        type: 'dir',
+        children: ['apps', 'shell', 'ui', 'window'],
+    },
+    '/home/sawyehtet/projects/portfolio/src/styles': { type: 'dir', children: ['main.css'] },
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
-        content: '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: VR Heist Game for Meta Quest\n- **portfolio**: This website!\n\nFeel free to explore with `cd` and `cat`.',
+        content:
+            '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: VR Heist Game for Meta Quest\n- **portfolio**: This website!\n\nFeel free to explore with `cd` and `cat`.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md'] },
     '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
-        content: 'TODO:\n- Finish VR project\n- Update portfolio\n- Master Godot Engine\n- Call mom \u{1F499}',
+        content:
+            'TODO:\n- Finish VR project\n- Update portfolio\n- Master Godot Engine\n- Call mom \u{1F499}',
     },
     '/home/sawyehtet/documents/ideas.md': {
         type: 'file',
-        content: '# Future Project Ideas\n\n1. Multiplayer VR escape room\n2. Indie game with procedural generation\n3. Open-source developer tools',
+        content:
+            '# Future Project Ideas\n\n1. Multiplayer VR escape room\n2. Indie game with procedural generation\n3. Open-source developer tools',
     },
     '/home/sawyehtet/resume.txt': {
         type: 'file',
-        content: '\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         SAW YE HTET - RESUME          \u2551\n\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563\n\u2551 Education: Singapore Polytechnic      \u2551\n\u2551 Major: Information Technology         \u2551\n\u2551 Skills: Unity, C#, JavaScript, Python \u2551\n\u2551 Focus: VR Development, Full-Stack     \u2551\n\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D\n\nContact: minwn2244@gmail.com',
+        content: `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         SAW YE HTET - RESUME          \u2551\n\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563\n\u2551 Education: Singapore Polytechnic      \u2551\n\u2551 Major: Information Technology         \u2551\n\u2551 Skills: Unity, C#, JavaScript, Python \u2551\n\u2551 Focus: VR Development, Full-Stack     \u2551\n\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D\n\nContact: ${PROFILE.email}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',
-        content: '# ~/.bashrc\nexport PS1="sawyehtet@fedora:~$ "\nalias ll="ls -la"\nalias cls="clear"\n\n# Secret: You found the hidden config!',
+        content:
+            '# ~/.bashrc\nexport PS1="sawyehtet@fedora:~$ "\nalias ll="ls -la"\nalias cls="clear"\n\n# Secret: You found the hidden config!',
     },
     '/etc': { type: 'dir', children: ['hostname', 'os-release'] },
     '/etc/hostname': { type: 'file', content: 'fedora' },
     '/etc/os-release': {
         type: 'file',
-        content: 'NAME="Fedora Linux"\nVERSION="43 (Workstation Edition)"\nID=fedora\nPRETTY_NAME="Fedora Linux 43 (Workstation Edition)"',
+        content:
+            'NAME="Fedora Linux"\nVERSION="43 (Workstation Edition)"\nID=fedora\nPRETTY_NAME="Fedora Linux 43 (Workstation Edition)"',
     },
     '/var': { type: 'dir', children: ['log'] },
     '/var/log': { type: 'dir', children: ['visitor.log'] },
     '/var/log/visitor.log': {
         type: 'file',
-        content: '[INFO] Visitor connected to portfolio\n[INFO] Terminal session started\n[INFO] Thanks for exploring! \u{1F389}',
+        content:
+            '[INFO] Visitor connected to portfolio\n[INFO] Terminal session started\n[INFO] Thanks for exploring! \u{1F389}',
     },
 };
 
@@ -352,12 +438,37 @@ export const terminalGreetings: string[] = [
 
 export const WALLPAPERS: WallpaperOption[] = [
     { id: 'default', label: 'Fedora 43 (Time)', gradient: null },
-    { id: 'adwaita-dark', label: 'Adwaita Dark', gradient: 'linear-gradient(135deg, #242424 0%, #303030 50%, #242424 100%)' },
-    { id: 'gnome-blobs', label: 'GNOME Blobs', gradient: 'radial-gradient(ellipse at 20% 50%, #3584e4 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #9141ac 0%, transparent 40%), radial-gradient(ellipse at 70% 80%, #2ec27e 0%, transparent 45%), linear-gradient(135deg, #242424 0%, #303030 100%)' },
-    { id: 'fedora-dark', label: 'Fedora Dark', gradient: 'linear-gradient(160deg, #0d1b2a 0%, #1b2838 30%, #303030 60%, #242424 100%)' },
-    { id: 'aurora', label: 'Aurora', gradient: 'linear-gradient(135deg, #0d2137 0%, #9141ac 40%, #3584e4 70%, #2ec27e 100%)' },
-    { id: 'ocean', label: 'Ocean Blue', gradient: 'linear-gradient(135deg, #0c3547 0%, #1a6b8a 50%, #11998e 100%)' },
-    { id: 'midnight', label: 'Midnight', gradient: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' },
+    {
+        id: 'adwaita-dark',
+        label: 'Adwaita Dark',
+        gradient: 'linear-gradient(135deg, #242424 0%, #303030 50%, #242424 100%)',
+    },
+    {
+        id: 'gnome-blobs',
+        label: 'GNOME Blobs',
+        gradient:
+            'radial-gradient(ellipse at 20% 50%, #3584e4 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #9141ac 0%, transparent 40%), radial-gradient(ellipse at 70% 80%, #2ec27e 0%, transparent 45%), linear-gradient(135deg, #242424 0%, #303030 100%)',
+    },
+    {
+        id: 'fedora-dark',
+        label: 'Fedora Dark',
+        gradient: 'linear-gradient(160deg, #0d1b2a 0%, #1b2838 30%, #303030 60%, #242424 100%)',
+    },
+    {
+        id: 'aurora',
+        label: 'Aurora',
+        gradient: 'linear-gradient(135deg, #0d2137 0%, #9141ac 40%, #3584e4 70%, #2ec27e 100%)',
+    },
+    {
+        id: 'ocean',
+        label: 'Ocean Blue',
+        gradient: 'linear-gradient(135deg, #0c3547 0%, #1a6b8a 50%, #11998e 100%)',
+    },
+    {
+        id: 'midnight',
+        label: 'Midnight',
+        gradient: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
+    },
 ];
 
 // ============================================
@@ -414,5 +525,3 @@ export const PLYMOUTH_DURATION_MS = 1200;
 
 export const SWIPE_CLOSE_THRESHOLD_Y = 80;
 export const SWIPE_CLOSE_MAX_X = 50;
-export const SWIPE_SWITCH_THRESHOLD_X = 100;
-export const SWIPE_SWITCH_MAX_Y = 50;

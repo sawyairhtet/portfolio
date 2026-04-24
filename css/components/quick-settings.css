@@ -13,8 +13,8 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
     box-shadow:
-        0 2px 8px rgba(0,0,0,0.1),
-        0 16px 40px rgba(0,0,0,0.22);
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        0 16px 40px rgba(0, 0, 0, 0.22);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
@@ -30,10 +30,10 @@
     gap: 16px;
 }
 
-[data-theme="dark"] .quick-settings-panel {
+[data-theme='dark'] .quick-settings-panel {
     box-shadow:
-        0 2px 8px rgba(0,0,0,0.38),
-        0 16px 40px rgba(0,0,0,0.6);
+        0 2px 8px rgba(0, 0, 0, 0.38),
+        0 16px 40px rgba(0, 0, 0, 0.6);
 }
 
 .quick-settings-panel.visible {
@@ -75,13 +75,13 @@
     transform: scale(0.97);
 }
 
-.qs-tile[aria-pressed="true"] {
+.qs-tile[aria-pressed='true'] {
     background: rgba(53, 132, 228, 0.12);
     border-color: var(--fedora-blue);
     color: var(--fedora-blue);
 }
 
-[data-theme="dark"] .qs-tile[aria-pressed="true"] {
+[data-theme='dark'] .qs-tile[aria-pressed='true'] {
     background: rgba(53, 132, 228, 0.18);
 }
 
@@ -97,7 +97,7 @@
     transition: background 0.15s ease;
 }
 
-.qs-tile[aria-pressed="true"] .qs-tile-icon {
+.qs-tile[aria-pressed='true'] .qs-tile-icon {
     background: var(--fedora-blue);
     color: #fff;
 }
@@ -149,7 +149,7 @@
     background: var(--fedora-blue);
     cursor: pointer;
     border: 2px solid var(--surface-1);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.12s ease;
 }
 
@@ -189,7 +189,10 @@
     font-size: 11px;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+    transition:
+        background 0.12s ease,
+        color 0.12s ease,
+        transform 0.12s ease;
 }
 
 .qs-footer-btn:hover {
@@ -208,6 +211,8 @@
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .quick-settings-panel {
-        transition: opacity 0.01ms, visibility 0.01ms;
+        transition:
+            opacity 0.01ms,
+            visibility 0.01ms;
     }
 }

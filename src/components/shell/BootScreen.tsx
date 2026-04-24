@@ -78,7 +78,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
             if (lineIndex < BOOT_LOG_MESSAGES.length) {
                 const line = BOOT_LOG_MESSAGES[lineIndex];
                 if (typeof line === 'string') {
-                    setBootLines((prev) => [...prev, line]);
+                    setBootLines(prev => [...prev, line]);
                 }
                 lineIndex++;
                 timeout = setTimeout(addLine, BOOT_LINE_INTERVAL_MS);
@@ -122,20 +122,22 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
 
             {phase === 'bootlog' && (
                 <div className="boot-log" ref={bootLogRef}>
-                    {bootLines.filter((line): line is string => typeof line === 'string').map((line, i) => (
-                        <div key={i}>
-                            {line.startsWith('[  OK  ]') ? (
-                                <>
-                                    <span className="ok">[  OK  ]</span>
-                                    {line.substring(8)}
-                                </>
-                            ) : line.startsWith('[') ? (
-                                <span className="info">{line}</span>
-                            ) : (
-                                line
-                            )}
-                        </div>
-                    ))}
+                    {bootLines
+                        .filter((line): line is string => typeof line === 'string')
+                        .map((line, i) => (
+                            <div key={i}>
+                                {line.startsWith('[  OK  ]') ? (
+                                    <>
+                                        <span className="ok">[ OK ]</span>
+                                        {line.substring(8)}
+                                    </>
+                                ) : line.startsWith('[') ? (
+                                    <span className="info">{line}</span>
+                                ) : (
+                                    line
+                                )}
+                            </div>
+                        ))}
                 </div>
             )}
 

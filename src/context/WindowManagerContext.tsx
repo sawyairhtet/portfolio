@@ -8,10 +8,7 @@ interface WindowManagerContextValue {
     minimizeWindow: (appId: AppId) => void;
     toggleMaximize: (appId: AppId) => void;
     bringToFront: (appId: AppId) => void;
-    closeAllWindows: () => void;
-    getActiveWindowIds: () => AppId[];
     focusedApp: AppId | null;
-    currentZIndex: number;
     updateWindowPosition: (appId: AppId, top: string, left: string) => void;
     updateWindowSize: (appId: AppId, width: string, height: string) => void;
     setSnapState: (appId: AppId, snap: 'none' | 'left' | 'right') => void;
@@ -24,10 +21,7 @@ const WindowManagerContext = createContext<WindowManagerContextValue>({
     minimizeWindow: () => {},
     toggleMaximize: () => {},
     bringToFront: () => {},
-    closeAllWindows: () => {},
-    getActiveWindowIds: () => [],
     focusedApp: null,
-    currentZIndex: 100,
     updateWindowPosition: () => {},
     updateWindowSize: () => {},
     setSnapState: () => {},
@@ -73,36 +67,44 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
     const [currentZIndex, setCurrentZIndex] = useState(100);
     const [focusedApp, setFocusedApp] = useState<AppId | null>(null);
 
-    const openWindow = useCallback((appId: AppId) => {
-        setWindows((prev) => {
-            const next = new Map(prev);
-            const existing = next.get(appId);
-            if (existing) {
-                // Already open — bring to front and unminimize
-                const newZ = currentZIndex + 1;
-                next.set(appId, { ...existing, isOpen: true, isMinimized: false, zIndex: newZ });
-                setCurrentZIndex(newZ);
-            } else {
-                const newZ = currentZIndex + 1;
-                next.set(appId, createWindowInfo(appId, newZ));
-                setCurrentZIndex(newZ);
-            }
-            return next;
-        });
-        setFocusedApp(appId);
-    }, [currentZIndex]);
+    const openWindow = useCallback(
+        (appId: AppId) => {
+            setWindows(prev => {
+                const next = new Map(prev);
+                const existing = next.get(appId);
+                if (existing) {
+                    // Already open — bring to front and unminimize
+                    const newZ = currentZIndex + 1;
+                    next.set(appId, {
+                        ...existing,
+                        isOpen: true,
+                        isMinimized: false,
+                        zIndex: newZ,
+                    });
+                    setCurrentZIndex(newZ);
+                } else {
+                    const newZ = currentZIndex + 1;
+                    next.set(appId, createWindowInfo(appId, newZ));
+                    setCurrentZIndex(newZ);
+                }
+                return next;
+            });
+            setFocusedApp(appId);
+        },
+        [currentZIndex]
+    );
 
     const closeWindow = useCallback((appId: AppId) => {
-        setWindows((prev) => {
+        setWindows(prev => {
             const next = new Map(prev);
             next.delete(appId);
             return next;
         });
-        setFocusedApp((prev) => (prev === appId ? null : prev));
+        setFocusedApp(prev => (prev === appId ? null : prev));
     }, []);
 
     const minimizeWindow = useCallback((appId: AppId) => {
-        setWindows((prev) => {
+        setWindows(prev => {
             const next = new Map(prev);
             const win = next.get(appId);
             if (win) {
@@ -110,11 +112,11 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
             }
             return next;
         });
-        setFocusedApp((prev) => (prev === appId ? null : prev));
+        setFocusedApp(prev => (prev === appId ? null : prev));
     }, []);
 
     const toggleMaximize = useCallback((appId: AppId) => {
-        setWindows((prev) => {
+        setWindows(prev => {
             const next = new Map(prev);
             const win = next.get(appId);
             if (win) {
@@ -128,33 +130,25 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         });
     }, []);
 
-    const bringToFront = useCallback((appId: AppId) => {
-        setWindows((prev) => {
-            const next = new Map(prev);
-            const win = next.get(appId);
-            if (win) {
-                const newZ = currentZIndex + 1;
-                next.set(appId, { ...win, zIndex: newZ, isMinimized: false });
-                setCurrentZIndex(newZ);
-            }
-            return next;
-        });
-        setFocusedApp(appId);
-    }, [currentZIndex]);
-
-    const closeAllWindows = useCallback(() => {
-        setWindows(new Map());
-        setFocusedApp(null);
-    }, []);
-
-    const getActiveWindowIds = useCallback((): AppId[] => {
-        return Array.from(windows.entries())
-            .filter(([, w]) => w.isOpen)
-            .map(([id]) => id);
-    }, [windows]);
+    const bringToFront = useCallback(
+        (appId: AppId) => {
+            setWindows(prev => {
+                const next = new Map(prev);
+                const win = next.get(appId);
+                if (win) {
+                    const newZ = currentZIndex + 1;
+                    next.set(appId, { ...win, zIndex: newZ, isMinimized: false });
+                    setCurrentZIndex(newZ);
+                }
+                return next;
+            });
+            setFocusedApp(appId);
+        },
+        [currentZIndex]
+    );
 
     const updateWindowPosition = useCallback((appId: AppId, top: string, left: string) => {
-        setWindows((prev) => {
+        setWindows(prev => {
             const next = new Map(prev);
             const win = next.get(appId);
             if (win) {
@@ -165,7 +159,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const updateWindowSize = useCallback((appId: AppId, width: string, height: string) => {
-        setWindows((prev) => {
+        setWindows(prev => {
             const next = new Map(prev);
             const win = next.get(appId);
             if (win) {
@@ -176,7 +170,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const setSnapState = useCallback((appId: AppId, snap: 'none' | 'left' | 'right') => {
-        setWindows((prev) => {
+        setWindows(prev => {
             const next = new Map(prev);
             const win = next.get(appId);
             if (win) {
@@ -195,10 +189,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                 minimizeWindow,
                 toggleMaximize,
                 bringToFront,
-                closeAllWindows,
-                getActiveWindowIds,
                 focusedApp,
-                currentZIndex,
                 updateWindowPosition,
                 updateWindowSize,
                 setSnapState,

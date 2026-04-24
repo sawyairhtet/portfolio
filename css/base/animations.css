@@ -2,19 +2,6 @@
    ANIMATIONS - Base Keyframes
    ============================================ */
 
-/* Icon Fade In */
-@keyframes iconFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.8);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
 /* Context Menu In */
 @keyframes contextMenuIn {
     from {
@@ -43,20 +30,6 @@
     }
 }
 
-/* Construction Bounce */
-@keyframes constructionBounce {
-    0%,
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-3px) rotate(-5deg);
-    }
-    75% {
-        transform: translateY(-3px) rotate(5deg);
-    }
-}
-
 /* Sticky Note In */
 @keyframes stickyNoteIn {
     0% {
@@ -75,112 +48,6 @@
     }
 }
 
-/* Window Open — GNOME 49 Mutter spring (quad ease-out with slight overshoot) */
-@keyframes windowBounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.92) translateY(6px);
-    }
-    60% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-/* Window Close — GNOME 49 Mutter spring */
-@keyframes windowBounceOut {
-    0% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.94) translateY(4px);
-    }
-}
-
-/* Mutter Minimize Animation — GNOME 49 (scale-down toward dock) */
-@keyframes mutterMinimize {
-    0% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.5) translateY(50vh);
-    }
-}
-
-/* Mutter Restore Animation — GNOME 49 */
-@keyframes mutterRestore {
-    0% {
-        opacity: 0;
-        transform: scale(0.5) translateY(50vh);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-/* Shimmer Move */
-@keyframes shimmerMove {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 100%;
-    }
-}
-
-/* Swipe Hint Pulse */
-@keyframes swipeHintPulse {
-    0%,
-    100% {
-        transform: translateX(-50%) scale(1);
-    }
-    50% {
-        transform: translateX(-50%) scale(1.02);
-    }
-}
-
-/* Nav Hint Bounce */
-@keyframes navHintBounce {
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-/* Content Slide In */
-@keyframes contentSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Matrix Blink */
-@keyframes matrixBlink {
-    0%,
-    100% {
-        opacity: 0.7;
-    }
-    50% {
-        opacity: 0.3;
-    }
-}
-
 /* Dock Bounce (Mobile) */
 @keyframes dockBounce {
     0% {
@@ -191,14 +58,6 @@
     }
     100% {
         transform: scale(1);
-    }
-}
-
-/* Ripple Effect (moved from JS runtime injection in transitions.js) */
-@keyframes ripple-effect {
-    to {
-        transform: scale(2.5);
-        opacity: 0;
     }
 }
 
@@ -237,32 +96,6 @@
     }
 }
 
-/* Toast Notification — GNOME 49 scale+fade from top */
-@keyframes toastSlideDown {
-    0% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-16px) scale(0.95);
-    }
-    60% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1);
-    }
-}
-
-@keyframes toastSlideUp {
-    0% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-12px) scale(0.95);
-    }
-}
-
 /* Notification Center scale-in (GNOME 49 pop-over animation) */
 @keyframes popoverScaleIn {
     0% {
@@ -291,7 +124,9 @@
 
 /* Search ellipse dots (GNOME 49 Overview animated ellipse) */
 @keyframes searchDot {
-    0%, 60%, 100% {
+    0%,
+    60%,
+    100% {
         opacity: 0.25;
         transform: scale(0.75);
     }
@@ -303,22 +138,44 @@
 
 /* Dock icon launch bounce */
 @keyframes dockIconLaunch {
-    0%   { transform: scale(1); }
-    30%  { transform: scale(0.82); }
-    60%  { transform: scale(1.18); }
-    80%  { transform: scale(0.96); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(0.82);
+    }
+    60% {
+        transform: scale(1.18);
+    }
+    80% {
+        transform: scale(0.96);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Workspace switch slide */
 @keyframes workspaceSlideLeft {
-    from { transform: translateX(0); opacity: 1; }
-    to   { transform: translateX(-60px); opacity: 0; }
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-60px);
+        opacity: 0;
+    }
 }
 
 @keyframes workspaceSlideRight {
-    from { transform: translateX(60px); opacity: 0; }
-    to   { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(60px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* ============================================

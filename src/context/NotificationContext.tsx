@@ -30,32 +30,38 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const [isDnd, setIsDnd] = useState(() => localStorage.getItem('portfolioDnd') === 'true');
     const toastIdRef = useRef(0);
 
-    const addNotification = useCallback((notification: Omit<Notification, 'id'>) => {
-        if (isDnd) return;
-        const id = `notif-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-        setNotifications((prev) => [{ ...notification, id }, ...prev]);
-    }, [isDnd]);
+    const addNotification = useCallback(
+        (notification: Omit<Notification, 'id'>) => {
+            if (isDnd) return;
+            const id = `notif-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+            setNotifications(prev => [{ ...notification, id }, ...prev]);
+        },
+        [isDnd]
+    );
 
     const dismissNotification = useCallback((id: string) => {
-        setNotifications((prev) => prev.filter((n) => n.id !== id));
+        setNotifications(prev => prev.filter(n => n.id !== id));
     }, []);
 
     const clearAllNotifications = useCallback(() => {
         setNotifications([]);
     }, []);
 
-    const showToast = useCallback((message: string, icon = 'fas fa-info-circle') => {
-        if (isDnd) return;
+    const showToast = useCallback(
+        (message: string, icon = 'fas fa-info-circle') => {
+            if (isDnd) return;
 
-        const id = `toast-${toastIdRef.current++}`;
-        const toast: Toast = { id, message, icon };
-        setToasts((prev) => [...prev, toast]);
+            const id = `toast-${toastIdRef.current++}`;
+            const toast: Toast = { id, message, icon };
+            setToasts(prev => [...prev, toast]);
 
-        // Auto-remove after 3 seconds
-        setTimeout(() => {
-            setToasts((prev) => prev.filter((t) => t.id !== id));
-        }, 3000);
-    }, [isDnd]);
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                setToasts(prev => prev.filter(t => t.id !== id));
+            }, 3000);
+        },
+        [isDnd]
+    );
 
     const setDnd = useCallback((dnd: boolean) => {
         setIsDnd(dnd);

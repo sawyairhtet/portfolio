@@ -1,177 +1,10 @@
 /* ============================================
-   UI ELEMENTS - Hints, Notifications, Boot Screen
-   ============================================ */
-
-/* ============================================
-   FIRST-VISIT NAVIGATION HINT
-   ============================================ */
-
-.nav-hint {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--color-glass-dark);
-    color: var(--color-text-light);
-    padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    max-width: 320px;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-border);
-    z-index: 2000;
-    opacity: 0;
-    visibility: hidden;
-    transition:
-        opacity 0.4s ease,
-        visibility 0.4s ease,
-        transform 0.4s ease;
-}
-
-.nav-hint.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.nav-hint h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: var(--spacing-md);
-    color: var(--color-primary);
-}
-
-.nav-hint p {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: var(--spacing-lg);
-    opacity: 0.9;
-}
-
-.nav-hint-icon {
-    font-size: 48px;
-    margin-bottom: var(--spacing-md);
-    animation: navHintBounce 2s ease-in-out infinite;
-}
-
-.nav-hint-dismiss {
-    background: var(--gradient-btn);
-    color: var(--text-on-accent);
-    border: none;
-    padding: 10px 24px;
-    border-radius: var(--radius-md);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.nav-hint-dismiss:hover {
-    filter: brightness(1.07);
-    box-shadow: 0 4px 12px rgba(53, 132, 228, 0.4);
-}
-
-/* ============================================
-   SWIPE GESTURE HINT
-   ============================================ */
-
-.swipe-hint {
-    position: fixed;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--color-window-body-bg);
-    color: var(--color-window-body-text);
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 13px;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-border);
-    opacity: 0;
-    visibility: hidden;
-    transition:
-        opacity 0.3s ease,
-        visibility 0.3s ease;
-    z-index: 1500;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.swipe-hint.visible {
-    opacity: 1;
-    visibility: visible;
-    animation: swipeHintPulse 2s ease-in-out infinite;
-}
-
-.swipe-hint i {
-    color: var(--color-primary);
-}
-
-/* ============================================
-   TOAST NOTIFICATION
-   ============================================ */
-
-.toast-notification {
-    position: fixed;
-    top: calc(var(--topbar-height) + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(-16px) scale(0.95);
-    background: var(--surface-1);
-    color: var(--text-primary);
-    padding: 10px 20px;
-    border-radius: var(--border-radius-lg);
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.12),
-        0 8px 24px rgba(0,0,0,0.18);
-    border: 1px solid var(--border-color);
-    font-size: 13px;
-    font-weight: 500;
-    z-index: var(--z-tooltip);
-    opacity: 0;
-    pointer-events: none;
-    transition:
-        transform 0.22s cubic-bezier(0.2, 0.82, 0.38, 1),
-        opacity 0.18s ease;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    white-space: nowrap;
-    max-width: calc(100vw - 32px);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-[data-theme="dark"] .toast-notification {
-    background: rgba(60, 60, 60, 0.96);
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.3),
-        0 8px 24px rgba(0,0,0,0.45);
-}
-
-.toast-notification.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
-    pointer-events: auto;
-    animation: toastSlideDown 0.22s cubic-bezier(0.2, 0.82, 0.38, 1) forwards;
-}
-
-.toast-notification i {
-    color: var(--color-primary);
-}
-
-/* ============================================
-   BOOT SCREEN - Linux Boot Log Style
+   React shell extras: boot screen and sticky notes
    ============================================ */
 
 .boot-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: var(--boot-bg);
     display: flex;
     flex-direction: column;
@@ -208,7 +41,7 @@
     color: rgba(255, 255, 255, 0.85);
     font-family: var(--font-mono);
     font-size: 14px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0;
     animation: bootHintPulse 2s ease-in-out infinite;
 }
 
@@ -227,26 +60,15 @@
     color: var(--boot-ok);
 }
 
-.boot-log .fail {
-    color: var(--boot-fail);
-}
-
 .boot-log .info {
     color: var(--boot-info);
 }
 
-/* ============================================
-   STICKY NOTES
-   ============================================ */
-
-/* Sticky notes hidden by default (non-GNOME feature).
-   Enable via body.show-sticky-notes */
-#sticky-notes {
-    display: none;
-}
-
-body.show-sticky-notes #sticky-notes {
-    display: block;
+.sticky-notes-container {
+    position: fixed;
+    inset: var(--topbar-height) 0 0;
+    z-index: 50;
+    pointer-events: none;
 }
 
 .sticky-note {
@@ -262,17 +84,15 @@ body.show-sticky-notes #sticky-notes {
     white-space: pre-line;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     cursor: grab;
-    z-index: 50;
     user-select: none;
+    pointer-events: auto;
+    opacity: 0;
+    animation: stickyNoteIn 0.6s ease forwards;
     transition:
         transform var(--transition-smooth),
         box-shadow var(--transition-normal);
-    /* Entrance animation */
-    opacity: 0;
-    animation: stickyNoteIn 0.6s ease forwards;
 }
 
-/* Staggered entrance for sticky notes */
 .sticky-note:nth-child(1) {
     animation-delay: 0.5s;
 }
@@ -283,6 +103,10 @@ body.show-sticky-notes #sticky-notes {
 
 .sticky-note:nth-child(3) {
     animation-delay: 0.9s;
+}
+
+.sticky-note:nth-child(4) {
+    animation-delay: 1.1s;
 }
 
 .sticky-note:hover {
@@ -296,109 +120,16 @@ body.show-sticky-notes #sticky-notes {
     z-index: 999;
 }
 
-/* Different note colors */
-.sticky-note.pink {
+.sticky-pink {
     background: var(--sticky-pink);
 }
 
-.sticky-note.blue {
+.sticky-blue {
     background: var(--sticky-blue-bg);
     color: var(--sticky-blue-text);
 }
 
-.sticky-note.green {
+.sticky-green {
     background: var(--sticky-green-bg);
     color: var(--sticky-green-text);
-}
-
-/* ============================================
-   SKELETON LOADER / SHIMMER EFFECT
-   ============================================ */
-
-.skeleton-shimmer {
-    position: relative;
-    overflow: hidden;
-}
-
-.skeleton-shimmer::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.15) 50%,
-        transparent 100%
-    );
-    animation: shimmerMove 1.5s ease-in-out infinite;
-}
-
-/* ============================================
-   PWA INSTALL BANNER
-   ============================================ */
-
-.pwa-install-banner {
-    position: fixed;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    background: var(--surface-1);
-    color: var(--text-primary);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-border);
-    z-index: var(--z-modal);
-    font-size: 14px;
-    opacity: 0;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.pwa-install-banner.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.pwa-install-banner span {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.pwa-install-banner #pwa-install-btn {
-    background: var(--gradient-btn);
-    color: var(--text-on-accent);
-    border: none;
-    padding: 6px 16px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-.pwa-install-banner #pwa-dismiss-btn {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px 8px;
-    line-height: 1;
-}
-
-/* ============================================
-   WIDGETS
-   ============================================ */
-
-.widget {
-    background: var(--color-glass-light);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
 }

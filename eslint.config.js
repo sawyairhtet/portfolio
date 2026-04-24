@@ -1,4 +1,4 @@
-// ESLint Configuration - Modern Flat Config
+// ESLint Configuration - React / TypeScript flat config
 // @ts-check
 
 import js from '@eslint/js';
@@ -8,36 +8,6 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 
 export default [
     js.configs.recommended,
-    {
-        files: ['**/*.js'],
-        languageOptions: {
-            ecmaVersion: 2024,
-            sourceType: 'module',
-            globals: {
-                ...globals.browser,
-                ...globals.es2021,
-            },
-        },
-        rules: {
-            // Code Quality
-            'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-            'no-console': ['warn', { allow: ['error', 'warn'] }],
-            'no-var': 'error',
-            'prefer-const': 'error',
-            'prefer-arrow-callback': 'error',
-
-            // Best Practices
-            eqeqeq: ['error', 'always'],
-            curly: ['error', 'all'],
-            'no-eval': 'error',
-            'no-implied-eval': 'error',
-            'no-return-await': 'error',
-
-            // Style (Prettier handles formatting, these catch issues)
-            'no-trailing-spaces': 'error',
-            'eol-last': 'error',
-        },
-    },
     {
         files: ['src/**/*.{ts,tsx}'],
         languageOptions: {
@@ -62,11 +32,14 @@ export default [
         rules: {
             'no-undef': 'off',
             'no-unused-vars': 'off',
-            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+            ],
         },
     },
     {
-        files: ['src/tests/**/*.{ts,tsx}', 'test/**/*.js'],
+        files: ['src/tests/**/*.{ts,tsx}'],
         languageOptions: {
             globals: {
                 afterEach: 'readonly',

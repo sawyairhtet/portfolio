@@ -1,8 +1,8 @@
 import { PROJECTS } from '../../config/data';
 
 export function ProjectsApp() {
-    const featured = PROJECTS.find((project) => project.featured);
-    const supporting = PROJECTS.filter((project) => !project.featured);
+    const featured = PROJECTS.find(project => project.featured);
+    const supporting = PROJECTS.filter(project => !project.featured);
 
     return (
         <div className="projects-app">
@@ -21,25 +21,33 @@ export function ProjectsApp() {
                     <div className="project-detail">
                         <span className="project-badge">Featured</span>
                         <h2>{featured.title}</h2>
-                        <p className="project-role">{featured.role} / {featured.platform}</p>
+                        <p className="project-role">
+                            {featured.role} / {featured.platform}
+                        </p>
                         <p>{featured.summary}</p>
                         <div className="tech-stack">
-                            {featured.techStack.map((tech) => (
-                                <span key={tech} className="tech-badge">{tech}</span>
+                            {featured.techStack.map(tech => (
+                                <span key={tech} className="tech-badge">
+                                    {tech}
+                                </span>
                             ))}
                         </div>
                         <ul className="proof-list">
-                            {featured.proofPoints.map((point) => (
+                            {featured.proofPoints.map(point => (
                                 <li key={point}>{point}</li>
                             ))}
                         </ul>
                         <div className="project-actions">
-                            {featured.links.map((link) => (
+                            {featured.links.map(link => (
                                 <a
                                     key={link.href}
                                     href={link.href}
                                     target={link.href.startsWith('http') ? '_blank' : undefined}
-                                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                    rel={
+                                        link.href.startsWith('http')
+                                            ? 'noopener noreferrer'
+                                            : undefined
+                                    }
                                     className={`project-action${link.primary ? ' primary' : ''}`}
                                 >
                                     <i className={link.icon} aria-hidden="true" />
@@ -52,7 +60,7 @@ export function ProjectsApp() {
             )}
 
             <div className="projects-grid">
-                {supporting.map((project) => (
+                {supporting.map(project => (
                     <article key={project.id} className="project-card">
                         <div className="project-preview">
                             {project.media ? (
@@ -62,25 +70,33 @@ export function ProjectsApp() {
                             )}
                         </div>
                         <h3>{project.title}</h3>
-                        <p className="project-role">{project.role} / {project.platform}</p>
+                        <p className="project-role">
+                            {project.role} / {project.platform}
+                        </p>
                         <p>{project.summary}</p>
                         <div className="tech-stack">
-                            {project.techStack.map((tech) => (
-                                <span key={tech} className="tech-badge">{tech}</span>
+                            {project.techStack.map(tech => (
+                                <span key={tech} className="tech-badge">
+                                    {tech}
+                                </span>
                             ))}
                         </div>
                         <ul className="proof-list compact">
-                            {project.proofPoints.slice(0, 2).map((point) => (
+                            {project.proofPoints.slice(0, 2).map(point => (
                                 <li key={point}>{point}</li>
                             ))}
                         </ul>
                         <div className="project-actions">
-                            {project.links.map((link) => (
+                            {project.links.map(link => (
                                 <a
                                     key={link.href}
                                     href={link.href}
                                     target={link.href.startsWith('http') ? '_blank' : undefined}
-                                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                    rel={
+                                        link.href.startsWith('http')
+                                            ? 'noopener noreferrer'
+                                            : undefined
+                                    }
                                     className={`project-action${link.primary ? ' primary' : ''}`}
                                 >
                                     <i className={link.icon} aria-hidden="true" />

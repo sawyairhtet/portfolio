@@ -10,13 +10,17 @@ export function StickyNotes() {
     const [positions, setPositions] = useState<StickyNotePosition[]>(() => {
         const saved = localStorage.getItem('stickyNotePositions');
         if (saved) {
-            try { return JSON.parse(saved); } catch { /* use defaults */ }
+            try {
+                return JSON.parse(saved);
+            } catch {
+                /* use defaults */
+            }
         }
-        return stickyNotesData.map((n) => ({ x: n.x, y: n.y }));
+        return stickyNotesData.map(n => ({ x: n.x, y: n.y }));
     });
 
     const dragging = useRef<{ index: number; offsetX: number; offsetY: number } | null>(null);
-    const defaultPositions = useCallback(() => stickyNotesData.map((n) => ({ x: n.x, y: n.y })), []);
+    const defaultPositions = useCallback(() => stickyNotesData.map(n => ({ x: n.x, y: n.y })), []);
 
     useEffect(() => {
         const reset = () => setPositions(defaultPositions());
@@ -38,7 +42,7 @@ export function StickyNotes() {
             const newX = ((ev.clientX - dragging.current.offsetX) / window.innerWidth) * 100;
             const newY = ((ev.clientY - dragging.current.offsetY) / window.innerHeight) * 100;
 
-            setPositions((prev) => {
+            setPositions(prev => {
                 const next = [...prev];
                 next[dragging.current!.index] = {
                     x: Math.max(0, Math.min(90, newX)),
@@ -50,7 +54,7 @@ export function StickyNotes() {
 
         const handleMouseUp = () => {
             // Save positions
-            setPositions((prev) => {
+            setPositions(prev => {
                 localStorage.setItem('stickyNotePositions', JSON.stringify(prev));
                 return prev;
             });
@@ -75,7 +79,7 @@ export function StickyNotes() {
                         transform: `rotate(${note.rotation}deg)`,
                         cursor: 'grab',
                     }}
-                    onMouseDown={(e) => handleMouseDown(e, i)}
+                    onMouseDown={e => handleMouseDown(e, i)}
                 >
                     {note.text.split('\n').map((line, j) => (
                         <span key={j}>

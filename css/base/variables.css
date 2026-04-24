@@ -1,243 +1,241 @@
 /* ── Fedora 43 / GNOME 49 / Adwaita Design Tokens ── */
 
 :root {
-  /* ── Accent & Brand ── */
-  --fedora-blue:        #3584e4;
-  --fedora-blue-dark:   #1c6fcf;
-  --fedora-blue-light:  #62a0ea;
-  --fedora-blue-pale:   #dde8f8;
-  --fedora-red:         #e01b24;
-  --fedora-green:       #2ec27e;
-  --fedora-yellow:      #f5c211;
-  --fedora-purple:      #9141ac;
-  --fedora-teal:        #2190a4;
+    /* ── Accent & Brand ── */
+    --fedora-blue: #3584e4;
+    --fedora-blue-dark: #1c6fcf;
+    --fedora-blue-light: #62a0ea;
+    --fedora-blue-pale: #dde8f8;
+    --fedora-red: #e01b24;
+    --fedora-green: #2ec27e;
+    --fedora-yellow: #f5c211;
+    --fedora-purple: #9141ac;
+    --fedora-teal: #2190a4;
 
-  /* ── Light Mode Surfaces (Adwaita) ── */
-  --surface-0:          #ffffff;
-  --surface-1:          #f6f5f4;
-  --surface-2:          #edeceb;
-  --surface-3:          #deddda;
-  --surface-4:          #c0bfbc;
+    /* ── Light Mode Surfaces (Adwaita) ── */
+    --surface-0: #ffffff;
+    --surface-1: #f6f5f4;
+    --surface-2: #edeceb;
+    --surface-3: #deddda;
+    --surface-4: #c0bfbc;
 
-  /* ── Light Mode Text ── */
-  --text-primary:       rgba(0, 0, 0, 0.87);
-  --text-secondary:     rgba(0, 0, 0, 0.55);
-  --text-disabled:      rgba(0, 0, 0, 0.38);
-  --text-on-accent:     #ffffff;
+    /* ── Light Mode Text ── */
+    --text-primary: rgba(0, 0, 0, 0.87);
+    --text-secondary: rgba(0, 0, 0, 0.55);
+    --text-disabled: rgba(0, 0, 0, 0.38);
+    --text-on-accent: #ffffff;
 
-  /* ── Light Mode UI ── */
-  --border-color:       rgba(0, 0, 0, 0.12);
-  --border-focus:       var(--fedora-blue);
-  --shadow-window:      0 1px 3px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.24);
-  --shadow-popover:     0 2px 12px rgba(0, 0, 0, 0.18);
+    /* ── Light Mode UI ── */
+    --border-color: rgba(0, 0, 0, 0.12);
+    --border-focus: var(--fedora-blue);
+    --shadow-window: 0 1px 3px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.24);
+    --shadow-popover: 0 2px 12px rgba(0, 0, 0, 0.18);
 
-  /* ── Typography ── */
-  --font-ui:   'Adwaita Sans', 'Inter', 'Cantarell', system-ui, sans-serif;
-  --font-mono: 'Adwaita Mono', 'JetBrains Mono', 'Source Code Pro', monospace;
-  --font-size-base: 10pt;
-  --font-size-sm:   9.75pt;
-  --font-size-lg:   13pt;
-  --font-size-xl:   15pt;
+    /* ── Typography ── */
+    --font-ui: 'Adwaita Sans', 'Inter', 'Cantarell', system-ui, sans-serif;
+    --font-mono: 'Adwaita Mono', 'JetBrains Mono', 'Source Code Pro', monospace;
+    --font-size-base: 10pt;
+    --font-size-sm: 9.75pt;
+    --font-size-lg: 13pt;
+    --font-size-xl: 15pt;
 
-  /* ── Window Chrome ── */
-  --window-header-height:  47px;
-  --window-border-radius:  12px;
-  --window-shadow:         var(--shadow-window);
-  --window-header-bg:      var(--surface-1);
-  --window-header-border:  var(--surface-3);
-  --window-body-bg:        var(--surface-0);
-  --btn-close-color:       var(--fedora-red);
-  --btn-min-color:         var(--fedora-yellow);
-  --btn-max-color:         var(--fedora-green);
-  --btn-size:              14px;
-  --btn-gap:               8px;
+    /* ── Window Chrome ── */
+    --window-header-height: 47px;
+    --window-border-radius: 12px;
+    --window-shadow: var(--shadow-window);
+    --window-header-bg: var(--surface-1);
+    --window-header-border: var(--surface-3);
+    --window-body-bg: var(--surface-0);
+    --btn-close-color: var(--fedora-red);
+    --btn-min-color: var(--fedora-yellow);
+    --btn-max-color: var(--fedora-green);
+    --btn-size: 14px;
+    --btn-gap: 8px;
 
-  /* ── Top Bar ── */
-  --topbar-height:         32px;
-  --topbar-bg:             rgba(0, 0, 0, 1);
-  --topbar-bg-light:       rgba(237, 236, 235, 1);
-  --topbar-blur:           blur(20px);
+    /* ── Top Bar ── */
+    --topbar-height: 32px;
+    --topbar-bg: rgba(0, 0, 0, 1);
+    --topbar-bg-light: rgba(237, 236, 235, 1);
+    --topbar-blur: blur(20px);
 
-  /* ── Dock (Dash-to-Dock style) ── */
-  --dock-bg:               rgba(36, 36, 36, 0.78);
-  --dock-blur:             blur(24px);
-  --dock-border-radius:    16px;
-  --dock-padding:          8px 6px;
-  --dock-icon-size:        48px;
-  --dock-gap:              4px;
-  --dock-border:           1px solid rgba(255, 255, 255, 0.08);
-  --dock-active-dot:       var(--fedora-blue);
-  --dock-hover-bg:         rgba(255, 255, 255, 0.1);
+    /* ── Dock (Dash-to-Dock style) ── */
+    --dock-bg: rgba(36, 36, 36, 0.78);
+    --dock-blur: blur(24px);
+    --dock-border-radius: 16px;
+    --dock-padding: 8px 6px;
+    --dock-icon-size: 48px;
+    --dock-gap: 4px;
+    --dock-border: 1px solid rgba(255, 255, 255, 0.08);
+    --dock-active-dot: var(--fedora-blue);
+    --dock-hover-bg: rgba(255, 255, 255, 0.1);
 
-  /* ── Terminal ── */
-  --terminal-bg:           #1e1e1e;
-  --terminal-text:         #cdd6f4;
-  --terminal-prompt:       #8ae234;
-  --terminal-cursor:       var(--fedora-blue);
-  --terminal-selection:    rgba(53, 132, 228, 0.35);
-  --terminal-font-size:    13px;
+    /* ── Terminal ── */
+    --terminal-bg: #1e1e1e;
+    --terminal-text: #cdd6f4;
+    --terminal-prompt: #8ae234;
+    --terminal-cursor: var(--fedora-blue);
+    --terminal-selection: rgba(53, 132, 228, 0.35);
+    --terminal-font-size: 13px;
 
-  /* ── Boot / Plymouth ── */
-  --boot-bg:            #000000;
-  --boot-text:          #ffffff;
-  --boot-ok:            #4e9a06;
-  --boot-fail:          #cc0000;
-  --boot-info:          #729fcf;
+    /* ── Boot / Plymouth ── */
+    --boot-bg: #000000;
+    --boot-text: #ffffff;
+    --boot-ok: #4e9a06;
+    --boot-info: #729fcf;
 
-  /* ── Matrix Effect ── */
-  --matrix-bg:          #000000;
-  --matrix-text:        #00ff00;
-  --matrix-exit-text:   #00ff00;
+    /* ── Sticky Notes ── */
+    --sticky-bg: #fff9c4;
+    --sticky-text: #5d4037;
+    --sticky-pink: #ffd6e0;
+    --sticky-blue-bg: #d4f1f4;
+    --sticky-blue-text: #1a535c;
+    --sticky-green-bg: #d8f3dc;
+    --sticky-green-text: #2d6a4f;
 
-  /* ── Sticky Notes ── */
-  --sticky-bg:          #fff9c4;
-  --sticky-text:        #5d4037;
-  --sticky-pink:        #ffd6e0;
-  --sticky-blue-bg:     #d4f1f4;
-  --sticky-blue-text:   #1a535c;
-  --sticky-green-bg:    #d8f3dc;
-  --sticky-green-text:  #2d6a4f;
+    /* ── App Icon Gradients (Dock + Activities) ── */
+    --icon-projects: #5b9bd5;
+    --icon-contact: #c061cb;
+    --icon-terminal: #57e389;
+    --icon-settings-start: #c0bfbc;
+    --icon-settings-end: #9a9996;
+    --icon-skills: #33d17a;
+    --icon-links-start: #f5c211;
+    --icon-links-end: #e5a50a;
+    --icon-focus-start: #ff7800;
+    --icon-focus-end: #e5611a;
 
-  /* ── App Icon Gradients (Dock + Activities) ── */
-  --icon-projects:       #5b9bd5;
-  --icon-contact:        #c061cb;
-  --icon-terminal:       #57e389;
-  --icon-settings-start: #c0bfbc;
-  --icon-settings-end:   #9a9996;
-  --icon-skills:         #33d17a;
-  --icon-links-start:    #f5c211;
-  --icon-links-end:      #e5a50a;
-  --icon-focus-start:    #ff7800;
-  --icon-focus-end:      #e5611a;
+    /* ── Status Indicators ── */
+    --status-available: #4caf50;
+    --disabled-start: #888888;
+    --disabled-end: #666666;
 
-  /* ── Status Indicators ── */
-  --status-available:    #4caf50;
-  --disabled-start:      #888888;
-  --disabled-end:        #666666;
+    /* ── Wallpaper ── */
+    --gradient-wallpaper: linear-gradient(
+        135deg,
+        #1e3a5f 0%,
+        #3584e4 40%,
+        #1c6fcf 70%,
+        #0d2137 100%
+    );
 
-  /* ── Screenshot Flash ── */
-  --screenshot-flash:    #ffffff;
+    /* ── Misc ── */
+    --border-radius-sm: 6px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+    --transition-fast: 0.12s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 0.35s ease;
 
-  /* ── Wallpaper ── */
-  --gradient-wallpaper: linear-gradient(135deg, #1e3a5f 0%, #3584e4 40%, #1c6fcf 70%, #0d2137 100%);
-
-  /* ── Misc ── */
-  --border-radius-sm:   6px;
-  --border-radius-md:   8px;
-  --border-radius-lg:   12px;
-  --border-radius-xl:   16px;
-  --transition-fast:    0.12s ease;
-  --transition-base:    0.2s ease;
-  --transition-slow:    0.35s ease;
-
-  /* ── Legacy Aliases (map old variable names → new tokens) ──
+    /* ── Legacy Aliases (map old variable names → new tokens) ──
      These keep existing component CSS working during migration.
      Remove each alias once the referencing file is updated. */
-  --font-system:            var(--font-ui);
-  --color-primary:          var(--fedora-blue);
-  --color-bg-light:         var(--surface-1);
-  --color-bg-dark:          var(--surface-2);
-  --color-glass-light:      rgba(246, 245, 244, 0.85);
-  --color-glass-dark:       rgba(237, 236, 235, 0.9);
-  --color-text-light:       var(--text-primary);
-  --color-text-dark:        var(--text-secondary);
-  --color-border:           var(--border-color);
-  --color-card-bg:          rgba(0, 0, 0, 0.04);
-  --color-header-bg:        var(--window-header-bg);
-  --color-header-text:      var(--text-primary);
-  --color-window-body-bg:   var(--window-body-bg);
-  --color-window-body-text: var(--text-primary);
-  --color-close-bg:         var(--fedora-red);
-  --color-close-text:       var(--text-on-accent);
-  --color-control-bg:       rgba(0, 0, 0, 0.06);
-  --color-control-text:     var(--text-secondary);
-  --color-dock-bg:          var(--dock-bg);
-  --color-dock-item-bg:     rgba(0, 0, 0, 0.04);
-  --color-dock-item-hover:  rgba(53, 132, 228, 0.15);
-  --color-dock-text:        var(--text-primary);
-  --color-topbar-bg:        var(--topbar-bg);
-  --color-topbar-text:      var(--text-on-accent);
+    --font-system: var(--font-ui);
+    --color-primary: var(--fedora-blue);
+    --color-bg-light: var(--surface-1);
+    --color-bg-dark: var(--surface-2);
+    --color-glass-light: rgba(246, 245, 244, 0.85);
+    --color-glass-dark: rgba(237, 236, 235, 0.9);
+    --color-text-light: var(--text-primary);
+    --color-text-dark: var(--text-secondary);
+    --color-border: var(--border-color);
+    --color-card-bg: rgba(0, 0, 0, 0.04);
+    --color-header-bg: var(--window-header-bg);
+    --color-header-text: var(--text-primary);
+    --color-window-body-bg: var(--window-body-bg);
+    --color-window-body-text: var(--text-primary);
+    --color-close-bg: var(--fedora-red);
+    --color-close-text: var(--text-on-accent);
+    --color-control-bg: rgba(0, 0, 0, 0.06);
+    --color-control-text: var(--text-secondary);
+    --color-dock-bg: var(--dock-bg);
+    --color-dock-item-bg: rgba(0, 0, 0, 0.04);
+    --color-dock-item-hover: rgba(53, 132, 228, 0.15);
+    --color-dock-text: var(--text-primary);
+    --color-topbar-bg: var(--topbar-bg);
+    --color-topbar-text: var(--text-on-accent);
 
-  /* Legacy spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
+    /* Legacy spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
 
-  /* Legacy radii */
-  --radius-sm: var(--border-radius-sm);
-  --radius-md: var(--border-radius-md);
-  --radius-lg: var(--border-radius-lg);
-  --radius-xl: var(--border-radius-xl);
+    /* Legacy radii */
+    --radius-sm: var(--border-radius-sm);
+    --radius-md: var(--border-radius-md);
+    --radius-lg: var(--border-radius-lg);
+    --radius-xl: var(--border-radius-xl);
 
-  /* Legacy shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+    /* Legacy shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 
-  /* Legacy glass */
-  --glass-blur:       blur(24px);
-  --glass-saturation: saturate(180%);
+    /* Legacy glass */
+    --glass-blur: blur(24px);
+    --glass-saturation: saturate(180%);
 
-  /* Legacy dock width */
-  --dock-width: 60px;
+    /* Legacy dock width */
+    --dock-width: 60px;
 
-  /* Legacy gradients — now Fedora blue-based */
-  --gradient-accent:    linear-gradient(135deg, #3584e4 0%, #62a0ea 50%, #1c6fcf 100%);
-  --gradient-btn:       linear-gradient(135deg, #3584e4 0%, #1c6fcf 100%);
+    /* Legacy gradients — now Fedora blue-based */
+    --gradient-accent: linear-gradient(135deg, #3584e4 0%, #62a0ea 50%, #1c6fcf 100%);
+    --gradient-btn: linear-gradient(135deg, #3584e4 0%, #1c6fcf 100%);
 
-  /* Legacy transitions */
-  --transition-normal: var(--transition-base);
-  --transition-smooth: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Legacy transitions */
+    --transition-normal: var(--transition-base);
+    --transition-smooth: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-  /* Z-Index Layer Map */
-  --z-wallpaper: 0;
-  --z-desktop-icons: 10;
-  --z-window: 100;
-  --z-dock: 1000;
-  --z-topbar: 1100;
-  --z-modal: 2000;
-  --z-context-menu: 9999;
-  --z-tooltip: 10000;
-  --z-skip-link: 10001;
+    /* Z-Index Layer Map */
+    --z-wallpaper: 0;
+    --z-desktop-icons: 10;
+    --z-window: 100;
+    --z-dock: 1000;
+    --z-topbar: 1100;
+    --z-modal: 2000;
+    --z-context-menu: 9999;
+    --z-tooltip: 10000;
+    --z-skip-link: 10001;
 }
 
 /* ── Dark Mode (Adwaita Dark / GNOME 49) ── */
-[data-theme="dark"], .dark {
-  /* GNOME 49: "deeper blacks and warmer accents" */
-  --surface-0:          #1e1e1e;
-  --surface-1:          #2b2b2b;
-  --surface-2:          #333333;
-  --surface-3:          #3d3d3d;
-  --surface-4:          #525252;
+[data-theme='dark'],
+.dark {
+    /* GNOME 49: "deeper blacks and warmer accents" */
+    --surface-0: #1e1e1e;
+    --surface-1: #2b2b2b;
+    --surface-2: #333333;
+    --surface-3: #3d3d3d;
+    --surface-4: #525252;
 
-  --text-primary:       rgba(255, 255, 255, 0.87);
-  --text-secondary:     rgba(255, 255, 255, 0.55);
-  --text-disabled:      rgba(255, 255, 255, 0.35);
+    --text-primary: rgba(255, 255, 255, 0.87);
+    --text-secondary: rgba(255, 255, 255, 0.55);
+    --text-disabled: rgba(255, 255, 255, 0.35);
 
-  --border-color:       rgba(255, 255, 255, 0.08);
-  --window-header-bg:   #2b2b2b;
-  --window-header-border: rgba(255, 255, 255, 0.07);
-  --window-body-bg:     #1e1e1e;
-  --shadow-window:      0 4px 16px rgba(0, 0, 0, 0.4), 0 12px 40px rgba(0, 0, 0, 0.55);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --window-header-bg: #2b2b2b;
+    --window-header-border: rgba(255, 255, 255, 0.07);
+    --window-body-bg: #1e1e1e;
+    --shadow-window: 0 4px 16px rgba(0, 0, 0, 0.4), 0 12px 40px rgba(0, 0, 0, 0.55);
 
-  /* GNOME 49: slightly warmer/brighter accent in dark mode */
-  --fedora-blue:        #4a90e2;
-  --fedora-blue-light:  #74aee8;
+    /* GNOME 49: slightly warmer/brighter accent in dark mode */
+    --fedora-blue: #4a90e2;
+    --fedora-blue-light: #74aee8;
 
-  /* Legacy dark mode aliases */
-  --color-glass-light:      rgba(30, 30, 30, 0.88);
-  --color-glass-dark:       rgba(43, 43, 43, 0.92);
-  --color-header-bg:        var(--window-header-bg);
-  --color-header-text:      var(--text-primary);
-  --color-window-body-bg:   var(--window-body-bg);
-  --color-window-body-text: var(--text-primary);
-  --color-dock-bg:          rgba(30, 30, 30, 0.9);
-  --color-dock-item-hover:  rgba(74, 144, 226, 0.2);
-  --color-dock-text:        var(--text-primary);
-  --color-topbar-bg:        #000000;
-  --color-topbar-text:      var(--text-primary);
-  --color-border:           var(--border-color);
-  --color-card-bg:          rgba(255, 255, 255, 0.04);
+    /* Legacy dark mode aliases */
+    --color-glass-light: rgba(30, 30, 30, 0.88);
+    --color-glass-dark: rgba(43, 43, 43, 0.92);
+    --color-header-bg: var(--window-header-bg);
+    --color-header-text: var(--text-primary);
+    --color-window-body-bg: var(--window-body-bg);
+    --color-window-body-text: var(--text-primary);
+    --color-dock-bg: rgba(30, 30, 30, 0.9);
+    --color-dock-item-hover: rgba(74, 144, 226, 0.2);
+    --color-dock-text: var(--text-primary);
+    --color-topbar-bg: #000000;
+    --color-topbar-text: var(--text-primary);
+    --color-border: var(--border-color);
+    --color-card-bg: rgba(255, 255, 255, 0.04);
 }

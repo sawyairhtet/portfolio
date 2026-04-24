@@ -3,7 +3,6 @@ import { createContext, useContext, useState, useEffect, useCallback, type React
 interface ThemeContextValue {
     isDark: boolean;
     toggle: () => void;
-    setDark: (dark: boolean) => void;
     accentColor: string;
     setAccentColor: (color: string) => void;
 }
@@ -11,7 +10,6 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue>({
     isDark: true,
     toggle: () => {},
-    setDark: () => {},
     accentColor: '#3584e4',
     setAccentColor: () => {},
 });
@@ -44,12 +42,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('portfolioAccent', accentColor);
     }, [accentColor]);
 
-    const toggle = useCallback(() => setIsDark((prev) => !prev), []);
-    const setDark = useCallback((dark: boolean) => setIsDark(dark), []);
+    const toggle = useCallback(() => setIsDark(prev => !prev), []);
     const setAccentColor = useCallback((color: string) => setAccentColorState(color), []);
 
     return (
-        <ThemeContext.Provider value={{ isDark, toggle, setDark, accentColor, setAccentColor }}>
+        <ThemeContext.Provider value={{ isDark, toggle, accentColor, setAccentColor }}>
             {children}
         </ThemeContext.Provider>
     );

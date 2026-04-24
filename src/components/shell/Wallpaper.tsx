@@ -9,7 +9,8 @@ export function Wallpaper() {
     const { preferences } = usePreferences();
     const wallpaperRef = useRef<HTMLDivElement>(null);
     const [timeOfDay, setTimeOfDay] = useState<'day' | 'night'>('day');
-    const customWallpaper: WallpaperOption | null = WALLPAPERS.find((w) => w.id === preferences.wallpaperId && w.gradient) ?? null;
+    const customWallpaper: WallpaperOption | null =
+        WALLPAPERS.find(w => w.id === preferences.wallpaperId && w.gradient) ?? null;
 
     // Time-of-day detection
     useEffect(() => {

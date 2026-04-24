@@ -24,12 +24,8 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
     const filteredApps = useMemo(() => {
         if (!searchQuery.trim()) return APP_DEFINITIONS;
         const q = searchQuery.toLowerCase();
-        return APP_DEFINITIONS.filter((app) => {
-            const searchable = [
-                app.label,
-                app.description,
-                ...app.aliases,
-            ].join(' ').toLowerCase();
+        return APP_DEFINITIONS.filter(app => {
+            const searchable = [app.label, app.description, ...app.aliases].join(' ').toLowerCase();
             return searchable.includes(q);
         });
     }, [searchQuery]);
@@ -39,7 +35,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             openWindow(appId);
             onClose();
         },
-        [openWindow, onClose],
+        [openWindow, onClose]
     );
 
     // Window thumbnails for activities view
@@ -64,8 +60,8 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                     autoComplete="off"
                     spellCheck={false}
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyDown={(e) => {
+                    onChange={e => setSearchQuery(e.target.value)}
+                    onKeyDown={e => {
                         if (e.key === 'Escape') onClose();
                         if (e.key === 'Enter' && filteredApps.length > 0) {
                             handleAppClick(filteredApps[0].id);
@@ -77,22 +73,30 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             <div className="activities-main">
                 <div className="activities-windows">
                     {openWindowIds.length === 0 ? (
-                        <div className="activities-no-windows">
-                            No open windows
-                        </div>
+                        <div className="activities-no-windows">No open windows</div>
                     ) : (
-                        openWindowIds.map((id) => {
-                            const app = APP_DEFINITIONS.find((a) => a.id === id);
+                        openWindowIds.map(id => {
+                            const app = APP_DEFINITIONS.find(a => a.id === id);
                             return (
                                 <button
                                     key={id}
                                     className="activities-window-thumb"
-                                    onClick={() => { openWindow(id); onClose(); }}
+                                    onClick={() => {
+                                        openWindow(id);
+                                        onClose();
+                                    }}
                                     aria-label={`Switch to ${app?.label || id}`}
                                 >
-                                    <i className={app?.icon || 'fas fa-window-maximize'} aria-hidden="true" />
-                                    <span className="activities-thumb-title">{app?.label || id}</span>
-                                    <small>{windows.get(id)?.isMinimized ? 'Minimized' : 'Open'}</small>
+                                    <i
+                                        className={app?.icon || 'fas fa-window-maximize'}
+                                        aria-hidden="true"
+                                    />
+                                    <span className="activities-thumb-title">
+                                        {app?.label || id}
+                                    </span>
+                                    <small>
+                                        {windows.get(id)?.isMinimized ? 'Minimized' : 'Open'}
+                                    </small>
                                 </button>
                             );
                         })
@@ -101,7 +105,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             </div>
 
             <div className="activities-app-grid">
-                {filteredApps.map((app) => (
+                {filteredApps.map(app => (
                     <button
                         key={app.id}
                         className="activities-app-item"

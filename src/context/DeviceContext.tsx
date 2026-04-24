@@ -36,11 +36,7 @@ export function DeviceProvider({ children }: { children: ReactNode }) {
         };
     }, [handleResize]);
 
-    return (
-        <DeviceContext.Provider value={{ device }}>
-            {children}
-        </DeviceContext.Provider>
-    );
+    return <DeviceContext.Provider value={{ device }}>{children}</DeviceContext.Provider>;
 }
 
 export function useDevice(): DeviceContextValue {

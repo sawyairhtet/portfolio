@@ -59,7 +59,9 @@ export function ContextMenu() {
                 className="context-menu-item"
                 role="menuitem"
                 tabIndex={-1}
-                onClick={() => { setVisible(false); }}
+                onClick={() => {
+                    setVisible(false);
+                }}
             >
                 <i className="fas fa-sync-alt" aria-hidden="true" /> Refresh
             </div>
@@ -67,7 +69,10 @@ export function ContextMenu() {
                 className="context-menu-item"
                 role="menuitem"
                 tabIndex={-1}
-                onClick={() => { openWindow('terminal'); setVisible(false); }}
+                onClick={() => {
+                    openWindow('terminal');
+                    setVisible(false);
+                }}
             >
                 <i className="fas fa-terminal" aria-hidden="true" /> Open Terminal
             </div>
@@ -76,7 +81,10 @@ export function ContextMenu() {
                 className="context-menu-item"
                 role="menuitem"
                 tabIndex={-1}
-                onClick={() => { resetStickyNotes(); setVisible(false); }}
+                onClick={() => {
+                    resetStickyNotes();
+                    setVisible(false);
+                }}
             >
                 <i className="fas fa-note-sticky" aria-hidden="true" /> Reset Notes
             </div>
@@ -84,7 +92,10 @@ export function ContextMenu() {
                 className="context-menu-item"
                 role="menuitem"
                 tabIndex={-1}
-                onClick={() => { openWindow('settings'); setVisible(false); }}
+                onClick={() => {
+                    openWindow('settings');
+                    setVisible(false);
+                }}
             >
                 <i className="fas fa-cog" aria-hidden="true" /> Settings
             </div>

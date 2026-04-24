@@ -14,9 +14,12 @@ export function SettingsApp() {
     const { preferences, updatePreferences } = usePreferences();
     const [activePanel, setActivePanel] = useState<SettingsPanel>('appearance');
 
-    const handleWallpaperChange = useCallback((id: string) => {
-        updatePreferences({ wallpaperId: id });
-    }, [updatePreferences]);
+    const handleWallpaperChange = useCallback(
+        (id: string) => {
+            updatePreferences({ wallpaperId: id });
+        },
+        [updatePreferences]
+    );
 
     return (
         <>
@@ -54,7 +57,9 @@ export function SettingsApp() {
                         <div className="settings-card">
                             <h3>Style</h3>
                             <div className="settings-row">
-                                <span><i className="fas fa-moon" aria-hidden="true" /> Dark Mode</span>
+                                <span>
+                                    <i className="fas fa-moon" aria-hidden="true" /> Dark Mode
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
@@ -66,7 +71,7 @@ export function SettingsApp() {
                         <div className="settings-card">
                             <h3>Accent Color</h3>
                             <div className="accent-color-options">
-                                {ACCENT_COLORS.map((ac) => (
+                                {ACCENT_COLORS.map(ac => (
                                     <button
                                         key={ac.color}
                                         className={`accent-swatch${accentColor === ac.color ? ' active' : ''}`}
@@ -81,7 +86,7 @@ export function SettingsApp() {
                         <div className="settings-card">
                             <h3>Background</h3>
                             <div className="wallpaper-grid">
-                                {WALLPAPERS.map((wp) => (
+                                {WALLPAPERS.map(wp => (
                                     <button
                                         key={wp.id}
                                         className={`wallpaper-option${preferences.wallpaperId === wp.id ? ' active' : ''}`}
@@ -103,7 +108,10 @@ export function SettingsApp() {
                         <div className="settings-card">
                             <h3>System Sounds</h3>
                             <div className="settings-row">
-                                <span><i className="fas fa-volume-up" aria-hidden="true" /> Sound Effects</span>
+                                <span>
+                                    <i className="fas fa-volume-up" aria-hidden="true" /> Sound
+                                    Effects
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
@@ -112,24 +120,29 @@ export function SettingsApp() {
                                 />
                             </div>
                             <div className="settings-row">
-                                <span><i className="fas fa-volume-high" aria-hidden="true" /> Volume</span>
+                                <span>
+                                    <i className="fas fa-volume-high" aria-hidden="true" /> Volume
+                                </span>
                                 <input
                                     type="range"
                                     className="settings-slider"
                                     min={0}
                                     max={100}
                                     value={volume}
-                                    onChange={(event) => setVolume(Number(event.target.value))}
+                                    onChange={event => setVolume(Number(event.target.value))}
                                     aria-label="Sound volume"
                                 />
                             </div>
                             <div className="settings-row">
-                                <span><i className="fas fa-bell-slash" aria-hidden="true" /> Do Not Disturb</span>
+                                <span>
+                                    <i className="fas fa-bell-slash" aria-hidden="true" /> Do Not
+                                    Disturb
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={isDnd}
-                                    onChange={(event) => setDnd(event.target.checked)}
+                                    onChange={event => setDnd(event.target.checked)}
                                 />
                             </div>
                         </div>
@@ -143,51 +156,81 @@ export function SettingsApp() {
                         <div className="settings-card">
                             <h3>Titlebar</h3>
                             <div className="settings-row">
-                                <span><i className="fas fa-window-minimize" aria-hidden="true" /> Show minimize and maximize</span>
+                                <span>
+                                    <i className="fas fa-window-minimize" aria-hidden="true" /> Show
+                                    minimize and maximize
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.showWindowButtons}
-                                    onChange={(event) => updatePreferences({ showWindowButtons: event.target.checked })}
+                                    onChange={event =>
+                                        updatePreferences({
+                                            showWindowButtons: event.target.checked,
+                                        })
+                                    }
                                 />
                             </div>
                         </div>
                         <div className="settings-card">
                             <h3>Window Management</h3>
                             <div className="settings-row">
-                                <span><i className="fas fa-table-columns" aria-hidden="true" /> Edge snap</span>
+                                <span>
+                                    <i className="fas fa-table-columns" aria-hidden="true" /> Edge
+                                    snap
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.enableSnap}
-                                    onChange={(event) => updatePreferences({ enableSnap: event.target.checked })}
+                                    onChange={event =>
+                                        updatePreferences({ enableSnap: event.target.checked })
+                                    }
                                 />
                             </div>
                             <div className="settings-row">
-                                <span><i className="fas fa-up-right-and-down-left-from-center" aria-hidden="true" /> Resize handles</span>
+                                <span>
+                                    <i
+                                        className="fas fa-up-right-and-down-left-from-center"
+                                        aria-hidden="true"
+                                    />{' '}
+                                    Resize handles
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.enableResize}
-                                    onChange={(event) => updatePreferences({ enableResize: event.target.checked })}
+                                    onChange={event =>
+                                        updatePreferences({ enableResize: event.target.checked })
+                                    }
                                 />
                             </div>
                             <div className="settings-row">
-                                <span><i className="fas fa-moon" aria-hidden="true" /> Dim other windows during focus</span>
+                                <span>
+                                    <i className="fas fa-moon" aria-hidden="true" /> Dim other
+                                    windows during focus
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.focusDim}
-                                    onChange={(event) => updatePreferences({ focusDim: event.target.checked })}
+                                    onChange={event =>
+                                        updatePreferences({ focusDim: event.target.checked })
+                                    }
                                 />
                             </div>
                             <div className="settings-row">
-                                <span><i className="fas fa-gauge-high" aria-hidden="true" /> Fast boot after first visit</span>
+                                <span>
+                                    <i className="fas fa-gauge-high" aria-hidden="true" /> Fast boot
+                                    after first visit
+                                </span>
                                 <input
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.fastBoot}
-                                    onChange={(event) => updatePreferences({ fastBoot: event.target.checked })}
+                                    onChange={event =>
+                                        updatePreferences({ fastBoot: event.target.checked })
+                                    }
                                 />
                             </div>
                         </div>
@@ -199,7 +242,9 @@ export function SettingsApp() {
                     <div className="settings-panel active">
                         <h2>About</h2>
                         <div className="settings-card about-system-card">
-                            <div className="about-system-logo"><i className="fab fa-fedora" aria-hidden="true" /></div>
+                            <div className="about-system-logo">
+                                <i className="fab fa-fedora" aria-hidden="true" />
+                            </div>
                             <h3>Fedora Linux 43 (Workstation Edition)</h3>
                             <div className="about-system-info">
                                 {[

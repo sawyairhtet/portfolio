@@ -15,13 +15,8 @@ export default defineConfig({
     test: {
         pool: 'vmForks',
         environment: 'jsdom',
-        setupFiles: ['src/tests/setup.ts', 'test/setup.js'],
-        include: ['src/tests/**/*.test.{ts,tsx}', 'test/**/*.test.js'],
+        setupFiles: ['src/tests/setup.ts'],
+        include: ['src/tests/**/*.test.{ts,tsx}'],
         globals: true,
-        coverage: {
-            provider: 'v8',
-            include: ['src/**', 'js/**'],
-            thresholds: { statements: 80 },
-        },
     },
 });

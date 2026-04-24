@@ -34,17 +34,6 @@ export interface StickyNote {
 
 export type DeviceType = 'desktop' | 'tablet' | 'mobile';
 
-// ============================================
-// WINDOW TYPES
-// ============================================
-
-export interface WindowState {
-    top: string;
-    left: string;
-    width: string;
-    height: string;
-}
-
 export type AppId =
     | 'about'
     | 'skills'
@@ -80,14 +69,6 @@ export interface AppDefinition {
     aliases: string[];
     desktopDock: boolean;
     mobileDock: boolean;
-    quickActions?: AppQuickAction[];
-}
-
-export interface AppQuickAction {
-    label: string;
-    icon: string;
-    appId?: AppId;
-    href?: string;
 }
 
 // ============================================
@@ -180,14 +161,4 @@ export interface PortfolioPreferences {
     enableResize: boolean;
     focusDim: boolean;
     fastBoot: boolean;
-}
-
-// ============================================
-// TERMINAL TYPES
-// ============================================
-
-export interface TerminalLine {
-    id: string;
-    content: string;
-    type: 'output' | 'command' | 'error' | 'info';
 }

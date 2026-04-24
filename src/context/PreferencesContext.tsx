@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+    type ReactNode,
+} from 'react';
 import type { PortfolioPreferences } from '../types';
 
 const STORAGE_KEY = 'portfolioPreferences';
@@ -58,11 +66,14 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
         localStorage.setItem('portfolioWallpaper', preferences.wallpaperId);
         document.body.classList.toggle('show-window-buttons', preferences.showWindowButtons);
-        document.documentElement.style.setProperty('--desktop-brightness', String(preferences.brightness));
+        document.documentElement.style.setProperty(
+            '--desktop-brightness',
+            String(preferences.brightness)
+        );
     }, [preferences]);
 
     const updatePreferences = useCallback((patch: Partial<PortfolioPreferences>) => {
-        setPreferences((prev) => ({ ...prev, ...patch }));
+        setPreferences(prev => ({ ...prev, ...patch }));
     }, []);
 
     const resetStickyNotes = useCallback(() => {
@@ -72,14 +83,10 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
 
     const value = useMemo(
         () => ({ preferences, updatePreferences, resetStickyNotes }),
-        [preferences, updatePreferences, resetStickyNotes],
+        [preferences, updatePreferences, resetStickyNotes]
     );
 
-    return (
-        <PreferencesContext.Provider value={value}>
-            {children}
-        </PreferencesContext.Provider>
-    );
+    return <PreferencesContext.Provider value={value}>{children}</PreferencesContext.Provider>;
 }
 
 export function usePreferences(): PreferencesContextValue {

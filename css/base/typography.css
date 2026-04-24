@@ -3,16 +3,22 @@
    ============================================ */
 
 body {
-  font-family: var(--font-ui);
-  font-size: var(--font-size-base);
-  color: var(--text-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
-  font-variant-ligatures: common-ligatures;
+    font-family: var(--font-ui);
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings:
+        'kern' 1,
+        'liga' 1,
+        'calt' 1;
+    font-variant-ligatures: common-ligatures;
 }
 
-code, pre, .terminal, .terminal * {
-  font-family: var(--font-mono);
+code,
+pre,
+.terminal,
+.terminal * {
+    font-family: var(--font-mono);
 }

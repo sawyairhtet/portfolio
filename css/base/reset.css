@@ -37,11 +37,11 @@
 }
 
 /* Dark mode scrollbar */
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.18);
 }
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
@@ -51,7 +51,7 @@
     scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
 }
 
-[data-theme="dark"] * {
+[data-theme='dark'] * {
     scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 }
 
@@ -91,24 +91,18 @@ body {
    ============================================ */
 
 /* Visible focus outlines for keyboard navigation — Adwaita style */
-.app-icon:focus-visible,
 .dock-item:focus-visible,
 .window-control:focus-visible,
 .activities-btn:focus-visible,
 .social-link:focus-visible,
 .project-card:focus-visible,
 .close-btn-mobile:focus-visible,
-.resume-download-btn:focus-visible,
 .toggle-switch:focus-visible,
 .terminal-input:focus-visible,
 .terminal-submit-btn:focus-visible,
 .context-menu-item:focus-visible,
-.nav-hint-dismiss:focus-visible,
-.dialog-btn:focus-visible,
-.dialog-input:focus-visible,
 .qs-tile:focus-visible,
 .qs-footer-btn:focus-visible,
-#quick-settings-btn:focus-visible,
 .settings-nav-item:focus-visible,
 .notification-item-dismiss:focus-visible {
     outline: 2px solid var(--fedora-blue);

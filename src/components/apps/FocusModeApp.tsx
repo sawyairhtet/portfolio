@@ -25,7 +25,7 @@ export function FocusModeApp() {
     const { showToast, addNotification } = useNotifications();
     const { preferences } = usePreferences();
     const [presetId, setPresetId] = useState(PRESETS[0].id);
-    const preset = PRESETS.find((item) => item.id === presetId) ?? PRESETS[0];
+    const preset = PRESETS.find(item => item.id === presetId) ?? PRESETS[0];
     const [state, setState] = useState<TimerState>('idle');
     const [pausedFrom, setPausedFrom] = useState<ActiveTimerState>('work');
     const [timeLeft, setTimeLeft] = useState(preset.work);
@@ -57,13 +57,13 @@ export function FocusModeApp() {
         }
 
         intervalRef.current = setInterval(() => {
-            setTimeLeft((prev) => {
+            setTimeLeft(prev => {
                 if (prev > 1) return prev - 1;
 
                 clearTimer();
                 if (state === 'work') {
-                    setSessions((count) => count + 1);
-                    setTotalFocusSeconds((total) => total + preset.work);
+                    setSessions(count => count + 1);
+                    setTotalFocusSeconds(total => total + preset.work);
                     setState('break');
                     setPausedFrom('break');
                     showToast('Focus session complete. Break time.', 'fas fa-mug-hot');
@@ -129,19 +129,23 @@ export function FocusModeApp() {
         setTotalFocusSeconds(0);
     }, [clearTimer, preset.work]);
 
-    const changePreset = useCallback((nextPresetId: string) => {
-        const nextPreset = PRESETS.find((item) => item.id === nextPresetId) ?? PRESETS[0];
-        setPresetId(nextPreset.id);
-        if (state === 'idle' || state === 'paused') {
-            setTimeLeft(nextPreset.work);
-            setState('idle');
-            setPausedFrom('work');
-        }
-    }, [state]);
+    const changePreset = useCallback(
+        (nextPresetId: string) => {
+            const nextPreset = PRESETS.find(item => item.id === nextPresetId) ?? PRESETS[0];
+            setPresetId(nextPreset.id);
+            if (state === 'idle' || state === 'paused') {
+                setTimeLeft(nextPreset.work);
+                setState('idle');
+                setPausedFrom('work');
+            }
+        },
+        [state]
+    );
 
-    const duration = state === 'break' || (state === 'paused' && pausedFrom === 'break')
-        ? preset.break
-        : preset.work;
+    const duration =
+        state === 'break' || (state === 'paused' && pausedFrom === 'break')
+            ? preset.break
+            : preset.work;
     const progress = Math.max(0, Math.min(1, (duration - timeLeft) / duration));
     const circumference = 2 * Math.PI * 90;
 
@@ -149,7 +153,13 @@ export function FocusModeApp() {
         <div className="focus-mode-container">
             <div className="focus-timer-section">
                 <div className="focus-mode-label">
-                    {state === 'work' ? 'Focus time' : state === 'break' ? 'Break time' : state === 'paused' ? 'Paused' : 'Ready'}
+                    {state === 'work'
+                        ? 'Focus time'
+                        : state === 'break'
+                          ? 'Break time'
+                          : state === 'paused'
+                            ? 'Paused'
+                            : 'Ready'}
                 </div>
                 <div className="focus-timer-ring">
                     <svg viewBox="0 0 200 200" className="focus-progress-svg" aria-hidden="true">
@@ -168,7 +178,7 @@ export function FocusModeApp() {
             </div>
 
             <div className="focus-presets" aria-label="Focus presets">
-                {PRESETS.map((item) => (
+                {PRESETS.map(item => (
                     <button
                         key={item.id}
                         className={`focus-preset-btn${presetId === item.id ? ' active' : ''}`}
@@ -186,10 +196,15 @@ export function FocusModeApp() {
                     </button>
                 ) : (
                     <button onClick={startOrResume} className="focus-btn focus-btn-primary">
-                        <i className="fas fa-play" aria-hidden="true" /> {state === 'paused' ? 'Resume' : 'Start'}
+                        <i className="fas fa-play" aria-hidden="true" />{' '}
+                        {state === 'paused' ? 'Resume' : 'Start'}
                     </button>
                 )}
-                <button onClick={skip} className="focus-btn focus-btn-ghost" disabled={state === 'idle'}>
+                <button
+                    onClick={skip}
+                    className="focus-btn focus-btn-ghost"
+                    disabled={state === 'idle'}
+                >
                     <i className="fas fa-forward" aria-hidden="true" /> Skip
                 </button>
                 <button onClick={reset} className="focus-btn focus-btn-ghost">

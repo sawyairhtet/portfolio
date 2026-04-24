@@ -7,7 +7,8 @@ interface NotificationCenterProps {
 }
 
 export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps) {
-    const { notifications, dismissNotification, clearAllNotifications, isDnd, setDnd } = useNotifications();
+    const { notifications, dismissNotification, clearAllNotifications, isDnd, setDnd } =
+        useNotifications();
 
     useEffect(() => {
         if (!isOpen) return;
@@ -61,9 +62,16 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
             <div className="notification-list">
                 {Object.keys(grouped).length === 0 ? (
                     <div className="notification-empty">
-                        <i className={isDnd ? 'fas fa-bell-slash' : 'fas fa-bell'} aria-hidden="true" />
+                        <i
+                            className={isDnd ? 'fas fa-bell-slash' : 'fas fa-bell'}
+                            aria-hidden="true"
+                        />
                         <span>{isDnd ? 'Do Not Disturb is on' : 'No notifications'}</span>
-                        <small>{isDnd ? 'Toasts and new notifications are paused.' : 'You are all caught up.'}</small>
+                        <small>
+                            {isDnd
+                                ? 'Toasts and new notifications are paused.'
+                                : 'You are all caught up.'}
+                        </small>
                     </div>
                 ) : (
                     Object.entries(grouped).map(([group, items]) => (
@@ -73,7 +81,7 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                                 <span className="notification-group-count">{items.length}</span>
                             </div>
                             <div className="notification-group-items">
-                                {items.map((item) => (
+                                {items.map(item => (
                                     <div key={item.id} className="notification-item">
                                         <div
                                             className={`notification-item-icon${item.iconBg.includes('--fedora-green') ? ' notification-item-icon-success' : ' notification-item-icon-info'}`}
@@ -81,9 +89,15 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                                             <i className={item.icon} aria-hidden="true" />
                                         </div>
                                         <div className="notification-item-content">
-                                            <div className="notification-item-title">{item.title}</div>
-                                            <div className="notification-item-body">{item.body}</div>
-                                            <div className="notification-item-time">{item.time}</div>
+                                            <div className="notification-item-title">
+                                                {item.title}
+                                            </div>
+                                            <div className="notification-item-body">
+                                                {item.body}
+                                            </div>
+                                            <div className="notification-item-time">
+                                                {item.time}
+                                            </div>
                                         </div>
                                         <button
                                             className="notification-item-dismiss"

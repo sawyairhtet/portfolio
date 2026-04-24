@@ -37,18 +37,22 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     className={`qs-tile${wifiOn ? ' active' : ''}`}
                     aria-pressed={wifiOn}
                     aria-label="Wi-Fi"
-                    onClick={() => setWifiOn((p) => !p)}
+                    onClick={() => setWifiOn(p => !p)}
                 >
-                    <div className="qs-tile-icon"><i className="fas fa-wifi" aria-hidden="true" /></div>
+                    <div className="qs-tile-icon">
+                        <i className="fas fa-wifi" aria-hidden="true" />
+                    </div>
                     <div className="qs-tile-label">Wi-Fi</div>
                 </button>
                 <button
                     className={`qs-tile${btOn ? ' active' : ''}`}
                     aria-pressed={btOn}
                     aria-label="Bluetooth"
-                    onClick={() => setBtOn((p) => !p)}
+                    onClick={() => setBtOn(p => !p)}
                 >
-                    <div className="qs-tile-icon"><i className="fab fa-bluetooth-b" aria-hidden="true" /></div>
+                    <div className="qs-tile-icon">
+                        <i className="fab fa-bluetooth-b" aria-hidden="true" />
+                    </div>
                     <div className="qs-tile-label">Bluetooth</div>
                 </button>
                 <button
@@ -57,7 +61,9 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     aria-label="Dark Mode"
                     onClick={toggle}
                 >
-                    <div className="qs-tile-icon"><i className="fas fa-moon" aria-hidden="true" /></div>
+                    <div className="qs-tile-icon">
+                        <i className="fas fa-moon" aria-hidden="true" />
+                    </div>
                     <div className="qs-tile-label">Dark Mode</div>
                 </button>
                 <button
@@ -66,7 +72,12 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     aria-label="Mute"
                     onClick={toggleMute}
                 >
-                    <div className="qs-tile-icon"><i className={isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up'} aria-hidden="true" /></div>
+                    <div className="qs-tile-icon">
+                        <i
+                            className={isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up'}
+                            aria-hidden="true"
+                        />
+                    </div>
                     <div className="qs-tile-label">{isMuted ? 'Muted' : 'Sound'}</div>
                 </button>
                 <button
@@ -75,7 +86,9 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     aria-label="Do Not Disturb"
                     onClick={() => setDnd(!isDnd)}
                 >
-                    <div className="qs-tile-icon"><i className="fas fa-bell-slash" aria-hidden="true" /></div>
+                    <div className="qs-tile-icon">
+                        <i className="fas fa-bell-slash" aria-hidden="true" />
+                    </div>
                     <div className="qs-tile-label">Do Not Disturb</div>
                 </button>
             </div>
@@ -89,7 +102,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                         min={20}
                         max={100}
                         value={preferences.brightness}
-                        onChange={(e) => updatePreferences({ brightness: Number(e.target.value) })}
+                        onChange={e => updatePreferences({ brightness: Number(e.target.value) })}
                         aria-label="Brightness"
                     />
                 </div>
@@ -101,14 +114,18 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                         min={0}
                         max={100}
                         value={volume}
-                        onChange={(e) => setVolume(Number(e.target.value))}
+                        onChange={e => setVolume(Number(e.target.value))}
                         aria-label="Volume"
                     />
                 </div>
             </div>
 
             <div className="qs-footer">
-                <button className="qs-footer-btn" aria-label="Open Settings" onClick={handleSettings}>
+                <button
+                    className="qs-footer-btn"
+                    aria-label="Open Settings"
+                    onClick={handleSettings}
+                >
                     <i className="fas fa-cog" aria-hidden="true" />
                     <span>Settings</span>
                 </button>

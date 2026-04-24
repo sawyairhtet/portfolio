@@ -4,12 +4,12 @@
  */
 
 // Cache version - update BUILD_VERSION on each deploy for cache-busting
-const BUILD_VERSION = '20260423-blank-page-fix';
+const BUILD_VERSION = '20260424-react-cleanup';
 const CACHE_NAME = `syh-portfolio-v1-${BUILD_VERSION}`;
 const STATIC_ASSETS = [
     '/404.html',
     '/sw.js',
-    '/images/profile-picture.jpg',
+    '/images/profile-picture.webp',
     '/images/og-preview.png',
     '/offline.html',
 ];
@@ -55,9 +55,7 @@ self.addEventListener('fetch', event => {
 
     const acceptHeader = event.request.headers.get('accept');
     if (event.request.mode === 'navigate' || (acceptHeader && acceptHeader.includes('text/html'))) {
-        event.respondWith(
-            fetch(event.request).catch(() => caches.match('/offline.html'))
-        );
+        event.respondWith(fetch(event.request).catch(() => caches.match('/offline.html')));
         return;
     }
 
