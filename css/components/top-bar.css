@@ -37,6 +37,10 @@
     pointer-events: none;
 }
 
+[data-theme='light'] .top-bar::after {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.04), transparent);
+}
+
 /* Dark mode: same look — dark first design */
 [data-theme='dark'] .top-bar {
     background: var(--topbar-bg);
@@ -157,6 +161,10 @@
     .activities-btn:hover::after {
         opacity: 1;
     }
+
+    [data-theme='light'] .activities-btn:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
 }
 
 [data-theme='dark'] .activities-btn.active {
@@ -165,6 +173,10 @@
 
 [data-theme='dark'] .activities-btn:hover {
     background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='light'] .activities-btn.active {
+    background: rgba(109, 77, 230, 0.12);
 }
 
 /* Pill Styling for Top Bar Items */
@@ -188,6 +200,10 @@
 
     [data-theme='dark'] .pill:hover {
         background: rgba(255, 255, 255, 0.08);
+    }
+
+    [data-theme='light'] .pill:hover {
+        background: rgba(0, 0, 0, 0.05);
     }
 }
 

@@ -27,11 +27,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     // Sync data-theme attribute with state
     useEffect(() => {
-        if (isDark) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-        }
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }, [isDark]);
 

@@ -246,3 +246,101 @@
     --color-border: var(--border-color);
     --color-card-bg: rgba(255, 255, 255, 0.03);
 }
+
+/* ── Light Mode ── */
+[data-theme='light'],
+.light {
+    /* ── Surfaces — Warm light grays ── */
+    --surface-0: #ffffff;
+    --surface-1: #f8f8fa;
+    --surface-2: #f0f0f4;
+    --surface-3: #e4e4ec;
+    --surface-4: #d4d4de;
+
+    /* ── Text — Dark on light ── */
+    --text-primary: rgba(0, 0, 0, 0.87);
+    --text-secondary: rgba(0, 0, 0, 0.54);
+    --text-disabled: rgba(0, 0, 0, 0.30);
+    --text-on-accent: #ffffff;
+
+    /* ── Accent — Slightly deeper for contrast on light ── */
+    --accent: #6d4de6;
+    --accent-light: #8b6cf5;
+    --accent-dark: #5634c7;
+    --accent-glow: rgba(109, 77, 230, 0.25);
+    --accent-subtle: rgba(109, 77, 230, 0.10);
+    --accent-surface: rgba(109, 77, 230, 0.05);
+
+    /* ── Borders — Visible on light ── */
+    --border-color: rgba(0, 0, 0, 0.09);
+    --border-focus: var(--accent);
+    --border-subtle: rgba(0, 0, 0, 0.05);
+
+    /* ── Glassmorphism — Light frosted glass ── */
+    --glass-bg: rgba(255, 255, 255, 0.70);
+    --glass-bg-heavy: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.08);
+
+    /* ── Shadows — Softer for light mode ── */
+    --shadow-window: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px var(--border-color);
+    --shadow-popover: 0 4px 24px rgba(0, 0, 0, 0.10), 0 0 0 1px var(--border-color);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 40px var(--accent-glow), 0 0 80px rgba(109, 77, 230, 0.08);
+
+    /* ── Scrollbar ── */
+    --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.28);
+
+    /* ── Window Chrome ── */
+    --window-header-bg: var(--glass-bg-heavy);
+    --window-header-border: var(--glass-border);
+    --window-body-bg: var(--surface-0);
+    --window-shadow: var(--shadow-window);
+
+    /* ── Top Bar ── */
+    --topbar-bg: rgba(255, 255, 255, 0.80);
+    --topbar-bg-light: rgba(255, 255, 255, 0.80);
+
+    /* ── Dock ── */
+    --dock-bg: rgba(255, 255, 255, 0.65);
+    --dock-border: 1px solid rgba(0, 0, 0, 0.08);
+    --dock-hover-bg: rgba(0, 0, 0, 0.06);
+
+    /* ── Terminal — Light terminal theme ── */
+    --terminal-bg: #f8f8fa;
+    --terminal-text: #1e293b;
+    --terminal-prompt: #16a34a;
+    --terminal-cursor: var(--accent);
+    --terminal-selection: rgba(109, 77, 230, 0.18);
+
+    /* ── Wallpaper — Light gradient ── */
+    --gradient-wallpaper: linear-gradient(
+        135deg,
+        #e8e0f0 0%,
+        #dde4f0 40%,
+        #e0e8f5 70%,
+        #f0eef5 100%
+    );
+
+    /* ── Legacy Aliases ── */
+    --color-bg-light: var(--surface-0);
+    --color-bg-dark: var(--surface-1);
+    --color-glass-light: var(--glass-bg);
+    --color-glass-dark: var(--glass-bg-heavy);
+    --color-header-bg: var(--window-header-bg);
+    --color-header-text: var(--text-primary);
+    --color-window-body-bg: var(--window-body-bg);
+    --color-window-body-text: var(--text-primary);
+    --color-dock-bg: var(--dock-bg);
+    --color-dock-item-bg: rgba(0, 0, 0, 0.03);
+    --color-dock-item-hover: rgba(109, 77, 230, 0.12);
+    --color-dock-text: var(--text-primary);
+    --color-topbar-bg: var(--topbar-bg);
+    --color-topbar-text: var(--text-primary);
+    --color-border: var(--border-color);
+    --color-card-bg: rgba(0, 0, 0, 0.02);
+    --color-control-bg: rgba(0, 0, 0, 0.04);
+    --color-control-text: var(--text-secondary);
+}
