@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef, type MouseEvent } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { APP_DEFINITIONS } from '../../config/data';
 import type { AppId } from '../../types';
@@ -38,6 +38,19 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
         [openWindow, onClose]
     );
 
+    const handleOverlayClick = useCallback(
+        (event: MouseEvent<HTMLDivElement>) => {
+            const target = event.target as HTMLElement;
+
+            if (target.closest('.activities-search, .activities-window-thumb, .activities-app-grid')) {
+                return;
+            }
+
+            onClose();
+        },
+        [onClose]
+    );
+
     // Window thumbnails for activities view
     const openWindowIds = Array.from(windows.entries())
         .filter(([, w]) => w.isOpen)
@@ -50,6 +63,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             aria-modal="false"
             aria-label="Activities overview"
             aria-hidden={!isOpen}
+            onClick={handleOverlayClick}
         >
             <div className="activities-search">
                 <input

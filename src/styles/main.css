@@ -128,6 +128,34 @@ body,
     opacity: 0;
 }
 
+:where(button, a, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+:where(
+        .dock-item,
+        .window-control,
+        .close-btn-mobile,
+        .contact-action,
+        .contact-submit-btn,
+        .project-action,
+        .about-cta-btn,
+        .social-link,
+        .settings-nav-item,
+        .accent-swatch,
+        .wallpaper-option,
+        .qs-tile,
+        .qs-footer-btn,
+        .activities-app-item,
+        .activities-window-thumb,
+        .focus-preset-btn,
+        .focus-btn,
+        .mobile-launcher-item
+    ):focus-visible {
+    box-shadow: 0 0 0 4px var(--accent-subtle);
+}
+
 .notification-item:focus-within .notification-item-dismiss,
 .notification-item-dismiss:focus-visible {
     opacity: 1;
@@ -332,7 +360,7 @@ body,
     box-shadow: 0 0 48px rgba(124, 92, 252, 0.06);
 }
 
-/* Shimmer on featured panel */
+/* Subtle sheen on featured panel */
 .featured-project-panel::before {
     content: '';
     position: absolute;
@@ -346,7 +374,7 @@ body,
         transparent 75%
     );
     background-size: 200% 100%;
-    animation: shimmer 8s ease-in-out infinite;
+    opacity: 0.55;
     pointer-events: none;
 }
 
@@ -481,7 +509,7 @@ body,
 /* Contact — Premium */
 .contact-primary-actions {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
     gap: var(--spacing-sm);
 }
 
@@ -509,7 +537,7 @@ body,
 .contact-action:hover {
     border-color: rgba(124, 92, 252, 0.12);
     background: var(--surface-2);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
@@ -633,11 +661,12 @@ body,
 
 /* Activities */
 .activities-app-grid {
-    max-width: 980px;
+    max-width: min(880px, calc(100vw - 96px));
 }
 
 .activities-app-item {
-    width: 112px;
+    width: 100%;
+    max-width: 112px;
 }
 
 .activities-window-thumb small {
@@ -791,13 +820,13 @@ body.focus-dim-active .window[data-app='focus-mode'] {
         background:
             linear-gradient(
                 to top,
-                rgba(15, 23, 42, 0.48) 0%,
-                rgba(15, 23, 42, 0.24) 38%,
-                rgba(15, 23, 42, 0.04) 68%,
+                rgba(15, 23, 42, 0.22) 0%,
+                rgba(15, 23, 42, 0.10) 38%,
+                rgba(15, 23, 42, 0.02) 68%,
                 transparent 100%
             ),
-            radial-gradient(ellipse at 15% 85%, rgba(109, 77, 230, 0.12) 0%, transparent 50%),
-            radial-gradient(ellipse at 85% 15%, rgba(20, 184, 166, 0.08) 0%, transparent 45%);
+            radial-gradient(ellipse at 15% 85%, rgba(255, 255, 255, 0.26) 0%, transparent 50%),
+            radial-gradient(ellipse at 85% 15%, rgba(20, 184, 166, 0.10) 0%, transparent 45%);
     }
 }
 

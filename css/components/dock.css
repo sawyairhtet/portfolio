@@ -25,10 +25,24 @@
         0 0 0 1px rgba(255, 255, 255, 0.04),
         inset 0 1px 0 rgba(255, 255, 255, 0.06);
     opacity: 1;
-    animation: dockBreathing 6s ease-in-out infinite;
     transition:
         transform 0.3s var(--ease-out-expo),
         opacity 0.3s ease;
+}
+
+[data-theme='dark'] .dock {
+    box-shadow:
+        0 12px 36px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+[data-theme='light'] .dock {
+    border-color: rgba(15, 23, 42, 0.10);
+    box-shadow:
+        0 14px 40px rgba(15, 23, 42, 0.16),
+        0 2px 10px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.76);
 }
 
 body.show-dock .dock {
@@ -59,7 +73,7 @@ body.show-dock .dock {
 
 @media (hover: hover) {
     .dock-item:hover {
-        transform: scale(1.22) translateY(-6px);
+        transform: scale(1.12) translateY(-4px);
         box-shadow:
             0 8px 24px rgba(0, 0, 0, 0.4),
             0 2px 8px rgba(0, 0, 0, 0.2),
@@ -70,13 +84,13 @@ body.show-dock .dock {
     /* Neighbor magnification — icons adjacent to hovered one scale up slightly */
     .dock-item:has(+ .dock-item:hover),
     .dock-item:hover + .dock-item {
-        transform: scale(1.08) translateY(-3px);
+        transform: scale(1.04) translateY(-2px);
     }
 
     /* Second neighbors */
     .dock-item:has(+ .dock-item + .dock-item:hover),
     .dock-item:hover + .dock-item + .dock-item {
-        transform: scale(1.03) translateY(-1px);
+        transform: scale(1.015) translateY(-1px);
     }
 }
 
@@ -123,7 +137,7 @@ body.show-dock .dock {
     background: linear-gradient(135deg, var(--icon-focus-start) 0%, var(--icon-focus-end) 100%);
 }
 
-/* Active dot indicator with animated glow */
+/* Active dot indicator */
 .dock-item.active::after {
     content: '';
     position: absolute;
@@ -134,7 +148,7 @@ body.show-dock .dock {
     height: 6px;
     border-radius: 50%;
     background: var(--dock-active-dot);
-    animation: activeDotPulse 2.5s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--accent-glow);
 }
 
 .dock-separator {

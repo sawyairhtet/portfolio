@@ -148,19 +148,20 @@ export function FocusModeApp() {
             : preset.work;
     const progress = Math.max(0, Math.min(1, (duration - timeLeft) / duration));
     const circumference = 2 * Math.PI * 90;
+    const modeLabel =
+        state === 'work'
+            ? 'Focus time'
+            : state === 'break'
+              ? 'Break time'
+              : state === 'paused'
+                ? 'Paused'
+                : 'Ready';
+    const rhythmLabel = `${formatMinutes(preset.work)} work / ${formatMinutes(preset.break)} break`;
 
     return (
-        <div className="focus-mode-container">
-            <div className="focus-timer-section">
-                <div className="focus-mode-label">
-                    {state === 'work'
-                        ? 'Focus time'
-                        : state === 'break'
-                          ? 'Break time'
-                          : state === 'paused'
-                            ? 'Paused'
-                            : 'Ready'}
-                </div>
+        <div className={`focus-mode-container focus-state-${state}`}>
+            <section className="focus-timer-section" aria-label="Focus timer">
+                <div className="focus-mode-label">{modeLabel}</div>
                 <div className="focus-timer-ring">
                     <svg viewBox="0 0 200 200" className="focus-progress-svg" aria-hidden="true">
                         <circle cx="100" cy="100" r="90" className="focus-progress-bg" />
@@ -173,59 +174,81 @@ export function FocusModeApp() {
                             strokeDashoffset={circumference * (1 - progress)}
                         />
                     </svg>
-                    <div className="focus-timer-display">{formatTime(timeLeft)}</div>
+                    <div className="focus-timer-display" aria-live="polite">
+                        {formatTime(timeLeft)}
+                    </div>
                 </div>
-            </div>
+                <p className="focus-session-note">
+                    {state === 'idle'
+                        ? 'Choose a rhythm and start when you are ready.'
+                        : state === 'paused'
+                          ? 'Session paused. Resume when your attention is back.'
+                          : state === 'break'
+                            ? 'Step away briefly before the next round.'
+                            : 'Stay with one task until the timer completes.'}
+                </p>
+            </section>
 
-            <div className="focus-presets" aria-label="Focus presets">
-                {PRESETS.map(item => (
+            <section className="focus-control-panel" aria-label="Focus controls">
+                <div className="focus-panel-heading">
+                    <span className="focus-panel-kicker">Session Rhythm</span>
+                    <h2>{rhythmLabel}</h2>
+                    <p>Keep the desktop quiet and use one intentional timer at a time.</p>
+                </div>
+
+                <div className="focus-presets" aria-label="Focus presets">
+                    {PRESETS.map(item => (
+                        <button
+                            key={item.id}
+                            className={`focus-preset-btn${presetId === item.id ? ' active' : ''}`}
+                            aria-pressed={presetId === item.id}
+                            onClick={() => changePreset(item.id)}
+                        >
+                            {item.label}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="focus-controls">
+                    {state === 'work' || state === 'break' ? (
+                        <button onClick={pause} className="focus-btn focus-btn-secondary">
+                            <i className="fas fa-pause" aria-hidden="true" /> Pause
+                        </button>
+                    ) : (
+                        <button onClick={startOrResume} className="focus-btn focus-btn-primary">
+                            <i className="fas fa-play" aria-hidden="true" />{' '}
+                            {state === 'paused' ? 'Resume' : 'Start'}
+                        </button>
+                    )}
                     <button
-                        key={item.id}
-                        className={`focus-preset-btn${presetId === item.id ? ' active' : ''}`}
-                        onClick={() => changePreset(item.id)}
+                        onClick={skip}
+                        className="focus-btn focus-btn-ghost"
+                        disabled={state === 'idle'}
                     >
-                        {item.label}
+                        <i className="fas fa-forward" aria-hidden="true" /> Skip
                     </button>
-                ))}
-            </div>
+                    <button onClick={reset} className="focus-btn focus-btn-ghost">
+                        <i className="fas fa-redo" aria-hidden="true" /> Reset
+                    </button>
+                </div>
 
-            <div className="focus-controls">
-                {state === 'work' || state === 'break' ? (
-                    <button onClick={pause} className="focus-btn focus-btn-secondary">
-                        <i className="fas fa-pause" aria-hidden="true" /> Pause
-                    </button>
-                ) : (
-                    <button onClick={startOrResume} className="focus-btn focus-btn-primary">
-                        <i className="fas fa-play" aria-hidden="true" />{' '}
-                        {state === 'paused' ? 'Resume' : 'Start'}
-                    </button>
-                )}
-                <button
-                    onClick={skip}
-                    className="focus-btn focus-btn-ghost"
-                    disabled={state === 'idle'}
-                >
-                    <i className="fas fa-forward" aria-hidden="true" /> Skip
-                </button>
-                <button onClick={reset} className="focus-btn focus-btn-ghost">
-                    <i className="fas fa-redo" aria-hidden="true" /> Reset
-                </button>
-            </div>
-
-            <div className="focus-stats">
-                <div className="focus-stat">
-                    <span className="focus-stat-value">{sessions}</span>
-                    <span className="focus-stat-label">Sessions</span>
+                <div className="focus-stats">
+                    <div className="focus-stat">
+                        <span className="focus-stat-value">{sessions}</span>
+                        <span className="focus-stat-label">Sessions</span>
+                    </div>
+                    <div className="focus-stat">
+                        <span className="focus-stat-value">{formatMinutes(totalFocusSeconds)}</span>
+                        <span className="focus-stat-label">Focused</span>
+                    </div>
+                    <div className="focus-stat">
+                        <span className="focus-stat-value focus-stat-value-text">
+                            {preferences.focusDim ? 'On' : 'Off'}
+                        </span>
+                        <span className="focus-stat-label">Dim</span>
+                    </div>
                 </div>
-                <div className="focus-stat">
-                    <span className="focus-stat-value">{formatMinutes(totalFocusSeconds)}</span>
-                    <span className="focus-stat-label">Focused</span>
-                </div>
-                <div className="focus-stat">
-                    <span className="focus-stat-value">{preferences.focusDim ? 'On' : 'Off'}</span>
-                    <span className="focus-stat-label">Dim</span>
-                </div>
-            </div>
+            </section>
         </div>
     );
 }

@@ -30,23 +30,23 @@ const WindowManagerContext = createContext<WindowManagerContextValue>({
 const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
     about: { top: '8%', left: 'calc(50% - 360px)' },
     skills: { top: '10%', left: 'calc(50% - 325px)' },
-    projects: { top: '8%', left: 'calc(50% - 350px)' },
+    projects: { top: '8%', left: 'calc(50% - 390px)' },
     contact: { top: '12%', left: 'calc(50% - 275px)' },
     links: { top: '14%', left: 'calc(50% - 200px)' },
     terminal: { top: '10%', left: 'calc(50% - 350px)' },
     settings: { top: '8%', left: 'calc(50% - 375px)' },
-    'focus-mode': { top: '12%', left: 'calc(50% - 250px)' },
+    'focus-mode': { top: '10%', left: 'calc(50% - 430px)' },
 };
 
 const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
     about: { width: '720px', height: '680px' },
     skills: { width: '650px', height: '550px' },
-    projects: { width: '700px', height: '500px' },
+    projects: { width: '780px', height: '620px' },
     contact: { width: '550px', height: '600px' },
     links: { width: '400px', height: '350px' },
     terminal: { width: '700px', height: '450px' },
     settings: { width: '750px', height: '550px' },
-    'focus-mode': { width: '500px', height: '450px' },
+    'focus-mode': { width: '860px', height: '560px' },
 };
 
 const MAXIMIZED_Z_FLOOR = 1050;

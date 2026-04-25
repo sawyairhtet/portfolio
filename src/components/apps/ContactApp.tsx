@@ -126,10 +126,11 @@ export function ContactApp() {
                         placeholder="Your name"
                         autoComplete="name"
                         aria-invalid={Boolean(errors.name)}
+                        aria-describedby={errors.name ? 'contact-name-error' : undefined}
                         {...register('name')}
                     />
                     {errors.name && (
-                        <span className="form-error" role="alert">
+                        <span className="form-error" id="contact-name-error" role="alert">
                             {errors.name.message}
                         </span>
                     )}
@@ -142,10 +143,11 @@ export function ContactApp() {
                         placeholder="Your email"
                         autoComplete="email"
                         aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? 'contact-email-error' : undefined}
                         {...register('email')}
                     />
                     {errors.email && (
-                        <span className="form-error" role="alert">
+                        <span className="form-error" id="contact-email-error" role="alert">
                             {errors.email.message}
                         </span>
                     )}
@@ -157,10 +159,11 @@ export function ContactApp() {
                         placeholder="Your message"
                         rows={5}
                         aria-invalid={Boolean(errors.message)}
+                        aria-describedby={errors.message ? 'contact-message-error' : undefined}
                         {...register('message')}
                     />
                     {errors.message && (
-                        <span className="form-error" role="alert">
+                        <span className="form-error" id="contact-message-error" role="alert">
                             {errors.message.message}
                         </span>
                     )}

@@ -40,24 +40,28 @@ export function SettingsApp() {
             <div className="settings-sidebar">
                 <button
                     className={`settings-nav-item${activePanel === 'appearance' ? ' active' : ''}`}
+                    aria-pressed={activePanel === 'appearance'}
                     onClick={() => setActivePanel('appearance')}
                 >
                     <i className="fas fa-palette" aria-hidden="true" /> Appearance
                 </button>
                 <button
                     className={`settings-nav-item${activePanel === 'sound' ? ' active' : ''}`}
+                    aria-pressed={activePanel === 'sound'}
                     onClick={() => setActivePanel('sound')}
                 >
                     <i className="fas fa-volume-up" aria-hidden="true" /> Sound
                 </button>
                 <button
                     className={`settings-nav-item${activePanel === 'windows' ? ' active' : ''}`}
+                    aria-pressed={activePanel === 'windows'}
                     onClick={() => setActivePanel('windows')}
                 >
                     <i className="fas fa-window-restore" aria-hidden="true" /> Windows
                 </button>
                 <button
                     className={`settings-nav-item${activePanel === 'about' ? ' active' : ''}`}
+                    aria-pressed={activePanel === 'about'}
                     onClick={() => setActivePanel('about')}
                 >
                     <i className="fas fa-info-circle" aria-hidden="true" /> About
@@ -109,6 +113,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={isDark}
+                                    aria-label="Dark mode"
                                     onChange={toggle}
                                 />
                             </div>
@@ -131,6 +136,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={!isMuted}
+                                    aria-label="Sound effects"
                                     onChange={toggleMute}
                                 />
                             </div>
@@ -157,6 +163,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={isDnd}
+                                    aria-label="Do Not Disturb"
                                     onChange={event => setDnd(event.target.checked)}
                                 />
                             </div>
@@ -179,6 +186,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.showWindowButtons}
+                                    aria-label="Show minimize and maximize buttons"
                                     onChange={event =>
                                         updatePreferences({
                                             showWindowButtons: event.target.checked,
@@ -198,6 +206,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.enableSnap}
+                                    aria-label="Edge snap"
                                     onChange={event =>
                                         updatePreferences({ enableSnap: event.target.checked })
                                     }
@@ -215,6 +224,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.enableResize}
+                                    aria-label="Resize handles"
                                     onChange={event =>
                                         updatePreferences({ enableResize: event.target.checked })
                                     }
@@ -229,6 +239,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.focusDim}
+                                    aria-label="Dim other windows during focus"
                                     onChange={event =>
                                         updatePreferences({ focusDim: event.target.checked })
                                     }
@@ -243,6 +254,7 @@ export function SettingsApp() {
                                     type="checkbox"
                                     className="toggle-switch"
                                     checked={preferences.fastBoot}
+                                    aria-label="Fast boot after first visit"
                                     onChange={event =>
                                         updatePreferences({ fastBoot: event.target.checked })
                                     }
