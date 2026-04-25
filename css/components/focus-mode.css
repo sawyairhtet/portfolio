@@ -7,6 +7,22 @@
     --focus-accent-strong: var(--accent-light);
     --focus-accent-soft: rgba(124, 92, 252, 0.16);
     --focus-accent-glow: rgba(124, 92, 252, 0.28);
+    --focus-panel-border: rgba(255, 255, 255, 0.08);
+    --focus-panel-bg:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
+        rgba(12, 12, 18, 0.74);
+    --focus-panel-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --focus-ring-core: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 68%);
+    --focus-ring-shadow: inset 0 0 42px rgba(0, 0, 0, 0.24);
+    --focus-progress-track: rgba(255, 255, 255, 0.08);
+    --focus-timer-text-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    --focus-segment-bg: rgba(255, 255, 255, 0.035);
+    --focus-segment-hover-bg: rgba(255, 255, 255, 0.045);
+    --focus-ghost-bg: rgba(255, 255, 255, 0.025);
+    --focus-ghost-hover-bg: rgba(255, 255, 255, 0.055);
+    --focus-stat-bg: rgba(255, 255, 255, 0.03);
 
     position: relative;
     display: grid;
@@ -59,17 +75,48 @@
     --focus-accent-glow: rgba(234, 179, 8, 0.24);
 }
 
+[data-theme='light'] .focus-mode-container,
+.light .focus-mode-container {
+    --focus-panel-border: rgba(79, 70, 229, 0.16);
+    --focus-panel-bg:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--focus-accent) 8%, rgba(255, 255, 255, 0.94)),
+            rgba(255, 255, 255, 0.76)
+        ),
+        rgba(255, 255, 255, 0.82);
+    --focus-panel-shadow:
+        0 24px 60px rgba(30, 41, 59, 0.14),
+        0 8px 22px color-mix(in srgb, var(--focus-accent) 10%, transparent),
+        inset 0 1px 0 rgba(255, 255, 255, 0.86);
+    --focus-ring-core:
+        radial-gradient(
+            circle,
+            color-mix(in srgb, var(--focus-accent) 16%, rgba(255, 255, 255, 0.62)),
+            rgba(255, 255, 255, 0.38) 58%,
+            transparent 72%
+        );
+    --focus-ring-shadow:
+        inset 0 0 34px color-mix(in srgb, var(--focus-accent) 12%, transparent),
+        0 16px 36px rgba(15, 23, 42, 0.08);
+    --focus-progress-track: color-mix(in srgb, var(--focus-accent) 16%, rgba(15, 23, 42, 0.08));
+    --focus-timer-text-shadow:
+        0 14px 34px color-mix(in srgb, var(--focus-accent) 16%, transparent),
+        0 1px 0 rgba(255, 255, 255, 0.8);
+    --focus-segment-bg: rgba(255, 255, 255, 0.68);
+    --focus-segment-hover-bg: color-mix(in srgb, var(--focus-accent) 10%, rgba(255, 255, 255, 0.82));
+    --focus-ghost-bg: rgba(255, 255, 255, 0.62);
+    --focus-ghost-hover-bg: rgba(255, 255, 255, 0.88);
+    --focus-stat-bg: rgba(255, 255, 255, 0.64);
+}
+
 .focus-timer-section,
 .focus-control-panel {
     position: relative;
     z-index: 1;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
-        rgba(12, 12, 18, 0.74);
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.32),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--focus-panel-border);
+    background: var(--focus-panel-bg);
+    box-shadow: var(--focus-panel-shadow);
     backdrop-filter: blur(18px) saturate(150%);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
@@ -136,8 +183,8 @@
     position: absolute;
     inset: 18%;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 68%);
-    box-shadow: inset 0 0 42px rgba(0, 0, 0, 0.24);
+    background: var(--focus-ring-core);
+    box-shadow: var(--focus-ring-shadow);
 }
 
 .focus-progress-svg {
@@ -150,7 +197,7 @@
 
 .focus-progress-bg {
     fill: none;
-    stroke: rgba(255, 255, 255, 0.08);
+    stroke: var(--focus-progress-track);
     stroke-width: 6;
 }
 
@@ -172,7 +219,7 @@
     font-weight: 800;
     letter-spacing: 0.04em;
     line-height: 1;
-    text-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    text-shadow: var(--focus-timer-text-shadow);
 }
 
 .focus-session-note {
@@ -225,7 +272,7 @@
     padding: 4px;
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.035);
+    background: var(--focus-segment-bg);
 }
 
 .focus-preset-btn {
@@ -249,7 +296,7 @@
 
 .focus-preset-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.045);
+    background: var(--focus-segment-hover-bg);
 }
 
 .focus-preset-btn.active {
@@ -317,13 +364,13 @@
 
 .focus-btn-ghost {
     border-color: var(--border-color);
-    background: rgba(255, 255, 255, 0.025);
+    background: var(--focus-ghost-bg);
     color: var(--text-secondary);
 }
 
 .focus-btn-ghost:hover {
     border-color: var(--glass-border);
-    background: rgba(255, 255, 255, 0.055);
+    background: var(--focus-ghost-hover-bg);
     color: var(--text-primary);
 }
 
@@ -341,7 +388,7 @@
     padding: 12px;
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--focus-stat-bg);
 }
 
 .focus-stat-value {
