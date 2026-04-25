@@ -29,7 +29,13 @@
 /* Active window */
 .window.active {
     display: flex;
-    animation: fadeInUp 0.3s var(--ease-out-expo) forwards;
+    animation: windowOpen var(--window-open-duration) var(--ease-out-expo) forwards;
+}
+
+/* Window closing state */
+.window.closing {
+    animation: windowClose var(--window-close-duration) var(--ease-out-expo) forwards;
+    pointer-events: none;
 }
 
 .window.is-minimized {
@@ -247,9 +253,14 @@
     flex: 1;
     text-align: center;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-secondary);
     letter-spacing: 0.01em;
+    transition: color 0.2s ease;
+}
+
+.window:focus-within .window-title {
+    color: var(--text-primary);
 }
 
 /* Window Controls — RIGHT side */
@@ -367,6 +378,31 @@ body.show-window-buttons .window-control.maximize {
     color: var(--text-primary);
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+}
+
+/* GNOME-style slim scrollbars */
+.window-body::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+}
+
+.window-body::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.window-body::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+    transition: background 0.2s ease;
+}
+
+.window-body::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Firefox scrollbar */
+.window-body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 .window-body h2 {

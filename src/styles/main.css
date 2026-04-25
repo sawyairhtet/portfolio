@@ -402,16 +402,25 @@ body,
 
 .proof-list {
     margin: var(--spacing-md) 0;
-    padding-left: 18px;
+    padding-left: 0;
+    list-style: none;
 }
 
 .proof-list li {
-    margin-bottom: 8px;
-    line-height: 1.5;
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 22px;
+    line-height: 1.55;
     color: var(--text-secondary);
 }
 
-.proof-list.compact {
+.proof-list li::before {
+    content: '\2713';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-weight: 700;
     font-size: 13px;
 }
 

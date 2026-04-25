@@ -1,5 +1,5 @@
 /* ============================================
-   TERMINAL STYLING — Premium dark
+   TERMINAL STYLING — Premium GNOME Terminal
    ============================================ */
 
 .terminal-body {
@@ -11,7 +11,7 @@
     position: relative;
 }
 
-/* Scanline effect */
+/* Scanline effect — very subtle */
 .terminal-body::after {
     content: '';
     position: absolute;
@@ -20,8 +20,8 @@
         0deg,
         transparent,
         transparent 2px,
-        rgba(255, 255, 255, 0.008) 2px,
-        rgba(255, 255, 255, 0.008) 4px
+        rgba(255, 255, 255, 0.005) 2px,
+        rgba(255, 255, 255, 0.005) 4px
     );
     pointer-events: none;
 }
@@ -41,11 +41,97 @@
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.terminal-output-scroll::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+}
+
+.terminal-output-scroll::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.terminal-output-scroll::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
 }
 
 .terminal-line {
-    margin: 4px 0;
+    margin: 3px 0;
     white-space: pre-wrap;
+    line-height: 1.55;
+    font-size: var(--terminal-font-size);
+}
+
+/* Colored terminal prompt parts */
+.terminal-prompt-user {
+    color: var(--terminal-prompt);
+    font-weight: 600;
+}
+
+.terminal-prompt-host {
+    color: var(--terminal-prompt);
+    font-weight: 600;
+}
+
+.terminal-prompt-at {
+    color: var(--text-disabled);
+}
+
+.terminal-prompt-path {
+    color: var(--accent-light);
+    font-weight: 500;
+}
+
+.terminal-prompt-symbol {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* Syntax-colored output */
+.terminal-cmd-echo {
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+.terminal-ok {
+    color: var(--fedora-green);
+    font-weight: 600;
+}
+
+.terminal-error {
+    color: var(--fedora-red);
+}
+
+.terminal-info {
+    color: var(--accent-light);
+}
+
+.terminal-path {
+    color: var(--cyan);
+}
+
+.terminal-heading {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.terminal-divider {
+    color: var(--text-disabled);
+    opacity: 0.5;
+}
+
+.terminal-welcome {
+    color: var(--accent-light);
+    font-weight: 500;
+}
+
+/* Selection styling */
+.terminal-body ::selection {
+    background: var(--terminal-selection);
+    color: var(--text-primary);
 }
 
 .terminal-input-line {
@@ -57,6 +143,8 @@
     color: var(--terminal-prompt);
     margin-right: var(--spacing-sm);
     font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .terminal-input {
@@ -69,6 +157,28 @@
     flex: 1;
     min-width: 0;
     caret-color: var(--accent);
+}
+
+/* Blinking cursor effect */
+.terminal-input:focus {
+    caret-color: transparent;
+}
+
+.terminal-input-line::after {
+    content: '';
+    display: none;
+    width: 8px;
+    height: 18px;
+    background: var(--accent);
+    margin-left: -1px;
+    animation: terminalCursorBlink 1s step-end infinite;
+    border-radius: 1px;
+    flex-shrink: 0;
+}
+
+.terminal-input:focus ~ .terminal-cursor-placeholder,
+.terminal-input-line:focus-within::after {
+    display: inline-block;
 }
 
 /* Terminal Submit Button - Mobile only */

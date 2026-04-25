@@ -168,8 +168,19 @@ export function DesktopShell() {
                         <h2>{PROFILE.name}</h2>
                         <p>Software Engineer</p>
                         <span className="desktop-welcome-hint">
-                            Click any app in the dock to open.
+                            Click any app in the dock to explore.
                         </span>
+                        <div className="desktop-welcome-shortcuts">
+                            <span className="shortcut-pill">
+                                <kbd>Alt+1</kbd> Projects
+                            </span>
+                            <span className="shortcut-pill">
+                                <kbd>Alt+2</kbd> Contact
+                            </span>
+                            <span className="shortcut-pill">
+                                <kbd>Alt+3</kbd> Resume
+                            </span>
+                        </div>
                     </section>
                 )}
             </main>

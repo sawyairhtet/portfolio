@@ -46,7 +46,6 @@ body .wallpaper.custom-wallpaper {
     text-shadow:
         0 2px 20px rgba(0, 0, 0, 0.55),
         0 0 42px rgba(0, 0, 0, 0.35);
-    animation: fadeInUp 0.45s var(--ease-out-expo) both;
 }
 
 .desktop-welcome-kicker {
@@ -57,6 +56,8 @@ body .wallpaper.custom-wallpaper {
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    opacity: 0;
+    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.1s forwards;
 }
 
 .desktop-welcome h2 {
@@ -66,6 +67,8 @@ body .wallpaper.custom-wallpaper {
     font-weight: 750;
     line-height: 0.95;
     letter-spacing: 0;
+    opacity: 0;
+    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.2s forwards;
 }
 
 .desktop-welcome p {
@@ -74,6 +77,8 @@ body .wallpaper.custom-wallpaper {
     font-size: clamp(16px, 1.6vw, 21px);
     font-weight: 500;
     line-height: 1.35;
+    opacity: 0;
+    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.3s forwards;
 }
 
 .desktop-welcome-hint {
@@ -92,6 +97,50 @@ body .wallpaper.custom-wallpaper {
     box-shadow:
         0 8px 30px rgba(0, 0, 0, 0.22),
         inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    pointer-events: auto;
+    opacity: 0;
+    animation:
+        welcomeSlideUp 0.5s var(--ease-out-expo) 0.45s forwards,
+        hintPulse 3s ease-in-out 1.5s infinite;
+}
+
+/* Keyboard shortcut hints */
+.desktop-welcome-shortcuts {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    pointer-events: auto;
+    opacity: 0;
+    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.6s forwards;
+}
+
+.shortcut-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 6px;
+    background: rgba(10, 10, 15, 0.30);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.shortcut-pill kbd {
+    display: inline-block;
+    padding: 1px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
 }
 
 /* Ambient glow overlay */

@@ -19,14 +19,15 @@ function randomPick<T>(arr: T[]): T {
 interface TerminalLine {
     id: number;
     content: string;
+    className?: string;
 }
 
 export function TerminalApp() {
     const { openWindow } = useWindowManager();
     const [lines, setLines] = useState<TerminalLine[]>([
-        { id: 0, content: "Welcome to Saw Ye Htet's Portfolio Terminal" },
-        { id: 1, content: "Type 'help' to see available commands" },
-        { id: 2, content: '─────────────────────────────────────────' },
+        { id: 0, content: "Welcome to Saw Ye Htet's Portfolio Terminal", className: 'terminal-welcome' },
+        { id: 1, content: "Type 'help' to see available commands", className: 'terminal-info' },
+        { id: 2, content: '─────────────────────────────────────────', className: 'terminal-divider' },
     ]);
     const [inputValue, setInputValue] = useState('');
     const [cwd, setCwd] = useState('/home/sawyehtet');
@@ -43,14 +44,19 @@ export function TerminalApp() {
         }
     }, [lines]);
 
-    const addLine = useCallback((content: string) => {
-        setLines(prev => [...prev, { id: lineIdRef.current++, content }]);
+    const addLine = useCallback((content: string, className?: string) => {
+        setLines(prev => [...prev, { id: lineIdRef.current++, content, className }]);
     }, []);
 
-    const addLines = useCallback((contents: string[]) => {
+    const addLines = useCallback((contents: (string | { text: string; className?: string })[]) => {
         setLines(prev => [
             ...prev,
-            ...contents.map(c => ({ id: lineIdRef.current++, content: c })),
+            ...contents.map(c => {
+                if (typeof c === 'string') {
+                    return { id: lineIdRef.current++, content: c };
+                }
+                return { id: lineIdRef.current++, content: c.text, className: c.className };
+            }),
         ]);
     }, []);
 
@@ -78,7 +84,8 @@ export function TerminalApp() {
             if (!trimmed) return;
 
             addLine(
-                `[sawyehtet@fedora ${cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop()}]$ ${trimmed}`
+                `[sawyehtet@fedora ${cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop()}]$ ${trimmed}`,
+                'terminal-cmd-echo'
             );
 
             const [rawCommand, ...args] = trimmed.split(/\s+/);
@@ -98,7 +105,7 @@ export function TerminalApp() {
             switch (command) {
                 case 'help':
                     addLines([
-                        'Available commands:',
+                        { text: 'Available commands:', className: 'terminal-heading' },
                         '  help          - Show this help message',
                         '  projects      - Open Projects and list featured work',
                         '  skills        - Open Skills and summarize tools',
@@ -119,7 +126,8 @@ export function TerminalApp() {
                     const node = fs[target];
                     if (!node) {
                         addLine(
-                            `ls: cannot access '${args[0] || target}': No such file or directory`
+                            `ls: cannot access '${args[0] || target}': No such file or directory`,
+                            'terminal-error'
                         );
                         break;
                     }
@@ -139,11 +147,11 @@ export function TerminalApp() {
                     const target = resolvePath(args[0]);
                     const node = fs[target];
                     if (!node) {
-                        addLine(`cd: no such file or directory: ${args[0]}`);
+                        addLine(`cd: no such file or directory: ${args[0]}`, 'terminal-error');
                         break;
                     }
                     if (node.type !== 'dir') {
-                        addLine(`cd: not a directory: ${args[0]}`);
+                        addLine(`cd: not a directory: ${args[0]}`, 'terminal-error');
                         break;
                     }
                     setCwd(target);
@@ -152,17 +160,17 @@ export function TerminalApp() {
 
                 case 'cat': {
                     if (!args[0]) {
-                        addLine('cat: missing operand');
+                        addLine('cat: missing operand', 'terminal-error');
                         break;
                     }
                     const target = resolvePath(args[0]);
                     const node = fs[target];
                     if (!node) {
-                        addLine(`cat: ${args[0]}: No such file or directory`);
+                        addLine(`cat: ${args[0]}: No such file or directory`, 'terminal-error');
                         break;
                     }
                     if (node.type !== 'file') {
-                        addLine(`cat: ${args[0]}: Is a directory`);
+                        addLine(`cat: ${args[0]}: Is a directory`, 'terminal-error');
                         break;
                     }
                     addLines(node.content.split('\n'));
@@ -170,7 +178,7 @@ export function TerminalApp() {
                 }
 
                 case 'pwd':
-                    addLine(cwd);
+                    addLine(cwd, 'terminal-path');
                     break;
 
                 case 'clear':
@@ -215,54 +223,54 @@ export function TerminalApp() {
                     break;
                 case 'about':
                     openWindow('about');
-                    addLine('Opened About.');
+                    addLine('Opened About.', 'terminal-ok');
                     break;
 
                 case 'projects':
                     openWindow('projects');
                     addLines([
-                        'Projects:',
+                        { text: 'Projects:', className: 'terminal-heading' },
                         ...PROJECTS.map(
                             project => `  ${project.title} - ${project.role}; ${project.platform}`
                         ),
-                        'Opened Projects.',
+                        { text: 'Opened Projects.', className: 'terminal-ok' },
                     ]);
                     break;
 
                 case 'skills':
                     openWindow('skills');
                     addLines([
-                        'Skills:',
+                        { text: 'Skills:', className: 'terminal-heading' },
                         ...SKILL_CATEGORIES.map(
                             category =>
                                 `  ${category.title}: ${category.skills.map(skill => skill.name).join(', ')}`
                         ),
-                        'Opened Skills.',
+                        { text: 'Opened Skills.', className: 'terminal-ok' },
                     ]);
                     break;
 
                 case 'contact':
                     openWindow('contact');
                     addLines([
-                        'Contact:',
+                        { text: 'Contact:', className: 'terminal-heading' },
                         `  Email: ${PROFILE.email}`,
                         `  Availability: ${PROFILE.availability}`,
-                        'Opened Contact.',
+                        { text: 'Opened Contact.', className: 'terminal-ok' },
                     ]);
                     break;
 
                 case 'links':
                     openWindow('links');
                     addLines([
-                        'Links:',
+                        { text: 'Links:', className: 'terminal-heading' },
                         ...SOCIAL_LINKS.map(link => `  ${link.label}: ${link.terminal}`),
-                        'Opened Links.',
+                        { text: 'Opened Links.', className: 'terminal-ok' },
                     ]);
                     break;
 
                 case 'resume':
                     window.open(PROFILE.resumePath, '_blank', 'noopener,noreferrer');
-                    addLine('Opened resume PDF.');
+                    addLine('Opened resume PDF.', 'terminal-ok');
                     break;
 
                 case 'open': {
@@ -272,12 +280,13 @@ export function TerminalApp() {
                     }
                     const appId = findApp(args.join(' '));
                     if (!appId) {
-                        addLine(`open: unknown app '${args.join(' ')}'`);
+                        addLine(`open: unknown app '${args.join(' ')}'`, 'terminal-error');
                         break;
                     }
                     openWindow(appId);
                     addLine(
-                        `Opened ${APP_DEFINITIONS.find(app => app.id === appId)?.label ?? appId}.`
+                        `Opened ${APP_DEFINITIONS.find(app => app.id === appId)?.label ?? appId}.`,
+                        'terminal-ok'
                     );
                     break;
                 }
@@ -323,7 +332,7 @@ export function TerminalApp() {
                 }
 
                 default:
-                    addLine(`bash: ${rawCommand}: command not found`);
+                    addLine(`bash: ${rawCommand}: command not found`, 'terminal-error');
                     break;
             }
 
@@ -399,7 +408,7 @@ export function TerminalApp() {
                 aria-label="Terminal output"
             >
                 {lines.map(line => (
-                    <div key={line.id} className="terminal-line">
+                    <div key={line.id} className={`terminal-line${line.className ? ` ${line.className}` : ''}`}>
                         {line.content}
                     </div>
                 ))}

@@ -363,7 +363,7 @@
 
 .project-preview {
     width: 100%;
-    height: 110px;
+    height: 140px;
     background: var(--gradient-accent);
     border-radius: var(--radius-sm);
     margin-bottom: var(--spacing-md);
@@ -408,6 +408,10 @@
 .project-card p {
     color: var(--text-secondary);
     line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .tech-stack {

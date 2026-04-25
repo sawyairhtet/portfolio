@@ -16,6 +16,34 @@
     }
 }
 
+/* Window Open — Scale + fade + subtle blur */
+@keyframes windowOpen {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+        filter: blur(6px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+/* Window Close — Scale down + fade out */
+@keyframes windowClose {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.95);
+        filter: blur(4px);
+    }
+}
+
 /* Avatar Pulse Glow */
 @keyframes avatarPulseGlow {
     0%,
@@ -209,6 +237,67 @@
     }
     50% {
         opacity: 0.8;
+    }
+}
+
+/* Terminal cursor blink */
+@keyframes terminalCursorBlink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Dock breathing glow */
+@keyframes dockBreathing {
+    0%, 100% {
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.40),
+            0 0 0 1px rgba(255, 255, 255, 0.04),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    50% {
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.40),
+            0 0 0 1px rgba(255, 255, 255, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08),
+            0 0 60px rgba(124, 92, 252, 0.04);
+    }
+}
+
+/* Welcome text stagger */
+@keyframes welcomeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* Hint pill pulse border */
+@keyframes hintPulse {
+    0%, 100% {
+        border-color: rgba(255, 255, 255, 0.14);
+    }
+    50% {
+        border-color: rgba(255, 255, 255, 0.28);
+    }
+}
+
+/* Active dot pulse */
+@keyframes activeDotPulse {
+    0%, 100% {
+        box-shadow: 0 0 6px var(--accent-glow), 0 0 3px var(--accent-glow);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--accent-glow), 0 0 6px var(--accent-glow), 0 0 20px rgba(124, 92, 252, 0.15);
     }
 }
 

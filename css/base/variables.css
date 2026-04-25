@@ -29,8 +29,8 @@
 
     /* ── Text ── */
     --text-primary: rgba(255, 255, 255, 0.92);
-    --text-secondary: rgba(255, 255, 255, 0.50);
-    --text-disabled: rgba(255, 255, 255, 0.28);
+    --text-secondary: rgba(255, 255, 255, 0.58);
+    --text-disabled: rgba(255, 255, 255, 0.30);
     --text-on-accent: #ffffff;
 
     /* ── Borders ── */
@@ -53,6 +53,12 @@
     --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.50);
     --shadow-glow: 0 0 40px var(--accent-glow), 0 0 80px rgba(124, 92, 252, 0.12);
 
+    /* ── Scrollbar ── */
+    --scrollbar-thumb: rgba(255, 255, 255, 0.12);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.22);
+    --scrollbar-track: transparent;
+    --scrollbar-width: 6px;
+
     /* ── Typography — Editorial, sharp ── */
     --font-ui: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace;
@@ -65,7 +71,9 @@
 
     /* ── Window Chrome ── */
     --window-header-height: 48px;
-    --window-border-radius: 16px;
+    --window-border-radius: 14px;
+    --window-open-duration: 0.28s;
+    --window-close-duration: 0.2s;
     --window-shadow: var(--shadow-window);
     --window-header-bg: var(--glass-bg-heavy);
     --window-header-border: var(--glass-border);
@@ -215,8 +223,8 @@
     --surface-4: #2e2e3d;
 
     --text-primary: rgba(255, 255, 255, 0.92);
-    --text-secondary: rgba(255, 255, 255, 0.50);
-    --text-disabled: rgba(255, 255, 255, 0.28);
+    --text-secondary: rgba(255, 255, 255, 0.58);
+    --text-disabled: rgba(255, 255, 255, 0.30);
 
     --border-color: rgba(255, 255, 255, 0.06);
     --window-header-bg: var(--glass-bg-heavy);
