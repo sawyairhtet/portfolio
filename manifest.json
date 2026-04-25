@@ -1,7 +1,7 @@
 {
     "name": "Saw Ye Htet - Portfolio",
     "short_name": "SYH Portfolio",
-    "description": "IT Student & VR Developer - Portfolio Website",
+    "description": "Java-focused software developer portfolio website",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#1e1e2e",

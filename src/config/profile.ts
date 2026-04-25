@@ -1,7 +1,7 @@
 export const PROFILE = {
     name: 'Saw Ye Htet',
     email: 'minwn2244@gmail.com',
-    resumePath: 'resume/SYH_resume.pdf',
+    resumePath: '/resume/SYH_resume.pdf',
     availability: 'Open to opportunities',
     location: 'Singapore / remote-friendly',
 };

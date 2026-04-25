@@ -20,7 +20,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         icon: 'fas fa-user-circle',
         dockTooltip: 'About Me',
         gradient: 'linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%)',
-        description: 'Recruiter summary, education, focus, and personality.',
+        description: 'Recruiter summary, graduation, Java focus, and personality.',
         aliases: ['bio', 'profile', 'summary', 'saw'],
         desktopDock: true,
         mobileDock: true,
@@ -116,9 +116,33 @@ export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app 
 
 export const PROJECTS: Project[] = [
     {
+        id: 'fedora-portfolio',
+        title: 'Fedora Portfolio Website',
+        role: 'Software developer',
+        summary:
+            'A recruiter-first portfolio wrapped in a Fedora 43 / GNOME 49 desktop, repositioned around a Java developer career path while preserving past project proof.',
+        techStack: ['React', 'TypeScript', 'Vite', 'CSS', 'Adwaita'],
+        platform: 'Responsive web app',
+        proofPoints: [
+            'Built window management, Activities search, quick settings, notifications, and a terminal interface.',
+            'Keeps Java developer positioning visible across About, Skills, Projects, metadata, and terminal surfaces.',
+            'Ships as a Vite app with typecheck, lint, and Vitest validation.',
+        ],
+        links: [
+            {
+                label: 'View Repository',
+                href: 'https://github.com/sawyairhtet/portfolio',
+                icon: 'fab fa-github',
+                primary: true,
+            },
+        ],
+        featured: true,
+        icon: 'fas fa-desktop',
+    },
+    {
         id: 'jewelry-vr',
         title: 'Jewelry Shop Robbery VR',
-        role: 'VR developer',
+        role: 'Past VR developer',
         summary:
             'A Meta Quest heist prototype focused on bare-hand interaction, object grabbing, throwing, and room-scale feedback.',
         techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking', 'Oculus Interaction'],
@@ -136,39 +160,39 @@ export const PROJECTS: Project[] = [
                 primary: true,
             },
         ],
-        featured: true,
-        icon: 'fas fa-vr-cardboard',
-    },
-    {
-        id: 'fedora-portfolio',
-        title: 'Fedora Portfolio Website',
-        role: 'Frontend engineer and interaction designer',
-        summary:
-            'A recruiter-first portfolio wrapped in a Fedora 43 / GNOME 49 desktop with windows, terminal, boot sequence, settings, and responsive app shell.',
-        techStack: ['React', 'TypeScript', 'Vite', 'CSS', 'Adwaita'],
-        platform: 'Responsive web app',
-        proofPoints: [
-            'Built window management, Activities search, quick settings, notifications, and a terminal interface.',
-            'Preserved desktop fidelity while making projects, contact, and social links faster to reach.',
-            'Ships as a Vite app with typecheck, lint, and Vitest validation.',
-        ],
-        links: [
-            {
-                label: 'View Repository',
-                href: 'https://github.com/sawyairhtet/portfolio',
-                icon: 'fab fa-github',
-                primary: true,
-            },
-        ],
         featured: false,
-        icon: 'fas fa-desktop',
+        icon: 'fas fa-vr-cardboard',
     },
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
     {
-        title: 'Frontend Engineering',
-        icon: 'fab fa-react',
+        title: 'Java Development',
+        icon: 'fab fa-java',
+        skills: [
+            {
+                name: 'Java + OOP',
+                context:
+                    'Object-oriented programming, class design, control flow, and practical problem solving from IT coursework and self-study.',
+                usedIn: ['Singapore Polytechnic', 'Java Path'],
+            },
+            {
+                name: 'SQL + Data Handling',
+                context:
+                    'Relational data basics, queries, schema thinking, and connecting application logic to structured data.',
+                usedIn: ['Coursework', 'Backend Fundamentals'],
+            },
+            {
+                name: 'Backend Fundamentals',
+                context:
+                    'REST concepts, validation, debugging, and maintainable code habits for application development.',
+                usedIn: ['Java Path', 'Full-Stack Projects'],
+            },
+        ],
+    },
+    {
+        title: 'Full-Stack Foundations',
+        icon: 'fas fa-code',
         skills: [
             {
                 name: 'React + TypeScript',
@@ -177,21 +201,21 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 usedIn: ['Fedora Portfolio'],
             },
             {
-                name: 'CSS / Adwaita UI',
+                name: 'JavaScript / Python',
                 context:
-                    'GNOME-inspired layouts, accessibility states, motion, and mobile constraints.',
-                usedIn: ['Fedora Portfolio'],
+                    'Coursework, tooling, data handling, scripting, and small automation tasks.',
+                usedIn: ['Coursework', 'Fedora Portfolio'],
             },
             {
-                name: 'Vite + Testing',
+                name: 'Git + Linux Workflow',
                 context:
-                    'Fast iteration, typecheck/lint/test workflows, and focused interaction tests.',
-                usedIn: ['Fedora Portfolio'],
+                    'Source control, shell habits, public repositories, and Fedora/GNOME customization.',
+                usedIn: ['Fedora Portfolio', 'Personal Workflow'],
             },
         ],
     },
     {
-        title: 'VR And Game Development',
+        title: 'Past VR And Game Work',
         icon: 'fas fa-vr-cardboard',
         skills: [
             {
@@ -208,27 +232,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'Performance Awareness',
                 context: 'Standalone VR decisions around feedback, rendering cost, and comfort.',
                 usedIn: ['Jewelry VR'],
-            },
-        ],
-    },
-    {
-        title: 'General Engineering',
-        icon: 'fas fa-code',
-        skills: [
-            {
-                name: 'JavaScript / Python / Java / SQL',
-                context: 'Coursework, tooling, data handling, and small automation tasks.',
-                usedIn: ['Coursework'],
-            },
-            {
-                name: 'Git + GitHub',
-                context: 'Source control, public repositories, and collaboration-ready workflows.',
-                usedIn: ['Fedora Portfolio', 'Jewelry VR'],
-            },
-            {
-                name: 'Linux Workflow',
-                context: 'Daily system fluency, shell habits, and Fedora/GNOME customization.',
-                usedIn: ['Fedora Portfolio'],
             },
         ],
     },
@@ -322,22 +325,22 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
-            '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: VR Heist Game for Meta Quest\n- **portfolio**: This website!\n\nFeel free to explore with `cd` and `cat`.',
+            '# My Projects\n\nWelcome to my project folder!\n\n- **portfolio**: This website, now focused around my Java developer path\n- **jewelry-vr**: Past VR heist prototype for Meta Quest\n\nFeel free to explore with `cd` and `cat`.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md'] },
     '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
         content:
-            'TODO:\n- Finish VR project\n- Update portfolio\n- Master Godot Engine\n- Call mom \u{1F499}',
+            'TODO:\n- Keep strengthening Java fundamentals\n- Build backend practice projects\n- Update portfolio proof points\n- Call mom \u{1F499}',
     },
     '/home/sawyehtet/documents/ideas.md': {
         type: 'file',
         content:
-            '# Future Project Ideas\n\n1. Multiplayer VR escape room\n2. Indie game with procedural generation\n3. Open-source developer tools',
+            '# Future Project Ideas\n\n1. Java backend API with SQL persistence\n2. Spring Boot practice app\n3. Open-source developer tools',
     },
     '/home/sawyehtet/resume.txt': {
         type: 'file',
-        content: `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         SAW YE HTET - RESUME          \u2551\n\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563\n\u2551 Education: Singapore Polytechnic      \u2551\n\u2551 Major: Information Technology         \u2551\n\u2551 Skills: Unity, C#, JavaScript, Python \u2551\n\u2551 Focus: VR Development, Full-Stack     \u2551\n\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D\n\nContact: ${PROFILE.email}`,
+        content: `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         SAW YE HTET - RESUME          \u2551\n\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563\n\u2551 Education: Singapore Polytechnic grad \u2551\n\u2551 Major: Information Technology         \u2551\n\u2551 Skills: Java, SQL, JavaScript, Python \u2551\n\u2551 Focus: Java developer path            \u2551\n\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D\n\nContact: ${PROFILE.email}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',

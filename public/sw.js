@@ -4,13 +4,14 @@
  */
 
 // Cache version - update BUILD_VERSION on each deploy for cache-busting
-const BUILD_VERSION = '20260424-react-cleanup';
+const BUILD_VERSION = '20260425-java-focus';
 const CACHE_NAME = `syh-portfolio-v1-${BUILD_VERSION}`;
 const STATIC_ASSETS = [
     '/404.html',
     '/sw.js',
     '/images/profile-picture.webp',
     '/images/og-preview.png',
+    '/resume/SYH_resume.pdf',
     '/offline.html',
 ];
 

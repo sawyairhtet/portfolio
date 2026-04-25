@@ -156,7 +156,7 @@ export function DesktopShell() {
             {/* Main Content */}
             <main id="main-content" className="main-content" role="main">
                 <h1 className="sr-only">
-                    Saw Ye Htet — IT Student &amp; VR Developer | Fedora 43 Desktop Portfolio
+                    Saw Ye Htet — Java-Focused Software Developer | Fedora 43 Desktop Portfolio
                 </h1>
                 <Wallpaper />
             </main>

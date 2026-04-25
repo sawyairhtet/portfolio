@@ -29,7 +29,7 @@ export function AboutApp() {
                     </picture>
                 </div>
                 <h2>Saw Ye Htet</h2>
-                <p className="about-tagline">IT Student &amp; VR Developer</p>
+                <p className="about-tagline">Java-Focused Software Developer</p>
                 <div className="about-hero-actions">
                     <button
                         className="about-cta-btn about-cta-primary"
@@ -41,11 +41,11 @@ export function AboutApp() {
             </div>
             <div className="recruiter-summary" aria-label="Recruiter summary">
                 {[
-                    ['Role', 'IT student / VR developer'],
-                    ['School', 'Singapore Polytechnic'],
+                    ['Role', 'Java-focused software developer'],
+                    ['Education', 'Singapore Polytechnic graduate'],
                     ['Location', 'Singapore'],
                     ['Availability', PROFILE.availability],
-                    ['Focus', 'VR, React, interaction design'],
+                    ['Focus', 'Java, backend fundamentals, SQL'],
                 ].map(([label, value]) => (
                     <div key={label} className="summary-row">
                         <span>{label}</span>
@@ -59,13 +59,12 @@ export function AboutApp() {
                         <i className="fas fa-user" aria-hidden="true" /> About Me
                     </h3>
                     <p>
-                        I build things that feel real — whether that&apos;s a VR heist game where
-                        you grab jewels with your bare hands, or this portfolio that simulates a
-                        full Fedora 43 desktop in the browser. I got hooked on VR after implementing
-                        Meta Quest hand tracking and realising gesture input could replace
-                        controllers entirely. When I&apos;m not in Unity, I&apos;m usually deep in
-                        React, Linux configs, or figuring out how to make CSS do something it
-                        probably shouldn&apos;t.
+                        I recently graduated from Singapore Polytechnic with a Diploma in
+                        Information Technology, and I&apos;m steering my portfolio toward Java
+                        developer roles. My past VR and interactive web projects gave me practice
+                        with object-oriented thinking, user flows, performance-minded code, and
+                        shipping complete experiences. Now I&apos;m focusing those habits on Java,
+                        backend fundamentals, SQL, and maintainable application code.
                     </p>
                 </div>
                 <div className="about-section about-grouped">
@@ -75,11 +74,15 @@ export function AboutApp() {
                     {[
                         [
                             'Education',
-                            'Diploma in Information Technology, Singapore Polytechnic. Expected graduation: 2026.',
+                            'Diploma in Information Technology, Singapore Polytechnic. Graduated in 2026.',
                         ],
                         [
-                            'VR Project',
-                            'Built a Meta Quest jewelry heist prototype with Unity, C#, and bare-hand object interactions.',
+                            'Java Direction',
+                            'Building toward Java developer roles with a focus on OOP, backend fundamentals, SQL, and clean application structure.',
+                        ],
+                        [
+                            'Past VR Work',
+                            'Built Meta Quest VR prototypes with Unity, C#, hand tracking, and performance constraints.',
                         ],
                         [
                             'Web Project',
@@ -87,7 +90,7 @@ export function AboutApp() {
                         ],
                         [
                             'Interests',
-                            'VR, spatial computing, game development, Linux customization, open source, and UI/UX.',
+                            'Java development, backend systems, Linux customization, open source, and practical developer tools.',
                         ],
                     ].map(([label, value]) => (
                         <div key={label} className="about-grouped-row">
