@@ -35,6 +35,65 @@ body .wallpaper.custom-wallpaper {
     background: var(--custom-wallpaper-bg);
 }
 
+.desktop-welcome {
+    position: absolute;
+    left: clamp(24px, 6vw, 84px);
+    bottom: clamp(116px, 17vh, 176px);
+    z-index: 9;
+    max-width: min(460px, calc(100vw - 48px));
+    color: var(--text-on-accent);
+    pointer-events: none;
+    text-shadow:
+        0 2px 20px rgba(0, 0, 0, 0.55),
+        0 0 42px rgba(0, 0, 0, 0.35);
+    animation: fadeInUp 0.45s var(--ease-out-expo) both;
+}
+
+.desktop-welcome-kicker {
+    display: block;
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.desktop-welcome h2 {
+    margin: 0;
+    color: inherit;
+    font-size: clamp(30px, 3.6vw, 46px);
+    font-weight: 750;
+    line-height: 0.95;
+    letter-spacing: 0;
+}
+
+.desktop-welcome p {
+    margin: 10px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: clamp(16px, 1.6vw, 21px);
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+.desktop-welcome-hint {
+    display: inline-flex;
+    margin-top: 18px;
+    padding: 8px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(10, 10, 15, 0.38);
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
 /* Ambient glow overlay */
 .wallpaper::before {
     content: '';
@@ -68,4 +127,32 @@ body .wallpaper.custom-wallpaper {
 /* Desktop shell uses a centered bottom dock, so content keeps full width */
 body.show-dock .main-content {
     padding-left: 0;
+}
+
+@media (max-width: 767px) {
+    .desktop-welcome {
+        left: 20px;
+        right: 20px;
+        bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+        max-width: none;
+    }
+
+    .desktop-welcome-kicker {
+        font-size: 10px;
+    }
+
+    .desktop-welcome h2 {
+        font-size: 30px;
+        line-height: 1;
+    }
+
+    .desktop-welcome p {
+        max-width: 280px;
+        font-size: 15px;
+    }
+
+    .desktop-welcome-hint {
+        max-width: 100%;
+        font-size: 12px;
+    }
 }

@@ -59,6 +59,23 @@ function DockStateHarness() {
     );
 }
 
+function OpenWindowIdentityHarness() {
+    const { openWindow, windows } = useWindowManager();
+    const initialOpenWindow = useRef(openWindow);
+
+    useEffect(() => {
+        openWindow('about');
+    }, [openWindow]);
+
+    return (
+        <div data-testid="open-window-identity">
+            {windows.get('about')?.isOpen
+                ? String(initialOpenWindow.current === openWindow)
+                : 'pending'}
+        </div>
+    );
+}
+
 function TerminalHarness() {
     const { windows } = useWindowManager();
 
@@ -113,6 +130,18 @@ describe('Portfolio React interactions', () => {
         await user.click(screen.getByRole('button', { name: 'About' }));
 
         expect(screen.getByTestId('about-window-state')).toHaveTextContent('open');
+    });
+
+    it('keeps the openWindow callback stable after opening an app', async () => {
+        render(
+            <Providers>
+                <OpenWindowIdentityHarness />
+            </Providers>
+        );
+
+        await waitFor(() =>
+            expect(screen.getByTestId('open-window-identity')).toHaveTextContent('true')
+        );
     });
 
     it('renders mobile dock with primary apps and an Apps launcher', async () => {

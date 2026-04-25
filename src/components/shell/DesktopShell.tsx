@@ -23,7 +23,7 @@ import { ContextMenu } from '../ui/ContextMenu';
 import { PROFILE } from '../../config/profile';
 
 export function DesktopShell() {
-    const { openWindow } = useWindowManager();
+    const { openWindow, windows } = useWindowManager();
     const { playStartupDrum } = useSound();
     const { preferences } = usePreferences();
 
@@ -31,6 +31,9 @@ export function DesktopShell() {
     const [activitiesOpen, setActivitiesOpen] = useState(false);
     const [quickSettingsOpen, setQuickSettingsOpen] = useState(false);
     const [notifCenterOpen, setNotifCenterOpen] = useState(false);
+    const hasVisibleWindows = Array.from(windows.values()).some(
+        win => win.isOpen && !win.isMinimized
+    );
 
     // Track load time for uptime command
     useEffect(() => {
@@ -156,9 +159,19 @@ export function DesktopShell() {
             {/* Main Content */}
             <main id="main-content" className="main-content" role="main">
                 <h1 className="sr-only">
-                    Saw Ye Htet — Java-Focused Software Developer | Fedora 43 Desktop Portfolio
+                    Saw Ye Htet — Software Engineer | Fedora 43 Desktop Portfolio
                 </h1>
                 <Wallpaper />
+                {booted && !hasVisibleWindows && !activitiesOpen && (
+                    <section className="desktop-welcome" aria-label="Portfolio welcome">
+                        <span className="desktop-welcome-kicker">Fedora 43 Portfolio</span>
+                        <h2>{PROFILE.name}</h2>
+                        <p>Software Engineer</p>
+                        <span className="desktop-welcome-hint">
+                            Click any app in the dock to open.
+                        </span>
+                    </section>
+                )}
             </main>
 
             <div

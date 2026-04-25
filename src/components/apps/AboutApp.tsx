@@ -29,7 +29,7 @@ export function AboutApp() {
                     </picture>
                 </div>
                 <h2>Saw Ye Htet</h2>
-                <p className="about-tagline">Java-Focused Software Developer</p>
+                <p className="about-tagline">Software Engineer</p>
                 <div className="about-hero-actions">
                     <button
                         className="about-cta-btn about-cta-primary"
@@ -41,7 +41,7 @@ export function AboutApp() {
             </div>
             <div className="recruiter-summary" aria-label="Recruiter summary">
                 {[
-                    ['Role', 'Java-focused software developer'],
+                    ['Role', 'Software Engineer'],
                     ['Education', 'Singapore Polytechnic graduate'],
                     ['Location', 'Singapore'],
                     ['Availability', PROFILE.availability],

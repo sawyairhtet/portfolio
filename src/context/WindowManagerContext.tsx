@@ -65,134 +65,127 @@ function createWindowInfo(appId: AppId, zIndex: number): WindowInfo {
 }
 
 export function WindowManagerProvider({ children }: { children: ReactNode }) {
-    const [windows, setWindows] = useState<Map<AppId, WindowInfo>>(new Map());
-    const [currentZIndex, setCurrentZIndex] = useState(100);
+    const [managerState, setManagerState] = useState({
+        windows: new Map<AppId, WindowInfo>(),
+        currentZIndex: 100,
+    });
     const [focusedApp, setFocusedApp] = useState<AppId | null>(null);
+    const { windows } = managerState;
 
-    const openWindow = useCallback(
-        (appId: AppId) => {
-            setWindows(prev => {
-                const next = new Map(prev);
-                const existing = next.get(appId);
-                if (existing) {
-                    // Already open — bring to front and unminimize
-                    const newZ = currentZIndex + 1;
-                    next.set(appId, {
-                        ...existing,
-                        isOpen: true,
-                        isMinimized: false,
-                        zIndex: newZ,
-                    });
-                    setCurrentZIndex(newZ);
-                } else {
-                    const newZ = currentZIndex + 1;
-                    next.set(appId, createWindowInfo(appId, newZ));
-                    setCurrentZIndex(newZ);
-                }
-                return next;
-            });
-            setFocusedApp(appId);
-        },
-        [currentZIndex]
-    );
+    const openWindow = useCallback((appId: AppId) => {
+        setManagerState(prev => {
+            const nextZ = prev.currentZIndex + 1;
+            const next = new Map(prev.windows);
+            const existing = next.get(appId);
+
+            if (existing) {
+                // Already open: bring to front and unminimize.
+                next.set(appId, {
+                    ...existing,
+                    isOpen: true,
+                    isMinimized: false,
+                    zIndex: nextZ,
+                });
+            } else {
+                next.set(appId, createWindowInfo(appId, nextZ));
+            }
+
+            return { windows: next, currentZIndex: nextZ };
+        });
+        setFocusedApp(appId);
+    }, []);
 
     const closeWindow = useCallback((appId: AppId) => {
-        setWindows(prev => {
-            const next = new Map(prev);
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
             next.delete(appId);
-            return next;
+            return { ...prev, windows: next };
         });
         setFocusedApp(prev => (prev === appId ? null : prev));
     }, []);
 
     const minimizeWindow = useCallback((appId: AppId) => {
-        setWindows(prev => {
-            const next = new Map(prev);
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
             const win = next.get(appId);
             if (win) {
                 next.set(appId, { ...win, isMinimized: true });
             }
-            return next;
+            return { ...prev, windows: next };
         });
         setFocusedApp(prev => (prev === appId ? null : prev));
     }, []);
 
-    const toggleMaximize = useCallback(
-        (appId: AppId) => {
-            setWindows(prev => {
-                const next = new Map(prev);
-                const win = next.get(appId);
-                if (win) {
-                    const isMaximizing = !win.isMaximized;
-                    const newZ = isMaximizing
-                        ? Math.max(currentZIndex + 1, MAXIMIZED_Z_FLOOR)
-                        : win.zIndex;
+    const toggleMaximize = useCallback((appId: AppId) => {
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
+            const win = next.get(appId);
+            if (!win) {
+                return prev;
+            }
 
-                    next.set(appId, {
-                        ...win,
-                        isMaximized: isMaximizing,
-                        snapState: 'none',
-                        zIndex: newZ,
-                    });
+            const isMaximizing = !win.isMaximized;
+            const nextZ = isMaximizing
+                ? Math.max(prev.currentZIndex + 1, MAXIMIZED_Z_FLOOR)
+                : prev.currentZIndex;
 
-                    if (isMaximizing) {
-                        setCurrentZIndex(newZ);
-                    }
-                }
-                return next;
+            next.set(appId, {
+                ...win,
+                isMaximized: isMaximizing,
+                snapState: 'none',
+                zIndex: isMaximizing ? nextZ : win.zIndex,
             });
-            setFocusedApp(appId);
-        },
-        [currentZIndex]
-    );
 
-    const bringToFront = useCallback(
-        (appId: AppId) => {
-            setWindows(prev => {
-                const next = new Map(prev);
-                const win = next.get(appId);
-                if (win) {
-                    const newZ = currentZIndex + 1;
-                    next.set(appId, { ...win, zIndex: newZ, isMinimized: false });
-                    setCurrentZIndex(newZ);
-                }
-                return next;
-            });
-            setFocusedApp(appId);
-        },
-        [currentZIndex]
-    );
+            return { windows: next, currentZIndex: nextZ };
+        });
+        setFocusedApp(appId);
+    }, []);
+
+    const bringToFront = useCallback((appId: AppId) => {
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
+            const win = next.get(appId);
+            if (!win) {
+                return prev;
+            }
+
+            const nextZ = prev.currentZIndex + 1;
+            next.set(appId, { ...win, zIndex: nextZ, isMinimized: false });
+            return { windows: next, currentZIndex: nextZ };
+        });
+        setFocusedApp(appId);
+    }, []);
 
     const updateWindowPosition = useCallback((appId: AppId, top: string, left: string) => {
-        setWindows(prev => {
-            const next = new Map(prev);
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
             const win = next.get(appId);
             if (win) {
                 next.set(appId, { ...win, position: { top, left } });
             }
-            return next;
+            return { ...prev, windows: next };
         });
     }, []);
 
     const updateWindowSize = useCallback((appId: AppId, width: string, height: string) => {
-        setWindows(prev => {
-            const next = new Map(prev);
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
             const win = next.get(appId);
             if (win) {
                 next.set(appId, { ...win, size: { width, height } });
             }
-            return next;
+            return { ...prev, windows: next };
         });
     }, []);
 
     const setSnapState = useCallback((appId: AppId, snap: 'none' | 'left' | 'right') => {
-        setWindows(prev => {
-            const next = new Map(prev);
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
             const win = next.get(appId);
             if (win) {
                 next.set(appId, { ...win, snapState: snap, isMaximized: false });
             }
-            return next;
+            return { ...prev, windows: next };
         });
     }, []);
 
