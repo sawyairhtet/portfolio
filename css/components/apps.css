@@ -1,20 +1,50 @@
 /* ============================================
-   React app content styles
+   APP CONTENT STYLES — Premium
    ============================================ */
 
 .about-hero {
     text-align: center;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-xl) var(--spacing-lg);
     background: var(--gradient-accent);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     margin-bottom: var(--spacing-lg);
     color: var(--text-on-accent);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shimmer overlay on hero */
+.about-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.08) 40%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.08) 60%,
+        transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 6s ease-in-out infinite;
+}
+
+/* Noise texture on hero */
+.about-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--gradient-noise);
+    opacity: 0.04;
+    pointer-events: none;
+    mix-blend-mode: overlay;
 }
 
 .about-avatar {
-    width: 116px;
-    height: 116px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.12);
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -22,15 +52,17 @@
     justify-content: center;
     margin: 0 auto var(--spacing-md);
     font-size: 48px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.25);
+    position: relative;
+    z-index: 1;
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.4s var(--ease-spring),
+        box-shadow 0.4s var(--ease-out-expo);
 }
 
 .about-avatar:hover {
-    transform: scale(1.05);
-    animation: avatarPulseGlow 2s ease-in-out infinite;
+    transform: scale(1.06);
+    animation: avatarPulseGlow 2.5s ease-in-out infinite;
 }
 
 .about-avatar picture {
@@ -48,16 +80,21 @@
 }
 
 .about-hero h2 {
-    font-size: 26px;
+    font-size: var(--font-size-2xl);
     font-weight: 700;
     margin-bottom: var(--spacing-xs);
     color: var(--text-on-accent);
+    position: relative;
+    z-index: 1;
+    letter-spacing: -0.03em;
 }
 
 .about-tagline {
-    font-size: 16px;
-    opacity: 0.9;
+    font-size: var(--font-size-lg);
+    opacity: 0.85;
     margin-bottom: var(--spacing-sm) !important;
+    position: relative;
+    z-index: 1;
 }
 
 .about-hero-actions {
@@ -66,13 +103,15 @@
     gap: var(--spacing-sm);
     justify-content: center;
     margin-top: var(--spacing-md);
+    position: relative;
+    z-index: 1;
 }
 
 .about-cta-btn {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: 9px 20px;
+    padding: 10px 22px;
     border: none;
     border-radius: var(--radius-md);
     color: var(--text-on-accent);
@@ -82,26 +121,34 @@
     text-decoration: none;
     cursor: pointer;
     transition:
-        filter 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.18s ease;
+        transform 0.2s var(--ease-spring),
+        box-shadow 0.2s var(--ease-out-expo),
+        filter 0.2s ease;
 }
 
 .about-cta-primary {
-    background: var(--gradient-btn);
-    box-shadow: var(--shadow-sm);
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .about-cta-secondary {
-    background: rgba(255, 255, 255, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .about-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     filter: brightness(1.1);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
     color: var(--text-on-accent);
+}
+
+.about-cta-btn:active {
+    transform: translateY(0) scale(0.98);
 }
 
 .about-content {
@@ -114,7 +161,7 @@
     place-items: center;
     width: 1em;
     height: 1em;
-    color: var(--fedora-blue);
+    color: var(--accent);
     font-size: 27px;
     font-weight: 800;
     line-height: 1;
@@ -123,8 +170,16 @@
 .about-section {
     background: var(--color-card-bg);
     padding: var(--spacing-lg);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.about-section:hover {
+    border-color: rgba(124, 92, 252, 0.12);
+    box-shadow: 0 0 32px rgba(124, 92, 252, 0.04);
 }
 
 .about-section h3 {
@@ -135,7 +190,7 @@
 }
 
 .about-section h3 i {
-    color: var(--color-primary);
+    color: var(--accent);
 }
 
 .about-section p {
@@ -159,15 +214,16 @@
     gap: var(--spacing-md);
     margin-top: var(--spacing-xl);
     padding-top: var(--spacing-xl);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--border-color);
 }
 
 .contact-form::before {
     content: 'Send a message';
     display: block;
-    font-size: 16px;
+    font-size: var(--font-size-lg);
     font-weight: 600;
     margin-bottom: 4px;
+    letter-spacing: -0.02em;
 }
 
 .form-group {
@@ -177,40 +233,44 @@
 }
 
 .form-group label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0;
+    letter-spacing: 0.04em;
 }
 
 .form-group input,
 .form-group textarea {
-    padding: 10px 14px;
+    padding: 12px 16px;
     border: 1px solid var(--surface-3);
     border-radius: var(--radius-sm);
-    background: var(--surface-0);
+    background: var(--surface-1);
     color: var(--text-primary);
     font-family: var(--font-ui);
     font-size: 14px;
     outline: none;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
     transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
+        border-color 0.2s var(--ease-out-expo),
+        box-shadow 0.2s var(--ease-out-expo),
+        background 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: var(--fedora-blue);
-    box-shadow:
-        0 0 0 2px rgba(53, 132, 228, 0.2),
-        inset 0 1px 2px rgba(0, 0, 0, 0.06);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+    background: var(--surface-2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-disabled);
 }
 
 .form-group textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 110px;
 }
 
 .contact-submit-btn {
@@ -218,7 +278,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--spacing-sm);
-    padding: 12px 24px;
+    padding: 13px 28px;
     border: none;
     border-radius: var(--radius-md);
     background: var(--gradient-btn);
@@ -227,17 +287,19 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 2px 12px var(--accent-glow);
     transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        transform 0.2s var(--ease-spring),
+        box-shadow 0.3s var(--ease-out-expo),
+        filter 0.2s ease;
 }
 
 .contact-submit-btn:hover {
-    filter: brightness(1.07);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
     box-shadow:
-        var(--shadow-lg),
-        0 0 16px rgba(53, 132, 228, 0.3);
+        0 4px 20px var(--accent-glow),
+        0 0 32px rgba(124, 92, 252, 0.15);
 }
 
 .contact-submit-btn:active {
@@ -245,9 +307,10 @@
 }
 
 .contact-submit-btn:disabled {
-    opacity: 0.7;
+    opacity: 0.5;
     cursor: not-allowed;
     transform: none;
+    filter: saturate(0.5);
 }
 
 .form-status {
@@ -255,20 +318,21 @@
     padding: 0;
     border-radius: var(--radius-sm);
     font-size: 14px;
+    font-weight: 500;
 }
 
 .form-status.success {
     color: var(--fedora-green);
-    background: rgba(46, 194, 126, 0.1);
+    background: rgba(34, 197, 94, 0.08);
     padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid rgba(46, 194, 126, 0.3);
+    border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .form-status.error {
     color: var(--fedora-red);
-    background: rgba(224, 27, 36, 0.1);
+    background: rgba(239, 68, 68, 0.08);
     padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid rgba(224, 27, 36, 0.3);
+    border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .projects-grid {
@@ -279,24 +343,27 @@
 
 .project-card {
     background: var(--color-card-bg);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     padding: var(--spacing-md);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border-color);
     transition:
-        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.3s ease,
+        transform 0.3s var(--ease-spring),
+        box-shadow 0.3s var(--ease-out-expo),
         border-color 0.3s ease;
     cursor: pointer;
 }
 
 .project-card:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(124, 92, 252, 0.12);
+    border-color: rgba(124, 92, 252, 0.15);
 }
 
 .project-preview {
     width: 100%;
-    height: 100px;
+    height: 110px;
     background: var(--gradient-accent);
     border-radius: var(--radius-sm);
     margin-bottom: var(--spacing-md);
@@ -305,6 +372,24 @@
     align-items: center;
     justify-content: center;
     font-size: 32px;
+    position: relative;
+}
+
+/* Shimmer on project preview */
+.project-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        110deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.06) 45%,
+        rgba(255, 255, 255, 0.10) 50%,
+        rgba(255, 255, 255, 0.06) 55%,
+        transparent 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 4s ease-in-out infinite;
 }
 
 .project-preview img {
@@ -316,12 +401,13 @@
 .project-card h3 {
     font-size: 18px;
     margin-bottom: var(--spacing-sm);
-    color: var(--color-window-body-text);
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
 }
 
 .project-card p {
-    color: var(--color-window-body-text);
-    opacity: 0.85;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
 .tech-stack {
@@ -332,12 +418,14 @@
 }
 
 .tech-badge {
-    background: var(--color-primary);
-    color: var(--text-on-accent);
-    padding: 4px 8px;
-    border-radius: 4px;
+    background: var(--accent-subtle);
+    color: var(--accent-light);
+    padding: 4px 10px;
+    border-radius: 6px;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: 1px solid rgba(124, 92, 252, 0.08);
 }
 
 .links-list {
@@ -355,36 +443,53 @@
     padding: var(--spacing-lg) var(--spacing-md);
     background: var(--color-card-bg);
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border-color);
     text-align: center;
     text-decoration: none;
     color: inherit;
     transition:
-        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
+        transform 0.3s var(--ease-spring),
+        box-shadow 0.3s var(--ease-out-expo),
+        border-color 0.3s ease;
 }
 
 .social-link i {
     font-size: 24px;
-    color: var(--color-primary);
+    color: var(--accent);
     transition:
-        transform 0.3s ease,
+        transform 0.3s var(--ease-spring),
         color 0.3s ease;
 }
 
 .social-link:hover {
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    border-color: rgba(124, 92, 252, 0.15);
 }
 
 .social-link:hover i {
     transform: scale(1.2);
-    color: var(--fedora-blue-light);
+    color: var(--accent-light);
 }
 
 .toggle-switch {
     width: 50px;
     height: 30px;
     cursor: pointer;
+}
+
+/* Project badge */
+.project-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    background: var(--accent-subtle);
+    color: var(--accent-light);
+    border: 1px solid rgba(124, 92, 252, 0.12);
 }

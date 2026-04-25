@@ -1,5 +1,5 @@
 /* ============================================
-   Activities overview
+   Activities overview — Premium
    ============================================ */
 
 .activities-overlay {
@@ -9,24 +9,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: calc(var(--topbar-height) + 32px);
-    background: rgba(0, 0, 0, 0.75);
-    -webkit-backdrop-filter: blur(32px) saturate(140%);
-    backdrop-filter: blur(32px) saturate(140%);
+    padding-top: calc(var(--topbar-height) + 36px);
+    background: rgba(10, 10, 15, 0.80);
+    -webkit-backdrop-filter: blur(40px) saturate(160%);
+    backdrop-filter: blur(40px) saturate(160%);
     opacity: 0;
     visibility: hidden;
     transform: scale(1.02);
     transition:
-        opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1),
-        visibility 0.22s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity 0.25s var(--ease-out-expo),
+        visibility 0.25s var(--ease-out-expo),
+        transform 0.25s var(--ease-out-expo);
 }
 
 .activities-overlay.visible {
     opacity: 1;
     visibility: visible;
     transform: scale(1);
-    animation: activitiesOverlayIn 0.22s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: activitiesOverlayIn 0.3s var(--ease-out-expo) forwards;
 }
 
 .activities-search {
@@ -39,29 +39,31 @@
 .activities-search-input {
     width: 100%;
     box-sizing: border-box;
-    padding: 13px 22px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 14px 24px;
+    border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-xl);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     color: rgba(255, 255, 255, 0.92);
     font-family: var(--font-ui);
     font-size: 16px;
     font-weight: 400;
     outline: none;
     transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease,
-        background 0.15s ease;
+        border-color 0.2s var(--ease-out-expo),
+        box-shadow 0.2s var(--ease-out-expo),
+        background 0.2s ease;
 }
 
 .activities-search-input::placeholder {
-    color: rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.30);
 }
 
 .activities-search-input:focus {
-    border-color: var(--fedora-blue);
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 0 0 3px rgba(53, 132, 228, 0.28);
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px var(--accent-subtle), 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 .activities-main {
@@ -93,21 +95,25 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    border: 1px solid var(--color-border, #444);
-    border-radius: 12px;
-    background: var(--color-card-bg, #2d2d2d);
-    color: var(--color-text, #fff);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-lg);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
     font-family: var(--font-ui);
     font-size: 0.85rem;
     cursor: pointer;
     transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+        transform 0.2s var(--ease-spring),
+        box-shadow 0.2s var(--ease-out-expo),
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .activities-window-thumb:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.06);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border-color: rgba(124, 92, 252, 0.15);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .activities-window-thumb i {
@@ -116,7 +122,7 @@
 }
 
 .activities-no-windows {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.30);
     font-size: 16px;
     text-align: center;
     padding: 40px;
@@ -130,7 +136,7 @@
     width: 100%;
     max-width: 800px;
     padding: 32px 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .activities-app-item {
@@ -143,8 +149,8 @@
     color: rgba(255, 255, 255, 0.9);
     cursor: pointer;
     opacity: 0;
-    animation: activitiesAppItemIn 0.28s cubic-bezier(0.2, 0.82, 0.38, 1) forwards;
-    transition: transform 0.15s cubic-bezier(0.2, 0.82, 0.38, 1);
+    animation: activitiesAppItemIn 0.32s var(--ease-out-expo) forwards;
+    transition: transform 0.2s var(--ease-spring);
 }
 
 .activities-overlay:not(.visible) .activities-app-item {
@@ -152,33 +158,17 @@
     opacity: 1;
 }
 
-.activities-app-item:nth-child(1) {
-    animation-delay: 0.04s;
-}
-.activities-app-item:nth-child(2) {
-    animation-delay: 0.07s;
-}
-.activities-app-item:nth-child(3) {
-    animation-delay: 0.1s;
-}
-.activities-app-item:nth-child(4) {
-    animation-delay: 0.13s;
-}
-.activities-app-item:nth-child(5) {
-    animation-delay: 0.16s;
-}
-.activities-app-item:nth-child(6) {
-    animation-delay: 0.19s;
-}
-.activities-app-item:nth-child(7) {
-    animation-delay: 0.22s;
-}
-.activities-app-item:nth-child(8) {
-    animation-delay: 0.25s;
-}
+.activities-app-item:nth-child(1) { animation-delay: 0.04s; }
+.activities-app-item:nth-child(2) { animation-delay: 0.07s; }
+.activities-app-item:nth-child(3) { animation-delay: 0.10s; }
+.activities-app-item:nth-child(4) { animation-delay: 0.13s; }
+.activities-app-item:nth-child(5) { animation-delay: 0.16s; }
+.activities-app-item:nth-child(6) { animation-delay: 0.19s; }
+.activities-app-item:nth-child(7) { animation-delay: 0.22s; }
+.activities-app-item:nth-child(8) { animation-delay: 0.25s; }
 
 .activities-app-item:hover {
-    transform: scale(1.14);
+    transform: scale(1.16);
 }
 
 .activities-app-icon {
@@ -190,12 +180,19 @@
     border-radius: 22.37%;
     color: var(--text-on-accent);
     font-size: 26px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
-    transition: box-shadow 0.15s ease;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition:
+        box-shadow 0.2s var(--ease-out-expo),
+        filter 0.2s ease;
 }
 
 .activities-app-item:hover .activities-app-icon {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    filter: brightness(1.1);
 }
 
 .activities-app-label {

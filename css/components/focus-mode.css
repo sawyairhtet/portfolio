@@ -1,5 +1,5 @@
 /* ============================================
-   FOCUS MODE - GNOME 49 Pomodoro Timer
+   FOCUS MODE - Premium Timer
    ============================================ */
 
 .focus-mode-container {
@@ -19,11 +19,11 @@
 }
 
 .focus-mode-label {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-sm);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--fedora-blue);
+    letter-spacing: 0.08em;
+    color: var(--accent);
 }
 
 /* Timer Ring */
@@ -47,15 +47,16 @@
 .focus-progress-bg {
     fill: none;
     stroke: var(--surface-3);
-    stroke-width: 6;
+    stroke-width: 5;
 }
 
 .focus-progress-fill {
     fill: none;
-    stroke: var(--fedora-blue);
-    stroke-width: 6;
+    stroke: var(--accent);
+    stroke-width: 5;
     stroke-linecap: round;
-    transition: stroke-dashoffset 0.5s ease;
+    transition: stroke-dashoffset 0.5s var(--ease-out-expo);
+    filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 .focus-timer-display {
@@ -76,7 +77,7 @@
 }
 
 .focus-preset-btn {
-    padding: 8px 16px;
+    padding: 8px 18px;
     border: 1px solid var(--border-color);
     border-radius: 20px;
     background: var(--surface-1);
@@ -88,18 +89,22 @@
     transition:
         background var(--transition-fast),
         border-color var(--transition-fast),
-        color var(--transition-fast);
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .focus-preset-btn:hover {
-    border-color: var(--fedora-blue);
+    border-color: var(--accent);
     background: var(--surface-2);
+    transform: translateY(-1px);
 }
 
 .focus-preset-btn.active {
-    background: var(--fedora-blue);
+    background: var(--accent);
     color: var(--text-on-accent);
-    border-color: var(--fedora-blue);
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px var(--accent-glow);
 }
 
 /* Controls */
@@ -121,9 +126,10 @@
     font-weight: 600;
     cursor: pointer;
     transition:
-        transform var(--transition-fast),
-        box-shadow var(--transition-fast),
-        opacity var(--transition-fast);
+        transform 0.15s var(--ease-spring),
+        box-shadow 0.2s var(--ease-out-expo),
+        opacity var(--transition-fast),
+        filter 0.2s ease;
 }
 
 .focus-btn:active {
@@ -131,13 +137,14 @@
 }
 
 .focus-btn-primary {
-    background: var(--fedora-blue);
+    background: var(--gradient-btn);
     color: var(--text-on-accent);
-    box-shadow: 0 2px 8px rgba(53, 132, 228, 0.3);
+    box-shadow: 0 2px 12px var(--accent-glow);
 }
 
 .focus-btn-primary:hover {
-    box-shadow: 0 4px 16px rgba(53, 132, 228, 0.4);
+    box-shadow: 0 4px 20px var(--accent-glow);
+    filter: brightness(1.1);
 }
 
 .focus-btn-secondary {
@@ -158,6 +165,7 @@
 .focus-btn-ghost:hover {
     background: var(--surface-1);
     color: var(--text-primary);
+    border-color: var(--glass-border);
 }
 
 /* Stats */
@@ -180,15 +188,16 @@
 .focus-stat-value {
     font-size: 24px;
     font-weight: 700;
-    color: var(--fedora-blue);
+    color: var(--accent);
     font-family: var(--font-mono);
 }
 
 .focus-stat-label {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.06em;
+    font-weight: 600;
 }
 
 @media (prefers-reduced-motion: reduce) {

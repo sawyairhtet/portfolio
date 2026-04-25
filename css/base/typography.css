@@ -1,5 +1,5 @@
 /* ============================================
-   TYPOGRAPHY — Fedora 43 / GNOME 49 / Adwaita
+   TYPOGRAPHY — Premium editorial design
    ============================================ */
 
 body {
@@ -12,8 +12,36 @@ body {
     font-feature-settings:
         'kern' 1,
         'liga' 1,
-        'calt' 1;
+        'calt' 1,
+        'ss01' 1;
     font-variant-ligatures: common-ligatures;
+    letter-spacing: -0.011em;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: var(--font-size-display);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+}
+
+h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
 
 code,
@@ -21,4 +49,22 @@ pre,
 .terminal,
 .terminal * {
     font-family: var(--font-mono);
+    font-feature-settings: 'liga' 1, 'calt' 1;
+}
+
+/* Subtle gradient text utility */
+.text-gradient {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Muted label style */
+.text-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
 }

@@ -1,5 +1,5 @@
 /* ============================================
-   PLYMOUTH BOOT SPLASH — Fedora 43
+   PLYMOUTH BOOT SPLASH — Premium
    ============================================ */
 
 .plymouth-splash {
@@ -12,21 +12,22 @@
     gap: 48px;
     background: var(--boot-bg);
     z-index: 2;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s var(--ease-out-expo);
 }
 
 .plymouth-splash.fade-out {
     opacity: 0;
 }
 
-/* Fedora logo */
+/* Logo with glow */
 .plymouth-logo {
     font-size: 80px;
-    color: var(--fedora-blue);
+    color: var(--accent);
     transition: opacity 0.3s ease;
+    filter: drop-shadow(0 0 24px var(--accent-glow));
 }
 
-/* Three-dot spinner (Fedora Plymouth style) */
+/* Three-dot spinner */
 .plymouth-spinner {
     display: flex;
     gap: 12px;
@@ -37,7 +38,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
     animation: plymouthPulse 1.4s ease-in-out infinite;
 }
 
@@ -57,13 +58,14 @@
     0%,
     80%,
     100% {
-        opacity: 0.2;
+        opacity: 0.15;
         transform: scale(0.8);
     }
     40% {
         opacity: 1;
         transform: scale(1);
-        background: var(--fedora-blue);
+        background: var(--accent);
+        box-shadow: 0 0 12px var(--accent-glow);
     }
 }
 

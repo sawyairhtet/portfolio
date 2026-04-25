@@ -1,5 +1,5 @@
 /* ============================================
-   TERMINAL STYLING
+   TERMINAL STYLING — Premium dark
    ============================================ */
 
 .terminal-body {
@@ -8,6 +8,22 @@
     font-family: var(--font-mono);
     padding: var(--spacing-md);
     min-height: 400px;
+    position: relative;
+}
+
+/* Scanline effect */
+.terminal-body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.008) 2px,
+        rgba(255, 255, 255, 0.008) 4px
+    );
+    pointer-events: none;
 }
 
 .terminal-shell {
@@ -40,6 +56,7 @@
 .terminal-prompt {
     color: var(--terminal-prompt);
     margin-right: var(--spacing-sm);
+    font-weight: 600;
 }
 
 .terminal-input {
@@ -50,7 +67,8 @@
     font-size: var(--terminal-font-size);
     outline: none;
     flex: 1;
-    min-width: 0; /* Allow shrinking on mobile */
+    min-width: 0;
+    caret-color: var(--accent);
 }
 
 /* Terminal Submit Button - Mobile only */
@@ -60,7 +78,7 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    background: var(--color-primary);
+    background: var(--accent);
     color: var(--text-on-accent);
     border: none;
     border-radius: var(--radius-sm);
@@ -69,10 +87,14 @@
     flex-shrink: 0;
     transition:
         background 0.2s ease,
-        transform 0.1s ease;
+        transform 0.15s var(--ease-spring);
+}
+
+.terminal-submit-btn:hover {
+    background: var(--accent-light);
 }
 
 .terminal-submit-btn:active {
-    transform: scale(0.95);
-    background: var(--fedora-blue-dark);
+    transform: scale(0.93);
+    background: var(--accent-dark);
 }

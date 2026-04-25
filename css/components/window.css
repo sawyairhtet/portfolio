@@ -1,13 +1,13 @@
 /* ============================================
-   WINDOWS - GNOME 49 / Adwaita Style
+   WINDOWS - Premium Glassmorphism Style
    ============================================ */
 
 .window {
     position: absolute;
-    background: var(--window-body-bg);
+    background: var(--surface-0);
     border-radius: var(--window-border-radius);
     box-shadow: var(--window-shadow);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--glass-border);
     display: none;
     flex-direction: column;
     width: 680px;
@@ -18,35 +18,41 @@
     overflow: hidden;
     container: app-window / inline-size;
     transition:
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
+        box-shadow 0.3s var(--ease-out-expo),
+        transform 0.25s var(--ease-out-expo),
+        border-color 0.3s ease;
     /* Default position */
     left: 20px;
     top: 15%;
 }
 
-/* Explicit rule — don't rely on Tailwind's coincidental .active utility */
+/* Active window */
 .window.active {
     display: flex;
+    animation: fadeInUp 0.3s var(--ease-out-expo) forwards;
 }
 
 .window.is-minimized {
     display: none;
 }
 
-/* Focused window — GNOME 49 elevated shadow */
+/* Focused window — Premium elevated shadow with accent border glow */
 .window:focus-within {
     box-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.14),
-        0 16px 48px rgba(0, 0, 0, 0.32),
-        0 0 0 1px rgba(53, 132, 228, 0.18);
+        0 4px 16px rgba(0, 0, 0, 0.35),
+        0 24px 64px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(124, 92, 252, 0.15),
+        0 0 60px rgba(124, 92, 252, 0.05);
+    border-color: rgba(124, 92, 252, 0.12);
 }
 
 [data-theme='dark'] .window:focus-within {
     box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.5),
-        0 24px 64px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(53, 132, 228, 0.22);
+        0 4px 16px rgba(0, 0, 0, 0.45),
+        0 24px 64px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(124, 92, 252, 0.18),
+        0 0 80px rgba(124, 92, 252, 0.06);
+    border-color: rgba(124, 92, 252, 0.15);
 }
 
 /* ============================================
@@ -126,7 +132,6 @@
 
 /* ============================================
    WINDOW SNAP STATES
-   Note: Inline styles are cleared in JS before applying these classes (#33)
    ============================================ */
 
 .window.snapped-left {
@@ -138,7 +143,7 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s var(--ease-out-expo);
 }
 
 .window.snapped-right {
@@ -150,7 +155,7 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s var(--ease-out-expo);
 }
 
 .window.snapped-maximized {
@@ -164,22 +169,22 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s var(--ease-out-expo);
 }
 
 /* Snap Preview Overlay */
 .snap-preview {
     position: fixed;
     top: var(--topbar-height);
-    background: rgba(53, 132, 228, 0.15);
-    border: 2px dashed var(--fedora-blue);
+    background: rgba(124, 92, 252, 0.10);
+    border: 2px dashed rgba(124, 92, 252, 0.35);
     border-radius: var(--radius-md);
     z-index: 99;
     pointer-events: none;
     opacity: 0;
     transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+        opacity 0.25s var(--ease-out-expo),
+        transform 0.25s var(--ease-out-expo);
 }
 
 .snap-preview.visible {
@@ -205,36 +210,49 @@
 }
 
 /* ============================================
-   WINDOW HEADER — GNOME 49
+   WINDOW HEADER — Glassmorphism
    ============================================ */
 
 .window-header {
     display: flex;
     align-items: center;
     height: var(--window-header-height);
-    padding: 0 14px;
-    background: var(--window-header-bg);
-    border-bottom: 1px solid var(--window-header-border);
+    padding: 0 16px;
+    background: var(--glass-bg-heavy);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border-bottom: 1px solid var(--glass-border);
     cursor: grab;
     user-select: none;
+    position: relative;
+}
+
+/* Subtle top highlight */
+.window-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
 }
 
 .window-header:active {
     cursor: grabbing;
 }
 
-/* GNOME 49: Title CENTERED */
+/* Title */
 .window-title {
     flex: 1;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
 }
 
-/* GNOME 49 Window Controls — RIGHT side
-   Stock GNOME only shows Close by default.
-   Minimize & Maximize require GNOME Tweaks. */
+/* Window Controls — RIGHT side */
 .window-controls {
     display: flex;
     align-items: center;
@@ -248,7 +266,7 @@
     display: none;
 }
 
-/* Show when user enables via Settings (GNOME Tweaks equivalent) */
+/* Show when user enables via Settings */
 body.show-window-buttons .window-control.minimize,
 body.show-window-buttons .window-control.maximize {
     display: flex;
@@ -264,22 +282,22 @@ body.show-window-buttons .window-control.maximize {
     align-items: center;
     justify-content: center;
     font-size: 11px;
-    color: var(--text-secondary);
+    color: var(--text-disabled);
     cursor: pointer;
     transition:
         background var(--transition-fast),
-        color var(--transition-fast);
+        color var(--transition-fast),
+        transform var(--transition-fast);
 }
 
-/* GNOME 49: icon buttons — always visible, subtle hover */
 @media (hover: hover) {
     .window-control:hover {
-        background: var(--surface-3);
+        background: rgba(255, 255, 255, 0.08);
         color: var(--text-primary);
     }
 }
 
-/* Close button — transparent by default, red on hover */
+/* Close button */
 .window-control.close {
     background: transparent;
 }
@@ -288,20 +306,21 @@ body.show-window-buttons .window-control.maximize {
     .window-control.close:hover {
         background: var(--fedora-red);
         color: var(--text-on-accent);
+        transform: scale(1.05);
     }
 }
 
 .window-control:active {
     opacity: 0.7;
-    transform: scale(0.92);
+    transform: scale(0.90);
 }
 
-/* Hide FA icons — use CSS shapes for Adwaita fidelity */
+/* Hide FA icons */
 .window-control i {
     display: none;
 }
 
-/* Adwaita close: × shape */
+/* Close: × shape */
 .window-control.close::before {
     content: '';
     width: 10px;
@@ -313,7 +332,7 @@ body.show-window-buttons .window-control.maximize {
         center/contain no-repeat;
 }
 
-/* Adwaita minimize: horizontal line */
+/* Minimize: horizontal line */
 .window-control.minimize::before {
     content: '';
     width: 10px;
@@ -322,7 +341,7 @@ body.show-window-buttons .window-control.maximize {
     border-radius: 1px;
 }
 
-/* Adwaita maximize: square outline */
+/* Maximize: square outline */
 .window-control.maximize::before {
     content: '';
     width: 9px;
@@ -346,35 +365,42 @@ body.show-window-buttons .window-control.maximize {
     min-height: 0;
     background: var(--window-body-bg);
     color: var(--text-primary);
-    /* Prevent pull-to-refresh on mobile within windows */
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
 }
 
 .window-body h2 {
-    font-size: 24px;
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    letter-spacing: -0.03em;
     margin-bottom: var(--spacing-md);
 }
 
 .window-body h3 {
-    font-size: 18px;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-sm);
 }
 
 .window-body p {
     margin-bottom: var(--spacing-sm);
-    line-height: 1.6;
+    line-height: 1.7;
+    color: var(--text-secondary);
 }
 
 .window-body a {
-    color: inherit;
+    color: var(--accent-light);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .window-body a:hover {
-    color: var(--fedora-blue);
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: rgba(124, 92, 252, 0.3);
+    text-underline-offset: 3px;
 }
 
 /* ============================================
@@ -391,6 +417,6 @@ body.show-window-buttons .window-control.maximize {
 
 .window-control.minimize:hover,
 .window-control.maximize:hover {
-    background: var(--surface-3);
+    background: rgba(255, 255, 255, 0.08);
     color: var(--text-primary);
 }

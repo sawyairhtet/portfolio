@@ -37,11 +37,11 @@
         <link rel="canonical" href="https://sawyehtet.com/" />
         <title>Saw Ye Htet — Portfolio | Fedora 43 Desktop</title>
         <script src="/head-bootstrap.js"></script>
-        <!-- Google Fonts - Inter (Adwaita Sans fallback) + JetBrains Mono (Adwaita Mono fallback) -->
+        <!-- Google Fonts - Outfit (editorial) + JetBrains Mono -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
             rel="stylesheet"
         />
         <!-- Font Awesome for icons -->
@@ -52,7 +52,7 @@
         <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
         <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" sizes="180x180" />
         <link rel="manifest" href="manifest.json" />
-        <meta name="theme-color" content="#3584e4" />
+        <meta name="theme-color" content="#7c5cfc" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -115,13 +115,13 @@
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background: #1a1a1a;
-                    color: #f0f0f0;
+                    background: #0a0a0f;
+                    color: rgba(255, 255, 255, 0.92);
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     z-index: 10000;
-                    font-family: 'Inter', 'Cantarell', system-ui, sans-serif;
+                    font-family: 'Outfit', system-ui, sans-serif;
                     padding: 20px;
                 "
             >
@@ -129,16 +129,18 @@
                     style="
                         text-align: center;
                         max-width: 500px;
-                        background: #2d2d2d;
+                        background: rgba(17, 17, 24, 0.82);
                         padding: 48px;
                         border-radius: 16px;
-                        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(255, 255, 255, 0.06);
+                        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+                        backdrop-filter: blur(24px);
                     "
                 >
-                    <h1 style="font-size: 24px; margin-bottom: 12px; font-weight: 600">
+                    <h1 style="font-size: 24px; margin-bottom: 12px; font-weight: 600; letter-spacing: -0.03em">
                         JavaScript Required
                     </h1>
-                    <p style="opacity: 0.8; line-height: 1.6; margin-bottom: 24px">
+                    <p style="opacity: 0.6; line-height: 1.6; margin-bottom: 24px">
                         This portfolio website is an interactive Fedora 43 desktop experience that
                         requires JavaScript to function.
                     </p>
@@ -149,11 +151,12 @@
                             align-items: center;
                             gap: 8px;
                             padding: 12px 24px;
-                            background: linear-gradient(135deg, #3584e4 0%, #1c6fcf 100%);
+                            background: linear-gradient(135deg, #7c5cfc 0%, #5b3fd9 100%);
                             color: #fff;
                             text-decoration: none;
-                            border-radius: 8px;
-                            font-weight: 500;
+                            border-radius: 12px;
+                            font-weight: 600;
+                            box-shadow: 0 4px 16px rgba(124, 92, 252, 0.3);
                         "
                     >
                         Contact via Email

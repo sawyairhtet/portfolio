@@ -1,5 +1,5 @@
 /* ============================================
-   SETTINGS - GNOME 49 Two-Panel Layout
+   SETTINGS - Premium Two-Panel Layout
    ============================================ */
 
 /* Two-panel layout */
@@ -41,17 +41,19 @@
     text-align: left;
     transition:
         background var(--transition-fast),
-        color var(--transition-fast);
+        color var(--transition-fast),
+        transform var(--transition-fast);
 }
 
 .settings-nav-item:hover {
-    background: var(--surface-2);
+    background: rgba(255, 255, 255, 0.04);
     color: var(--text-primary);
 }
 
 .settings-nav-item.active {
-    background: var(--fedora-blue);
+    background: var(--accent);
     color: var(--text-on-accent);
+    box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 .settings-nav-item i {
@@ -74,6 +76,7 @@
 
 .settings-panel.active {
     display: block;
+    animation: fadeInUp 0.3s var(--ease-out-expo) forwards;
 }
 
 .settings-panel h2 {
@@ -81,24 +84,32 @@
     margin-bottom: var(--spacing-lg);
     font-size: var(--font-size-xl);
     font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
-/* Card sections (GNOME 49 card style) */
+/* Card sections — Glass style */
 .settings-card {
-    background: var(--surface-0);
+    background: var(--surface-1);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.settings-card:hover {
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .settings-card h3 {
     margin: 0 0 var(--spacing-md) 0;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.06em;
 }
 
 /* Settings row */
@@ -134,13 +145,14 @@
     border: 2px solid transparent;
     cursor: pointer;
     transition:
-        transform var(--transition-fast),
-        box-shadow var(--transition-fast);
+        transform 0.2s var(--ease-spring),
+        box-shadow 0.2s var(--ease-out-expo);
     position: relative;
 }
 
 .accent-swatch:hover {
-    transform: scale(1.15);
+    transform: scale(1.18);
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
 }
 
 .accent-swatch.active {
@@ -161,10 +173,10 @@
     justify-content: center;
     color: var(--text-on-accent);
     font-size: 12px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* Wallpaper grid in settings */
+/* Wallpaper grid */
 .wallpaper-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -178,9 +190,9 @@
     border: 2px solid var(--border-color);
     cursor: pointer;
     transition:
-        transform var(--transition-fast),
-        border-color var(--transition-fast),
-        box-shadow var(--transition-fast);
+        transform 0.2s var(--ease-spring),
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .wallpaper-grid .wallpaper-option[data-wallpaper='default'] {
@@ -193,13 +205,13 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
 }
 
 .wallpaper-grid .wallpaper-option:hover {
-    transform: scale(1.05);
-    border-color: var(--fedora-blue);
+    transform: scale(1.06);
+    border-color: var(--accent);
 }
 
 .wallpaper-grid .wallpaper-option.active {
-    border-color: var(--fedora-blue);
-    box-shadow: 0 0 0 2px var(--fedora-blue);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent), 0 0 16px var(--accent-glow);
 }
 
 /* Volume slider */
@@ -207,9 +219,9 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     flex: 1;
     -webkit-appearance: none;
     appearance: none;
-    height: 6px;
+    height: 4px;
     background: var(--surface-3);
-    border-radius: 3px;
+    border-radius: 2px;
     outline: none;
 }
 
@@ -219,25 +231,25 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: var(--fedora-blue);
+    background: var(--accent);
     cursor: pointer;
     border: 2px solid var(--surface-0);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    transition: transform var(--transition-fast);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3), 0 0 8px var(--accent-glow);
+    transition: transform 0.15s var(--ease-spring);
 }
 
 .settings-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+    transform: scale(1.25);
 }
 
 .settings-slider::-moz-range-thumb {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: var(--fedora-blue);
+    background: var(--accent);
     cursor: pointer;
     border: 2px solid var(--surface-0);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* About system card */
@@ -247,7 +259,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
 
 .about-system-logo {
     font-size: 64px;
-    color: var(--fedora-blue);
+    color: var(--accent);
     margin-bottom: var(--spacing-md);
 }
 
@@ -256,6 +268,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     font-size: 18px;
     color: var(--text-primary);
     margin-bottom: var(--spacing-lg);
+    letter-spacing: -0.02em;
 }
 
 .about-system-info {
@@ -288,7 +301,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     color: var(--text-primary);
 }
 
-/* Toggle switch styling (shared) */
+/* Toggle switch — Premium */
 .toggle-switch {
     width: 42px;
     height: 24px;
@@ -301,7 +314,9 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     position: relative;
     outline: none;
     border: none;
-    transition: background var(--transition-fast);
+    transition:
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .toggle-switch::after {
@@ -313,12 +328,13 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     height: 18px;
     border-radius: 50%;
     background: var(--surface-0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    transition: transform var(--transition-fast);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s var(--ease-spring);
 }
 
 .toggle-switch:checked {
-    background: var(--fedora-blue);
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .toggle-switch:checked::after {

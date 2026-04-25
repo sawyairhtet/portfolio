@@ -1,17 +1,18 @@
 /* ============================================
-   ANIMATIONS - Base Keyframes
+   ANIMATIONS - Premium Keyframes
    ============================================ */
 
 /* Context Menu In */
 @keyframes contextMenuIn {
     from {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.92) translateY(-4px);
+        filter: blur(4px);
     }
-
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
+        filter: blur(0);
     }
 }
 
@@ -20,13 +21,13 @@
     0%,
     100% {
         box-shadow:
-            0 0 20px rgba(53, 132, 228, 0.3),
-            0 0 40px rgba(53, 132, 228, 0.1);
+            0 0 24px rgba(124, 92, 252, 0.3),
+            0 0 48px rgba(124, 92, 252, 0.1);
     }
     50% {
         box-shadow:
-            0 0 30px rgba(53, 132, 228, 0.5),
-            0 0 60px rgba(53, 132, 228, 0.2);
+            0 0 36px rgba(124, 92, 252, 0.5),
+            0 0 72px rgba(124, 92, 252, 0.2);
     }
 }
 
@@ -43,15 +44,17 @@
     }
 }
 
-/* Activities Overlay — GNOME 49 zoom-out from desktop */
+/* Activities Overlay */
 @keyframes activitiesOverlayIn {
     0% {
         opacity: 0;
         transform: scale(1.04);
+        filter: blur(8px);
     }
     100% {
         opacity: 1;
         transform: scale(1);
+        filter: blur(0);
     }
 }
 
@@ -63,6 +66,7 @@
     100% {
         opacity: 0;
         transform: scale(1.03);
+        filter: blur(4px);
     }
 }
 
@@ -70,45 +74,49 @@
 @keyframes activitiesAppItemIn {
     0% {
         opacity: 0;
-        transform: translateY(16px) scale(0.88);
+        transform: translateY(20px) scale(0.85);
+        filter: blur(4px);
     }
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
-/* Notification Center scale-in (GNOME 49 pop-over animation) */
+/* Notification Center scale-in */
 @keyframes popoverScaleIn {
     0% {
         opacity: 0;
-        transform: translateX(-50%) scale(0.93) translateY(-8px);
+        transform: translateX(-50%) scale(0.92) translateY(-10px);
+        filter: blur(4px);
     }
     100% {
         opacity: 1;
         transform: translateX(-50%) scale(1) translateY(0);
+        filter: blur(0);
     }
 }
 
-/* Quick Settings panel scale-in from top-right */
+/* Quick Settings panel scale-in */
 @keyframes quickSettingsIn {
     0% {
         opacity: 0;
-        transform: scale(0.93) translateY(-10px);
+        transform: scale(0.92) translateY(-12px);
         transform-origin: top right;
+        filter: blur(4px);
     }
     100% {
         opacity: 1;
         transform: scale(1) translateY(0);
         transform-origin: top right;
+        filter: blur(0);
     }
 }
 
-/* Search ellipse dots (GNOME 49 Overview animated ellipse) */
+/* Search dots */
 @keyframes searchDot {
-    0%,
-    60%,
-    100% {
+    0%, 60%, 100% {
         opacity: 0.25;
         transform: scale(0.75);
     }
@@ -123,21 +131,21 @@
     0% {
         transform: scale(1);
     }
-    30% {
-        transform: scale(0.82);
+    20% {
+        transform: scale(0.80);
     }
-    60% {
-        transform: scale(1.18);
+    50% {
+        transform: scale(1.2) translateY(-4px);
     }
-    80% {
-        transform: scale(0.96);
+    70% {
+        transform: scale(0.95);
     }
     100% {
         transform: scale(1);
     }
 }
 
-/* Workspace switch slide */
+/* Workspace switch */
 @keyframes workspaceSlideLeft {
     from {
         transform: translateX(0);
@@ -160,10 +168,52 @@
     }
 }
 
+/* Premium fade-in-up */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* Subtle float */
+@keyframes subtleFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
 /* ============================================
    REDUCED MOTION — Global Override
-   Disables all animations and transitions for
-   users who prefer reduced motion.
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
