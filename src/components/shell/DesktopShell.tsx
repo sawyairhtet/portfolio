@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { usePreferences } from '../../context/PreferencesContext';
+import { useDevice } from '../../context/DeviceContext';
 import { TopBar } from './TopBar';
 import { Dock } from './Dock';
 import { Wallpaper } from './Wallpaper';
@@ -26,6 +27,7 @@ export function DesktopShell() {
     const { openWindow, windows } = useWindowManager();
     const { playStartupDrum } = useSound();
     const { preferences } = usePreferences();
+    const { device } = useDevice();
 
     const [booted, setBooted] = useState(false);
     const [activitiesOpen, setActivitiesOpen] = useState(false);
@@ -168,7 +170,9 @@ export function DesktopShell() {
                         <h2>{PROFILE.name}</h2>
                         <p>Software Engineer</p>
                         <span className="desktop-welcome-hint">
-                            Click any app in the dock to explore.
+                            {device === 'desktop'
+                                ? 'Click any app in the dock to explore.'
+                                : 'Tap any app in the dock to explore.'}
                         </span>
                         <div className="desktop-welcome-shortcuts">
                             <span className="shortcut-pill">

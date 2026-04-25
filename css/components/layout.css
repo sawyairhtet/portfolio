@@ -204,4 +204,8 @@ body.show-dock .main-content {
         max-width: 100%;
         font-size: 12px;
     }
+
+    .desktop-welcome-shortcuts {
+        display: none;
+    }
 }
