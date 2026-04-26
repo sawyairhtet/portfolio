@@ -179,7 +179,7 @@ describe('Portfolio React interactions', () => {
         expect(screen.getByRole('heading', { name: 'Windows' })).toBeInTheDocument();
 
         await user.click(screen.getByRole('button', { name: 'Appearance' }));
-        await user.click(screen.getByRole('button', { name: 'Adwaita Dark' }));
+        await user.click(screen.getByRole('button', { name: 'GNOME Dark' }));
 
         expect(document.querySelector('.wallpaper')).toHaveClass('custom-wallpaper');
     });
