@@ -7,7 +7,7 @@ export function ProjectsApp() {
     return (
         <div className="projects-app">
             {featured && (
-                <article className="featured-project-panel">
+                <article className="featured-project-panel" data-project={featured.id}>
                     <div className="project-media-frame">
                         {featured.media ? (
                             <img src={featured.media.src} alt={featured.media.alt} />
@@ -61,7 +61,7 @@ export function ProjectsApp() {
 
             <div className="projects-grid">
                 {supporting.map(project => (
-                    <article key={project.id} className="project-card">
+                    <article key={project.id} className="project-card" data-project={project.id}>
                         <div className="project-preview">
                             {project.media ? (
                                 <img src={project.media.src} alt={project.media.alt} />

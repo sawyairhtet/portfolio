@@ -116,45 +116,21 @@ export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app 
 
 export const PROJECTS: Project[] = [
     {
-        id: 'fedora-portfolio',
-        title: 'Fedora Portfolio Website',
-        role: 'Software developer',
-        summary:
-            'A recruiter-first portfolio wrapped in a Fedora 43 / GNOME 49 desktop, repositioned around a Java developer career path while preserving past project proof.',
-        techStack: ['React', 'TypeScript', 'Vite', 'CSS', 'Adwaita'],
-        platform: 'Responsive web app',
-        proofPoints: [
-            'Built window management, Activities search, quick settings, notifications, and a terminal interface.',
-            'Keeps Java developer positioning visible across About, Skills, Projects, metadata, and terminal surfaces.',
-            'Ships as a Vite app with typecheck, lint, and Vitest validation.',
-        ],
-        links: [
-            {
-                label: 'View Repository',
-                href: 'https://github.com/sawyairhtet/portfolio',
-                icon: 'fab fa-github',
-                primary: true,
-            },
-        ],
-        featured: true,
-        icon: 'fas fa-desktop',
-    },
-    {
         id: 'jewelry-vr',
         title: 'Jewelry Shop Robbery VR',
-        role: 'Past VR developer',
+        role: 'Internship — VR Developer',
         summary:
-            'A Meta Quest heist prototype focused on bare-hand interaction, object grabbing, throwing, and room-scale feedback.',
-        techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking', 'Oculus Interaction'],
-        platform: 'Meta Quest 2/3/Pro',
+            'A controller-free Meta Quest heist experience built during a year-long internship. Players grab jewels, throw objects, and interact with a physical room using only their bare hands — no controllers, no UI prompts.',
+        techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking', 'Oculus Interaction SDK'],
+        platform: 'Meta Quest 2 / 3 / Pro',
         proofPoints: [
-            'Implemented controller-free grab and throw interactions with Meta Quest hand tracking.',
-            'Designed tactile jewel and prop interactions for standalone VR constraints.',
-            'Kept the experience performance-minded for Quest hardware and fast recruiter demos.',
+            'Built controller-free grab, throw, and physics interactions using Meta Quest bare-hand tracking — no controller input at all.',
+            'Designed all prop interactions for standalone Quest constraints: no GPU headroom to waste, no positional audio budget to exceed.',
+            'Tuned hand-tracking sensitivity to feel natural across different hand sizes and lighting conditions.',
         ],
         links: [
             {
-                label: 'View Repository',
+                label: 'View on GitHub',
                 href: 'https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking',
                 icon: 'fab fa-github',
                 primary: true,
@@ -163,41 +139,65 @@ export const PROJECTS: Project[] = [
         featured: false,
         icon: 'fas fa-vr-cardboard',
     },
+    {
+        id: 'fedora-portfolio',
+        title: 'This Portfolio (Fedora Desktop)',
+        role: 'Developer & Designer',
+        summary:
+            'The site you are using right now — a full Fedora 43 GNOME desktop simulation built in React and TypeScript, with draggable windows, a virtual terminal, a boot sequence, and real desktop keyboard shortcuts.',
+        techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers', 'Tailwind v4'],
+        platform: 'Responsive web app',
+        proofPoints: [
+            'Implemented draggable windows with snap zones, resize handles, minimise/maximise, and z-index stacking.',
+            'Built a virtual filesystem terminal you can explore with cd, ls, cat, and open commands.',
+            'Ships with a Plymouth boot screen, GNOME Activities overlay, Quick Settings panel, and notification center.',
+        ],
+        links: [
+            {
+                label: 'View on GitHub',
+                href: 'https://github.com/sawyairhtet/portfolio',
+                icon: 'fab fa-github',
+                primary: true,
+            },
+        ],
+        featured: true,
+        icon: 'fas fa-desktop',
+    },
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
     {
-        title: 'Java Development',
+        title: 'Java & Backend',
         icon: 'fab fa-java',
         skills: [
             {
                 name: 'Java + OOP',
                 context:
-                    'Object-oriented programming, class design, control flow, and practical problem solving from IT coursework and self-study.',
-                usedIn: ['Singapore Polytechnic', 'Java Path'],
+                    'Object-oriented design, class hierarchies, control flow, and practical problem solving — actively building toward professional Spring Boot development.',
+                usedIn: ['Singapore Polytechnic', 'Self-Study'],
+            },
+            {
+                name: 'Spring Boot',
+                context:
+                    'REST API structure, dependency injection, application layers, and building clean backend services — current primary learning focus.',
+                usedIn: ['Java Path'],
             },
             {
                 name: 'SQL + Data Handling',
                 context:
-                    'Relational data basics, queries, schema thinking, and connecting application logic to structured data.',
-                usedIn: ['Coursework', 'Backend Fundamentals'],
-            },
-            {
-                name: 'Backend Fundamentals',
-                context:
-                    'REST concepts, validation, debugging, and maintainable code habits for application development.',
-                usedIn: ['Java Path', 'Full-Stack Projects'],
+                    'Relational data fundamentals, queries, schema design, and connecting application logic to structured storage.',
+                usedIn: ['Coursework', 'Backend Study'],
             },
         ],
     },
     {
-        title: 'Full-Stack Foundations',
+        title: 'Web & Tooling',
         icon: 'fas fa-code',
         skills: [
             {
                 name: 'React + TypeScript',
                 context:
-                    'Component architecture, stateful UI, typed config, and responsive app shells.',
+                    'Component architecture, stateful UI, typed config, custom context providers, and responsive app shells.',
                 usedIn: ['Fedora Portfolio'],
             },
             {
@@ -209,28 +209,31 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
             {
                 name: 'Git + Linux Workflow',
                 context:
-                    'Source control, shell habits, public repositories, and Fedora/GNOME customization.',
+                    'Source control, shell habits, public repositories, and Fedora/GNOME customization on real hardware.',
                 usedIn: ['Fedora Portfolio', 'Personal Workflow'],
             },
         ],
     },
     {
-        title: 'Past VR And Game Work',
+        title: 'VR (Internship)',
         icon: 'fas fa-vr-cardboard',
         skills: [
             {
                 name: 'Unity + C#',
-                context: 'Gameplay systems, object interaction, and Quest-ready prototypes.',
+                context:
+                    'VR gameplay systems, 3D object interaction, physics-based mechanics, and Quest-ready scene management — built during internship.',
                 usedIn: ['Jewelry VR'],
             },
             {
                 name: 'Meta Quest Hand Tracking',
-                context: 'Bare-hand grabbing and gestural input without physical controllers.',
+                context:
+                    'Controller-free bare-hand grabbing and gestural input using the Oculus Interaction SDK — calibrated across hand sizes and lighting.',
                 usedIn: ['Jewelry VR'],
             },
             {
-                name: 'Performance Awareness',
-                context: 'Standalone VR decisions around feedback, rendering cost, and comfort.',
+                name: 'Standalone VR Performance',
+                context:
+                    'Budget-conscious rendering, mobile GPU constraints, and standalone deployment decisions for Quest hardware.',
                 usedIn: ['Jewelry VR'],
             },
         ],
@@ -260,7 +263,7 @@ export const BOOT_LOG_MESSAGES: string[] = [
     '         Fedora Linux 43 (Workstation Edition)',
     '         Kernel 6.11.4-301.fc43.x86_64 on Wayland',
     '',
-    "Welcome to Saw Ye Htet's Portfolio!",
+    '  sawyehtet@fedora  Java Software Engineer. Recent graduate. This portfolio runs on your browser.',
     '',
 ];
 
@@ -325,7 +328,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
-            '# My Projects\n\nWelcome to my project folder!\n\n- **portfolio**: This website, now focused around my Java developer path\n- **jewelry-vr**: Past VR heist prototype for Meta Quest\n\nFeel free to explore with `cd` and `cat`.',
+            '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: Meta Quest heist prototype — controller-free bare-hand tracking, built at Singapore Polytechnic\n- **portfolio**: This Fedora 43 desktop simulation — React 19, TypeScript, window management, virtual terminal\n\nFeel free to explore with `cd` and `cat`.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md'] },
     '/home/sawyehtet/documents/notes.txt': {
@@ -456,12 +459,21 @@ export const ACCENT_COLORS: AccentColor[] = [
 export const DEFAULT_NOTIFICATIONS: Notification[] = [
     {
         id: 'welcome',
-        title: 'Portfolio Ready',
-        body: 'The desktop is ready.',
+        title: 'sawyehtet.com',
+        body: 'Java Software Engineer, recent SP graduate — click apps in the dock to explore projects, skills, and contact.',
         icon: 'fab fa-fedora',
         iconBg: 'linear-gradient(135deg, var(--fedora-blue-light), var(--fedora-blue))',
         time: 'Just now',
         group: 'System',
+    },
+    {
+        id: 'vr-project',
+        title: 'Internship Project: Jewelry Shop Robbery VR',
+        body: 'Meta Quest bare-hand tracking demo built during a year-long internship. Listed under Projects.',
+        icon: 'fas fa-vr-cardboard',
+        iconBg: 'linear-gradient(135deg, #0d6e1d, #1a3a5c)',
+        time: '1 min ago',
+        group: 'Portfolio',
     },
 ];
 

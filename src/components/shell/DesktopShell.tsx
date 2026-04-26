@@ -70,8 +70,14 @@ export function DesktopShell() {
     }, []);
 
     const handleBootComplete = useCallback(() => {
+        const isFirstVisit = !localStorage.getItem('hasVisitedBefore');
         setBooted(true);
         localStorage.setItem('hasVisitedBefore', 'true');
+
+        // Auto-open About window on first visit so visitors immediately know who this is
+        if (isFirstVisit) {
+            setTimeout(() => openWindow('about'), 600);
+        }
 
         // Startup sound on first interaction
         const playOnce = () => {
@@ -81,7 +87,7 @@ export function DesktopShell() {
         };
         document.addEventListener('click', playOnce, { once: true });
         document.addEventListener('keydown', playOnce, { once: true });
-    }, [playStartupDrum]);
+    }, [playStartupDrum, openWindow]);
 
     // Keyboard shortcuts
     useEffect(() => {
@@ -161,19 +167,24 @@ export function DesktopShell() {
             {/* Main Content */}
             <main id="main-content" className="main-content" role="main">
                 <h1 className="sr-only">
-                    Saw Ye Htet — Software Engineer | Fedora 43 Desktop Portfolio
+                    Saw Ye Htet — Java Software Engineer | Fedora 43 Desktop Portfolio
                 </h1>
                 <Wallpaper />
                 {booted && !hasVisibleWindows && !activitiesOpen && (
                     <section className="desktop-welcome" aria-label="Portfolio welcome">
-                        <span className="desktop-welcome-kicker">Fedora 43 Portfolio</span>
+                        <span className="desktop-welcome-kicker">sawyehtet.com · Fedora 43</span>
                         <h2>{PROFILE.name}</h2>
-                        <p>Software Engineer</p>
-                        <span className="desktop-welcome-hint">
+                        <p>Java Software Engineer</p>
+                        <p className="desktop-welcome-stack">Java · Spring Boot · SQL · React · TypeScript</p>
+                        <button
+                            className="desktop-welcome-hint"
+                            onClick={() => openWindow('about')}
+                            aria-label="Open About window"
+                        >
                             {device === 'desktop'
-                                ? 'Click any app in the dock to explore.'
-                                : 'Tap any app in the dock to explore.'}
-                        </span>
+                                ? 'Interactive Fedora desktop — click apps in the dock to explore ↓'
+                                : 'Interactive Fedora desktop — tap apps in the dock below ↓'}
+                        </button>
                         <div className="desktop-welcome-shortcuts">
                             <span className="shortcut-pill">
                                 <kbd>Alt+1</kbd> Projects

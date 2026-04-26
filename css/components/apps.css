@@ -5,29 +5,19 @@
 .about-hero {
     text-align: center;
     padding: var(--spacing-xl) var(--spacing-lg);
-    background: var(--gradient-accent);
+    background: var(--surface-2);
     border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    border-top: 3px solid var(--accent);
     margin-bottom: var(--spacing-lg);
-    color: var(--text-on-accent);
+    color: var(--text-primary);
     position: relative;
     overflow: hidden;
 }
 
-/* Subtle sheen overlay on hero */
+/* No sheen needed on flat surface */
 .about-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        110deg,
-        transparent 20%,
-        rgba(255, 255, 255, 0.08) 40%,
-        rgba(255, 255, 255, 0.12) 50%,
-        rgba(255, 255, 255, 0.08) 60%,
-        transparent 80%
-    );
-    background-size: 200% 100%;
-    opacity: 0.45;
+    content: none;
 }
 
 /* Noise texture on hero */
@@ -44,7 +34,7 @@
 .about-avatar {
     width: 120px;
     height: 120px;
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--surface-3);
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -52,7 +42,7 @@
     justify-content: center;
     margin: 0 auto var(--spacing-md);
     font-size: 48px;
-    border: 3px solid rgba(255, 255, 255, 0.25);
+    border: 3px solid rgba(124, 92, 252, 0.35);
     position: relative;
     z-index: 1;
     transition:
@@ -83,7 +73,7 @@
     font-size: var(--font-size-2xl);
     font-weight: 700;
     margin-bottom: var(--spacing-xs);
-    color: var(--text-on-accent);
+    color: var(--text-primary);
     position: relative;
     z-index: 1;
     letter-spacing: -0.03em;
@@ -93,6 +83,16 @@
     font-size: var(--font-size-lg);
     opacity: 0.85;
     margin-bottom: var(--spacing-sm) !important;
+    position: relative;
+    z-index: 1;
+}
+
+.about-institution {
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    opacity: 1 !important;
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
     position: relative;
     z-index: 1;
 }
@@ -114,7 +114,7 @@
     padding: 10px 22px;
     border: none;
     border-radius: var(--radius-md);
-    color: var(--text-on-accent);
+    color: var(--text-primary);
     font-family: var(--font-ui);
     font-size: 13px;
     font-weight: 600;
@@ -127,24 +127,21 @@
 }
 
 .about-cta-primary {
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    background: var(--accent);
+    color: var(--text-on-accent);
+    box-shadow: 0 2px 12px var(--accent-glow);
 }
 
 .about-cta-secondary {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: var(--surface-3);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
 }
 
 .about-cta-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     filter: brightness(1.1);
-    color: var(--text-on-accent);
 }
 
 .about-cta-btn:active {
@@ -154,6 +151,74 @@
 .about-content {
     display: grid;
     gap: var(--spacing-lg);
+}
+
+/* Recruiter quick-facts table */
+.recruiter-summary {
+    display: grid;
+    gap: 1px;
+    margin-bottom: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.summary-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    padding: 10px 16px;
+    background: var(--surface-1);
+}
+
+.summary-row:nth-child(even) {
+    background: var(--surface-2);
+}
+
+.summary-row span {
+    flex-shrink: 0;
+    width: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+}
+
+.summary-row strong {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Snapshot grouped rows */
+.about-grouped-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: var(--spacing-xs) var(--spacing-md);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.about-grouped-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.about-grouped-row span {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    padding-top: 2px;
+}
+
+.about-grouped-row p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-primary);
 }
 
 .x-logo-mark {
@@ -364,7 +429,7 @@
 .project-preview {
     width: 100%;
     height: 140px;
-    background: var(--gradient-accent);
+    background: var(--surface-3);
     border-radius: var(--radius-sm);
     margin-bottom: var(--spacing-md);
     overflow: hidden;
@@ -373,6 +438,18 @@
     justify-content: center;
     font-size: 32px;
     position: relative;
+    color: var(--text-secondary);
+}
+
+/* Project-specific preview backgrounds */
+[data-project='jewelry-vr'] .project-preview {
+    background: linear-gradient(135deg, #0a1f12 0%, #0d1e32 100%);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-project='fedora-portfolio'] .project-preview {
+    background: linear-gradient(135deg, #1a2a4a 0%, #0f2040 100%);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* Subtle sheen on project preview */

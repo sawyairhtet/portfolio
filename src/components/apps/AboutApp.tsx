@@ -14,11 +14,10 @@ export function AboutApp() {
                             src="/images/profile-picture.webp"
                             alt="Saw Ye Htet"
                             className="profile-img"
-                            width={140}
-                            height={140}
+                            width={120}
+                            height={120}
                             loading="eager"
                             onError={e => {
-                                // Fallback: hide broken image, show initials via parent's font-size/text
                                 (e.target as HTMLImageElement).style.display = 'none';
                                 const avatar = (e.target as HTMLImageElement).closest(
                                     '.about-avatar'
@@ -29,7 +28,8 @@ export function AboutApp() {
                     </picture>
                 </div>
                 <h2>Saw Ye Htet</h2>
-                <p className="about-tagline">Software Engineer</p>
+                <p className="about-tagline">Java Software Engineer</p>
+                <p className="about-institution">Singapore Polytechnic · Diploma in IT · Graduated 2026</p>
                 <div className="about-hero-actions">
                     <button
                         className="about-cta-btn about-cta-primary"
@@ -37,15 +37,22 @@ export function AboutApp() {
                     >
                         <i className="fas fa-envelope" aria-hidden="true" /> Get in Touch
                     </button>
+                    <a
+                        className="about-cta-btn about-cta-secondary"
+                        href={PROFILE.resumePath}
+                        download
+                    >
+                        <i className="fas fa-file-arrow-down" aria-hidden="true" /> Resume
+                    </a>
                 </div>
             </div>
             <div className="recruiter-summary" aria-label="Recruiter summary">
                 {[
-                    ['Role', 'Software Engineer'],
-                    ['Education', 'Singapore Polytechnic graduate'],
-                    ['Location', 'Singapore'],
+                    ['Role', 'Java Software Engineer'],
+                    ['Education', 'Diploma in IT — Singapore Polytechnic, 2026'],
+                    ['Location', PROFILE.location],
                     ['Availability', PROFILE.availability],
-                    ['Focus', 'Java, backend fundamentals, SQL'],
+                    ['Stack', 'Java · Spring Boot · SQL · React · TS'],
                 ].map(([label, value]) => (
                     <div key={label} className="summary-row">
                         <span>{label}</span>
@@ -60,11 +67,15 @@ export function AboutApp() {
                     </h3>
                     <p>
                         I recently graduated from Singapore Polytechnic with a Diploma in
-                        Information Technology, and I&apos;m steering my portfolio toward Java
-                        developer roles. My past VR and interactive web projects gave me practice
-                        with object-oriented thinking, user flows, performance-minded code, and
-                        shipping complete experiences. Now I&apos;m focusing those habits on Java,
-                        backend fundamentals, SQL, and maintainable application code.
+                        Information Technology and I&apos;m targeting Java Software Engineer roles.
+                        I care about clean code, solid OOP design, and building systems that
+                        actually work. During a year-long internship, I built a Meta Quest VR
+                        experience — controller-free hand tracking, physics-based interactions, no
+                        UI prompts — which taught me to ship under real constraints. That same
+                        habit of finishing things properly is what I&apos;m bringing to Java,
+                        Spring Boot, and SQL. I don&apos;t have a Spring Boot project to show yet
+                        — I&apos;m building that now — but I learn by doing, and that pattern shows
+                        in everything I&apos;ve shipped so far.
                     </p>
                 </div>
                 <div className="about-section about-grouped">
@@ -73,24 +84,24 @@ export function AboutApp() {
                     </h3>
                     {[
                         [
+                            'Current Focus',
+                            'Targeting Java Software Engineer roles. Building OOP foundations, Spring Boot, SQL, and clean application design.',
+                        ],
+                        [
+                            'Internship VR',
+                            'Built a Meta Quest heist prototype during a year-long internship — controller-free bare-hand tracking, physics-based object interactions, standalone Quest performance.',
+                        ],
+                        [
                             'Education',
-                            'Diploma in Information Technology, Singapore Polytechnic. Graduated in 2026.',
+                            'Diploma in Information Technology, Singapore Polytechnic. Graduated 2026.',
                         ],
                         [
-                            'Java Direction',
-                            'Building toward Java developer roles with a focus on OOP, backend fundamentals, SQL, and clean application structure.',
-                        ],
-                        [
-                            'Past VR Work',
-                            'Built Meta Quest VR prototypes with Unity, C#, hand tracking, and performance constraints.',
-                        ],
-                        [
-                            'Web Project',
-                            'Designed this Fedora desktop portfolio in React, TypeScript, and Vite with shell-level interactions.',
+                            'This Portfolio',
+                            'Designed and built this Fedora 43 desktop simulation in React 19, TypeScript, and Vite — with real window management, a virtual terminal, and GNOME-style shell interactions.',
                         ],
                         [
                             'Interests',
-                            'Java development, backend systems, Linux customization, open source, and practical developer tools.',
+                            'Backend systems, Java ecosystem, Linux customisation, VR & spatial computing, open source, and developer tooling.',
                         ],
                     ].map(([label, value]) => (
                         <div key={label} className="about-grouped-row">
