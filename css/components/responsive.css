@@ -20,26 +20,26 @@
 
     .dock {
         top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        max-width: none;
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        right: auto;
+        width: auto;
+        max-width: calc(100vw - 64px);
         min-height: 0;
-        transform: none !important;
-        justify-content: space-around;
-        border-right: none;
-        border-top: 1px solid var(--border-color);
-        border-radius: 0;
-        padding: var(--spacing-sm);
+        transform: translateX(-50%) !important;
+        justify-content: center;
+        gap: 14px;
+        border: 1px solid var(--glass-border);
+        border-radius: var(--dock-border-radius);
+        padding: 10px 16px;
         backdrop-filter: var(--dock-blur) saturate(180%);
         -webkit-backdrop-filter: var(--dock-blur) saturate(180%);
         animation: none;
     }
 
     .dock-item {
-        width: 52px;
-        height: 52px;
+        width: 56px;
+        height: 56px;
         font-size: 26px;
     }
 
@@ -50,11 +50,11 @@
     .dock-item.active::after {
         left: 50%;
         top: auto;
-        bottom: 0;
-        width: 20px;
+        bottom: -6px;
+        width: 18px;
         height: 3px;
         transform: translateX(-50%);
-        border-radius: 2px 2px 0 0;
+        border-radius: 2px;
     }
 
     .window {
