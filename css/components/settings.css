@@ -84,7 +84,6 @@
     margin-bottom: var(--spacing-lg);
     font-size: var(--font-size-xl);
     font-weight: 700;
-    letter-spacing: -0.02em;
 }
 
 /* Card sections — Glass style */
@@ -211,7 +210,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
 
 .wallpaper-grid .wallpaper-option.active {
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent), 0 0 16px var(--accent-glow);
+    box-shadow: 0 0 0 2px var(--accent);
 }
 
 /* Volume slider */
@@ -234,7 +233,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     background: var(--accent);
     cursor: pointer;
     border: 2px solid var(--surface-0);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3), 0 0 8px var(--accent-glow);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
     transition: transform 0.15s var(--ease-spring);
 }
 
@@ -268,7 +267,6 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     font-size: 18px;
     color: var(--text-primary);
     margin-bottom: var(--spacing-lg);
-    letter-spacing: -0.02em;
 }
 
 .about-system-info {
@@ -334,7 +332,6 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
 
 .toggle-switch:checked {
     background: var(--accent);
-    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .toggle-switch:checked::after {

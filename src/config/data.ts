@@ -404,35 +404,50 @@ export const terminalGreetings: string[] = [
 export const WALLPAPERS: WallpaperOption[] = [
     { id: 'default', label: 'Fedora 43 (Time)', gradient: null },
     {
-        id: 'adwaita-dark',
-        label: 'Adwaita Dark',
-        gradient: 'linear-gradient(135deg, #242424 0%, #303030 50%, #242424 100%)',
-    },
-    {
-        id: 'gnome-blobs',
-        label: 'GNOME Blobs',
+        // Multi-centre Fedora-blue blobs — the closest CSS approximation
+        // of the official GNOME/Fedora blob wallpaper series
+        id: 'fedora-blobs',
+        label: 'Fedora Blobs',
         gradient:
-            'radial-gradient(ellipse at 20% 50%, #3584e4 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #9141ac 0%, transparent 40%), radial-gradient(ellipse at 70% 80%, #2ec27e 0%, transparent 45%), linear-gradient(135deg, #242424 0%, #303030 100%)',
+            'radial-gradient(ellipse at 22% 48%, rgba(53,132,228,0.42) 0%, transparent 46%), radial-gradient(ellipse at 78% 30%, rgba(28,113,216,0.32) 0%, transparent 42%), radial-gradient(ellipse at 60% 78%, rgba(78,154,241,0.26) 0%, transparent 38%), radial-gradient(ellipse at 38% 18%, rgba(120,174,237,0.16) 0%, transparent 32%), linear-gradient(135deg, #0a1424 0%, #0e1c30 50%, #0a1424 100%)',
     },
     {
-        id: 'fedora-dark',
-        label: 'Fedora Dark',
-        gradient: 'linear-gradient(160deg, #0d1b2a 0%, #1b2838 30%, #303030 60%, #242424 100%)',
+        // Blueprint — deep navy + single overhead Fedora-blue radial,
+        // feels like a technical schematic / Fedora design asset
+        id: 'blueprint',
+        label: 'Blueprint',
+        gradient:
+            'radial-gradient(ellipse at 50% 0%, rgba(53,132,228,0.30) 0%, transparent 55%), radial-gradient(ellipse at 0% 100%, rgba(28,113,216,0.22) 0%, transparent 45%), radial-gradient(ellipse at 100% 80%, rgba(78,154,241,0.14) 0%, transparent 38%), linear-gradient(160deg, #040d1c 0%, #071326 40%, #0b1c38 70%, #060f1e 100%)',
     },
     {
-        id: 'aurora',
-        label: 'Aurora',
-        gradient: 'linear-gradient(135deg, #0d2137 0%, #9141ac 40%, #3584e4 70%, #2ec27e 100%)',
+        // Indigo — deep indigo-blue matching Fedora's darker brand tone
+        id: 'indigo',
+        label: 'Indigo',
+        gradient:
+            'radial-gradient(ellipse at 50% 100%, rgba(53,132,228,0.38) 0%, transparent 46%), radial-gradient(ellipse at 18% 58%, rgba(83,96,200,0.26) 0%, transparent 40%), radial-gradient(ellipse at 82% 48%, rgba(53,132,228,0.20) 0%, transparent 36%), linear-gradient(180deg, #06080f 0%, #0c0e20 35%, #141638 60%, #0e1030 85%, #060810 100%)',
     },
     {
-        id: 'ocean',
-        label: 'Ocean Blue',
-        gradient: 'linear-gradient(135deg, #0c3547 0%, #1a6b8a 50%, #11998e 100%)',
+        // Teal — secondary Fedora/GNOME teal accent over dark navy
+        id: 'fedora-teal',
+        label: 'Fedora Teal',
+        gradient:
+            'radial-gradient(ellipse at 62% 28%, rgba(20,184,166,0.32) 0%, transparent 46%), radial-gradient(ellipse at 24% 68%, rgba(53,132,228,0.28) 0%, transparent 42%), radial-gradient(ellipse at 78% 76%, rgba(6,182,212,0.22) 0%, transparent 36%), linear-gradient(160deg, #030e0e 0%, #05141a 40%, #071c22 70%, #040f14 100%)',
     },
     {
-        id: 'midnight',
-        label: 'Midnight',
-        gradient: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
+        // Fedora Radiant — centred radial burst in signature Fedora blue,
+        // evokes the "infinity" logo glow used in Fedora design assets
+        id: 'fedora-radiant',
+        label: 'Fedora Radiant',
+        gradient:
+            'radial-gradient(ellipse at 50% 50%, rgba(53,132,228,0.32) 0%, rgba(28,113,216,0.22) 32%, rgba(12,50,100,0.16) 62%, transparent 82%), radial-gradient(ellipse at 20% 28%, rgba(78,154,241,0.16) 0%, transparent 40%), radial-gradient(ellipse at 80% 72%, rgba(28,113,216,0.12) 0%, transparent 36%), linear-gradient(135deg, #040810 0%, #07101e 50%, #050c18 100%)',
+    },
+    {
+        // GNOME Dark — clean Adwaita-dark surface with the lightest
+        // blue touch; minimal option for those who prefer near-plain
+        id: 'gnome-dark',
+        label: 'GNOME Dark',
+        gradient:
+            'radial-gradient(ellipse at 38% 38%, rgba(53,132,228,0.14) 0%, transparent 52%), radial-gradient(ellipse at 66% 66%, rgba(28,113,216,0.10) 0%, transparent 42%), linear-gradient(135deg, #1e1e1e 0%, #252525 45%, #2a2a2a 72%, #1e1e1e 100%)',
     },
 ];
 

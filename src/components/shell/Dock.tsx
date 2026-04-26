@@ -21,9 +21,8 @@ export function Dock() {
             }
 
             setLauncherOpen(false);
-            // Trigger launch animation
             setLaunchingApp(appId);
-            setTimeout(() => setLaunchingApp(null), 420);
+            setTimeout(() => setLaunchingApp(null), 360);
         },
         [windows, openWindow, bringToFront]
     );
@@ -92,7 +91,7 @@ export function Dock() {
     }
 
     return (
-        <div className="dock visible" id="dock" aria-label="Desktop app dock">
+        <div className="dock" id="dock" aria-label="App launcher dash">
             {mainApps.map(app => {
                 const isActive = windows.get(app.id)?.isOpen ?? false;
                 return (

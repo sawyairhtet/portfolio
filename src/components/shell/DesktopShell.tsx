@@ -63,7 +63,7 @@ export function DesktopShell() {
         navigator.serviceWorker.register('/sw.js').catch(() => {});
     }, []);
 
-    // Show dock once shell is active
+    // Show dock once shell is active (mobile only — desktop dock is always visible)
     useEffect(() => {
         document.body.classList.add('show-dock');
         return () => document.body.classList.remove('show-dock');
@@ -237,7 +237,7 @@ export function DesktopShell() {
                 <FocusModeApp />
             </Window>
 
-            {/* Dock */}
+            {/* Dock — always visible on desktop, mobile: always visible */}
             <Dock />
 
             {/* Context Menu */}

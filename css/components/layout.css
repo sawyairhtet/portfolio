@@ -10,52 +10,38 @@
 }
 
 .main-content::before {
-    content: '';
-    position: absolute;
-    inset: var(--topbar-height) 0 0;
-    z-index: 1;
-    pointer-events: none;
-    background:
-        linear-gradient(to top, rgba(5, 5, 8, 0.26) 0%, rgba(5, 5, 8, 0.07) 34%, transparent 66%),
-        radial-gradient(circle at 12% 78%, rgba(10, 10, 15, 0.16), transparent 34%);
+    display: none;
 }
 
 [data-theme='light'] .main-content::before {
-    background:
-        linear-gradient(to top, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.10) 36%, transparent 68%),
-        radial-gradient(circle at 12% 78%, rgba(255, 255, 255, 0.24), transparent 36%),
-        radial-gradient(circle at 88% 18%, rgba(118, 87, 240, 0.10), transparent 36%);
+    display: none;
 }
 
-/* Wallpaper — Premium dark ambient */
+/* Wallpaper — actual Fedora 43 wallpaper, no artificial effects */
 .wallpaper {
     position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     /* Day wallpaper (default, 6am–5:59pm) */
     background: url('../../images/wallpapers/1200px-F43-DAY_final_day_small.png') center/cover
         no-repeat;
     z-index: var(--z-wallpaper);
-    transform: translate(calc(var(--mouse-x, 0) * -8px), calc(var(--mouse-y, 0) * -8px));
-    filter: saturate(1.08) brightness(1.08);
-    transition: transform 0.3s ease-out, filter 0.3s ease-out;
 }
 
 /* Night wallpaper (6pm–5:59am) */
 body[data-time='night'] .wallpaper {
     background: url('../../images/wallpapers/1200px-F43-DAY_final_night_small.png') center/cover
         no-repeat;
-    filter: saturate(1.10) brightness(1.16);
 }
 
 [data-theme='light'] .wallpaper {
-    filter: saturate(1.08) brightness(1.12);
+    /* light mode uses same wallpaper, no filter override */
 }
 
 [data-theme='light'] body[data-time='night'] .wallpaper {
-    filter: saturate(1.06) brightness(1.10);
+    /* same */
 }
 
 /* Custom wallpaper override */
@@ -122,23 +108,19 @@ body .wallpaper.custom-wallpaper {
     display: inline-flex;
     margin-top: 18px;
     padding: 8px 13px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 999px;
-    background: rgba(10, 10, 15, 0.38);
-    backdrop-filter: blur(14px) saturate(150%);
-    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    background: rgba(30, 30, 30, 0.72);
     color: rgba(255, 255, 255, 0.88);
     font-family: var(--font-ui);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.3;
     cursor: pointer;
-    box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     pointer-events: auto;
     opacity: 0;
-    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.45s forwards;
+    animation: welcomeSlideUp 0.4s var(--ease-out-expo) 0.45s forwards;
 }
 
 .desktop-welcome-hint:hover {
@@ -193,14 +175,12 @@ body .wallpaper.custom-wallpaper {
     align-items: center;
     gap: 6px;
     padding: 5px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 6px;
-    background: rgba(10, 10, 15, 0.30);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(30, 30, 30, 0.60);
     color: rgba(255, 255, 255, 0.65);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
     white-space: nowrap;
 }
 
@@ -216,20 +196,9 @@ body .wallpaper.custom-wallpaper {
     color: rgba(255, 255, 255, 0.85);
 }
 
-/* Ambient glow overlay */
+/* Ambient glow overlay — removed for Adwaita accuracy */
 .wallpaper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        radial-gradient(ellipse at 15% 85%, rgba(139, 108, 246, 0.14) 0%, transparent 50%),
-        radial-gradient(ellipse at 85% 15%, rgba(34, 211, 238, 0.11) 0%, transparent 45%),
-        radial-gradient(ellipse at 50% 50%, rgba(139, 108, 246, 0.06) 0%, transparent 60%);
-    pointer-events: none;
-    animation: glowPulse 8s ease-in-out infinite;
+    display: none;
 }
 
 [data-theme='light'] .wallpaper::before {
@@ -239,18 +208,9 @@ body .wallpaper.custom-wallpaper {
         radial-gradient(ellipse at 50% 52%, rgba(118, 87, 240, 0.09) 0%, transparent 60%);
 }
 
-/* Subtle noise grain texture */
+/* Noise grain — removed for Adwaita accuracy */
 .wallpaper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: var(--gradient-noise);
-    opacity: 0.025;
-    pointer-events: none;
-    mix-blend-mode: overlay;
+    display: none;
 }
 
 /* Desktop shell uses a centered bottom dock, so content keeps full width */

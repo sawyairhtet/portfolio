@@ -52,7 +52,6 @@
     }
     50% {
         opacity: 1;
-        text-shadow: 0 0 12px var(--accent-glow);
     }
 }
 

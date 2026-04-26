@@ -1,5 +1,5 @@
 /* ============================================
-   TYPOGRAPHY — Premium editorial design
+   TYPOGRAPHY — Adwaita / Cantarell
    ============================================ */
 
 body {
@@ -9,39 +9,29 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    font-feature-settings:
-        'kern' 1,
-        'liga' 1,
-        'calt' 1,
-        'ss01' 1;
-    font-variant-ligatures: common-ligatures;
-    letter-spacing: -0.011em;
     line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-ui);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.25;
 }
 
 h1 {
     font-size: var(--font-size-display);
     font-weight: 700;
-    letter-spacing: -0.04em;
 }
 
 h2 {
     font-size: var(--font-size-2xl);
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    font-weight: 700;
 }
 
 h3 {
     font-size: var(--font-size-xl);
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-weight: 700;
 }
 
 code,
@@ -49,21 +39,17 @@ pre,
 .terminal,
 .terminal * {
     font-family: var(--font-mono);
-    font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
-/* Subtle gradient text utility */
+/* Accent-colored text (no gradient clip — Cantarell doesn't benefit) */
 .text-gradient {
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--accent);
 }
 
 /* Muted label style */
 .text-label {
     font-size: var(--font-size-sm);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-secondary);

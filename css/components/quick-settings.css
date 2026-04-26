@@ -9,23 +9,18 @@
     width: 330px;
     z-index: calc(var(--z-modal) + 10);
     background: var(--glass-bg-heavy);
-    backdrop-filter: var(--glass-blur) saturate(180%);
-    -webkit-backdrop-filter: var(--glass-blur) saturate(180%);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-lg);
-    box-shadow:
-        0 4px 16px rgba(0, 0, 0, 0.35),
-        0 20px 60px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow: var(--shadow-popover);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.92) translateY(-12px);
+    transform: scale(0.95) translateY(-8px);
     transform-origin: top right;
     transition:
-        opacity 0.25s var(--ease-out-expo),
-        transform 0.25s var(--ease-out-expo),
-        visibility 0.25s;
+        opacity 0.20s ease,
+        transform 0.20s ease,
+        visibility 0.20s;
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -33,17 +28,11 @@
 }
 
 [data-theme='dark'] .quick-settings-panel {
-    box-shadow:
-        0 4px 16px rgba(0, 0, 0, 0.45),
-        0 20px 60px rgba(0, 0, 0, 0.65),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow: var(--shadow-popover);
 }
 
 [data-theme='light'] .quick-settings-panel {
-    box-shadow:
-        0 4px 16px rgba(0, 0, 0, 0.10),
-        0 20px 60px rgba(0, 0, 0, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    box-shadow: var(--shadow-popover);
 }
 
 .quick-settings-panel.visible {
@@ -89,12 +78,12 @@
 
 .qs-tile[aria-pressed='true'] {
     background: var(--accent-subtle);
-    border-color: rgba(124, 92, 252, 0.2);
+    border-color: rgba(53, 132, 228, 0.25);
     color: var(--accent-light);
 }
 
 [data-theme='dark'] .qs-tile[aria-pressed='true'] {
-    background: rgba(124, 92, 252, 0.12);
+    background: rgba(53, 132, 228, 0.14);
 }
 
 .qs-tile-icon {
@@ -114,7 +103,6 @@
 .qs-tile[aria-pressed='true'] .qs-tile-icon {
     background: var(--accent);
     color: #fff;
-    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 .qs-tile-label {
@@ -164,8 +152,7 @@
     background: var(--accent);
     cursor: pointer;
     border: 2px solid var(--surface-1);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3), 0 0 8px var(--accent-glow);
-    transition: transform 0.15s var(--ease-spring);
+    transition: transform 0.12s ease;
 }
 
 .qs-slider::-webkit-slider-thumb:hover {

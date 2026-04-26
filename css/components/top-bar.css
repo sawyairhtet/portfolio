@@ -15,14 +15,11 @@
     font-weight: 500;
     z-index: var(--z-topbar);
     background: var(--topbar-bg);
-    backdrop-filter: var(--topbar-blur) saturate(180%);
-    -webkit-backdrop-filter: var(--topbar-blur) saturate(180%);
     color: var(--text-primary);
     border-bottom: 1px solid var(--border-subtle);
     transition:
-        background 0.3s var(--ease-out-expo),
-        color 0.3s var(--ease-out-expo),
-        border-color 0.3s var(--ease-out-expo);
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 /* Subtle bottom shadow for depth separation from desktop */
@@ -31,14 +28,14 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -8px;
-    height: 8px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), transparent);
+    bottom: -1px;
+    height: 1px;
+    background: var(--border-subtle);
     pointer-events: none;
 }
 
 [data-theme='light'] .top-bar::after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.04), transparent);
+    background: var(--border-subtle);
 }
 
 /* Dark mode: same look — dark first design */
@@ -145,7 +142,7 @@
 }
 
 .activities-btn.active {
-    background: rgba(124, 92, 252, 0.15);
+    background: rgba(53, 132, 228, 0.18);
 }
 
 .activities-btn.active::before,
@@ -168,7 +165,7 @@
 }
 
 [data-theme='dark'] .activities-btn.active {
-    background: rgba(124, 92, 252, 0.18);
+    background: rgba(53, 132, 228, 0.20);
 }
 
 [data-theme='dark'] .activities-btn:hover {
@@ -176,7 +173,7 @@
 }
 
 [data-theme='light'] .activities-btn.active {
-    background: rgba(109, 77, 230, 0.12);
+    background: rgba(53, 132, 228, 0.14);
 }
 
 /* Pill Styling for Top Bar Items */
@@ -232,11 +229,11 @@
 
 /* Clock */
 .menu-clock[aria-expanded='true'] {
-    background: rgba(124, 92, 252, 0.12) !important;
+    background: rgba(53, 132, 228, 0.12) !important;
 }
 
 [data-theme='dark'] .menu-clock[aria-expanded='true'] {
-    background: rgba(124, 92, 252, 0.15) !important;
+    background: rgba(53, 132, 228, 0.16) !important;
 }
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */
