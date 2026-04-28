@@ -42,7 +42,7 @@
 
 @media (hover: hover) {
     .context-menu-item:hover {
-        background: rgba(53, 132, 228, 0.10);
+        background: rgba(53, 132, 228, 0.1);
         color: var(--text-primary);
     }
 }

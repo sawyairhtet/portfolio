@@ -175,7 +175,9 @@ export function DesktopShell() {
                         <span className="desktop-welcome-kicker">sawyehtet.com · Fedora 43</span>
                         <h2>{PROFILE.name}</h2>
                         <p>Java Software Engineer</p>
-                        <p className="desktop-welcome-stack">Java · Spring Boot · SQL · React · TypeScript</p>
+                        <p className="desktop-welcome-stack">
+                            Java · Spring Boot · SQL · React · TypeScript
+                        </p>
                         <button
                             className="desktop-welcome-hint"
                             onClick={() => openWindow('about')}

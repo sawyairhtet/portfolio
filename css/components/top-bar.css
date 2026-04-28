@@ -165,7 +165,7 @@
 }
 
 [data-theme='dark'] .activities-btn.active {
-    background: rgba(53, 132, 228, 0.20);
+    background: rgba(53, 132, 228, 0.2);
 }
 
 [data-theme='dark'] .activities-btn:hover {

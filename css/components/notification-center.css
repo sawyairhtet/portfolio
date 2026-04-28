@@ -30,9 +30,9 @@
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity 0.20s ease,
-        transform 0.20s ease,
-        visibility 0.20s;
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s;
 }
 
 [data-theme='dark'] .notification-center {
@@ -91,7 +91,7 @@
 }
 
 .dnd-toggle.active {
-    background: rgba(239, 68, 68, 0.10);
+    background: rgba(239, 68, 68, 0.1);
     color: var(--fedora-red);
     border-color: rgba(239, 68, 68, 0.25);
 }

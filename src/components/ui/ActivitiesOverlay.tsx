@@ -42,7 +42,9 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
         (event: MouseEvent<HTMLDivElement>) => {
             const target = event.target as HTMLElement;
 
-            if (target.closest('.activities-search, .activities-window-thumb, .activities-app-grid')) {
+            if (
+                target.closest('.activities-search, .activities-window-thumb, .activities-app-grid')
+            ) {
                 return;
             }
 

@@ -39,10 +39,10 @@ const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
 };
 
 const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
-    about: { width: '720px', height: '680px' },
+    about: { width: '720px', height: '600px' },
     skills: { width: '650px', height: '550px' },
-    projects: { width: '780px', height: '620px' },
-    contact: { width: '550px', height: '600px' },
+    projects: { width: '780px', height: '580px' },
+    contact: { width: '550px', height: '560px' },
     links: { width: '400px', height: '350px' },
     terminal: { width: '700px', height: '450px' },
     settings: { width: '750px', height: '550px' },

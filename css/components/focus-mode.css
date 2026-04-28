@@ -11,9 +11,7 @@
     --focus-panel-bg:
         linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
         rgba(12, 12, 18, 0.74);
-    --focus-panel-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.32),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --focus-panel-shadow: 0 20px 60px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     --focus-ring-core: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 68%);
     --focus-ring-shadow: inset 0 0 42px rgba(0, 0, 0, 0.24);
     --focus-progress-track: rgba(255, 255, 255, 0.08);
@@ -57,7 +55,7 @@
     --focus-accent: var(--accent-light);
     --focus-accent-strong: var(--accent);
     --focus-accent-soft: rgba(53, 132, 228, 0.18);
-    --focus-accent-glow: rgba(53, 132, 228, 0.30);
+    --focus-accent-glow: rgba(53, 132, 228, 0.3);
 }
 
 .focus-state-break {
@@ -88,13 +86,12 @@
         0 24px 60px rgba(30, 41, 59, 0.14),
         0 8px 22px color-mix(in srgb, var(--focus-accent) 10%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.86);
-    --focus-ring-core:
-        radial-gradient(
-            circle,
-            color-mix(in srgb, var(--focus-accent) 16%, rgba(255, 255, 255, 0.62)),
-            rgba(255, 255, 255, 0.38) 58%,
-            transparent 72%
-        );
+    --focus-ring-core: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--focus-accent) 16%, rgba(255, 255, 255, 0.62)),
+        rgba(255, 255, 255, 0.38) 58%,
+        transparent 72%
+    );
     --focus-ring-shadow:
         inset 0 0 34px color-mix(in srgb, var(--focus-accent) 12%, transparent),
         0 16px 36px rgba(15, 23, 42, 0.08);
@@ -103,7 +100,11 @@
         0 14px 34px color-mix(in srgb, var(--focus-accent) 16%, transparent),
         0 1px 0 rgba(255, 255, 255, 0.8);
     --focus-segment-bg: rgba(255, 255, 255, 0.68);
-    --focus-segment-hover-bg: color-mix(in srgb, var(--focus-accent) 10%, rgba(255, 255, 255, 0.82));
+    --focus-segment-hover-bg: color-mix(
+        in srgb,
+        var(--focus-accent) 10%,
+        rgba(255, 255, 255, 0.82)
+    );
     --focus-ghost-bg: rgba(255, 255, 255, 0.62);
     --focus-ghost-hover-bg: rgba(255, 255, 255, 0.88);
     --focus-stat-bg: rgba(255, 255, 255, 0.64);

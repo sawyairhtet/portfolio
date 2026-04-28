@@ -17,9 +17,9 @@
     visibility: hidden;
     transform: scale(1.01);
     transition:
-        opacity 0.20s ease,
-        visibility 0.20s ease,
-        transform 0.20s ease;
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease;
 }
 
 .activities-overlay.visible {
@@ -49,7 +49,7 @@
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius-xl);
     background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.90);
+    color: rgba(255, 255, 255, 0.9);
     font-family: var(--font-ui);
     font-size: 16px;
     font-weight: 400;
@@ -66,7 +66,7 @@
 
 .activities-search-input:focus {
     border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 0 2px var(--accent-subtle);
 }
 
@@ -83,7 +83,9 @@
 
 [data-theme='light'] .activities-search-input:focus {
     background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 0 0 3px var(--accent-subtle), 0 8px 32px rgba(15, 23, 42, 0.10);
+    box-shadow:
+        0 0 0 3px var(--accent-subtle),
+        0 8px 32px rgba(15, 23, 42, 0.1);
 }
 
 .activities-main {
@@ -135,14 +137,14 @@
 .activities-window-thumb:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    border-color: rgba(53, 132, 228, 0.20);
+    border-color: rgba(53, 132, 228, 0.2);
     background: rgba(255, 255, 255, 0.05);
 }
 
 [data-theme='light'] .activities-window-thumb {
     background: rgba(255, 255, 255, 0.68);
     color: var(--text-primary);
-    border-color: rgba(15, 23, 42, 0.10);
+    border-color: rgba(15, 23, 42, 0.1);
 }
 
 [data-theme='light'] .activities-window-thumb:hover {
@@ -158,7 +160,7 @@
 
 .activities-no-windows {
     width: 100%;
-    color: rgba(255, 255, 255, 0.30);
+    color: rgba(255, 255, 255, 0.3);
     font-size: 16px;
     text-align: center;
     padding: 40px;
@@ -209,14 +211,30 @@
     opacity: 1;
 }
 
-.activities-app-item:nth-child(1) { animation-delay: 0.04s; }
-.activities-app-item:nth-child(2) { animation-delay: 0.07s; }
-.activities-app-item:nth-child(3) { animation-delay: 0.10s; }
-.activities-app-item:nth-child(4) { animation-delay: 0.13s; }
-.activities-app-item:nth-child(5) { animation-delay: 0.16s; }
-.activities-app-item:nth-child(6) { animation-delay: 0.19s; }
-.activities-app-item:nth-child(7) { animation-delay: 0.22s; }
-.activities-app-item:nth-child(8) { animation-delay: 0.25s; }
+.activities-app-item:nth-child(1) {
+    animation-delay: 0.04s;
+}
+.activities-app-item:nth-child(2) {
+    animation-delay: 0.07s;
+}
+.activities-app-item:nth-child(3) {
+    animation-delay: 0.1s;
+}
+.activities-app-item:nth-child(4) {
+    animation-delay: 0.13s;
+}
+.activities-app-item:nth-child(5) {
+    animation-delay: 0.16s;
+}
+.activities-app-item:nth-child(6) {
+    animation-delay: 0.19s;
+}
+.activities-app-item:nth-child(7) {
+    animation-delay: 0.22s;
+}
+.activities-app-item:nth-child(8) {
+    animation-delay: 0.25s;
+}
 
 .activities-app-item:hover {
     transform: translateY(-3px);

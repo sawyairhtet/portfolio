@@ -18,9 +18,9 @@
     transform: scale(0.95) translateY(-8px);
     transform-origin: top right;
     transition:
-        opacity 0.20s ease,
-        transform 0.20s ease,
-        visibility 0.20s;
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s;
     padding: 16px;
     display: flex;
     flex-direction: column;

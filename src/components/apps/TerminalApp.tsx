@@ -25,9 +25,17 @@ interface TerminalLine {
 export function TerminalApp() {
     const { openWindow } = useWindowManager();
     const [lines, setLines] = useState<TerminalLine[]>([
-        { id: 0, content: "Welcome to Saw Ye Htet's Portfolio Terminal", className: 'terminal-welcome' },
+        {
+            id: 0,
+            content: "Welcome to Saw Ye Htet's Portfolio Terminal",
+            className: 'terminal-welcome',
+        },
         { id: 1, content: "Type 'help' to see available commands", className: 'terminal-info' },
-        { id: 2, content: '─────────────────────────────────────────', className: 'terminal-divider' },
+        {
+            id: 2,
+            content: '─────────────────────────────────────────',
+            className: 'terminal-divider',
+        },
     ]);
     const [inputValue, setInputValue] = useState('');
     const [cwd, setCwd] = useState('/home/sawyehtet');
@@ -408,7 +416,10 @@ export function TerminalApp() {
                 aria-label="Terminal output"
             >
                 {lines.map(line => (
-                    <div key={line.id} className={`terminal-line${line.className ? ` ${line.className}` : ''}`}>
+                    <div
+                        key={line.id}
+                        className={`terminal-line${line.className ? ` ${line.className}` : ''}`}
+                    >
                         {line.content}
                     </div>
                 ))}

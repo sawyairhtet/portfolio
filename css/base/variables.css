@@ -27,7 +27,7 @@
 
     /* ── Text ── */
     --text-primary: rgba(255, 255, 255, 0.87);
-    --text-secondary: rgba(255, 255, 255, 0.60);
+    --text-secondary: rgba(255, 255, 255, 0.6);
     --text-disabled: rgba(255, 255, 255, 0.38);
     --text-on-accent: #ffffff;
 
@@ -44,16 +44,16 @@
     --glass-saturation: saturate(100%);
 
     /* ── Shadows — Simple Adwaita shadows ── */
-    --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.60), 0 0 0 1px rgba(0, 0, 0, 0.30);
-    --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.50), 0 0 0 1px rgba(0, 0, 0, 0.20);
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.30);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.40);
-    --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.50);
+    --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.3);
+    --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.5);
     --shadow-glow: none;
 
     /* ── Scrollbar ── */
     --scrollbar-thumb: rgba(255, 255, 255, 0.18);
-    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.30);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
     --scrollbar-track: transparent;
     --scrollbar-width: 6px;
 
@@ -70,7 +70,7 @@
     /* ── Window Chrome ── */
     --window-header-height: 48px;
     --window-border-radius: 12px;
-    --window-open-duration: 0.20s;
+    --window-open-duration: 0.2s;
     --window-close-duration: 0.15s;
     --window-shadow: var(--shadow-window);
     --window-header-bg: #303030;
@@ -97,14 +97,14 @@
     --dock-gap: 6px;
     --dock-border: 1px solid rgba(255, 255, 255, 0.08);
     --dock-active-dot: var(--accent);
-    --dock-hover-bg: rgba(255, 255, 255, 0.10);
+    --dock-hover-bg: rgba(255, 255, 255, 0.1);
 
     /* ── Terminal ── */
     --terminal-bg: #1e1e1e;
     --terminal-text: #f1f5f9;
     --terminal-prompt: var(--fedora-green);
     --terminal-cursor: var(--accent);
-    --terminal-selection: rgba(53, 132, 228, 0.30);
+    --terminal-selection: rgba(53, 132, 228, 0.3);
     --terminal-font-size: 13px;
 
     /* ── Boot / Plymouth ── */
@@ -150,8 +150,8 @@
 
     /* ── Transitions ── */
     --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-base: 0.20s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.30s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: var(--transition-base);
     --transition-smooth: 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -212,14 +212,14 @@
     --surface-4: #4d4d4d;
 
     --text-primary: rgba(255, 255, 255, 0.87);
-    --text-secondary: rgba(255, 255, 255, 0.60);
+    --text-secondary: rgba(255, 255, 255, 0.6);
     --text-disabled: rgba(255, 255, 255, 0.38);
 
     --border-color: rgba(255, 255, 255, 0.08);
     --window-header-bg: #303030;
     --window-header-border: rgba(255, 255, 255, 0.08);
     --window-body-bg: var(--surface-0);
-    --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.60), 0 0 0 1px rgba(0, 0, 0, 0.30);
+    --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.3);
 
     --glass-bg: #303030;
     --glass-bg-heavy: #272727;
@@ -250,7 +250,7 @@
 
     /* ── Text — Dark on light ── */
     --text-primary: rgba(0, 0, 0, 0.87);
-    --text-secondary: rgba(0, 0, 0, 0.60);
+    --text-secondary: rgba(0, 0, 0, 0.6);
     --text-disabled: rgba(0, 0, 0, 0.38);
     --text-on-accent: #ffffff;
 
@@ -270,23 +270,23 @@
     /* ── Flat surfaces ── */
     --glass-bg: #f6f5f4;
     --glass-bg-heavy: #ebebeb;
-    --glass-border: rgba(0, 0, 0, 0.10);
+    --glass-border: rgba(0, 0, 0, 0.1);
 
     /* ── Shadows — Softer for light mode ── */
-    --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.10);
+    --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.1);
     --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08);
     --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.10);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.12);
     --shadow-glow: none;
 
     /* ── Scrollbar ── */
-    --scrollbar-thumb: rgba(0, 0, 0, 0.20);
+    --scrollbar-thumb: rgba(0, 0, 0, 0.2);
     --scrollbar-thumb-hover: rgba(0, 0, 0, 0.35);
 
     /* ── Window Chrome ── */
     --window-header-bg: #ebebeb;
-    --window-header-border: rgba(0, 0, 0, 0.10);
+    --window-header-border: rgba(0, 0, 0, 0.1);
     --window-body-bg: var(--surface-0);
     --window-shadow: var(--shadow-window);
 
@@ -296,7 +296,7 @@
 
     /* ── Dock — Adwaita light ── */
     --dock-bg: #f0efee;
-    --dock-border: 1px solid rgba(0, 0, 0, 0.10);
+    --dock-border: 1px solid rgba(0, 0, 0, 0.1);
     --dock-hover-bg: rgba(0, 0, 0, 0.06);
 
     /* ── Terminal — Light ── */

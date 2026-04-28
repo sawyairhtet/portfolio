@@ -22,12 +22,12 @@
     opacity: 1;
     pointer-events: auto;
     transition:
-        opacity 0.20s ease,
-        transform 0.20s ease;
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 [data-theme='light'] .dock {
-    border-color: rgba(0, 0, 0, 0.10);
+    border-color: rgba(0, 0, 0, 0.1);
     box-shadow: var(--shadow-popover);
 }
 
@@ -83,7 +83,11 @@
 }
 
 .dock-item[data-app='settings'] {
-    background: linear-gradient(135deg, var(--icon-settings-start) 0%, var(--icon-settings-end) 100%);
+    background: linear-gradient(
+        135deg,
+        var(--icon-settings-start) 0%,
+        var(--icon-settings-end) 100%
+    );
 }
 
 .dock-item[data-app='skills'] {

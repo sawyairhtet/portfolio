@@ -134,26 +134,26 @@ body,
 }
 
 :where(
-        .dock-item,
-        .window-control,
-        .close-btn-mobile,
-        .contact-action,
-        .contact-submit-btn,
-        .project-action,
-        .about-cta-btn,
-        .about-social-link,
-        .social-link,
-        .settings-nav-item,
-        .accent-swatch,
-        .wallpaper-option,
-        .qs-tile,
-        .qs-footer-btn,
-        .activities-app-item,
-        .activities-window-thumb,
-        .focus-preset-btn,
-        .focus-btn,
-        .mobile-launcher-item
-    ):focus-visible {
+    .dock-item,
+    .window-control,
+    .close-btn-mobile,
+    .contact-action,
+    .contact-submit-btn,
+    .project-action,
+    .about-cta-btn,
+    .about-social-link,
+    .social-link,
+    .settings-nav-item,
+    .accent-swatch,
+    .wallpaper-option,
+    .qs-tile,
+    .qs-footer-btn,
+    .activities-app-item,
+    .activities-window-thumb,
+    .focus-preset-btn,
+    .focus-btn,
+    .mobile-launcher-item
+):focus-visible {
     box-shadow: 0 0 0 4px var(--accent-subtle);
 }
 
@@ -256,7 +256,7 @@ body,
 }
 
 .skill-category:hover {
-    border-color: rgba(124, 92, 252, 0.10);
+    border-color: rgba(124, 92, 252, 0.1);
     box-shadow: 0 0 40px rgba(124, 92, 252, 0.03);
 }
 
@@ -347,8 +347,7 @@ body,
     border: 1px solid rgba(124, 92, 252, 0.15);
     border-radius: var(--border-radius-lg);
     background:
-        linear-gradient(135deg, rgba(124, 92, 252, 0.06), rgba(6, 182, 212, 0.04)),
-        var(--surface-1);
+        linear-gradient(135deg, rgba(124, 92, 252, 0.06), rgba(6, 182, 212, 0.04)), var(--surface-1);
     position: relative;
     overflow: hidden;
     transition:
@@ -383,7 +382,12 @@ body,
     min-height: 260px;
     border-radius: var(--border-radius-md);
     overflow: hidden;
-    background: linear-gradient(135deg, var(--accent-dark), var(--fedora-teal) 55%, var(--fedora-green));
+    background: linear-gradient(
+        135deg,
+        var(--accent-dark),
+        var(--fedora-teal) 55%,
+        var(--fedora-green)
+    );
 }
 
 .project-media-frame img,
@@ -543,13 +547,13 @@ body,
 }
 
 .contact-action.primary {
-    border-color: rgba(124, 92, 252, 0.20);
+    border-color: rgba(124, 92, 252, 0.2);
     background: rgba(124, 92, 252, 0.06);
 }
 
 .contact-action.primary:hover {
-    border-color: rgba(124, 92, 252, 0.30);
-    background: rgba(124, 92, 252, 0.10);
+    border-color: rgba(124, 92, 252, 0.3);
+    background: rgba(124, 92, 252, 0.1);
 }
 
 .contact-action > i {
@@ -693,7 +697,7 @@ body,
 }
 
 body.focus-dim-active .window:not([data-app='focus-mode']) {
-    opacity: 0.30;
+    opacity: 0.3;
     filter: blur(2px) saturate(0.6);
 }
 
@@ -796,8 +800,8 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 }
 
 [data-theme='light'] .mobile-launcher {
-    background: rgba(248, 249, 252, 0.90);
-    border-color: rgba(15, 23, 42, 0.10);
+    background: rgba(248, 249, 252, 0.9);
+    border-color: rgba(15, 23, 42, 0.1);
     box-shadow:
         0 18px 55px rgba(15, 23, 42, 0.18),
         0 2px 12px rgba(15, 23, 42, 0.08),
@@ -812,7 +816,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 
 [data-theme='light'] .mobile-launcher-item:hover,
 [data-theme='light'] .mobile-launcher-item:active {
-    background: rgba(109, 77, 230, 0.10);
+    background: rgba(109, 77, 230, 0.1);
 }
 
 @media (max-width: 767px) {
@@ -822,12 +826,12 @@ body.focus-dim-active .window[data-app='focus-mode'] {
             linear-gradient(
                 to top,
                 rgba(15, 23, 42, 0.22) 0%,
-                rgba(15, 23, 42, 0.10) 38%,
+                rgba(15, 23, 42, 0.1) 38%,
                 rgba(15, 23, 42, 0.02) 68%,
                 transparent 100%
             ),
             radial-gradient(ellipse at 15% 85%, rgba(255, 255, 255, 0.26) 0%, transparent 50%),
-            radial-gradient(ellipse at 85% 15%, rgba(20, 184, 166, 0.10) 0%, transparent 45%);
+            radial-gradient(ellipse at 85% 15%, rgba(20, 184, 166, 0.1) 0%, transparent 45%);
     }
 }
 
@@ -937,7 +941,6 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     .mobile-launcher {
         grid-template-columns: 1fr;
     }
-
 }
 
 @media (max-width: 400px) {

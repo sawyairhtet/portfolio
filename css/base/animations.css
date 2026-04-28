@@ -40,7 +40,8 @@
 
 /* Avatar Pulse */
 @keyframes avatarPulseGlow {
-    0%, 100% {
+    0%,
+    100% {
         box-shadow: 0 0 0 2px var(--accent-subtle);
     }
     50% {
@@ -50,9 +51,15 @@
 
 /* Dock Bounce (Mobile) */
 @keyframes dockBounce {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.88); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.88);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Activities Overlay */
@@ -118,7 +125,9 @@
 
 /* Search dots */
 @keyframes searchDot {
-    0%, 60%, 100% {
+    0%,
+    60%,
+    100% {
         opacity: 0.25;
         transform: scale(0.75);
     }
@@ -130,22 +139,44 @@
 
 /* Dock icon launch bounce */
 @keyframes dockIconLaunch {
-    0% { transform: scale(1); }
-    20% { transform: scale(0.82); }
-    50% { transform: scale(1.14) translateY(-3px); }
-    70% { transform: scale(0.97); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(0.82);
+    }
+    50% {
+        transform: scale(1.14) translateY(-3px);
+    }
+    70% {
+        transform: scale(0.97);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Workspace switch */
 @keyframes workspaceSlideLeft {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(-60px); opacity: 0; }
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-60px);
+        opacity: 0;
+    }
 }
 
 @keyframes workspaceSlideRight {
-    from { transform: translateX(60px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(60px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* Fade-in-up */
@@ -162,26 +193,45 @@
 
 /* Subtle float */
 @keyframes subtleFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
 }
 
 /* Shimmer */
 @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
 }
 
 /* Glow pulse (removed — not used in Adwaita) */
 @keyframes glowPulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.7; }
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.7;
+    }
 }
 
 /* Terminal cursor blink */
 @keyframes terminalCursorBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
 }
 
 /* Welcome text stagger */
@@ -198,14 +248,24 @@
 
 /* Hint pulse border */
 @keyframes hintPulse {
-    0%, 100% { border-color: rgba(255, 255, 255, 0.18); }
-    50% { border-color: rgba(255, 255, 255, 0.32); }
+    0%,
+    100% {
+        border-color: rgba(255, 255, 255, 0.18);
+    }
+    50% {
+        border-color: rgba(255, 255, 255, 0.32);
+    }
 }
 
 /* Active dot pulse */
 @keyframes activeDotPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
 }
 
 /* ============================================
