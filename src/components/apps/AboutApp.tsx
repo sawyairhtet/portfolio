@@ -1,5 +1,9 @@
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { PROFILE } from '../../config/profile';
+import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
+
+const HERO_SOCIAL_LINKS = SOCIAL_LINKS.filter(({ label }) =>
+    ['GitHub', 'LinkedIn'].includes(label)
+);
 
 export function AboutApp() {
     const { openWindow } = useWindowManager();
@@ -29,7 +33,9 @@ export function AboutApp() {
                 </div>
                 <h2>Saw Ye Htet</h2>
                 <p className="about-tagline">Java Software Engineer</p>
-                <p className="about-institution">Singapore Polytechnic · Diploma in IT · Graduated 2026</p>
+                <p className="about-institution">
+                    Singapore Polytechnic · Diploma in IT · Graduated 2026
+                </p>
                 <div className="about-hero-actions">
                     <button
                         className="about-cta-btn about-cta-primary"
@@ -44,6 +50,18 @@ export function AboutApp() {
                     >
                         <i className="fas fa-file-arrow-down" aria-hidden="true" /> Resume
                     </a>
+                    {HERO_SOCIAL_LINKS.map(link => (
+                        <a
+                            key={link.href}
+                            className="about-cta-btn about-cta-secondary about-social-link"
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Open ${link.label} profile`}
+                        >
+                            <i className={link.icon} aria-hidden="true" /> {link.label}
+                        </a>
+                    ))}
                 </div>
             </div>
             <div className="recruiter-summary" aria-label="Recruiter summary">
@@ -71,11 +89,10 @@ export function AboutApp() {
                         I care about clean code, solid OOP design, and building systems that
                         actually work. During a year-long internship, I built a Meta Quest VR
                         experience — controller-free hand tracking, physics-based interactions, no
-                        UI prompts — which taught me to ship under real constraints. That same
-                        habit of finishing things properly is what I&apos;m bringing to Java,
-                        Spring Boot, and SQL. I don&apos;t have a Spring Boot project to show yet
-                        — I&apos;m building that now — but I learn by doing, and that pattern shows
-                        in everything I&apos;ve shipped so far.
+                        UI prompts — which taught me to ship under real constraints. That same habit
+                        of finishing things properly is what I&apos;m bringing to Java, Spring Boot,
+                        and SQL. I&apos;m currently building a Spring Boot API to strengthen my
+                        backend portfolio, and I learn best by turning study into shipped work.
                     </p>
                 </div>
                 <div className="about-section about-grouped">
@@ -85,7 +102,7 @@ export function AboutApp() {
                     {[
                         [
                             'Current Focus',
-                            'Targeting Java Software Engineer roles. Building OOP foundations, Spring Boot, SQL, and clean application design.',
+                            'Targeting Java Software Engineer roles while building practical Spring Boot, SQL, OOP, and clean application design experience.',
                         ],
                         [
                             'Internship VR',

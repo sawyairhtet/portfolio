@@ -25,14 +25,14 @@
     right: 0;
     bottom: 0;
     /* Day wallpaper (default, 6am–5:59pm) */
-    background: url('../../images/wallpapers/1200px-F43-DAY_final_day_small.png') center/cover
+    background: url('../../images/wallpapers/1200px-F43-DAY_final_day_small.webp') center/cover
         no-repeat;
     z-index: var(--z-wallpaper);
 }
 
 /* Night wallpaper (6pm–5:59am) */
 body[data-time='night'] .wallpaper {
-    background: url('../../images/wallpapers/1200px-F43-DAY_final_night_small.png') center/cover
+    background: url('../../images/wallpapers/1200px-F43-DAY_final_night_small.webp') center/cover
         no-repeat;
 }
 

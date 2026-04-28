@@ -195,12 +195,12 @@
 }
 
 .wallpaper-grid .wallpaper-option[data-wallpaper='default'] {
-    background: url('../../images/wallpapers/1200px-F43-DAY_final_day_small.png') center/cover
+    background: url('../../images/wallpapers/1200px-F43-DAY_final_day_small.webp') center/cover
         no-repeat;
 }
 
 body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='default'] {
-    background-image: url('../../images/wallpapers/1200px-F43-DAY_final_night_small.png');
+    background-image: url('../../images/wallpapers/1200px-F43-DAY_final_night_small.webp');
 }
 
 .wallpaper-grid .wallpaper-option:hover {

@@ -137,6 +137,10 @@
     color: var(--text-primary);
 }
 
+.about-social-link {
+    padding-inline: 16px;
+}
+
 .about-cta-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
