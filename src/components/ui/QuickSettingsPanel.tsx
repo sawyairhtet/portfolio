@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, type KeyboardEvent } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
@@ -24,6 +24,15 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
         onClose();
     }, [openWindow, onClose]);
 
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        },
+        [onClose]
+    );
+
     return (
         <div
             className={`quick-settings-panel${isOpen ? ' visible' : ''}`}
@@ -31,7 +40,13 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
             aria-label="Quick Settings"
             aria-modal="false"
             aria-hidden={!isOpen}
+            hidden={!isOpen}
+            onKeyDown={handleKeyDown}
         >
+            <div className="qs-header">
+                <span>Quick Settings</span>
+                <small>Fedora Workstation</small>
+            </div>
             <div className="qs-tiles">
                 <button
                     className={`qs-tile${wifiOn ? ' active' : ''}`}

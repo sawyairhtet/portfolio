@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { lazy, Suspense, useState, useCallback, useEffect } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -8,20 +8,53 @@ import { Dock } from './Dock';
 import { Wallpaper } from './Wallpaper';
 import { BootScreen } from './BootScreen';
 import { Window } from '../window/Window';
-import { AboutApp } from '../apps/AboutApp';
-import { SkillsApp } from '../apps/SkillsApp';
-import { ProjectsApp } from '../apps/ProjectsApp';
-import { ContactApp } from '../apps/ContactApp';
-import { LinksApp } from '../apps/LinksApp';
-import { TerminalApp } from '../apps/TerminalApp';
-import { SettingsApp } from '../apps/SettingsApp';
-import { FocusModeApp } from '../apps/FocusModeApp';
 import { ActivitiesOverlay } from '../ui/ActivitiesOverlay';
 import { QuickSettingsPanel } from '../ui/QuickSettingsPanel';
 import { NotificationCenter } from '../ui/NotificationCenter';
 import { ToastContainer } from '../ui/ToastContainer';
 import { ContextMenu } from '../ui/ContextMenu';
 import { PROFILE } from '../../config/profile';
+import type { AppId } from '../../types';
+
+const AboutApp = lazy(() =>
+    import('../apps/AboutApp').then(module => ({ default: module.AboutApp }))
+);
+const SkillsApp = lazy(() =>
+    import('../apps/SkillsApp').then(module => ({ default: module.SkillsApp }))
+);
+const ProjectsApp = lazy(() =>
+    import('../apps/ProjectsApp').then(module => ({ default: module.ProjectsApp }))
+);
+const ContactApp = lazy(() =>
+    import('../apps/ContactApp').then(module => ({ default: module.ContactApp }))
+);
+const LinksApp = lazy(() =>
+    import('../apps/LinksApp').then(module => ({ default: module.LinksApp }))
+);
+const TerminalApp = lazy(() =>
+    import('../apps/TerminalApp').then(module => ({ default: module.TerminalApp }))
+);
+const SettingsApp = lazy(() =>
+    import('../apps/SettingsApp').then(module => ({ default: module.SettingsApp }))
+);
+const FocusModeApp = lazy(() =>
+    import('../apps/FocusModeApp').then(module => ({ default: module.FocusModeApp }))
+);
+
+const WELCOME_ACTIONS: { label: string; appId: AppId; icon: string; primary?: boolean }[] = [
+    { label: 'About', appId: 'about', icon: 'fas fa-user-circle', primary: true },
+    { label: 'Projects', appId: 'projects', icon: 'fas fa-folder-open' },
+    { label: 'Contact', appId: 'contact', icon: 'fas fa-envelope' },
+];
+
+function WindowFallback() {
+    return (
+        <div className="window-loading" role="status" aria-live="polite">
+            <i className="fas fa-spinner fa-spin" aria-hidden="true" />
+            <span>Loading</span>
+        </div>
+    );
+}
 
 export function DesktopShell() {
     const { openWindow, windows } = useWindowManager();
@@ -187,6 +220,19 @@ export function DesktopShell() {
                                 ? 'Interactive Fedora desktop — click apps in the dock to explore ↓'
                                 : 'Interactive Fedora desktop — tap apps in the dock below ↓'}
                         </button>
+                        <div className="desktop-welcome-actions" aria-label="Quick portfolio apps">
+                            {WELCOME_ACTIONS.map(action => (
+                                <button
+                                    key={action.appId}
+                                    type="button"
+                                    className={`desktop-welcome-action${action.primary ? ' primary' : ''}`}
+                                    onClick={() => openWindow(action.appId)}
+                                >
+                                    <i className={action.icon} aria-hidden="true" />
+                                    <span>{action.label}</span>
+                                </button>
+                            ))}
+                        </div>
                         <div className="desktop-welcome-shortcuts">
                             <span className="shortcut-pill">
                                 <kbd>Alt+1</kbd> Projects
@@ -215,28 +261,44 @@ export function DesktopShell() {
 
             {/* Windows */}
             <Window appId="about" title="About">
-                <AboutApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <AboutApp />
+                </Suspense>
             </Window>
             <Window appId="skills" title="Skills">
-                <SkillsApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <SkillsApp />
+                </Suspense>
             </Window>
             <Window appId="projects" title="Projects">
-                <ProjectsApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <ProjectsApp />
+                </Suspense>
             </Window>
             <Window appId="contact" title="Contact">
-                <ContactApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <ContactApp />
+                </Suspense>
             </Window>
             <Window appId="links" title="Links">
-                <LinksApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <LinksApp />
+                </Suspense>
             </Window>
             <Window appId="terminal" title="Terminal">
-                <TerminalApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <TerminalApp />
+                </Suspense>
             </Window>
             <Window appId="settings" title="Settings">
-                <SettingsApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <SettingsApp />
+                </Suspense>
             </Window>
             <Window appId="focus-mode" title="Focus Mode">
-                <FocusModeApp />
+                <Suspense fallback={<WindowFallback />}>
+                    <FocusModeApp />
+                </Suspense>
             </Window>
 
             {/* Dock — always visible on desktop, mobile: always visible */}

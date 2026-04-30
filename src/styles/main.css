@@ -115,6 +115,15 @@ body,
     transition: opacity 0.3s var(--ease-out-expo);
 }
 
+.window-loading {
+    display: grid;
+    min-height: 180px;
+    place-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
 .window-body {
     box-sizing: border-box;
     overflow-x: hidden;
@@ -142,6 +151,8 @@ body,
     .project-action,
     .about-cta-btn,
     .about-social-link,
+    .about-recruiter-path button,
+    .desktop-welcome-action,
     .social-link,
     .settings-nav-item,
     .accent-swatch,
@@ -177,6 +188,43 @@ body,
     border-radius: var(--border-radius-lg);
     background: var(--border-color);
     margin-bottom: var(--spacing-lg);
+}
+
+.about-recruiter-path {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spacing-sm);
+    margin: calc(var(--spacing-lg) * -0.45) 0 var(--spacing-lg);
+}
+
+.about-recruiter-path button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s var(--ease-spring);
+}
+
+.about-recruiter-path button:hover {
+    transform: translateY(-1px);
+    border-color: rgba(53, 132, 228, 0.25);
+    background: var(--surface-2);
+}
+
+.about-recruiter-path i {
+    color: var(--accent);
 }
 
 .summary-row {
@@ -455,6 +503,36 @@ body,
     color: var(--accent);
     font-weight: 700;
     font-size: 13px;
+}
+
+.project-impact {
+    margin: var(--spacing-md) 0;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--surface-1);
+}
+
+.project-impact span {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.project-impact p {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.project-impact.compact {
+    margin: var(--spacing-sm) 0;
+    padding: 10px 12px;
 }
 
 .project-actions {
@@ -855,7 +933,8 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 
     .featured-project-panel,
     .skill-row-card,
-    .about-grouped-row {
+    .about-grouped-row,
+    .about-recruiter-path {
         grid-template-columns: 1fr;
     }
 
@@ -925,7 +1004,8 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     .contact-primary-actions,
     .featured-project-panel,
     .skill-row-card,
-    .about-grouped-row {
+    .about-grouped-row,
+    .about-recruiter-path {
         grid-template-columns: 1fr;
     }
 

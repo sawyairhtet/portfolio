@@ -3,7 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { describe, expect, it, beforeEach } from 'vitest';
 import { ActivitiesOverlay } from '../components/ui/ActivitiesOverlay';
+import { QuickSettingsPanel } from '../components/ui/QuickSettingsPanel';
 import { Dock } from '../components/shell/Dock';
+import { Window } from '../components/window/Window';
 import { SettingsApp } from '../components/apps/SettingsApp';
 import { Wallpaper } from '../components/shell/Wallpaper';
 import { FocusModeApp } from '../components/apps/FocusModeApp';
@@ -89,6 +91,28 @@ function TerminalHarness() {
     );
 }
 
+function WindowEscapeHarness() {
+    const { openWindow, windows } = useWindowManager();
+    const didOpen = useRef(false);
+
+    useEffect(() => {
+        if (didOpen.current) return;
+        didOpen.current = true;
+        openWindow('about');
+    }, [openWindow]);
+
+    return (
+        <>
+            <Window appId="about" title="About">
+                <button type="button">Inside window</button>
+            </Window>
+            <div data-testid="about-window-state">
+                {windows.get('about')?.isOpen ? 'open' : 'closed'}
+            </div>
+        </>
+    );
+}
+
 describe('Portfolio React interactions', () => {
     beforeEach(() => {
         localStorage.clear();
@@ -158,11 +182,30 @@ describe('Portfolio React interactions', () => {
         expect(screen.getByRole('button', { name: 'Projects' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Skills' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Contact' })).toBeInTheDocument();
+        expect(screen.queryByRole('button', { name: /Terminal/i })).not.toBeInTheDocument();
 
         await user.click(screen.getByRole('button', { name: 'Apps' }));
 
         expect(screen.getByRole('dialog', { name: /more apps/i })).toHaveClass('visible');
         expect(screen.getByRole('button', { name: /Terminal/i })).toBeInTheDocument();
+    });
+
+    it('keeps closed Quick Settings out of the accessible tree', () => {
+        const { rerender } = render(
+            <Providers>
+                <QuickSettingsPanel isOpen={false} onClose={() => {}} />
+            </Providers>
+        );
+
+        expect(screen.queryByRole('button', { name: 'Wi-Fi' })).not.toBeInTheDocument();
+
+        rerender(
+            <Providers>
+                <QuickSettingsPanel isOpen onClose={() => {}} />
+            </Providers>
+        );
+
+        expect(screen.getByRole('button', { name: 'Wi-Fi' })).toBeInTheDocument();
     });
 
     it('switches Settings panels and updates wallpaper immediately', async () => {
@@ -182,6 +225,38 @@ describe('Portfolio React interactions', () => {
         await user.click(screen.getByRole('button', { name: 'GNOME Dark' }));
 
         expect(document.querySelector('.wallpaper')).toHaveClass('custom-wallpaper');
+    });
+
+    it('updates the live accent token when a color swatch changes', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <Providers>
+                <SettingsApp />
+            </Providers>
+        );
+
+        await user.click(screen.getByRole('button', { name: 'Green' }));
+
+        await waitFor(() =>
+            expect(document.documentElement.style.getPropertyValue('--accent')).toBe('#2ec27e')
+        );
+    });
+
+    it('closes a focused window with Escape', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <Providers>
+                <WindowEscapeHarness />
+            </Providers>
+        );
+
+        const dialog = await screen.findByRole('dialog', { name: 'About' });
+        dialog.focus();
+        await user.keyboard('{Escape}');
+
+        expect(screen.getByTestId('about-window-state')).toHaveTextContent('closed');
     });
 
     it('pauses and resumes Focus sessions without resetting the timer label', async () => {

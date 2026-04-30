@@ -4,7 +4,7 @@
  */
 
 // Cache version - update BUILD_VERSION on each deploy for cache-busting
-const BUILD_VERSION = '20260425-java-focus';
+const BUILD_VERSION = '20260430-a11y-polish';
 const CACHE_NAME = `syh-portfolio-v1-${BUILD_VERSION}`;
 const STATIC_ASSETS = [
     '/404.html',
@@ -21,7 +21,6 @@ self.addEventListener('install', event => {
         caches
             .open(CACHE_NAME)
             .then(cache => {
-                console.log('[SW] Caching static assets');
                 return cache.addAll(STATIC_ASSETS);
             })
             .then(() => self.skipWaiting())

@@ -49,6 +49,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         updateWindowPosition,
         updateWindowSize,
         setSnapState,
+        focusedApp,
     } = useWindowManager();
     const { device } = useDevice();
     const { preferences } = usePreferences();
@@ -63,6 +64,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     const snapState = win?.snapState ?? 'none';
     const isMaximized = Boolean(win?.isMaximized);
     const isMinimized = Boolean(win?.isMinimized);
+    const isFocused = focusedApp === appId;
     const zIndex = win?.zIndex ?? 0;
     const positionTop = win?.position.top;
     const positionLeft = win?.position.left;
@@ -119,6 +121,19 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         zIndex,
     ]);
 
+    useEffect(() => {
+        if (!isOpen || isMinimized || !isFocused) return;
+
+        const element = windowRef.current;
+        if (!element || element.contains(document.activeElement)) return;
+
+        const frame = requestAnimationFrame(() => {
+            element.focus({ preventScroll: true });
+        });
+
+        return () => cancelAnimationFrame(frame);
+    }, [isFocused, isMinimized, isOpen]);
+
     // Drag handlers (desktop only)
     const handleMouseDown = useCallback(
         (e: React.MouseEvent) => {
@@ -131,12 +146,14 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                 return;
 
             e.preventDefault();
+            e.stopPropagation();
             isDragging.current = true;
             const rect = windowRef.current?.getBoundingClientRect();
             if (rect) {
                 dragOffset.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
             }
             bringToFront(appId);
+            windowRef.current?.focus({ preventScroll: true });
             if (snapState !== 'none') {
                 setSnapState(appId, 'none');
             }
@@ -306,9 +323,29 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     }, [device, appId, toggleMaximize]);
 
     // Click anywhere on window to bring to front
-    const handleWindowClick = useCallback(() => {
-        bringToFront(appId);
-    }, [appId, bringToFront]);
+    const handleWindowMouseDown = useCallback(
+        (event: React.MouseEvent<HTMLDivElement>) => {
+            const target = event.target as HTMLElement;
+            bringToFront(appId);
+
+            if (!target.closest('button, a, input, textarea, select, [role="button"]')) {
+                windowRef.current?.focus({ preventScroll: true });
+            }
+        },
+        [appId, bringToFront]
+    );
+
+    const handleKeyDown = useCallback(
+        (event: React.KeyboardEvent<HTMLDivElement>) => {
+            if (event.key !== 'Escape' || event.defaultPrevented) {
+                return;
+            }
+
+            event.preventDefault();
+            closeWindow(appId);
+        },
+        [appId, closeWindow]
+    );
 
     // Mobile swipe gestures
     const touchStart = useRef({ x: 0, y: 0 });
@@ -338,12 +375,16 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         <>
             <div
                 ref={windowRef}
-                className={`window active${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''} ${className}`}
+                className={`window active${isFocused ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''} ${className}`}
                 id={windowId}
                 data-app={appId}
+                data-focused={isFocused ? 'true' : 'false'}
                 role="dialog"
+                aria-modal="false"
                 aria-labelledby={`${appId}-window-title`}
-                onMouseDown={handleWindowClick}
+                tabIndex={-1}
+                onMouseDown={handleWindowMouseDown}
+                onKeyDown={handleKeyDown}
             >
                 <div
                     className="window-header"

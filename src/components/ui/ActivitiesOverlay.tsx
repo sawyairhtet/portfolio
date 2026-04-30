@@ -65,6 +65,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             aria-modal="false"
             aria-label="Activities overview"
             aria-hidden={!isOpen}
+            hidden={!isOpen}
             onClick={handleOverlayClick}
         >
             <div className="activities-search">
@@ -73,6 +74,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                     type="text"
                     className="activities-search-input"
                     placeholder="Type to search apps…"
+                    aria-label="Search apps"
                     autoComplete="off"
                     spellCheck={false}
                     value={searchQuery}
@@ -134,6 +136,11 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                         <span className="activities-app-label">{app.label}</span>
                     </button>
                 ))}
+                {filteredApps.length === 0 && (
+                    <div className="activities-empty-search" role="status">
+                        No matching apps
+                    </div>
+                )}
             </div>
         </div>
     );

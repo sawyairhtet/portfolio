@@ -28,10 +28,14 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    width: calc(100% - 8px);
     padding: 8px 14px;
+    border: 0;
     cursor: pointer;
     font-size: 13px;
     font-family: var(--font-ui);
+    text-align: left;
+    background: transparent;
     color: var(--text-primary);
     transition:
         background 0.12s ease,

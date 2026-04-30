@@ -282,6 +282,14 @@
     text-align: center;
 }
 
+.activities-empty-search {
+    grid-column: 1 / -1;
+    color: var(--text-secondary);
+    font-size: 14px;
+    padding: 18px;
+    text-align: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .activities-overlay,
     .activities-window-thumb,

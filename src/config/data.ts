@@ -121,6 +121,8 @@ export const PROJECTS: Project[] = [
         role: 'Internship — VR Developer',
         summary:
             'A controller-free Meta Quest heist experience built during a year-long internship. Players grab jewels, throw objects, and interact with a physical room using only their bare hands — no controllers, no UI prompts.',
+        impact:
+            'Converted a physical-room heist concept into a playable Quest prototype with bare-hand interactions, tuned physics, and standalone VR performance constraints.',
         techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking', 'Oculus Interaction SDK'],
         platform: 'Meta Quest 2 / 3 / Pro',
         proofPoints: [
@@ -145,6 +147,8 @@ export const PROJECTS: Project[] = [
         role: 'Developer & Designer',
         summary:
             'The site you are using right now — a full Fedora 43 GNOME desktop simulation built in React and TypeScript, with draggable windows, a virtual terminal, a boot sequence, and real desktop keyboard shortcuts.',
+        impact:
+            'Turns a personal portfolio into a recruiter-friendly desktop experience while preserving fast routes to About, Skills, Projects, Resume, and Contact.',
         techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers', 'Tailwind v4'],
         platform: 'Responsive web app',
         proofPoints: [

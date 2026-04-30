@@ -81,6 +81,7 @@ export interface Project {
     title: string;
     role: string;
     summary: string;
+    impact: string;
     techStack: string[];
     platform: string;
     proofPoints: string[];

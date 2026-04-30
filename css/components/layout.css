@@ -128,6 +128,53 @@ body .wallpaper.custom-wallpaper {
     border-color: rgba(255, 255, 255, 0.22);
 }
 
+.desktop-welcome-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    pointer-events: auto;
+    opacity: 0;
+    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.52s forwards;
+}
+
+.desktop-welcome-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 36px;
+    padding: 8px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(30, 30, 30, 0.68);
+    color: rgba(255, 255, 255, 0.86);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s var(--ease-spring);
+}
+
+.desktop-welcome-action.primary {
+    border-color: rgba(53, 132, 228, 0.45);
+    background: var(--accent);
+    color: var(--text-on-accent);
+}
+
+.desktop-welcome-action:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(10, 10, 15, 0.6);
+}
+
+.desktop-welcome-action.primary:hover {
+    background: var(--accent);
+    filter: brightness(1.08);
+}
+
 [data-theme='light'] .desktop-welcome {
     color: rgba(15, 23, 42, 0.94);
     text-shadow:
@@ -144,6 +191,7 @@ body .wallpaper.custom-wallpaper {
 }
 
 [data-theme='light'] .desktop-welcome-hint,
+[data-theme='light'] .desktop-welcome-action,
 [data-theme='light'] .shortcut-pill {
     border-color: rgba(15, 23, 42, 0.12);
     background: rgba(255, 255, 255, 0.64);
@@ -151,6 +199,11 @@ body .wallpaper.custom-wallpaper {
     box-shadow:
         0 8px 30px rgba(15, 23, 42, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+[data-theme='light'] .desktop-welcome-action.primary {
+    color: var(--text-on-accent);
+    background: var(--accent);
 }
 
 [data-theme='light'] .shortcut-pill kbd {
@@ -247,5 +300,15 @@ body.show-dock .main-content {
 
     .desktop-welcome-shortcuts {
         display: none;
+    }
+
+    .desktop-welcome-actions {
+        max-width: 300px;
+    }
+
+    .desktop-welcome-action {
+        flex: 1 1 auto;
+        justify-content: center;
+        min-width: 88px;
     }
 }

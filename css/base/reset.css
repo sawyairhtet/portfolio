@@ -8,6 +8,10 @@
     box-sizing: border-box;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 /* ============================================
    CUSTOM SCROLLBARS — Sleek thin overlay
    ============================================ */

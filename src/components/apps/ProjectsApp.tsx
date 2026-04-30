@@ -25,6 +25,10 @@ export function ProjectsApp() {
                             {featured.role} / {featured.platform}
                         </p>
                         <p>{featured.summary}</p>
+                        <div className="project-impact">
+                            <span>Impact</span>
+                            <p>{featured.impact}</p>
+                        </div>
                         <div className="tech-stack">
                             {featured.techStack.map(tech => (
                                 <span key={tech} className="tech-badge">
@@ -74,6 +78,10 @@ export function ProjectsApp() {
                             {project.role} / {project.platform}
                         </p>
                         <p>{project.summary}</p>
+                        <div className="project-impact compact">
+                            <span>Impact</span>
+                            <p>{project.impact}</p>
+                        </div>
                         <div className="tech-stack">
                             {project.techStack.map(tech => (
                                 <span key={tech} className="tech-badge">

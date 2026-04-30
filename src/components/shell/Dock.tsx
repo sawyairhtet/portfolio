@@ -56,6 +56,7 @@ export function Dock() {
                         aria-label="Apps"
                         aria-expanded={launcherOpen}
                         aria-haspopup="dialog"
+                        aria-controls="mobile-app-launcher"
                         onClick={() => setLauncherOpen(open => !open)}
                     >
                         <i className="fas fa-grip" aria-hidden="true" />
@@ -63,15 +64,23 @@ export function Dock() {
                     </button>
                 </div>
                 <div
+                    id="mobile-app-launcher"
                     className={`mobile-launcher${launcherOpen ? ' visible' : ''}`}
                     role="dialog"
                     aria-label="More apps"
+                    hidden={!launcherOpen}
+                    onKeyDown={event => {
+                        if (event.key === 'Escape') {
+                            setLauncherOpen(false);
+                        }
+                    }}
                 >
                     {MOBILE_LAUNCHER_APPS.map(app => (
                         <button
                             key={app.id}
                             className="mobile-launcher-item"
                             data-app={app.id}
+                            aria-label={`${app.label}: ${app.description}`}
                             onClick={() => handleDockClick(app.id)}
                         >
                             <span

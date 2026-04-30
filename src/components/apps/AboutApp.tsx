@@ -1,9 +1,16 @@
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
+import type { AppId } from '../../types';
 
 const HERO_SOCIAL_LINKS = SOCIAL_LINKS.filter(({ label }) =>
     ['GitHub', 'LinkedIn'].includes(label)
 );
+
+const RECRUITER_PATH: { label: string; appId: AppId; icon: string }[] = [
+    { label: 'Skills', appId: 'skills', icon: 'fas fa-tools' },
+    { label: 'Projects', appId: 'projects', icon: 'fas fa-folder-open' },
+    { label: 'Contact', appId: 'contact', icon: 'fas fa-paper-plane' },
+];
 
 export function AboutApp() {
     const { openWindow } = useWindowManager();
@@ -78,6 +85,14 @@ export function AboutApp() {
                     </div>
                 ))}
             </div>
+            <nav className="about-recruiter-path" aria-label="Recruiter path">
+                {RECRUITER_PATH.map(({ label, appId, icon }) => (
+                    <button key={appId} type="button" onClick={() => openWindow(appId)}>
+                        <i className={icon} aria-hidden="true" />
+                        <span>{label}</span>
+                    </button>
+                ))}
+            </nav>
             <div className="about-content">
                 <div className="about-section">
                     <h3>

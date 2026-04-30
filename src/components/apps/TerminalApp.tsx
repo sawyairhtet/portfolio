@@ -118,8 +118,10 @@ export function TerminalApp() {
                         '  projects      - Open Projects and list featured work',
                         '  skills        - Open Skills and summarize tools',
                         '  contact       - Open Contact and show email',
+                        '  hire          - Open Contact with recruiter details',
                         '  links         - Open Links',
-                        '  resume        - Open the resume PDF',
+                        '  resume/cv     - Open the resume PDF',
+                        '  shortcuts     - Show desktop shortcuts',
                         '  open <app>    - Open an app by label or alias',
                         '  about         - Open About',
                         '  ls/cd/cat/pwd - Browse the portfolio filesystem',
@@ -267,6 +269,18 @@ export function TerminalApp() {
                     ]);
                     break;
 
+                case 'hire':
+                    openWindow('contact');
+                    addLines([
+                        { text: 'Recruiter shortcut:', className: 'terminal-heading' },
+                        `  Role target: Java Software Engineer`,
+                        `  Availability: ${PROFILE.availability}`,
+                        `  Location: ${PROFILE.location}`,
+                        `  Email: ${PROFILE.email}`,
+                        { text: 'Opened Contact.', className: 'terminal-ok' },
+                    ]);
+                    break;
+
                 case 'links':
                     openWindow('links');
                     addLines([
@@ -277,8 +291,21 @@ export function TerminalApp() {
                     break;
 
                 case 'resume':
+                case 'cv':
                     window.open(PROFILE.resumePath, '_blank', 'noopener,noreferrer');
                     addLine('Opened resume PDF.', 'terminal-ok');
+                    break;
+
+                case 'shortcuts':
+                    addLines([
+                        { text: 'Desktop shortcuts:', className: 'terminal-heading' },
+                        '  Super / Meta  - Activities overview',
+                        '  Escape        - Close overlays or focused window',
+                        '  Alt+1         - Projects',
+                        '  Alt+2         - Contact',
+                        '  Alt+3         - Resume',
+                        '  Ctrl+L        - Clear terminal',
+                    ]);
                     break;
 
                 case 'open': {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 
 interface MenuPosition {
@@ -10,6 +10,7 @@ export function ContextMenu() {
     const { openWindow } = useWindowManager();
     const [visible, setVisible] = useState(false);
     const [position, setPosition] = useState<MenuPosition>({ x: 0, y: 0 });
+    const firstItemRef = useRef<HTMLButtonElement>(null);
 
     const handleContextMenu = useCallback((e: MouseEvent) => {
         // Only show on main content / wallpaper area
@@ -33,7 +34,10 @@ export function ContextMenu() {
         }
 
         e.preventDefault();
-        setPosition({ x: e.clientX, y: e.clientY });
+        setPosition({
+            x: Math.max(8, Math.min(e.clientX, window.innerWidth - 220)),
+            y: Math.max(8, Math.min(e.clientY, window.innerHeight - 80)),
+        });
         setVisible(true);
     }, []);
 
@@ -50,17 +54,34 @@ export function ContextMenu() {
         };
     }, [handleContextMenu, handleClick]);
 
+    useEffect(() => {
+        if (!visible) return;
+
+        firstItemRef.current?.focus({ preventScroll: true });
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setVisible(false);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [visible]);
+
     return (
         <div
             className={`context-menu${visible ? ' visible' : ''}`}
             style={{ top: position.y, left: position.x, position: 'fixed' }}
             role="menu"
             aria-hidden={!visible}
+            hidden={!visible}
         >
-            <div
+            <button
+                ref={firstItemRef}
+                type="button"
                 className="context-menu-item"
                 role="menuitem"
-                tabIndex={-1}
                 onClick={() => {
                     openWindow('settings');
                     window.setTimeout(() => {
@@ -74,7 +95,7 @@ export function ContextMenu() {
                 }}
             >
                 <i className="fas fa-image" aria-hidden="true" /> Change Background
-            </div>
+            </button>
         </div>
     );
 }
