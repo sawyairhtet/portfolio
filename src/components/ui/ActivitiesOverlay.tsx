@@ -12,13 +12,55 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
     const { openWindow, windows } = useWindowManager();
     const [searchQuery, setSearchQuery] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
+    const overlayRef = useRef<HTMLDivElement>(null);
 
-    // Focus search on open
+    // Focus search on open, restore previous focus on close
     useEffect(() => {
         if (isOpen) {
             setSearchQuery('');
+            const previousFocus = document.activeElement as HTMLElement | null;
             setTimeout(() => inputRef.current?.focus(), 100);
+            return () => {
+                previousFocus?.focus();
+            };
         }
+    }, [isOpen]);
+
+    // Focus trap: keep Tab inside the overlay while open
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key !== 'Tab') return;
+            const overlay = overlayRef.current;
+            if (!overlay) return;
+
+            const focusable = Array.from(
+                overlay.querySelectorAll<HTMLElement>(
+                    'button:not([disabled]), input:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter(el => el.offsetParent !== null);
+
+            if (focusable.length === 0) return;
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isOpen]);
 
     const filteredApps = useMemo(() => {
@@ -60,9 +102,10 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
 
     return (
         <div
+            ref={overlayRef}
             className={`activities-overlay${isOpen ? ' visible' : ''}`}
             role="dialog"
-            aria-modal="false"
+            aria-modal="true"
             aria-label="Activities overview"
             aria-hidden={!isOpen}
             hidden={!isOpen}
@@ -98,6 +141,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                             return (
                                 <button
                                     key={id}
+                                    type="button"
                                     className="activities-window-thumb"
                                     onClick={() => {
                                         openWindow(id);
@@ -126,6 +170,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                 {filteredApps.map(app => (
                     <button
                         key={app.id}
+                        type="button"
                         className="activities-app-item"
                         data-app={app.id}
                         onClick={() => handleAppClick(app.id)}

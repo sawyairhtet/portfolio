@@ -64,12 +64,7 @@ export function ContactApp() {
         try {
             await navigator.clipboard.writeText(PROFILE.email);
         } catch {
-            const textArea = document.createElement('textarea');
-            textArea.value = PROFILE.email;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            textArea.remove();
+            // Clipboard API unavailable (non-HTTPS or denied) — silent fail
         }
 
         setCopyState('copied');

@@ -287,6 +287,12 @@ body.show-window-buttons .window-control.maximize {
         background var(--transition-fast),
         color var(--transition-fast),
         transform var(--transition-fast);
+    outline: none;
+}
+
+.window-control:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 @media (hover: hover) {
@@ -351,6 +357,11 @@ body.show-window-buttons .window-control.maximize {
 
 .close-btn-mobile {
     display: none;
+}
+
+.close-btn-mobile:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 /* ============================================
@@ -443,4 +454,25 @@ body.show-window-buttons .window-control.maximize {
 .window-control.maximize:hover {
     background: rgba(255, 255, 255, 0.08);
     color: var(--text-primary);
+}
+
+/* ============================================
+   REDUCED MOTION — disable window animations
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .window {
+        transition: none;
+    }
+
+    .window.active {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .window.closing {
+        animation: none;
+        opacity: 0;
+    }
 }

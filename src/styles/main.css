@@ -1,6 +1,9 @@
 /* ============================================
-   CSS Entry Point — All imports first, then rules
+   CSS Entry Point — Layer ordering declared first
    ============================================ */
+
+/* Layer ordering — declared before imports to guarantee cascade priority */
+@layer reset, tokens, base, components, utilities;
 
 /* Reset */
 @import '../../css/base/reset.css' layer(reset);
@@ -31,11 +34,13 @@
 /* Responsive / Utilities */
 @import '../../css/components/responsive.css' layer(utilities);
 
+/* Font Awesome — self-hosted, solid + brands only (tree-shaken from full CDN) */
+@import '@fortawesome/fontawesome-free/css/fontawesome.css';
+@import '@fortawesome/fontawesome-free/css/solid.css';
+@import '@fortawesome/fontawesome-free/css/brands.css';
+
 /* Tailwind CSS v4 */
 @import 'tailwindcss';
-
-/* Layer ordering */
-@layer reset, tokens, base, components, utilities;
 
 /* ============================================
    React-specific additions

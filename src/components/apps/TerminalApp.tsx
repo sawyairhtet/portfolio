@@ -205,8 +205,7 @@ export function TerminalApp() {
                     break;
 
                 case 'uptime': {
-                    const loadTime = (window as unknown as Record<string, unknown>)
-                        .__portfolioLoadTime;
+                    const loadTime = window.__portfolioLoadTime;
                     if (typeof loadTime === 'number') {
                         const seconds = Math.floor((Date.now() - loadTime) / 1000);
                         const mins = Math.floor(seconds / 60);

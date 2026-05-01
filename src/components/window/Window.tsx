@@ -397,6 +397,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                         {title}
                     </div>
                     <button
+                        type="button"
                         className="close-btn-mobile"
                         aria-label="Close"
                         onClick={() => closeWindow(appId)}
@@ -405,16 +406,19 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                     </button>
                     <div className="window-controls">
                         <button
+                            type="button"
                             className="window-control minimize"
                             aria-label="Minimize"
                             onClick={() => minimizeWindow(appId)}
                         />
                         <button
+                            type="button"
                             className="window-control maximize"
                             aria-label="Maximize"
                             onClick={() => toggleMaximize(appId)}
                         />
                         <button
+                            type="button"
                             className="window-control close"
                             aria-label="Close"
                             onClick={() => closeWindow(appId)}

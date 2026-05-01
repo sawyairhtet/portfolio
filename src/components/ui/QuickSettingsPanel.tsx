@@ -1,4 +1,4 @@
-import { useState, useCallback, type KeyboardEvent } from 'react';
+import { useState, useCallback, useEffect, useRef, type KeyboardEvent } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
@@ -18,6 +18,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
     const { preferences, updatePreferences } = usePreferences();
     const [wifiOn, setWifiOn] = useState(true);
     const [btOn, setBtOn] = useState(false);
+    const panelRef = useRef<HTMLDivElement>(null);
 
     const handleSettings = useCallback(() => {
         openWindow('settings');
@@ -33,12 +34,45 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
         [onClose]
     );
 
+    // Focus trap while panel is open
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleTabTrap = (e: globalThis.KeyboardEvent) => {
+            if (e.key !== 'Tab') return;
+            const panel = panelRef.current;
+            if (!panel) return;
+
+            const focusable = Array.from(
+                panel.querySelectorAll<HTMLElement>(
+                    'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter(el => el.offsetParent !== null);
+
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+
+        document.addEventListener('keydown', handleTabTrap);
+        return () => document.removeEventListener('keydown', handleTabTrap);
+    }, [isOpen]);
+
     return (
         <div
+            ref={panelRef}
             className={`quick-settings-panel${isOpen ? ' visible' : ''}`}
             role="dialog"
             aria-label="Quick Settings"
-            aria-modal="false"
+            aria-modal="true"
             aria-hidden={!isOpen}
             hidden={!isOpen}
             onKeyDown={handleKeyDown}
@@ -49,6 +83,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
             </div>
             <div className="qs-tiles">
                 <button
+                    type="button"
                     className={`qs-tile${wifiOn ? ' active' : ''}`}
                     aria-pressed={wifiOn}
                     aria-label="Wi-Fi"
@@ -60,6 +95,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     <div className="qs-tile-label">Wi-Fi</div>
                 </button>
                 <button
+                    type="button"
                     className={`qs-tile${btOn ? ' active' : ''}`}
                     aria-pressed={btOn}
                     aria-label="Bluetooth"
@@ -71,6 +107,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     <div className="qs-tile-label">Bluetooth</div>
                 </button>
                 <button
+                    type="button"
                     className={`qs-tile${isDark ? ' active' : ''}`}
                     aria-pressed={isDark}
                     aria-label="Dark Mode"
@@ -82,6 +119,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     <div className="qs-tile-label">Dark Mode</div>
                 </button>
                 <button
+                    type="button"
                     className={`qs-tile${isMuted ? ' active' : ''}`}
                     aria-pressed={isMuted}
                     aria-label="Mute"
@@ -96,6 +134,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     <div className="qs-tile-label">{isMuted ? 'Muted' : 'Sound'}</div>
                 </button>
                 <button
+                    type="button"
                     className={`qs-tile${isDnd ? ' active' : ''}`}
                     aria-pressed={isDnd}
                     aria-label="Do Not Disturb"
@@ -137,6 +176,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
 
             <div className="qs-footer">
                 <button
+                    type="button"
                     className="qs-footer-btn"
                     aria-label="Open Settings"
                     onClick={handleSettings}
@@ -144,11 +184,11 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     <i className="fas fa-cog" aria-hidden="true" />
                     <span>Settings</span>
                 </button>
-                <button className="qs-footer-btn" aria-label="Lock Screen" onClick={onClose}>
+                <button type="button" className="qs-footer-btn" aria-label="Lock Screen" onClick={onClose}>
                     <i className="fas fa-lock" aria-hidden="true" />
                     <span>Lock</span>
                 </button>
-                <button className="qs-footer-btn" aria-label="Power options" onClick={onClose}>
+                <button type="button" className="qs-footer-btn" aria-label="Power options" onClick={onClose}>
                     <i className="fas fa-power-off" aria-hidden="true" />
                     <span>Power</span>
                 </button>

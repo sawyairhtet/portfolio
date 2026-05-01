@@ -66,13 +66,14 @@ export function DesktopShell() {
     const [activitiesOpen, setActivitiesOpen] = useState(false);
     const [quickSettingsOpen, setQuickSettingsOpen] = useState(false);
     const [notifCenterOpen, setNotifCenterOpen] = useState(false);
+    const [showDockTip, setShowDockTip] = useState(false);
     const hasVisibleWindows = Array.from(windows.values()).some(
         win => win.isOpen && !win.isMinimized
     );
 
     // Track load time for uptime command
     useEffect(() => {
-        (window as unknown as Record<string, unknown>).__portfolioLoadTime = Date.now();
+        window.__portfolioLoadTime = Date.now();
     }, []);
 
     // Register service worker
@@ -110,6 +111,8 @@ export function DesktopShell() {
         // Auto-open About window on first visit so visitors immediately know who this is
         if (isFirstVisit) {
             setTimeout(() => openWindow('about'), 600);
+            setTimeout(() => setShowDockTip(true), 1800);
+            setTimeout(() => setShowDockTip(false), 8000);
         }
 
         // Startup sound on first interaction
@@ -198,7 +201,7 @@ export function DesktopShell() {
             />
 
             {/* Main Content */}
-            <main id="main-content" className="main-content" role="main">
+            <main id="main-content" className="main-content">
                 <h1 className="sr-only">
                     Saw Ye Htet — Java Software Engineer | Fedora 43 Desktop Portfolio
                 </h1>
@@ -303,6 +306,21 @@ export function DesktopShell() {
 
             {/* Dock — always visible on desktop, mobile: always visible */}
             <Dock />
+
+            {/* Dock onboarding tooltip for first-time visitors */}
+            {showDockTip && !hasVisibleWindows && (
+                <div className="dock-onboarding-tip" aria-live="polite">
+                    <span>Try clicking the dock icons to explore</span>
+                    <button
+                        type="button"
+                        className="dock-tip-dismiss"
+                        aria-label="Dismiss tip"
+                        onClick={() => setShowDockTip(false)}
+                    >
+                        <i className="fas fa-times" aria-hidden="true" />
+                    </button>
+                </div>
+            )}
 
             {/* Context Menu */}
             <ContextMenu />

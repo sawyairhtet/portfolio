@@ -249,3 +249,23 @@
     gap: 6px;
     font-size: 12px;
 }
+
+/* Focus-visible for clock and status-menu pills */
+.menu-clock:focus-visible,
+.status-menu:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--accent-subtle);
+    border-radius: var(--border-radius-sm);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .top-bar,
+    .pill,
+    .activities-btn,
+    .status-menu {
+        transition: none;
+    }
+}
+

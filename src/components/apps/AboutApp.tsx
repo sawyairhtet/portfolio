@@ -29,11 +29,15 @@ export function AboutApp() {
                             height={120}
                             loading="eager"
                             onError={e => {
-                                (e.target as HTMLImageElement).style.display = 'none';
-                                const avatar = (e.target as HTMLImageElement).closest(
-                                    '.about-avatar'
-                                );
-                                if (avatar) avatar.textContent = 'SY';
+                                const img = e.target as HTMLImageElement;
+                                img.style.display = 'none';
+                                const avatar = img.closest('.about-avatar');
+                                if (avatar && !avatar.querySelector('.avatar-fallback')) {
+                                    const fallback = document.createElement('span');
+                                    fallback.className = 'avatar-fallback';
+                                    fallback.textContent = 'SY';
+                                    avatar.appendChild(fallback);
+                                }
                             }}
                         />
                     </picture>

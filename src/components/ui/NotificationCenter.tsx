@@ -43,14 +43,17 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                 <span className="notification-header-title">Notifications</span>
                 <div className="notification-header-actions">
                     <button
+                        type="button"
                         className={`dnd-toggle${isDnd ? ' active' : ''}`}
                         aria-pressed={isDnd}
+                        aria-label={isDnd ? 'Do Not Disturb: on' : 'Do Not Disturb: off'}
                         onClick={() => setDnd(!isDnd)}
                     >
                         <i className="fas fa-bell-slash" aria-hidden="true" />
                         DND
                     </button>
                     <button
+                        type="button"
                         className="clear-all-btn"
                         aria-label="Clear all notifications"
                         onClick={clearAllNotifications}
@@ -100,6 +103,7 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                                             </div>
                                         </div>
                                         <button
+                                            type="button"
                                             className="notification-item-dismiss"
                                             aria-label="Dismiss notification"
                                             onClick={() => dismissNotification(item.id)}
