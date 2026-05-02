@@ -406,14 +406,12 @@ body.show-window-buttons .window-control.maximize {
 
 .window-body h2 {
     font-size: var(--font-size-2xl);
-    font-weight: 600;
     letter-spacing: -0.03em;
     margin-bottom: var(--spacing-md);
 }
 
 .window-body h3 {
     font-size: var(--font-size-xl);
-    font-weight: 600;
     letter-spacing: -0.02em;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-sm);
@@ -421,7 +419,6 @@ body.show-window-buttons .window-control.maximize {
 
 .window-body p {
     margin-bottom: var(--spacing-sm);
-    line-height: 1.7;
     color: var(--text-secondary);
 }
 

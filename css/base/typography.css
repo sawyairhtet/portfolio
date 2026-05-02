@@ -12,6 +12,7 @@ body {
     line-height: 1.6;
 }
 
+/* libadwaita title scale: title-1 ~800, title-2..4 ~700. Heading default 700. */
 h1,
 h2,
 h3,
@@ -26,17 +27,15 @@ h6 {
 
 h1 {
     font-size: var(--font-size-display);
-    font-weight: 700;
+    font-weight: 800;
 }
 
 h2 {
     font-size: var(--font-size-2xl);
-    font-weight: 700;
 }
 
 h3 {
     font-size: var(--font-size-xl);
-    font-weight: 700;
 }
 
 code,

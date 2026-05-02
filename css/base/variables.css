@@ -32,7 +32,7 @@
     /* ── Text ── */
     --text-primary: rgba(255, 255, 255, 0.87);
     --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-disabled: rgba(255, 255, 255, 0.45);
+    --text-disabled: rgba(255, 255, 255, 0.55);
     --text-on-accent: #ffffff;
 
     /* ── Borders — libadwaita uses ~15% opacity ── */
@@ -217,7 +217,7 @@
 
     --text-primary: rgba(255, 255, 255, 0.87);
     --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-disabled: rgba(255, 255, 255, 0.45);
+    --text-disabled: rgba(255, 255, 255, 0.55);
 
     --border-color: rgba(255, 255, 255, 0.15);
     --window-header-bg: #2e2e32;
