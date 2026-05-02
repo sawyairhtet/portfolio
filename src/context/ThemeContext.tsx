@@ -48,8 +48,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const rgb = hexToRgb(accentColor);
         document.documentElement.style.setProperty('--accent', accentColor);
-        document.documentElement.style.setProperty('--fedora-blue', accentColor);
-        document.documentElement.style.setProperty('--color-primary', accentColor);
         if (rgb) {
             document.documentElement.style.setProperty(
                 '--accent-glow',

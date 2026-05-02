@@ -423,7 +423,7 @@ body.show-window-buttons .window-control.maximize {
 }
 
 .window-body a {
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
     text-decoration: none;
     transition: color 0.15s ease;
 }

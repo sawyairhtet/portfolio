@@ -60,5 +60,5 @@
 }
 
 .boot-log .info {
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
 }

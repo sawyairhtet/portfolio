@@ -178,31 +178,6 @@
     --z-tooltip: 10000;
     --z-skip-link: 10001;
 
-    /* ── Legacy Aliases ── */
-    --font-system: var(--font-ui);
-    --color-primary: var(--accent);
-    --color-bg-light: var(--surface-0);
-    --color-bg-dark: var(--surface-1);
-    --color-glass-light: var(--glass-bg);
-    --color-glass-dark: var(--glass-bg-heavy);
-    --color-text-light: var(--text-primary);
-    --color-text-dark: var(--text-secondary);
-    --color-border: var(--border-color);
-    --color-card-bg: rgba(255, 255, 255, 0.04);
-    --color-header-bg: var(--window-header-bg);
-    --color-header-text: var(--text-primary);
-    --color-window-body-bg: var(--window-body-bg);
-    --color-window-body-text: var(--text-primary);
-    --color-close-bg: var(--fedora-red);
-    --color-close-text: var(--text-on-accent);
-    --color-control-bg: rgba(255, 255, 255, 0.06);
-    --color-control-text: var(--text-secondary);
-    --color-dock-bg: var(--dock-bg);
-    --color-dock-item-bg: rgba(255, 255, 255, 0.06);
-    --color-dock-item-hover: rgba(53, 132, 228, 0.16);
-    --color-dock-text: var(--text-primary);
-    --color-topbar-bg: var(--topbar-bg);
-    --color-topbar-text: var(--text-primary);
     --dock-width: 60px;
 }
 
@@ -228,19 +203,6 @@
     --glass-bg: #2e2e32;
     --glass-bg-heavy: #28282c;
     --accent-on-surface: #78aeed;
-    --color-glass-light: var(--glass-bg);
-    --color-glass-dark: var(--glass-bg-heavy);
-    --color-header-bg: var(--window-header-bg);
-    --color-header-text: var(--text-primary);
-    --color-window-body-bg: var(--window-body-bg);
-    --color-window-body-text: var(--text-primary);
-    --color-dock-bg: var(--dock-bg);
-    --color-dock-item-hover: rgba(53, 132, 228, 0.16);
-    --color-dock-text: var(--text-primary);
-    --color-topbar-bg: var(--topbar-bg);
-    --color-topbar-text: var(--text-primary);
-    --color-border: var(--border-color);
-    --color-card-bg: rgba(255, 255, 255, 0.04);
 }
 
 /* ── Light Mode — libadwaita light ── */
@@ -312,24 +274,4 @@
     --terminal-prompt: #2ec27e;
     --terminal-cursor: var(--accent);
     --terminal-selection: rgba(53, 132, 228, 0.18);
-
-    /* ── Legacy Aliases ── */
-    --color-bg-light: var(--surface-0);
-    --color-bg-dark: var(--surface-1);
-    --color-glass-light: var(--glass-bg);
-    --color-glass-dark: var(--glass-bg-heavy);
-    --color-header-bg: var(--window-header-bg);
-    --color-header-text: var(--text-primary);
-    --color-window-body-bg: var(--window-body-bg);
-    --color-window-body-text: var(--text-primary);
-    --color-dock-bg: var(--dock-bg);
-    --color-dock-item-bg: rgba(0, 0, 0, 0.04);
-    --color-dock-item-hover: rgba(53, 132, 228, 0.12);
-    --color-dock-text: var(--text-primary);
-    --color-topbar-bg: var(--topbar-bg);
-    --color-topbar-text: var(--text-primary);
-    --color-border: var(--border-color);
-    --color-card-bg: rgba(0, 0, 0, 0.03);
-    --color-control-bg: rgba(0, 0, 0, 0.06);
-    --color-control-text: var(--text-secondary);
 }

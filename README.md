@@ -65,3 +65,10 @@ npm run validate
 ## Deployment
 
 Netlify should build with `npm run build` and publish the `dist/` directory. The included `netlify.toml` also rewrites `/app/*` deep links to the SPA entry so app routes load correctly on refresh.
+
+## Design notes
+
+The shell follows the GNOME 49 / libadwaita visual language (window radius, header bars, Adwaita color ramp, Cantarell, accent #3584e4). Two intentional deviations from the HIG, kept for portfolio UX:
+
+- **Persistent dock.** Stock GNOME 49 only shows the dash inside the Activities overview; this site keeps the dash visible at all times so visitors can navigate without learning the gesture. Closer to Dash-to-Dock than vanilla GNOME.
+- **Icon-plus-label buttons in body content** (About CTAs, Contact actions, Project actions). HIG prefers icon-or-label outside header bars; the combined form is kept here because the audience is recruiters scanning quickly.

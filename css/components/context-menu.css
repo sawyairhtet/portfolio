@@ -53,7 +53,7 @@
 
 .context-menu-item:active {
     background: rgba(53, 132, 228, 0.18);
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
 }
 
 .context-menu-item i {
@@ -65,7 +65,7 @@
 }
 
 .context-menu-item:hover i {
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
 }
 
 .context-menu-separator {

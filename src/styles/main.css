@@ -273,7 +273,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     min-width: 0;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
-    background: var(--color-card-bg);
+    background: var(--surface-1);
     color: var(--text-primary);
     text-align: left;
     font-family: var(--font-ui);
@@ -283,7 +283,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 }
 
 .mobile-launcher-item:hover {
-    background: var(--color-dock-item-hover);
+    background: var(--accent-subtle);
 }
 
 .mobile-launcher-item:active {
@@ -396,17 +396,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 }
 
 @media (max-width: 767px) {
-    .window {
-        bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
-        height: auto !important;
-        border-bottom-left-radius: var(--border-radius-lg);
-        border-bottom-right-radius: var(--border-radius-lg);
-    }
-
-    .window-body {
-        padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-    }
-
+    /* Mobile .window and .window-body styles live in css/components/responsive.css */
     .mobile-launcher {
         grid-template-columns: 1fr;
     }

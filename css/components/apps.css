@@ -168,7 +168,7 @@
 }
 
 .about-section {
-    background: var(--color-card-bg);
+    background: var(--surface-1);
     padding: var(--spacing-lg);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
@@ -338,7 +338,7 @@
 }
 
 .project-card {
-    background: var(--color-card-bg);
+    background: var(--surface-1);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     border: 1px solid var(--border-color);
@@ -414,7 +414,7 @@
 
 .tech-badge {
     background: var(--accent-subtle);
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 11px;
@@ -436,7 +436,7 @@
     justify-content: center;
     gap: var(--spacing-sm);
     padding: var(--spacing-lg) var(--spacing-md);
-    background: var(--color-card-bg);
+    background: var(--surface-1);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
     text-align: center;
@@ -465,7 +465,7 @@
 
     .social-link:hover i {
         transform: scale(1.08);
-        color: var(--accent-light);
+        color: var(--accent-on-surface);
     }
 }
 
@@ -487,7 +487,7 @@
     letter-spacing: 0.02em;
     text-transform: uppercase;
     background: var(--accent-subtle);
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
     border: 1px solid var(--accent-subtle);
 }
 

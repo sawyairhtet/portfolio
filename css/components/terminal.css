@@ -81,7 +81,7 @@
 }
 
 .terminal-prompt-path {
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
     font-weight: 500;
 }
 
@@ -106,7 +106,7 @@
 }
 
 .terminal-info {
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
 }
 
 .terminal-path {
@@ -124,7 +124,7 @@
 }
 
 .terminal-welcome {
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
     font-weight: 500;
 }
 
@@ -201,7 +201,7 @@
 }
 
 .terminal-submit-btn:hover {
-    background: var(--accent-light);
+    background: var(--accent-dark);
 }
 
 .terminal-submit-btn:active {

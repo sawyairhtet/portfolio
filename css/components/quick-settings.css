@@ -99,7 +99,7 @@
 .qs-tile[aria-pressed='true'] {
     background: var(--accent-subtle);
     border-color: rgba(53, 132, 228, 0.25);
-    color: var(--accent-light);
+    color: var(--accent-on-surface);
 }
 
 [data-theme='dark'] .qs-tile[aria-pressed='true'] {
