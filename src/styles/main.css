@@ -309,8 +309,8 @@ body,
 }
 
 .skill-category:hover {
-    border-color: rgba(124, 92, 252, 0.1);
-    box-shadow: 0 0 40px rgba(124, 92, 252, 0.03);
+    border-color: rgba(53, 132, 228, 0.1);
+    box-shadow: 0 0 40px rgba(53, 132, 228, 0.03);
 }
 
 .skill-category-header {
@@ -380,7 +380,7 @@ body,
     font-size: 11px;
     font-weight: 600;
     white-space: nowrap;
-    border: 1px solid rgba(124, 92, 252, 0.08);
+    border: 1px solid rgba(53, 132, 228, 0.08);
 }
 
 /* Projects — Premium */
@@ -397,10 +397,10 @@ body,
     gap: var(--spacing-lg);
     min-width: 0;
     padding: var(--spacing-lg);
-    border: 1px solid rgba(124, 92, 252, 0.15);
+    border: 1px solid rgba(53, 132, 228, 0.15);
     border-radius: var(--border-radius-lg);
     background:
-        linear-gradient(135deg, rgba(124, 92, 252, 0.06), rgba(6, 182, 212, 0.04)), var(--surface-1);
+        linear-gradient(135deg, rgba(53, 132, 228, 0.06), rgba(6, 182, 212, 0.04)), var(--surface-1);
     position: relative;
     overflow: hidden;
     transition:
@@ -409,8 +409,8 @@ body,
 }
 
 .featured-project-panel:hover {
-    border-color: rgba(124, 92, 252, 0.25);
-    box-shadow: 0 0 48px rgba(124, 92, 252, 0.06);
+    border-color: rgba(53, 132, 228, 0.25);
+    box-shadow: 0 0 48px rgba(53, 132, 228, 0.06);
 }
 
 /* Subtle sheen on featured panel */
@@ -623,20 +623,20 @@ body,
 }
 
 .contact-action:hover {
-    border-color: rgba(124, 92, 252, 0.12);
+    border-color: rgba(53, 132, 228, 0.12);
     background: var(--surface-2);
     transform: translateY(-1px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .contact-action.primary {
-    border-color: rgba(124, 92, 252, 0.2);
-    background: rgba(124, 92, 252, 0.06);
+    border-color: rgba(53, 132, 228, 0.2);
+    background: rgba(53, 132, 228, 0.06);
 }
 
 .contact-action.primary:hover {
-    border-color: rgba(124, 92, 252, 0.3);
-    background: rgba(124, 92, 252, 0.1);
+    border-color: rgba(53, 132, 228, 0.3);
+    background: rgba(53, 132, 228, 0.1);
 }
 
 .contact-action > i {

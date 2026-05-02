@@ -10,7 +10,7 @@ export function ProjectsApp() {
                 <article className="featured-project-panel" data-project={featured.id}>
                     <div className="project-media-frame">
                         {featured.media ? (
-                            <img src={featured.media.src} alt={featured.media.alt} />
+                            <img src={featured.media.src} alt={featured.media.alt} loading="lazy" />
                         ) : (
                             <div className="project-media-fallback">
                                 <i className={featured.icon} aria-hidden="true" />
@@ -68,7 +68,7 @@ export function ProjectsApp() {
                     <article key={project.id} className="project-card" data-project={project.id}>
                         <div className="project-preview">
                             {project.media ? (
-                                <img src={project.media.src} alt={project.media.alt} />
+                                <img src={project.media.src} alt={project.media.alt} loading="lazy" />
                             ) : (
                                 <i className={project.icon} aria-hidden="true" />
                             )}

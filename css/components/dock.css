@@ -258,6 +258,23 @@
     }
 }
 
+[data-theme='light'] .dock-onboarding-tip {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .dock-onboarding-tip::after {
+    border-right-color: rgba(0, 0, 0, 0.1);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .dock-tip-dismiss {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='light'] .dock-tip-dismiss:hover {
+    background: rgba(0, 0, 0, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
     .dock-onboarding-tip {
         animation: none;

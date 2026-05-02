@@ -4,7 +4,7 @@
     "description": "Interactive Fedora 43 desktop portfolio for Java-focused software developer Saw Ye Htet",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#1e1e2e",
+    "background_color": "#1e1e1e",
     "theme_color": "#3584e4",
     "orientation": "any",
     "icons": [

@@ -98,8 +98,10 @@
         box-shadow 0.3s ease;
 }
 
-.settings-card:hover {
-    border-color: rgba(255, 255, 255, 0.08);
+@media (hover: hover) {
+    .settings-card:hover {
+        border-color: rgba(255, 255, 255, 0.08);
+    }
 }
 
 .settings-card h3 {

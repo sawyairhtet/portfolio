@@ -36,14 +36,6 @@ body[data-time='night'] .wallpaper {
         no-repeat;
 }
 
-[data-theme='light'] .wallpaper {
-    /* light mode uses same wallpaper, no filter override */
-}
-
-[data-theme='light'] body[data-time='night'] .wallpaper {
-    /* same */
-}
-
 /* Custom wallpaper override */
 body .wallpaper.custom-wallpaper {
     background: var(--custom-wallpaper-bg);
@@ -198,6 +190,10 @@ body .wallpaper.custom-wallpaper {
 
 [data-theme='light'] .desktop-welcome p {
     color: rgba(30, 41, 59, 0.76);
+}
+
+[data-theme='light'] .desktop-welcome-stack {
+    color: rgba(30, 41, 59, 0.55) !important;
 }
 
 [data-theme='light'] .desktop-welcome-hint,

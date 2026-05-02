@@ -27,8 +27,8 @@
 
     /* ── Text ── */
     --text-primary: rgba(255, 255, 255, 0.87);
-    --text-secondary: rgba(255, 255, 255, 0.6);
-    --text-disabled: rgba(255, 255, 255, 0.38);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-disabled: rgba(255, 255, 255, 0.45);
     --text-on-accent: #ffffff;
 
     /* ── Borders ── */
@@ -212,8 +212,8 @@
     --surface-4: #4d4d4d;
 
     --text-primary: rgba(255, 255, 255, 0.87);
-    --text-secondary: rgba(255, 255, 255, 0.6);
-    --text-disabled: rgba(255, 255, 255, 0.38);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-disabled: rgba(255, 255, 255, 0.45);
 
     --border-color: rgba(255, 255, 255, 0.08);
     --window-header-bg: #303030;

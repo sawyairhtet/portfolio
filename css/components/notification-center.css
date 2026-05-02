@@ -193,9 +193,11 @@
     align-items: flex-start;
 }
 
-.notification-item:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: var(--glass-border);
+@media (hover: hover) {
+    .notification-item:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: var(--glass-border);
+    }
 }
 
 .notification-item-icon {

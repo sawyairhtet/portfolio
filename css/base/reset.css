@@ -43,7 +43,7 @@
 /* Firefox Scrollbars */
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 /* ============================================
@@ -51,7 +51,7 @@
    ============================================ */
 
 ::selection {
-    background: rgba(124, 92, 252, 0.35);
+    background: rgba(53, 132, 228, 0.35);
     color: #fff;
 }
 

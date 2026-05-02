@@ -240,7 +240,7 @@
     }
 
     .close-btn-mobile:active {
-        background: rgba(124, 92, 252, 0.18);
+        background: rgba(53, 132, 228, 0.18);
         color: var(--accent);
         transform: scale(0.9);
     }
