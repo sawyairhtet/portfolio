@@ -182,10 +182,10 @@
 .snap-preview {
     position: fixed;
     top: var(--topbar-height);
-    background: rgba(53, 132, 228, 0.1);
-    border: 2px dashed rgba(53, 132, 228, 0.4);
+    background: var(--accent-subtle);
+    border: 2px dashed var(--accent);
     border-radius: var(--radius-md);
-    z-index: 99;
+    z-index: 950;
     pointer-events: none;
     opacity: 0;
     transition:
@@ -235,7 +235,7 @@
     cursor: grabbing;
 }
 
-/* Title */
+/* Title — non-interactive so drags pass through to the header */
 .window-title {
     flex: 1;
     text-align: center;
@@ -244,6 +244,7 @@
     color: var(--text-secondary);
     letter-spacing: 0.01em;
     transition: color 0.2s ease;
+    pointer-events: none;
 }
 
 .window.is-focused .window-title,
@@ -309,9 +310,8 @@ body.show-window-buttons .window-control.maximize {
 
 @media (hover: hover) {
     .window-control.close:hover {
-        background: var(--fedora-red);
-        color: var(--text-on-accent);
-        transform: scale(1.05);
+        background: var(--surface-3);
+        color: var(--text-primary);
     }
 }
 

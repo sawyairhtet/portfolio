@@ -137,25 +137,6 @@
     }
 }
 
-/* Dock icon launch bounce */
-@keyframes dockIconLaunch {
-    0% {
-        transform: scale(1);
-    }
-    20% {
-        transform: scale(0.82);
-    }
-    50% {
-        transform: scale(1.14) translateY(-3px);
-    }
-    70% {
-        transform: scale(0.97);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
 /* Workspace switch */
 @keyframes workspaceSlideLeft {
     from {

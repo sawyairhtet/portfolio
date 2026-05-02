@@ -8,6 +8,10 @@
     --accent-glow: rgba(53, 132, 228, 0.35);
     --accent-subtle: rgba(53, 132, 228, 0.12);
     --accent-surface: rgba(53, 132, 228, 0.08);
+    /* Accent variant that reads as text/icon on the current surface
+       (lighter than --accent on dark, darker on light). Use this instead
+       of --accent-light for "accent text/icon on surface" semantics. */
+    --accent-on-surface: #78aeed;
     --fedora-blue: var(--accent);
     --fedora-blue-dark: var(--accent-dark);
     --fedora-blue-light: var(--accent-light);
@@ -18,12 +22,12 @@
     --fedora-purple: #9141ac;
     --fedora-teal: #14b8a6;
 
-    /* ── Surfaces — GNOME Adwaita dark (soft dark gray, not near-black) ── */
-    --surface-0: #1e1e1e;
-    --surface-1: #303030;
-    --surface-2: #383838;
-    --surface-3: #404040;
-    --surface-4: #4d4d4d;
+    /* ── Surfaces — libadwaita dark window/view backgrounds ── */
+    --surface-0: #222226;
+    --surface-1: #2e2e32;
+    --surface-2: #36363a;
+    --surface-3: #404044;
+    --surface-4: #4d4d52;
 
     /* ── Text ── */
     --text-primary: rgba(255, 255, 255, 0.87);
@@ -31,15 +35,15 @@
     --text-disabled: rgba(255, 255, 255, 0.45);
     --text-on-accent: #ffffff;
 
-    /* ── Borders ── */
-    --border-color: rgba(255, 255, 255, 0.08);
+    /* ── Borders — libadwaita uses ~15% opacity ── */
+    --border-color: rgba(255, 255, 255, 0.15);
     --border-focus: var(--accent);
-    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-subtle: rgba(255, 255, 255, 0.08);
 
-    /* ── Flat surfaces (replaces glassmorphism) ── */
-    --glass-bg: #303030;
-    --glass-bg-heavy: #272727;
-    --glass-border: rgba(255, 255, 255, 0.08);
+    /* ── Flat elevated surfaces (historical "glass" name; values are flat) ── */
+    --glass-bg: #2e2e32;
+    --glass-bg-heavy: #28282c;
+    --glass-border: rgba(255, 255, 255, 0.15);
     --glass-blur: blur(0px);
     --glass-saturation: saturate(100%);
 
@@ -68,13 +72,13 @@
     --font-size-display: 40px;
 
     /* ── Window Chrome ── */
-    --window-header-height: 48px;
-    --window-border-radius: 12px;
+    --window-header-height: 47px;
+    --window-border-radius: 13px;
     --window-open-duration: 0.2s;
     --window-close-duration: 0.15s;
     --window-shadow: var(--shadow-window);
-    --window-header-bg: #303030;
-    --window-header-border: rgba(255, 255, 255, 0.08);
+    --window-header-bg: #2e2e32;
+    --window-header-border: rgba(255, 255, 255, 0.15);
     --window-body-bg: var(--surface-0);
     --btn-close-color: var(--fedora-red);
     --btn-min-color: var(--fedora-yellow);
@@ -82,14 +86,14 @@
     --btn-size: 14px;
     --btn-gap: 8px;
 
-    /* ── Top Bar — Opaque Adwaita panel ── */
-    --topbar-height: 36px;
-    --topbar-bg: #2d2d2d;
-    --topbar-bg-light: #2d2d2d;
+    /* ── Top Bar — GNOME shell panel (~32px) ── */
+    --topbar-height: 32px;
+    --topbar-bg: #1d1d20;
+    --topbar-bg-light: #1d1d20;
     --topbar-blur: blur(0px);
 
     /* ── Dock (Activities dash, GNOME style) ── */
-    --dock-bg: #303030;
+    --dock-bg: #2e2e32;
     --dock-blur: blur(0px);
     --dock-border-radius: 12px;
     --dock-padding: 8px 12px;
@@ -205,24 +209,25 @@
 /* ── Dark Mode (same as default — dark-first design) ── */
 [data-theme='dark'],
 .dark {
-    --surface-0: #1e1e1e;
-    --surface-1: #303030;
-    --surface-2: #383838;
-    --surface-3: #404040;
-    --surface-4: #4d4d4d;
+    --surface-0: #222226;
+    --surface-1: #2e2e32;
+    --surface-2: #36363a;
+    --surface-3: #404044;
+    --surface-4: #4d4d52;
 
     --text-primary: rgba(255, 255, 255, 0.87);
     --text-secondary: rgba(255, 255, 255, 0.7);
     --text-disabled: rgba(255, 255, 255, 0.45);
 
-    --border-color: rgba(255, 255, 255, 0.08);
-    --window-header-bg: #303030;
-    --window-header-border: rgba(255, 255, 255, 0.08);
+    --border-color: rgba(255, 255, 255, 0.15);
+    --window-header-bg: #2e2e32;
+    --window-header-border: rgba(255, 255, 255, 0.15);
     --window-body-bg: var(--surface-0);
     --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.3);
 
-    --glass-bg: #303030;
-    --glass-bg-heavy: #272727;
+    --glass-bg: #2e2e32;
+    --glass-bg-heavy: #28282c;
+    --accent-on-surface: #78aeed;
     --color-glass-light: var(--glass-bg);
     --color-glass-dark: var(--glass-bg-heavy);
     --color-header-bg: var(--window-header-bg);
@@ -238,39 +243,41 @@
     --color-card-bg: rgba(255, 255, 255, 0.04);
 }
 
-/* ── Light Mode — GNOME Adwaita light ── */
+/* ── Light Mode — libadwaita light ── */
 [data-theme='light'],
 .light {
-    /* ── Surfaces — Adwaita light ── */
-    --surface-0: #ffffff;
-    --surface-1: #f6f5f4;
-    --surface-2: #ebebeb;
-    --surface-3: #e0e0e0;
-    --surface-4: #d4d4d4;
+    /* ── Surfaces — libadwaita light (#fafafb window, white view) ── */
+    --surface-0: #fafafb;
+    --surface-1: #ffffff;
+    --surface-2: #f0f0f3;
+    --surface-3: #e4e4e7;
+    --surface-4: #d4d4d8;
 
     /* ── Text — Dark on light ── */
-    --text-primary: rgba(0, 0, 0, 0.87);
-    --text-secondary: rgba(0, 0, 0, 0.6);
-    --text-disabled: rgba(0, 0, 0, 0.38);
+    --text-primary: rgba(0, 0, 6, 0.8);
+    --text-secondary: rgba(0, 0, 6, 0.55);
+    --text-disabled: rgba(0, 0, 6, 0.38);
     --text-on-accent: #ffffff;
 
-    /* ── Accent — Same GNOME blue ── */
+    /* ── Accent — Same GNOME blue; --accent-light here is a darker variant
+       that reads on light surfaces (semantic dual; prefer --accent-on-surface) ── */
     --accent: #3584e4;
     --accent-light: #1c71d8;
     --accent-dark: #0e5fad;
     --accent-glow: rgba(53, 132, 228, 0.28);
     --accent-subtle: rgba(53, 132, 228, 0.12);
     --accent-surface: rgba(53, 132, 228, 0.07);
+    --accent-on-surface: #1c71d8;
 
-    /* ── Borders — Visible on light ── */
-    --border-color: rgba(0, 0, 0, 0.12);
+    /* ── Borders — libadwaita ~15% ── */
+    --border-color: rgba(0, 0, 6, 0.15);
     --border-focus: var(--accent);
-    --border-subtle: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 6, 0.1);
 
-    /* ── Flat surfaces ── */
-    --glass-bg: #f6f5f4;
-    --glass-bg-heavy: #ebebeb;
-    --glass-border: rgba(0, 0, 0, 0.1);
+    /* ── Flat elevated surfaces ── */
+    --glass-bg: #ffffff;
+    --glass-bg-heavy: #f0f0f3;
+    --glass-border: rgba(0, 0, 6, 0.15);
 
     /* ── Shadows — Softer for light mode ── */
     --shadow-window: 0 2px 8px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.1);
@@ -284,20 +291,20 @@
     --scrollbar-thumb: rgba(0, 0, 0, 0.2);
     --scrollbar-thumb-hover: rgba(0, 0, 0, 0.35);
 
-    /* ── Window Chrome ── */
-    --window-header-bg: #ebebeb;
-    --window-header-border: rgba(0, 0, 0, 0.1);
-    --window-body-bg: var(--surface-0);
+    /* ── Window Chrome — libadwaita light header bars are white ── */
+    --window-header-bg: #ffffff;
+    --window-header-border: rgba(0, 0, 6, 0.15);
+    --window-body-bg: var(--surface-1);
     --window-shadow: var(--shadow-window);
 
-    /* ── Top Bar — Adwaita light panel ── */
-    --topbar-bg: #ebebeb;
-    --topbar-bg-light: #ebebeb;
+    /* ── Top Bar — GNOME shell light panel ── */
+    --topbar-bg: #ffffff;
+    --topbar-bg-light: #ffffff;
 
-    /* ── Dock — Adwaita light ── */
-    --dock-bg: #f0efee;
-    --dock-border: 1px solid rgba(0, 0, 0, 0.1);
-    --dock-hover-bg: rgba(0, 0, 0, 0.06);
+    /* ── Dock — libadwaita light ── */
+    --dock-bg: #ffffff;
+    --dock-border: 1px solid rgba(0, 0, 6, 0.15);
+    --dock-hover-bg: rgba(0, 0, 6, 0.06);
 
     /* ── Terminal — Light ── */
     --terminal-bg: #ffffff;

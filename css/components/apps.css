@@ -8,27 +8,10 @@
     background: var(--surface-2);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
-    border-top: 3px solid var(--accent);
     margin-bottom: var(--spacing-lg);
     color: var(--text-primary);
     position: relative;
     overflow: hidden;
-}
-
-/* No sheen needed on flat surface */
-.about-hero::before {
-    content: none;
-}
-
-/* Noise texture on hero */
-.about-hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: var(--gradient-noise);
-    opacity: 0.04;
-    pointer-events: none;
-    mix-blend-mode: overlay;
 }
 
 .about-avatar {
@@ -140,7 +123,10 @@
 .about-cta-primary {
     background: var(--accent);
     color: var(--text-on-accent);
-    box-shadow: 0 2px 12px var(--accent-glow);
+}
+
+.about-cta-primary:hover {
+    background: var(--accent-dark);
 }
 
 .about-cta-secondary {
@@ -168,73 +154,7 @@
     gap: var(--spacing-lg);
 }
 
-/* Recruiter quick-facts table */
-.recruiter-summary {
-    display: grid;
-    gap: 1px;
-    margin-bottom: var(--spacing-lg);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-}
-
-.summary-row {
-    display: flex;
-    align-items: baseline;
-    gap: var(--spacing-md);
-    padding: 10px 16px;
-    background: var(--surface-1);
-}
-
-.summary-row:nth-child(even) {
-    background: var(--surface-2);
-}
-
-.summary-row span {
-    flex-shrink: 0;
-    width: 100px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-secondary);
-}
-
-.summary-row strong {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-/* Snapshot grouped rows */
-.about-grouped-row {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: var(--spacing-xs) var(--spacing-md);
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.about-grouped-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.about-grouped-row span {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-secondary);
-    padding-top: 2px;
-}
-
-.about-grouped-row p {
-    margin: 0;
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--text-primary);
-}
+/* Recruiter summary, summary-row, and about-grouped-row defined in src/styles/main.css */
 
 .x-logo-mark {
     display: inline-grid;
@@ -368,17 +288,15 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 2px 12px var(--accent-glow);
     transition:
         transform 0.2s var(--ease-spring),
-        box-shadow 0.3s var(--ease-out-expo),
+        background 0.2s ease,
         filter 0.2s ease;
 }
 
 .contact-submit-btn:hover {
-    filter: brightness(1.1);
+    background: var(--accent-dark);
     transform: translateY(-1px);
-    box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 .contact-submit-btn:active {
@@ -464,23 +382,6 @@
 [data-project='fedora-portfolio'] .project-preview {
     background: linear-gradient(135deg, #1a2a4a 0%, #0f2040 100%);
     color: rgba(255, 255, 255, 0.7);
-}
-
-/* Subtle sheen on project preview */
-.project-preview::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        110deg,
-        transparent 25%,
-        rgba(255, 255, 255, 0.06) 45%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.06) 55%,
-        transparent 75%
-    );
-    background-size: 200% 100%;
-    opacity: 0.38;
 }
 
 .project-preview img {

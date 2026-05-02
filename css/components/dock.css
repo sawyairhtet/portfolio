@@ -34,7 +34,7 @@
 .dock-item {
     width: var(--dock-icon-size);
     height: var(--dock-icon-size);
-    border-radius: 22.37%;
+    border-radius: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,8 +43,8 @@
     position: relative;
     color: var(--text-on-accent);
     transition:
-        transform 0.15s ease,
-        filter 0.15s ease;
+        filter 0.15s ease,
+        transform 0.1s ease;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     outline: none;
 }
@@ -56,7 +56,6 @@
 
 @media (hover: hover) {
     .dock-item:hover {
-        transform: scale(1.08) translateY(-3px);
         filter: brightness(1.08);
     }
 }
@@ -64,11 +63,6 @@
 .dock-item:active {
     transform: scale(0.94);
     filter: brightness(0.95);
-}
-
-/* Launch animation */
-.dock-item.launching {
-    animation: dockIconLaunch 0.36s ease forwards;
 }
 
 /* Adwaita-style dock icon backgrounds */
@@ -108,16 +102,16 @@
     background: linear-gradient(135deg, var(--icon-focus-start) 0%, var(--icon-focus-end) 100%);
 }
 
-/* Active dot indicator */
+/* Active bar indicator (GNOME dash style) */
 .dock-item.active::after {
     content: '';
     position: absolute;
-    bottom: -7px;
+    bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+    width: 18px;
+    height: 3px;
+    border-radius: 2px;
     background: var(--dock-active-dot);
 }
 
@@ -179,10 +173,6 @@
 @media (prefers-reduced-motion: reduce) {
     .dock-item {
         transition: none;
-    }
-
-    .dock-item.launching {
-        animation: none;
     }
 
     .dock-tooltip {
