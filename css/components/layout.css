@@ -143,6 +143,7 @@ body .wallpaper.custom-wallpaper {
     font-family: var(--font-ui);
     font-size: 14px;
     font-weight: 700;
+    text-decoration: none;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);

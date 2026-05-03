@@ -100,18 +100,18 @@ export function ContactApp() {
             <section className="adw-section">
                 <h3 className="adw-section-title">Quick Contact</h3>
                 <div className="adw-boxed-list">
-                    <a
-                        className="adw-row adw-row-link"
-                        href={`mailto:${PROFILE.email}`}
-                        aria-label="Email"
-                    >
+                    <div className="adw-row">
                         <div className="adw-row-icon adw-icon-blue">
                             <i className="fas fa-envelope" aria-hidden="true" />
                         </div>
-                        <div className="adw-row-text">
+                        <a
+                            className="adw-row-text adw-row-main-link"
+                            href={`mailto:${PROFILE.email}`}
+                            aria-label={`Email ${PROFILE.email}`}
+                        >
                             <span className="adw-row-title">Email</span>
                             <span className="adw-row-subtitle">{PROFILE.email}</span>
-                        </div>
+                        </a>
                         <div className="adw-row-actions">
                             <button
                                 type="button"
@@ -126,19 +126,24 @@ export function ContactApp() {
                             >
                                 <i
                                     className={
-                                        copyState === 'copied'
-                                            ? 'fas fa-check'
-                                            : 'fas fa-copy'
+                                        copyState === 'copied' ? 'fas fa-check' : 'fas fa-copy'
                                     }
                                     aria-hidden="true"
                                 />
                             </button>
-                            <i
-                                className="fas fa-arrow-up-right-from-square adw-row-chevron"
-                                aria-hidden="true"
-                            />
+                            <a
+                                className="adw-row-icon-btn"
+                                href={`mailto:${PROFILE.email}`}
+                                aria-label="Open mail client"
+                                title="Open mail"
+                            >
+                                <i
+                                    className="fas fa-arrow-up-right-from-square"
+                                    aria-hidden="true"
+                                />
+                            </a>
                         </div>
-                    </a>
+                    </div>
                     <a
                         className="adw-row adw-row-link"
                         href={PROFILE.resumePath}
@@ -240,17 +245,11 @@ export function ContactApp() {
                             placeholder="Your name"
                             autoComplete="name"
                             aria-invalid={Boolean(errors.name)}
-                            aria-describedby={
-                                errors.name ? 'contact-name-error' : undefined
-                            }
+                            aria-describedby={errors.name ? 'contact-name-error' : undefined}
                             {...register('name')}
                         />
                         {errors.name && (
-                            <span
-                                className="adw-form-error"
-                                id="contact-name-error"
-                                role="alert"
-                            >
+                            <span className="adw-form-error" id="contact-name-error" role="alert">
                                 {errors.name.message}
                             </span>
                         )}
@@ -265,17 +264,11 @@ export function ContactApp() {
                             placeholder="you@example.com"
                             autoComplete="email"
                             aria-invalid={Boolean(errors.email)}
-                            aria-describedby={
-                                errors.email ? 'contact-email-error' : undefined
-                            }
+                            aria-describedby={errors.email ? 'contact-email-error' : undefined}
                             {...register('email')}
                         />
                         {errors.email && (
-                            <span
-                                className="adw-form-error"
-                                id="contact-email-error"
-                                role="alert"
-                            >
+                            <span className="adw-form-error" id="contact-email-error" role="alert">
                                 {errors.email.message}
                             </span>
                         )}
@@ -301,9 +294,7 @@ export function ContactApp() {
                             rows={5}
                             maxLength={MESSAGE_MAX}
                             aria-invalid={Boolean(errors.message)}
-                            aria-describedby={
-                                errors.message ? 'contact-message-error' : undefined
-                            }
+                            aria-describedby={errors.message ? 'contact-message-error' : undefined}
                             {...register('message')}
                         />
                         {errors.message && (
@@ -340,10 +331,7 @@ export function ContactApp() {
                         >
                             {isSubmitting ? (
                                 <>
-                                    <i
-                                        className="fas fa-spinner fa-spin"
-                                        aria-hidden="true"
-                                    />
+                                    <i className="fas fa-spinner fa-spin" aria-hidden="true" />
                                     Sending…
                                 </>
                             ) : (

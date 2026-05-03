@@ -41,9 +41,14 @@ const FocusModeApp = lazy(() =>
     import('../apps/FocusModeApp').then(module => ({ default: module.FocusModeApp }))
 );
 
-const WELCOME_ACTIONS: { label: string; appId: AppId; icon: string; primary?: boolean }[] = [
+type WelcomeAction =
+    | { label: string; appId: AppId; icon: string; primary?: boolean }
+    | { label: string; href: string; icon: string; download?: boolean };
+
+const WELCOME_ACTIONS: WelcomeAction[] = [
     { label: 'About', appId: 'about', icon: 'fas fa-user-circle', primary: true },
     { label: 'Projects', appId: 'projects', icon: 'fas fa-folder-open' },
+    { label: 'Resume', href: PROFILE.resumePath, icon: 'fas fa-file-arrow-down', download: true },
     { label: 'Contact', appId: 'contact', icon: 'fas fa-envelope' },
 ];
 
@@ -224,17 +229,29 @@ export function DesktopShell() {
                                 : 'Interactive Fedora desktop — tap apps in the dock below ↓'}
                         </button>
                         <div className="desktop-welcome-actions" aria-label="Quick portfolio apps">
-                            {WELCOME_ACTIONS.map(action => (
-                                <button
-                                    key={action.appId}
-                                    type="button"
-                                    className={`desktop-welcome-action${action.primary ? ' primary' : ''}`}
-                                    onClick={() => openWindow(action.appId)}
-                                >
-                                    <i className={action.icon} aria-hidden="true" />
-                                    <span>{action.label}</span>
-                                </button>
-                            ))}
+                            {WELCOME_ACTIONS.map(action =>
+                                'appId' in action ? (
+                                    <button
+                                        key={action.appId}
+                                        type="button"
+                                        className={`desktop-welcome-action${action.primary ? ' primary' : ''}`}
+                                        onClick={() => openWindow(action.appId)}
+                                    >
+                                        <i className={action.icon} aria-hidden="true" />
+                                        <span>{action.label}</span>
+                                    </button>
+                                ) : (
+                                    <a
+                                        key={action.href}
+                                        className="desktop-welcome-action"
+                                        href={action.href}
+                                        download={action.download}
+                                    >
+                                        <i className={action.icon} aria-hidden="true" />
+                                        <span>{action.label}</span>
+                                    </a>
+                                )
+                            )}
                         </div>
                         <div className="desktop-welcome-shortcuts">
                             <span className="shortcut-pill">
