@@ -116,32 +116,6 @@ export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app 
 
 export const PROJECTS: Project[] = [
     {
-        id: 'jewelry-vr',
-        title: 'Jewelry Shop Robbery VR',
-        role: 'Internship — VR Developer',
-        summary:
-            'A controller-free Meta Quest heist experience built during a year-long internship. Players grab jewels, throw objects, and interact with a physical room using only their bare hands — no controllers, no UI prompts.',
-        impact:
-            'Converted a physical-room heist concept into a playable Quest prototype with bare-hand interactions, tuned physics, and standalone VR performance constraints.',
-        techStack: ['Unity', 'C#', 'Meta Quest', 'Hand Tracking', 'Oculus Interaction SDK'],
-        platform: 'Meta Quest 2 / 3 / Pro',
-        proofPoints: [
-            'Built controller-free grab, throw, and physics interactions using Meta Quest bare-hand tracking — no controller input at all.',
-            'Designed all prop interactions for standalone Quest constraints: no GPU headroom to waste, no positional audio budget to exceed.',
-            'Tuned hand-tracking sensitivity to feel natural across different hand sizes and lighting conditions.',
-        ],
-        links: [
-            {
-                label: 'View on GitHub',
-                href: 'https://github.com/sawyairhtet/Jewelry-Shop-Robbery-game-with-Meta-Quest-hand-tracking',
-                icon: 'fab fa-github',
-                primary: true,
-            },
-        ],
-        featured: false,
-        icon: 'fas fa-vr-cardboard',
-    },
-    {
         id: 'fedora-portfolio',
         title: 'This Portfolio (Fedora Desktop)',
         role: 'Developer & Designer',
@@ -218,30 +192,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
             },
         ],
     },
-    {
-        title: 'VR (Internship)',
-        icon: 'fas fa-vr-cardboard',
-        skills: [
-            {
-                name: 'Unity + C#',
-                context:
-                    'VR gameplay systems, 3D object interaction, physics-based mechanics, and Quest-ready scene management — built during internship.',
-                usedIn: ['Jewelry VR'],
-            },
-            {
-                name: 'Meta Quest Hand Tracking',
-                context:
-                    'Controller-free bare-hand grabbing and gestural input using the Oculus Interaction SDK — calibrated across hand sizes and lighting.',
-                usedIn: ['Jewelry VR'],
-            },
-            {
-                name: 'Standalone VR Performance',
-                context:
-                    'Budget-conscious rendering, mobile GPU constraints, and standalone deployment decisions for Quest hardware.',
-                usedIn: ['Jewelry VR'],
-            },
-        ],
-    },
 ];
 
 // ============================================
@@ -282,21 +232,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
         type: 'dir',
         children: ['projects', 'documents', 'resume.txt', '.bashrc'],
     },
-    '/home/sawyehtet/projects': { type: 'dir', children: ['jewelry-vr', 'portfolio', 'README.md'] },
-    '/home/sawyehtet/projects/jewelry-vr': {
-        type: 'dir',
-        children: ['main.cs', 'HandTracking.cs'],
-    },
-    '/home/sawyehtet/projects/jewelry-vr/main.cs': {
-        type: 'file',
-        content:
-            '// Unity VR Game - Main Entry Point\nusing UnityEngine;\n\npublic class JewelryHeist : MonoBehaviour {\n    void Start() {\n        Debug.Log("Welcome to Jewelry Shop Robbery VR!");\n    }\n}',
-    },
-    '/home/sawyehtet/projects/jewelry-vr/HandTracking.cs': {
-        type: 'file',
-        content:
-            '// Meta Quest Hand Tracking Integration\nusing Oculus.Interaction;\n\npublic class HandGrabber : MonoBehaviour {\n    // Grab gems with your bare hands!\n}',
-    },
+    '/home/sawyehtet/projects': { type: 'dir', children: ['portfolio', 'README.md'] },
     '/home/sawyehtet/projects/portfolio': {
         type: 'dir',
         children: ['src', 'index.html', 'package.json'],
@@ -332,7 +268,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
-            '# My Projects\n\nWelcome to my project folder!\n\n- **jewelry-vr**: Meta Quest heist prototype — controller-free bare-hand tracking, built at Singapore Polytechnic\n- **portfolio**: This Fedora 43 desktop simulation — React 19, TypeScript, window management, virtual terminal\n\nFeel free to explore with `cd` and `cat`.',
+            '# My Projects\n\nWelcome to my project folder!\n\n- **portfolio**: This Fedora 43 desktop simulation — React 19, TypeScript, window management, virtual terminal\n\nFeel free to explore with `cd` and `cat`.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md'] },
     '/home/sawyehtet/documents/notes.txt': {
@@ -388,7 +324,7 @@ export const terminalFortunes: string[] = [
 export const terminalJokes: string[] = [
     'Why do programmers prefer dark mode?\nBecause light attracts bugs.',
     "A SQL query walks into a bar, walks up to two tables and asks...\n'Can I join you?'",
-    "Why do Java developers wear glasses?\nBecause they don't C#.",
+    "Why do Java developers wear glasses?\nBecause they can't see without them — just like their code can't run without a JVM.",
     "!false - It's funny because it's true.",
     "A programmer's wife tells him: 'Go to the store and buy a loaf of bread. If they have eggs, buy a dozen.'\nHe comes home with 12 loaves of bread.",
     "There are only 10 types of people in the world:\nThose who understand binary and those who don't.",
@@ -484,15 +420,6 @@ export const DEFAULT_NOTIFICATIONS: Notification[] = [
         iconBg: 'linear-gradient(135deg, var(--fedora-blue-light), var(--fedora-blue))',
         time: 'Just now',
         group: 'System',
-    },
-    {
-        id: 'vr-project',
-        title: 'Internship Project: Jewelry Shop Robbery VR',
-        body: 'Meta Quest bare-hand tracking demo built during a year-long internship. Listed under Projects.',
-        icon: 'fas fa-vr-cardboard',
-        iconBg: 'linear-gradient(135deg, #0d6e1d, #1a3a5c)',
-        time: '1 min ago',
-        group: 'Portfolio',
     },
 ];
 

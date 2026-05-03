@@ -106,12 +106,11 @@ export function AboutApp() {
                         I recently graduated from Singapore Polytechnic with a Diploma in
                         Information Technology and I&apos;m targeting Java Software Engineer roles.
                         I care about clean code, solid OOP design, and building systems that
-                        actually work. During a year-long internship, I built a Meta Quest VR
-                        experience — controller-free hand tracking, physics-based interactions, no
-                        UI prompts — which taught me to ship under real constraints. That same habit
-                        of finishing things properly is what I&apos;m bringing to Java, Spring Boot,
-                        and SQL. I&apos;m currently building a Spring Boot API to strengthen my
-                        backend portfolio, and I learn best by turning study into shipped work.
+                        actually work. I&apos;m currently focused on Java, Spring Boot, and SQL —
+                        building backend projects to strengthen my portfolio and deepen my
+                        understanding of real application architecture. I learn best by turning
+                        study into shipped work, which is why I built this entire Fedora desktop
+                        portfolio from scratch in React and TypeScript.
                     </p>
                 </div>
                 <div className="about-section about-grouped">
@@ -124,10 +123,6 @@ export function AboutApp() {
                             'Targeting Java Software Engineer roles while building practical Spring Boot, SQL, OOP, and clean application design experience.',
                         ],
                         [
-                            'Internship VR',
-                            'Built a Meta Quest heist prototype during a year-long internship — controller-free bare-hand tracking, physics-based object interactions, standalone Quest performance.',
-                        ],
-                        [
                             'Education',
                             'Diploma in Information Technology, Singapore Polytechnic. Graduated 2026.',
                         ],
@@ -137,7 +132,7 @@ export function AboutApp() {
                         ],
                         [
                             'Interests',
-                            'Backend systems, Java ecosystem, Linux customisation, VR & spatial computing, open source, and developer tooling.',
+                            'Backend systems, Java ecosystem, Spring Boot, Linux customisation, open source, and developer tooling.',
                         ],
                     ].map(([label, value]) => (
                         <div key={label} className="about-grouped-row">

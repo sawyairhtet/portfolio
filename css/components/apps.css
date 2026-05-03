@@ -199,31 +199,259 @@
     margin-top: var(--spacing-sm);
 }
 
-#contact-window .window-body h2 {
+/* ============================================
+   CONTACT — Redesigned hero + chips + form
+   ============================================ */
+
+.contact-app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.contact-hero {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
+    background: var(--surface-2);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, var(--accent-subtle) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.contact-hero-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto var(--spacing-md);
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: var(--accent-subtle);
+    color: var(--accent-on-surface);
     font-size: 22px;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-hero h2 {
+    font-size: var(--font-size-2xl);
     font-weight: 700;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+    z-index: 1;
 }
 
-.contact-form-intro {
-    display: none;
+.contact-hero-sub {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 1;
 }
 
+.contact-availability-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(51, 209, 122, 0.1);
+    border: 1px solid rgba(51, 209, 122, 0.25);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fedora-green);
+    position: relative;
+    z-index: 1;
+}
+
+.contact-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--fedora-green);
+    animation: contactPulse 2s ease-in-out infinite;
+}
+
+@keyframes contactPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* Quick action chips */
+.contact-quick-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: var(--spacing-sm);
+}
+
+.contact-chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--surface-1);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-ui);
+    cursor: pointer;
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.2s var(--ease-spring),
+        box-shadow 0.25s ease;
+}
+
+.contact-chip:hover {
+    border-color: var(--accent-subtle);
+    background: var(--surface-2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.contact-chip.primary {
+    border-color: var(--accent-subtle);
+    background: var(--accent-surface);
+}
+
+.contact-chip.primary:hover {
+    border-color: var(--accent);
+    background: var(--accent-subtle);
+}
+
+.contact-chip > i {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    background: var(--surface-3);
+    color: var(--accent);
+    font-size: 15px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-chip:hover > i {
+    background: var(--accent-subtle);
+    color: var(--accent-on-surface);
+}
+
+.contact-chip-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.contact-chip-text strong {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.contact-chip-text small {
+    font-size: 11px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Social buttons strip */
+.contact-socials {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.contact-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.15s var(--ease-spring);
+}
+
+.contact-social-btn i {
+    color: var(--accent);
+    font-size: 14px;
+}
+
+.contact-social-btn:hover {
+    border-color: var(--accent-subtle);
+    background: var(--accent-surface);
+    transform: translateY(-1px);
+}
+
+/* Contact form — redesigned */
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-xl);
-    border-top: 1px solid var(--border-color);
+    gap: 0;
+    margin-top: 0;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    overflow: hidden;
 }
 
 .contact-form::before {
-    content: 'Send a message';
-    display: block;
-    font-size: var(--font-size-lg);
+    display: none;
+}
+
+.contact-form-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 14px var(--spacing-lg);
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border-color);
     font-weight: 700;
-    margin-bottom: 4px;
+    font-size: var(--font-size-base);
+}
+
+.contact-form-header i {
+    color: var(--accent);
+}
+
+.contact-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+}
+
+.contact-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.contact-form-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
 }
 
 .form-group {
@@ -373,11 +601,6 @@
 }
 
 /* Project-specific preview backgrounds */
-[data-project='jewelry-vr'] .project-preview {
-    background: linear-gradient(135deg, #0a1f12 0%, #0d1e32 100%);
-    color: rgba(255, 255, 255, 0.7);
-}
-
 [data-project='fedora-portfolio'] .project-preview {
     background: linear-gradient(135deg, #1a2a4a 0%, #0f2040 100%);
     color: rgba(255, 255, 255, 0.7);
@@ -698,88 +921,184 @@
 }
 
 /* ============================================
-   PROJECTS
+   PROJECTS — Redesigned v2
    ============================================ */
 
-.projects-app {
+.projects-app-v2 {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
     min-width: 0;
 }
 
-.featured-project-panel {
-    display: grid;
-    grid-template-columns: minmax(220px, 0.85fr) 1.15fr;
-    gap: var(--spacing-lg);
-    min-width: 0;
-    padding: var(--spacing-lg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    background: var(--surface-1);
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s ease;
+.projects-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
 }
 
-.featured-project-panel:hover {
+.projects-header-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: var(--accent-subtle);
+    color: var(--accent-on-surface);
+    font-size: 20px;
+}
+
+.projects-header h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+.projects-header-sub {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Expandable project card */
+.project-card-v2 {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    overflow: hidden;
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.project-card-v2:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-md);
+}
+
+.project-card-v2.featured {
     border-color: var(--accent-subtle);
 }
 
-.project-media-frame {
-    min-height: 260px;
-    border-radius: var(--border-radius-md);
-    overflow: hidden;
-    background: linear-gradient(
-        135deg,
-        var(--accent-dark),
-        var(--fedora-teal) 55%,
-        var(--fedora-green)
-    );
+.project-card-v2.featured:hover {
+    border-color: var(--accent);
 }
 
-.project-media-frame img,
-.project-preview img {
+.project-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+}
+
+.project-card-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    color: var(--text-on-accent);
+}
+
+[data-project='fedora-portfolio'] .project-card-icon {
+    background: linear-gradient(135deg, var(--accent-dark), var(--fedora-teal) 55%, var(--fedora-green));
+}
+
+.project-card-icon img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.project-media-fallback {
-    height: 100%;
-    min-height: 260px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    color: var(--text-on-accent);
-    text-align: center;
-}
-
-.project-media-fallback i {
-    font-size: 54px;
-}
-
-.project-detail h2 {
-    margin: 10px 0 4px;
-}
-
-.project-detail,
-.project-card {
+.project-card-title {
+    flex: 1;
     min-width: 0;
 }
 
-.project-card {
-    cursor: default;
+.project-card-title-row {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
 }
 
-.featured-project-panel .project-badge {
-    position: static;
-    display: inline-flex;
-    width: fit-content;
+.project-card-title h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.project-role-sep {
+    color: var(--text-disabled);
+    margin: 0 2px;
+}
+
+.project-expand-btn {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s var(--ease-spring);
+}
+
+.project-expand-btn:hover {
+    background: var(--surface-3);
+    color: var(--text-primary);
+}
+
+.project-card-v2 .tech-stack {
+    padding: 0 var(--spacing-lg) var(--spacing-md);
+}
+
+/* Expandable body — hidden by default */
+.project-card-body {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 var(--spacing-lg);
+    transition:
+        max-height 0.35s var(--ease-out-expo),
+        opacity 0.25s ease,
+        padding 0.3s ease;
+}
+
+.project-card-v2.expanded .project-card-body {
+    max-height: 800px;
+    opacity: 1;
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+}
+
+.project-card-v2.expanded .project-expand-btn {
+    transform: rotate(0deg);
+}
+
+.project-summary {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 var(--spacing-md);
 }
 
 .project-role {
@@ -887,93 +1206,7 @@
     margin-top: auto;
 }
 
-/* ============================================
-   CONTACT — Primary actions, form layout
-   ============================================ */
-
-.contact-primary-actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-    gap: var(--spacing-sm);
-}
-
-.contact-action {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px;
-    min-width: 0;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    background: var(--surface-1);
-    color: var(--text-primary);
-    text-align: left;
-    text-decoration: none;
-    font-family: var(--font-ui);
-    cursor: pointer;
-    transition:
-        border-color 0.3s ease,
-        background 0.3s ease,
-        transform 0.2s var(--ease-spring);
-}
-
-.contact-action:hover {
-    border-color: var(--accent-subtle);
-    background: var(--surface-2);
-    transform: translateY(-1px);
-}
-
-.contact-action.primary {
-    border-color: var(--accent-subtle);
-    background: var(--accent-surface);
-}
-
-.contact-action.primary:hover {
-    border-color: var(--accent);
-    background: var(--accent-subtle);
-}
-
-.contact-action > i {
-    width: 38px;
-    height: 38px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    border-radius: var(--border-radius-md);
-    background: var(--surface-3);
-    color: var(--accent);
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-.contact-action:hover > i {
-    background: var(--accent-subtle);
-    color: var(--accent-on-surface);
-}
-
-.contact-action span {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.contact-action small {
-    color: var(--text-secondary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.contact-action.availability .status-available {
-    color: var(--fedora-green);
-}
-
-.contact-form {
-    margin-top: var(--spacing-lg);
-}
-
+/* Contact form overrides for v2 (bottom section) */
 .form-group input,
 .form-group textarea {
     width: 100%;
@@ -1052,16 +1285,10 @@
    ============================================ */
 
 @container app-window (max-width: 560px) {
-    .featured-project-panel,
     .skill-row-card,
     .about-grouped-row,
     .about-recruiter-path {
         grid-template-columns: 1fr;
-    }
-
-    .project-media-frame,
-    .project-media-fallback {
-        min-height: 180px;
     }
 
     .used-in-chips {
@@ -1070,6 +1297,18 @@
 
     .contact-submit-btn {
         width: 100%;
+    }
+
+    .contact-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-quick-row {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card-title h3 {
+        font-size: var(--font-size-base);
     }
 }
 
@@ -1091,24 +1330,34 @@
     .project-action {
         justify-content: center;
     }
+
+    .contact-hero {
+        padding: var(--spacing-lg);
+    }
+
+    .contact-socials {
+        flex-direction: column;
+    }
+
+    .contact-social-btn {
+        justify-content: center;
+    }
 }
 
 /* Mobile collapse — same grid rules at viewport level for non-container browsers */
 @media (max-width: 767px) {
-    .contact-primary-actions,
-    .featured-project-panel,
     .skill-row-card,
     .about-grouped-row,
     .about-recruiter-path {
         grid-template-columns: 1fr;
     }
 
-    .project-media-frame,
-    .project-media-fallback {
-        min-height: 180px;
-    }
-
     .used-in-chips {
         justify-content: flex-start;
+    }
+
+    .contact-form-row,
+    .contact-quick-row {
+        grid-template-columns: 1fr;
     }
 }

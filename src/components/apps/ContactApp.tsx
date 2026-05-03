@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotifications } from '../../context/NotificationContext';
-import { PROFILE } from '../../config/profile';
+import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import api from '../../lib/axios';
+
+const MESSAGE_MAX = 2000;
 
 const contactSchema = z.object({
     name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
@@ -27,10 +29,13 @@ export function ContactApp() {
         register,
         handleSubmit,
         reset,
+        watch,
         formState: { errors, isSubmitting },
     } = useForm<ContactFormData>({
         resolver: zodResolver(contactSchema),
     });
+
+    const messageValue = watch('message') ?? '';
 
     const onSubmit = async (data: ContactFormData) => {
         setStatusMsg('');
@@ -73,113 +78,284 @@ export function ContactApp() {
     };
 
     return (
-        <>
-            <h2>Get in Touch</h2>
-            <div className="contact-primary-actions">
-                <a className="contact-action primary" href={`mailto:${PROFILE.email}`}>
-                    <i className="fas fa-envelope" aria-hidden="true" />
-                    <span>
-                        <strong>Email</strong>
-                        <small>{PROFILE.email}</small>
-                    </span>
-                </a>
-                <button className="contact-action" onClick={copyEmail} type="button">
-                    <i
-                        className={copyState === 'copied' ? 'fas fa-check' : 'fas fa-copy'}
-                        aria-hidden="true"
-                    />
-                    <span>
-                        <strong>{copyState === 'copied' ? 'Copied' : 'Copy Email'}</strong>
-                        <small>For quick recruiter follow-up</small>
-                    </span>
-                </button>
-                <a className="contact-action" href={PROFILE.resumePath} download>
-                    <i className="fas fa-file-arrow-down" aria-hidden="true" />
-                    <span>
-                        <strong>Resume</strong>
-                        <small>Download PDF</small>
-                    </span>
-                </a>
-                <div className="contact-action availability" aria-label="Availability">
-                    <i className="fas fa-circle status-available" aria-hidden="true" />
-                    <span>
-                        <strong>Available</strong>
-                        <small>{PROFILE.location}</small>
-                    </span>
-                </div>
-            </div>
-
-            <form className="contact-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <p className="contact-form-intro">
-                    Send me a message and I&apos;ll get back to you.
-                </p>
-                <div className="form-group">
-                    <label htmlFor="contact-name">Name</label>
-                    <input
-                        type="text"
-                        id="contact-name"
-                        placeholder="Your name"
-                        autoComplete="name"
-                        aria-invalid={Boolean(errors.name)}
-                        aria-describedby={errors.name ? 'contact-name-error' : undefined}
-                        {...register('name')}
-                    />
-                    {errors.name && (
-                        <span className="form-error" id="contact-name-error" role="alert">
-                            {errors.name.message}
-                        </span>
-                    )}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="contact-email">Email</label>
-                    <input
-                        type="email"
-                        id="contact-email"
-                        placeholder="Your email"
-                        autoComplete="email"
-                        aria-invalid={Boolean(errors.email)}
-                        aria-describedby={errors.email ? 'contact-email-error' : undefined}
-                        {...register('email')}
-                    />
-                    {errors.email && (
-                        <span className="form-error" id="contact-email-error" role="alert">
-                            {errors.email.message}
-                        </span>
-                    )}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="contact-message">Message</label>
-                    <textarea
-                        id="contact-message"
-                        placeholder="Your message"
-                        rows={5}
-                        aria-invalid={Boolean(errors.message)}
-                        aria-describedby={errors.message ? 'contact-message-error' : undefined}
-                        {...register('message')}
-                    />
-                    {errors.message && (
-                        <span className="form-error" id="contact-message-error" role="alert">
-                            {errors.message.message}
-                        </span>
-                    )}
-                </div>
-                <button type="submit" className="contact-submit-btn" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                        <>
-                            <i className="fas fa-spinner fa-spin" aria-hidden="true" /> Sending...
-                        </>
-                    ) : (
-                        <>
-                            <i className="fas fa-paper-plane" aria-hidden="true" /> Send Message
-                        </>
-                    )}
-                </button>
-                {statusMsg && (
-                    <div className={`form-status ${statusType}`} aria-live="polite">
-                        {statusMsg}
+        <div className="adw-page contact-page">
+            {/* Status header — Adwaita AdwStatusPage style, compact */}
+            <header className="adw-status-header">
+                <div className="adw-status-row">
+                    <div className="adw-status-icon">
+                        <i className="fas fa-envelope" aria-hidden="true" />
                     </div>
-                )}
-            </form>
-        </>
+                    <div className="adw-status-text">
+                        <h2>Get in touch</h2>
+                        <p>{PROFILE.availability}. Usually replies within 24 hours.</p>
+                    </div>
+                    <div className="adw-availability-badge" aria-label="Availability">
+                        <span className="adw-availability-dot" />
+                        Available
+                    </div>
+                </div>
+            </header>
+
+            {/* Quick contact — boxed list of action rows */}
+            <section className="adw-section">
+                <h3 className="adw-section-title">Quick Contact</h3>
+                <div className="adw-boxed-list">
+                    <a
+                        className="adw-row adw-row-link"
+                        href={`mailto:${PROFILE.email}`}
+                        aria-label="Email"
+                    >
+                        <div className="adw-row-icon adw-icon-blue">
+                            <i className="fas fa-envelope" aria-hidden="true" />
+                        </div>
+                        <div className="adw-row-text">
+                            <span className="adw-row-title">Email</span>
+                            <span className="adw-row-subtitle">{PROFILE.email}</span>
+                        </div>
+                        <div className="adw-row-actions">
+                            <button
+                                type="button"
+                                className="adw-row-icon-btn"
+                                onClick={e => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    copyEmail();
+                                }}
+                                aria-label={copyState === 'copied' ? 'Copied' : 'Copy email'}
+                                title={copyState === 'copied' ? 'Copied' : 'Copy email'}
+                            >
+                                <i
+                                    className={
+                                        copyState === 'copied'
+                                            ? 'fas fa-check'
+                                            : 'fas fa-copy'
+                                    }
+                                    aria-hidden="true"
+                                />
+                            </button>
+                            <i
+                                className="fas fa-arrow-up-right-from-square adw-row-chevron"
+                                aria-hidden="true"
+                            />
+                        </div>
+                    </a>
+                    <a
+                        className="adw-row adw-row-link"
+                        href={PROFILE.resumePath}
+                        download
+                        aria-label="Resume"
+                    >
+                        <div className="adw-row-icon adw-icon-purple">
+                            <i className="fas fa-file-pdf" aria-hidden="true" />
+                        </div>
+                        <div className="adw-row-text">
+                            <span className="adw-row-title">Resume</span>
+                            <span className="adw-row-subtitle">PDF · Download</span>
+                        </div>
+                        <i className="fas fa-download adw-row-chevron" aria-hidden="true" />
+                    </a>
+                </div>
+            </section>
+
+            {/* Connect — social profiles */}
+            <section className="adw-section">
+                <h3 className="adw-section-title">Connect</h3>
+                <div className="adw-boxed-list">
+                    {SOCIAL_LINKS.map(link => (
+                        <a
+                            key={link.label}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="adw-row adw-row-link"
+                            aria-label={link.label}
+                        >
+                            <div className="adw-row-icon adw-icon-neutral">
+                                <i className={link.icon} aria-hidden="true" />
+                            </div>
+                            <div className="adw-row-text">
+                                <span className="adw-row-title">{link.label}</span>
+                                <span className="adw-row-subtitle">{link.handle}</span>
+                            </div>
+                            <i
+                                className="fas fa-arrow-up-right-from-square adw-row-chevron"
+                                aria-hidden="true"
+                            />
+                        </a>
+                    ))}
+                </div>
+            </section>
+
+            {/* Availability details */}
+            <section className="adw-section">
+                <h3 className="adw-section-title">Availability</h3>
+                <div className="adw-boxed-list">
+                    <div className="adw-row">
+                        <div className="adw-row-icon adw-icon-green">
+                            <i className="fas fa-circle-check" aria-hidden="true" />
+                        </div>
+                        <div className="adw-row-text">
+                            <span className="adw-row-title">Open to opportunities</span>
+                            <span className="adw-row-subtitle">
+                                Full-time, internship, or collaboration
+                            </span>
+                        </div>
+                    </div>
+                    <div className="adw-row">
+                        <div className="adw-row-icon adw-icon-blue">
+                            <i className="fas fa-location-dot" aria-hidden="true" />
+                        </div>
+                        <div className="adw-row-text">
+                            <span className="adw-row-title">Location</span>
+                            <span className="adw-row-subtitle">{PROFILE.location}</span>
+                        </div>
+                    </div>
+                    <div className="adw-row">
+                        <div className="adw-row-icon adw-icon-orange">
+                            <i className="fas fa-clock" aria-hidden="true" />
+                        </div>
+                        <div className="adw-row-text">
+                            <span className="adw-row-title">Response time</span>
+                            <span className="adw-row-subtitle">Usually within 24 hours</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Send a message — form group */}
+            <section className="adw-section">
+                <h3 className="adw-section-title">Send a Message</h3>
+                <form
+                    className="adw-boxed-list adw-form"
+                    onSubmit={handleSubmit(onSubmit)}
+                    noValidate
+                >
+                    <div className={`adw-form-row${errors.name ? ' has-error' : ''}`}>
+                        <label htmlFor="contact-name" className="adw-form-label">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            id="contact-name"
+                            placeholder="Your name"
+                            autoComplete="name"
+                            aria-invalid={Boolean(errors.name)}
+                            aria-describedby={
+                                errors.name ? 'contact-name-error' : undefined
+                            }
+                            {...register('name')}
+                        />
+                        {errors.name && (
+                            <span
+                                className="adw-form-error"
+                                id="contact-name-error"
+                                role="alert"
+                            >
+                                {errors.name.message}
+                            </span>
+                        )}
+                    </div>
+                    <div className={`adw-form-row${errors.email ? ' has-error' : ''}`}>
+                        <label htmlFor="contact-email" className="adw-form-label">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="contact-email"
+                            placeholder="you@example.com"
+                            autoComplete="email"
+                            aria-invalid={Boolean(errors.email)}
+                            aria-describedby={
+                                errors.email ? 'contact-email-error' : undefined
+                            }
+                            {...register('email')}
+                        />
+                        {errors.email && (
+                            <span
+                                className="adw-form-error"
+                                id="contact-email-error"
+                                role="alert"
+                            >
+                                {errors.email.message}
+                            </span>
+                        )}
+                    </div>
+                    <div
+                        className={`adw-form-row adw-form-row-textarea${errors.message ? ' has-error' : ''}`}
+                    >
+                        <div className="adw-form-label-row">
+                            <label htmlFor="contact-message" className="adw-form-label">
+                                Message
+                            </label>
+                            <span
+                                className="adw-form-counter"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
+                                {messageValue.length} / {MESSAGE_MAX}
+                            </span>
+                        </div>
+                        <textarea
+                            id="contact-message"
+                            placeholder="Tell me about your project, role, or opportunity…"
+                            rows={5}
+                            maxLength={MESSAGE_MAX}
+                            aria-invalid={Boolean(errors.message)}
+                            aria-describedby={
+                                errors.message ? 'contact-message-error' : undefined
+                            }
+                            {...register('message')}
+                        />
+                        {errors.message && (
+                            <span
+                                className="adw-form-error"
+                                id="contact-message-error"
+                                role="alert"
+                            >
+                                {errors.message.message}
+                            </span>
+                        )}
+                    </div>
+                    <div className="adw-form-actions">
+                        {statusMsg && (
+                            <div
+                                className={`adw-banner adw-banner-${statusType}`}
+                                aria-live="polite"
+                            >
+                                <i
+                                    className={
+                                        statusType === 'success'
+                                            ? 'fas fa-circle-check'
+                                            : 'fas fa-circle-exclamation'
+                                    }
+                                    aria-hidden="true"
+                                />
+                                <span>{statusMsg}</span>
+                            </div>
+                        )}
+                        <button
+                            type="submit"
+                            className="adw-btn adw-btn-suggested"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <i
+                                        className="fas fa-spinner fa-spin"
+                                        aria-hidden="true"
+                                    />
+                                    Sending…
+                                </>
+                            ) : (
+                                <>
+                                    <i className="fas fa-paper-plane" aria-hidden="true" />
+                                    Send Message
+                                </>
+                            )}
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
     );
 }

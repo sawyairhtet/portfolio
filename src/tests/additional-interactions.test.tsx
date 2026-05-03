@@ -71,9 +71,9 @@ describe('ContactApp form validation', () => {
             </Providers>
         );
 
-        await user.type(screen.getByLabelText(/name/i), 'Test User');
-        await user.type(screen.getByLabelText(/email/i), 'not-an-email');
-        await user.type(screen.getByLabelText(/message/i), 'Hello, this is a test message for validation.');
+        await user.type(screen.getByRole('textbox', { name: /name/i }), 'Test User');
+        await user.type(screen.getByRole('textbox', { name: /email/i }), 'not-an-email');
+        await user.type(screen.getByRole('textbox', { name: /message/i }), 'Hello, this is a test message for validation.');
         await user.click(screen.getByRole('button', { name: /send message/i }));
 
         await waitFor(() => {
@@ -93,9 +93,9 @@ describe('ContactApp form validation', () => {
         await user.click(screen.getByRole('button', { name: /send message/i }));
 
         await waitFor(() => {
-            expect(screen.getByLabelText(/name/i)).toHaveAttribute('aria-invalid', 'true');
-            expect(screen.getByLabelText(/email/i)).toHaveAttribute('aria-invalid', 'true');
-            expect(screen.getByLabelText(/message/i)).toHaveAttribute('aria-invalid', 'true');
+            expect(screen.getByRole('textbox', { name: /name/i })).toHaveAttribute('aria-invalid', 'true');
+            expect(screen.getByRole('textbox', { name: /email/i })).toHaveAttribute('aria-invalid', 'true');
+            expect(screen.getByRole('textbox', { name: /message/i })).toHaveAttribute('aria-invalid', 'true');
         });
     });
 });
