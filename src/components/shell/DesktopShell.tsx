@@ -253,17 +253,7 @@ export function DesktopShell() {
                                 )
                             )}
                         </div>
-                        <div className="desktop-welcome-shortcuts">
-                            <span className="shortcut-pill">
-                                <kbd>Alt+1</kbd> Projects
-                            </span>
-                            <span className="shortcut-pill">
-                                <kbd>Alt+2</kbd> Contact
-                            </span>
-                            <span className="shortcut-pill">
-                                <kbd>Alt+3</kbd> Resume
-                            </span>
-                        </div>
+
                     </section>
                 )}
             </main>

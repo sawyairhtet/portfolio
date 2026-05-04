@@ -141,6 +141,33 @@ export const PROJECTS: Project[] = [
         featured: true,
         icon: 'fas fa-desktop',
     },
+    {
+        id: 'opstrack',
+        title: 'OpsTrack',
+        role: 'Developer',
+        summary:
+            'A Spring Boot operations tracking API with clean REST endpoints, SQL persistence, and layered architecture — built to sharpen backend fundamentals and demonstrate production-grade Java patterns.',
+        impact:
+            'Practice ground for applying Spring Boot, JPA, and relational data patterns in a realistic backend service.',
+        techStack: ['Java', 'Spring Boot', 'PostgreSQL', 'REST API'],
+        platform: 'Backend API',
+        proofPoints: [
+            'REST API with CRUD operations and proper HTTP status codes.',
+            'Layered architecture: Controller → Service → Repository.',
+            'PostgreSQL persistence with Spring Data JPA.',
+        ],
+        links: [
+            {
+                label: 'View on GitHub',
+                href: 'https://github.com/sawyairhtet/opstrack',
+                icon: 'fab fa-github',
+                primary: true,
+            },
+        ],
+        featured: false,
+        icon: 'fas fa-server',
+        status: 'wip',
+    },
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
@@ -153,18 +180,21 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 context:
                     'Object-oriented design, class hierarchies, control flow, and practical problem solving — actively building toward professional Spring Boot development.',
                 usedIn: ['Singapore Polytechnic', 'Self-Study'],
+                level: 'proficient',
             },
             {
                 name: 'Spring Boot',
                 context:
                     'REST API structure, dependency injection, application layers, and building clean backend services — current primary learning focus.',
                 usedIn: ['Java Path'],
+                level: 'intermediate',
             },
             {
                 name: 'SQL + Data Handling',
                 context:
                     'Relational data fundamentals, queries, schema design, and connecting application logic to structured storage.',
                 usedIn: ['Coursework', 'Backend Study'],
+                level: 'intermediate',
             },
         ],
     },
@@ -177,18 +207,21 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 context:
                     'Component architecture, stateful UI, typed config, custom context providers, and responsive app shells.',
                 usedIn: ['Fedora Portfolio'],
+                level: 'proficient',
             },
             {
                 name: 'JavaScript / Python',
                 context:
                     'Coursework, tooling, data handling, scripting, and small automation tasks.',
                 usedIn: ['Coursework', 'Fedora Portfolio'],
+                level: 'intermediate',
             },
             {
                 name: 'Git + Linux Workflow',
                 context:
                     'Source control, shell habits, public repositories, and Fedora/GNOME customization on real hardware.',
                 usedIn: ['Fedora Portfolio', 'Personal Workflow'],
+                level: 'proficient',
             },
         ],
     },

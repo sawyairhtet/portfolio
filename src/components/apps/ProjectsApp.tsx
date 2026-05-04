@@ -102,6 +102,12 @@ function ProjectCard({ project }: { project: Project }) {
                     </div>
                 )}
                 <span className="adw-project-card-platform">{project.platform}</span>
+                {project.status === 'wip' && (
+                    <span className="adw-wip-badge">
+                        <i className="fas fa-hammer" aria-hidden="true" />
+                        Work in Progress
+                    </span>
+                )}
             </div>
             <div className="adw-project-card-body">
                 <h3 id={`card-${project.id}-title`}>{project.title}</h3>

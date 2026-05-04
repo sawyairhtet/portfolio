@@ -20,13 +20,13 @@ export function SkillsApp() {
                                         <h4>{skill.name}</h4>
                                         <p>{skill.context}</p>
                                     </div>
-                                    <div
-                                        className="used-in-chips"
-                                        aria-label={`${skill.name} used in`}
-                                    >
-                                        {skill.usedIn.map(project => (
-                                            <span key={project}>{project}</span>
-                                        ))}
+                                    <div className="skill-proficiency" aria-label={`${skill.name}: ${skill.level}`}>
+                                        <span className={`proficiency-dots proficiency-${skill.level}`} aria-hidden="true">
+                                            <span className="dot filled" />
+                                            <span className={`dot ${skill.level !== 'learning' ? 'filled' : ''}`} />
+                                            <span className={`dot ${skill.level === 'proficient' ? 'filled' : ''}`} />
+                                        </span>
+                                        <span className="proficiency-label">{skill.level}</span>
                                     </div>
                                 </article>
                             ))}

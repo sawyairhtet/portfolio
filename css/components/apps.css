@@ -5,7 +5,7 @@
 .about-hero {
     text-align: center;
     padding: var(--spacing-xl) var(--spacing-lg);
-    background: var(--surface-2);
+    background: linear-gradient(180deg, rgba(53, 132, 228, 0.08) 0%, var(--surface-2) 50%);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
     margin-bottom: var(--spacing-lg);
@@ -719,6 +719,59 @@
     background: var(--accent-subtle);
     color: var(--accent-on-surface);
     border: 1px solid var(--accent-subtle);
+}
+
+[data-theme='light'] .about-hero {
+    background: linear-gradient(180deg, rgba(53, 132, 228, 0.06) 0%, var(--surface-2) 50%);
+}
+
+/* WIP Badge */
+.adw-wip-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(246, 211, 45, 0.12);
+    border: 1px solid rgba(246, 211, 45, 0.25);
+    color: var(--fedora-yellow);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Proficiency Indicators */
+.skill-proficiency {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.proficiency-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.proficiency-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--surface-3);
+    transition: background 0.2s ease;
+}
+
+.proficiency-dots .dot.filled {
+    background: var(--accent);
+}
+
+.proficiency-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
 }
 
 /* ============================================
@@ -2073,8 +2126,8 @@
         grid-template-columns: 1fr;
     }
 
-    .used-in-chips {
-        justify-content: flex-start;
+    .skill-proficiency {
+        align-items: flex-start;
     }
 
     .contact-form-row,

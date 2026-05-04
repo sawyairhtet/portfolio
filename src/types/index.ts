@@ -89,12 +89,14 @@ export interface Project {
     featured: boolean;
     icon: string;
     media?: ProjectMedia;
+    status?: 'completed' | 'wip';
 }
 
 export interface SkillItem {
     name: string;
     context: string;
     usedIn: string[];
+    level: 'proficient' | 'intermediate' | 'learning';
 }
 
 export interface SkillCategory {
