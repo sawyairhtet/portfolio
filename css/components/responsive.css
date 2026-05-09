@@ -444,23 +444,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-    }
-
+    /* Global animation/transition disable lives in css/base/animations.css.
+       This block keeps only the wallpaper-specific reset, which previously
+       cleared parallax transforms. */
     .wallpaper {
         transform: none !important;
         transition: none !important;
-    }
-
-    .dock-item,
-    .window {
-        animation: none !important;
     }
 }
 

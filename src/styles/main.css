@@ -95,6 +95,25 @@
     display: block;
 }
 
+/* Contact form honeypot — invisible to humans, off-screen so bots that
+   indiscriminately fill all fields trip the spam filter. Use position
+   (not display:none) because some bots skip display:none fields. */
+.contact-honeypot {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+}
+
+/* Visually-soft submitting state — keeps the form readable while async work
+   is in flight. Inputs are also explicitly `disabled`-attribute'd in JS. */
+.adw-form.is-submitting {
+    opacity: 0.65;
+}
+
 /* Focus Mode content area */
 .focus-mode-content {
     color: var(--text-primary);
@@ -127,6 +146,93 @@ body,
     gap: 10px;
     color: var(--text-secondary);
     font-weight: 600;
+}
+
+/* ============================================
+   Window app loading skeletons
+   Built from existing Adwaita/terminal tokens —
+   no new visual language introduced.
+   ============================================ */
+
+.window-skeleton-bar,
+.window-skeleton-icon {
+    background-image: linear-gradient(
+        90deg,
+        var(--surface-2) 0%,
+        var(--surface-3) 50%,
+        var(--surface-2) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+}
+
+.window-skeleton-bar {
+    display: block;
+    height: 12px;
+    border-radius: 6px;
+    margin: 4px 0;
+}
+
+.window-skeleton-bar-sm {
+    width: 40%;
+    height: 10px;
+}
+
+.window-skeleton-bar-md {
+    width: 65%;
+}
+
+.window-skeleton-bar-lg {
+    width: 80%;
+    height: 18px;
+}
+
+.window-skeleton-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    flex-shrink: 0;
+}
+
+.terminal-skeleton {
+    background: var(--terminal-bg);
+    color: var(--terminal-text);
+    font-family: var(--font-mono);
+    padding: var(--spacing-md);
+    min-height: 240px;
+}
+
+.terminal-skeleton-line {
+    height: 14px;
+    margin: 6px 0;
+    border-radius: 3px;
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.14) 50%,
+        rgba(255, 255, 255, 0.06) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+}
+
+.terminal-skeleton-line:nth-child(1) {
+    width: 60%;
+}
+.terminal-skeleton-line:nth-child(2) {
+    width: 45%;
+}
+.terminal-skeleton-line:nth-child(3) {
+    width: 30%;
+}
+.terminal-skeleton-line:nth-child(4) {
+    width: 50%;
+}
+
+/* Skeleton text columns expand inside Adwaita rows so the bars span fully. */
+.adw-page > .adw-status-header .adw-status-row > .adw-status-text:has(> .window-skeleton-bar),
+.adw-page > .adw-section .adw-row > .adw-row-text:has(> .window-skeleton-bar) {
+    flex: 1;
 }
 
 .window-body {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,6 +7,7 @@ import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import api from '../../lib/axios';
 
 const MESSAGE_MAX = 2000;
+const COOLDOWN_MS = 8000;
 
 const contactSchema = z.object({
     name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
@@ -19,27 +20,63 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
+interface FormspreeFieldError {
+    field?: string;
+    message?: string;
+}
+
 export function ContactApp() {
     const { showToast } = useNotifications();
     const [statusMsg, setStatusMsg] = useState('');
     const [statusType, setStatusType] = useState<'success' | 'error' | ''>('');
     const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle');
+    const [isCoolingDown, setIsCoolingDown] = useState(false);
+    const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const honeypotRef = useRef<HTMLInputElement>(null);
+    const bannerRef = useRef<HTMLDivElement>(null);
 
     const {
         register,
         handleSubmit,
         reset,
         watch,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm<ContactFormData>({
         resolver: zodResolver(contactSchema),
     });
 
     const messageValue = watch('message') ?? '';
+    const submitDisabled = isSubmitting || isCoolingDown;
+
+    useEffect(() => {
+        return () => {
+            if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
+        };
+    }, []);
+
+    const startCooldown = () => {
+        setIsCoolingDown(true);
+        if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
+        cooldownTimerRef.current = setTimeout(() => setIsCoolingDown(false), COOLDOWN_MS);
+    };
+
+    const focusBanner = () => {
+        // Defer to the next frame so the banner is in the DOM when we focus it.
+        requestAnimationFrame(() => bannerRef.current?.focus());
+    };
 
     const onSubmit = async (data: ContactFormData) => {
         setStatusMsg('');
         setStatusType('');
+
+        // Honeypot check — silently no-op if bots filled the trap field.
+        if (honeypotRef.current?.value) {
+            // Pretend success to the bot; do not actually submit.
+            reset();
+            startCooldown();
+            return;
+        }
 
         try {
             const formData = new FormData();
@@ -55,26 +92,58 @@ export function ContactApp() {
                 setStatusMsg("Message sent! I'll get back to you soon.");
                 setStatusType('success');
                 reset();
+                startCooldown();
                 showToast('Message sent successfully!', 'fas fa-check-circle');
+                focusBanner();
             } else {
                 throw new Error('Form submission failed');
             }
-        } catch {
-            setStatusMsg('Oops! Something went wrong. Try emailing me directly.');
+        } catch (err: unknown) {
+            // Surface per-field Formspree errors when present, e.g.
+            // { errors: [{ field: "email", message: "is invalid" }] }
+            const fieldErrors: FormspreeFieldError[] | undefined =
+                typeof err === 'object' && err !== null && 'response' in err
+                    ? (err as { response?: { data?: { errors?: FormspreeFieldError[] } } }).response
+                          ?.data?.errors
+                    : undefined;
+
+            let mappedAny = false;
+            if (Array.isArray(fieldErrors)) {
+                for (const fe of fieldErrors) {
+                    if (
+                        fe.field === 'name' ||
+                        fe.field === 'email' ||
+                        fe.field === 'message'
+                    ) {
+                        setError(fe.field, {
+                            type: 'server',
+                            message: fe.message ?? 'Invalid value',
+                        });
+                        mappedAny = true;
+                    }
+                }
+            }
+
+            setStatusMsg(
+                mappedAny
+                    ? 'Some fields need attention.'
+                    : 'Oops! Something went wrong. Try emailing me directly.'
+            );
             setStatusType('error');
+            focusBanner();
         }
     };
 
     const copyEmail = async () => {
         try {
             await navigator.clipboard.writeText(PROFILE.email);
+            setCopyState('copied');
+            showToast('Email copied', 'fas fa-check-circle');
+            window.setTimeout(() => setCopyState('idle'), 1800);
         } catch {
-            // Clipboard API unavailable (non-HTTPS or denied) — silent fail
+            // Clipboard API unavailable (non-HTTPS or denied).
+            showToast('Copy unavailable — long-press to copy', 'fas fa-circle-exclamation');
         }
-
-        setCopyState('copied');
-        showToast('Email copied', 'fas fa-check-circle');
-        window.setTimeout(() => setCopyState('idle'), 1800);
     };
 
     return (
@@ -231,10 +300,22 @@ export function ContactApp() {
             <section className="adw-section">
                 <h3 className="adw-section-title">Send a Message</h3>
                 <form
-                    className="adw-boxed-list adw-form"
+                    className={`adw-boxed-list adw-form${submitDisabled ? ' is-submitting' : ''}`}
                     onSubmit={handleSubmit(onSubmit)}
                     noValidate
                 >
+                    {/* Honeypot — invisible to humans, off-screen so naive bots
+                        that fill every input get caught. Formspree honors
+                        a `_gotcha` field by silently rejecting the submission. */}
+                    <input
+                        ref={honeypotRef}
+                        type="text"
+                        name="_gotcha"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                        className="contact-honeypot"
+                    />
                     <div className={`adw-form-row${errors.name ? ' has-error' : ''}`}>
                         <label htmlFor="contact-name" className="adw-form-label">
                             Name
@@ -244,12 +325,17 @@ export function ContactApp() {
                             id="contact-name"
                             placeholder="Your name"
                             autoComplete="name"
-                            aria-invalid={Boolean(errors.name)}
+                            disabled={submitDisabled}
+                            aria-invalid={errors.name ? 'true' : 'false'}
                             aria-describedby={errors.name ? 'contact-name-error' : undefined}
                             {...register('name')}
                         />
                         {errors.name && (
-                            <span className="adw-form-error" id="contact-name-error" role="alert">
+                            <span
+                                className="adw-form-error"
+                                id="contact-name-error"
+                                aria-live="polite"
+                            >
                                 {errors.name.message}
                             </span>
                         )}
@@ -263,12 +349,17 @@ export function ContactApp() {
                             id="contact-email"
                             placeholder="you@example.com"
                             autoComplete="email"
-                            aria-invalid={Boolean(errors.email)}
+                            disabled={submitDisabled}
+                            aria-invalid={errors.email ? 'true' : 'false'}
                             aria-describedby={errors.email ? 'contact-email-error' : undefined}
                             {...register('email')}
                         />
                         {errors.email && (
-                            <span className="adw-form-error" id="contact-email-error" role="alert">
+                            <span
+                                className="adw-form-error"
+                                id="contact-email-error"
+                                aria-live="polite"
+                            >
                                 {errors.email.message}
                             </span>
                         )}
@@ -293,7 +384,8 @@ export function ContactApp() {
                             placeholder="Tell me about your project, role, or opportunity…"
                             rows={5}
                             maxLength={MESSAGE_MAX}
-                            aria-invalid={Boolean(errors.message)}
+                            disabled={submitDisabled}
+                            aria-invalid={errors.message ? 'true' : 'false'}
                             aria-describedby={errors.message ? 'contact-message-error' : undefined}
                             {...register('message')}
                         />
@@ -301,7 +393,7 @@ export function ContactApp() {
                             <span
                                 className="adw-form-error"
                                 id="contact-message-error"
-                                role="alert"
+                                aria-live="polite"
                             >
                                 {errors.message.message}
                             </span>
@@ -310,8 +402,11 @@ export function ContactApp() {
                     <div className="adw-form-actions">
                         {statusMsg && (
                             <div
+                                ref={bannerRef}
                                 className={`adw-banner adw-banner-${statusType}`}
+                                role="status"
                                 aria-live="polite"
+                                tabIndex={-1}
                             >
                                 <i
                                     className={
@@ -327,12 +422,18 @@ export function ContactApp() {
                         <button
                             type="submit"
                             className="adw-btn adw-btn-suggested"
-                            disabled={isSubmitting}
+                            disabled={submitDisabled}
+                            aria-busy={isSubmitting ? 'true' : 'false'}
                         >
                             {isSubmitting ? (
                                 <>
                                     <i className="fas fa-spinner fa-spin" aria-hidden="true" />
                                     Sending…
+                                </>
+                            ) : isCoolingDown ? (
+                                <>
+                                    <i className="fas fa-circle-check" aria-hidden="true" />
+                                    Sent
                                 </>
                             ) : (
                                 <>

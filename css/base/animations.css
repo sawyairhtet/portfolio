@@ -257,9 +257,22 @@
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        animation: none !important;
+        transition: none !important;
         scroll-behavior: auto !important;
+    }
+
+    /* Elements that start invisible and rely on a `forwards` animation
+       to fade in — force the visible end-state since the animation no
+       longer runs. */
+    .desktop-welcome-kicker,
+    .desktop-welcome h2,
+    .desktop-welcome p,
+    .desktop-welcome-hint,
+    .desktop-welcome-actions,
+    .desktop-welcome-shortcuts,
+    .activities-app-item {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }

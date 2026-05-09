@@ -52,11 +52,61 @@ const WELCOME_ACTIONS: WelcomeAction[] = [
     { label: 'Contact', appId: 'contact', icon: 'fas fa-envelope' },
 ];
 
-function WindowFallback() {
+function AdwaitaSkeleton() {
     return (
-        <div className="window-loading" role="status" aria-live="polite">
-            <i className="fas fa-spinner fa-spin" aria-hidden="true" />
-            <span>Loading</span>
+        <div className="adw-page" role="status" aria-live="polite" aria-label="Loading">
+            <header className="adw-status-header">
+                <div className="adw-status-row">
+                    <div className="window-skeleton-icon" aria-hidden="true" />
+                    <div className="adw-status-text">
+                        <span
+                            className="window-skeleton-bar window-skeleton-bar-lg"
+                            aria-hidden="true"
+                        />
+                        <span
+                            className="window-skeleton-bar window-skeleton-bar-md"
+                            aria-hidden="true"
+                        />
+                    </div>
+                </div>
+            </header>
+            <section className="adw-section">
+                <div className="adw-boxed-list">
+                    {[0, 1, 2].map(i => (
+                        <div className="adw-row" key={i}>
+                            <div className="window-skeleton-icon" aria-hidden="true" />
+                            <div className="adw-row-text">
+                                <span
+                                    className="window-skeleton-bar window-skeleton-bar-md"
+                                    aria-hidden="true"
+                                />
+                                <span
+                                    className="window-skeleton-bar window-skeleton-bar-sm"
+                                    aria-hidden="true"
+                                />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+            <span className="sr-only">Loading…</span>
+        </div>
+    );
+}
+
+function TerminalSkeleton() {
+    return (
+        <div
+            className="terminal-skeleton"
+            role="status"
+            aria-live="polite"
+            aria-label="Loading terminal"
+        >
+            <div className="terminal-skeleton-line" aria-hidden="true" />
+            <div className="terminal-skeleton-line" aria-hidden="true" />
+            <div className="terminal-skeleton-line" aria-hidden="true" />
+            <div className="terminal-skeleton-line" aria-hidden="true" />
+            <span className="sr-only">Loading terminal…</span>
         </div>
     );
 }
@@ -271,42 +321,42 @@ export function DesktopShell() {
 
             {/* Windows */}
             <Window appId="about" title="About">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<AdwaitaSkeleton />}>
                     <AboutApp />
                 </Suspense>
             </Window>
             <Window appId="skills" title="Skills">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<AdwaitaSkeleton />}>
                     <SkillsApp />
                 </Suspense>
             </Window>
             <Window appId="projects" title="Projects">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<AdwaitaSkeleton />}>
                     <ProjectsApp />
                 </Suspense>
             </Window>
             <Window appId="contact" title="Contact">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<AdwaitaSkeleton />}>
                     <ContactApp />
                 </Suspense>
             </Window>
             <Window appId="links" title="Links">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<AdwaitaSkeleton />}>
                     <LinksApp />
                 </Suspense>
             </Window>
             <Window appId="terminal" title="Terminal">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<TerminalSkeleton />}>
                     <TerminalApp />
                 </Suspense>
             </Window>
             <Window appId="settings" title="Settings">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<AdwaitaSkeleton />}>
                     <SettingsApp />
                 </Suspense>
             </Window>
             <Window appId="focus-mode" title="Focus Mode">
-                <Suspense fallback={<WindowFallback />}>
+                <Suspense fallback={<AdwaitaSkeleton />}>
                     <FocusModeApp />
                 </Suspense>
             </Window>
