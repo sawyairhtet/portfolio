@@ -1,4 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { Terminal } from '@xterm/xterm';
+import '@xterm/xterm/css/xterm.css';
 import {
     APP_DEFINITIONS,
     DEFAULT_FILE_SYSTEM,
@@ -44,6 +46,14 @@ export function TerminalApp() {
     const lineIdRef = useRef(3);
     const outputRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const xtermHostRef = useRef<HTMLDivElement>(null);
+    const xtermRef = useRef<Terminal | null>(null);
+    const xtermInputRef = useRef('');
+    const [xtermReady, setXtermReady] = useState(false);
+    const executeCommandRef = useRef<(cmd: string, echoCommand?: boolean) => void>(() => {});
+    const historyRef = useRef(history);
+    const historyIndexRef = useRef(historyIndex);
+    const cwdRef = useRef(cwd);
 
     // Auto-scroll & auto-focus
     useEffect(() => {
@@ -54,6 +64,7 @@ export function TerminalApp() {
 
     const addLine = useCallback((content: string, className?: string) => {
         setLines(prev => [...prev, { id: lineIdRef.current++, content, className }]);
+        xtermRef.current?.writeln(content);
     }, []);
 
     const addLines = useCallback((contents: (string | { text: string; className?: string })[]) => {
@@ -66,6 +77,12 @@ export function TerminalApp() {
                 return { id: lineIdRef.current++, content: c.text, className: c.className };
             }),
         ]);
+        const term = xtermRef.current;
+        if (term) {
+            contents.forEach(c => {
+                term.writeln(typeof c === 'string' ? c : c.text);
+            });
+        }
     }, []);
 
     const resolvePath = useCallback(
@@ -78,7 +95,7 @@ export function TerminalApp() {
 
             for (const seg of segments) {
                 if (seg === '..') parts.pop();
-                else if (seg !== '.') parts.push(seg);
+                else if (seg !== '.' && seg !== '') parts.push(seg);
             }
 
             return '/' + parts.join('/');
@@ -87,14 +104,16 @@ export function TerminalApp() {
     );
 
     const executeCommand = useCallback(
-        (cmd: string) => {
+        (cmd: string, echoCommand = true) => {
             const trimmed = cmd.trim();
             if (!trimmed) return;
 
-            addLine(
-                `[sawyehtet@fedora ${cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop()}]$ ${trimmed}`,
-                'terminal-cmd-echo'
-            );
+            if (echoCommand) {
+                addLine(
+                    `[sawyehtet@fedora ${cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop()}]$ ${trimmed}`,
+                    'terminal-cmd-echo'
+                );
+            }
 
             const [rawCommand, ...args] = trimmed.split(/\s+/);
             const command = rawCommand.toLowerCase();
@@ -121,6 +140,8 @@ export function TerminalApp() {
                         '  hire          - Open Contact with recruiter details',
                         '  links         - Open Links',
                         '  resume/cv     - Open the resume PDF',
+                        '  nano resume.md - Open resume.md in Text Editor',
+                        '  firefox       - Open GitHub in Firefox',
                         '  shortcuts     - Show desktop shortcuts',
                         '  open <app>    - Open an app by label or alias',
                         '  about         - Open About',
@@ -194,6 +215,7 @@ export function TerminalApp() {
                 case 'clear':
                     setLines([]);
                     lineIdRef.current = 0;
+                    xtermRef.current?.clear();
                     break;
 
                 case 'whoami':
@@ -295,6 +317,25 @@ export function TerminalApp() {
                     addLine('Opened resume PDF.', 'terminal-ok');
                     break;
 
+                case 'nano': {
+                    const target = args[0] || '';
+                    if (
+                        target === 'resume.md' ||
+                        resolvePath(target) === '/home/sawyehtet/resume.md'
+                    ) {
+                        openWindow('text-editor');
+                        addLine('Opened resume.md in Text Editor.', 'terminal-ok');
+                        break;
+                    }
+                    addLine(`nano: ${target || 'missing file'}: No such file`, 'terminal-error');
+                    break;
+                }
+
+                case 'firefox':
+                    openWindow('browser');
+                    addLine(`Opening ${SOCIAL_LINKS[0].terminal} in Firefox.`, 'terminal-ok');
+                    break;
+
                 case 'shortcuts':
                     addLines([
                         { text: 'Desktop shortcuts:', className: 'terminal-heading' },
@@ -312,6 +353,17 @@ export function TerminalApp() {
                         addLine('Usage: open <app>');
                         break;
                     }
+                    const projectQuery = args.join(' ').toLowerCase();
+                    const project = PROJECTS.find(
+                        item =>
+                            item.id.toLowerCase() === projectQuery ||
+                            item.title.toLowerCase() === projectQuery
+                    );
+                    if (project) {
+                        openWindow('projects');
+                        addLine(`Opened project: ${project.title}.`, 'terminal-ok');
+                        break;
+                    }
                     const appId = findApp(args.join(' '));
                     if (!appId) {
                         addLine(`open: unknown app '${args.join(' ')}'`, 'terminal-error');
@@ -325,7 +377,11 @@ export function TerminalApp() {
                     break;
                 }
 
-                case 'neofetch':
+                case 'neofetch': {
+                    const deviceMemory =
+                        'deviceMemory' in navigator
+                            ? `${(navigator as Navigator & { deviceMemory?: number }).deviceMemory} GB`
+                            : 'Browser reported';
                     addLines([
                         '         ⣀⣤⣤⣤⣤⣤⣤⣤⣄⡀        sawyehtet@fedora',
                         '       ⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡀    ─────────────────',
@@ -333,11 +389,14 @@ export function TerminalApp() {
                         '     ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇   DE: GNOME 49',
                         '     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇   WM: Wayland',
                         '     ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇   Shell: bash 5.2',
-                        '      ⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃    Terminal: portfolio-term',
-                        "        ⠈⠛⠿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠁       CPU: Visitor's Device",
-                        '                                          Made with React + TS',
+                        '      ⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃    Terminal: GNOME Console / xterm.js',
+                        `        ⠈⠛⠿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠁       Host: ${navigator.platform}`,
+                        `                                          CPU: ${navigator.hardwareConcurrency || 'Browser'} threads`,
+                        `                                          Memory: ${deviceMemory}`,
+                        `                                          Display: ${window.screen.width}x${window.screen.height}`,
                     ]);
                     break;
+                }
 
                 case 'tree': {
                     const target = args[0] ? resolvePath(args[0]) : cwd;
@@ -375,6 +434,22 @@ export function TerminalApp() {
         },
         [cwd, addLine, addLines, resolvePath, openWindow]
     );
+
+    useEffect(() => {
+        executeCommandRef.current = executeCommand;
+    }, [executeCommand]);
+
+    useEffect(() => {
+        historyRef.current = history;
+    }, [history]);
+
+    useEffect(() => {
+        historyIndexRef.current = historyIndex;
+    }, [historyIndex]);
+
+    useEffect(() => {
+        cwdRef.current = cwd;
+    }, [cwd]);
 
     const handleKeyDown = useCallback(
         (e: React.KeyboardEvent) => {
@@ -428,54 +503,211 @@ export function TerminalApp() {
 
     // Focus input when terminal body clicked
     const handleBodyClick = useCallback(() => {
+        if (xtermRef.current) {
+            xtermRef.current.focus();
+            return;
+        }
         inputRef.current?.focus();
     }, []);
 
     const prompt = `[sawyehtet@fedora ${cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop()}]$`;
+    const promptRef = useRef(prompt);
+
+    useEffect(() => {
+        promptRef.current = prompt;
+    }, [prompt]);
+
+    useEffect(() => {
+        if (!xtermHostRef.current || xtermRef.current) return;
+        if (navigator.userAgent.toLowerCase().includes('jsdom')) return;
+
+        const term = new Terminal({
+            cursorBlink: true,
+            convertEol: true,
+            fontFamily: 'Adwaita Mono',
+            fontSize: 14,
+            lineHeight: 1.35,
+            scrollback: 1200,
+            theme: {
+                background: 'var(--view-bg-color)',
+                foreground: 'var(--view-fg-color)',
+                cursor: 'var(--accent-bg-color)',
+                selectionBackground: 'color-mix(in srgb, var(--accent-bg-color) 30%, transparent)',
+                black: 'var(--dark-4)',
+                red: 'var(--red-3)',
+                green: 'var(--green-4)',
+                yellow: 'var(--yellow-5)',
+                blue: 'var(--accent-blue)',
+                magenta: 'var(--accent-purple)',
+                cyan: 'var(--accent-teal)',
+                white: 'var(--light-2)',
+            },
+        });
+
+        const redrawInput = () => {
+            term.write(`\x1b[2K\r${promptRef.current} ${xtermInputRef.current}`);
+        };
+
+        const completeInput = () => {
+            const value = xtermInputRef.current;
+            const parts = value.split(/\s+/);
+            const partial = parts[parts.length - 1] || '';
+            if (!partial) return;
+
+            const commandMatches = [
+                'help',
+                'whoami',
+                'cat',
+                'ls',
+                'cd',
+                'open',
+                'neofetch',
+                'nano',
+                'firefox',
+                'projects',
+                'skills',
+                'contact',
+                'links',
+                'resume',
+                'clear',
+            ].filter(item => item.startsWith(partial));
+            const currentNode = DEFAULT_FILE_SYSTEM[cwdRef.current];
+            const fileMatches =
+                currentNode?.type === 'dir'
+                    ? currentNode.children.filter(item => item.startsWith(partial))
+                    : [];
+            const match = [...fileMatches, ...commandMatches][0];
+            if (!match) return;
+
+            parts[parts.length - 1] = match;
+            xtermInputRef.current = parts.join(' ');
+            setInputValue(xtermInputRef.current);
+            redrawInput();
+        };
+
+        term.open(xtermHostRef.current);
+        xtermRef.current = term;
+        lines.forEach(line => term.writeln(line.content));
+        term.write(`${promptRef.current} `);
+        setXtermReady(true);
+
+        const disposable = term.onData(data => {
+            if (data === '\r') {
+                const command = xtermInputRef.current;
+                term.write('\r\n');
+                xtermInputRef.current = '';
+                setInputValue('');
+                executeCommandRef.current(command, false);
+                window.setTimeout(() => term.write(`${promptRef.current} `), 0);
+                return;
+            }
+
+            if (data === '\u007F') {
+                if (!xtermInputRef.current) return;
+                xtermInputRef.current = xtermInputRef.current.slice(0, -1);
+                setInputValue(xtermInputRef.current);
+                term.write('\b \b');
+                return;
+            }
+
+            if (data === '\t') {
+                completeInput();
+                return;
+            }
+
+            if (data === '\x1b[A') {
+                const nextIndex =
+                    historyIndexRef.current === -1
+                        ? historyRef.current.length - 1
+                        : Math.max(0, historyIndexRef.current - 1);
+                if (nextIndex >= 0) {
+                    historyIndexRef.current = nextIndex;
+                    setHistoryIndex(nextIndex);
+                    xtermInputRef.current = historyRef.current[nextIndex];
+                    setInputValue(xtermInputRef.current);
+                    redrawInput();
+                }
+                return;
+            }
+
+            if (data === '\x1b[B') {
+                const nextIndex = historyIndexRef.current + 1;
+                if (nextIndex >= historyRef.current.length) {
+                    historyIndexRef.current = -1;
+                    setHistoryIndex(-1);
+                    xtermInputRef.current = '';
+                } else {
+                    historyIndexRef.current = nextIndex;
+                    setHistoryIndex(nextIndex);
+                    xtermInputRef.current = historyRef.current[nextIndex];
+                }
+                setInputValue(xtermInputRef.current);
+                redrawInput();
+                return;
+            }
+
+            if (data >= ' ' && data !== '\x7f') {
+                xtermInputRef.current += data;
+                setInputValue(xtermInputRef.current);
+                term.write(data);
+            }
+        });
+
+        term.focus();
+
+        return () => {
+            disposable.dispose();
+            term.dispose();
+            xtermRef.current = null;
+        };
+    }, []);
 
     return (
         <div onClick={handleBodyClick} className="terminal-shell">
-            <div
-                ref={outputRef}
-                className="terminal-output terminal-output-scroll"
-                aria-live="polite"
-                aria-label="Terminal output"
-            >
-                {lines.map(line => (
-                    <div
-                        key={line.id}
-                        className={`terminal-line${line.className ? ` ${line.className}` : ''}`}
-                    >
-                        {line.content}
-                    </div>
-                ))}
-            </div>
-            <div className="terminal-input-line">
-                <span className="terminal-prompt">{prompt}</span>
-                <input
-                    ref={inputRef}
-                    type="text"
-                    className="terminal-input"
-                    autoComplete="off"
-                    spellCheck="false"
-                    inputMode="text"
-                    enterKeyHint="send"
-                    aria-label="Terminal command input"
-                    title="Terminal command input"
-                    value={inputValue}
-                    onChange={e => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                />
-                <button
-                    className="terminal-submit-btn"
-                    aria-label="Run command"
-                    onClick={() => {
-                        executeCommand(inputValue);
-                        setInputValue('');
-                    }}
+            <div ref={xtermHostRef} className="terminal-xterm" aria-label="Terminal" />
+            <div className={`terminal-fallback${xtermReady ? ' is-hidden' : ''}`}>
+                <div
+                    ref={outputRef}
+                    className="terminal-output terminal-output-scroll"
+                    aria-live="polite"
+                    aria-label="Terminal output"
                 >
-                    <i className="fas fa-arrow-right" aria-hidden="true" />
-                </button>
+                    {lines.map(line => (
+                        <div
+                            key={line.id}
+                            className={`terminal-line${line.className ? ` ${line.className}` : ''}`}
+                        >
+                            {line.content}
+                        </div>
+                    ))}
+                </div>
+                <div className="terminal-input-line">
+                    <span className="terminal-prompt">{prompt}</span>
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        className="terminal-input"
+                        autoComplete="off"
+                        spellCheck="false"
+                        inputMode="text"
+                        enterKeyHint="send"
+                        aria-label="Terminal command input"
+                        title="Terminal command input"
+                        value={inputValue}
+                        onChange={e => setInputValue(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <button
+                        className="terminal-submit-btn"
+                        aria-label="Run command"
+                        onClick={() => {
+                            executeCommand(inputValue);
+                            setInputValue('');
+                        }}
+                    >
+                        <i className="fas fa-arrow-right" aria-hidden="true" />
+                    </button>
+                </div>
             </div>
         </div>
     );

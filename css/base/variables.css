@@ -2,137 +2,154 @@
 
 :root {
     /* ── Accent & Brand — GNOME default blue ── */
-    --accent: #3584e4;
-    --accent-light: #78aeed;
-    --accent-dark: #1c71d8;
-    --accent-glow: rgba(53, 132, 228, 0.35);
-    --accent-subtle: rgba(53, 132, 228, 0.12);
-    --accent-surface: rgba(53, 132, 228, 0.08);
+    --accent: var(--accent-bg-color);
+    --accent-light: var(--blue-1);
+    --accent-dark: var(--blue-4);
+    --accent-glow: color-mix(in srgb, var(--accent-bg-color) 35%, transparent);
+    --accent-subtle: color-mix(in srgb, var(--accent-bg-color) 12%, transparent);
+    --accent-surface: color-mix(in srgb, var(--accent-bg-color) 8%, transparent);
     /* Accent variant that reads as text/icon on the current surface
        (lighter than --accent on dark, darker on light). Use this instead
        of --accent-light for "accent text/icon on surface" semantics. */
-    --accent-on-surface: #78aeed;
+    --accent-on-surface: var(--accent-color);
     --fedora-blue: var(--accent);
     --fedora-blue-dark: var(--accent-dark);
     --fedora-blue-light: var(--accent-light);
-    --fedora-blue-pale: rgba(53, 132, 228, 0.12);
-    --fedora-red: #e01b24;
-    --fedora-green: #33d17a;
-    --fedora-yellow: #f6d32d;
-    --fedora-purple: #9141ac;
-    --fedora-teal: #14b8a6;
+    --fedora-blue-pale: var(--accent-subtle);
+    --fedora-red: var(--destructive-bg-color);
+    --fedora-green: var(--success-bg-color);
+    --fedora-yellow: var(--warning-bg-color);
+    --fedora-purple: var(--accent-purple);
+    --fedora-teal: var(--accent-teal);
 
     /* ── Surfaces — libadwaita dark window/view backgrounds ── */
-    --surface-0: #222226;
-    --surface-1: #2e2e32;
-    --surface-2: #36363a;
-    --surface-3: #404044;
-    --surface-4: #4d4d52;
+    --surface-0: var(--window-bg-color);
+    --surface-1: var(--headerbar-bg-color);
+    --surface-2: var(--dialog-bg-color);
+    --surface-3: var(--popover-bg-color);
+    --surface-4: var(--thumbnail-bg-color);
 
     /* ── Text ── */
-    --text-primary: rgba(255, 255, 255, 0.87);
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-disabled: rgba(255, 255, 255, 0.55);
-    --text-on-accent: #ffffff;
+    --text-primary: var(--window-fg-color);
+    --text-secondary: color-mix(
+        in srgb,
+        var(--window-fg-color) calc(100% - var(--dim-opacity)),
+        transparent
+    );
+    --text-disabled: color-mix(
+        in srgb,
+        var(--window-fg-color) calc(100% - var(--disabled-opacity)),
+        transparent
+    );
+    --text-on-accent: var(--accent-fg-color);
+    --window-fg-muted-color: var(--text-secondary);
+    --insensitive-fg-color: var(--text-disabled);
+    --hover-color: color-mix(in srgb, var(--view-fg-color) 7%, transparent);
 
     /* ── Borders — libadwaita uses ~15% opacity ── */
-    --border-color: rgba(255, 255, 255, 0.15);
-    --border-focus: var(--accent);
-    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-color: color-mix(in srgb, currentColor var(--border-opacity), transparent);
+    --border-focus: var(--accent-bg-color);
+    --border-subtle: color-mix(in srgb, currentColor 8%, transparent);
 
     /* ── Flat elevated surfaces (historical "glass" name; values are flat) ── */
-    --glass-bg: #2e2e32;
-    --glass-bg-heavy: #28282c;
-    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-bg: var(--popover-bg-color);
+    --glass-bg-heavy: var(--dialog-bg-color);
+    --glass-border: var(--border-color);
     --glass-blur: blur(0px);
     --glass-saturation: saturate(100%);
 
     /* ── Shadows — Simple Adwaita shadows ── */
-    --shadow-window: 0 4px 16px rgba(0, 0, 0, 0.5), 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.25);
-    --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.2);
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.5);
+    --shadow-window: var(--window-shadow);
+    --shadow-popover: 0 2px 8px var(--popover-shade-color);
+    --shadow-sm: 0 1px 4px var(--shade-color);
+    --shadow-md: 0 2px 8px var(--shade-color);
+    --shadow-lg: 0 6px 24px var(--shade-color);
     --shadow-glow: none;
 
     /* ── Scrollbar ── */
-    --scrollbar-thumb: rgba(255, 255, 255, 0.18);
-    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+    --scrollbar-thumb: color-mix(in srgb, var(--view-fg-color) 18%, transparent);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--view-fg-color) 30%, transparent);
     --scrollbar-track: transparent;
     --scrollbar-width: 6px;
 
-    /* ── Typography — GNOME system font ── */
-    --font-ui: 'Cantarell', system-ui, -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace;
-    --font-size-base: 14px;
-    --font-size-sm: 12px;
-    --font-size-lg: 16px;
-    --font-size-xl: 20px;
-    --font-size-2xl: 28px;
-    --font-size-display: 40px;
+    /* ── Typography — GNOME 49 Adwaita defaults ── */
+    --font-ui: var(--document-font-family);
+    --font-mono: var(--monospace-font-family);
+    --font-size-base: 11pt;
+    --font-size-sm: 82%;
+    --font-size-lg: 118%;
+    --font-size-xl: 136%;
+    --font-size-2xl: 136%;
+    --font-size-display: 181%;
 
     /* ── Window Chrome ── */
     --window-header-height: 47px;
-    --window-border-radius: 13px;
-    --window-open-duration: 0.2s;
-    --window-close-duration: 0.15s;
+    --window-border-radius: var(--window-radius);
+    --button-radius: var(--button_radius);
+    --toolbar-height: var(--headerbar-min-height);
+    --window-open-duration: 400ms;
+    --window-close-duration: 400ms;
+    --window-open-origin: 50% 100%;
+    --window-open-dx: 0;
+    --window-open-dy: 24px;
     --window-shadow: var(--shadow-window);
-    --window-header-bg: #2e2e32;
-    --window-header-border: rgba(255, 255, 255, 0.15);
-    --window-body-bg: var(--surface-0);
-    --btn-close-color: var(--fedora-red);
-    --btn-min-color: var(--fedora-yellow);
-    --btn-max-color: var(--fedora-green);
+    --window-header-bg: var(--headerbar-bg-color);
+    --window-header-border: var(--border-color);
+    --window-body-bg: var(--window-bg-color);
+    --custom-wallpaper-bg: var(--window-bg-color);
+    --btn-close-color: var(--destructive-bg-color);
+    --btn-min-color: var(--warning-bg-color);
+    --btn-max-color: var(--success-bg-color);
     --btn-size: 14px;
     --btn-gap: 8px;
 
     /* ── Top Bar — GNOME shell panel (~32px) ── */
     --topbar-height: 32px;
-    --topbar-bg: #1d1d20;
-    --topbar-bg-light: #1d1d20;
+    --topbar-bg: var(--view-bg-color);
+    --topbar-bg-light: var(--view-bg-color);
     --topbar-blur: blur(0px);
 
     /* ── Dock (Activities dash, GNOME style) ── */
-    --dock-bg: #2e2e32;
+    --dock-bg: var(--popover-bg-color);
     --dock-blur: blur(0px);
     --dock-border-radius: 12px;
     --dock-padding: 8px 12px;
     --dock-icon-size: 52px;
     --dock-gap: 6px;
-    --dock-border: 1px solid rgba(255, 255, 255, 0.08);
+    --dock-border: 1px solid var(--border-subtle);
     --dock-active-dot: var(--accent);
-    --dock-hover-bg: rgba(255, 255, 255, 0.1);
+    --dock-hover-bg: color-mix(in srgb, var(--popover-fg-color) 10%, transparent);
 
     /* ── Terminal ── */
-    --terminal-bg: #1e1e1e;
-    --terminal-text: #f1f5f9;
-    --terminal-prompt: var(--fedora-green);
-    --terminal-cursor: var(--accent);
-    --terminal-selection: rgba(53, 132, 228, 0.3);
+    --terminal-bg: var(--view-bg-color);
+    --terminal-text: var(--view-fg-color);
+    --terminal-prompt: var(--success-color);
+    --terminal-cursor: var(--accent-bg-color);
+    --terminal-selection: color-mix(in srgb, var(--accent-bg-color) 30%, transparent);
     --terminal-font-size: 13px;
 
     /* ── Boot / Plymouth ── */
-    --boot-bg: #000000;
-    --boot-text: #ffffff;
-    --boot-ok: var(--fedora-green);
-    --boot-info: var(--accent-light);
+    --boot-bg: var(--dark-5);
+    --boot-text: var(--light-1);
+    --boot-ok: var(--success-color);
+    --boot-info: var(--accent-color);
 
     /* ── App Icon Gradients (Dock + Activities) ── */
-    --icon-projects: #1c71d8;
-    --icon-contact: #9141ac;
-    --icon-terminal: #33d17a;
-    --icon-settings-start: #77767b;
-    --icon-settings-end: #5e5c64;
-    --icon-skills: #14b8a6;
-    --icon-links-start: #06b6d4;
-    --icon-links-end: #0891b2;
-    --icon-focus-start: #e66100;
-    --icon-focus-end: #c64600;
+    --icon-projects: var(--blue-4);
+    --icon-contact: var(--accent-purple);
+    --icon-terminal: var(--success-bg-color);
+    --icon-settings-start: var(--dark-1);
+    --icon-settings-end: var(--dark-2);
+    --icon-skills: var(--accent-teal);
+    --icon-links-start: var(--accent-teal);
+    --icon-links-end: var(--blue-4);
+    --icon-focus-start: var(--orange-4);
+    --icon-focus-end: var(--orange-5);
 
     /* ── Status Indicators ── */
-    --status-available: #33d17a;
-    --disabled-start: #6b7280;
-    --disabled-end: #4b5563;
+    --status-available: var(--success-bg-color);
+    --disabled-start: var(--dark-1);
+    --disabled-end: var(--dark-2);
 
     /* ── Spacing ── */
     --spacing-xs: 4px;
@@ -153,18 +170,18 @@
     --radius-xl: var(--border-radius-xl);
 
     /* ── Transitions ── */
-    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 200ms var(--ease-out-quad);
+    --transition-base: 200ms var(--ease-in-out-quad);
+    --transition-slow: 400ms var(--ease-out-quad);
     --transition-normal: var(--transition-base);
-    --transition-smooth: 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+    --transition-smooth: 200ms var(--ease-out-quad);
+    --ease-out-expo: var(--ease-out-quad);
+    --ease-spring: var(--ease-out-quad);
 
     /* ── Gradients ── */
     --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
     --gradient-btn: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-    --gradient-glass: rgba(255, 255, 255, 0.04);
+    --gradient-glass: color-mix(in srgb, var(--view-fg-color) 4%, transparent);
     --gradient-noise: none;
 
     /* Z-Index Layer Map */
@@ -184,94 +201,110 @@
 /* ── Dark Mode (same as default — dark-first design) ── */
 [data-theme='dark'],
 .dark {
-    --surface-0: #222226;
-    --surface-1: #2e2e32;
-    --surface-2: #36363a;
-    --surface-3: #404044;
-    --surface-4: #4d4d52;
+    --surface-0: var(--window-bg-color);
+    --surface-1: var(--headerbar-bg-color);
+    --surface-2: var(--dialog-bg-color);
+    --surface-3: var(--popover-bg-color);
+    --surface-4: var(--thumbnail-bg-color);
 
-    --text-primary: rgba(255, 255, 255, 0.87);
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-disabled: rgba(255, 255, 255, 0.55);
+    --text-primary: var(--window-fg-color);
+    --text-secondary: color-mix(
+        in srgb,
+        var(--window-fg-color) calc(100% - var(--dim-opacity)),
+        transparent
+    );
+    --text-disabled: color-mix(
+        in srgb,
+        var(--window-fg-color) calc(100% - var(--disabled-opacity)),
+        transparent
+    );
 
-    --border-color: rgba(255, 255, 255, 0.15);
-    --window-header-bg: #2e2e32;
-    --window-header-border: rgba(255, 255, 255, 0.15);
-    --window-body-bg: var(--surface-0);
-    --shadow-window: 0 4px 16px rgba(0, 0, 0, 0.5), 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.25);
+    --border-color: color-mix(in srgb, currentColor var(--border-opacity), transparent);
+    --window-header-bg: var(--headerbar-bg-color);
+    --window-header-border: var(--border-color);
+    --window-body-bg: var(--window-bg-color);
+    --shadow-window: var(--window-shadow);
 
-    --glass-bg: #2e2e32;
-    --glass-bg-heavy: #28282c;
-    --accent-on-surface: #78aeed;
+    --glass-bg: var(--popover-bg-color);
+    --glass-bg-heavy: var(--dialog-bg-color);
+    --accent-on-surface: var(--accent-color);
 }
 
 /* ── Light Mode — libadwaita light ── */
 [data-theme='light'],
 .light {
-    /* ── Surfaces — libadwaita light (#fafafb window, white view) ── */
-    --surface-0: #fafafb;
-    --surface-1: #ffffff;
-    --surface-2: #f0f0f3;
-    --surface-3: #e4e4e7;
-    --surface-4: #d4d4d8;
+    /* ── Surfaces — libadwaita light window and view roles ── */
+    --surface-0: var(--window-bg-color);
+    --surface-1: var(--view-bg-color);
+    --surface-2: var(--overview-bg-color);
+    --surface-3: var(--secondary-sidebar-bg-color);
+    --surface-4: var(--sidebar-bg-color);
 
     /* ── Text — Dark on light ── */
-    --text-primary: rgba(0, 0, 6, 0.8);
-    --text-secondary: rgba(0, 0, 6, 0.55);
-    --text-disabled: rgba(0, 0, 6, 0.38);
-    --text-on-accent: #ffffff;
+    --text-primary: var(--window-fg-color);
+    --text-secondary: color-mix(
+        in srgb,
+        var(--window-fg-color) calc(100% - var(--dim-opacity)),
+        transparent
+    );
+    --text-disabled: color-mix(
+        in srgb,
+        var(--window-fg-color) calc(100% - var(--disabled-opacity)),
+        transparent
+    );
+    --text-on-accent: var(--accent-fg-color);
 
     /* ── Accent — Same GNOME blue; --accent-light here is a darker variant
        that reads on light surfaces (semantic dual; prefer --accent-on-surface) ── */
-    --accent: #3584e4;
-    --accent-light: #1c71d8;
-    --accent-dark: #0e5fad;
-    --accent-glow: rgba(53, 132, 228, 0.28);
-    --accent-subtle: rgba(53, 132, 228, 0.12);
-    --accent-surface: rgba(53, 132, 228, 0.07);
-    --accent-on-surface: #1c71d8;
+    --accent: var(--accent-bg-color);
+    --accent-light: var(--blue-4);
+    --accent-dark: var(--blue-5);
+    --accent-glow: color-mix(in srgb, var(--accent-bg-color) 28%, transparent);
+    --accent-subtle: color-mix(in srgb, var(--accent-bg-color) 12%, transparent);
+    --accent-surface: color-mix(in srgb, var(--accent-bg-color) 7%, transparent);
+    --accent-on-surface: var(--accent-color);
 
     /* ── Borders — libadwaita ~15% ── */
-    --border-color: rgba(0, 0, 6, 0.15);
-    --border-focus: var(--accent);
-    --border-subtle: rgba(0, 0, 6, 0.1);
+    --border-color: color-mix(in srgb, currentColor var(--border-opacity), transparent);
+    --border-focus: var(--accent-bg-color);
+    --border-subtle: color-mix(in srgb, currentColor 10%, transparent);
 
     /* ── Flat elevated surfaces ── */
-    --glass-bg: #ffffff;
-    --glass-bg-heavy: #f0f0f3;
-    --glass-border: rgba(0, 0, 6, 0.15);
+    --glass-bg: var(--popover-bg-color);
+    --glass-bg-heavy: var(--dialog-bg-color);
+    --glass-border: var(--border-color);
 
     /* ── Shadows — Softer for light mode ── */
-    --shadow-window: 0 4px 16px rgba(0, 0, 0, 0.14), 0 16px 48px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.12);
+    --shadow-window: var(--window-shadow);
+    --shadow-popover: 0 2px 8px var(--popover-shade-color);
+    --shadow-sm: 0 1px 4px var(--shade-color);
+    --shadow-md: 0 2px 8px var(--shade-color);
+    --shadow-lg: 0 6px 24px var(--shade-color);
     --shadow-glow: none;
 
     /* ── Scrollbar ── */
-    --scrollbar-thumb: rgba(0, 0, 0, 0.2);
-    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.35);
+    --scrollbar-thumb: color-mix(in srgb, var(--view-fg-color) 20%, transparent);
+    --scrollbar-thumb-hover: color-mix(in srgb, var(--view-fg-color) 35%, transparent);
 
     /* ── Window Chrome — libadwaita light header bars are white ── */
-    --window-header-bg: #ffffff;
-    --window-header-border: rgba(0, 0, 6, 0.15);
-    --window-body-bg: var(--surface-1);
+    --window-header-bg: var(--headerbar-bg-color);
+    --window-header-border: var(--border-color);
+    --window-body-bg: var(--view-bg-color);
     --window-shadow: var(--shadow-window);
 
     /* ── Top Bar — GNOME shell light panel ── */
-    --topbar-bg: #ffffff;
-    --topbar-bg-light: #ffffff;
+    --topbar-bg: var(--view-bg-color);
+    --topbar-bg-light: var(--view-bg-color);
 
     /* ── Dock — libadwaita light ── */
-    --dock-bg: #ffffff;
-    --dock-border: 1px solid rgba(0, 0, 6, 0.15);
-    --dock-hover-bg: rgba(0, 0, 6, 0.06);
+    --dock-bg: var(--popover-bg-color);
+    --dock-border: 1px solid var(--border-color);
+    --dock-hover-bg: color-mix(in srgb, var(--popover-fg-color) 6%, transparent);
 
     /* ── Terminal — Always dark (matches real GNOME Terminal) ── */
-    --terminal-bg: #1e1e1e;
-    --terminal-text: #f1f5f9;
-    --terminal-prompt: #33d17a;
-    --terminal-cursor: var(--accent);
-    --terminal-selection: rgba(53, 132, 228, 0.3);
+    --terminal-bg: var(--view-bg-color);
+    --terminal-text: var(--view-fg-color);
+    --terminal-prompt: var(--success-color);
+    --terminal-cursor: var(--accent-bg-color);
+    --terminal-selection: color-mix(in srgb, var(--accent-bg-color) 30%, transparent);
 }

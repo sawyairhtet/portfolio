@@ -1,13 +1,15 @@
 /* ============================================
-   WINDOWS - Premium Glassmorphism Style
+   WINDOWS - Adwaita CSD
    ============================================ */
 
 .window {
     position: absolute;
-    background: var(--surface-0);
-    border-radius: var(--window-border-radius);
+    background: var(--window-bg-color);
+    border-radius: var(--window-radius);
     box-shadow: var(--window-shadow);
-    border: 1px solid var(--glass-border);
+    border: 0;
+    outline: 1px solid var(--window-outline-color);
+    outline-offset: -1px;
     display: none;
     flex-direction: column;
     width: 680px;
@@ -17,10 +19,11 @@
     z-index: var(--z-window);
     overflow: hidden;
     container: app-window / inline-size;
+    transform-origin: var(--window-open-origin, 50% 100%);
     transition:
-        box-shadow 0.3s var(--ease-out-expo),
-        transform 0.25s var(--ease-out-expo),
-        border-color 0.3s ease;
+        box-shadow var(--backdrop_transition),
+        transform 200ms var(--ease-out-quad),
+        outline-color var(--backdrop_transition);
     /* Default position */
     left: 20px;
     top: 15%;
@@ -29,12 +32,12 @@
 /* Active window */
 .window.active {
     display: flex;
-    animation: windowOpen var(--window-open-duration) var(--ease-out-expo) forwards;
+    animation: windowOpen var(--window-open-duration) var(--ease-out-quad) forwards;
 }
 
 /* Window closing state */
 .window.closing {
-    animation: windowClose var(--window-close-duration) var(--ease-out-expo) forwards;
+    animation: windowClose var(--window-close-duration) var(--ease-out-quad) forwards;
     pointer-events: none;
 }
 
@@ -42,23 +45,14 @@
     display: none;
 }
 
-/* Focused window — Adwaita elevated shadow, no accent glow */
+/* Focused window — Adwaita CSD shadow */
 .window.is-focused,
 .window:focus-within {
-    box-shadow:
-        0 6px 20px rgba(0, 0, 0, 0.55),
-        0 24px 64px rgba(0, 0, 0, 0.45),
-        0 0 0 1px rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--window-shadow);
 }
 
-[data-theme='dark'] .window.is-focused,
-[data-theme='dark'] .window:focus-within {
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.6),
-        0 20px 48px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.1);
+.window:not(.is-focused):not(:focus-within) {
+    box-shadow: var(--window-backdrop-shadow);
 }
 
 /* ============================================
@@ -149,7 +143,12 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition: all 0.3s var(--ease-out-expo);
+    transition:
+        top 200ms var(--ease-in-out-quad),
+        left 200ms var(--ease-in-out-quad),
+        width 200ms var(--ease-in-out-quad),
+        height 200ms var(--ease-in-out-quad),
+        border-radius 200ms var(--ease-in-out-quad);
 }
 
 .window.snapped-right {
@@ -161,7 +160,12 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition: all 0.3s var(--ease-out-expo);
+    transition:
+        top 200ms var(--ease-in-out-quad),
+        left 200ms var(--ease-in-out-quad),
+        width 200ms var(--ease-in-out-quad),
+        height 200ms var(--ease-in-out-quad),
+        border-radius 200ms var(--ease-in-out-quad);
 }
 
 .window.snapped-maximized {
@@ -175,22 +179,29 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition: all 0.3s var(--ease-out-expo);
+    transition:
+        top 200ms var(--ease-in-out-quad),
+        left 200ms var(--ease-in-out-quad),
+        right 200ms var(--ease-in-out-quad),
+        bottom 200ms var(--ease-in-out-quad),
+        width 200ms var(--ease-in-out-quad),
+        height 200ms var(--ease-in-out-quad),
+        border-radius 200ms var(--ease-in-out-quad);
 }
 
 /* Snap Preview Overlay */
 .snap-preview {
     position: fixed;
     top: var(--topbar-height);
-    background: var(--accent-subtle);
-    border: 2px dashed var(--accent);
+    background: color-mix(in srgb, var(--accent-bg-color) 12%, transparent);
+    border: 2px dashed var(--accent-bg-color);
     border-radius: var(--radius-md);
     z-index: 950;
     pointer-events: none;
     opacity: 0;
     transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+        opacity 200ms var(--ease-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .snap-preview.visible {
@@ -222,12 +233,18 @@
 .window-header {
     display: flex;
     align-items: center;
-    height: var(--window-header-height);
-    padding: 0 16px;
-    backdrop-filter: blur(12px) saturate(130%);
-    -webkit-backdrop-filter: blur(12px) saturate(130%);
-    background: var(--window-header-bg);
-    border-bottom: 1px solid var(--window-header-border);
+    box-sizing: border-box;
+    height: var(--headerbar-min-height);
+    min-height: var(--headerbar-min-height);
+    padding: 6px 7px 7px;
+    background: var(--headerbar-bg-color);
+    color: var(--headerbar-fg-color);
+    box-shadow:
+        inset 0 -1px var(--headerbar-shade-color),
+        inset 1px 0
+            color-mix(in srgb, var(--headerbar-border-color) var(--border-opacity), transparent),
+        inset -1px 0
+            color-mix(in srgb, var(--headerbar-border-color) var(--border-opacity), transparent);
     cursor: grab;
     user-select: none;
     position: relative;
@@ -241,84 +258,58 @@
 .window-title {
     flex: 1;
     text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    letter-spacing: 0.01em;
-    transition: color 0.2s ease;
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: inherit;
+    letter-spacing: 0;
+    transition: color 200ms var(--ease-out-quad);
     pointer-events: none;
 }
 
-.window.is-focused .window-title,
-.window:focus-within .window-title {
-    color: var(--text-primary);
+.window:not(.is-focused):not(:focus-within) .window-header {
+    background: var(--headerbar-backdrop-color);
+}
+
+.window:not(.is-focused):not(:focus-within) .window-header > * {
+    filter: opacity(0.5);
+    transition: filter var(--backdrop_transition);
 }
 
 /* Window Controls — RIGHT side */
 .window-controls {
     display: flex;
     align-items: center;
-    gap: var(--btn-gap);
+    gap: 3px;
     margin-left: auto;
 }
 
-/* Hide minimize & maximize by default (stock GNOME) */
-.window-control.minimize,
-.window-control.maximize {
-    display: none;
-}
-
-/* Show when user enables via Settings */
-body.show-window-buttons .window-control.minimize,
-body.show-window-buttons .window-control.maximize {
-    display: flex;
-}
-
 .window-control {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+    position: relative;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    padding: 5px;
+    border-radius: var(--button_radius);
     border: none;
     background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
-    color: var(--text-disabled);
+    color: currentColor;
     cursor: pointer;
     transition:
-        background var(--transition-fast),
-        color var(--transition-fast),
-        transform var(--transition-fast);
+        background var(--button_transition),
+        box-shadow var(--button_transition),
+        transform 200ms var(--ease-out-quad);
     outline: none;
 }
 
 .window-control:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
 }
 
-@media (hover: hover) {
-    .window-control:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: var(--text-primary);
-    }
-}
-
-/* Close button */
-.window-control.close {
-    background: transparent;
-}
-
-@media (hover: hover) {
-    .window-control.close:hover {
-        background: var(--surface-3);
-        color: var(--text-primary);
-    }
-}
-
 .window-control:active {
-    opacity: 0.7;
     transform: scale(0.9);
 }
 
@@ -327,34 +318,64 @@ body.show-window-buttons .window-control.maximize {
     display: none;
 }
 
-/* Close: × shape */
-.window-control.close::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")
-        center/contain no-repeat;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")
-        center/contain no-repeat;
+.window-control.close::after {
+    mask-image: url('/icons/adwaita/window/window-close-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-close-symbolic.svg');
 }
 
-/* Minimize: horizontal line */
-.window-control.minimize::before {
-    content: '';
-    width: 10px;
-    height: 1px;
-    background: currentColor;
-    border-radius: 1px;
+.window-control.minimize::after {
+    mask-image: url('/icons/adwaita/window/window-minimize-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-minimize-symbolic.svg');
 }
 
-/* Maximize: square outline */
-.window-control.maximize::before {
+.window-control.maximize::after {
+    mask-image: url('/icons/adwaita/window/window-maximize-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-maximize-symbolic.svg');
+}
+
+.window-control.maximize.restore::after {
+    mask-image: url('/icons/adwaita/window/window-restore-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-restore-symbolic.svg');
+}
+
+.window-control::before {
     content: '';
-    width: 9px;
-    height: 9px;
-    border: 1.5px solid currentColor;
-    border-radius: 2px;
+    position: absolute;
+    inset: 4px;
+    border-radius: 100%;
+    background-color: color-mix(in srgb, currentColor 10%, transparent);
+    transition: var(--button_transition);
+}
+
+.window-control::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: currentColor;
+    opacity: 0.75;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 16px 16px;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: 16px 16px;
+    pointer-events: none;
+    transition: opacity 200ms var(--ease-out-quad);
+}
+
+@media (hover: hover) {
+    .window-control:hover::before {
+        background-color: color-mix(in srgb, currentColor 15%, transparent);
+    }
+
+    .window-control:hover::after {
+        opacity: 1;
+    }
+}
+
+.window-control:active::before {
+    background-color: color-mix(in srgb, currentColor 30%, transparent);
 }
 
 .close-btn-mobile {
@@ -362,7 +383,7 @@ body.show-window-buttons .window-control.maximize {
 }
 
 .close-btn-mobile:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
 }
 
@@ -375,8 +396,8 @@ body.show-window-buttons .window-control.maximize {
     overflow-y: auto;
     flex: 1;
     min-height: 0;
-    background: var(--window-body-bg);
-    color: var(--text-primary);
+    background: var(--window-bg-color);
+    color: var(--window-fg-color);
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
 }
@@ -393,7 +414,7 @@ body.show-window-buttons .window-control.maximize {
 .window-body::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb);
     border-radius: 999px;
-    transition: background 0.2s ease;
+    transition: background 200ms var(--ADW_EASE_IN_OUT);
 }
 
 .window-body::-webkit-scrollbar-thumb:hover {
@@ -408,13 +429,13 @@ body.show-window-buttons .window-control.maximize {
 
 .window-body h2 {
     font-size: var(--font-size-2xl);
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
     margin-bottom: var(--spacing-md);
 }
 
 .window-body h3 {
     font-size: var(--font-size-xl);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-sm);
 }
@@ -425,15 +446,15 @@ body.show-window-buttons .window-control.maximize {
 }
 
 .window-body a {
-    color: var(--accent-on-surface);
+    color: var(--accent-color);
     text-decoration: none;
-    transition: color 0.15s ease;
+    transition: color 200ms var(--ease-out-quad);
 }
 
 .window-body a:hover {
-    color: var(--accent);
+    color: var(--accent-bg-color);
     text-decoration: underline;
-    text-decoration-color: rgba(53, 132, 228, 0.4);
+    text-decoration-color: color-mix(in srgb, var(--accent-bg-color) 40%, transparent);
     text-underline-offset: 3px;
 }
 
@@ -447,12 +468,6 @@ body.show-window-buttons .window-control.maximize {
 
 .window-control.maximize {
     background: transparent;
-}
-
-.window-control.minimize:hover,
-.window-control.maximize:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--text-primary);
 }
 
 /* ============================================

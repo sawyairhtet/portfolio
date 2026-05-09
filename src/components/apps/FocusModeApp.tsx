@@ -71,7 +71,7 @@ export function FocusModeApp() {
                         title: 'Focus Session Complete',
                         body: 'Nice work. Take a short break before the next round.',
                         icon: 'fas fa-clock',
-                        iconBg: 'linear-gradient(135deg, var(--fedora-green), var(--fedora-teal))',
+                        iconBg: 'linear-gradient(135deg, var(--accent-green), var(--accent-teal))',
                         time: 'Just now',
                         group: 'Focus',
                     });

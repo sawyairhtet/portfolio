@@ -63,14 +63,38 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isOpen]);
 
+    const normalizedSearch = searchQuery.trim().toLowerCase();
+
     const filteredApps = useMemo(() => {
-        if (!searchQuery.trim()) return APP_DEFINITIONS;
+        if (!normalizedSearch) return APP_DEFINITIONS;
         const q = searchQuery.toLowerCase();
         return APP_DEFINITIONS.filter(app => {
             const searchable = [app.label, app.description, ...app.aliases].join(' ').toLowerCase();
             return searchable.includes(q);
         });
-    }, [searchQuery]);
+    }, [normalizedSearch, searchQuery]);
+
+    const openWindowEntries = useMemo(() => {
+        return Array.from(windows.entries())
+            .filter(([, w]) => w.isOpen)
+            .map(([id, windowInfo]) => ({
+                id,
+                windowInfo,
+                app: APP_DEFINITIONS.find(app => app.id === id),
+            }));
+    }, [windows]);
+
+    const filteredWindows = useMemo(() => {
+        if (!normalizedSearch) return openWindowEntries;
+        return openWindowEntries.filter(({ id, app }) => {
+            const searchable = [app?.label ?? id, app?.description ?? '', ...(app?.aliases ?? [])]
+                .join(' ')
+                .toLowerCase();
+            return searchable.includes(normalizedSearch);
+        });
+    }, [normalizedSearch, openWindowEntries]);
+
+    const dashApps = useMemo(() => APP_DEFINITIONS.filter(app => app.desktopDock), []);
 
     const handleAppClick = useCallback(
         (appId: AppId) => {
@@ -94,11 +118,6 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
         },
         [onClose]
     );
-
-    // Window thumbnails for activities view
-    const openWindowIds = Array.from(windows.entries())
-        .filter(([, w]) => w.isOpen)
-        .map(([id]) => id);
 
     return (
         <div
@@ -131,14 +150,15 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                 />
             </div>
 
-            <div className="activities-main">
-                <div className="activities-windows">
-                    {openWindowIds.length === 0 ? (
-                        <div className="activities-no-windows">No open windows</div>
-                    ) : (
-                        openWindowIds.map(id => {
-                            const app = APP_DEFINITIONS.find(a => a.id === id);
-                            return (
+            <div className="activities-stage">
+                <div className="activities-main">
+                    <div className="activities-windows">
+                        {filteredWindows.length === 0 ? (
+                            <div className="activities-no-windows">
+                                {normalizedSearch ? 'No matching windows' : 'No open windows'}
+                            </div>
+                        ) : (
+                            filteredWindows.map(({ id, app, windowInfo }) => (
                                 <button
                                     key={id}
                                     type="button"
@@ -149,42 +169,94 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                                     }}
                                     aria-label={`Switch to ${app?.label || id}`}
                                 >
-                                    <i
-                                        className={app?.icon || 'fas fa-window-maximize'}
-                                        aria-hidden="true"
-                                    />
+                                    <span className="activities-window-preview" aria-hidden="true">
+                                        <span className="activities-window-header" />
+                                        <span className="activities-window-content">
+                                            <i
+                                                className={app?.icon || 'fas fa-window-maximize'}
+                                                aria-hidden="true"
+                                            />
+                                        </span>
+                                    </span>
                                     <span className="activities-thumb-title">
                                         {app?.label || id}
                                     </span>
-                                    <small>
-                                        {windows.get(id)?.isMinimized ? 'Minimized' : 'Open'}
-                                    </small>
+                                    <small>{windowInfo.isMinimized ? 'Minimized' : 'Open'}</small>
                                 </button>
-                            );
-                        })
-                    )}
+                            ))
+                        )}
+                    </div>
                 </div>
+
+                <aside className="activities-workspace-switcher" aria-label="Workspaces">
+                    <button
+                        type="button"
+                        className="activities-workspace active"
+                        aria-current="true"
+                    >
+                        <span />
+                    </button>
+                    <button type="button" className="activities-workspace">
+                        <span />
+                    </button>
+                    <button type="button" className="activities-workspace">
+                        <span />
+                    </button>
+                </aside>
+            </div>
+
+            <div className="activities-dash" role="toolbar" aria-label="Dash">
+                {dashApps.map(app => {
+                    const isActive = windows.get(app.id)?.isOpen ?? false;
+                    return (
+                        <button
+                            key={app.id}
+                            type="button"
+                            className={`activities-dash-item${isActive ? ' active' : ''}`}
+                            data-app={app.id}
+                            aria-label={app.label}
+                            onClick={() => handleAppClick(app.id)}
+                        >
+                            <span style={{ background: app.gradient }}>
+                                <i className={app.icon} aria-hidden="true" />
+                            </span>
+                        </button>
+                    );
+                })}
+                <button
+                    type="button"
+                    className="activities-dash-item show-apps active"
+                    aria-label="Show Apps"
+                >
+                    <span>
+                        <i className="fas fa-grip" aria-hidden="true" />
+                    </span>
+                </button>
             </div>
 
             <div className="activities-app-grid">
-                {filteredApps.map(app => (
-                    <button
-                        key={app.id}
-                        type="button"
-                        className="activities-app-item"
-                        data-app={app.id}
-                        onClick={() => handleAppClick(app.id)}
-                    >
-                        <div className="activities-app-icon" style={{ background: app.gradient }}>
-                            <i className={app.icon} aria-hidden="true" />
-                        </div>
-                        <span className="activities-app-label">{app.label}</span>
-                    </button>
-                ))}
-                {filteredApps.length === 0 && (
+                {filteredApps.length === 0 ? (
                     <div className="activities-empty-search" role="status">
                         No matching apps
                     </div>
+                ) : (
+                    filteredApps.map(app => (
+                        <button
+                            key={app.id}
+                            type="button"
+                            className="activities-app-item"
+                            data-app={app.id}
+                            onClick={() => handleAppClick(app.id)}
+                        >
+                            <div
+                                className="activities-app-icon"
+                                style={{ background: app.gradient }}
+                            >
+                                <i className={app.icon} aria-hidden="true" />
+                            </div>
+                            <span className="activities-app-label">{app.label}</span>
+                        </button>
+                    ))
                 )}
             </div>
         </div>

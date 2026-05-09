@@ -30,9 +30,9 @@
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity 0.2s ease,
-        transform 0.2s ease,
-        visibility 0.2s;
+        opacity 200ms var(--ease-out-quad),
+        transform 200ms var(--ease-out-quad),
+        visibility 200ms var(--ease-out-quad);
 }
 
 [data-theme='dark'] .notification-center {
@@ -55,10 +55,10 @@
 }
 
 .notification-header-title {
-    font-size: 13px;
+    font-size: var(--font-size-base);
     font-weight: 700;
     color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
 }
 
 .notification-header-actions {
@@ -87,13 +87,13 @@
 }
 
 .dnd-toggle:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: color-mix(in srgb, var(--popover-fg-color) 4%, transparent);
 }
 
 .dnd-toggle.active {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--fedora-red);
-    border-color: rgba(239, 68, 68, 0.25);
+    background: color-mix(in srgb, var(--destructive-bg-color) 10%, transparent);
+    color: var(--destructive-color);
+    border-color: color-mix(in srgb, var(--destructive-bg-color) 25%, transparent);
 }
 
 .clear-all-btn {
@@ -111,7 +111,7 @@
 }
 
 .clear-all-btn:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: color-mix(in srgb, var(--popover-fg-color) 4%, transparent);
     color: var(--text-primary);
 }
 
@@ -159,7 +159,7 @@
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
     color: var(--text-secondary);
 }
 
@@ -182,10 +182,10 @@
     display: flex;
     gap: var(--spacing-sm);
     padding: var(--spacing-sm) var(--spacing-md);
-    background: rgba(255, 255, 255, 0.02);
+    background: color-mix(in srgb, var(--popover-fg-color) 2%, transparent);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
-    animation: notificationSlideIn 0.22s var(--ease-out-expo) forwards;
+    animation: notificationSlideIn 200ms var(--ease-out-quad) forwards;
     cursor: default;
     transition:
         background var(--transition-fast),
@@ -195,7 +195,7 @@
 
 @media (hover: hover) {
     .notification-item:hover {
-        background: rgba(255, 255, 255, 0.04);
+        background: color-mix(in srgb, var(--popover-fg-color) 4%, transparent);
         border-color: var(--glass-border);
     }
 }
@@ -211,7 +211,7 @@
     font-size: 16px;
     color: var(--accent);
     flex-shrink: 0;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 4px var(--shade-color);
 }
 
 .notification-item-icon-info {
@@ -255,6 +255,27 @@
     margin-top: 2px;
 }
 
+.notification-action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    margin-top: var(--spacing-xs);
+    padding: 0 var(--spacing-sm);
+    border: 0;
+    border-radius: var(--button-radius);
+    background: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+    font: 700 var(--font-size-sm) / 120% var(--document-font-family);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
+}
+
+.notification-action:hover {
+    background: var(--accent-color);
+    transform: translateY(-1px);
+}
+
 .notification-item-dismiss {
     width: 24px;
     height: 24px;
@@ -280,8 +301,8 @@
 }
 
 .notification-item-dismiss:hover {
-    background: rgba(239, 68, 68, 0.12);
-    color: var(--fedora-red);
+    background: color-mix(in srgb, var(--destructive-bg-color) 12%, transparent);
+    color: var(--destructive-color);
 }
 
 @keyframes notificationSlideIn {

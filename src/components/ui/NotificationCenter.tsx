@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNotifications } from '../../context/NotificationContext';
+import { useWindowManager } from '../../context/WindowManagerContext';
 
 interface NotificationCenterProps {
     isOpen: boolean;
@@ -9,6 +10,7 @@ interface NotificationCenterProps {
 export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps) {
     const { notifications, dismissNotification, clearAllNotifications, isDnd, setDnd } =
         useNotifications();
+    const { openWindow } = useWindowManager();
 
     useEffect(() => {
         if (!isOpen) return;
@@ -101,6 +103,27 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                                             <div className="notification-item-time">
                                                 {item.time}
                                             </div>
+                                            {item.action && (
+                                                <button
+                                                    type="button"
+                                                    className="notification-action"
+                                                    onClick={() => {
+                                                        if (item.action?.appId) {
+                                                            openWindow(item.action.appId);
+                                                        }
+                                                        if (item.action?.href) {
+                                                            window.open(
+                                                                item.action.href,
+                                                                '_blank',
+                                                                'noopener,noreferrer'
+                                                            );
+                                                        }
+                                                        onClose();
+                                                    }}
+                                                >
+                                                    {item.action.label}
+                                                </button>
+                                            )}
                                         </div>
                                         <button
                                             type="button"

@@ -3,6 +3,7 @@ import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { useDevice } from '../../context/DeviceContext';
+import { useNotifications } from '../../context/NotificationContext';
 import { TopBar } from './TopBar';
 import { Dock } from './Dock';
 import { Wallpaper } from './Wallpaper';
@@ -13,11 +14,18 @@ import { QuickSettingsPanel } from '../ui/QuickSettingsPanel';
 import { NotificationCenter } from '../ui/NotificationCenter';
 import { ToastContainer } from '../ui/ToastContainer';
 import { ContextMenu } from '../ui/ContextMenu';
+import { DOCK_APPS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
 import type { AppId } from '../../types';
 
 const AboutApp = lazy(() =>
     import('../apps/AboutApp').then(module => ({ default: module.AboutApp }))
+);
+const BrowserApp = lazy(() =>
+    import('../apps/BrowserApp').then(module => ({ default: module.BrowserApp }))
+);
+const FilesApp = lazy(() =>
+    import('../apps/FilesApp').then(module => ({ default: module.FilesApp }))
 );
 const SkillsApp = lazy(() =>
     import('../apps/SkillsApp').then(module => ({ default: module.SkillsApp }))
@@ -33,6 +41,9 @@ const LinksApp = lazy(() =>
 );
 const TerminalApp = lazy(() =>
     import('../apps/TerminalApp').then(module => ({ default: module.TerminalApp }))
+);
+const TextEditorApp = lazy(() =>
+    import('../apps/TextEditorApp').then(module => ({ default: module.TextEditorApp }))
 );
 const SettingsApp = lazy(() =>
     import('../apps/SettingsApp').then(module => ({ default: module.SettingsApp }))
@@ -112,16 +123,21 @@ function TerminalSkeleton() {
 }
 
 export function DesktopShell() {
-    const { openWindow, windows } = useWindowManager();
+    const { openWindow, closeWindow, bringToFront, windows } = useWindowManager();
     const { playStartupDrum } = useSound();
     const { preferences } = usePreferences();
     const { device } = useDevice();
+    const { showToast } = useNotifications();
 
     const [booted, setBooted] = useState(false);
     const [activitiesOpen, setActivitiesOpen] = useState(false);
     const [quickSettingsOpen, setQuickSettingsOpen] = useState(false);
     const [notifCenterOpen, setNotifCenterOpen] = useState(false);
     const [showDockTip, setShowDockTip] = useState(false);
+    const [altTabOpen, setAltTabOpen] = useState(false);
+    const [altTabIndex, setAltTabIndex] = useState(0);
+    const [shortcutsOpen, setShortcutsOpen] = useState(false);
+    const [workspaceIndex, setWorkspaceIndex] = useState(0);
     const hasVisibleWindows = Array.from(windows.values()).some(
         win => win.isOpen && !win.isMinimized
     );
@@ -166,6 +182,14 @@ export function DesktopShell() {
         // Auto-open About window on first visit so visitors immediately know who this is
         if (isFirstVisit) {
             setTimeout(() => openWindow('about'), 600);
+            setTimeout(
+                () =>
+                    showToast('Welcome to Saw Ye Htet', 'fab fa-fedora', {
+                        label: 'View Resume',
+                        appId: 'text-editor',
+                    }),
+                1000
+            );
             setTimeout(() => setShowDockTip(true), 1800);
             setTimeout(() => setShowDockTip(false), 8000);
         }
@@ -178,22 +202,81 @@ export function DesktopShell() {
         };
         document.addEventListener('click', playOnce, { once: true });
         document.addEventListener('keydown', playOnce, { once: true });
-    }, [playStartupDrum, openWindow]);
+    }, [playStartupDrum, openWindow, showToast]);
 
     // Keyboard shortcuts
     useEffect(() => {
+        const isTypingTarget = (target: EventTarget | null) => {
+            const element = target as HTMLElement | null;
+            return Boolean(
+                element?.closest('input, textarea, select, [contenteditable="true"], .xterm')
+            );
+        };
+
         const handleKeyDown = (e: KeyboardEvent) => {
+            const openWindowIds = Array.from(windows.entries())
+                .filter(([, win]) => win.isOpen)
+                .sort(([, a], [, b]) => b.zIndex - a.zIndex)
+                .map(([id]) => id);
+
             // Super key → Activities
             if (e.key === 'Super' || (e.key === 'Meta' && !e.ctrlKey && !e.altKey && !e.shiftKey)) {
                 e.preventDefault();
                 setActivitiesOpen(prev => !prev);
             }
 
+            if (e.metaKey && /^[1-9]$/.test(e.key)) {
+                e.preventDefault();
+                const app = DOCK_APPS[Number(e.key) - 1];
+                if (app) {
+                    const win = windows.get(app.id);
+                    if (win?.isOpen) bringToFront(app.id);
+                    else openWindow(app.id);
+                }
+            }
+
+            if (e.altKey && e.key === 'Tab') {
+                e.preventDefault();
+                if (openWindowIds.length > 0) {
+                    const nextIndex = (altTabIndex + 1) % openWindowIds.length;
+                    setAltTabIndex(nextIndex);
+                    setAltTabOpen(true);
+                    bringToFront(openWindowIds[nextIndex]);
+                    window.setTimeout(() => setAltTabOpen(false), 900);
+                }
+            }
+
+            if (e.ctrlKey && e.altKey && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+                e.preventDefault();
+                setWorkspaceIndex(current =>
+                    e.key === 'ArrowRight' ? Math.min(2, current + 1) : Math.max(0, current - 1)
+                );
+            }
+
             // Escape → close overlays
             if (e.key === 'Escape') {
-                setActivitiesOpen(false);
-                setQuickSettingsOpen(false);
-                setNotifCenterOpen(false);
+                if (shortcutsOpen || activitiesOpen || quickSettingsOpen || notifCenterOpen) {
+                    setShortcutsOpen(false);
+                    setActivitiesOpen(false);
+                    setQuickSettingsOpen(false);
+                    setNotifCenterOpen(false);
+                    return;
+                }
+
+                const topWindow = openWindowIds[0];
+                if (topWindow) {
+                    closeWindow(topWindow);
+                }
+            }
+
+            if (!isTypingTarget(e.target) && e.key === '/' && !e.shiftKey) {
+                e.preventDefault();
+                openWindow('settings');
+            }
+
+            if (!isTypingTarget(e.target) && (e.key === '?' || (e.key === '/' && e.shiftKey))) {
+                e.preventDefault();
+                setShortcutsOpen(true);
             }
 
             // Alt+1/2/3 for quick access
@@ -215,7 +298,17 @@ export function DesktopShell() {
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [openWindow]);
+    }, [
+        activitiesOpen,
+        altTabIndex,
+        bringToFront,
+        closeWindow,
+        notifCenterOpen,
+        openWindow,
+        quickSettingsOpen,
+        shortcutsOpen,
+        windows,
+    ]);
 
     return (
         <>
@@ -303,7 +396,6 @@ export function DesktopShell() {
                                 )
                             )}
                         </div>
-
                     </section>
                 )}
             </main>
@@ -319,10 +411,78 @@ export function DesktopShell() {
             {/* Activities Overlay */}
             <ActivitiesOverlay isOpen={activitiesOpen} onClose={() => setActivitiesOpen(false)} />
 
+            {altTabOpen && (
+                <div className="alt-tab-switcher" role="status" aria-live="polite">
+                    {Array.from(windows.entries())
+                        .filter(([, win]) => win.isOpen)
+                        .sort(([, a], [, b]) => b.zIndex - a.zIndex)
+                        .map(([id], index) => (
+                            <div
+                                key={id}
+                                className={`alt-tab-item${index === altTabIndex ? ' active' : ''}`}
+                            >
+                                <i
+                                    className={
+                                        DOCK_APPS.find(app => app.id === id)?.icon ||
+                                        'fas fa-window-maximize'
+                                    }
+                                    aria-hidden="true"
+                                />
+                                <span>{DOCK_APPS.find(app => app.id === id)?.label || id}</span>
+                            </div>
+                        ))}
+                </div>
+            )}
+
+            {shortcutsOpen && (
+                <div className="shortcuts-cheatsheet" role="dialog" aria-modal="true">
+                    <header>
+                        <h2>Keyboard Shortcuts</h2>
+                        <button
+                            type="button"
+                            aria-label="Close"
+                            onClick={() => setShortcutsOpen(false)}
+                        >
+                            <i className="fas fa-times" aria-hidden="true" />
+                        </button>
+                    </header>
+                    <div>
+                        {[
+                            ['Super', 'Activities Overview'],
+                            ['Alt+Tab', 'Switch Windows'],
+                            ['Ctrl+Alt+←/→', 'Switch Workspace'],
+                            ['Super+1…9', 'Open Dock App'],
+                            ['Esc', 'Close Top Window'],
+                            ['/', 'Open Settings'],
+                            ['?', 'Show Shortcuts'],
+                        ].map(([keys, label]) => (
+                            <p key={keys}>
+                                <kbd>{keys}</kbd>
+                                <span>{label}</span>
+                            </p>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            <span className="sr-only" aria-live="polite">
+                Workspace {workspaceIndex + 1}
+            </span>
+
             {/* Windows */}
             <Window appId="about" title="About">
                 <Suspense fallback={<AdwaitaSkeleton />}>
                     <AboutApp />
+                </Suspense>
+            </Window>
+            <Window appId="browser" title="Firefox">
+                <Suspense fallback={<AdwaitaSkeleton />}>
+                    <BrowserApp />
+                </Suspense>
+            </Window>
+            <Window appId="files" title="Files">
+                <Suspense fallback={<AdwaitaSkeleton />}>
+                    <FilesApp />
                 </Suspense>
             </Window>
             <Window appId="skills" title="Skills">
@@ -350,6 +510,11 @@ export function DesktopShell() {
                     <TerminalApp />
                 </Suspense>
             </Window>
+            <Window appId="text-editor" title="Text Editor">
+                <Suspense fallback={<AdwaitaSkeleton />}>
+                    <TextEditorApp />
+                </Suspense>
+            </Window>
             <Window appId="settings" title="Settings">
                 <Suspense fallback={<AdwaitaSkeleton />}>
                     <SettingsApp />
@@ -362,7 +527,7 @@ export function DesktopShell() {
             </Window>
 
             {/* Dock — always visible on desktop, mobile: always visible */}
-            <Dock />
+            <Dock onShowApps={() => setActivitiesOpen(true)} />
 
             {/* Dock onboarding tooltip for first-time visitors */}
             {showDockTip && !hasVisibleWindows && (

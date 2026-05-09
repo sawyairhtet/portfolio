@@ -6,12 +6,15 @@ import { DesktopShell } from './DesktopShell';
 
 const VALID_APPS: AppId[] = [
     'about',
+    'browser',
+    'files',
     'skills',
     'projects',
     'contact',
     'links',
     'terminal',
     'settings',
+    'text-editor',
     'focus-mode',
 ];
 

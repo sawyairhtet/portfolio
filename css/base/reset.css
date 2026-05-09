@@ -27,13 +27,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb, rgba(255, 255, 255, 0.12));
+    background: var(--scrollbar-thumb, color-mix(in srgb, var(--view-fg-color) 12%, transparent));
     border-radius: 10px;
-    transition: background 0.2s ease;
+    transition: background 200ms var(--ease-in-out-quad);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover, rgba(255, 255, 255, 0.25));
+    background: var(
+        --scrollbar-thumb-hover,
+        color-mix(in srgb, var(--view-fg-color) 25%, transparent)
+    );
 }
 
 ::-webkit-scrollbar-corner {
@@ -51,8 +54,8 @@
    ============================================ */
 
 ::selection {
-    background: rgba(53, 132, 228, 0.35);
-    color: #fff;
+    background: color-mix(in srgb, var(--accent-bg-color) 35%, transparent);
+    color: var(--accent-fg-color);
 }
 
 button {
@@ -111,10 +114,10 @@ body {
 .focus-preset-btn:focus-visible,
 .focus-btn:focus-visible,
 .mobile-launcher-item:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
     border-radius: var(--border-radius-sm);
-    box-shadow: 0 0 0 4px var(--accent-subtle);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
 }
 
 /* Universal fallback for any missed interactive elements */

@@ -1,9 +1,9 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
-import type { AppId, WindowInfo } from '../types';
+import type { AppId, LaunchOrigin, WindowInfo } from '../types';
 
 interface WindowManagerContextValue {
     windows: Map<AppId, WindowInfo>;
-    openWindow: (appId: AppId) => void;
+    openWindow: (appId: AppId, launchOrigin?: LaunchOrigin) => void;
     closeWindow: (appId: AppId) => void;
     minimizeWindow: (appId: AppId) => void;
     toggleMaximize: (appId: AppId) => void;
@@ -29,29 +29,35 @@ const WindowManagerContext = createContext<WindowManagerContextValue>({
 
 const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
     about: { top: '8%', left: 'calc(50% - 360px)' },
+    browser: { top: '6%', left: 'calc(50% - 430px)' },
+    files: { top: '7%', left: 'calc(50% - 390px)' },
     skills: { top: '10%', left: 'calc(50% - 325px)' },
     projects: { top: '8%', left: 'calc(50% - 390px)' },
     contact: { top: '12%', left: 'calc(50% - 275px)' },
     links: { top: '14%', left: 'calc(50% - 200px)' },
     terminal: { top: '10%', left: 'calc(50% - 350px)' },
     settings: { top: '8%', left: 'calc(50% - 375px)' },
+    'text-editor': { top: '9%', left: 'calc(50% - 360px)' },
     'focus-mode': { top: '10%', left: 'calc(50% - 430px)' },
 };
 
 const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
     about: { width: '720px', height: '600px' },
+    browser: { width: '860px', height: '620px' },
+    files: { width: '780px', height: '560px' },
     skills: { width: '650px', height: '550px' },
     projects: { width: '780px', height: '580px' },
     contact: { width: '550px', height: '560px' },
     links: { width: '400px', height: '350px' },
     terminal: { width: '700px', height: '450px' },
     settings: { width: '750px', height: '550px' },
+    'text-editor': { width: '720px', height: '560px' },
     'focus-mode': { width: '860px', height: '560px' },
 };
 
 const MAXIMIZED_Z_FLOOR = 1050;
 
-function createWindowInfo(appId: AppId, zIndex: number): WindowInfo {
+function createWindowInfo(appId: AppId, zIndex: number, launchOrigin?: LaunchOrigin): WindowInfo {
     return {
         appId,
         isOpen: true,
@@ -61,6 +67,7 @@ function createWindowInfo(appId: AppId, zIndex: number): WindowInfo {
         position: DEFAULT_POSITIONS[appId] || { top: '10%', left: '10%' },
         size: DEFAULT_SIZES[appId] || { width: '600px', height: '450px' },
         snapState: 'none',
+        launchOrigin,
     };
 }
 
@@ -72,7 +79,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
     const [focusedApp, setFocusedApp] = useState<AppId | null>(null);
     const { windows } = managerState;
 
-    const openWindow = useCallback((appId: AppId) => {
+    const openWindow = useCallback((appId: AppId, launchOrigin?: LaunchOrigin) => {
         setManagerState(prev => {
             const nextZ = prev.currentZIndex + 1;
             const next = new Map(prev.windows);
@@ -85,9 +92,10 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                     isOpen: true,
                     isMinimized: false,
                     zIndex: nextZ,
+                    launchOrigin,
                 });
             } else {
-                next.set(appId, createWindowInfo(appId, nextZ));
+                next.set(appId, createWindowInfo(appId, nextZ, launchOrigin));
             }
 
             return { windows: next, currentZIndex: nextZ };

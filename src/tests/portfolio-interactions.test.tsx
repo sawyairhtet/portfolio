@@ -222,7 +222,7 @@ describe('Portfolio React interactions', () => {
         expect(screen.getByRole('heading', { name: 'Windows' })).toBeInTheDocument();
 
         await user.click(screen.getByRole('button', { name: 'Appearance' }));
-        await user.click(screen.getByRole('button', { name: 'GNOME Dark' }));
+        await user.click(screen.getByRole('button', { name: 'GNOME 49 Adwaita' }));
 
         expect(document.querySelector('.wallpaper')).toHaveClass('custom-wallpaper');
     });
@@ -239,7 +239,9 @@ describe('Portfolio React interactions', () => {
         await user.click(screen.getByRole('button', { name: 'Green' }));
 
         await waitFor(() =>
-            expect(document.documentElement.style.getPropertyValue('--accent')).toBe('#2ec27e')
+            expect(document.documentElement.style.getPropertyValue('--accent-bg-color')).toBe(
+                'var(--accent-green)'
+            )
         );
     });
 

@@ -5,7 +5,11 @@
 .about-hero {
     text-align: center;
     padding: var(--spacing-xl) var(--spacing-lg);
-    background: linear-gradient(180deg, rgba(53, 132, 228, 0.08) 0%, var(--surface-2) 50%);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent-bg-color) 8%, transparent) 0%,
+        var(--surface-2) 50%
+    );
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
     margin-bottom: var(--spacing-lg);
@@ -29,13 +33,13 @@
     position: relative;
     z-index: 1;
     transition:
-        transform 0.4s var(--ease-spring),
-        box-shadow 0.4s var(--ease-out-expo);
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .about-avatar:hover {
     transform: scale(1.03);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--dark-5) 22%, transparent);
 }
 
 .avatar-fallback {
@@ -115,9 +119,9 @@
     text-decoration: none;
     cursor: pointer;
     transition:
-        transform 0.2s var(--ease-spring),
-        box-shadow 0.2s var(--ease-out-expo),
-        filter 0.2s ease;
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad),
+        filter 200ms var(--ease-in-out-quad);
 }
 
 .about-cta-primary {
@@ -141,7 +145,7 @@
 
 .about-cta-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px color-mix(in srgb, var(--dark-5) 30%, transparent);
     filter: brightness(1.1);
 }
 
@@ -173,13 +177,13 @@
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
     transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 @media (hover: hover) {
     .about-section:hover {
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: color-mix(in srgb, var(--view-fg-color) 10%, transparent);
         box-shadow: var(--shadow-md);
     }
 }
@@ -263,8 +267,8 @@
     gap: 8px;
     padding: 6px 16px;
     border-radius: 999px;
-    background: rgba(51, 209, 122, 0.1);
-    border: 1px solid rgba(51, 209, 122, 0.25);
+    background: color-mix(in srgb, var(--success-bg-color) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--success-bg-color) 25%, transparent);
     font-size: 13px;
     font-weight: 600;
     color: var(--fedora-green);
@@ -277,7 +281,7 @@
     height: 8px;
     border-radius: 50%;
     background: var(--fedora-green);
-    animation: contactPulse 2s ease-in-out infinite;
+    animation: contactPulse 2s var(--ease-in-out-quad) infinite;
 }
 
 @keyframes contactPulse {
@@ -310,17 +314,17 @@
     font-family: var(--font-ui);
     cursor: pointer;
     transition:
-        border-color 0.25s ease,
-        background 0.25s ease,
-        transform 0.2s var(--ease-spring),
-        box-shadow 0.25s ease;
+        border-color 200ms var(--ease-in-out-quad),
+        background 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .contact-chip:hover {
     border-color: var(--accent-subtle);
     background: var(--surface-2);
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--dark-5) 15%, transparent);
 }
 
 .contact-chip.primary {
@@ -344,8 +348,8 @@
     color: var(--accent);
     font-size: 15px;
     transition:
-        background 0.2s ease,
-        color 0.2s ease;
+        background 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad);
 }
 
 .contact-chip:hover > i {
@@ -393,9 +397,9 @@
     font-weight: 600;
     text-decoration: none;
     transition:
-        border-color 0.2s ease,
-        background 0.2s ease,
-        transform 0.15s var(--ease-spring);
+        border-color 200ms var(--ease-in-out-quad),
+        background 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .contact-social-btn i {
@@ -472,7 +476,7 @@
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0;
 }
 
 .form-group input,
@@ -486,9 +490,9 @@
     font-size: 14px;
     outline: none;
     transition:
-        border-color 0.2s var(--ease-out-expo),
-        box-shadow 0.2s var(--ease-out-expo),
-        background 0.2s ease;
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad),
+        background 200ms var(--ease-in-out-quad);
 }
 
 .form-group input:focus,
@@ -523,9 +527,9 @@
     font-weight: 600;
     cursor: pointer;
     transition:
-        transform 0.2s var(--ease-spring),
-        background 0.2s ease,
-        filter 0.2s ease;
+        transform 200ms var(--ease-out-quad),
+        background 200ms var(--ease-in-out-quad),
+        filter 200ms var(--ease-in-out-quad);
 }
 
 .contact-submit-btn:hover {
@@ -554,16 +558,16 @@
 
 .form-status.success {
     color: var(--fedora-green);
-    background: rgba(34, 197, 94, 0.08);
+    background: color-mix(in srgb, var(--success-bg-color) 8%, transparent);
     padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid color-mix(in srgb, var(--success-bg-color) 20%, transparent);
 }
 
 .form-status.error {
     color: var(--fedora-red);
-    background: rgba(239, 68, 68, 0.08);
+    background: color-mix(in srgb, var(--error-bg-color) 8%, transparent);
     padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    border: 1px solid color-mix(in srgb, var(--error-bg-color) 20%, transparent);
 }
 
 .projects-grid {
@@ -578,17 +582,17 @@
     padding: var(--spacing-md);
     border: 1px solid var(--border-color);
     transition:
-        transform 0.3s var(--ease-spring),
-        box-shadow 0.3s var(--ease-out-expo),
-        border-color 0.3s ease;
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad),
+        border-color 200ms var(--ease-in-out-quad);
     cursor: pointer;
 }
 
 @media (hover: hover) {
     .project-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
-        border-color: rgba(53, 132, 228, 0.25);
+        box-shadow: 0 10px 30px color-mix(in srgb, var(--dark-5) 28%, transparent);
+        border-color: color-mix(in srgb, var(--accent-bg-color) 25%, transparent);
     }
 }
 
@@ -609,8 +613,8 @@
 
 /* Project-specific preview backgrounds */
 [data-project='fedora-portfolio'] .project-preview {
-    background: linear-gradient(135deg, #1a2a4a 0%, #0f2040 100%);
-    color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(135deg, var(--blue-5) 0%, var(--dark-4) 100%);
+    color: color-mix(in srgb, var(--light-1) 70%, transparent);
 }
 
 .project-preview img {
@@ -649,7 +653,7 @@
     border-radius: 6px;
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.01em;
+    letter-spacing: 0;
     border: 1px solid var(--accent-subtle);
 }
 
@@ -673,24 +677,24 @@
     text-decoration: none;
     color: inherit;
     transition:
-        transform 0.3s var(--ease-spring),
-        box-shadow 0.3s var(--ease-out-expo),
-        border-color 0.3s ease;
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad),
+        border-color 200ms var(--ease-in-out-quad);
 }
 
 .social-link i {
     font-size: 24px;
     color: var(--accent);
     transition:
-        transform 0.3s var(--ease-spring),
-        color 0.3s ease;
+        transform 200ms var(--ease-out-quad),
+        color 200ms var(--ease-in-out-quad);
 }
 
 @media (hover: hover) {
     .social-link:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
-        border-color: rgba(53, 132, 228, 0.25);
+        box-shadow: 0 10px 26px color-mix(in srgb, var(--dark-5) 22%, transparent);
+        border-color: color-mix(in srgb, var(--accent-bg-color) 25%, transparent);
     }
 
     .social-link:hover i {
@@ -714,7 +718,7 @@
     border-radius: 6px;
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.02em;
+    letter-spacing: 0;
     text-transform: uppercase;
     background: var(--accent-subtle);
     color: var(--accent-on-surface);
@@ -722,7 +726,11 @@
 }
 
 [data-theme='light'] .about-hero {
-    background: linear-gradient(180deg, rgba(53, 132, 228, 0.06) 0%, var(--surface-2) 50%);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent-bg-color) 6%, transparent) 0%,
+        var(--surface-2) 50%
+    );
 }
 
 /* WIP Badge */
@@ -732,12 +740,12 @@
     gap: 5px;
     padding: 3px 8px;
     border-radius: 6px;
-    background: rgba(246, 211, 45, 0.12);
-    border: 1px solid rgba(246, 211, 45, 0.25);
+    background: color-mix(in srgb, var(--warning-bg-color) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--warning-bg-color) 25%, transparent);
     color: var(--fedora-yellow);
     font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.04em;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 
@@ -759,7 +767,7 @@
     height: 8px;
     border-radius: 50%;
     background: var(--surface-3);
-    transition: background 0.2s ease;
+    transition: background 200ms var(--ease-in-out-quad);
 }
 
 .proficiency-dots .dot.filled {
@@ -771,7 +779,7 @@
     font-weight: 700;
     color: var(--text-secondary);
     text-transform: capitalize;
-    letter-spacing: 0.02em;
+    letter-spacing: 0;
 }
 
 /* ============================================
@@ -812,9 +820,9 @@
     font-size: 13px;
     font-weight: 700;
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.15s var(--ease-spring);
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .about-recruiter-path button:hover {
@@ -834,7 +842,7 @@
     padding: 14px 16px;
     background: var(--surface-1);
     min-width: 0;
-    transition: background 0.2s ease;
+    transition: background 200ms var(--ease-in-out-quad);
 }
 
 .summary-row:hover {
@@ -847,7 +855,7 @@
     font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
 }
 
 .summary-row strong {
@@ -872,11 +880,11 @@
     gap: var(--spacing-md);
     padding: 14px var(--spacing-lg);
     border-top: 1px solid var(--border-color);
-    transition: background 0.2s ease;
+    transition: background 200ms var(--ease-in-out-quad);
 }
 
 .about-grouped-row:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: color-mix(in srgb, var(--view-fg-color) 2%, transparent);
 }
 
 .about-grouped-row p {
@@ -902,8 +910,8 @@
     background: var(--surface-1);
     overflow: hidden;
     transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .skill-category:hover {
@@ -926,7 +934,7 @@
 .skill-category-header h3,
 .skill-row-card h4 {
     margin: 0;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
 }
 
 .skill-row-list {
@@ -941,11 +949,11 @@
     min-width: 0;
     padding: 14px var(--spacing-lg);
     border-top: 1px solid var(--border-color);
-    transition: background 0.2s ease;
+    transition: background 200ms var(--ease-in-out-quad);
 }
 
 .skill-row-card:hover {
-    background: rgba(255, 255, 255, 0.015);
+    background: color-mix(in srgb, var(--view-fg-color) 1.5%, transparent);
 }
 
 .skill-row-card > div {
@@ -1056,9 +1064,9 @@
     gap: 7px;
     min-height: 30px;
     padding: 5px 10px;
-    border: 1px solid rgba(51, 209, 122, 0.25);
+    border: 1px solid color-mix(in srgb, var(--success-bg-color) 25%, transparent);
     border-radius: 999px;
-    background: rgba(51, 209, 122, 0.1);
+    background: color-mix(in srgb, var(--success-bg-color) 10%, transparent);
     color: var(--fedora-green);
     font-size: 12px;
     font-weight: 700;
@@ -1084,7 +1092,7 @@
     color: var(--text-secondary);
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     line-height: 1.3;
     text-transform: uppercase;
 }
@@ -1106,8 +1114,8 @@
     color: var(--text-primary);
     text-decoration: none;
     transition:
-        background 0.16s ease,
-        border-color 0.16s ease;
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad);
 }
 
 .adw-row + .adw-row {
@@ -1127,23 +1135,23 @@
 }
 
 .adw-icon-blue {
-    color: #99c1f1;
-    background: rgba(53, 132, 228, 0.16);
+    color: var(--blue-1);
+    background: color-mix(in srgb, var(--accent-bg-color) 16%, transparent);
 }
 
 .adw-icon-purple {
-    color: #dc8add;
-    background: rgba(145, 65, 172, 0.18);
+    color: var(--purple-1);
+    background: color-mix(in srgb, var(--accent-purple) 18%, transparent);
 }
 
 .adw-icon-green {
-    color: #57e389;
-    background: rgba(51, 209, 122, 0.14);
+    color: var(--green-2);
+    background: color-mix(in srgb, var(--success-bg-color) 14%, transparent);
 }
 
 .adw-icon-orange {
-    color: #ffa348;
-    background: rgba(255, 120, 0, 0.16);
+    color: var(--orange-2);
+    background: color-mix(in srgb, var(--orange-3) 16%, transparent);
 }
 
 .adw-icon-neutral {
@@ -1193,10 +1201,10 @@
     color: var(--text-secondary);
     text-decoration: none;
     transition:
-        background 0.16s ease,
-        border-color 0.16s ease,
-        color 0.16s ease,
-        transform 0.12s var(--ease-spring);
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .adw-row-icon-btn:hover {
@@ -1230,13 +1238,13 @@
     line-height: 1.2;
     text-decoration: none;
     transition:
-        background 0.16s ease,
-        border-color 0.16s ease,
-        transform 0.12s var(--ease-spring);
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .adw-btn:hover {
-    border-color: rgba(255, 255, 255, 0.22);
+    border-color: color-mix(in srgb, var(--view-fg-color) 22%, transparent);
     background: var(--surface-3);
     transform: translateY(-1px);
 }
@@ -1306,9 +1314,9 @@
     line-height: 1.4;
     outline: none;
     transition:
-        border-color 0.16s ease,
-        box-shadow 0.16s ease,
-        background 0.16s ease;
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad),
+        background 200ms var(--ease-in-out-quad);
 }
 
 .adw-form input {
@@ -1360,15 +1368,15 @@
 }
 
 .adw-banner-success {
-    border: 1px solid rgba(51, 209, 122, 0.24);
-    background: rgba(51, 209, 122, 0.1);
+    border: 1px solid color-mix(in srgb, var(--success-bg-color) 24%, transparent);
+    background: color-mix(in srgb, var(--success-bg-color) 10%, transparent);
     color: var(--fedora-green);
 }
 
 .adw-banner-error {
-    border: 1px solid rgba(224, 27, 36, 0.28);
-    background: rgba(224, 27, 36, 0.1);
-    color: #ff7b7b;
+    border: 1px solid color-mix(in srgb, var(--error-bg-color) 28%, transparent);
+    background: color-mix(in srgb, var(--error-bg-color) 10%, transparent);
+    color: var(--error-color);
 }
 
 .adw-featured-project,
@@ -1389,8 +1397,12 @@
     position: relative;
     overflow: hidden;
     background:
-        radial-gradient(circle at 20% 20%, rgba(120, 174, 237, 0.22), transparent 34%),
-        linear-gradient(135deg, #1b345f 0%, #15324a 45%, #0f5132 100%);
+        radial-gradient(
+            circle at 20% 20%,
+            color-mix(in srgb, var(--blue-2) 22%, transparent),
+            transparent 34%
+        ),
+        linear-gradient(135deg, var(--blue-5) 0%, var(--dark-4) 45%, var(--green-5) 100%);
 }
 
 .adw-featured-media {
@@ -1410,7 +1422,7 @@
     place-items: center;
     height: 100%;
     min-height: 220px;
-    color: rgba(255, 255, 255, 0.82);
+    color: color-mix(in srgb, var(--light-1) 82%, transparent);
     text-align: center;
 }
 
@@ -1427,7 +1439,7 @@
 .adw-featured-media-fallback span {
     font-size: 12px;
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 
@@ -1441,10 +1453,10 @@
     gap: 6px;
     min-height: 28px;
     padding: 5px 9px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid color-mix(in srgb, var(--light-1) 16%, transparent);
     border-radius: 999px;
-    background: rgba(20, 20, 24, 0.78);
-    color: rgba(255, 255, 255, 0.9);
+    background: color-mix(in srgb, var(--view-bg-color) 78%, transparent);
+    color: color-mix(in srgb, var(--light-1) 90%, transparent);
     font-size: 11px;
     font-weight: 800;
     backdrop-filter: blur(8px);
@@ -1511,7 +1523,7 @@
     color: var(--text-secondary);
     font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     line-height: 1.2;
     text-transform: uppercase;
 }
@@ -1652,12 +1664,12 @@
     background: var(--surface-1);
     overflow: hidden;
     transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .project-card-v2:hover {
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: color-mix(in srgb, var(--view-fg-color) 10%, transparent);
     box-shadow: var(--shadow-md);
 }
 
@@ -1742,9 +1754,9 @@
     color: var(--text-secondary);
     cursor: pointer;
     transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s var(--ease-spring);
+        background 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .project-expand-btn:hover {
@@ -1763,9 +1775,9 @@
     overflow: hidden;
     padding: 0 var(--spacing-lg);
     transition:
-        max-height 0.35s var(--ease-out-expo),
-        opacity 0.25s ease,
-        padding 0.3s ease;
+        max-height 400ms var(--ease-out-quad),
+        opacity 200ms var(--ease-out-quad),
+        padding 200ms var(--ease-in-out-quad);
 }
 
 .project-card-v2.expanded .project-card-body {
@@ -1827,7 +1839,7 @@
     color: var(--text-secondary);
     font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 
@@ -1863,9 +1875,9 @@
     font-size: 13px;
     text-decoration: none;
     transition:
-        border-color 0.2s ease,
-        background 0.2s ease,
-        transform 0.15s var(--ease-spring);
+        border-color 200ms var(--ease-in-out-quad),
+        background 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .project-action:hover {
@@ -1931,7 +1943,7 @@
     flex-shrink: 0;
     border-radius: var(--border-radius-md);
     background: var(--surface-3);
-    transition: background 0.2s ease;
+    transition: background 200ms var(--ease-in-out-quad);
 }
 
 .social-link:hover .social-link-icon {
@@ -1956,7 +1968,7 @@
     margin-left: auto;
     color: var(--text-secondary);
     font-size: 13px !important;
-    transition: color 0.2s ease;
+    transition: color 200ms var(--ease-in-out-quad);
 }
 
 .social-link:hover .social-link-external {

@@ -5,8 +5,8 @@
 .dock {
     position: fixed;
     left: 50%;
-    bottom: 20px;
-    transform: translateX(-50%);
+    bottom: 0;
+    transform: translateX(-50%) translateY(calc(100% - 12px));
     width: auto;
     max-width: min(calc(100vw - 32px), 720px);
     background: var(--dock-bg);
@@ -19,16 +19,19 @@
     border: var(--dock-border);
     z-index: var(--z-dock);
     box-shadow: var(--shadow-popover);
-    opacity: 1;
+    opacity: 0.42;
     pointer-events: auto;
     transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+        opacity 200ms var(--ease-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
-[data-theme='light'] .dock {
-    border-color: rgba(0, 0, 0, 0.1);
-    box-shadow: var(--shadow-popover);
+.dock:hover,
+.dock:focus-within,
+.dock.visible,
+.mobile-dock {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 .dock-item {
@@ -43,20 +46,21 @@
     position: relative;
     color: var(--text-on-accent);
     transition:
-        filter 0.15s ease,
-        transform 0.1s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+        filter 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
+    box-shadow: 0 1px 3px 1px var(--shade-color);
     outline: none;
 }
 
 .dock-item:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-bg-color);
     outline-offset: 3px;
 }
 
 @media (hover: hover) {
     .dock-item:hover {
         filter: brightness(1.08);
+        transform: translateY(-4px) scale(1.08);
     }
 }
 
@@ -67,19 +71,23 @@
 
 /* Adwaita-style dock icon backgrounds */
 .dock-item[data-app='about'] {
-    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+    background: linear-gradient(135deg, var(--blue-2) 0%, var(--accent-blue) 100%);
+}
+
+.dock-item[data-app='files'] {
+    background: linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%);
 }
 
 .dock-item[data-app='projects'] {
-    background: linear-gradient(135deg, var(--icon-projects) 0%, var(--accent-dark) 100%);
+    background: linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%);
 }
 
 .dock-item[data-app='contact'] {
-    background: linear-gradient(135deg, var(--icon-contact) 0%, #7b2f8e 100%);
+    background: linear-gradient(135deg, var(--purple-2) 0%, var(--accent-purple) 100%);
 }
 
 .dock-item[data-app='terminal'] {
-    background: linear-gradient(135deg, var(--icon-terminal) 0%, #2ec27e 100%);
+    background: linear-gradient(135deg, var(--green-2) 0%, var(--accent-green) 100%);
 }
 
 .dock-item[data-app='settings'] {
@@ -91,7 +99,7 @@
 }
 
 .dock-item[data-app='skills'] {
-    background: linear-gradient(135deg, var(--icon-skills) 0%, var(--fedora-teal) 100%);
+    background: linear-gradient(135deg, var(--green-3) 0%, var(--accent-teal) 100%);
 }
 
 .dock-item[data-app='links'] {
@@ -102,6 +110,11 @@
     background: linear-gradient(135deg, var(--icon-focus-start) 0%, var(--icon-focus-end) 100%);
 }
 
+.dock-item[data-app='apps'] {
+    background: color-mix(in srgb, var(--dock-bg) 82%, var(--dock-active-dot));
+    color: var(--text-primary);
+}
+
 /* Active bar indicator (GNOME dash style) */
 .dock-item.active::after {
     content: '';
@@ -109,16 +122,16 @@
     bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 18px;
-    height: 3px;
-    border-radius: 2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
     background: var(--dock-active-dot);
 }
 
 .dock-separator {
     width: 1px;
     align-self: stretch;
-    background: rgba(255, 255, 255, 0.08);
+    background: color-mix(in srgb, currentColor 8%, transparent);
     margin: 6px 8px;
 }
 
@@ -131,8 +144,8 @@
     left: 50%;
     bottom: calc(100% + 10px);
     transform: translateX(-50%) translateY(4px);
-    background: var(--surface-3);
-    color: var(--text-primary);
+    background: var(--popover-bg-color);
+    color: var(--popover-fg-color);
     padding: 5px 10px;
     border-radius: var(--border-radius-sm);
     font-size: 12px;
@@ -143,9 +156,9 @@
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity 0.15s ease,
-        visibility 0.15s ease,
-        transform 0.15s ease;
+        opacity 200ms var(--ease-out-quad),
+        visibility 200ms var(--ease-out-quad),
+        transform 200ms var(--ease-out-quad);
     z-index: 1001;
     pointer-events: none;
 }
@@ -194,7 +207,7 @@
     align-items: center;
     gap: 10px;
     padding: 10px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     background: var(--surface-2);
     color: var(--text-primary);
@@ -203,7 +216,7 @@
     box-shadow: var(--shadow-popover);
     white-space: nowrap;
     pointer-events: auto;
-    animation: dockTipIn 0.4s var(--ease-out-expo) forwards;
+    animation: dockTipIn 400ms var(--ease-out-quad) forwards;
 }
 
 .dock-onboarding-tip::after {
@@ -215,8 +228,8 @@
     width: 10px;
     height: 10px;
     background: var(--surface-2);
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .dock-tip-dismiss {
@@ -226,15 +239,15 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
+    background: color-mix(in srgb, currentColor 8%, transparent);
     color: var(--text-secondary);
     font-size: 10px;
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: background 200ms var(--ease-in-out-quad);
 }
 
 .dock-tip-dismiss:hover {
-    background: rgba(255, 255, 255, 0.16);
+    background: color-mix(in srgb, currentColor 16%, transparent);
 }
 
 @keyframes dockTipIn {
@@ -246,23 +259,6 @@
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
-}
-
-[data-theme='light'] .dock-onboarding-tip {
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme='light'] .dock-onboarding-tip::after {
-    border-right-color: rgba(0, 0, 0, 0.1);
-    border-bottom-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme='light'] .dock-tip-dismiss {
-    background: rgba(0, 0, 0, 0.06);
-}
-
-[data-theme='light'] .dock-tip-dismiss:hover {
-    background: rgba(0, 0, 0, 0.12);
 }
 
 @media (prefers-reduced-motion: reduce) {

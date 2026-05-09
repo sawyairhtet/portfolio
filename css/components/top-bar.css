@@ -18,8 +18,8 @@
     color: var(--text-primary);
     border-bottom: 1px solid var(--border-subtle);
     transition:
-        background 0.2s ease,
-        color 0.2s ease;
+        background 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad);
 }
 
 /* Subtle bottom shadow for depth separation from desktop */
@@ -62,7 +62,7 @@
     align-items: center;
     font-weight: 600;
     font-size: 13px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0;
 }
 
 /* Right section: System tray */
@@ -136,13 +136,13 @@
 }
 
 .activities-btn:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px var(--accent-subtle);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
 }
 
 .activities-btn.active {
-    background: rgba(53, 132, 228, 0.18);
+    background: color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
 }
 
 .activities-btn.active::before,
@@ -152,7 +152,7 @@
 
 @media (hover: hover) {
     .activities-btn:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
     }
     .activities-btn:hover::before,
     .activities-btn:hover::after {
@@ -160,20 +160,20 @@
     }
 
     [data-theme='light'] .activities-btn:hover {
-        background: rgba(0, 0, 0, 0.06);
+        background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
     }
 }
 
 [data-theme='dark'] .activities-btn.active {
-    background: rgba(53, 132, 228, 0.2);
+    background: color-mix(in srgb, var(--accent-bg-color) 20%, transparent);
 }
 
 [data-theme='dark'] .activities-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
 }
 
 [data-theme='light'] .activities-btn.active {
-    background: rgba(53, 132, 228, 0.14);
+    background: color-mix(in srgb, var(--accent-bg-color) 14%, transparent);
 }
 
 /* Pill Styling for Top Bar Items */
@@ -192,15 +192,15 @@
 
 @media (hover: hover) {
     .pill:hover {
-        background: rgba(255, 255, 255, 0.06);
+        background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
     }
 
     [data-theme='dark'] .pill:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
     }
 
     [data-theme='light'] .pill:hover {
-        background: rgba(0, 0, 0, 0.05);
+        background: color-mix(in srgb, var(--view-fg-color) 5%, transparent);
     }
 }
 
@@ -229,11 +229,11 @@
 
 /* Clock */
 .menu-clock[aria-expanded='true'] {
-    background: rgba(53, 132, 228, 0.12) !important;
+    background: color-mix(in srgb, var(--accent-bg-color) 12%, transparent) !important;
 }
 
 [data-theme='dark'] .menu-clock[aria-expanded='true'] {
-    background: rgba(53, 132, 228, 0.16) !important;
+    background: color-mix(in srgb, var(--accent-bg-color) 16%, transparent) !important;
 }
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */
@@ -253,9 +253,9 @@
 /* Focus-visible for clock and status-menu pills */
 .menu-clock:focus-visible,
 .status-menu:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px var(--accent-subtle);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
     border-radius: var(--border-radius-sm);
 }
 
@@ -268,4 +268,3 @@
         transition: none;
     }
 }
-

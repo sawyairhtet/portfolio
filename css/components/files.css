@@ -1,0 +1,214 @@
+/* ============================================
+   Files — GNOME 49 Nautilus-inspired layout
+   ============================================ */
+
+.files-app {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    margin: calc(var(--spacing-lg) * -1);
+    background: var(--view-bg-color);
+    color: var(--view-fg-color);
+}
+
+.files-sidebar {
+    width: 190px;
+    flex: 0 0 190px;
+    padding: 9px;
+    border-right: 1px solid var(--sidebar-border-color);
+    background: var(--sidebar-bg-color);
+    color: var(--sidebar-fg-color);
+}
+
+.files-sidebar-row {
+    display: flex;
+    width: 100%;
+    min-height: 36px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    border-radius: var(--button_radius);
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
+.files-sidebar-row:hover {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.files-sidebar-row.active {
+    background: var(--active-toggle-bg-color);
+    color: var(--active-toggle-fg-color);
+    font-weight: 700;
+}
+
+.files-view {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+}
+
+.files-toolbar {
+    display: flex;
+    min-height: 47px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 9px 7px;
+    background: var(--headerbar-bg-color);
+    box-shadow: inset 0 -1px var(--headerbar-shade-color);
+}
+
+.files-pathbar,
+.files-view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.files-pathbar button,
+.files-view-toggle button {
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: var(--button_radius);
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    color: inherit;
+    font: inherit;
+    font-weight: 700;
+}
+
+.files-view-toggle button {
+    min-width: 34px;
+    padding: 0;
+}
+
+.files-view-toggle button.active {
+    background: var(--active-toggle-bg-color);
+    color: var(--active-toggle-fg-color);
+}
+
+.files-list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 8px;
+}
+
+.files-list-header,
+.files-row {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) 128px 80px;
+    align-items: center;
+    gap: 12px;
+    min-height: 36px;
+    padding: 0 12px;
+}
+
+.files-list-header {
+    color: color-mix(in srgb, var(--view-fg-color) var(--dim-opacity), transparent);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+}
+
+.files-row {
+    width: 100%;
+    border-radius: var(--button_radius);
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
+.files-row:hover {
+    background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.files-row.selected {
+    background: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+}
+
+.files-name {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+}
+
+.files-name > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.files-name i {
+    width: 20px;
+    color: var(--accent-color);
+}
+
+.files-row.selected .files-name i {
+    color: inherit;
+}
+
+.files-list.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+    align-content: start;
+    gap: 12px;
+    padding: 18px;
+}
+
+.files-list.grid .files-row {
+    display: flex;
+    min-height: 112px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.files-list.grid .files-row > span:not(.files-name) {
+    display: none;
+}
+
+.files-list.grid .files-name {
+    flex-direction: column;
+}
+
+.files-list.grid .files-name i {
+    width: auto;
+    font-size: 32px;
+}
+
+@container app-window (max-width: 620px) {
+    .files-app {
+        flex-direction: column;
+    }
+
+    .files-sidebar {
+        display: flex;
+        width: 100%;
+        flex: 0 0 auto;
+        gap: 6px;
+        overflow-x: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--sidebar-border-color);
+    }
+
+    .files-sidebar-row {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .files-list-header,
+    .files-row {
+        grid-template-columns: minmax(160px, 1fr) 90px;
+    }
+
+    .files-list-header span:last-child,
+    .files-row > span:last-child {
+        display: none;
+    }
+}

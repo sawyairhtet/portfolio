@@ -20,7 +20,7 @@
 
 .context-menu.visible {
     display: block;
-    animation: contextMenuIn 0.18s var(--ease-out-expo);
+    animation: contextMenuIn 200ms var(--ease-out-quad);
     transform-origin: top left;
 }
 
@@ -38,21 +38,21 @@
     background: transparent;
     color: var(--text-primary);
     transition:
-        background 0.12s ease,
-        color 0.12s ease;
+        background 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad);
     margin: 0 4px;
     border-radius: var(--border-radius-sm);
 }
 
 @media (hover: hover) {
     .context-menu-item:hover {
-        background: rgba(53, 132, 228, 0.1);
+        background: color-mix(in srgb, var(--accent-bg-color) 10%, transparent);
         color: var(--text-primary);
     }
 }
 
 .context-menu-item:active {
-    background: rgba(53, 132, 228, 0.18);
+    background: color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
     color: var(--accent-on-surface);
 }
 
@@ -61,7 +61,7 @@
     text-align: center;
     font-size: 12px;
     color: var(--text-secondary);
-    transition: color 0.12s ease;
+    transition: color 200ms var(--ease-in-out-quad);
 }
 
 .context-menu-item:hover i {

@@ -3,14 +3,17 @@ import { useDevice } from '../../context/DeviceContext';
 import type { WallpaperOption } from '../../types';
 import { WALLPAPERS } from '../../config/data';
 import { usePreferences } from '../../context/PreferencesContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export function Wallpaper() {
     const { device } = useDevice();
     const { preferences } = usePreferences();
+    const { isDark } = useTheme();
     const wallpaperRef = useRef<HTMLDivElement>(null);
     const [timeOfDay, setTimeOfDay] = useState<'day' | 'night'>('day');
-    const customWallpaper: WallpaperOption | null =
-        WALLPAPERS.find(w => w.id === preferences.wallpaperId && w.gradient) ?? null;
+    const selectedWallpaper: WallpaperOption =
+        WALLPAPERS.find(w => w.id === preferences.wallpaperId) ?? WALLPAPERS[0];
+    const customWallpaper = selectedWallpaper.id === 'default' ? null : selectedWallpaper;
 
     // Time-of-day detection
     useEffect(() => {
@@ -64,14 +67,22 @@ export function Wallpaper() {
     }, [device]);
 
     const style: Record<string, string> = {};
-    if (customWallpaper?.gradient) {
-        style['--custom-wallpaper-bg'] = customWallpaper.gradient;
+    const customWallpaperImage =
+        customWallpaper && isDark && customWallpaper.darkImage
+            ? customWallpaper.darkImage
+            : customWallpaper?.image;
+    const customWallpaperBackground =
+        customWallpaper?.gradient ??
+        (customWallpaperImage ? `url("${customWallpaperImage}") center / cover no-repeat` : null);
+
+    if (customWallpaperBackground) {
+        style['--custom-wallpaper-bg'] = customWallpaperBackground;
     }
 
     return (
         <div
             ref={wallpaperRef}
-            className={`wallpaper${customWallpaper?.gradient ? ' custom-wallpaper' : ''}`}
+            className={`wallpaper${customWallpaperBackground ? ' custom-wallpaper' : ''}`}
             style={style}
         />
     );

@@ -88,6 +88,23 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
 
         element.style.zIndex = String(zIndex);
 
+        const syncLaunchOrigin = () => {
+            const origin = win.launchOrigin ?? {
+                x: window.innerWidth / 2,
+                y: window.innerHeight - 64,
+            };
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            element.style.setProperty('--window-open-dx', `${Math.round(origin.x - centerX)}px`);
+            element.style.setProperty('--window-open-dy', `${Math.round(origin.y - centerY)}px`);
+            element.style.setProperty(
+                '--window-open-origin',
+                `${Math.round(origin.x - rect.left)}px ${Math.round(origin.y - rect.top)}px`
+            );
+        };
+
         if (
             device === 'desktop' &&
             !isMaximized &&
@@ -101,6 +118,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
             element.style.left = positionLeft;
             element.style.width = sizeWidth;
             element.style.height = sizeHeight;
+            syncLaunchOrigin();
             return;
         }
 
@@ -108,6 +126,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         element.style.removeProperty('left');
         element.style.removeProperty('width');
         element.style.removeProperty('height');
+        syncLaunchOrigin();
     }, [
         device,
         isMaximized,
@@ -413,8 +432,8 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                         />
                         <button
                             type="button"
-                            className="window-control maximize"
-                            aria-label="Maximize"
+                            className={`window-control maximize${isMaximized ? ' restore' : ''}`}
+                            aria-label={isMaximized ? 'Restore' : 'Maximize'}
                             onClick={() => toggleMaximize(appId)}
                         />
                         <button

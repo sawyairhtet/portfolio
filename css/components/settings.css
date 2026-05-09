@@ -46,7 +46,7 @@
 }
 
 .settings-nav-item:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: color-mix(in srgb, var(--sidebar-fg-color) 4%, transparent);
     color: var(--text-primary);
 }
 
@@ -75,7 +75,7 @@
 
 .settings-panel.active {
     display: block;
-    animation: fadeInUp 0.3s var(--ease-out-expo) forwards;
+    animation: fadeInUp 200ms var(--ease-out-quad) forwards;
 }
 
 .settings-panel h2 {
@@ -93,13 +93,13 @@
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
     transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 @media (hover: hover) {
     .settings-card:hover {
-        border-color: rgba(255, 255, 255, 0.08);
+        border-color: color-mix(in srgb, var(--window-fg-color) 8%, transparent);
     }
 }
 
@@ -109,7 +109,7 @@
     font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
 }
 
 /* Settings row */
@@ -145,14 +145,14 @@
     border: 2px solid transparent;
     cursor: pointer;
     transition:
-        transform 0.2s var(--ease-spring),
-        box-shadow 0.2s var(--ease-out-expo);
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
     position: relative;
 }
 
 .accent-swatch:hover {
     transform: scale(1.18);
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 16px var(--shade-color);
 }
 
 .accent-swatch.active {
@@ -173,7 +173,7 @@
     justify-content: center;
     color: var(--text-on-accent);
     font-size: 12px;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 3px var(--shade-color);
 }
 
 /* Wallpaper grid */
@@ -190,28 +190,27 @@
     border: 2px solid var(--border-color);
     cursor: pointer;
     transition:
-        transform 0.2s var(--ease-spring),
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        transform 200ms var(--ease-out-quad),
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .wallpaper-grid .wallpaper-option[data-wallpaper='default'] {
-    background: url('../../images/wallpapers/1200px-F43-DAY_final_day_small.webp') center/cover
-        no-repeat;
+    background: url('/images/wallpapers/fedora-43/f43-day.webp') center/cover no-repeat;
 }
 
 body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='default'] {
-    background-image: url('../../images/wallpapers/1200px-F43-DAY_final_night_small.webp');
+    background-image: url('/images/wallpapers/fedora-43/f43-night.webp');
 }
 
 .wallpaper-grid .wallpaper-option:hover {
     transform: scale(1.06);
-    border-color: var(--accent);
+    border-color: var(--accent-bg-color);
 }
 
 .wallpaper-grid .wallpaper-option.active {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent);
+    border-color: var(--accent-bg-color);
+    box-shadow: 0 0 0 2px var(--accent-bg-color);
 }
 
 /* Volume slider */
@@ -234,8 +233,8 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     background: var(--accent);
     cursor: pointer;
     border: 2px solid var(--surface-0);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
-    transition: transform 0.15s var(--ease-spring);
+    box-shadow: 0 1px 6px var(--shade-color);
+    transition: transform 200ms var(--ease-out-quad);
 }
 
 .settings-slider::-webkit-slider-thumb:hover {
@@ -249,7 +248,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     background: var(--accent);
     cursor: pointer;
     border: 2px solid var(--surface-0);
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 6px var(--shade-color);
 }
 
 /* About system card */
@@ -327,8 +326,8 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
     height: 18px;
     border-radius: 50%;
     background: var(--surface-0);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s var(--ease-spring);
+    box-shadow: 0 1px 4px var(--shade-color);
+    transition: transform 200ms var(--ease-out-quad);
 }
 
 .toggle-switch:checked {

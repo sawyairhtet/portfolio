@@ -25,15 +25,13 @@
     right: 0;
     bottom: 0;
     /* Day wallpaper (default, 6am–5:59pm) */
-    background: url('../../images/wallpapers/1200px-F43-DAY_final_day_small.webp') center/cover
-        no-repeat;
+    background: url('/images/wallpapers/fedora-43/f43-day.webp') center/cover no-repeat;
     z-index: var(--z-wallpaper);
 }
 
 /* Night wallpaper (6pm–5:59am) */
 body[data-time='night'] .wallpaper {
-    background: url('../../images/wallpapers/1200px-F43-DAY_final_night_small.webp') center/cover
-        no-repeat;
+    background: url('/images/wallpapers/fedora-43/f43-night.webp') center/cover no-repeat;
 }
 
 /* Custom wallpaper override */
@@ -50,49 +48,49 @@ body .wallpaper.custom-wallpaper {
     color: var(--text-on-accent);
     pointer-events: none;
     text-shadow:
-        0 2px 20px rgba(0, 0, 0, 0.55),
-        0 0 42px rgba(0, 0, 0, 0.35);
+        0 2px 20px color-mix(in srgb, var(--dark-5) 55%, transparent),
+        0 0 42px color-mix(in srgb, var(--dark-5) 35%, transparent);
 }
 
 .desktop-welcome-kicker {
     display: block;
     margin-bottom: 8px;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 12px;
+    color: color-mix(in srgb, var(--light-1) 72%, transparent);
+    font-size: var(--font-size-sm);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     text-transform: uppercase;
     opacity: 0;
-    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.1s forwards;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 100ms forwards;
 }
 
 .desktop-welcome h2 {
     margin: 0;
     color: inherit;
-    font-size: clamp(30px, 3.6vw, 46px);
-    font-weight: 750;
+    font-size: var(--font-size-display);
+    font-weight: 800;
     line-height: 0.95;
     letter-spacing: 0;
     opacity: 0;
-    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.2s forwards;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 200ms forwards;
 }
 
 .desktop-welcome p {
     margin: 10px 0 0;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: clamp(16px, 1.6vw, 21px);
+    color: color-mix(in srgb, var(--light-1) 82%, transparent);
+    font-size: var(--font-size-lg);
     font-weight: 500;
     line-height: 1.35;
     opacity: 0;
-    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.3s forwards;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 300ms forwards;
 }
 
 .desktop-welcome-stack {
     margin: 6px 0 0 !important;
-    font-size: clamp(12px, 1.1vw, 14px) !important;
+    font-size: var(--font-size-sm) !important;
     font-weight: 600 !important;
-    color: rgba(255, 255, 255, 0.52) !important;
-    letter-spacing: 0.04em !important;
+    color: color-mix(in srgb, var(--light-1) 52%, transparent) !important;
+    letter-spacing: 0 !important;
     animation-delay: 0.38s !important;
 }
 
@@ -100,24 +98,24 @@ body .wallpaper.custom-wallpaper {
     display: inline-flex;
     margin-top: 18px;
     padding: 8px 13px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid color-mix(in srgb, var(--light-1) 18%, transparent);
     border-radius: 999px;
-    background: rgba(30, 30, 30, 0.72);
-    color: rgba(255, 255, 255, 0.88);
+    background: color-mix(in srgb, var(--view-bg-color) 72%, transparent);
+    color: color-mix(in srgb, var(--light-1) 88%, transparent);
     font-family: var(--font-ui);
     font-size: 13px;
     font-weight: 500;
     line-height: 1.3;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--dark-5) 25%, transparent);
     pointer-events: auto;
     opacity: 0;
-    animation: welcomeSlideUp 0.4s var(--ease-out-expo) 0.45s forwards;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 450ms forwards;
 }
 
 .desktop-welcome-hint:hover {
-    background: rgba(10, 10, 15, 0.52);
-    border-color: rgba(255, 255, 255, 0.22);
+    background: color-mix(in srgb, var(--view-bg-color) 52%, transparent);
+    border-color: color-mix(in srgb, var(--light-1) 22%, transparent);
 }
 
 .desktop-welcome-actions {
@@ -127,7 +125,7 @@ body .wallpaper.custom-wallpaper {
     margin-top: 12px;
     pointer-events: auto;
     opacity: 0;
-    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.52s forwards;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 520ms forwards;
 }
 
 .desktop-welcome-action {
@@ -136,74 +134,74 @@ body .wallpaper.custom-wallpaper {
     gap: 7px;
     min-height: 40px;
     padding: 10px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid color-mix(in srgb, var(--light-1) 16%, transparent);
     border-radius: 10px;
-    background: rgba(30, 30, 30, 0.72);
-    color: rgba(255, 255, 255, 0.88);
+    background: color-mix(in srgb, var(--view-bg-color) 72%, transparent);
+    color: color-mix(in srgb, var(--light-1) 88%, transparent);
     font-family: var(--font-ui);
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--dark-5) 28%, transparent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition:
-        background 0.15s ease,
-        border-color 0.15s ease,
-        transform 0.15s var(--ease-spring),
-        box-shadow 0.15s ease;
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .desktop-welcome-action.primary {
-    border-color: rgba(53, 132, 228, 0.5);
+    border-color: color-mix(in srgb, var(--accent-bg-color) 50%, transparent);
     background: var(--accent);
     color: var(--text-on-accent);
     box-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.28),
-        0 0 20px rgba(53, 132, 228, 0.25);
+        0 2px 12px color-mix(in srgb, var(--dark-5) 28%, transparent),
+        0 0 20px color-mix(in srgb, var(--accent-bg-color) 25%, transparent);
 }
 
 .desktop-welcome-action:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.28);
-    background: rgba(10, 10, 15, 0.65);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    border-color: color-mix(in srgb, var(--light-1) 28%, transparent);
+    background: color-mix(in srgb, var(--view-bg-color) 65%, transparent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--dark-5) 35%, transparent);
 }
 
 .desktop-welcome-action.primary:hover {
     background: var(--accent);
     filter: brightness(1.1);
     box-shadow:
-        0 4px 16px rgba(0, 0, 0, 0.35),
-        0 0 28px rgba(53, 132, 228, 0.35);
+        0 4px 16px color-mix(in srgb, var(--dark-5) 35%, transparent),
+        0 0 28px color-mix(in srgb, var(--accent-bg-color) 35%, transparent);
 }
 
 [data-theme='light'] .desktop-welcome {
-    color: rgba(15, 23, 42, 0.94);
+    color: color-mix(in srgb, var(--window-fg-color) 94%, transparent);
     text-shadow:
-        0 2px 24px rgba(255, 255, 255, 0.78),
-        0 0 2px rgba(255, 255, 255, 0.9);
+        0 2px 24px color-mix(in srgb, var(--view-bg-color) 78%, transparent),
+        0 0 2px color-mix(in srgb, var(--view-bg-color) 90%, transparent);
 }
 
 [data-theme='light'] .desktop-welcome-kicker {
-    color: rgba(30, 41, 59, 0.68);
+    color: color-mix(in srgb, var(--window-fg-color) 68%, transparent);
 }
 
 [data-theme='light'] .desktop-welcome p {
-    color: rgba(30, 41, 59, 0.76);
+    color: color-mix(in srgb, var(--window-fg-color) 76%, transparent);
 }
 
 [data-theme='light'] .desktop-welcome-stack {
-    color: rgba(30, 41, 59, 0.55) !important;
+    color: color-mix(in srgb, var(--window-fg-color) 55%, transparent) !important;
 }
 
 [data-theme='light'] .desktop-welcome-hint,
 [data-theme='light'] .desktop-welcome-action,
 [data-theme='light'] .shortcut-pill {
-    border-color: rgba(15, 23, 42, 0.12);
-    background: rgba(255, 255, 255, 0.85);
-    color: rgba(15, 23, 42, 0.82);
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.1);
+    border-color: color-mix(in srgb, var(--window-fg-color) 12%, transparent);
+    background: color-mix(in srgb, var(--view-bg-color) 85%, transparent);
+    color: color-mix(in srgb, var(--window-fg-color) 82%, transparent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--window-fg-color) 10%, transparent);
 }
 
 [data-theme='light'] .desktop-welcome-action.primary {
@@ -212,9 +210,9 @@ body .wallpaper.custom-wallpaper {
 }
 
 [data-theme='light'] .shortcut-pill kbd {
-    border-color: rgba(15, 23, 42, 0.14);
-    background: rgba(15, 23, 42, 0.06);
-    color: rgba(15, 23, 42, 0.82);
+    border-color: color-mix(in srgb, var(--window-fg-color) 14%, transparent);
+    background: color-mix(in srgb, var(--window-fg-color) 6%, transparent);
+    color: color-mix(in srgb, var(--window-fg-color) 82%, transparent);
 }
 
 /* Keyboard shortcut hints */
@@ -225,7 +223,7 @@ body .wallpaper.custom-wallpaper {
     flex-wrap: wrap;
     pointer-events: auto;
     opacity: 0;
-    animation: welcomeSlideUp 0.5s var(--ease-out-expo) 0.6s forwards;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 600ms forwards;
 }
 
 .shortcut-pill {
@@ -233,10 +231,10 @@ body .wallpaper.custom-wallpaper {
     align-items: center;
     gap: 6px;
     padding: 5px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid color-mix(in srgb, var(--light-1) 12%, transparent);
     border-radius: 6px;
-    background: rgba(30, 30, 30, 0.6);
-    color: rgba(255, 255, 255, 0.65);
+    background: color-mix(in srgb, var(--view-bg-color) 60%, transparent);
+    color: color-mix(in srgb, var(--light-1) 65%, transparent);
     font-size: 11px;
     font-weight: 500;
     white-space: nowrap;
@@ -245,13 +243,13 @@ body .wallpaper.custom-wallpaper {
 .shortcut-pill kbd {
     display: inline-block;
     padding: 1px 5px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid color-mix(in srgb, var(--light-1) 15%, transparent);
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.08);
+    background: color-mix(in srgb, var(--light-1) 8%, transparent);
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.85);
+    color: color-mix(in srgb, var(--light-1) 85%, transparent);
 }
 
 /* Ambient glow overlay — removed for Adwaita accuracy */
@@ -261,9 +259,21 @@ body .wallpaper.custom-wallpaper {
 
 [data-theme='light'] .wallpaper::before {
     background:
-        radial-gradient(ellipse at 15% 85%, rgba(255, 255, 255, 0.34) 0%, transparent 48%),
-        radial-gradient(ellipse at 85% 15%, rgba(34, 211, 238, 0.13) 0%, transparent 45%),
-        radial-gradient(ellipse at 50% 52%, rgba(118, 87, 240, 0.09) 0%, transparent 60%);
+        radial-gradient(
+            ellipse at 15% 85%,
+            color-mix(in srgb, var(--view-bg-color) 34%, transparent) 0%,
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse at 85% 15%,
+            color-mix(in srgb, var(--accent-teal) 13%, transparent) 0%,
+            transparent 45%
+        ),
+        radial-gradient(
+            ellipse at 50% 52%,
+            color-mix(in srgb, var(--accent-purple) 9%, transparent) 0%,
+            transparent 60%
+        );
 }
 
 /* Noise grain — removed for Adwaita accuracy */

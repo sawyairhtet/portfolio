@@ -19,9 +19,20 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'About',
         icon: 'fas fa-user-circle',
         dockTooltip: 'About Me',
-        gradient: 'linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-blue) 100%)',
+        gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--accent-blue) 100%)',
         description: 'Recruiter summary, graduation, Java focus, and personality.',
         aliases: ['bio', 'profile', 'summary', 'saw'],
+        desktopDock: true,
+        mobileDock: true,
+    },
+    {
+        id: 'files',
+        label: 'Files',
+        icon: 'fas fa-folder',
+        dockTooltip: 'Files',
+        gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%)',
+        description: 'Nautilus-style project files, recent work, and case studies.',
+        aliases: ['nautilus', 'folder', 'recent', 'documents'],
         desktopDock: true,
         mobileDock: true,
     },
@@ -30,7 +41,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'Skills',
         icon: 'fas fa-tools',
         dockTooltip: 'Skills',
-        gradient: 'linear-gradient(135deg, #33d17a 0%, var(--fedora-teal) 100%)',
+        gradient: 'linear-gradient(135deg, var(--green-3) 0%, var(--accent-teal) 100%)',
         description: 'Technical stack with practical context and project usage.',
         aliases: ['stack', 'tools', 'technologies', 'tech'],
         desktopDock: true,
@@ -41,7 +52,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'Projects',
         icon: 'fas fa-folder',
         dockTooltip: 'Projects',
-        gradient: 'linear-gradient(135deg, #5b9bd5 0%, var(--fedora-blue-dark) 100%)',
+        gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%)',
         description: 'Featured work, proof points, tech, platforms, and source links.',
         aliases: ['work', 'portfolio', 'case studies', 'github'],
         desktopDock: true,
@@ -52,7 +63,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'Contact',
         icon: 'fas fa-envelope',
         dockTooltip: 'Contact',
-        gradient: 'linear-gradient(135deg, #c061cb 0%, var(--fedora-purple) 100%)',
+        gradient: 'linear-gradient(135deg, var(--purple-2) 0%, var(--accent-purple) 100%)',
         description: 'Email, resume, availability, and a contact form.',
         aliases: ['email', 'hire', 'resume', 'availability'],
         desktopDock: true,
@@ -63,10 +74,21 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'Links',
         icon: 'fas fa-link',
         dockTooltip: 'Links',
-        gradient: 'linear-gradient(135deg, var(--fedora-blue-light) 0%, var(--fedora-teal) 100%)',
+        gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--accent-teal) 100%)',
         description: 'GitHub, LinkedIn, and social profiles.',
         aliases: ['social', 'github', 'linkedin', 'x'],
         desktopDock: true,
+        mobileDock: false,
+    },
+    {
+        id: 'browser',
+        label: 'Firefox',
+        icon: 'fab fa-firefox-browser',
+        dockTooltip: 'Firefox',
+        gradient: 'linear-gradient(135deg, var(--orange-3) 0%, var(--accent-purple) 100%)',
+        description: 'A small browser window pointed at GitHub.',
+        aliases: ['firefox', 'web', 'github', 'browser'],
+        desktopDock: false,
         mobileDock: false,
     },
     {
@@ -74,10 +96,21 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'Terminal',
         icon: 'fas fa-terminal',
         dockTooltip: 'Terminal',
-        gradient: 'linear-gradient(135deg, #57e389 0%, var(--fedora-green) 100%)',
+        gradient: 'linear-gradient(135deg, var(--green-2) 0%, var(--accent-green) 100%)',
         description: 'A portfolio terminal with filesystem and app commands.',
         aliases: ['shell', 'cli', 'bash', 'command'],
         desktopDock: true,
+        mobileDock: false,
+    },
+    {
+        id: 'text-editor',
+        label: 'Text Editor',
+        icon: 'fas fa-pen-to-square',
+        dockTooltip: 'Text Editor',
+        gradient: 'linear-gradient(135deg, var(--blue-1) 0%, var(--accent-blue) 100%)',
+        description: 'Resume markdown opened from nano.',
+        aliases: ['text editor', 'editor', 'gedit', 'nano', 'resume.md'],
+        desktopDock: false,
         mobileDock: false,
     },
     {
@@ -85,7 +118,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'Settings',
         icon: 'fas fa-cog',
         dockTooltip: 'Settings',
-        gradient: 'linear-gradient(135deg, #c0bfbc 0%, #9a9996 100%)',
+        gradient: 'linear-gradient(135deg, var(--light-4) 0%, var(--light-5) 100%)',
         description: 'Appearance, sound, windowing, and system preferences.',
         aliases: ['preferences', 'appearance', 'sound', 'windows'],
         desktopDock: true,
@@ -96,7 +129,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         label: 'Focus',
         icon: 'fas fa-clock',
         dockTooltip: 'Focus Mode',
-        gradient: 'linear-gradient(135deg, #ff7800 0%, #e5611a 100%)',
+        gradient: 'linear-gradient(135deg, var(--orange-3) 0%, var(--orange-4) 100%)',
         description: 'Pomodoro presets, session stats, and optional focus dimming.',
         aliases: ['pomodoro', 'timer', 'deep work', 'productivity'],
         desktopDock: false,
@@ -121,8 +154,7 @@ export const PROJECTS: Project[] = [
         role: 'Developer & Designer',
         summary:
             'The site you are using right now — a full Fedora 43 GNOME desktop simulation built in React and TypeScript, with draggable windows, a virtual terminal, a boot sequence, and real desktop keyboard shortcuts.',
-        impact:
-            'Turns a personal portfolio into a recruiter-friendly desktop experience while preserving fast routes to About, Skills, Projects, Resume, and Contact.',
+        impact: 'Turns a personal portfolio into a recruiter-friendly desktop experience while preserving fast routes to About, Skills, Projects, Resume, and Contact.',
         techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers', 'Tailwind v4'],
         platform: 'Responsive web app',
         proofPoints: [
@@ -147,8 +179,7 @@ export const PROJECTS: Project[] = [
         role: 'Developer',
         summary:
             'A Spring Boot operations tracking API with clean REST endpoints, SQL persistence, and layered architecture — built to sharpen backend fundamentals and demonstrate production-grade Java patterns.',
-        impact:
-            'Practice ground for applying Spring Boot, JPA, and relational data patterns in a realistic backend service.',
+        impact: 'Practice ground for applying Spring Boot, JPA, and relational data patterns in a realistic backend service.',
         techStack: ['Java', 'Spring Boot', 'PostgreSQL', 'REST API'],
         platform: 'Backend API',
         proofPoints: [
@@ -263,7 +294,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home': { type: 'dir', children: ['sawyehtet'] },
     '/home/sawyehtet': {
         type: 'dir',
-        children: ['projects', 'documents', 'resume.txt', '.bashrc'],
+        children: ['projects', 'documents', 'resume.txt', 'resume.md', '.bashrc'],
     },
     '/home/sawyehtet/projects': { type: 'dir', children: ['portfolio', 'README.md'] },
     '/home/sawyehtet/projects/portfolio': {
@@ -317,6 +348,10 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/resume.txt': {
         type: 'file',
         content: `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         SAW YE HTET - RESUME          \u2551\n\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563\n\u2551 Education: Singapore Polytechnic grad \u2551\n\u2551 Major: Information Technology         \u2551\n\u2551 Skills: Java, SQL, JavaScript, Python \u2551\n\u2551 Focus: Java developer path            \u2551\n\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D\n\nContact: ${PROFILE.email}`,
+    },
+    '/home/sawyehtet/resume.md': {
+        type: 'file',
+        content: `# Saw Ye Htet\n\nJava Software Engineer · Recent Singapore Polytechnic graduate\n\n## Focus\n\n- Java backend development\n- Spring Boot services\n- SQL data modelling\n- React and TypeScript interfaces\n\n## Portfolio Highlights\n\n- Fedora 43 / GNOME 49 desktop simulation\n- Window manager, xterm.js Console, Nautilus-style Files, and Settings preferences\n- Project case studies available in /home/sawyehtet/projects\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',
@@ -375,52 +410,69 @@ export const terminalGreetings: string[] = [
 // ============================================
 
 export const WALLPAPERS: WallpaperOption[] = [
-    { id: 'default', label: 'Fedora 43 (Time)', gradient: null },
     {
-        // Multi-centre Fedora-blue blobs — the closest CSS approximation
-        // of the official GNOME/Fedora blob wallpaper series
-        id: 'fedora-blobs',
-        label: 'Fedora Blobs',
-        gradient:
-            'radial-gradient(ellipse at 22% 48%, rgba(53,132,228,0.42) 0%, transparent 46%), radial-gradient(ellipse at 78% 30%, rgba(28,113,216,0.32) 0%, transparent 42%), radial-gradient(ellipse at 60% 78%, rgba(78,154,241,0.26) 0%, transparent 38%), radial-gradient(ellipse at 38% 18%, rgba(120,174,237,0.16) 0%, transparent 32%), linear-gradient(135deg, #0a1424 0%, #0e1c30 50%, #0a1424 100%)',
+        id: 'default',
+        label: 'Fedora 43 (Time)',
+        gradient: null,
+        image: '/images/wallpapers/fedora-43/f43-day.webp',
+        darkImage: '/images/wallpapers/fedora-43/f43-night.webp',
+        sourceUrl: 'https://github.com/fedoradesign/backgrounds/tree/f43-backgrounds/default',
     },
     {
-        // Blueprint — deep navy + single overhead Fedora-blue radial,
-        // feels like a technical schematic / Fedora design asset
-        id: 'blueprint',
-        label: 'Blueprint',
-        gradient:
-            'radial-gradient(ellipse at 50% 0%, rgba(53,132,228,0.30) 0%, transparent 55%), radial-gradient(ellipse at 0% 100%, rgba(28,113,216,0.22) 0%, transparent 45%), radial-gradient(ellipse at 100% 80%, rgba(78,154,241,0.14) 0%, transparent 38%), linear-gradient(160deg, #040d1c 0%, #071326 40%, #0b1c38 70%, #060f1e 100%)',
+        id: 'gnome-adwaita',
+        label: 'GNOME 49 Adwaita',
+        gradient: null,
+        image: '/images/wallpapers/gnome-49/adwaita-l.webp',
+        darkImage: '/images/wallpapers/gnome-49/adwaita-d.webp',
+        sourceUrl: 'https://download.gnome.org/sources/gnome-backgrounds/49/',
     },
     {
-        // Indigo — deep indigo-blue matching Fedora's darker brand tone
-        id: 'indigo',
-        label: 'Indigo',
-        gradient:
-            'radial-gradient(ellipse at 50% 100%, rgba(53,132,228,0.38) 0%, transparent 46%), radial-gradient(ellipse at 18% 58%, rgba(83,96,200,0.26) 0%, transparent 40%), radial-gradient(ellipse at 82% 48%, rgba(53,132,228,0.20) 0%, transparent 36%), linear-gradient(180deg, #06080f 0%, #0c0e20 35%, #141638 60%, #0e1030 85%, #060810 100%)',
+        id: 'gnome-curvy',
+        label: 'GNOME 49 Curvy',
+        gradient: null,
+        image: '/images/wallpapers/gnome-49/curvy-l.webp',
+        darkImage: '/images/wallpapers/gnome-49/curvy-d.webp',
+        sourceUrl: 'https://download.gnome.org/sources/gnome-backgrounds/49/',
     },
     {
-        // Teal — secondary Fedora/GNOME teal accent over dark navy
-        id: 'fedora-teal',
-        label: 'Fedora Teal',
-        gradient:
-            'radial-gradient(ellipse at 62% 28%, rgba(20,184,166,0.32) 0%, transparent 46%), radial-gradient(ellipse at 24% 68%, rgba(53,132,228,0.28) 0%, transparent 42%), radial-gradient(ellipse at 78% 76%, rgba(6,182,212,0.22) 0%, transparent 36%), linear-gradient(160deg, #030e0e 0%, #05141a 40%, #071c22 70%, #040f14 100%)',
+        id: 'gnome-blobs',
+        label: 'GNOME 49 Blobs',
+        gradient: null,
+        image: '/images/wallpapers/gnome-49/blobs-l.svg',
+        darkImage: '/images/wallpapers/gnome-49/blobs-d.svg',
+        sourceUrl: 'https://download.gnome.org/sources/gnome-backgrounds/49/',
     },
     {
-        // Fedora Radiant — centred radial burst in signature Fedora blue,
-        // evokes the "infinity" logo glow used in Fedora design assets
-        id: 'fedora-radiant',
-        label: 'Fedora Radiant',
-        gradient:
-            'radial-gradient(ellipse at 50% 50%, rgba(53,132,228,0.32) 0%, rgba(28,113,216,0.22) 32%, rgba(12,50,100,0.16) 62%, transparent 82%), radial-gradient(ellipse at 20% 28%, rgba(78,154,241,0.16) 0%, transparent 40%), radial-gradient(ellipse at 80% 72%, rgba(28,113,216,0.12) 0%, transparent 36%), linear-gradient(135deg, #040810 0%, #07101e 50%, #050c18 100%)',
+        id: 'gnome-geometrics',
+        label: 'GNOME 49 Geometrics',
+        gradient: null,
+        image: '/images/wallpapers/gnome-49/geometrics-l.webp',
+        darkImage: '/images/wallpapers/gnome-49/geometrics-d.webp',
+        sourceUrl: 'https://download.gnome.org/sources/gnome-backgrounds/49/',
     },
     {
-        // GNOME Dark — clean Adwaita-dark surface with the lightest
-        // blue touch; minimal option for those who prefer near-plain
-        id: 'gnome-dark',
-        label: 'GNOME Dark',
-        gradient:
-            'radial-gradient(ellipse at 38% 38%, rgba(53,132,228,0.14) 0%, transparent 52%), radial-gradient(ellipse at 66% 66%, rgba(28,113,216,0.10) 0%, transparent 42%), linear-gradient(135deg, #1e1e1e 0%, #252525 45%, #2a2a2a 72%, #1e1e1e 100%)',
+        id: 'gnome-pixels',
+        label: 'GNOME 49 Pixels',
+        gradient: null,
+        image: '/images/wallpapers/gnome-49/pixels-l.webp',
+        darkImage: '/images/wallpapers/gnome-49/pixels-d.webp',
+        sourceUrl: 'https://download.gnome.org/sources/gnome-backgrounds/49/',
+    },
+    {
+        id: 'gnome-symbolic',
+        label: 'GNOME 49 Symbolic',
+        gradient: null,
+        image: '/images/wallpapers/gnome-49/symbolic-l.webp',
+        darkImage: '/images/wallpapers/gnome-49/symbolic-d.webp',
+        sourceUrl: 'https://download.gnome.org/sources/gnome-backgrounds/49/',
+    },
+    {
+        id: 'gnome-vnc',
+        label: 'GNOME 49 VNC',
+        gradient: null,
+        image: '/images/wallpapers/gnome-49/vnc-l.webp',
+        darkImage: '/images/wallpapers/gnome-49/vnc-d.webp',
+        sourceUrl: 'https://download.gnome.org/sources/gnome-backgrounds/49/',
     },
 ];
 
@@ -429,15 +481,15 @@ export const WALLPAPERS: WallpaperOption[] = [
 // ============================================
 
 export const ACCENT_COLORS: AccentColor[] = [
-    { color: '#3584e4', label: 'Blue' },
-    { color: '#2ec27e', label: 'Green' },
-    { color: '#e5a50a', label: 'Yellow' },
-    { color: '#e01b24', label: 'Red' },
-    { color: '#9141ac', label: 'Purple' },
-    { color: '#2190a4', label: 'Teal' },
-    { color: '#ff7800', label: 'Orange' },
-    { color: '#d971b0', label: 'Pink' },
-    { color: '#8c8c8c', label: 'Slate' },
+    { color: 'var(--accent-blue)', label: 'Blue' },
+    { color: 'var(--accent-green)', label: 'Green' },
+    { color: 'var(--accent-yellow)', label: 'Yellow' },
+    { color: 'var(--accent-red)', label: 'Red' },
+    { color: 'var(--accent-purple)', label: 'Purple' },
+    { color: 'var(--accent-teal)', label: 'Teal' },
+    { color: 'var(--accent-orange)', label: 'Orange' },
+    { color: 'var(--accent-pink)', label: 'Pink' },
+    { color: 'var(--accent-slate)', label: 'Slate' },
 ];
 
 // ============================================
@@ -447,12 +499,16 @@ export const ACCENT_COLORS: AccentColor[] = [
 export const DEFAULT_NOTIFICATIONS: Notification[] = [
     {
         id: 'welcome',
-        title: 'sawyehtet.com',
-        body: 'Java Software Engineer, recent SP graduate — click apps in the dock to explore projects, skills, and contact.',
+        title: 'Welcome to Saw Ye Htet',
+        body: 'Java Software Engineer, recent SP graduate. Open the resume or explore the desktop like GNOME.',
         icon: 'fab fa-fedora',
-        iconBg: 'linear-gradient(135deg, var(--fedora-blue-light), var(--fedora-blue))',
+        iconBg: 'linear-gradient(135deg, var(--accent-color), var(--accent-bg-color))',
         time: 'Just now',
         group: 'System',
+        action: {
+            label: 'View Resume',
+            appId: 'text-editor',
+        },
     },
 ];
 

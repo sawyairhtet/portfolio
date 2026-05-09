@@ -1,29 +1,16 @@
 /* ============================================
-   TERMINAL STYLING — Premium GNOME Terminal
+   TERMINAL STYLING — GNOME Console
    ============================================ */
 
 .terminal-body {
-    background: var(--terminal-bg);
-    color: var(--terminal-text);
-    font-family: var(--font-mono);
+    background: color-mix(in srgb, var(--view-bg-color) 92%, transparent);
+    color: var(--view-fg-color);
+    font-family: var(--monospace-font-family);
     padding: var(--spacing-md);
     min-height: 400px;
     position: relative;
-}
-
-/* Scanline effect — very subtle */
-.terminal-body::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.005) 2px,
-        rgba(255, 255, 255, 0.005) 4px
-    );
-    pointer-events: none;
+    -webkit-backdrop-filter: blur(18px) saturate(110%);
+    backdrop-filter: blur(18px) saturate(110%);
 }
 
 .terminal-shell {
@@ -31,6 +18,31 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
+}
+
+.terminal-xterm {
+    flex: 1;
+    min-height: 0;
+}
+
+.terminal-xterm .xterm {
+    height: 100%;
+    font-family: var(--monospace-font-family);
+}
+
+.terminal-xterm .xterm-viewport {
+    background: transparent !important;
+}
+
+.terminal-fallback {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+}
+
+.terminal-fallback.is-hidden {
+    display: none;
 }
 
 .terminal-output {
@@ -62,7 +74,7 @@
     margin: 3px 0;
     white-space: pre-wrap;
     line-height: 1.55;
-    font-size: var(--terminal-font-size);
+    font-size: var(--monospace-font-size);
 }
 
 /* Colored terminal prompt parts */
@@ -81,40 +93,40 @@
 }
 
 .terminal-prompt-path {
-    color: var(--accent-on-surface);
+    color: var(--accent-color);
     font-weight: 500;
 }
 
 .terminal-prompt-symbol {
-    color: var(--text-primary);
+    color: var(--view-fg-color);
     font-weight: 700;
 }
 
 /* Syntax-colored output */
 .terminal-cmd-echo {
-    color: var(--text-secondary);
+    color: color-mix(in srgb, var(--view-fg-color) var(--dim-opacity), transparent);
     opacity: 0.8;
 }
 
 .terminal-ok {
-    color: var(--fedora-green);
+    color: var(--success-color);
     font-weight: 600;
 }
 
 .terminal-error {
-    color: var(--fedora-red);
+    color: var(--error-color);
 }
 
 .terminal-info {
-    color: var(--accent-on-surface);
+    color: var(--accent-color);
 }
 
 .terminal-path {
-    color: var(--fedora-teal);
+    color: var(--accent-teal);
 }
 
 .terminal-heading {
-    color: var(--text-primary);
+    color: var(--view-fg-color);
     font-weight: 600;
 }
 
@@ -124,14 +136,14 @@
 }
 
 .terminal-welcome {
-    color: var(--accent-on-surface);
+    color: var(--accent-color);
     font-weight: 500;
 }
 
 /* Selection styling */
 .terminal-body ::selection {
     background: var(--terminal-selection);
-    color: var(--text-primary);
+    color: var(--view-fg-color);
 }
 
 .terminal-input-line {
@@ -150,13 +162,13 @@
 .terminal-input {
     background: transparent;
     border: none;
-    color: var(--terminal-text);
-    font-family: var(--font-mono);
-    font-size: var(--terminal-font-size);
+    color: var(--view-fg-color);
+    font-family: var(--monospace-font-family);
+    font-size: var(--monospace-font-size);
     outline: none;
     flex: 1;
     min-width: 0;
-    caret-color: var(--accent);
+    caret-color: var(--accent-bg-color);
 }
 
 /* Blinking cursor effect */
@@ -188,23 +200,23 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    background: var(--accent);
-    color: var(--text-on-accent);
+    background: var(--accent-bg-color);
+    color: var(--accent-fg-color);
     border: none;
     border-radius: var(--radius-sm);
     margin-left: var(--spacing-sm);
     cursor: pointer;
     flex-shrink: 0;
     transition:
-        background 0.2s ease,
-        transform 0.15s var(--ease-spring);
+        background 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .terminal-submit-btn:hover {
-    background: var(--accent-dark);
+    background: var(--accent-color);
 }
 
 .terminal-submit-btn:active {
     transform: scale(0.93);
-    background: var(--accent-dark);
+    background: var(--accent-color);
 }

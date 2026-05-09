@@ -80,7 +80,15 @@ export function SettingsApp() {
                                         key={wp.id}
                                         className={`wallpaper-option${preferences.wallpaperId === wp.id ? ' active' : ''}`}
                                         data-wallpaper={wp.id}
-                                        style={{ background: wp.gradient || undefined }}
+                                        style={{
+                                            background:
+                                                wp.gradient ||
+                                                (isDark && wp.darkImage
+                                                    ? `url("${wp.darkImage}") center / cover no-repeat`
+                                                    : wp.image
+                                                      ? `url("${wp.image}") center / cover no-repeat`
+                                                      : undefined),
+                                        }}
                                         aria-label={wp.label}
                                         title={wp.label}
                                         onClick={() => handleWallpaperChange(wp.id)}

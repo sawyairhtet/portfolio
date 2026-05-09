@@ -8,7 +8,7 @@ interface NotificationContextValue {
     addNotification: (notification: Omit<Notification, 'id'>) => void;
     dismissNotification: (id: string) => void;
     clearAllNotifications: () => void;
-    showToast: (message: string, icon?: string) => void;
+    showToast: (message: string, icon?: string, action?: Toast['action']) => void;
     isDnd: boolean;
     setDnd: (dnd: boolean) => void;
 }
@@ -25,7 +25,12 @@ const NotificationContext = createContext<NotificationContextValue>({
 });
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
-    const [notifications, setNotifications] = useState<Notification[]>(DEFAULT_NOTIFICATIONS);
+    const [notifications, setNotifications] = useState<Notification[]>(() => {
+        const hasSeenWelcome = localStorage.getItem('portfolioWelcomeNotificationSeen') === 'true';
+        if (hasSeenWelcome) return [];
+        localStorage.setItem('portfolioWelcomeNotificationSeen', 'true');
+        return DEFAULT_NOTIFICATIONS;
+    });
     const [toasts, setToasts] = useState<Toast[]>([]);
     const [isDnd, setIsDnd] = useState(() => localStorage.getItem('portfolioDnd') === 'true');
     const toastIdRef = useRef(0);
@@ -48,11 +53,11 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const showToast = useCallback(
-        (message: string, icon = 'fas fa-info-circle') => {
+        (message: string, icon = 'fas fa-info-circle', action?: Toast['action']) => {
             if (isDnd) return;
 
             const id = `toast-${toastIdRef.current++}`;
-            const toast: Toast = { id, message, icon };
+            const toast: Toast = { id, message, icon, action };
             setToasts(prev => [...prev, toast]);
 
             // Auto-remove after 3 seconds

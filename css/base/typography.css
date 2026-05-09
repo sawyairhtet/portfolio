@@ -1,15 +1,15 @@
 /* ============================================
-   TYPOGRAPHY — Adwaita / Cantarell
+   TYPOGRAPHY — libadwaita text scale
    ============================================ */
 
 body {
-    font-family: var(--font-ui);
+    font-family: var(--document-font-family);
     font-size: var(--font-size-base);
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    line-height: 1.6;
+    line-height: 140%;
 }
 
 /* libadwaita title scale: title-1 ~800, title-2..4 ~700. Heading default 700. */
@@ -19,10 +19,10 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-ui);
+    font-family: var(--document-font-family);
     font-weight: 700;
     letter-spacing: 0;
-    line-height: 1.25;
+    line-height: normal;
 }
 
 h1 {
@@ -32,29 +32,92 @@ h1 {
 
 h2 {
     font-size: var(--font-size-2xl);
+    font-weight: 800;
 }
 
 h3 {
     font-size: var(--font-size-xl);
 }
 
+h4,
+h5,
+h6 {
+    font-size: var(--font-size-lg);
+}
+
 code,
 pre,
 .terminal,
 .terminal * {
-    font-family: var(--font-mono);
+    font-family: var(--monospace-font-family);
+    font-size: var(--monospace-font-size);
 }
 
-/* Accent-colored text (no gradient clip — Cantarell doesn't benefit) */
+.title-1 {
+    font-size: var(--font-size-display);
+    font-weight: 800;
+}
+
+.title-2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+}
+
+.title-3 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+.title-4 {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+.heading {
+    font-weight: 700;
+}
+
+.body {
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.caption-heading {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+}
+
+.caption {
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.document {
+    font-family: var(--document-font-family);
+    font-size: var(--document-font-size);
+    line-height: 140%;
+}
+
+.monospace {
+    font-family: var(--monospace-font-family);
+    font-size: var(--monospace-font-size);
+}
+
+.numeric {
+    font-feature-settings: var(--numeric);
+}
+
+/* Accent-colored text */
 .text-gradient {
-    color: var(--accent);
+    color: var(--accent-color);
 }
 
 /* Muted label style */
 .text-label {
     font-size: var(--font-size-sm);
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0;
     text-transform: uppercase;
     color: var(--text-secondary);
 }

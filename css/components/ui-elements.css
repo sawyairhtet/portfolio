@@ -13,7 +13,7 @@
     padding: 20px;
     z-index: var(--z-context-menu);
     opacity: 1;
-    transition: opacity 0.6s var(--ease-out-expo);
+    transition: opacity 400ms var(--ease-out-quad);
     overflow: hidden;
 }
 
@@ -38,11 +38,11 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    color: rgba(255, 255, 255, 0.75);
+    color: color-mix(in srgb, var(--light-1) 75%, transparent);
     font-family: var(--font-mono);
-    font-size: 14px;
-    letter-spacing: 0.02em;
-    animation: bootHintPulse 2s ease-in-out infinite;
+    font-size: var(--monospace-font-size);
+    letter-spacing: 0;
+    animation: bootHintPulse 2s var(--ease-in-out-quad) infinite;
 }
 
 @keyframes bootHintPulse {

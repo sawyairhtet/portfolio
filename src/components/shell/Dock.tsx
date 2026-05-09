@@ -1,10 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, type MouseEvent } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { DOCK_APPS, MOBILE_DOCK_APPS, MOBILE_LAUNCHER_APPS } from '../../config/data';
 import { useDevice } from '../../context/DeviceContext';
 import type { AppId } from '../../types';
 
-export function Dock() {
+interface DockProps {
+    onShowApps?: () => void;
+}
+
+export function Dock({ onShowApps }: DockProps) {
     const { openWindow, bringToFront, windows } = useWindowManager();
     const { device } = useDevice();
     const [launchingApp, setLaunchingApp] = useState<AppId | null>(null);
@@ -12,12 +16,20 @@ export function Dock() {
     const isMobileShell = device !== 'desktop';
 
     const handleDockClick = useCallback(
-        (appId: AppId) => {
+        (appId: AppId, event?: MouseEvent<HTMLButtonElement>) => {
             const win = windows.get(appId);
+            const rect = event?.currentTarget.getBoundingClientRect();
+            const launchOrigin = rect
+                ? {
+                      x: rect.left + rect.width / 2,
+                      y: rect.top + rect.height / 2,
+                  }
+                : undefined;
+
             if (win?.isOpen) {
                 bringToFront(appId);
             } else {
-                openWindow(appId);
+                openWindow(appId, launchOrigin);
             }
 
             setLauncherOpen(false);
@@ -44,10 +56,16 @@ export function Dock() {
                                 data-app={app.id}
                                 aria-label={app.label}
                                 aria-describedby={`dock-tip-mobile-${app.id}`}
-                                onClick={() => handleDockClick(app.id)}
+                                onClick={event => handleDockClick(app.id, event)}
                             >
                                 <i className={app.icon} aria-hidden="true" />
-                                <span className="dock-tooltip" id={`dock-tip-mobile-${app.id}`} role="tooltip">{app.dockTooltip}</span>
+                                <span
+                                    className="dock-tooltip"
+                                    id={`dock-tip-mobile-${app.id}`}
+                                    role="tooltip"
+                                >
+                                    {app.dockTooltip}
+                                </span>
                             </button>
                         );
                     })}
@@ -61,7 +79,9 @@ export function Dock() {
                         onClick={() => setLauncherOpen(open => !open)}
                     >
                         <i className="fas fa-grip" aria-hidden="true" />
-                        <span className="dock-tooltip" id="dock-tip-mobile-apps" role="tooltip">Apps</span>
+                        <span className="dock-tooltip" id="dock-tip-mobile-apps" role="tooltip">
+                            Apps
+                        </span>
                     </button>
                 </div>
                 <div
@@ -82,7 +102,7 @@ export function Dock() {
                             className="mobile-launcher-item"
                             data-app={app.id}
                             aria-label={`${app.label}: ${app.description}`}
-                            onClick={() => handleDockClick(app.id)}
+                            onClick={event => handleDockClick(app.id, event)}
                         >
                             <span
                                 className="mobile-launcher-icon"
@@ -111,10 +131,12 @@ export function Dock() {
                         data-app={app.id}
                         aria-label={app.label}
                         aria-describedby={`dock-tip-${app.id}`}
-                        onClick={() => handleDockClick(app.id)}
+                        onClick={event => handleDockClick(app.id, event)}
                     >
                         <i className={app.icon} aria-hidden="true" />
-                        <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">{app.dockTooltip}</span>
+                        <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">
+                            {app.dockTooltip}
+                        </span>
                     </button>
                 );
             })}
@@ -128,13 +150,26 @@ export function Dock() {
                         data-app={app.id}
                         aria-label={app.label}
                         aria-describedby={`dock-tip-${app.id}`}
-                        onClick={() => handleDockClick(app.id)}
+                        onClick={event => handleDockClick(app.id, event)}
                     >
                         <i className={app.icon} aria-hidden="true" />
-                        <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">{app.dockTooltip}</span>
+                        <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">
+                            {app.dockTooltip}
+                        </span>
                     </button>
                 );
             })}
+            <button
+                className="dock-item show-apps-btn"
+                data-app="apps"
+                aria-label="Show Apps"
+                onClick={onShowApps}
+            >
+                <i className="fas fa-grip" aria-hidden="true" />
+                <span className="dock-tooltip" id="dock-tip-show-apps" role="tooltip">
+                    Show Apps
+                </span>
+            </button>
         </div>
     );
 }

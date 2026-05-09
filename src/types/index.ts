@@ -24,13 +24,21 @@ export type DeviceType = 'desktop' | 'tablet' | 'mobile';
 
 export type AppId =
     | 'about'
+    | 'browser'
+    | 'files'
     | 'skills'
     | 'projects'
     | 'contact'
     | 'links'
     | 'terminal'
     | 'settings'
+    | 'text-editor'
     | 'focus-mode';
+
+export interface LaunchOrigin {
+    x: number;
+    y: number;
+}
 
 export interface WindowInfo {
     appId: AppId;
@@ -41,6 +49,7 @@ export interface WindowInfo {
     position: { top: string; left: string };
     size: { width: string; height: string };
     snapState: 'none' | 'left' | 'right';
+    launchOrigin?: LaunchOrigin;
 }
 
 // ============================================
@@ -117,12 +126,22 @@ export interface Notification {
     iconBg: string;
     time: string;
     group: string;
+    action?: {
+        label: string;
+        appId?: AppId;
+        href?: string;
+    };
 }
 
 export interface Toast {
     id: string;
     message: string;
     icon: string;
+    action?: {
+        label: string;
+        appId?: AppId;
+        href?: string;
+    };
 }
 
 // ============================================
@@ -133,6 +152,9 @@ export interface WallpaperOption {
     id: string;
     label: string;
     gradient: string | null;
+    image?: string;
+    darkImage?: string;
+    sourceUrl?: string;
 }
 
 // ============================================

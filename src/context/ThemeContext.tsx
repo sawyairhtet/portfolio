@@ -7,25 +7,14 @@ interface ThemeContextValue {
     setAccentColor: (color: string) => void;
 }
 
+const DEFAULT_ACCENT_COLOR = 'var(--accent-blue)';
+
 const ThemeContext = createContext<ThemeContextValue>({
     isDark: true,
     toggle: () => {},
-    accentColor: '#3584e4',
+    accentColor: DEFAULT_ACCENT_COLOR,
     setAccentColor: () => {},
 });
-
-function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
-    const normalized = hex.trim().replace('#', '');
-    if (!/^[0-9a-f]{6}$/i.test(normalized)) {
-        return null;
-    }
-
-    return {
-        r: Number.parseInt(normalized.slice(0, 2), 16),
-        g: Number.parseInt(normalized.slice(2, 4), 16),
-        b: Number.parseInt(normalized.slice(4, 6), 16),
-    };
-}
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const [isDark, setIsDark] = useState<boolean>(() => {
@@ -35,7 +24,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     });
 
     const [accentColor, setAccentColorState] = useState<string>(() => {
-        return localStorage.getItem('portfolioAccent') || '#3584e4';
+        return localStorage.getItem('portfolioAccent') || DEFAULT_ACCENT_COLOR;
     });
 
     // Sync data-theme attribute with state
@@ -46,22 +35,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     // Sync accent color CSS custom properties
     useEffect(() => {
-        const rgb = hexToRgb(accentColor);
-        document.documentElement.style.setProperty('--accent', accentColor);
-        if (rgb) {
-            document.documentElement.style.setProperty(
-                '--accent-glow',
-                `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.35)`
-            );
-            document.documentElement.style.setProperty(
-                '--accent-subtle',
-                `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.12)`
-            );
-            document.documentElement.style.setProperty(
-                '--accent-surface',
-                `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.08)`
-            );
-        }
+        document.documentElement.style.setProperty('--accent-bg-color', accentColor);
+        document.documentElement.style.setProperty('--accent', 'var(--accent-bg-color)');
+        document.documentElement.style.setProperty(
+            '--accent-glow',
+            'color-mix(in srgb, var(--accent-bg-color) 35%, transparent)'
+        );
+        document.documentElement.style.setProperty(
+            '--accent-subtle',
+            'color-mix(in srgb, var(--accent-bg-color) 12%, transparent)'
+        );
+        document.documentElement.style.setProperty(
+            '--accent-surface',
+            'color-mix(in srgb, var(--accent-bg-color) 8%, transparent)'
+        );
         localStorage.setItem('portfolioAccent', accentColor);
     }, [accentColor]);
 

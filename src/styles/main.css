@@ -10,6 +10,7 @@
 
 /* Design Tokens */
 @import '../../css/base/variables.css' layer(tokens);
+@import './adwaita-tokens.css' layer(tokens);
 
 /* Base Styles */
 @import '../../css/base/typography.css' layer(base);
@@ -22,12 +23,15 @@
 @import '../../css/components/window.css' layer(components);
 @import '../../css/components/context-menu.css' layer(components);
 @import '../../css/components/terminal.css' layer(components);
+@import '../../css/components/files.css' layer(components);
+@import '../../css/components/easter-eggs.css' layer(components);
 @import '../../css/components/apps.css' layer(components);
 @import '../../css/components/ui-elements.css' layer(components);
 @import '../../css/components/focus-mode.css' layer(components);
 @import '../../css/components/settings.css' layer(components);
 @import '../../css/components/notification-center.css' layer(components);
 @import '../../css/components/activities.css' layer(components);
+@import '../../css/components/keyboard.css' layer(components);
 @import '../../css/components/plymouth.css' layer(components);
 @import '../../css/components/quick-settings.css' layer(components);
 
@@ -69,9 +73,28 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
     pointer-events: auto;
-    animation: toastSlideIn 0.3s var(--ease-out-expo);
+    animation: toastSlideIn 200ms var(--ease-out-quad);
+}
+
+.toast-notification button {
+    min-height: 28px;
+    margin-left: 4px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: var(--button-radius);
+    background: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+    font: 700 var(--font-size-sm) / 120% var(--document-font-family);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
+}
+
+.toast-notification button:hover {
+    background: var(--accent-color);
+    transform: translateY(-1px);
 }
 
 @keyframes toastSlideIn {
@@ -89,8 +112,8 @@
 
 /* Form validation errors */
 .form-error {
-    color: var(--fedora-red);
-    font-size: 0.8rem;
+    color: var(--error-color);
+    font-size: var(--font-size-sm);
     margin-top: 4px;
     display: block;
 }
@@ -134,9 +157,9 @@ body,
     position: fixed;
     inset: var(--topbar-height) 0 0;
     z-index: 8;
-    background: #000;
+    background: var(--dark-5);
     pointer-events: none;
-    transition: opacity 0.3s var(--ease-out-expo);
+    transition: opacity 200ms var(--ease-out-quad);
 }
 
 .window-loading {
@@ -208,9 +231,9 @@ body,
     border-radius: 3px;
     background-image: linear-gradient(
         90deg,
-        rgba(255, 255, 255, 0.06) 0%,
-        rgba(255, 255, 255, 0.14) 50%,
-        rgba(255, 255, 255, 0.06) 100%
+        color-mix(in srgb, var(--view-fg-color) 6%, transparent) 0%,
+        color-mix(in srgb, var(--view-fg-color) 14%, transparent) 50%,
+        color-mix(in srgb, var(--view-fg-color) 6%, transparent) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 1.4s linear infinite;
@@ -245,7 +268,7 @@ body,
 }
 
 :where(button, a, input, textarea, select, [tabindex]):focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
 }
 
@@ -275,7 +298,7 @@ body,
     .focus-btn,
     .mobile-launcher-item
 ):focus-visible {
-    box-shadow: 0 0 0 4px var(--accent-subtle);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
 }
 
 .notification-item:focus-within .notification-item-dismiss,
@@ -284,7 +307,7 @@ body,
 }
 
 .notification-empty small {
-    font-size: 12px;
+    font-size: var(--font-size-sm);
     color: var(--text-secondary);
 }
 
@@ -338,7 +361,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 }
 
 .mobile-apps-btn {
-    background: linear-gradient(135deg, #64748b, #334155);
+    background: linear-gradient(135deg, var(--accent-slate), var(--dark-3));
 }
 
 .mobile-launcher {
@@ -362,9 +385,9 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     visibility: hidden;
     transform: translateY(10px);
     transition:
-        opacity 0.2s var(--ease-out-expo),
-        visibility 0.2s var(--ease-out-expo),
-        transform 0.2s var(--ease-out-expo);
+        opacity 200ms var(--ease-out-quad),
+        visibility 200ms var(--ease-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .mobile-launcher.visible {
@@ -387,8 +410,8 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     text-align: left;
     font-family: var(--font-ui);
     transition:
-        background 0.15s ease,
-        transform 0.15s var(--ease-spring);
+        background 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad);
 }
 
 .mobile-launcher-item:hover {
@@ -418,7 +441,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 .mobile-launcher-item strong {
     overflow: hidden;
     color: inherit;
-    font-size: 14px;
+    font-size: var(--font-size-base);
     font-weight: 700;
     line-height: 1.2;
     text-overflow: ellipsis;
@@ -438,7 +461,7 @@ body.focus-dim-active .window[data-app='focus-mode'] {
 
 [data-theme='light'] .mobile-launcher-item:hover,
 [data-theme='light'] .mobile-launcher-item:active {
-    background: rgba(109, 77, 230, 0.1);
+    background: color-mix(in srgb, var(--accent-bg-color) 10%, transparent);
 }
 
 @media (max-width: 767px) {
@@ -447,13 +470,21 @@ body.focus-dim-active .window[data-app='focus-mode'] {
         background:
             linear-gradient(
                 to top,
-                rgba(15, 23, 42, 0.22) 0%,
-                rgba(15, 23, 42, 0.1) 38%,
-                rgba(15, 23, 42, 0.02) 68%,
+                color-mix(in srgb, var(--dark-4) 22%, transparent) 0%,
+                color-mix(in srgb, var(--dark-4) 10%, transparent) 38%,
+                color-mix(in srgb, var(--dark-4) 2%, transparent) 68%,
                 transparent 100%
             ),
-            radial-gradient(ellipse at 15% 85%, rgba(255, 255, 255, 0.26) 0%, transparent 50%),
-            radial-gradient(ellipse at 85% 15%, rgba(20, 184, 166, 0.1) 0%, transparent 45%);
+            radial-gradient(
+                ellipse at 15% 85%,
+                color-mix(in srgb, var(--light-1) 26%, transparent) 0%,
+                transparent 50%
+            ),
+            radial-gradient(
+                ellipse at 85% 15%,
+                color-mix(in srgb, var(--accent-teal) 10%, transparent) 0%,
+                transparent 45%
+            );
     }
 }
 
