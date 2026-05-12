@@ -1,4 +1,4 @@
-const CACHE_NAME = 'syh-portfolio-v2';
+const CACHE_NAME = 'syh-portfolio-__BUILD_HASH__';
 const PRECACHE = ['/offline.html'];
 
 function cacheResponse(request, response) {

@@ -10,6 +10,8 @@
     width: auto;
     max-width: min(calc(100vw - 32px), 720px);
     background: var(--dock-bg);
+    -webkit-backdrop-filter: var(--dock-blur) var(--glass-saturation);
+    backdrop-filter: var(--dock-blur) var(--glass-saturation);
     border-radius: var(--dock-border-radius);
     padding: 8px 14px;
     display: flex;
@@ -153,7 +155,7 @@
     background: var(--popover-bg-color);
     color: var(--popover-fg-color);
     padding: 5px 10px;
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--radius-sm);
     font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
@@ -219,7 +221,7 @@
     gap: 10px;
     padding: 10px 16px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-2);
     color: var(--text-primary);
     font-size: 13px;

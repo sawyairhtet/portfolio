@@ -23,7 +23,7 @@ export function BrowserApp() {
                     className="browser-open-link"
                     href={githubLink.href}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     aria-label="Open GitHub in a new tab"
                 >
                     <i className="fas fa-up-right-from-square" aria-hidden="true" />
@@ -35,12 +35,13 @@ export function BrowserApp() {
                     src={githubLink.href}
                     loading="lazy"
                     referrerPolicy="no-referrer"
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
                 />
                 <div className="browser-frame-fallback">
                     <i className="fab fa-github" aria-hidden="true" />
                     <strong>{githubLink.handle}</strong>
                     <span>GitHub may block embedding in some browsers.</span>
-                    <a href={githubLink.href} target="_blank" rel="noreferrer">
+                    <a href={githubLink.href} target="_blank" rel="noopener noreferrer">
                         Open GitHub
                     </a>
                 </div>

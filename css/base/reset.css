@@ -116,7 +116,7 @@ body {
 .mobile-launcher-item:focus-visible {
     outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--radius-sm);
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
 }
 
@@ -140,7 +140,7 @@ select:focus-visible {
     padding: 8px 16px;
     z-index: var(--z-skip-link);
     transition: top 0.3s;
-    border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 }
 
 .skip-link:focus {

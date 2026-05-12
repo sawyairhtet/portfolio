@@ -51,12 +51,12 @@
     --border-focus: var(--accent-bg-color);
     --border-subtle: color-mix(in srgb, currentColor 8%, transparent);
 
-    /* ── Flat elevated surfaces (historical "glass" name; values are flat) ── */
-    --glass-bg: var(--popover-bg-color);
-    --glass-bg-heavy: var(--dialog-bg-color);
+    /* ── Translucent elevated surfaces ── */
+    --glass-bg: color-mix(in srgb, var(--popover-bg-color) 78%, transparent);
+    --glass-bg-heavy: color-mix(in srgb, var(--dialog-bg-color) 85%, transparent);
     --glass-border: var(--border-color);
-    --glass-blur: blur(0px);
-    --glass-saturation: saturate(100%);
+    --glass-blur: blur(20px);
+    --glass-saturation: saturate(140%);
 
     /* ── Interaction surfaces ── */
     --surface-hover: color-mix(in srgb, var(--window-fg-color) 7%, transparent);
@@ -124,11 +124,11 @@
     --topbar-height: 32px;
     --topbar-bg: var(--shell-panel-bg);
     --topbar-bg-light: color-mix(in srgb, var(--view-bg-color) 92%, transparent);
-    --topbar-blur: blur(0px);
+    --topbar-blur: blur(20px);
 
     /* ── Dock (Activities dash, GNOME style) ── */
-    --dock-bg: var(--popover-bg-color);
-    --dock-blur: blur(0px);
+    --dock-bg: color-mix(in srgb, var(--popover-bg-color) 80%, transparent);
+    --dock-blur: blur(20px);
     --dock-border-radius: 12px;
     --dock-padding: 8px 12px;
     --dock-icon-size: 52px;
@@ -169,14 +169,6 @@
     --disabled-end: var(--dark-2);
 
     /* ── Spacing ── */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 24px;
-    --space-6: 32px;
-    --space-7: 48px;
-    --space-8: 64px;
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
@@ -186,14 +178,10 @@
 
     /* ── Border Radii ── */
     --radius-xs: 4px;
-    --border-radius-sm: 6px;
-    --border-radius-md: 10px;
-    --border-radius-lg: 14px;
-    --border-radius-xl: 18px;
-    --radius-sm: var(--border-radius-sm);
-    --radius-md: var(--border-radius-md);
-    --radius-lg: var(--border-radius-lg);
-    --radius-xl: var(--border-radius-xl);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
 
     /* ── Motion ── */
     --duration-instant: 80ms;
@@ -210,10 +198,6 @@
     --transition-fast: 200ms var(--ease-out-quad);
     --transition-base: 200ms var(--ease-in-out-quad);
     --transition-slow: 400ms var(--ease-out-quad);
-    --transition-normal: var(--transition-base);
-    --transition-smooth: 200ms var(--ease-out-quad);
-    --ease-out-expo: var(--ease-out-quad);
-    --ease-spring: var(--ease-out-quad);
 
     /* ── Gradients ── */
     --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
@@ -265,8 +249,8 @@
     --window-body-bg: var(--window-bg-color);
     --shadow-window: var(--window-shadow);
 
-    --glass-bg: var(--popover-bg-color);
-    --glass-bg-heavy: var(--dialog-bg-color);
+    --glass-bg: color-mix(in srgb, var(--popover-bg-color) 78%, transparent);
+    --glass-bg-heavy: color-mix(in srgb, var(--dialog-bg-color) 85%, transparent);
     --accent-on-surface: var(--accent-color);
     --shell-panel-bg: color-mix(in srgb, var(--dark-5) 48%, transparent);
     --shell-panel-border: color-mix(in srgb, var(--light-1) 10%, transparent);
@@ -312,9 +296,9 @@
     --border-focus: var(--accent-bg-color);
     --border-subtle: color-mix(in srgb, currentColor 10%, transparent);
 
-    /* ── Flat elevated surfaces ── */
-    --glass-bg: var(--popover-bg-color);
-    --glass-bg-heavy: var(--dialog-bg-color);
+    /* ── Translucent elevated surfaces ── */
+    --glass-bg: color-mix(in srgb, var(--popover-bg-color) 82%, transparent);
+    --glass-bg-heavy: color-mix(in srgb, var(--dialog-bg-color) 88%, transparent);
     --glass-border: var(--border-color);
     --shell-panel-bg: color-mix(in srgb, var(--view-bg-color) 84%, transparent);
     --shell-panel-border: color-mix(in srgb, var(--window-fg-color) 10%, transparent);
@@ -343,7 +327,7 @@
     --topbar-bg-light: var(--view-bg-color);
 
     /* ── Dock — libadwaita light ── */
-    --dock-bg: var(--popover-bg-color);
+    --dock-bg: color-mix(in srgb, var(--popover-bg-color) 82%, transparent);
     --dock-border: 1px solid var(--border-color);
     --dock-hover-bg: color-mix(in srgb, var(--popover-fg-color) 6%, transparent);
 

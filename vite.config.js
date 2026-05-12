@@ -1,13 +1,28 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-    plugins: [react(), tailwindcss()],
+    plugins: [
+        react(),
+        tailwindcss(),
+        {
+            name: 'inject-sw-cache-version',
+            closeBundle() {
+                const swPath = path.resolve(__dirname, 'dist/sw.js');
+                try {
+                    const content = readFileSync(swPath, 'utf-8');
+                    const hash = Date.now().toString(36);
+                    writeFileSync(swPath, content.replace('__BUILD_HASH__', hash));
+                } catch { /* dev mode — sw.js not in dist */ }
+            },
+        },
+    ],
     root: '.',
     resolve: {
         alias: {

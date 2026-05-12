@@ -6,7 +6,7 @@
     position: fixed;
     background: var(--glass-bg-heavy);
     border: 1px solid var(--glass-border);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow-popover);
     min-width: 200px;
     padding: 6px 0;
@@ -41,7 +41,7 @@
         background 200ms var(--ease-in-out-quad),
         color 200ms var(--ease-in-out-quad);
     margin: 0 4px;
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--radius-sm);
 }
 
 @media (hover: hover) {

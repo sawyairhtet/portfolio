@@ -184,7 +184,7 @@
     padding: var(--spacing-sm) var(--spacing-md);
     background: color-mix(in srgb, var(--popover-fg-color) 3%, transparent);
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     animation: notificationSlideIn 200ms var(--ease-out-quad) forwards;
     cursor: default;
     transition:

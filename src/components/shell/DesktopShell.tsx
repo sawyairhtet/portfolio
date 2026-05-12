@@ -490,7 +490,11 @@ export function DesktopShell() {
             />
 
             {/* Activities Overlay */}
-            <ActivitiesOverlay isOpen={activitiesOpen} onClose={() => setActivitiesOpen(false)} />
+            <ActivitiesOverlay
+                isOpen={activitiesOpen}
+                onClose={() => setActivitiesOpen(false)}
+                workspaceIndex={workspaceIndex}
+            />
 
             {altTabOpen && (
                 <div className="alt-tab-switcher" role="status" aria-live="polite">

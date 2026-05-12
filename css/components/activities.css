@@ -375,6 +375,7 @@
     cursor: pointer;
     opacity: 0;
     animation: activitiesAppItemIn var(--duration-normal) var(--ease-out-quad) forwards;
+    animation-delay: calc(var(--i, 0) * 30ms);
     transition: transform var(--duration-normal) var(--ease-out-quad);
 }
 

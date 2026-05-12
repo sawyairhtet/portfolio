@@ -793,7 +793,7 @@
     gap: 1px;
     overflow: hidden;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-lg);
     background: var(--border-color);
     margin-bottom: var(--spacing-lg);
 }
@@ -814,7 +814,7 @@
     min-height: 42px;
     padding: 10px 12px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-1);
     color: var(--text-primary);
     font-family: var(--font-ui);
@@ -909,7 +909,7 @@
 .skill-category {
     min-width: 0;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-lg);
     background: var(--surface-1);
     overflow: hidden;
     transition:
@@ -1017,7 +1017,7 @@
 .adw-status-header {
     padding: 16px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-lg);
     background: var(--surface-1);
 }
 
@@ -1103,7 +1103,7 @@
 .adw-boxed-list {
     overflow: hidden;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-lg);
     background: var(--surface-1);
 }
 
@@ -1233,7 +1233,7 @@
     min-height: 36px;
     padding: 8px 14px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-2);
     color: var(--text-primary);
     font-size: 13px;
@@ -1309,7 +1309,7 @@
 .adw-form textarea {
     width: 100%;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-0);
     color: var(--text-primary);
     font: inherit;
@@ -1365,7 +1365,7 @@
     gap: 8px;
     min-height: 34px;
     padding: 8px 11px;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     font-size: 12px;
     font-weight: 700;
 }
@@ -1386,7 +1386,7 @@
 .adw-project-card {
     overflow: hidden;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-lg);
     background: var(--surface-1);
 }
 
@@ -1520,7 +1520,7 @@
     min-width: 0;
     padding: 11px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-0);
 }
 
@@ -1563,7 +1563,7 @@
     gap: 11px;
     padding: 12px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-0);
 }
 
@@ -1889,7 +1889,7 @@
     margin: var(--spacing-md) 0;
     padding: 12px 14px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-1);
 }
 
@@ -1928,7 +1928,7 @@
     gap: 8px;
     padding: 10px 16px;
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-2);
     color: var(--text-primary);
     font-weight: 600;
@@ -2001,7 +2001,7 @@
     display: grid;
     place-items: center;
     flex-shrink: 0;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: var(--surface-3);
     transition: background 200ms var(--ease-in-out-quad);
 }

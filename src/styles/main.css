@@ -67,7 +67,7 @@
     -webkit-backdrop-filter: var(--glass-blur) saturate(180%);
     color: var(--text-primary);
     padding: 12px 20px;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     border: 1px solid var(--glass-border);
     box-shadow: var(--shadow-popover);
     display: flex;

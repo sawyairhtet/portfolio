@@ -14,9 +14,10 @@ import type { AppId, Project } from '../../types';
 interface ActivitiesOverlayProps {
     isOpen: boolean;
     onClose: () => void;
+    workspaceIndex?: number;
 }
 
-export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
+export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: ActivitiesOverlayProps) {
     const { openWindow, windows } = useWindowManager();
     const [searchQuery, setSearchQuery] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
@@ -313,15 +314,16 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                 </div>
 
                 <aside className="activities-workspace-switcher" aria-label="Workspaces">
-                    <div className="activities-workspace active" aria-hidden="true" tabIndex={-1}>
-                        <span />
-                    </div>
-                    <div className="activities-workspace" aria-hidden="true" tabIndex={-1}>
-                        <span />
-                    </div>
-                    <div className="activities-workspace" aria-hidden="true" tabIndex={-1}>
-                        <span />
-                    </div>
+                    {[0, 1, 2].map(i => (
+                        <div
+                            key={i}
+                            className={`activities-workspace${i === workspaceIndex ? ' active' : ''}`}
+                            aria-hidden="true"
+                            tabIndex={-1}
+                        >
+                            <span />
+                        </div>
+                    ))}
                 </aside>
             </div>
 
@@ -369,11 +371,12 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                                 <strong>No matching apps</strong>
                             </div>
                         ) : (
-                            filteredApps.map(app => (
+                            filteredApps.map((app, i) => (
                                 <button
                                     key={app.id}
                                     type="button"
                                     className="activities-app-item"
+                                    style={{ '--i': i } as React.CSSProperties}
                                     data-app={app.id}
                                     data-activities-result="true"
                                     aria-label={`Open ${app.label}`}

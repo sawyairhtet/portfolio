@@ -31,7 +31,7 @@
     gap: var(--spacing-sm);
     padding: 10px 14px;
     border: none;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     background: transparent;
     color: var(--text-secondary);
     font-family: var(--font-ui);
@@ -89,7 +89,7 @@
 .settings-card {
     background: var(--surface-1);
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
     transition:
@@ -186,7 +186,7 @@
 .wallpaper-grid .wallpaper-option {
     width: 100%;
     height: 56px;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--radius-md);
     border: 2px solid var(--border-color);
     cursor: pointer;
     transition:
