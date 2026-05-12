@@ -5,9 +5,11 @@ import js from '@eslint/js';
 import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
+import pluginSecurity from 'eslint-plugin-security';
 
 export default [
     js.configs.recommended,
+    pluginSecurity.configs.recommended,
     {
         files: ['src/**/*.{ts,tsx}'],
         languageOptions: {
@@ -36,6 +38,11 @@ export default [
                 'error',
                 { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
             ],
+
+            // --- Security-hardened rules ---
+            'no-eval': 'error',
+            'no-implied-eval': 'error',
+            'no-new-func': 'error',
         },
     },
     {

@@ -8,11 +8,28 @@ import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 const MESSAGE_MAX = 2000;
 const COOLDOWN_MS = 8000;
 
+/** Env-var Formspree endpoint — falls back to hardcoded if unset. */
+const FORMSPREE_URL =
+    import.meta.env.VITE_FORMSPREE_URL || 'https://formspree.io/f/mqewakad';
+
+/** Reject strings that look like HTML/script injection attempts. */
+const INJECTION_PATTERN = /<\s*\/?\s*(script|img|iframe|object|embed|link|style|svg|math)\b/i;
+
 const contactSchema = z.object({
-    name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
-    email: z.string().min(1, 'Email is required').email('Please enter a valid email'),
+    name: z
+        .string()
+        .trim()
+        .min(1, 'Name is required')
+        .max(100, 'Name is too long')
+        .refine(v => !INJECTION_PATTERN.test(v), 'Invalid characters in name'),
+    email: z
+        .string()
+        .trim()
+        .min(1, 'Email is required')
+        .email('Please enter a valid email'),
     message: z
         .string()
+        .trim()
         .min(10, 'Message must be at least 10 characters')
         .max(2000, 'Message is too long'),
 });
@@ -22,6 +39,37 @@ type ContactFormData = z.infer<typeof contactSchema>;
 interface FormspreeFieldError {
     field?: string;
     message?: string;
+}
+
+// ---------- Session-based rate limiter ----------
+const RATE_LIMIT_KEY = 'contact_submit_ts';
+const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
+
+function isRateLimited(): boolean {
+    try {
+        const raw = sessionStorage.getItem(RATE_LIMIT_KEY);
+        const timestamps: number[] = raw ? JSON.parse(raw) : [];
+        const now = Date.now();
+        const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+        return recent.length >= RATE_LIMIT_MAX;
+    } catch {
+        return false;
+    }
+}
+
+function recordSubmission(): void {
+    try {
+        const raw = sessionStorage.getItem(RATE_LIMIT_KEY);
+        const timestamps: number[] = raw ? JSON.parse(raw) : [];
+        const now = Date.now();
+        timestamps.push(now);
+        // Keep only recent timestamps to avoid unbounded growth
+        const recent = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
+        sessionStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recent));
+    } catch {
+        // sessionStorage unavailable — no-op
+    }
 }
 
 export function ContactApp() {
@@ -77,13 +125,21 @@ export function ContactApp() {
             return;
         }
 
+        // Client-side rate limiter — max 3 submissions per 5-minute window.
+        if (isRateLimited()) {
+            setStatusMsg('Too many messages. Please wait a few minutes.');
+            setStatusType('error');
+            focusBanner();
+            return;
+        }
+
         try {
             const formData = new FormData();
             formData.append('name', data.name);
             formData.append('email', data.email);
             formData.append('message', data.message);
 
-            const response = await fetch('https://formspree.io/f/mqewakad', {
+            const response = await fetch(FORMSPREE_URL, {
                 method: 'POST',
                 body: formData,
                 headers: { Accept: 'application/json' },
@@ -94,6 +150,7 @@ export function ContactApp() {
                 setStatusType('success');
                 reset();
                 startCooldown();
+                recordSubmission();
                 showToast('Message sent successfully!', 'fas fa-check-circle');
                 focusBanner();
             } else {

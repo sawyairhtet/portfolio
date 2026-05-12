@@ -7,10 +7,40 @@ import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Dev-only CSP meta tag — mirrors the production Netlify headers so CSP
+ * violations surface during development, not only after deploy.
+ */
+const devCspPlugin = () => ({
+    name: 'inject-dev-csp',
+    transformIndexHtml(html, ctx) {
+        if (!ctx.server) return html; // production builds use Netlify headers
+        const csp = [
+            "default-src 'self'",
+            "script-src 'self' https://plausible.io",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' https://fonts.gstatic.com",
+            "img-src 'self' data: https:",
+            "connect-src 'self' https://formspree.io https://plausible.io ws://localhost:* http://localhost:*",
+            "worker-src 'self'",
+            "manifest-src 'self'",
+            "object-src 'none'",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self' https://formspree.io",
+        ].join('; ');
+        return html.replace(
+            '<head>',
+            `<head>\n    <meta http-equiv="Content-Security-Policy" content="${csp}" />`
+        );
+    },
+});
+
 export default defineConfig({
     plugins: [
         react(),
         tailwindcss(),
+        devCspPlugin(),
         {
             name: 'inject-sw-cache-version',
             closeBundle() {

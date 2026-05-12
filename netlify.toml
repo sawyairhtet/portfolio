@@ -5,13 +5,58 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "0"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    # --- Transport Security ---
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-GDi0JzsFj+WolgyWEuMo1+3QwN9QFrzkFh7Acxz8bMI=' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://formspree.io https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io"
+
+    # --- Content Security Policy ---
+    # Allows: self, Google Fonts, Plausible analytics, Formspree contact form,
+    #         service worker, PWA manifest, and inline styles (Tailwind/CSS-in-JS).
+    Content-Security-Policy = """
+      default-src 'self'; \
+      script-src 'self' https://plausible.io; \
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; \
+      font-src 'self' https://fonts.gstatic.com; \
+      img-src 'self' data: https:; \
+      connect-src 'self' https://formspree.io https://plausible.io; \
+      worker-src 'self'; \
+      manifest-src 'self'; \
+      object-src 'none'; \
+      frame-ancestors 'none'; \
+      base-uri 'self'; \
+      form-action 'self' https://formspree.io; \
+      upgrade-insecure-requests"""
+
+    # --- Clickjacking / Framing ---
+    X-Frame-Options = "DENY"
+
+    # --- MIME-sniffing ---
+    X-Content-Type-Options = "nosniff"
+
+    # --- XSS filter (disabled — CSP supersedes it; "0" is safest) ---
+    X-XSS-Protection = "0"
+
+    # --- Referrer ---
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # --- Permissions Policy (deny everything we don't use) ---
+    Permissions-Policy = """
+      camera=(), \
+      microphone=(), \
+      geolocation=(), \
+      interest-cohort=(), \
+      payment=(), \
+      usb=(), \
+      bluetooth=(), \
+      serial=(), \
+      hid=(), \
+      ambient-light-sensor=(), \
+      gyroscope=(), \
+      magnetometer=(), \
+      accelerometer=()"""
+
+    # --- Cross-Origin Isolation ---
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
 
 [[headers]]
   for = "/fonts/*"
