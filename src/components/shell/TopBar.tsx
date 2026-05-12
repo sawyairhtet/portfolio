@@ -40,17 +40,15 @@ export function TopBar({
         return () => clearInterval(interval);
     }, [updateClock]);
 
-    const focusedAppName = focusedApp
-        ? (APP_DEFINITIONS.find(app => app.id === focusedApp)?.label ?? '')
-        : '';
+    const focusedAppDefinition = focusedApp
+        ? APP_DEFINITIONS.find(app => app.id === focusedApp)
+        : undefined;
+    const focusedAppName = focusedAppDefinition?.label ?? '';
 
     return (
         <div className="top-bar">
             {/* GNOME Panel Left - Activities */}
             <div className="menu-bar-left">
-                <span className="focused-app-name" aria-label="Focused application name">
-                    {focusedAppName}
-                </span>
                 <button
                     className={`activities-btn pill${isActivitiesOpen ? ' active' : ''}`}
                     title="Activities (Super)"
@@ -61,6 +59,12 @@ export function TopBar({
                 >
                     Activities
                 </button>
+                <span className="focused-app-name" aria-label="Focused application name">
+                    {focusedAppDefinition && (
+                        <i className={focusedAppDefinition.icon} aria-hidden="true" />
+                    )}
+                    {focusedAppName}
+                </span>
             </div>
 
             {/* Mobile Status Bar Items */}

@@ -9,33 +9,36 @@ import { NotificationProvider } from './context/NotificationContext';
 import { PreferencesProvider } from './context/PreferencesContext';
 import { DesktopShell } from './components/shell/DesktopShell';
 import { DeepLinkHandler } from './components/shell/DeepLinkHandler';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function App() {
     return (
-        <BrowserRouter>
-            <QueryClientProvider client={queryClient}>
-                <DeviceProvider>
-                    <ThemeProvider>
-                        <PreferencesProvider>
-                            <SoundProvider>
-                                <WindowManagerProvider>
-                                    <NotificationProvider>
-                                        <Routes>
-                                            <Route path="/" element={<DesktopShell />} />
-                                            <Route
-                                                path="/app/:appId"
-                                                element={<DeepLinkHandler />}
-                                            />
-                                            <Route path="*" element={<DesktopShell />} />
-                                        </Routes>
-                                    </NotificationProvider>
-                                </WindowManagerProvider>
-                            </SoundProvider>
-                        </PreferencesProvider>
-                    </ThemeProvider>
-                </DeviceProvider>
-            </QueryClientProvider>
-        </BrowserRouter>
+        <ErrorBoundary level="app">
+            <BrowserRouter>
+                <QueryClientProvider client={queryClient}>
+                    <DeviceProvider>
+                        <ThemeProvider>
+                            <PreferencesProvider>
+                                <SoundProvider>
+                                    <WindowManagerProvider>
+                                        <NotificationProvider>
+                                            <Routes>
+                                                <Route path="/" element={<DesktopShell />} />
+                                                <Route
+                                                    path="/app/:appId"
+                                                    element={<DeepLinkHandler />}
+                                                />
+                                                <Route path="*" element={<DesktopShell />} />
+                                            </Routes>
+                                        </NotificationProvider>
+                                    </WindowManagerProvider>
+                                </SoundProvider>
+                            </PreferencesProvider>
+                        </ThemeProvider>
+                    </DeviceProvider>
+                </QueryClientProvider>
+            </BrowserRouter>
+        </ErrorBoundary>
     );
 }
 

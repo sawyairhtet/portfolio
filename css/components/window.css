@@ -22,7 +22,7 @@
     transform-origin: var(--window-open-origin, 50% 100%);
     transition:
         box-shadow var(--backdrop_transition),
-        transform 200ms var(--ease-out-quad),
+        transform var(--duration-window) var(--ease-out-quad),
         outline-color var(--backdrop_transition);
     /* Default position */
     left: 20px;
@@ -196,12 +196,12 @@
     background: color-mix(in srgb, var(--accent-bg-color) 12%, transparent);
     border: 2px dashed var(--accent-bg-color);
     border-radius: var(--radius-md);
-    z-index: 950;
+    z-index: var(--z-snap-preview);
     pointer-events: none;
     opacity: 0;
     transition:
-        opacity 200ms var(--ease-out-quad),
-        transform 200ms var(--ease-out-quad);
+        opacity var(--duration-normal) var(--ease-out-quad),
+        transform var(--duration-normal) var(--ease-out-quad);
 }
 
 .snap-preview.visible {
@@ -254,16 +254,39 @@
     cursor: grabbing;
 }
 
+.window-title-group {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    max-width: calc(100% - 148px);
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+
+.window-title-icon {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    flex: 0 0 auto;
+    color: color-mix(in srgb, currentColor 70%, transparent);
+    font-size: 13px;
+}
+
 /* Title — non-interactive so drags pass through to the header */
 .window-title {
-    flex: 1;
-    text-align: center;
+    min-width: 0;
+    overflow: hidden;
     font-size: var(--font-size-base);
     font-weight: 700;
     color: inherit;
     letter-spacing: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     transition: color 200ms var(--ease-out-quad);
-    pointer-events: none;
 }
 
 .window:not(.is-focused):not(:focus-within) .window-header {
@@ -300,7 +323,7 @@
     transition:
         background var(--button_transition),
         box-shadow var(--button_transition),
-        transform 200ms var(--ease-out-quad);
+        transform var(--duration-fast) var(--ease-out-quad);
     outline: none;
 }
 
@@ -371,6 +394,14 @@
 
     .window-control:hover::after {
         opacity: 1;
+    }
+
+    .window-control.close:hover::before {
+        background-color: color-mix(in srgb, var(--destructive-bg-color) 18%, transparent);
+    }
+
+    .window-control.close:hover::after {
+        background-color: var(--destructive-color);
     }
 }
 

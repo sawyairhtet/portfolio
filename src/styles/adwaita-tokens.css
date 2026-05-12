@@ -171,21 +171,21 @@
     --numeric: 'tnum';
     --large-title: 24pt 300;
 
-    /* Spacing */
-    --spacing-xxs: 3px;
-    --spacing-xs: 4px;
-    --spacing-sm: 6px;
-    --spacing-md: 9px;
-    --spacing-lg: 12px;
-    --spacing-xl: 15px;
-    --spacing-2xl: 18px;
-    --spacing-3xl: 24px;
+    /* Spacing (Adwaita-prefixed to avoid collision with portfolio tokens) */
+    --adw-spacing-xxs: 3px;
+    --adw-spacing-xs: 4px;
+    --adw-spacing-sm: 6px;
+    --adw-spacing-md: 9px;
+    --adw-spacing-lg: 12px;
+    --adw-spacing-xl: 15px;
+    --adw-spacing-2xl: 18px;
+    --adw-spacing-3xl: 24px;
     --control-min-small: 24px;
     --control-min-medium: 36px;
     --headerbar-min-height: 47px;
     --touch-target-large: 56px;
-    --menu_margin: 6px;
-    --menu_padding: 12px;
+    --menu_margin: var(--adw-spacing-sm);
+    --menu_padding: var(--adw-spacing-lg);
 
     /* Radius */
     --button_radius: 9px;
@@ -300,4 +300,12 @@
     --border-opacity: 50%;
     --dim-opacity: 90%;
     --disabled-opacity: 40%;
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --border-opacity: 50%;
+        --dim-opacity: 90%;
+        --disabled-opacity: 40%;
+    }
 }

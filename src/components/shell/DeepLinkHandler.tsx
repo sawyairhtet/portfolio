@@ -18,22 +18,22 @@ const VALID_APPS: AppId[] = [
     'focus-mode',
 ];
 
-const DEFAULT_TITLE = 'Saw Ye Htet — Portfolio | Fedora 43 Desktop';
+const DEFAULT_TITLE = 'Saw Ye Htet - Java-focused Software Developer';
 const DEFAULT_DESCRIPTION =
-    'Saw Ye Htet is a Java-focused software developer and Singapore Polytechnic IT graduate. Explore projects, skills, resume, and contact details in an interactive Fedora 43 GNOME 49 desktop portfolio.';
+    'Saw Ye Htet is a Java-focused software developer building Spring Boot, SQL, and React + TypeScript projects. Explore projects, skills, resume, and contact details.';
 const SITE_ORIGIN = 'https://sawyehtet.com';
 
 /** Per-route SEO metadata for deep links. */
 const ROUTE_META: Partial<Record<AppId, { title: string; description: string }>> = {
     about: {
-        title: 'About — Saw Ye Htet | Java Software Engineer',
+        title: 'About - Saw Ye Htet | Java-focused Software Developer',
         description:
-            'Saw Ye Htet — Java Software Engineer and Singapore Polytechnic IT graduate (2026). Recruiter summary, education, skills, and availability.',
+            'Saw Ye Htet - Java-focused software developer and Singapore Polytechnic IT graduate (2026). Recruiter summary, education, skills, and availability.',
     },
     projects: {
-        title: 'Projects — Saw Ye Htet | Java & React Portfolio',
+        title: 'Projects - Saw Ye Htet | Java, Spring Boot, React',
         description:
-            'Featured projects by Saw Ye Htet: Fedora 43 desktop portfolio (React 19, TypeScript), OpsTrack (Spring Boot, PostgreSQL), and more.',
+            'Featured projects by Saw Ye Htet: a Fedora-inspired React + TypeScript portfolio desktop and OpsTrack, a Spring Boot and PostgreSQL API project.',
     },
     skills: {
         title: 'Skills — Saw Ye Htet | Java, Spring Boot, React, SQL',
@@ -41,14 +41,19 @@ const ROUTE_META: Partial<Record<AppId, { title: string; description: string }>>
             'Technical skills: Java + OOP, Spring Boot, SQL, React + TypeScript, Git, and Linux. Practical context and project usage for each.',
     },
     contact: {
-        title: 'Contact — Saw Ye Htet | Hire a Java Developer',
+        title: 'Contact - Saw Ye Htet | Java-focused Developer',
         description:
-            'Get in touch with Saw Ye Htet — Java Software Engineer based in Singapore. Email, resume download, and contact form.',
+            'Get in touch with Saw Ye Htet - Java-focused software developer based in Singapore. Email, resume download, and contact form.',
     },
     terminal: {
         title: 'Terminal — Saw Ye Htet | Interactive Portfolio Shell',
         description:
             'Explore Saw Ye Htet\'s portfolio through an interactive terminal with filesystem navigation, app commands, and easter eggs.',
+    },
+    'text-editor': {
+        title: 'Resume - Saw Ye Htet | Java-focused Software Developer',
+        description:
+            'Open or download Saw Ye Htet\'s resume PDF, with a readable markdown fallback for the portfolio desktop.',
     },
     links: {
         title: 'Links — Saw Ye Htet | GitHub, LinkedIn, Social',

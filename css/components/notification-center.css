@@ -1,5 +1,5 @@
 /* ============================================
-   NOTIFICATION CENTER - Premium Glass
+   NOTIFICATION CENTER - GNOME notifications
    ============================================ */
 
 /* Dismiss slide out */
@@ -19,20 +19,20 @@
     transform-origin: top center;
     width: 400px;
     max-height: calc(100vh - var(--topbar-height) - 32px);
-    z-index: var(--z-modal);
-    background: var(--glass-bg-heavy);
+    z-index: var(--z-popover);
+    background: color-mix(in srgb, var(--dialog-bg-color) 96%, transparent);
     border: 1px solid var(--glass-border);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-popover);
+    border-radius: var(--popover_radius);
+    box-shadow: var(--shadow-elevation-3);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity 200ms var(--ease-out-quad),
-        transform 200ms var(--ease-out-quad),
-        visibility 200ms var(--ease-out-quad);
+        opacity var(--duration-normal) var(--ease-out-quad),
+        transform var(--duration-normal) var(--ease-out-quad),
+        visibility var(--duration-normal) var(--ease-out-quad);
 }
 
 [data-theme='dark'] .notification-center {
@@ -182,14 +182,14 @@
     display: flex;
     gap: var(--spacing-sm);
     padding: var(--spacing-sm) var(--spacing-md);
-    background: color-mix(in srgb, var(--popover-fg-color) 2%, transparent);
+    background: color-mix(in srgb, var(--popover-fg-color) 3%, transparent);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     animation: notificationSlideIn 200ms var(--ease-out-quad) forwards;
     cursor: default;
     transition:
-        background var(--transition-fast),
-        border-color var(--transition-fast);
+        background var(--duration-fast) var(--ease-out-quad),
+        border-color var(--duration-fast) var(--ease-out-quad);
     align-items: flex-start;
 }
 
@@ -211,7 +211,7 @@
     font-size: 16px;
     color: var(--accent);
     flex-shrink: 0;
-    box-shadow: 0 1px 4px var(--shade-color);
+    box-shadow: var(--shadow-elevation-1);
 }
 
 .notification-item-icon-info {

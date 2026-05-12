@@ -54,6 +54,8 @@ export function Wallpaper() {
                 const y = (e.clientY / window.innerHeight - 0.5) * 2;
                 el.style.setProperty('--mouse-x', x.toFixed(3));
                 el.style.setProperty('--mouse-y', y.toFixed(3));
+                el.style.setProperty('--wallpaper-shift-x', `${(-x * 6).toFixed(2)}px`);
+                el.style.setProperty('--wallpaper-shift-y', `${(-y * 6).toFixed(2)}px`);
                 rafId = null;
             });
         };

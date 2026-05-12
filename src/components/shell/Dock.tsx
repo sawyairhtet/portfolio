@@ -1,4 +1,12 @@
-import { useCallback, useState, useRef, type MouseEvent, type KeyboardEvent } from 'react';
+import {
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+    useRef,
+    type MouseEvent,
+    type KeyboardEvent,
+} from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { DOCK_APPS, MOBILE_DOCK_APPS, MOBILE_LAUNCHER_APPS } from '../../config/data';
 import { useDevice } from '../../context/DeviceContext';
@@ -13,8 +21,10 @@ export function Dock({ onShowApps }: DockProps) {
     const { device } = useDevice();
     const [launchingApp, setLaunchingApp] = useState<AppId | null>(null);
     const [launcherOpen, setLauncherOpen] = useState(false);
+    const [mobileSearchQuery, setMobileSearchQuery] = useState('');
     const [focusedIndex, setFocusedIndex] = useState(0);
     const dockRef = useRef<HTMLDivElement>(null);
+    const mobileSearchRef = useRef<HTMLInputElement>(null);
     const isMobileShell = device !== 'desktop';
 
     const handleDockClick = useCallback(
@@ -35,6 +45,7 @@ export function Dock({ onShowApps }: DockProps) {
             }
 
             setLauncherOpen(false);
+            setMobileSearchQuery('');
             setLaunchingApp(appId);
             setTimeout(() => setLaunchingApp(null), 360);
         },
@@ -46,7 +57,28 @@ export function Dock({ onShowApps }: DockProps) {
     const utilityApps = DOCK_APPS.filter(a => ['terminal', 'settings'].includes(a.id));
 
     // All focusable items in desktop dock (main apps + utility apps + Show Apps)
-    const allDockItems = [...mainApps, ...utilityApps, { id: 'show-apps' as const, label: 'Show Apps' }];
+    const allDockItems = [
+        ...mainApps,
+        ...utilityApps,
+        { id: 'show-apps' as const, label: 'Show Apps' },
+    ];
+
+    const filteredMobileLauncherApps = useMemo(() => {
+        const query = mobileSearchQuery.trim().toLowerCase();
+        if (!query) return MOBILE_LAUNCHER_APPS;
+
+        return MOBILE_LAUNCHER_APPS.filter(app => {
+            const searchable = [app.label, app.description, ...app.aliases].join(' ').toLowerCase();
+            return searchable.includes(query);
+        });
+    }, [mobileSearchQuery]);
+
+    useEffect(() => {
+        if (!launcherOpen) return;
+
+        const timer = window.setTimeout(() => mobileSearchRef.current?.focus(), 80);
+        return () => window.clearTimeout(timer);
+    }, [launcherOpen]);
 
     const handleDockKeyDown = useCallback(
         (e: KeyboardEvent<HTMLDivElement>) => {
@@ -79,9 +111,7 @@ export function Dock({ onShowApps }: DockProps) {
             setFocusedIndex(nextIndex);
             const dock = dockRef.current;
             if (dock) {
-                const buttons = Array.from(
-                    dock.querySelectorAll<HTMLElement>('button.dock-item')
-                );
+                const buttons = Array.from(dock.querySelectorAll<HTMLElement>('button.dock-item'));
                 buttons[nextIndex]?.focus();
             }
         },
@@ -121,7 +151,10 @@ export function Dock({ onShowApps }: DockProps) {
                         aria-expanded={launcherOpen}
                         aria-haspopup="dialog"
                         aria-controls="mobile-app-launcher"
-                        onClick={() => setLauncherOpen(open => !open)}
+                        onClick={() => {
+                            setLauncherOpen(open => !open);
+                            setMobileSearchQuery('');
+                        }}
                     >
                         <i className="fas fa-grip" aria-hidden="true" />
                         <span className="dock-tooltip" id="dock-tip-mobile-apps" role="tooltip">
@@ -138,28 +171,54 @@ export function Dock({ onShowApps }: DockProps) {
                     onKeyDown={event => {
                         if (event.key === 'Escape') {
                             setLauncherOpen(false);
+                            setMobileSearchQuery('');
                         }
                     }}
                 >
-                    {MOBILE_LAUNCHER_APPS.map(app => (
-                        <button
-                            key={app.id}
-                            className="mobile-launcher-item"
-                            data-app={app.id}
-                            aria-label={`${app.label}: ${app.description}`}
-                            onClick={event => handleDockClick(app.id, event)}
-                        >
-                            <span
-                                className="mobile-launcher-icon"
-                                style={{ background: app.gradient }}
-                            >
-                                <i className={app.icon} aria-hidden="true" />
-                            </span>
-                            <span>
-                                <strong>{app.label}</strong>
-                            </span>
-                        </button>
-                    ))}
+                    <div className="mobile-launcher-header">
+                        <span>Applications</span>
+                        <small>Fedora mobile launcher</small>
+                    </div>
+                    <label className="mobile-launcher-search">
+                        <i className="fas fa-search" aria-hidden="true" />
+                        <input
+                            ref={mobileSearchRef}
+                            type="search"
+                            value={mobileSearchQuery}
+                            onChange={event => setMobileSearchQuery(event.target.value)}
+                            placeholder="Search apps"
+                            aria-label="Search mobile apps"
+                        />
+                    </label>
+                    <div className="mobile-launcher-grid">
+                        {filteredMobileLauncherApps.length === 0 ? (
+                            <div className="mobile-launcher-empty" role="status">
+                                <i className="fas fa-box-open" aria-hidden="true" />
+                                <span>No matching apps</span>
+                            </div>
+                        ) : (
+                            filteredMobileLauncherApps.map(app => (
+                                <button
+                                    key={app.id}
+                                    className="mobile-launcher-item"
+                                    data-app={app.id}
+                                    aria-label={`${app.label}: ${app.description}`}
+                                    onClick={event => handleDockClick(app.id, event)}
+                                >
+                                    <span
+                                        className="mobile-launcher-icon"
+                                        style={{ background: app.gradient }}
+                                    >
+                                        <i className={app.icon} aria-hidden="true" />
+                                    </span>
+                                    <span>
+                                        <strong>{app.label}</strong>
+                                        <small>{app.description}</small>
+                                    </span>
+                                </button>
+                            ))
+                        )}
+                    </div>
                 </div>
             </>
         );
@@ -232,4 +291,3 @@ export function Dock({ onShowApps }: DockProps) {
         </div>
     );
 }
-

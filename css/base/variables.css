@@ -58,12 +58,26 @@
     --glass-blur: blur(0px);
     --glass-saturation: saturate(100%);
 
+    /* ── Interaction surfaces ── */
+    --surface-hover: color-mix(in srgb, var(--window-fg-color) 7%, transparent);
+    --surface-active: color-mix(in srgb, var(--accent-bg-color) 14%, transparent);
+    --surface-selected: color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
+    --surface-scrim: color-mix(in srgb, var(--dark-5) 36%, transparent);
+    --surface-overview: color-mix(in srgb, var(--overview-bg-color) 88%, transparent);
+    --shell-panel-bg: color-mix(in srgb, var(--view-bg-color) 88%, transparent);
+    --shell-panel-border: color-mix(in srgb, var(--view-fg-color) 10%, transparent);
+
     /* ── Shadows — Simple Adwaita shadows ── */
     --shadow-window: var(--window-shadow);
     --shadow-popover: 0 2px 8px var(--popover-shade-color);
     --shadow-sm: 0 1px 4px var(--shade-color);
     --shadow-md: 0 2px 8px var(--shade-color);
     --shadow-lg: 0 6px 24px var(--shade-color);
+    --shadow-elevation-1: 0 1px 2px var(--shade-color);
+    --shadow-elevation-2: 0 2px 8px var(--shade-color);
+    --shadow-elevation-3: 0 8px 24px color-mix(in srgb, var(--dark-5) 22%, transparent);
+    --shadow-elevation-4: 0 18px 54px color-mix(in srgb, var(--dark-5) 32%, transparent);
+    --shadow-focus-ring: 0 0 0 4px color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
     --shadow-glow: none;
 
     /* ── Scrollbar ── */
@@ -81,14 +95,17 @@
     --font-size-xl: 136%;
     --font-size-2xl: 136%;
     --font-size-display: 181%;
+    --line-height-tight: 1.15;
+    --line-height-base: 1.4;
+    --line-height-relaxed: 1.6;
 
     /* ── Window Chrome ── */
     --window-header-height: 47px;
     --window-border-radius: var(--window-radius);
     --button-radius: var(--button_radius);
     --toolbar-height: var(--headerbar-min-height);
-    --window-open-duration: 400ms;
-    --window-close-duration: 400ms;
+    --window-open-duration: var(--duration-window);
+    --window-close-duration: var(--duration-window);
     --window-open-origin: 50% 100%;
     --window-open-dx: 0;
     --window-open-dy: 24px;
@@ -105,8 +122,8 @@
 
     /* ── Top Bar — GNOME shell panel (~32px) ── */
     --topbar-height: 32px;
-    --topbar-bg: var(--view-bg-color);
-    --topbar-bg-light: var(--view-bg-color);
+    --topbar-bg: var(--shell-panel-bg);
+    --topbar-bg-light: color-mix(in srgb, var(--view-bg-color) 92%, transparent);
     --topbar-blur: blur(0px);
 
     /* ── Dock (Activities dash, GNOME style) ── */
@@ -152,6 +169,14 @@
     --disabled-end: var(--dark-2);
 
     /* ── Spacing ── */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
@@ -160,6 +185,7 @@
     --spacing-2xl: 48px;
 
     /* ── Border Radii ── */
+    --radius-xs: 4px;
     --border-radius-sm: 6px;
     --border-radius-md: 10px;
     --border-radius-lg: 14px;
@@ -168,6 +194,17 @@
     --radius-md: var(--border-radius-md);
     --radius-lg: var(--border-radius-lg);
     --radius-xl: var(--border-radius-xl);
+
+    /* ── Motion ── */
+    --duration-instant: 80ms;
+    --duration-fast: 160ms;
+    --duration-normal: 200ms;
+    --duration-slow: 320ms;
+    --duration-window: 260ms;
+    --duration-reduced-motion: 1ms;
+    --motion-scale-in: 0.96;
+    --motion-pop-scale: 1.015;
+    --motion-lift: -2px;
 
     /* ── Transitions ── */
     --transition-fast: 200ms var(--ease-out-quad);
@@ -188,8 +225,11 @@
     --z-wallpaper: 0;
     --z-desktop-icons: 10;
     --z-window: 100;
-    --z-dock: 200;
+    --z-snap-preview: 950;
+    --z-dock: 1000;
     --z-topbar: 1100;
+    --z-overview: 1050;
+    --z-popover: 1800;
     --z-modal: 2000;
     --z-context-menu: 9999;
     --z-tooltip: 10000;
@@ -228,6 +268,9 @@
     --glass-bg: var(--popover-bg-color);
     --glass-bg-heavy: var(--dialog-bg-color);
     --accent-on-surface: var(--accent-color);
+    --shell-panel-bg: color-mix(in srgb, var(--dark-5) 48%, transparent);
+    --shell-panel-border: color-mix(in srgb, var(--light-1) 10%, transparent);
+    --surface-overview: color-mix(in srgb, var(--overview-bg-color) 90%, transparent);
 }
 
 /* ── Light Mode — libadwaita light ── */
@@ -273,6 +316,9 @@
     --glass-bg: var(--popover-bg-color);
     --glass-bg-heavy: var(--dialog-bg-color);
     --glass-border: var(--border-color);
+    --shell-panel-bg: color-mix(in srgb, var(--view-bg-color) 84%, transparent);
+    --shell-panel-border: color-mix(in srgb, var(--window-fg-color) 10%, transparent);
+    --surface-overview: color-mix(in srgb, var(--overview-bg-color) 90%, transparent);
 
     /* ── Shadows — Softer for light mode ── */
     --shadow-window: var(--window-shadow);
@@ -293,7 +339,7 @@
     --window-shadow: var(--shadow-window);
 
     /* ── Top Bar — GNOME shell light panel ── */
-    --topbar-bg: var(--view-bg-color);
+    --topbar-bg: var(--shell-panel-bg);
     --topbar-bg-light: var(--view-bg-color);
 
     /* ── Dock — libadwaita light ── */
@@ -307,4 +353,19 @@
     --terminal-prompt: var(--success-color);
     --terminal-cursor: var(--accent-bg-color);
     --terminal-selection: color-mix(in srgb, var(--accent-bg-color) 30%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --duration-instant: var(--duration-reduced-motion);
+        --duration-fast: var(--duration-reduced-motion);
+        --duration-normal: var(--duration-reduced-motion);
+        --duration-slow: var(--duration-reduced-motion);
+        --duration-window: var(--duration-reduced-motion);
+        --window-open-duration: var(--duration-reduced-motion);
+        --window-close-duration: var(--duration-reduced-motion);
+        --motion-scale-in: 1;
+        --motion-pop-scale: 1;
+        --motion-lift: 0;
+    }
 }

@@ -1,9 +1,17 @@
 export const PROFILE = {
     name: 'Saw Ye Htet',
+    role: 'Java-focused Software Developer',
+    roleTarget: 'Junior Java / Backend Developer',
+    headline:
+        'Java-focused software developer building Spring Boot, SQL, and React + TypeScript projects.',
+    summary:
+        'Recent Singapore Polytechnic IT graduate focused on Java, Spring Boot, SQL, REST APIs, and clean application structure. This React + TypeScript desktop portfolio is proof of frontend execution and product polish.',
+    education: 'Diploma in Information Technology - Singapore Polytechnic, 2026',
     email: 'minwn2244@gmail.com',
     resumePath: '/resume/SYH_resume.pdf',
     availability: 'Open to opportunities',
     location: 'Singapore / remote-friendly',
+    primaryStack: ['Java', 'Spring Boot', 'SQL', 'React', 'TypeScript'],
 };
 
 export const SOCIAL_LINKS = [

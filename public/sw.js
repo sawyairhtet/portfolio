@@ -1,86 +1,61 @@
-/**
- * Service Worker - Offline Caching for PWA
- * Caches stable URLs that exist in both dev and production output.
- */
+const CACHE_NAME = 'syh-portfolio-v2';
+const PRECACHE = ['/offline.html'];
 
-// Cache version - update BUILD_VERSION on each deploy for cache-busting
-const BUILD_VERSION = '20260430-a11y-polish';
-const CACHE_NAME = `syh-portfolio-v1-${BUILD_VERSION}`;
-const STATIC_ASSETS = [
-    '/404.html',
-    '/sw.js',
-    '/images/profile-picture.webp',
-    '/images/og-preview.png',
-    '/resume/SYH_resume.pdf',
-    '/offline.html',
-];
+function cacheResponse(request, response) {
+    if (!response || response.status !== 200) return Promise.resolve();
 
-// Install - cache static assets
+    return caches
+        .open(CACHE_NAME)
+        .then(cache => cache.put(request, response.clone()))
+        .catch(() => undefined);
+}
+
+function fetchAndCache(event) {
+    return fetch(event.request).then(response => {
+        event.waitUntil(cacheResponse(event.request, response));
+        return response;
+    });
+}
+
 self.addEventListener('install', event => {
     event.waitUntil(
         caches
             .open(CACHE_NAME)
-            .then(cache => {
-                return cache.addAll(STATIC_ASSETS);
-            })
+            .then(cache => cache.addAll(PRECACHE))
             .then(() => self.skipWaiting())
     );
 });
 
-// Activate - clean old caches
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches
             .keys()
-            .then(cacheNames => {
-                return Promise.all(
-                    cacheNames
-                        .filter(name => name.startsWith('syh-portfolio-') && name !== CACHE_NAME)
-                        .map(name => caches.delete(name))
-                );
-            })
+            .then(names =>
+                Promise.all(names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n)))
+            )
             .then(() => self.clients.claim())
     );
 });
 
-// Fetch - serve from cache, fallback to network
 self.addEventListener('fetch', event => {
-    if (event.request.method !== 'GET') {
-        return;
-    }
+    if (event.request.method !== 'GET') return;
+    if (!event.request.url.startsWith(self.location.origin)) return;
 
-    if (!event.request.url.startsWith(self.location.origin)) {
-        return;
-    }
+    const accept = event.request.headers.get('accept');
 
-    const acceptHeader = event.request.headers.get('accept');
-    if (event.request.mode === 'navigate' || (acceptHeader && acceptHeader.includes('text/html'))) {
-        event.respondWith(fetch(event.request).catch(() => caches.match('/offline.html')));
+    if (event.request.mode === 'navigate' || (accept && accept.includes('text/html'))) {
+        event.respondWith(fetchAndCache(event).catch(() => caches.match('/offline.html')));
         return;
     }
 
     event.respondWith(
-        caches.match(event.request).then(cachedResponse => {
-            if (cachedResponse) {
-                return cachedResponse;
+        caches.match(event.request).then(cached => {
+            if (cached) {
+                event.waitUntil(fetchAndCache(event).catch(() => undefined));
+                return cached;
             }
 
-            return fetch(event.request)
-                .then(response => {
-                    if (!response || response.status !== 200) {
-                        return response;
-                    }
-
-                    const responseToCache = response.clone();
-                    caches.open(CACHE_NAME).then(cache => {
-                        cache.put(event.request, responseToCache);
-                    });
-
-                    return response;
-                })
-                .catch(() => {
-                    return undefined;
-                });
+            return fetchAndCache(event);
         })
     );
 });

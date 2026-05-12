@@ -38,6 +38,11 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
     useEffect(() => {
         if (!isOpen) return;
 
+        const firstFocusable = panelRef.current?.querySelector<HTMLElement>(
+            'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        window.setTimeout(() => firstFocusable?.focus(), 50);
+
         const handleTabTrap = (e: globalThis.KeyboardEvent) => {
             if (e.key !== 'Tab') return;
             const panel = panelRef.current;
@@ -184,11 +189,21 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     <i className="fas fa-cog" aria-hidden="true" />
                     <span>Settings</span>
                 </button>
-                <button type="button" className="qs-footer-btn" aria-label="Lock Screen" onClick={onClose}>
+                <button
+                    type="button"
+                    className="qs-footer-btn"
+                    aria-label="Lock Screen"
+                    onClick={onClose}
+                >
                     <i className="fas fa-lock" aria-hidden="true" />
                     <span>Lock</span>
                 </button>
-                <button type="button" className="qs-footer-btn" aria-label="Power options" onClick={onClose}>
+                <button
+                    type="button"
+                    className="qs-footer-btn"
+                    aria-label="Power options"
+                    onClick={onClose}
+                >
                     <i className="fas fa-power-off" aria-hidden="true" />
                     <span>Power</span>
                 </button>

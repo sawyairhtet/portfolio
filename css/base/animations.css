@@ -18,11 +18,11 @@
 @keyframes windowOpen {
     0% {
         opacity: 0;
-        transform: translate(var(--window-open-dx, 0), var(--window-open-dy, 24px)) scale(0.18);
+        transform: translate(var(--window-open-dx, 0), var(--window-open-dy, 18px)) scale(0.94);
     }
     70% {
         opacity: 1;
-        transform: translate(0, 0) scale(1.015);
+        transform: translate(0, 0) scale(var(--motion-pop-scale));
     }
     100% {
         opacity: 1;
@@ -38,7 +38,7 @@
     }
     100% {
         opacity: 0;
-        transform: translate(var(--window-open-dx, 0), var(--window-open-dy, 24px)) scale(0.78);
+        transform: translate(var(--window-open-dx, 0), var(--window-open-dy, 18px)) scale(0.96);
     }
 }
 
@@ -264,7 +264,6 @@
         animation: none !important;
         transition-property: opacity, color, background-color, border-color, box-shadow !important;
         scroll-behavior: auto !important;
-        transform: none !important;
     }
 
     /* Elements that start invisible and rely on a `forwards` animation

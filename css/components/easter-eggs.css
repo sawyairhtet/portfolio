@@ -20,6 +20,7 @@
 }
 
 .text-editor-toolbar button,
+.text-editor-toolbar-button,
 .browser-toolbar button,
 .browser-open-link {
     display: grid;
@@ -37,6 +38,7 @@
 }
 
 .text-editor-toolbar button:hover:not(:disabled),
+.text-editor-toolbar-button:hover,
 .browser-toolbar button:hover:not(:disabled),
 .browser-open-link:hover {
     background: var(--hover-color);
@@ -58,6 +60,88 @@
 .text-editor-title span {
     font: 400 var(--font-size-sm) / 120% var(--document-font-family);
     color: var(--window-fg-muted-color);
+}
+
+.resume-file-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    background: color-mix(in srgb, var(--view-bg-color) 92%, var(--accent-bg-color));
+}
+
+.resume-file-copy {
+    min-width: 0;
+}
+
+.resume-file-eyebrow {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.resume-file-copy h3 {
+    margin: 0 0 6px;
+    color: var(--view-fg-color);
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+.resume-file-copy p {
+    margin: 0;
+    color: var(--window-fg-muted-color);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.resume-file-actions {
+    display: flex;
+    align-items: start;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.resume-file-meta {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+}
+
+.resume-file-meta div {
+    min-width: 0;
+    padding: 9px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--view-bg-color);
+}
+
+.resume-file-meta dt {
+    margin-bottom: 3px;
+    color: var(--window-fg-muted-color);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.resume-file-meta dd {
+    margin: 0;
+    overflow: hidden;
+    color: var(--view-fg-color);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+}
+
+.resume-file-meta a {
+    color: var(--accent);
 }
 
 .text-editor-document {
@@ -96,6 +180,22 @@
     font-family: var(--monospace-font-family);
     font-size: var(--monospace-font-size);
     line-height: 160%;
+}
+
+@container app-window (max-width: 520px) {
+    .resume-file-panel,
+    .resume-file-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .resume-file-actions {
+        justify-content: stretch;
+    }
+
+    .resume-file-actions .adw-btn {
+        flex: 1;
+        min-width: 130px;
+    }
 }
 
 .browser-location {

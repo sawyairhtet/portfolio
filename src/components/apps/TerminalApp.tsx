@@ -24,15 +24,28 @@ interface TerminalLine {
     className?: string;
 }
 
+const recruiterPathLines = [
+    { text: '10-second recruiter path:', className: 'terminal-heading' },
+    `  1. Who: ${PROFILE.name} - ${PROFILE.role}`,
+    '  2. Builds: Java, Spring Boot, SQL, REST APIs, and React + TypeScript UI',
+    '  3. Best proof: run projects',
+    '  4. Stack context: run skills',
+    '  5. Resume/contact: run resume or contact',
+];
+
 export function TerminalApp() {
     const { openWindow } = useWindowManager();
     const [lines, setLines] = useState<TerminalLine[]>([
         {
             id: 0,
-            content: "Welcome to Saw Ye Htet's Portfolio Terminal",
+            content: `${PROFILE.name} - ${PROFILE.role}`,
             className: 'terminal-welcome',
         },
-        { id: 1, content: "Type 'help' to see available commands", className: 'terminal-info' },
+        {
+            id: 1,
+            content: "Recruiter shortcuts: path, projects, skills, resume, contact",
+            className: 'terminal-info',
+        },
         {
             id: 2,
             content: '─────────────────────────────────────────',
@@ -133,18 +146,18 @@ export function TerminalApp() {
                 case 'help':
                     addLines([
                         { text: 'Available commands:', className: 'terminal-heading' },
+                        '  path          - Show the 10-second recruiter path',
                         '  help          - Show this help message',
-                        '  projects      - Open Projects and list featured work',
-                        '  skills        - Open Skills and summarize tools',
-                        '  contact       - Open Contact and show email',
-                        '  hire          - Open Contact with recruiter details',
-                        '  links         - Open Links',
+                        '  about         - Open About with positioning',
+                        '  projects      - Open Projects with problem/solution/stack/impact',
+                        '  skills        - Open Skills and summarize the stack',
                         '  resume/cv     - Open the resume PDF',
-                        '  nano resume.md - Open resume.md in Text Editor',
-                        '  firefox       - Open GitHub in Firefox',
+                        '  contact/hire  - Open Contact and show recruiter details',
+                        '  links         - Open GitHub, LinkedIn, and social profiles',
+                        '  nano resume.md - Open the markdown resume fallback',
+                        '  firefox       - Open GitHub',
                         '  shortcuts     - Show desktop shortcuts',
                         '  open <app>    - Open an app by label or alias',
-                        '  about         - Open About',
                         '  ls/cd/cat/pwd - Browse the portfolio filesystem',
                         '  clear         - Clear the terminal',
                         '  whoami/date/uptime/echo/neofetch/tree',
@@ -252,18 +265,33 @@ export function TerminalApp() {
                 case 'hello':
                     addLine(randomPick(terminalGreetings));
                     break;
+                case 'path':
+                case 'start':
+                    openWindow('about');
+                    addLines([...recruiterPathLines, { text: 'Opened About.', className: 'terminal-ok' }]);
+                    break;
                 case 'about':
                     openWindow('about');
-                    addLine('Opened About.', 'terminal-ok');
+                    addLines([
+                        { text: 'About:', className: 'terminal-heading' },
+                        `  ${PROFILE.summary}`,
+                        `  Target: ${PROFILE.roleTarget}`,
+                        `  Education: ${PROFILE.education}`,
+                        { text: 'Opened About.', className: 'terminal-ok' },
+                    ]);
                     break;
 
                 case 'projects':
                     openWindow('projects');
                     addLines([
                         { text: 'Projects:', className: 'terminal-heading' },
-                        ...PROJECTS.map(
-                            project => `  ${project.title} - ${project.role}; ${project.platform}`
-                        ),
+                        ...PROJECTS.flatMap(project => [
+                            `  ${project.title} - ${project.platform}`,
+                            `    Problem: ${project.problem}`,
+                            `    Solution: ${project.solution}`,
+                            `    Stack: ${project.techStack.join(', ')}`,
+                            `    Impact: ${project.impact}`,
+                        ]),
                         { text: 'Opened Projects.', className: 'terminal-ok' },
                     ]);
                     break;
@@ -272,6 +300,7 @@ export function TerminalApp() {
                     openWindow('skills');
                     addLines([
                         { text: 'Skills:', className: 'terminal-heading' },
+                        `  Primary path: ${PROFILE.primaryStack.join(' -> ')}`,
                         ...SKILL_CATEGORIES.map(
                             category =>
                                 `  ${category.title}: ${category.skills.map(skill => skill.name).join(', ')}`
@@ -284,8 +313,10 @@ export function TerminalApp() {
                     openWindow('contact');
                     addLines([
                         { text: 'Contact:', className: 'terminal-heading' },
+                        `  Role: ${PROFILE.role}`,
                         `  Email: ${PROFILE.email}`,
                         `  Availability: ${PROFILE.availability}`,
+                        `  Location: ${PROFILE.location}`,
                         { text: 'Opened Contact.', className: 'terminal-ok' },
                     ]);
                     break;
@@ -294,7 +325,8 @@ export function TerminalApp() {
                     openWindow('contact');
                     addLines([
                         { text: 'Recruiter shortcut:', className: 'terminal-heading' },
-                        `  Role target: Java Software Engineer`,
+                        `  Role target: ${PROFILE.roleTarget}`,
+                        `  Stack: ${PROFILE.primaryStack.join(', ')}`,
                         `  Availability: ${PROFILE.availability}`,
                         `  Location: ${PROFILE.location}`,
                         `  Email: ${PROFILE.email}`,
@@ -314,7 +346,12 @@ export function TerminalApp() {
                 case 'resume':
                 case 'cv':
                     window.open(PROFILE.resumePath, '_blank', 'noopener,noreferrer');
-                    addLine('Opened resume PDF.', 'terminal-ok');
+                    addLines([
+                        { text: 'Resume:', className: 'terminal-heading' },
+                        `  PDF: ${PROFILE.resumePath}`,
+                        '  Fallback: run nano resume.md',
+                        { text: 'Opened resume PDF.', className: 'terminal-ok' },
+                    ]);
                     break;
 
                 case 'nano': {
@@ -324,7 +361,7 @@ export function TerminalApp() {
                         resolvePath(target) === '/home/sawyehtet/resume.md'
                     ) {
                         openWindow('text-editor');
-                        addLine('Opened resume.md in Text Editor.', 'terminal-ok');
+                        addLine('Opened resume.md in Resume.', 'terminal-ok');
                         break;
                     }
                     addLine(`nano: ${target || 'missing file'}: No such file`, 'terminal-error');
@@ -383,17 +420,18 @@ export function TerminalApp() {
                             ? `${(navigator as Navigator & { deviceMemory?: number }).deviceMemory} GB`
                             : 'Browser reported';
                     addLines([
-                        '         ⣀⣤⣤⣤⣤⣤⣤⣤⣄⡀        sawyehtet@fedora',
-                        '       ⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡀    ─────────────────',
-                        '      ⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷    OS: Fedora Linux 43',
-                        '     ⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇   DE: GNOME 49',
-                        '     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇   WM: Wayland',
-                        '     ⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇   Shell: bash 5.2',
-                        '      ⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃    Terminal: GNOME Console / xterm.js',
-                        `        ⠈⠛⠿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠁       Host: ${navigator.platform}`,
-                        `                                          CPU: ${navigator.hardwareConcurrency || 'Browser'} threads`,
-                        `                                          Memory: ${deviceMemory}`,
-                        `                                          Display: ${window.screen.width}x${window.screen.height}`,
+                        `${PROFILE.name}@portfolio`,
+                        '--------------------------------',
+                        `Role: ${PROFILE.role}`,
+                        `Target: ${PROFILE.roleTarget}`,
+                        `Education: ${PROFILE.education}`,
+                        `Backend path: Java, Spring Boot, SQL, REST APIs`,
+                        `Frontend proof: React 19 + TypeScript desktop portfolio`,
+                        `Location: ${PROFILE.location}`,
+                        `Host: ${navigator.platform}`,
+                        `CPU: ${navigator.hardwareConcurrency || 'Browser'} threads`,
+                        `Memory: ${deviceMemory}`,
+                        `Display: ${window.screen.width}x${window.screen.height}`,
                     ]);
                     break;
                 }
@@ -554,23 +592,30 @@ export function TerminalApp() {
             const partial = parts[parts.length - 1] || '';
             if (!partial) return;
 
-            const commandMatches = [
-                'help',
-                'whoami',
-                'cat',
-                'ls',
+                const commandMatches = [
+                    'help',
+                    'path',
+                    'start',
+                    'about',
+                    'whoami',
+                    'cat',
+                    'ls',
                 'cd',
                 'open',
                 'neofetch',
                 'nano',
                 'firefox',
-                'projects',
-                'skills',
-                'contact',
-                'links',
-                'resume',
-                'clear',
-            ].filter(item => item.startsWith(partial));
+                    'projects',
+                    'skills',
+                    'contact',
+                    'hire',
+                    'links',
+                    'resume',
+                    'cv',
+                    'shortcuts',
+                    'tree',
+                    'clear',
+                ].filter(item => item.startsWith(partial));
             const currentNode = DEFAULT_FILE_SYSTEM[cwdRef.current];
             const fileMatches =
                 currentNode?.type === 'dir'

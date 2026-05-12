@@ -211,18 +211,19 @@
        so these rules win without !important. */
     .window {
         position: fixed;
-        top: 44px;
-        left: 0;
-        right: 0;
+        top: 52px;
+        left: 8px;
+        right: 8px;
         bottom: calc(82px + env(safe-area-inset-bottom, 0px));
-        width: 100%;
+        width: auto;
         max-width: 100%;
         min-width: 0;
         height: auto;
         max-height: none;
         margin-top: 0;
         transform: none;
-        border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+        border-radius: 20px;
+        box-shadow: var(--shadow-elevation-4);
     }
 
     .window-controls {
@@ -258,6 +259,10 @@
         height: 48px;
         padding: var(--spacing-sm) var(--spacing-md);
         border-bottom: 1px solid var(--border-color);
+    }
+
+    .window-title-group {
+        max-width: calc(100% - 88px);
     }
 
     .window-title {

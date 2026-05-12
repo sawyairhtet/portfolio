@@ -71,6 +71,14 @@ function createWindowInfo(appId: AppId, zIndex: number, launchOrigin?: LaunchOri
     };
 }
 
+function getTopVisibleWindowId(windows: Map<AppId, WindowInfo>): AppId | null {
+    const topWindow = Array.from(windows.entries())
+        .filter(([, win]) => win.isOpen && !win.isMinimized)
+        .sort(([, a], [, b]) => b.zIndex - a.zIndex)[0];
+
+    return topWindow?.[0] ?? null;
+}
+
 export function WindowManagerProvider({ children }: { children: ReactNode }) {
     const [managerState, setManagerState] = useState({
         windows: new Map<AppId, WindowInfo>(),
@@ -103,26 +111,45 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         setFocusedApp(appId);
     }, []);
 
-    const closeWindow = useCallback((appId: AppId) => {
-        setManagerState(prev => {
-            const next = new Map(prev.windows);
-            next.delete(appId);
-            return { ...prev, windows: next };
-        });
-        setFocusedApp(prev => (prev === appId ? null : prev));
-    }, []);
+    const closeWindow = useCallback(
+        (appId: AppId) => {
+            setManagerState(prev => {
+                const next = new Map(prev.windows);
+                next.delete(appId);
+                return { ...prev, windows: next };
+            });
+            setFocusedApp(current => {
+                if (current !== appId) return current;
+                const next = new Map(windows);
+                next.delete(appId);
+                return getTopVisibleWindowId(next);
+            });
+        },
+        [windows]
+    );
 
-    const minimizeWindow = useCallback((appId: AppId) => {
-        setManagerState(prev => {
-            const next = new Map(prev.windows);
-            const win = next.get(appId);
-            if (win) {
-                next.set(appId, { ...win, isMinimized: true });
-            }
-            return { ...prev, windows: next };
-        });
-        setFocusedApp(prev => (prev === appId ? null : prev));
-    }, []);
+    const minimizeWindow = useCallback(
+        (appId: AppId) => {
+            setManagerState(prev => {
+                const next = new Map(prev.windows);
+                const win = next.get(appId);
+                if (win) {
+                    next.set(appId, { ...win, isMinimized: true });
+                }
+                return { ...prev, windows: next };
+            });
+            setFocusedApp(current => {
+                if (current !== appId) return current;
+                const next = new Map(windows);
+                const win = next.get(appId);
+                if (win) {
+                    next.set(appId, { ...win, isMinimized: true });
+                }
+                return getTopVisibleWindowId(next);
+            });
+        },
+        [windows]
+    );
 
     const toggleMaximize = useCallback((appId: AppId) => {
         setManagerState(prev => {

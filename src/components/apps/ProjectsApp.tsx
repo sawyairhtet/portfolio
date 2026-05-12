@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { PROJECTS } from '../../config/data';
 import type { Project } from '../../types';
 
@@ -15,6 +16,31 @@ function ProjectLinks({ project }: { project: Project }) {
                     <i className={link.icon} aria-hidden="true" />
                     {link.label}
                 </a>
+            ))}
+        </div>
+    );
+}
+
+function ProjectBrief({ project, compact = false }: { project: Project; compact?: boolean }) {
+    const items = [
+        { label: 'Problem', value: project.problem, icon: 'fas fa-circle-question' },
+        { label: 'Solution', value: project.solution, icon: 'fas fa-screwdriver-wrench' },
+        { label: 'Impact', value: project.impact, icon: 'fas fa-bullseye' },
+    ];
+
+    return (
+        <div
+            className={`adw-project-brief${compact ? ' adw-project-brief-compact' : ''}`}
+            aria-label={`${project.title} project brief`}
+        >
+            {items.map(item => (
+                <div key={item.label} className="adw-project-brief-item">
+                    <span className="adw-project-brief-label">
+                        <i className={item.icon} aria-hidden="true" />
+                        {item.label}
+                    </span>
+                    <p>{item.value}</p>
+                </div>
             ))}
         </div>
     );
@@ -53,13 +79,15 @@ function FeaturedProject({ project }: { project: Project }) {
 
                 <p className="adw-featured-summary">{project.summary}</p>
 
+                <ProjectBrief project={project} />
+
                 <div className="adw-impact-callout">
                     <div className="adw-impact-icon">
-                        <i className="fas fa-bullseye" aria-hidden="true" />
+                        <i className="fas fa-code-branch" aria-hidden="true" />
                     </div>
                     <div className="adw-impact-text">
-                        <span className="adw-impact-label">Impact</span>
-                        <p>{project.impact}</p>
+                        <span className="adw-impact-label">Proof</span>
+                        <p>Concrete implementation details, not inflated claims.</p>
                     </div>
                 </div>
 
@@ -114,6 +142,8 @@ function ProjectCard({ project }: { project: Project }) {
                 <p className="adw-project-card-role">{project.role}</p>
                 <p className="adw-project-card-summary">{project.summary}</p>
 
+                <ProjectBrief project={project} compact />
+
                 <div className="adw-tech-stack adw-tech-stack-compact">
                     {project.techStack.slice(0, 4).map(tech => (
                         <span key={tech} className="adw-tech-tag">
@@ -138,6 +168,28 @@ export function ProjectsApp() {
     const supporting = PROJECTS.filter(project => !project.featured);
     const totalTech = new Set(PROJECTS.flatMap(p => p.techStack)).size;
 
+    useEffect(() => {
+        const projectId = sessionStorage.getItem('portfolioProjectFocus');
+        if (!projectId) return;
+
+        sessionStorage.removeItem('portfolioProjectFocus');
+
+        const frame = requestAnimationFrame(() => {
+            const target = document.querySelector<HTMLElement>(`[data-project="${projectId}"]`);
+            if (!target) return;
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            target.scrollIntoView({
+                block: 'nearest',
+                behavior: reduceMotion ? 'auto' : 'smooth',
+            });
+            target.classList.add('project-search-focus');
+            window.setTimeout(() => target.classList.remove('project-search-focus'), 1600);
+        });
+
+        return () => cancelAnimationFrame(frame);
+    }, []);
+
     return (
         <div className="adw-page projects-page">
             {/* Status header — Adwaita compact */}
@@ -149,8 +201,8 @@ export function ProjectsApp() {
                     <div className="adw-status-text">
                         <h2>Projects</h2>
                         <p>
-                            {PROJECTS.length} project{PROJECTS.length !== 1 ? 's' : ''} ·{' '}
-                            {totalTech} technologies
+                            Problem, solution, stack, and impact for {PROJECTS.length} project
+                            {PROJECTS.length !== 1 ? 's' : ''} · {totalTech} technologies
                         </p>
                     </div>
                 </div>

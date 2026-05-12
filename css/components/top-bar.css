@@ -1,5 +1,5 @@
 /* ============================================
-   TOP BAR — Premium Glass Panel
+   TOP BAR — GNOME shell panel
    ============================================ */
 
 .top-bar {
@@ -16,10 +16,13 @@
     z-index: var(--z-topbar);
     background: var(--topbar-bg);
     color: var(--text-primary);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--shell-panel-border);
+    -webkit-backdrop-filter: var(--topbar-blur) saturate(120%);
+    backdrop-filter: var(--topbar-blur) saturate(120%);
+    box-shadow: var(--shadow-elevation-1);
     transition:
-        background 200ms var(--ease-in-out-quad),
-        color 200ms var(--ease-in-out-quad);
+        background var(--duration-normal) var(--ease-in-out-quad),
+        color var(--duration-normal) var(--ease-in-out-quad);
 }
 
 /* Subtle bottom shadow for depth separation from desktop */
@@ -30,7 +33,7 @@
     right: 0;
     bottom: -1px;
     height: 1px;
-    background: var(--border-subtle);
+    background: var(--shell-panel-border);
     pointer-events: none;
 }
 
@@ -49,7 +52,7 @@
 .menu-bar-left {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     flex: 1;
 }
 
@@ -75,39 +78,47 @@
 
 /* Focused app name */
 .focused-app-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-weight: 500;
     font-size: 13px;
-    padding: 0 4px;
-    opacity: 0.7;
+    padding: 0 6px;
+    opacity: 0.78;
     max-width: 160px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: opacity var(--transition-fast);
+    transition: opacity var(--duration-fast) var(--ease-out-quad);
+}
+
+.focused-app-name i {
+    color: var(--accent-color);
+    font-size: 12px;
 }
 
 .focused-app-name:empty {
     display: none;
 }
 
-/* Activities button — Premium pill */
+/* Activities button — GNOME pill */
 .activities-btn {
     position: relative;
-    width: 34px;
+    width: auto;
     min-width: 34px;
-    height: 20px;
-    color: transparent;
-    font-size: 0;
-    font-weight: 500;
+    height: 24px;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 700;
     font-family: var(--font-ui);
-    padding: 0;
+    padding: 0 10px 0 38px;
     border: none;
     border-radius: 999px;
     background: transparent;
     cursor: pointer;
     transition:
-        background var(--transition-fast),
-        transform var(--transition-fast);
+        background var(--duration-fast) var(--ease-out-quad),
+        transform var(--duration-fast) var(--ease-out-quad);
 }
 
 .activities-btn::before,
@@ -122,16 +133,16 @@
 }
 
 .activities-btn::before {
-    left: 2px;
-    width: 16px;
+    left: 10px;
+    width: 12px;
     height: 4px;
     border-radius: 999px;
 }
 
 .activities-btn::after {
-    right: 4px;
-    width: 6px;
-    height: 6px;
+    left: 25px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
 }
 
@@ -186,8 +197,8 @@
     justify-content: center;
     gap: 8px;
     transition:
-        background var(--transition-fast),
-        transform var(--transition-fast);
+        background var(--duration-fast) var(--ease-out-quad),
+        transform var(--duration-fast) var(--ease-out-quad);
 }
 
 @media (hover: hover) {
@@ -214,7 +225,7 @@
     color: inherit;
     font-family: inherit;
     font-weight: 500;
-    transition: opacity var(--transition-fast);
+    transition: opacity var(--duration-fast) var(--ease-out-quad);
 }
 
 .status-menu:hover {

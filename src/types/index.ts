@@ -90,6 +90,8 @@ export interface Project {
     title: string;
     role: string;
     summary: string;
+    problem: string;
+    solution: string;
     impact: string;
     techStack: string[];
     platform: string;

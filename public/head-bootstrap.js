@@ -7,7 +7,11 @@
             document.documentElement.setAttribute('data-theme', 'dark');
         }
     } catch {
-        // Ignore storage access failures and keep the default dark theme.
         document.documentElement.setAttribute('data-theme', 'dark');
     }
 })();
+
+window.addEventListener('load', function () {
+    var link = document.querySelector('link[href*="JetBrains+Mono"]');
+    if (link) link.media = 'all';
+});

@@ -1,10 +1,10 @@
 # Personal Portfolio
 
-Interactive portfolio for Saw Ye Htet, built as a Fedora 43 / GNOME-style desktop experience in the browser.
+Recruiter-friendly portfolio for Saw Ye Htet, built as a Fedora/GNOME-inspired desktop experience in the browser.
 
 ## About
 
-The current site is a React and TypeScript application built with Vite. It recreates a desktop shell with a boot sequence, dock, draggable windows, terminal, quick settings, notifications, and deep-linkable app routes.
+The current site is a React and TypeScript application built with Vite. It presents Java, Spring Boot, SQL, and frontend proof through a desktop-style shell with a boot sequence, dock, draggable windows, terminal, quick settings, notifications, and deep-linkable app routes.
 
 ## Tech Stack
 

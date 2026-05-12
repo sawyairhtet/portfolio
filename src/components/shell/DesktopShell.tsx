@@ -9,6 +9,7 @@ import { Dock } from './Dock';
 import { Wallpaper } from './Wallpaper';
 import { BootScreen } from './BootScreen';
 import { Window } from '../window/Window';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { ActivitiesOverlay } from '../ui/ActivitiesOverlay';
 import { QuickSettingsPanel } from '../ui/QuickSettingsPanel';
 import { NotificationCenter } from '../ui/NotificationCenter';
@@ -181,12 +182,7 @@ function ShortcutsDialog({ onClose }: { onClose: () => void }) {
         >
             <header>
                 <h2 id="shortcuts-title">Keyboard Shortcuts</h2>
-                <button
-                    ref={closeBtnRef}
-                    type="button"
-                    aria-label="Close"
-                    onClick={onClose}
-                >
+                <button ref={closeBtnRef} type="button" aria-label="Close" onClick={onClose}>
                     <i className="fas fa-times" aria-hidden="true" />
                 </button>
             </header>
@@ -264,7 +260,7 @@ export function DesktopShell() {
             setTimeout(() => openWindow('about'), 600);
             setTimeout(
                 () =>
-                    showToast('Welcome to Saw Ye Htet', 'fab fa-fedora', {
+                    showToast('Welcome to Saw Ye Htet', 'fas fa-desktop', {
                         label: 'View Resume',
                         appId: 'text-editor',
                     }),
@@ -434,16 +430,18 @@ export function DesktopShell() {
             {/* Main Content */}
             <main id="main-content" className="main-content">
                 <h1 className="sr-only">
-                    Saw Ye Htet — Java Software Engineer | Fedora 43 Desktop Portfolio
+                    Saw Ye Htet - Java-focused Software Developer portfolio
                 </h1>
                 <Wallpaper />
                 {booted && !hasVisibleWindows && !activitiesOpen && (
                     <section className="desktop-welcome" aria-label="Portfolio welcome">
-                        <span className="desktop-welcome-kicker">sawyehtet.com · Fedora 43</span>
+                        <span className="desktop-welcome-kicker">
+                            sawyehtet.com · recruiter quick path
+                        </span>
                         <h2>{PROFILE.name}</h2>
-                        <p>Java Software Engineer</p>
+                        <p>{PROFILE.role}</p>
                         <p className="desktop-welcome-stack">
-                            Java · Spring Boot · SQL · React · TypeScript
+                            {PROFILE.primaryStack.join(' · ')}
                         </p>
                         <button
                             className="desktop-welcome-hint"
@@ -451,8 +449,8 @@ export function DesktopShell() {
                             aria-label="Open About window"
                         >
                             {device === 'desktop'
-                                ? 'Interactive Fedora desktop — click apps in the dock to explore ↓'
-                                : 'Interactive Fedora desktop — tap apps in the dock below ↓'}
+                                ? 'Open About, Projects, Resume, or Contact below'
+                                : 'Tap About, Projects, Resume, or Contact below'}
                         </button>
                         <div className="desktop-welcome-actions" aria-label="Quick portfolio apps">
                             {WELCOME_ACTIONS.map(action =>
@@ -517,9 +515,7 @@ export function DesktopShell() {
                 </div>
             )}
 
-            {shortcutsOpen && (
-                <ShortcutsDialog onClose={() => setShortcutsOpen(false)} />
-            )}
+            {shortcutsOpen && <ShortcutsDialog onClose={() => setShortcutsOpen(false)} />}
 
             <span className="sr-only" aria-live="polite">
                 Workspace {workspaceIndex + 1}
@@ -528,79 +524,101 @@ export function DesktopShell() {
             {/* Windows — conditionally rendered to avoid wasted reconciliation */}
             {windows.get('about')?.isOpen && (
                 <Window appId="about" title="About">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <AboutApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="about">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <AboutApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('browser')?.isOpen && (
                 <Window appId="browser" title="Firefox">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <BrowserApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="browser">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <BrowserApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('files')?.isOpen && (
                 <Window appId="files" title="Files">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <FilesApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="files">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <FilesApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('skills')?.isOpen && (
                 <Window appId="skills" title="Skills">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <SkillsApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="skills">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <SkillsApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('projects')?.isOpen && (
                 <Window appId="projects" title="Projects">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <ProjectsApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="projects">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <ProjectsApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('contact')?.isOpen && (
                 <Window appId="contact" title="Contact">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <ContactApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="contact">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <ContactApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('links')?.isOpen && (
                 <Window appId="links" title="Links">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <LinksApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="links">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <LinksApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('terminal')?.isOpen && (
                 <Window appId="terminal" title="Terminal">
-                    <Suspense fallback={<TerminalSkeleton />}>
-                        <TerminalApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="terminal">
+                        <Suspense fallback={<TerminalSkeleton />}>
+                            <TerminalApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('text-editor')?.isOpen && (
-                <Window appId="text-editor" title="Text Editor">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <TextEditorApp />
-                    </Suspense>
+                <Window appId="text-editor" title="Resume">
+                    <ErrorBoundary level="window" appId="text-editor">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <TextEditorApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('settings')?.isOpen && (
                 <Window appId="settings" title="Settings">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <SettingsApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="settings">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <SettingsApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
             {windows.get('focus-mode')?.isOpen && (
                 <Window appId="focus-mode" title="Focus Mode">
-                    <Suspense fallback={<AdwaitaSkeleton />}>
-                        <FocusModeApp />
-                    </Suspense>
+                    <ErrorBoundary level="window" appId="focus-mode">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <FocusModeApp />
+                        </Suspense>
+                    </ErrorBoundary>
                 </Window>
             )}
 

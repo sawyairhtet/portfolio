@@ -2,7 +2,7 @@ import { useRef, useCallback, useEffect, useState, type ReactNode } from 'react'
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
 import { usePreferences } from '../../context/PreferencesContext';
-import { SWIPE_CLOSE_MAX_X, SWIPE_CLOSE_THRESHOLD_Y } from '../../config/data';
+import { APP_DEFINITIONS, SWIPE_CLOSE_MAX_X, SWIPE_CLOSE_THRESHOLD_Y } from '../../config/data';
 import type { AppId } from '../../types';
 
 interface WindowProps {
@@ -58,6 +58,8 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     const dragOffset = useRef({ x: 0, y: 0 });
     const snapPreviewRef = useRef<SnapPreview>(null);
     const [snapPreview, setSnapPreview] = useState<SnapPreview>(null);
+    const [isClosing, setIsClosing] = useState(false);
+    const closeTimerRef = useRef<number | null>(null);
 
     const win = windows.get(appId);
     const isOpen = Boolean(win?.isOpen);
@@ -70,6 +72,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     const positionLeft = win?.position.left;
     const sizeWidth = win?.size.width;
     const sizeHeight = win?.size.height;
+    const appDefinition = APP_DEFINITIONS.find(app => app.id === appId);
 
     const windowId = `${appId}-window`;
 
@@ -80,6 +83,28 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         snapPreviewRef.current = next;
         setSnapPreview(next);
     }, []);
+
+    useEffect(() => {
+        return () => {
+            if (closeTimerRef.current !== null) {
+                window.clearTimeout(closeTimerRef.current);
+            }
+        };
+    }, []);
+
+    const requestClose = useCallback(() => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (reduceMotion) {
+            closeWindow(appId);
+            return;
+        }
+
+        setIsClosing(true);
+        closeTimerRef.current = window.setTimeout(() => {
+            closeWindow(appId);
+        }, 220);
+    }, [appId, closeWindow]);
 
     useEffect(() => {
         if (!isOpen || !win) return;
@@ -97,8 +122,14 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
 
-            element.style.setProperty('--window-open-dx', `${Math.round(origin.x - centerX)}px`);
-            element.style.setProperty('--window-open-dy', `${Math.round(origin.y - centerY)}px`);
+            element.style.setProperty(
+                '--window-open-dx',
+                `${Math.round((origin.x - centerX) * 0.22)}px`
+            );
+            element.style.setProperty(
+                '--window-open-dy',
+                `${Math.round((origin.y - centerY) * 0.22)}px`
+            );
             element.style.setProperty(
                 '--window-open-origin',
                 `${Math.round(origin.x - rect.left)}px ${Math.round(origin.y - rect.top)}px`
@@ -382,10 +413,10 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
             const diffX = e.changedTouches[0].clientX - touchStart.current.x;
 
             if (diffY > SWIPE_CLOSE_THRESHOLD_Y && Math.abs(diffX) < SWIPE_CLOSE_MAX_X) {
-                closeWindow(appId);
+                requestClose();
             }
         },
-        [appId, closeWindow]
+        [requestClose]
     );
 
     if (!isOpen || !win) return null;
@@ -394,7 +425,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         <>
             <div
                 ref={windowRef}
-                className={`window active${isFocused ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''} ${className}`}
+                className={`window active${isFocused ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''}${isClosing ? ' closing' : ''} ${className}`}
                 id={windowId}
                 data-app={appId}
                 data-focused={isFocused ? 'true' : 'false'}
@@ -412,14 +443,22 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                 >
-                    <div className="window-title" id={`${appId}-window-title`}>
-                        {title}
+                    <div className="window-title-group">
+                        <span className="window-title-icon" aria-hidden="true">
+                            <i
+                                className={appDefinition?.icon ?? 'fas fa-window-maximize'}
+                                aria-hidden="true"
+                            />
+                        </span>
+                        <div className="window-title" id={`${appId}-window-title`}>
+                            {title}
+                        </div>
                     </div>
                     <button
                         type="button"
                         className="close-btn-mobile"
                         aria-label="Close"
-                        onClick={() => closeWindow(appId)}
+                        onClick={requestClose}
                     >
                         <i className="fas fa-times" aria-hidden="true" />
                     </button>
@@ -440,7 +479,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                             type="button"
                             className="window-control close"
                             aria-label="Close"
-                            onClick={() => closeWindow(appId)}
+                            onClick={requestClose}
                         />
                     </div>
                 </div>

@@ -5,8 +5,8 @@
 .dock {
     position: fixed;
     left: 50%;
-    bottom: 0;
-    transform: translateX(-50%) translateY(calc(100% - 12px));
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%) translateY(0);
     width: auto;
     max-width: min(calc(100vw - 32px), 720px);
     background: var(--dock-bg);
@@ -18,12 +18,13 @@
     gap: var(--dock-gap);
     border: var(--dock-border);
     z-index: var(--z-dock);
-    box-shadow: var(--shadow-popover);
-    opacity: 0.42;
+    box-shadow: var(--shadow-elevation-3);
+    opacity: 0.94;
     pointer-events: auto;
     transition:
-        opacity 200ms var(--ease-out-quad),
-        transform 200ms var(--ease-out-quad);
+        opacity var(--duration-normal) var(--ease-out-quad),
+        transform var(--duration-normal) var(--ease-out-quad),
+        box-shadow var(--duration-normal) var(--ease-out-quad);
 }
 
 .dock:hover,
@@ -31,7 +32,8 @@
 .dock.visible,
 .mobile-dock {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(var(--motion-lift));
+    box-shadow: var(--shadow-elevation-4);
 }
 
 .dock-item {
@@ -46,8 +48,8 @@
     position: relative;
     color: var(--text-on-accent);
     transition:
-        filter 200ms var(--ease-in-out-quad),
-        transform 200ms var(--ease-out-quad);
+        filter var(--duration-normal) var(--ease-in-out-quad),
+        transform var(--duration-normal) var(--ease-out-quad);
     box-shadow: 0 1px 3px 1px var(--shade-color);
     outline: none;
 }
@@ -67,6 +69,10 @@
 .dock-item:active {
     transform: scale(0.94);
     filter: brightness(0.95);
+}
+
+.dock-item.launching {
+    animation: appLaunchPulse 360ms var(--ease-out-quad);
 }
 
 /* Adwaita-style dock icon backgrounds */
@@ -156,9 +162,9 @@
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity 200ms var(--ease-out-quad),
-        visibility 200ms var(--ease-out-quad),
-        transform 200ms var(--ease-out-quad);
+        opacity var(--duration-normal) var(--ease-out-quad),
+        visibility var(--duration-normal) var(--ease-out-quad),
+        transform var(--duration-normal) var(--ease-out-quad);
     z-index: 1001;
     pointer-events: none;
 }
@@ -184,8 +190,13 @@
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
+    .dock,
     .dock-item {
         transition: none;
+    }
+
+    .dock-item.launching {
+        animation: none;
     }
 
     .dock-tooltip {
@@ -258,6 +269,18 @@
     to {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes appLaunchPulse {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    45% {
+        transform: translateY(-7px) scale(1.08);
+    }
+    100% {
+        transform: translateY(0) scale(1);
     }
 }
 

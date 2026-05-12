@@ -1,7 +1,15 @@
-import { useState, useCallback, useMemo, useEffect, useRef, type MouseEvent } from 'react';
+import {
+    useState,
+    useCallback,
+    useMemo,
+    useEffect,
+    useRef,
+    type MouseEvent,
+    type KeyboardEvent as ReactKeyboardEvent,
+} from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { APP_DEFINITIONS } from '../../config/data';
-import type { AppId } from '../../types';
+import { APP_DEFINITIONS, PROJECTS } from '../../config/data';
+import type { AppId, Project } from '../../types';
 
 interface ActivitiesOverlayProps {
     isOpen: boolean;
@@ -104,6 +112,59 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
         [openWindow, onClose]
     );
 
+    const filteredProjects = useMemo(() => {
+        if (!normalizedSearch) return [];
+
+        return PROJECTS.filter(project => {
+            const searchable = [
+                project.title,
+                project.role,
+                project.summary,
+                project.impact,
+                project.platform,
+                ...project.techStack,
+                ...project.proofPoints,
+            ]
+                .join(' ')
+                .toLowerCase();
+
+            return searchable.includes(normalizedSearch);
+        });
+    }, [normalizedSearch]);
+
+    const handleProjectClick = useCallback(
+        (project: Project) => {
+            sessionStorage.setItem('portfolioProjectFocus', project.id);
+            openWindow('projects');
+            onClose();
+        },
+        [openWindow, onClose]
+    );
+
+    const focusResult = useCallback((direction: 'next' | 'previous' | 'first' | 'last') => {
+        const overlay = overlayRef.current;
+        if (!overlay) return;
+
+        const results = Array.from(
+            overlay.querySelectorAll<HTMLElement>('[data-activities-result="true"]')
+        ).filter(el => el.offsetParent !== null);
+
+        if (results.length === 0) return;
+
+        const activeIndex = results.findIndex(el => el === document.activeElement);
+        let nextIndex = 0;
+
+        if (direction === 'last') {
+            nextIndex = results.length - 1;
+        } else if (direction === 'previous') {
+            nextIndex = activeIndex <= 0 ? results.length - 1 : activeIndex - 1;
+        } else if (direction === 'next') {
+            nextIndex = activeIndex < 0 ? 0 : (activeIndex + 1) % results.length;
+        }
+
+        results[nextIndex]?.focus();
+    }, []);
+
     const handleOverlayClick = useCallback(
         (event: MouseEvent<HTMLDivElement>) => {
             const target = event.target as HTMLElement;
@@ -119,6 +180,31 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
         [onClose]
     );
 
+    const handleOverlayKeyDown = useCallback(
+        (event: ReactKeyboardEvent<HTMLDivElement>) => {
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                focusResult('next');
+            }
+
+            if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                focusResult('previous');
+            }
+
+            if (event.key === 'Home' && !event.ctrlKey && !event.metaKey) {
+                event.preventDefault();
+                focusResult('first');
+            }
+
+            if (event.key === 'End' && !event.ctrlKey && !event.metaKey) {
+                event.preventDefault();
+                focusResult('last');
+            }
+        },
+        [focusResult]
+    );
+
     return (
         <div
             ref={overlayRef}
@@ -129,14 +215,16 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             aria-hidden={!isOpen}
             inert={!isOpen || undefined}
             onClick={handleOverlayClick}
+            onKeyDown={handleOverlayKeyDown}
         >
             <div className="activities-search">
+                <i className="fas fa-search activities-search-icon" aria-hidden="true" />
                 <input
                     ref={inputRef}
                     type="text"
                     className="activities-search-input"
-                    placeholder="Type to search apps…"
-                    aria-label="Search apps"
+                    placeholder="Search apps and projects…"
+                    aria-label="Search apps and projects"
                     autoComplete="off"
                     spellCheck={false}
                     value={searchQuery}
@@ -146,8 +234,28 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                         if (e.key === 'Enter' && filteredApps.length > 0) {
                             handleAppClick(filteredApps[0].id);
                         }
+                        if (
+                            e.key === 'Enter' &&
+                            filteredApps.length === 0 &&
+                            filteredProjects.length > 0
+                        ) {
+                            handleProjectClick(filteredProjects[0]);
+                        }
                     }}
                 />
+                {searchQuery && (
+                    <button
+                        type="button"
+                        className="activities-search-clear"
+                        aria-label="Clear search"
+                        onClick={() => {
+                            setSearchQuery('');
+                            inputRef.current?.focus();
+                        }}
+                    >
+                        <i className="fas fa-times" aria-hidden="true" />
+                    </button>
+                )}
             </div>
 
             <div className="activities-stage">
@@ -155,7 +263,22 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                     <div className="activities-windows">
                         {filteredWindows.length === 0 ? (
                             <div className="activities-no-windows">
-                                {normalizedSearch ? 'No matching windows' : 'No open windows'}
+                                <i
+                                    className={
+                                        normalizedSearch
+                                            ? 'fas fa-magnifying-glass'
+                                            : 'fas fa-window-maximize'
+                                    }
+                                    aria-hidden="true"
+                                />
+                                <strong>
+                                    {normalizedSearch ? 'No matching windows' : 'No open windows'}
+                                </strong>
+                                <span>
+                                    {normalizedSearch
+                                        ? 'Open an app below or refine your search.'
+                                        : 'Launch an app from the grid or dash.'}
+                                </span>
                             </div>
                         ) : (
                             filteredWindows.map(({ id, app, windowInfo }) => (
@@ -163,6 +286,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                                     key={id}
                                     type="button"
                                     className="activities-window-thumb"
+                                    data-activities-result="true"
                                     onClick={() => {
                                         openWindow(id);
                                         onClose();
@@ -189,25 +313,13 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                 </div>
 
                 <aside className="activities-workspace-switcher" aria-label="Workspaces">
-                    <div
-                        className="activities-workspace active"
-                        aria-hidden="true"
-                        tabIndex={-1}
-                    >
+                    <div className="activities-workspace active" aria-hidden="true" tabIndex={-1}>
                         <span />
                     </div>
-                    <div
-                        className="activities-workspace"
-                        aria-hidden="true"
-                        tabIndex={-1}
-                    >
+                    <div className="activities-workspace" aria-hidden="true" tabIndex={-1}>
                         <span />
                     </div>
-                    <div
-                        className="activities-workspace"
-                        aria-hidden="true"
-                        tabIndex={-1}
-                    >
+                    <div className="activities-workspace" aria-hidden="true" tabIndex={-1}>
                         <span />
                     </div>
                 </aside>
@@ -222,6 +334,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                             type="button"
                             className={`activities-dash-item${isActive ? ' active' : ''}`}
                             data-app={app.id}
+                            data-activities-result="true"
                             aria-label={app.label}
                             onClick={() => handleAppClick(app.id)}
                         >
@@ -234,6 +347,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                 <button
                     type="button"
                     className="activities-dash-item show-apps active"
+                    data-activities-result="true"
                     aria-label="Show Apps"
                 >
                     <span>
@@ -242,30 +356,77 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                 </button>
             </div>
 
-            <div className="activities-app-grid">
-                {filteredApps.length === 0 ? (
-                    <div className="activities-empty-search" role="status">
-                        No matching apps
+            <div className="activities-results" aria-label="Search results and applications">
+                <section className="activities-section" aria-label="Applications">
+                    <div className="activities-section-header">
+                        <span>Applications</span>
+                        <small>{filteredApps.length}</small>
                     </div>
-                ) : (
-                    filteredApps.map(app => (
-                        <button
-                            key={app.id}
-                            type="button"
-                            className="activities-app-item"
-                            data-app={app.id}
-                            aria-label={`Open ${app.label}`}
-                            onClick={() => handleAppClick(app.id)}
-                        >
-                            <div
-                                className="activities-app-icon"
-                                style={{ background: app.gradient }}
-                            >
-                                <i className={app.icon} aria-hidden="true" />
+                    <div className="activities-app-grid">
+                        {filteredApps.length === 0 ? (
+                            <div className="activities-empty-search" role="status">
+                                <i className="fas fa-box-open" aria-hidden="true" />
+                                <strong>No matching apps</strong>
                             </div>
-                            <span className="activities-app-label">{app.label}</span>
-                        </button>
-                    ))
+                        ) : (
+                            filteredApps.map(app => (
+                                <button
+                                    key={app.id}
+                                    type="button"
+                                    className="activities-app-item"
+                                    data-app={app.id}
+                                    data-activities-result="true"
+                                    aria-label={`Open ${app.label}`}
+                                    onClick={() => handleAppClick(app.id)}
+                                >
+                                    <div
+                                        className="activities-app-icon"
+                                        style={{ background: app.gradient }}
+                                    >
+                                        <i className={app.icon} aria-hidden="true" />
+                                    </div>
+                                    <span className="activities-app-label">{app.label}</span>
+                                </button>
+                            ))
+                        )}
+                    </div>
+                </section>
+
+                {normalizedSearch && (
+                    <section className="activities-section" aria-label="Projects">
+                        <div className="activities-section-header">
+                            <span>Projects</span>
+                            <small>{filteredProjects.length}</small>
+                        </div>
+                        {filteredProjects.length === 0 ? (
+                            <div className="activities-empty-search activities-empty-card">
+                                <i className="fas fa-folder-open" aria-hidden="true" />
+                                <strong>No matching projects</strong>
+                                <span>Try a technology, platform, or project title.</span>
+                            </div>
+                        ) : (
+                            <div className="activities-project-results">
+                                {filteredProjects.map(project => (
+                                    <button
+                                        key={project.id}
+                                        type="button"
+                                        className="activities-project-result"
+                                        data-activities-result="true"
+                                        aria-label={`Open project ${project.title}`}
+                                        onClick={() => handleProjectClick(project)}
+                                    >
+                                        <span className="activities-project-icon">
+                                            <i className={project.icon} aria-hidden="true" />
+                                        </span>
+                                        <span className="activities-project-copy">
+                                            <strong>{project.title}</strong>
+                                            <span>{project.platform}</span>
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </section>
                 )}
             </div>
         </div>

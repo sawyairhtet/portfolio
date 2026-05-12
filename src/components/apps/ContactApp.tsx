@@ -160,8 +160,11 @@ export function ContactApp() {
                         <i className="fas fa-envelope" aria-hidden="true" />
                     </div>
                     <div className="adw-status-text">
-                        <h2>Get in touch</h2>
-                        <p>{PROFILE.availability}. Usually replies within 24 hours.</p>
+                        <h2>Contact Saw Ye Htet</h2>
+                        <p>
+                            {PROFILE.role}. Email is the fastest path for roles, interviews, or
+                            project questions.
+                        </p>
                     </div>
                     <div className="adw-availability-badge" aria-label="Availability">
                         <span className="adw-availability-dot" />
@@ -276,7 +279,18 @@ export function ContactApp() {
                         <div className="adw-row-text">
                             <span className="adw-row-title">Open to opportunities</span>
                             <span className="adw-row-subtitle">
-                                Full-time, internship, or collaboration
+                                Junior Java/backend roles, internships, or practical collaborations
+                            </span>
+                        </div>
+                    </div>
+                    <div className="adw-row">
+                        <div className="adw-row-icon adw-icon-purple">
+                            <i className="fas fa-code" aria-hidden="true" />
+                        </div>
+                        <div className="adw-row-text">
+                            <span className="adw-row-title">Best fit</span>
+                            <span className="adw-row-subtitle">
+                                {PROFILE.roleTarget} · Spring Boot · SQL · React/TypeScript
                             </span>
                         </div>
                     </div>
@@ -386,7 +400,7 @@ export function ContactApp() {
                         </div>
                         <textarea
                             id="contact-message"
-                            placeholder="Tell me about your project, role, or opportunity…"
+                            placeholder="Role, timeline, useful links, and what you would like me to review."
                             rows={5}
                             maxLength={MESSAGE_MAX}
                             disabled={submitDisabled}

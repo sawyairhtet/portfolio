@@ -104,12 +104,12 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     },
     {
         id: 'text-editor',
-        label: 'Text Editor',
+        label: 'Resume',
         icon: 'fas fa-pen-to-square',
-        dockTooltip: 'Text Editor',
+        dockTooltip: 'Resume',
         gradient: 'linear-gradient(135deg, var(--blue-1) 0%, var(--accent-blue) 100%)',
-        description: 'Resume markdown opened from nano.',
-        aliases: ['text editor', 'editor', 'gedit', 'nano', 'resume.md'],
+        description: 'Resume PDF actions, file metadata, and a markdown fallback.',
+        aliases: ['resume', 'cv', 'text editor', 'editor', 'gedit', 'nano', 'resume.md'],
         desktopDock: false,
         mobileDock: false,
     },
@@ -150,17 +150,22 @@ export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app 
 export const PROJECTS: Project[] = [
     {
         id: 'fedora-portfolio',
-        title: 'This Portfolio (Fedora Desktop)',
+        title: 'Fedora-Inspired Portfolio Desktop',
         role: 'Developer & Designer',
         summary:
-            'The site you are using right now — a full Fedora 43 GNOME desktop simulation built in React and TypeScript, with draggable windows, a virtual terminal, a boot sequence, and real desktop keyboard shortcuts.',
-        impact: 'Turns a personal portfolio into a recruiter-friendly desktop experience while preserving fast routes to About, Skills, Projects, Resume, and Contact.',
+            'The site you are using right now - a React and TypeScript portfolio presented through a Fedora/GNOME-inspired desktop shell with windows, app search, terminal commands, and mobile launcher cards.',
+        problem:
+            'A static portfolio can hide the strongest proof behind navigation and make recruiters work too hard for the basics.',
+        solution:
+            'Built a fast desktop-style shell where About, Projects, Resume, and Contact stay one click away from the dock, Activities search, and terminal.',
+        impact:
+            'Shows frontend ability through real interaction design while keeping the recruiter path clear and fast.',
         techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers', 'Tailwind v4'],
         platform: 'Responsive web app',
         proofPoints: [
             'Implemented draggable windows with snap zones, resize handles, minimise/maximise, and z-index stacking.',
             'Built a virtual filesystem terminal you can explore with cd, ls, cat, and open commands.',
-            'Ships with a Plymouth boot screen, GNOME Activities overlay, Quick Settings panel, and notification center.',
+            'Added Activities search, Quick Settings, notifications, welcome flow, and a mobile launcher experience.',
         ],
         links: [
             {
@@ -178,14 +183,19 @@ export const PROJECTS: Project[] = [
         title: 'OpsTrack',
         role: 'Developer',
         summary:
-            'A Spring Boot operations tracking API with clean REST endpoints, SQL persistence, and layered architecture — built to sharpen backend fundamentals and demonstrate production-grade Java patterns.',
-        impact: 'Practice ground for applying Spring Boot, JPA, and relational data patterns in a realistic backend service.',
+            'A Spring Boot operations tracking API for practicing REST endpoints, SQL persistence, and layered Java application structure.',
+        problem:
+            'I needed a Java backend project that goes beyond isolated coursework snippets and exercises real service boundaries.',
+        solution:
+            'Building a layered Spring Boot REST API with controllers, services, repositories, and PostgreSQL persistence.',
+        impact:
+            'Makes my Spring Boot and SQL learning path visible; it is marked as work in progress and kept honest in the UI.',
         techStack: ['Java', 'Spring Boot', 'PostgreSQL', 'REST API'],
         platform: 'Backend API',
         proofPoints: [
-            'REST API with CRUD operations and proper HTTP status codes.',
-            'Layered architecture: Controller → Service → Repository.',
-            'PostgreSQL persistence with Spring Data JPA.',
+            'Defines CRUD endpoints and HTTP status handling for operations tracking workflows.',
+            'Separates Controller, Service, and Repository responsibilities.',
+            'Connects Spring Data JPA to PostgreSQL for relational persistence practice.',
         ],
         links: [
             {
@@ -281,7 +291,7 @@ export const BOOT_LOG_MESSAGES: string[] = [
     '         Fedora Linux 43 (Workstation Edition)',
     '         Kernel 6.11.4-301.fc43.x86_64 on Wayland',
     '',
-    '  sawyehtet@fedora  Java Software Engineer. Recent graduate. This portfolio runs on your browser.',
+    '  sawyehtet@fedora  Java-focused software developer. This portfolio runs in your browser.',
     '',
 ];
 
@@ -332,13 +342,13 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
-            '# My Projects\n\nWelcome to my project folder!\n\n- **portfolio**: This Fedora 43 desktop simulation — React 19, TypeScript, window management, virtual terminal\n\nFeel free to explore with `cd` and `cat`.',
+            '# Projects\n\nRecruiter scan:\n\n- **Fedora-Inspired Portfolio Desktop**: React 19, TypeScript, window management, Activities search, virtual terminal, mobile launcher.\n- **OpsTrack**: Spring Boot and PostgreSQL API practice project for REST, SQL, and layered backend design.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md'] },
     '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
         content:
-            'TODO:\n- Keep strengthening Java fundamentals\n- Build backend practice projects\n- Update portfolio proof points\n- Call mom \u{1F499}',
+            'TODO:\n- Keep strengthening Java fundamentals\n- Build Spring Boot and SQL practice projects\n- Keep project proof points current\n- Make recruiter paths obvious',
     },
     '/home/sawyehtet/documents/ideas.md': {
         type: 'file',
@@ -347,11 +357,11 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     },
     '/home/sawyehtet/resume.txt': {
         type: 'file',
-        content: `\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551         SAW YE HTET - RESUME          \u2551\n\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563\n\u2551 Education: Singapore Polytechnic grad \u2551\n\u2551 Major: Information Technology         \u2551\n\u2551 Skills: Java, SQL, JavaScript, Python \u2551\n\u2551 Focus: Java developer path            \u2551\n\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D\n\nContact: ${PROFILE.email}`,
+        content: `SAW YE HTET - RESUME\n\nRole: ${PROFILE.role}\nTarget: ${PROFILE.roleTarget}\nEducation: ${PROFILE.education}\nStack: ${PROFILE.primaryStack.join(', ')}\nFocus: Java, Spring Boot, SQL, REST APIs, and React + TypeScript frontend proof.\n\nContact: ${PROFILE.email}\nResume PDF: ${PROFILE.resumePath}`,
     },
     '/home/sawyehtet/resume.md': {
         type: 'file',
-        content: `# Saw Ye Htet\n\nJava Software Engineer · Recent Singapore Polytechnic graduate\n\n## Focus\n\n- Java backend development\n- Spring Boot services\n- SQL data modelling\n- React and TypeScript interfaces\n\n## Portfolio Highlights\n\n- Fedora 43 / GNOME 49 desktop simulation\n- Window manager, xterm.js Console, Nautilus-style Files, and Settings preferences\n- Project case studies available in /home/sawyehtet/projects\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
+        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate focused on Java, Spring Boot, SQL, REST APIs, and clean application structure. This portfolio is also a React + TypeScript proof point.\n\n## Focus\n\n- Java backend development\n- Spring Boot service structure\n- SQL data modelling and persistence\n- React and TypeScript interfaces\n\n## Best Proof\n\n- Fedora-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n- OpsTrack: Spring Boot and PostgreSQL backend API practice project\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',
@@ -399,10 +409,10 @@ export const terminalJokes: string[] = [
 ];
 
 export const terminalGreetings: string[] = [
-    'Hey there! \u{1F44B} Welcome to my corner of the internet.',
-    'Hi! Thanks for exploring. Feel free to poke around!',
-    "Hi Mom! \u{1F499} (This one's for you)",
-    "Greetings, traveler! You've found the secret hello.",
+    'Hi. The fastest recruiter path is: path, projects, resume, contact.',
+    'Thanks for exploring. Try projects or skills for the useful bits.',
+    'Tip: run neofetch for a compact portfolio summary.',
+    'Tip: run nano resume.md for a readable resume fallback.',
 ];
 
 // ============================================
@@ -500,8 +510,8 @@ export const DEFAULT_NOTIFICATIONS: Notification[] = [
     {
         id: 'welcome',
         title: 'Welcome to Saw Ye Htet',
-        body: 'Java Software Engineer, recent SP graduate. Open the resume or explore the desktop like GNOME.',
-        icon: 'fab fa-fedora',
+        body: 'Java-focused software developer. Open the resume, projects, or contact app for the quick path.',
+        icon: 'fas fa-desktop',
         iconBg: 'linear-gradient(135deg, var(--accent-color), var(--accent-bg-color))',
         time: 'Just now',
         group: 'System',

@@ -278,16 +278,16 @@ export function SettingsApp() {
                         <h2>About</h2>
                         <div className="settings-card about-system-card">
                             <div className="about-system-logo">
-                                <i className="fab fa-fedora" aria-hidden="true" />
+                                <i className="fas fa-desktop" aria-hidden="true" />
                             </div>
-                            <h3>Fedora Linux 43 (Workstation Edition)</h3>
+                            <h3>Saw Ye Htet Portfolio Workstation</h3>
                             <div className="about-system-info">
                                 {[
-                                    ['OS Name', 'Fedora Linux 43'],
-                                    ['GNOME Version', '49'],
-                                    ['Windowing System', 'Wayland'],
-                                    ['Kernel', '6.11.4-301.fc43.x86_64'],
-                                    ['Hardware', 'Portfolio Virtual Machine'],
+                                    ['Role', 'Java-focused Software Developer'],
+                                    ['Primary Stack', 'Java, Spring Boot, SQL, React, TypeScript'],
+                                    ['Interface', 'Fedora/GNOME-inspired web desktop'],
+                                    ['Runtime', 'React 19 + TypeScript + Vite'],
+                                    ['Hardware', 'Browser-hosted portfolio'],
                                     ['Developer', 'Saw Ye Htet'],
                                 ].map(([label, value]) => (
                                     <div key={label} className="about-info-row">

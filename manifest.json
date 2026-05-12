@@ -1,7 +1,7 @@
 {
     "name": "Saw Ye Htet - Portfolio",
     "short_name": "SYH Portfolio",
-    "description": "Interactive Fedora 43 desktop portfolio for Java-focused software developer Saw Ye Htet",
+    "description": "Recruiter-friendly portfolio for Java-focused software developer Saw Ye Htet, built with React and TypeScript",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#1e1e1e",

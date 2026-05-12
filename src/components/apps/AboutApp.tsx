@@ -6,9 +6,14 @@ const HERO_SOCIAL_LINKS = SOCIAL_LINKS.filter(({ label }) =>
     ['GitHub', 'LinkedIn'].includes(label)
 );
 
-const RECRUITER_PATH: { label: string; appId: AppId; icon: string }[] = [
-    { label: 'Skills', appId: 'skills', icon: 'fas fa-tools' },
+type RecruiterPathAction =
+    | { label: string; appId: AppId; icon: string }
+    | { label: string; href: string; icon: string; download?: boolean };
+
+const RECRUITER_PATH: RecruiterPathAction[] = [
     { label: 'Projects', appId: 'projects', icon: 'fas fa-folder-open' },
+    { label: 'Skills', appId: 'skills', icon: 'fas fa-tools' },
+    { label: 'Resume', href: PROFILE.resumePath, icon: 'fas fa-file-arrow-down', download: true },
     { label: 'Contact', appId: 'contact', icon: 'fas fa-paper-plane' },
 ];
 
@@ -43,16 +48,14 @@ export function AboutApp() {
                     </picture>
                 </div>
                 <h2>Saw Ye Htet</h2>
-                <p className="about-tagline">Java Software Engineer</p>
-                <p className="about-institution">
-                    Singapore Polytechnic · Diploma in IT · Graduated 2026
-                </p>
+                <p className="about-tagline">{PROFILE.role}</p>
+                <p className="about-institution">{PROFILE.education}</p>
                 <div className="about-hero-actions">
                     <button
                         className="about-cta-btn about-cta-primary"
                         onClick={() => openWindow('contact')}
                     >
-                        <i className="fas fa-envelope" aria-hidden="true" /> Get in Touch
+                        <i className="fas fa-envelope" aria-hidden="true" /> Contact Me
                     </button>
                     <a
                         className="about-cta-btn about-cta-secondary"
@@ -77,11 +80,12 @@ export function AboutApp() {
             </div>
             <div className="recruiter-summary" aria-label="Recruiter summary">
                 {[
-                    ['Role', 'Java Software Engineer'],
-                    ['Education', 'Diploma in IT — Singapore Polytechnic, 2026'],
+                    ['Role', PROFILE.role],
+                    ['Target', PROFILE.roleTarget],
+                    ['Education', PROFILE.education],
                     ['Location', PROFILE.location],
                     ['Availability', PROFILE.availability],
-                    ['Stack', 'Java · Spring Boot · SQL · React · TS'],
+                    ['Stack', PROFILE.primaryStack.join(' · ')],
                 ].map(([label, value]) => (
                     <div key={label} className="summary-row">
                         <span>{label}</span>
@@ -90,12 +94,28 @@ export function AboutApp() {
                 ))}
             </div>
             <nav className="about-recruiter-path" aria-label="Recruiter path">
-                {RECRUITER_PATH.map(({ label, appId, icon }) => (
-                    <button key={appId} type="button" onClick={() => openWindow(appId)}>
-                        <i className={icon} aria-hidden="true" />
-                        <span>{label}</span>
-                    </button>
-                ))}
+                {RECRUITER_PATH.map(action =>
+                    'appId' in action ? (
+                        <button
+                            key={action.appId}
+                            type="button"
+                            onClick={() => openWindow(action.appId)}
+                        >
+                            <i className={action.icon} aria-hidden="true" />
+                            <span>{action.label}</span>
+                        </button>
+                    ) : (
+                        <a
+                            key={action.href}
+                            href={action.href}
+                            download={action.download}
+                            className="about-recruiter-link"
+                        >
+                            <i className={action.icon} aria-hidden="true" />
+                            <span>{action.label}</span>
+                        </a>
+                    )
+                )}
             </nav>
             <div className="about-content">
                 <div className="about-section">
@@ -103,14 +123,8 @@ export function AboutApp() {
                         <i className="fas fa-user" aria-hidden="true" /> About Me
                     </h3>
                     <p>
-                        I recently graduated from Singapore Polytechnic with a Diploma in
-                        Information Technology and I&apos;m targeting Java Software Engineer roles.
-                        I care about clean code, solid OOP design, and building systems that
-                        actually work. I&apos;m currently focused on Java, Spring Boot, and SQL —
-                        building backend projects to strengthen my portfolio and deepen my
-                        understanding of real application architecture. I learn best by turning
-                        study into shipped work, which is why I built this entire Fedora desktop
-                        portfolio from scratch in React and TypeScript.
+                        {PROFILE.summary} I am aiming for junior Java/backend roles where I can
+                        keep strengthening fundamentals through practical work.
                     </p>
                 </div>
                 <div className="about-section about-grouped">
@@ -120,19 +134,16 @@ export function AboutApp() {
                     {[
                         [
                             'Current Focus',
-                            'Targeting Java Software Engineer roles while building practical Spring Boot, SQL, OOP, and clean application design experience.',
+                            'Building practical Spring Boot, SQL, OOP, REST API, and clean application design experience.',
                         ],
-                        [
-                            'Education',
-                            'Diploma in Information Technology, Singapore Polytechnic. Graduated 2026.',
-                        ],
+                        ['Education', PROFILE.education],
                         [
                             'This Portfolio',
-                            'Designed and built this Fedora 43 desktop simulation in React 19, TypeScript, and Vite — with real window management, a virtual terminal, and GNOME-style shell interactions.',
+                            'Designed and built this Fedora/GNOME-inspired desktop portfolio in React 19, TypeScript, and Vite with window management, search, terminal, and mobile launcher behavior.',
                         ],
                         [
-                            'Interests',
-                            'Backend systems, Java ecosystem, Spring Boot, Linux customisation, open source, and developer tooling.',
+                            'Working Style',
+                            'Learns by building, keeps claims grounded in shipped work, and prefers clear structure over flashy complexity.',
                         ],
                     ].map(([label, value]) => (
                         <div key={label} className="about-grouped-row">

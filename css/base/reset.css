@@ -159,3 +159,52 @@ select:focus-visible {
     white-space: nowrap;
     border: 0;
 }
+
+/* ============================================
+   FORCED COLORS — Windows High Contrast
+   ============================================ */
+
+@media (forced-colors: active) {
+    .window-header,
+    .window-body {
+        border: 1px solid CanvasText;
+    }
+
+    button,
+    .dock-item,
+    .activities-btn,
+    .qs-tile,
+    .settings-nav-item,
+    .context-menu-item {
+        border: 1px solid ButtonText;
+        color: ButtonText;
+    }
+
+    button:hover,
+    .dock-item:hover,
+    .qs-tile:hover {
+        background: Highlight;
+        color: HighlightText;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+    }
+
+    .skip-link {
+        background: Highlight;
+        color: HighlightText;
+    }
+
+    .toggle-switch {
+        border: 1px solid ButtonText;
+    }
+
+    .toggle-switch[aria-checked='true'],
+    .toggle-switch.active {
+        background: Highlight;
+        border-color: Highlight;
+    }
+}

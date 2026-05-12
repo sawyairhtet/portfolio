@@ -15,7 +15,7 @@ export function FilesApp() {
         if (view === 'home') {
             return [
                 { id: 'projects', name: 'Projects', type: 'folder', modified: 'Today', size: '—' },
-                { id: 'resume', name: 'resume.txt', type: 'text', modified: 'Today', size: '8 KB' },
+                { id: 'resume', name: 'resume.md', type: 'text', modified: 'Today', size: '8 KB' },
             ];
         }
 
@@ -32,6 +32,11 @@ export function FilesApp() {
     const openSelected = (id: string) => {
         if (id === 'projects') {
             setView('projects');
+            return;
+        }
+
+        if (id === 'resume') {
+            openWindow('text-editor');
             return;
         }
 

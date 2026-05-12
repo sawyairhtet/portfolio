@@ -800,12 +800,13 @@
 
 .about-recruiter-path {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--spacing-sm);
     margin: calc(var(--spacing-lg) * -0.45) 0 var(--spacing-lg);
 }
 
-.about-recruiter-path button {
+.about-recruiter-path button,
+.about-recruiter-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -819,13 +820,15 @@
     font-family: var(--font-ui);
     font-size: 13px;
     font-weight: 700;
+    text-decoration: none;
     transition:
         background 200ms var(--ease-in-out-quad),
         border-color 200ms var(--ease-in-out-quad),
         transform 200ms var(--ease-out-quad);
 }
 
-.about-recruiter-path button:hover {
+.about-recruiter-path button:hover,
+.about-recruiter-link:hover {
     transform: translateY(-1px);
     border-color: var(--accent-subtle);
     background: var(--surface-2);
@@ -1387,6 +1390,12 @@
     background: var(--surface-1);
 }
 
+.adw-featured-project.project-search-focus,
+.adw-project-card.project-search-focus {
+    border-color: color-mix(in srgb, var(--accent-bg-color) 45%, transparent);
+    box-shadow: var(--shadow-focus-ring);
+}
+
 .adw-featured-project {
     display: grid;
     grid-template-columns: minmax(190px, 0.38fr) minmax(0, 1fr);
@@ -1501,6 +1510,53 @@
     line-height: 1.6;
 }
 
+.adw-project-brief {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.adw-project-brief-item {
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--surface-0);
+}
+
+.adw-project-brief-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.adw-project-brief-label i {
+    color: var(--accent);
+    font-size: 10px;
+}
+
+.adw-project-brief-item p {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.adw-project-brief-compact {
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.adw-project-brief-compact .adw-project-brief-item {
+    padding: 9px 10px;
+}
+
 .adw-impact-callout {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
@@ -1512,9 +1568,13 @@
 }
 
 .adw-impact-icon {
+    display: grid;
+    place-items: center;
     width: 34px;
     height: 34px;
     border-radius: 9px;
+    background: var(--accent-subtle);
+    color: var(--accent);
 }
 
 .adw-impact-label {
@@ -2014,7 +2074,8 @@
 
     .skill-row-card,
     .about-grouped-row,
-    .about-recruiter-path {
+    .about-recruiter-path,
+    .adw-project-brief {
         grid-template-columns: 1fr;
     }
 
@@ -2134,7 +2195,8 @@
 
     .skill-row-card,
     .about-grouped-row,
-    .about-recruiter-path {
+    .about-recruiter-path,
+    .adw-project-brief {
         grid-template-columns: 1fr;
     }
 
