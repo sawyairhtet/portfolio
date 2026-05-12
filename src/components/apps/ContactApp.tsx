@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotifications } from '../../context/NotificationContext';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
-import api from '../../lib/axios';
 
 const MESSAGE_MAX = 2000;
 const COOLDOWN_MS = 8000;
@@ -84,11 +83,13 @@ export function ContactApp() {
             formData.append('email', data.email);
             formData.append('message', data.message);
 
-            const response = await api.post('https://formspree.io/f/mqewakad', formData, {
+            const response = await fetch('https://formspree.io/f/mqewakad', {
+                method: 'POST',
+                body: formData,
                 headers: { Accept: 'application/json' },
             });
 
-            if (response.status >= 200 && response.status < 300) {
+            if (response.ok) {
                 setStatusMsg("Message sent! I'll get back to you soon.");
                 setStatusType('success');
                 reset();
@@ -96,39 +97,43 @@ export function ContactApp() {
                 showToast('Message sent successfully!', 'fas fa-check-circle');
                 focusBanner();
             } else {
-                throw new Error('Form submission failed');
-            }
-        } catch (err: unknown) {
-            // Surface per-field Formspree errors when present, e.g.
-            // { errors: [{ field: "email", message: "is invalid" }] }
-            const fieldErrors: FormspreeFieldError[] | undefined =
-                typeof err === 'object' && err !== null && 'response' in err
-                    ? (err as { response?: { data?: { errors?: FormspreeFieldError[] } } }).response
-                          ?.data?.errors
-                    : undefined;
+                // Surface per-field Formspree errors when present, e.g.
+                // { errors: [{ field: "email", message: "is invalid" }] }
+                let fieldErrors: FormspreeFieldError[] | undefined;
+                try {
+                    const body = await response.json();
+                    fieldErrors = body?.errors;
+                } catch {
+                    // Response wasn't JSON — fall through to generic error
+                }
 
-            let mappedAny = false;
-            if (Array.isArray(fieldErrors)) {
-                for (const fe of fieldErrors) {
-                    if (
-                        fe.field === 'name' ||
-                        fe.field === 'email' ||
-                        fe.field === 'message'
-                    ) {
-                        setError(fe.field, {
-                            type: 'server',
-                            message: fe.message ?? 'Invalid value',
-                        });
-                        mappedAny = true;
+                let mappedAny = false;
+                if (Array.isArray(fieldErrors)) {
+                    for (const fe of fieldErrors) {
+                        if (
+                            fe.field === 'name' ||
+                            fe.field === 'email' ||
+                            fe.field === 'message'
+                        ) {
+                            setError(fe.field, {
+                                type: 'server',
+                                message: fe.message ?? 'Invalid value',
+                            });
+                            mappedAny = true;
+                        }
                     }
                 }
-            }
 
-            setStatusMsg(
-                mappedAny
-                    ? 'Some fields need attention.'
-                    : 'Oops! Something went wrong. Try emailing me directly.'
-            );
+                setStatusMsg(
+                    mappedAny
+                        ? 'Some fields need attention.'
+                        : 'Oops! Something went wrong. Try emailing me directly.'
+                );
+                setStatusType('error');
+                focusBanner();
+            }
+        } catch {
+            setStatusMsg('Oops! Something went wrong. Try emailing me directly.');
             setStatusType('error');
             focusBanner();
         }
@@ -305,12 +310,12 @@ export function ContactApp() {
                     noValidate
                 >
                     {/* Honeypot — invisible to humans, off-screen so naive bots
-                        that fill every input get caught. Formspree honors
-                        a `_gotcha` field by silently rejecting the submission. */}
+                        that fill every input get caught. Uses an innocuous field
+                        name that bots tend to auto-fill. */}
                     <input
                         ref={honeypotRef}
                         type="text"
-                        name="_gotcha"
+                        name="website_url"
                         tabIndex={-1}
                         autoComplete="off"
                         aria-hidden="true"
@@ -430,7 +435,7 @@ export function ContactApp() {
                                     <i className="fas fa-spinner fa-spin" aria-hidden="true" />
                                     Sending…
                                 </>
-                            ) : isCoolingDown ? (
+                            ) : isCoolingDown && statusType === 'success' ? (
                                 <>
                                     <i className="fas fa-circle-check" aria-hidden="true" />
                                     Sent

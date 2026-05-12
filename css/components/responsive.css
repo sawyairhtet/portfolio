@@ -87,6 +87,12 @@
         display: none !important;
     }
 
+    /* Hide triggers for panels that are force-hidden on touch devices */
+    .menu-bar-center,
+    .menu-bar-right {
+        display: none !important;
+    }
+
     .dock {
         min-height: 0 !important;
     }

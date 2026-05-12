@@ -127,7 +127,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
             aria-modal="true"
             aria-label="Activities overview"
             aria-hidden={!isOpen}
-            hidden={!isOpen}
+            inert={!isOpen || undefined}
             onClick={handleOverlayClick}
         >
             <div className="activities-search">
@@ -189,19 +189,27 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                 </div>
 
                 <aside className="activities-workspace-switcher" aria-label="Workspaces">
-                    <button
-                        type="button"
+                    <div
                         className="activities-workspace active"
-                        aria-current="true"
+                        aria-hidden="true"
+                        tabIndex={-1}
                     >
                         <span />
-                    </button>
-                    <button type="button" className="activities-workspace">
+                    </div>
+                    <div
+                        className="activities-workspace"
+                        aria-hidden="true"
+                        tabIndex={-1}
+                    >
                         <span />
-                    </button>
-                    <button type="button" className="activities-workspace">
+                    </div>
+                    <div
+                        className="activities-workspace"
+                        aria-hidden="true"
+                        tabIndex={-1}
+                    >
                         <span />
-                    </button>
+                    </div>
                 </aside>
             </div>
 
@@ -246,6 +254,7 @@ export function ActivitiesOverlay({ isOpen, onClose }: ActivitiesOverlayProps) {
                             type="button"
                             className="activities-app-item"
                             data-app={app.id}
+                            aria-label={`Open ${app.label}`}
                             onClick={() => handleAppClick(app.id)}
                         >
                             <div

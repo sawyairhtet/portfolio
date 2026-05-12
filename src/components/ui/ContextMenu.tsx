@@ -75,7 +75,7 @@ export function ContextMenu() {
             style={{ top: position.y, left: position.x, position: 'fixed' }}
             role="menu"
             aria-hidden={!visible}
-            hidden={!visible}
+            inert={!visible || undefined}
         >
             <button
                 ref={firstItemRef}

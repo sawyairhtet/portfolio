@@ -24,6 +24,8 @@
             content="Java-focused software developer and Singapore Polytechnic IT graduate. Interactive Fedora 43 GNOME 49 desktop portfolio built with React, TypeScript & Vite."
         />
         <meta property="og:image" content="https://sawyehtet.com/images/og-preview.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta
             property="og:image:alt"
             content="Saw Ye Htet portfolio preview in a Fedora-inspired desktop interface"
@@ -144,76 +146,129 @@
             <div
                 style="
                     position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
+                    inset: 0;
+                    overflow-y: auto;
                     background: #1e1e1e;
                     color: rgba(255, 255, 255, 0.87);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
                     z-index: 10000;
                     font-family: 'Cantarell', system-ui, sans-serif;
-                    padding: 20px;
+                    padding: 32px 20px;
                 "
             >
                 <div
                     style="
-                        text-align: center;
-                        max-width: 500px;
+                        max-width: 640px;
+                        margin: 0 auto;
                         background: #2d2d2d;
-                        padding: 48px;
+                        padding: 40px 36px;
                         border-radius: 12px;
                         border: 1px solid rgba(255, 255, 255, 0.08);
                         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
                     "
                 >
-                    <h1 style="font-size: 24px; margin-bottom: 12px; font-weight: 700">
+                    <!-- Hero -->
+                    <h1 style="font-size: 26px; margin: 0 0 4px; font-weight: 700">
                         Saw Ye Htet
                     </h1>
-                    <p style="opacity: 0.72; line-height: 1.6; margin-bottom: 16px">
-                        Java-focused software developer, Singapore Polytechnic IT graduate, and
-                        creator of this Fedora 43 desktop portfolio.
+                    <p style="margin: 0 0 4px; font-size: 17px; opacity: 0.85; font-weight: 600">
+                        Java Software Engineer
                     </p>
-                    <p style="opacity: 0.6; line-height: 1.6; margin-bottom: 24px">
-                        JavaScript powers the interactive windows, dock, terminal, and contact
-                        form. You can still reach me directly by email or open my resume.
+                    <p style="margin: 0 0 20px; font-size: 13px; opacity: 0.55">
+                        Singapore Polytechnic · Diploma in Information Technology · Graduated 2026
                     </p>
-                    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap">
-                        <a
-                            href="mailto:minwn2244@gmail.com"
-                            style="
-                                display: inline-flex;
-                                align-items: center;
-                                gap: 8px;
-                                padding: 12px 20px;
-                                background: #3584e4;
-                                color: #fff;
-                                text-decoration: none;
-                                border-radius: 6px;
-                                font-weight: 700;
-                            "
-                        >
+
+                    <!-- Quick actions -->
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px">
+                        <a href="mailto:minwn2244@gmail.com" style="display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: #3584e4; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px">
                             Email Me
                         </a>
-                        <a
-                            href="/resume/SYH_resume.pdf"
-                            style="
-                                display: inline-flex;
-                                align-items: center;
-                                gap: 8px;
-                                padding: 12px 20px;
-                                background: #3a3a3a;
-                                color: #fff;
-                                text-decoration: none;
-                                border-radius: 6px;
-                                font-weight: 700;
-                            "
-                        >
+                        <a href="/resume/SYH_resume.pdf" style="display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: #3a3a3a; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px">
                             Resume PDF
                         </a>
+                        <a href="https://github.com/sawyairhtet" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: #3a3a3a; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px">
+                            GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: #3a3a3a; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 14px">
+                            LinkedIn
+                        </a>
                     </div>
+
+                    <!-- Recruiter summary -->
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 28px; font-size: 14px">
+                        <tr><td style="padding: 8px 0; opacity: 0.6; width: 120px">Role</td><td style="padding: 8px 0; font-weight: 600">Java Software Engineer</td></tr>
+                        <tr><td style="padding: 8px 0; opacity: 0.6">Education</td><td style="padding: 8px 0; font-weight: 600">Diploma in IT — Singapore Polytechnic, 2026</td></tr>
+                        <tr><td style="padding: 8px 0; opacity: 0.6">Location</td><td style="padding: 8px 0; font-weight: 600">Singapore / remote-friendly</td></tr>
+                        <tr><td style="padding: 8px 0; opacity: 0.6">Availability</td><td style="padding: 8px 0; font-weight: 600">Open to opportunities</td></tr>
+                        <tr><td style="padding: 8px 0; opacity: 0.6">Stack</td><td style="padding: 8px 0; font-weight: 600">Java · Spring Boot · SQL · React · TypeScript</td></tr>
+                    </table>
+
+                    <!-- About -->
+                    <h2 style="font-size: 18px; margin: 0 0 10px; font-weight: 700">About Me</h2>
+                    <p style="line-height: 1.65; margin: 0 0 10px; opacity: 0.8; font-size: 14px">
+                        I recently graduated from Singapore Polytechnic with a Diploma in
+                        Information Technology and I'm targeting Java Software Engineer roles.
+                        I care about clean code, solid OOP design, and building systems that
+                        actually work.
+                    </p>
+                    <p style="line-height: 1.65; margin: 0 0 24px; opacity: 0.8; font-size: 14px">
+                        I'm currently focused on Java, Spring Boot, and SQL — building backend
+                        projects to strengthen my portfolio and deepen my understanding of real
+                        application architecture. I learn best by turning study into shipped work,
+                        which is why I built this entire Fedora desktop portfolio from scratch in
+                        React and TypeScript.
+                    </p>
+
+                    <!-- Skills -->
+                    <h2 style="font-size: 18px; margin: 0 0 10px; font-weight: 700">Skills</h2>
+                    <h3 style="font-size: 15px; margin: 0 0 6px; font-weight: 600; opacity: 0.9">Java &amp; Backend</h3>
+                    <ul style="margin: 0 0 6px; padding-left: 20px; line-height: 1.7; font-size: 14px; opacity: 0.8">
+                        <li><strong>Java + OOP</strong> — Object-oriented design, class hierarchies, control flow, and practical problem solving.</li>
+                        <li><strong>Spring Boot</strong> — REST API structure, dependency injection, application layers, and building clean backend services.</li>
+                        <li><strong>SQL + Data Handling</strong> — Relational data fundamentals, queries, schema design, and connecting application logic to structured storage.</li>
+                    </ul>
+                    <h3 style="font-size: 15px; margin: 12px 0 6px; font-weight: 600; opacity: 0.9">Web &amp; Tooling</h3>
+                    <ul style="margin: 0 0 24px; padding-left: 20px; line-height: 1.7; font-size: 14px; opacity: 0.8">
+                        <li><strong>React + TypeScript</strong> — Component architecture, stateful UI, typed config, custom context providers.</li>
+                        <li><strong>JavaScript / Python</strong> — Coursework, tooling, data handling, and scripting.</li>
+                        <li><strong>Git + Linux Workflow</strong> — Source control, shell habits, public repositories, and Fedora/GNOME customisation.</li>
+                    </ul>
+
+                    <!-- Projects -->
+                    <h2 style="font-size: 18px; margin: 0 0 10px; font-weight: 700">Projects</h2>
+                    <div style="background: #363636; border-radius: 8px; padding: 16px; margin-bottom: 12px">
+                        <h3 style="font-size: 15px; margin: 0 0 6px; font-weight: 700">This Portfolio (Fedora Desktop)</h3>
+                        <p style="font-size: 13px; opacity: 0.75; margin: 0 0 8px; line-height: 1.55">
+                            A full Fedora 43 GNOME desktop simulation built in React 19 and TypeScript,
+                            with draggable windows, a virtual terminal, a boot sequence, and real desktop
+                            keyboard shortcuts.
+                        </p>
+                        <p style="font-size: 13px; opacity: 0.6; margin: 0 0 8px">
+                            Tech: React 19, TypeScript, Vite, CSS Layers, Tailwind v4
+                        </p>
+                        <a href="https://github.com/sawyairhtet/portfolio" rel="noopener noreferrer" style="color: #62a0ea; font-size: 13px; font-weight: 600">View on GitHub →</a>
+                    </div>
+                    <div style="background: #363636; border-radius: 8px; padding: 16px; margin-bottom: 24px">
+                        <h3 style="font-size: 15px; margin: 0 0 6px; font-weight: 700">OpsTrack</h3>
+                        <p style="font-size: 13px; opacity: 0.75; margin: 0 0 8px; line-height: 1.55">
+                            A Spring Boot operations tracking API with clean REST endpoints,
+                            SQL persistence, and layered architecture — built to sharpen backend
+                            fundamentals and demonstrate production-grade Java patterns.
+                        </p>
+                        <p style="font-size: 13px; opacity: 0.6; margin: 0 0 8px">
+                            Tech: Java, Spring Boot, PostgreSQL, REST API
+                        </p>
+                        <a href="https://github.com/sawyairhtet/opstrack" rel="noopener noreferrer" style="color: #62a0ea; font-size: 13px; font-weight: 600">View on GitHub →</a>
+                    </div>
+
+                    <!-- Contact -->
+                    <h2 style="font-size: 18px; margin: 0 0 10px; font-weight: 700">Contact</h2>
+                    <p style="font-size: 14px; opacity: 0.8; line-height: 1.7; margin: 0">
+                        Email: <a href="mailto:minwn2244@gmail.com" style="color: #62a0ea">minwn2244@gmail.com</a><br />
+                        Location: Singapore / remote-friendly<br />
+                        Status: Open to opportunities<br />
+                        GitHub: <a href="https://github.com/sawyairhtet" rel="noopener noreferrer" style="color: #62a0ea">github.com/sawyairhtet</a><br />
+                        LinkedIn: <a href="https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/" rel="noopener noreferrer" style="color: #62a0ea">linkedin.com/in/saw-ye-htet-the-man-who-code</a>
+                    </p>
                 </div>
             </div>
         </noscript>

@@ -43,13 +43,13 @@ export function Wallpaper() {
         const handleMouseMove = (e: MouseEvent) => {
             if (rafId) return;
 
-            el.style.willChange = 'transform';
             if (idleTimeout) clearTimeout(idleTimeout);
             idleTimeout = setTimeout(() => {
                 el.style.willChange = 'auto';
             }, 500);
 
             rafId = requestAnimationFrame(() => {
+                el.style.willChange = 'transform';
                 const x = (e.clientX / window.innerWidth - 0.5) * 2;
                 const y = (e.clientY / window.innerHeight - 0.5) * 2;
                 el.style.setProperty('--mouse-x', x.toFixed(3));

@@ -74,7 +74,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
             aria-label="Quick Settings"
             aria-modal="true"
             aria-hidden={!isOpen}
-            hidden={!isOpen}
+            inert={!isOpen || undefined}
             onKeyDown={handleKeyDown}
         >
             <div className="qs-header">

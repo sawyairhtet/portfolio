@@ -1,4 +1,4 @@
-import { useCallback, useState, type MouseEvent } from 'react';
+import { useCallback, useState, useRef, type MouseEvent, type KeyboardEvent } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { DOCK_APPS, MOBILE_DOCK_APPS, MOBILE_LAUNCHER_APPS } from '../../config/data';
 import { useDevice } from '../../context/DeviceContext';
@@ -13,6 +13,8 @@ export function Dock({ onShowApps }: DockProps) {
     const { device } = useDevice();
     const [launchingApp, setLaunchingApp] = useState<AppId | null>(null);
     const [launcherOpen, setLauncherOpen] = useState(false);
+    const [focusedIndex, setFocusedIndex] = useState(0);
+    const dockRef = useRef<HTMLDivElement>(null);
     const isMobileShell = device !== 'desktop';
 
     const handleDockClick = useCallback(
@@ -42,6 +44,49 @@ export function Dock({ onShowApps }: DockProps) {
     // Split dock apps: main apps and utility apps (after separator)
     const mainApps = DOCK_APPS.filter(a => !['terminal', 'settings'].includes(a.id));
     const utilityApps = DOCK_APPS.filter(a => ['terminal', 'settings'].includes(a.id));
+
+    // All focusable items in desktop dock (main apps + utility apps + Show Apps)
+    const allDockItems = [...mainApps, ...utilityApps, { id: 'show-apps' as const, label: 'Show Apps' }];
+
+    const handleDockKeyDown = useCallback(
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            const total = allDockItems.length;
+            let nextIndex = focusedIndex;
+
+            switch (e.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    nextIndex = (focusedIndex + 1) % total;
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                    e.preventDefault();
+                    nextIndex = (focusedIndex - 1 + total) % total;
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    nextIndex = 0;
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    nextIndex = total - 1;
+                    break;
+                default:
+                    return;
+            }
+
+            setFocusedIndex(nextIndex);
+            const dock = dockRef.current;
+            if (dock) {
+                const buttons = Array.from(
+                    dock.querySelectorAll<HTMLElement>('button.dock-item')
+                );
+                buttons[nextIndex]?.focus();
+            }
+        },
+        [focusedIndex, allDockItems.length]
+    );
 
     if (isMobileShell) {
         return (
@@ -121,8 +166,15 @@ export function Dock({ onShowApps }: DockProps) {
     }
 
     return (
-        <div className="dock" id="dock" aria-label="App launcher dash">
-            {mainApps.map(app => {
+        <div
+            ref={dockRef}
+            className="dock"
+            id="dock"
+            role="toolbar"
+            aria-label="App launcher dash"
+            onKeyDown={handleDockKeyDown}
+        >
+            {mainApps.map((app, idx) => {
                 const isActive = windows.get(app.id)?.isOpen ?? false;
                 return (
                     <button
@@ -131,7 +183,9 @@ export function Dock({ onShowApps }: DockProps) {
                         data-app={app.id}
                         aria-label={app.label}
                         aria-describedby={`dock-tip-${app.id}`}
+                        tabIndex={focusedIndex === idx ? 0 : -1}
                         onClick={event => handleDockClick(app.id, event)}
+                        onFocus={() => setFocusedIndex(idx)}
                     >
                         <i className={app.icon} aria-hidden="true" />
                         <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">
@@ -140,8 +194,9 @@ export function Dock({ onShowApps }: DockProps) {
                     </button>
                 );
             })}
-            <div className="dock-separator" />
-            {utilityApps.map(app => {
+            <div className="dock-separator" role="separator" aria-hidden="true" />
+            {utilityApps.map((app, idx) => {
+                const globalIdx = mainApps.length + idx;
                 const isActive = windows.get(app.id)?.isOpen ?? false;
                 return (
                     <button
@@ -150,7 +205,9 @@ export function Dock({ onShowApps }: DockProps) {
                         data-app={app.id}
                         aria-label={app.label}
                         aria-describedby={`dock-tip-${app.id}`}
+                        tabIndex={focusedIndex === globalIdx ? 0 : -1}
                         onClick={event => handleDockClick(app.id, event)}
+                        onFocus={() => setFocusedIndex(globalIdx)}
                     >
                         <i className={app.icon} aria-hidden="true" />
                         <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">
@@ -163,7 +220,9 @@ export function Dock({ onShowApps }: DockProps) {
                 className="dock-item show-apps-btn"
                 data-app="apps"
                 aria-label="Show Apps"
+                tabIndex={focusedIndex === allDockItems.length - 1 ? 0 : -1}
                 onClick={onShowApps}
+                onFocus={() => setFocusedIndex(allDockItems.length - 1)}
             >
                 <i className="fas fa-grip" aria-hidden="true" />
                 <span className="dock-tooltip" id="dock-tip-show-apps" role="tooltip">
@@ -173,3 +232,4 @@ export function Dock({ onShowApps }: DockProps) {
         </div>
     );
 }
+

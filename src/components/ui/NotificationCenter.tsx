@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNotifications } from '../../context/NotificationContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
 
@@ -11,6 +11,7 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
     const { notifications, dismissNotification, clearAllNotifications, isDnd, setDnd } =
         useNotifications();
     const { openWindow } = useWindowManager();
+    const panelRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -25,6 +26,50 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isOpen, onClose]);
 
+    // Auto-focus first focusable element on open
+    useEffect(() => {
+        if (!isOpen) return;
+        const panel = panelRef.current;
+        if (!panel) return;
+
+        const firstFocusable = panel.querySelector<HTMLElement>(
+            'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        setTimeout(() => firstFocusable?.focus(), 50);
+    }, [isOpen]);
+
+    // Focus trap while panel is open
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleTabTrap = (e: KeyboardEvent) => {
+            if (e.key !== 'Tab') return;
+            const panel = panelRef.current;
+            if (!panel) return;
+
+            const focusable = Array.from(
+                panel.querySelectorAll<HTMLElement>(
+                    'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter(el => el.offsetParent !== null);
+
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+
+        document.addEventListener('keydown', handleTabTrap);
+        return () => document.removeEventListener('keydown', handleTabTrap);
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     // Group notifications
@@ -36,10 +81,11 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
 
     return (
         <div
+            ref={panelRef}
             className="notification-center visible"
             role="dialog"
             aria-label="Notification Center"
-            aria-modal="false"
+            aria-modal="true"
         >
             <div className="notification-header">
                 <span className="notification-header-title">Notifications</span>

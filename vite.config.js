@@ -29,7 +29,7 @@ export default defineConfig({
                         return 'vendor-react';
                     }
                     // Routing + data fetching
-                    if (id.includes('node_modules/react-router') || id.includes('node_modules/@tanstack/') || id.includes('node_modules/axios/')) {
+                    if (id.includes('node_modules/react-router') || id.includes('node_modules/@tanstack/')) {
                         return 'vendor-query';
                     }
                     // Forms + validation (only loaded with ContactApp)

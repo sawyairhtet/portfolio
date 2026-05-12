@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useCallback, useEffect } from 'react';
+import { lazy, Suspense, useState, useCallback, useEffect, useRef } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -118,6 +118,86 @@ function TerminalSkeleton() {
             <div className="terminal-skeleton-line" aria-hidden="true" />
             <div className="terminal-skeleton-line" aria-hidden="true" />
             <span className="sr-only">Loading terminal…</span>
+        </div>
+    );
+}
+
+const SHORTCUTS_DATA = [
+    ['Super', 'Activities Overview'],
+    ['Alt+Tab', 'Switch Windows'],
+    ['Ctrl+Alt+←/→', 'Switch Workspace'],
+    ['Super+1…9', 'Open Dock App'],
+    ['Esc', 'Close Top Window'],
+    ['/', 'Open Settings'],
+    ['?', 'Show Shortcuts'],
+] as const;
+
+function ShortcutsDialog({ onClose }: { onClose: () => void }) {
+    const dialogRef = useRef<HTMLDivElement>(null);
+    const closeBtnRef = useRef<HTMLButtonElement>(null);
+
+    // Auto-focus close button on mount
+    useEffect(() => {
+        closeBtnRef.current?.focus();
+    }, []);
+
+    // Focus trap
+    useEffect(() => {
+        const handleTabTrap = (e: KeyboardEvent) => {
+            if (e.key !== 'Tab') return;
+            const dialog = dialogRef.current;
+            if (!dialog) return;
+
+            const focusable = Array.from(
+                dialog.querySelectorAll<HTMLElement>(
+                    'button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter(el => el.offsetParent !== null);
+
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+
+        document.addEventListener('keydown', handleTabTrap);
+        return () => document.removeEventListener('keydown', handleTabTrap);
+    }, []);
+
+    return (
+        <div
+            ref={dialogRef}
+            className="shortcuts-cheatsheet"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="shortcuts-title"
+        >
+            <header>
+                <h2 id="shortcuts-title">Keyboard Shortcuts</h2>
+                <button
+                    ref={closeBtnRef}
+                    type="button"
+                    aria-label="Close"
+                    onClick={onClose}
+                >
+                    <i className="fas fa-times" aria-hidden="true" />
+                </button>
+            </header>
+            <div>
+                {SHORTCUTS_DATA.map(([keys, label]) => (
+                    <p key={keys}>
+                        <kbd>{keys}</kbd>
+                        <span>{label}</span>
+                    </p>
+                ))}
+            </div>
         </div>
     );
 }
@@ -260,12 +340,15 @@ export function DesktopShell() {
                     setActivitiesOpen(false);
                     setQuickSettingsOpen(false);
                     setNotifCenterOpen(false);
+                    e.stopPropagation();
                     return;
                 }
 
                 const topWindow = openWindowIds[0];
                 if (topWindow) {
                     closeWindow(topWindow);
+                    e.stopPropagation();
+                    return;
                 }
             }
 
@@ -435,96 +518,91 @@ export function DesktopShell() {
             )}
 
             {shortcutsOpen && (
-                <div className="shortcuts-cheatsheet" role="dialog" aria-modal="true">
-                    <header>
-                        <h2>Keyboard Shortcuts</h2>
-                        <button
-                            type="button"
-                            aria-label="Close"
-                            onClick={() => setShortcutsOpen(false)}
-                        >
-                            <i className="fas fa-times" aria-hidden="true" />
-                        </button>
-                    </header>
-                    <div>
-                        {[
-                            ['Super', 'Activities Overview'],
-                            ['Alt+Tab', 'Switch Windows'],
-                            ['Ctrl+Alt+←/→', 'Switch Workspace'],
-                            ['Super+1…9', 'Open Dock App'],
-                            ['Esc', 'Close Top Window'],
-                            ['/', 'Open Settings'],
-                            ['?', 'Show Shortcuts'],
-                        ].map(([keys, label]) => (
-                            <p key={keys}>
-                                <kbd>{keys}</kbd>
-                                <span>{label}</span>
-                            </p>
-                        ))}
-                    </div>
-                </div>
+                <ShortcutsDialog onClose={() => setShortcutsOpen(false)} />
             )}
 
             <span className="sr-only" aria-live="polite">
                 Workspace {workspaceIndex + 1}
             </span>
 
-            {/* Windows */}
-            <Window appId="about" title="About">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <AboutApp />
-                </Suspense>
-            </Window>
-            <Window appId="browser" title="Firefox">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <BrowserApp />
-                </Suspense>
-            </Window>
-            <Window appId="files" title="Files">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <FilesApp />
-                </Suspense>
-            </Window>
-            <Window appId="skills" title="Skills">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <SkillsApp />
-                </Suspense>
-            </Window>
-            <Window appId="projects" title="Projects">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <ProjectsApp />
-                </Suspense>
-            </Window>
-            <Window appId="contact" title="Contact">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <ContactApp />
-                </Suspense>
-            </Window>
-            <Window appId="links" title="Links">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <LinksApp />
-                </Suspense>
-            </Window>
-            <Window appId="terminal" title="Terminal">
-                <Suspense fallback={<TerminalSkeleton />}>
-                    <TerminalApp />
-                </Suspense>
-            </Window>
-            <Window appId="text-editor" title="Text Editor">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <TextEditorApp />
-                </Suspense>
-            </Window>
-            <Window appId="settings" title="Settings">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <SettingsApp />
-                </Suspense>
-            </Window>
-            <Window appId="focus-mode" title="Focus Mode">
-                <Suspense fallback={<AdwaitaSkeleton />}>
-                    <FocusModeApp />
-                </Suspense>
-            </Window>
+            {/* Windows — conditionally rendered to avoid wasted reconciliation */}
+            {windows.get('about')?.isOpen && (
+                <Window appId="about" title="About">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <AboutApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('browser')?.isOpen && (
+                <Window appId="browser" title="Firefox">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <BrowserApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('files')?.isOpen && (
+                <Window appId="files" title="Files">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <FilesApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('skills')?.isOpen && (
+                <Window appId="skills" title="Skills">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <SkillsApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('projects')?.isOpen && (
+                <Window appId="projects" title="Projects">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <ProjectsApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('contact')?.isOpen && (
+                <Window appId="contact" title="Contact">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <ContactApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('links')?.isOpen && (
+                <Window appId="links" title="Links">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <LinksApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('terminal')?.isOpen && (
+                <Window appId="terminal" title="Terminal">
+                    <Suspense fallback={<TerminalSkeleton />}>
+                        <TerminalApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('text-editor')?.isOpen && (
+                <Window appId="text-editor" title="Text Editor">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <TextEditorApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('settings')?.isOpen && (
+                <Window appId="settings" title="Settings">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <SettingsApp />
+                    </Suspense>
+                </Window>
+            )}
+            {windows.get('focus-mode')?.isOpen && (
+                <Window appId="focus-mode" title="Focus Mode">
+                    <Suspense fallback={<AdwaitaSkeleton />}>
+                        <FocusModeApp />
+                    </Suspense>
+                </Window>
+            )}
 
             {/* Dock — always visible on desktop, mobile: always visible */}
             <Dock onShowApps={() => setActivitiesOpen(true)} />
