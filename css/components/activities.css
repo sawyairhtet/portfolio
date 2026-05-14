@@ -256,69 +256,6 @@
     background: color-mix(in srgb, var(--thumbnail-fg-color) 16%, transparent);
 }
 
-.activities-dash {
-    position: fixed;
-    left: 50%;
-    bottom: 22px;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px;
-    border-radius: var(--popover_radius);
-    background: color-mix(in srgb, var(--popover-bg-color) 78%, transparent);
-    box-shadow: 0 1px 5px 1px var(--popover-shade-color);
-    transform: translateX(-50%);
-}
-
-.activities-dash-item {
-    position: relative;
-    display: grid;
-    width: 48px;
-    height: 48px;
-    place-items: center;
-    border: 0;
-    border-radius: var(--button_radius);
-    background: transparent;
-    color: var(--accent-fg-color);
-    transition:
-        background var(--duration-normal) var(--ease-in-out-quad),
-        transform var(--duration-normal) var(--ease-out-quad);
-}
-
-.activities-dash-item:hover {
-    background: color-mix(in srgb, currentColor 10%, transparent);
-    transform: translateY(var(--motion-lift));
-}
-
-.activities-dash-item > span {
-    display: grid;
-    width: 40px;
-    height: 40px;
-    place-items: center;
-    border-radius: 22.37%;
-}
-
-.activities-dash-item.active::after {
-    content: '';
-    position: absolute;
-    bottom: 1px;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    border-radius: 999px;
-    background: var(--overview-fg-color);
-    transform: translateX(-50%);
-}
-
-.activities-dash-item.show-apps {
-    color: var(--overview-fg-color);
-}
-
-.activities-dash-item.show-apps > span {
-    background: color-mix(in srgb, var(--overview-fg-color) 10%, transparent);
-}
-
 .activities-results {
     z-index: 2;
     display: grid;
@@ -506,7 +443,6 @@
     .activities-overlay,
     .activities-window-thumb,
     .activities-app-item,
-    .activities-dash-item,
     .activities-project-result {
         transition-property: opacity, color, background-color, border-color, box-shadow;
     }
@@ -570,11 +506,6 @@
         width: 48px;
         height: 48px;
         font-size: 20px;
-    }
-
-    .activities-dash {
-        max-width: calc(100vw - 24px);
-        overflow-x: auto;
     }
 
     .activities-project-results {

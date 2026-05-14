@@ -201,6 +201,12 @@
         transform var(--duration-fast) var(--ease-out-quad);
 }
 
+.activities-btn.pill {
+    padding: 0 10px 0 38px;
+    border-radius: 999px;
+    justify-content: flex-start;
+}
+
 @media (hover: hover) {
     .pill:hover {
         background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);

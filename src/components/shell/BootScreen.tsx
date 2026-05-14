@@ -110,7 +110,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
             {phase === 'plymouth' && (
                 <div className="plymouth-splash">
                     <div className="plymouth-logo">
-                        <i className="fas fa-desktop" aria-hidden="true" />
+                        <i className="fab fa-fedora" aria-hidden="true" />
                     </div>
                     <div className="plymouth-spinner">
                         <div className="plymouth-dot" />

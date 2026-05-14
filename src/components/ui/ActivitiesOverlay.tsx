@@ -103,8 +103,6 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
         });
     }, [normalizedSearch, openWindowEntries]);
 
-    const dashApps = useMemo(() => APP_DEFINITIONS.filter(app => app.desktopDock), []);
-
     const handleAppClick = useCallback(
         (appId: AppId) => {
             openWindow(appId);
@@ -278,7 +276,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                 <span>
                                     {normalizedSearch
                                         ? 'Open an app below or refine your search.'
-                                        : 'Launch an app from the grid or dash.'}
+                                        : 'Launch an app from the grid.'}
                                 </span>
                             </div>
                         ) : (
@@ -325,37 +323,6 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                         </div>
                     ))}
                 </aside>
-            </div>
-
-            <div className="activities-dash" role="toolbar" aria-label="Dash">
-                {dashApps.map(app => {
-                    const isActive = windows.get(app.id)?.isOpen ?? false;
-                    return (
-                        <button
-                            key={app.id}
-                            type="button"
-                            className={`activities-dash-item${isActive ? ' active' : ''}`}
-                            data-app={app.id}
-                            data-activities-result="true"
-                            aria-label={app.label}
-                            onClick={() => handleAppClick(app.id)}
-                        >
-                            <span style={{ background: app.gradient }}>
-                                <i className={app.icon} aria-hidden="true" />
-                            </span>
-                        </button>
-                    );
-                })}
-                <button
-                    type="button"
-                    className="activities-dash-item show-apps active"
-                    data-activities-result="true"
-                    aria-label="Show Apps"
-                >
-                    <span>
-                        <i className="fas fa-grip" aria-hidden="true" />
-                    </span>
-                </button>
             </div>
 
             <div className="activities-results" aria-label="Search results and applications">

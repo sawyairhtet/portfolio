@@ -136,6 +136,7 @@ describe('Portfolio React interactions', () => {
         );
 
         expect(screen.getByRole('dialog', { name: /activities overview/i })).toHaveClass('visible');
+        expect(document.querySelector('.activities-dash')).not.toBeInTheDocument();
     });
 
     it('dock clicks restore or focus open apps without closing them', async () => {
