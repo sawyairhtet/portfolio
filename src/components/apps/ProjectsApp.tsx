@@ -1,19 +1,67 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { PROJECTS } from '../../config/data';
 import type { Project } from '../../types';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+    Star,
+    CheckCircle,
+    GitBranch,
+    ArrowSquareOut,
+    GithubLogo,
+    Hammer,
+    Wrench,
+} from '@phosphor-icons/react';
+
+const TECH_BRAND_COLORS: Record<string, string> = {
+    Java: '#ED8B00',
+    'Spring Boot': '#6DB33F',
+    React: '#61DAFB',
+    TypeScript: '#3178C6',
+    JavaScript: '#F7DF1E',
+    Python: '#3776AB',
+    SQL: '#336791',
+    PostgreSQL: '#336791',
+    Vite: '#646CFF',
+    CSS: '#264DE4',
+    HTML: '#E34F26',
+    Docker: '#2496ED',
+    Git: '#F05032',
+    Tailwind: '#06B6D4',
+};
+
+function TechChip({ tech }: { tech: string }) {
+    const color = TECH_BRAND_COLORS[tech];
+    const style = color
+        ? {
+              background: `color-mix(in srgb, ${color} 15%, transparent)`,
+              borderColor: `color-mix(in srgb, ${color} 30%, transparent)`,
+              color,
+          }
+        : undefined;
+
+    return (
+        <span className="project-tech-chip" style={style}>
+            {tech}
+        </span>
+    );
+}
 
 function ProjectLinks({ project }: { project: Project }) {
     return (
-        <div className="adw-project-actions">
+        <div className="project-links-v2">
             {project.links.map(link => (
                 <a
                     key={link.href}
                     href={link.href}
                     target={link.href.startsWith('http') ? '_blank' : undefined}
                     rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className={`adw-btn${link.primary ? ' adw-btn-suggested' : ''}`}
+                    className={`project-link-btn${link.primary ? ' primary' : ''}`}
                 >
-                    <i className={link.icon} aria-hidden="true" />
+                    {link.label.toLowerCase().includes('github') ? (
+                        <GithubLogo weight="bold" size={15} />
+                    ) : (
+                        <ArrowSquareOut weight="bold" size={15} />
+                    )}
                     {link.label}
                 </a>
             ))}
@@ -21,152 +69,132 @@ function ProjectLinks({ project }: { project: Project }) {
     );
 }
 
-function ProjectBrief({ project, compact = false }: { project: Project; compact?: boolean }) {
-    const items = [
-        { label: 'Problem', value: project.problem, icon: 'fas fa-circle-question' },
-        { label: 'Solution', value: project.solution, icon: 'fas fa-screwdriver-wrench' },
-        { label: 'Impact', value: project.impact, icon: 'fas fa-bullseye' },
-    ];
-
-    return (
-        <div
-            className={`adw-project-brief${compact ? ' adw-project-brief-compact' : ''}`}
-            aria-label={`${project.title} project brief`}
-        >
-            {items.map(item => (
-                <div key={item.label} className="adw-project-brief-item">
-                    <span className="adw-project-brief-label">
-                        <i className={item.icon} aria-hidden="true" />
-                        {item.label}
-                    </span>
-                    <p>{item.value}</p>
-                </div>
-            ))}
-        </div>
-    );
-}
-
 function FeaturedProject({ project }: { project: Project }) {
+    const reduced = useReducedMotion();
+
     return (
-        <article
-            className="adw-featured-project"
+        <motion.article
+            className="project-featured-v2"
             data-project={project.id}
             aria-labelledby={`featured-${project.id}-title`}
+            initial={reduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
         >
-            <div className="adw-featured-media">
+            <motion.div
+                className="project-featured-media"
+                initial={reduced ? false : { x: -30, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+            >
                 {project.media ? (
-                    <img src={project.media.src} alt={project.media.alt} loading="lazy" />
+                    <motion.img
+                        src={project.media.src}
+                        alt={project.media.alt}
+                        loading="lazy"
+                        whileHover={reduced ? undefined : { scale: 1.03 }}
+                        transition={{ duration: 0.3 }}
+                    />
                 ) : (
-                    <div className="adw-featured-media-fallback">
+                    <div className="project-featured-fallback">
                         <i className={project.icon} aria-hidden="true" />
                         <span>{project.platform}</span>
                     </div>
                 )}
-                <span className="adw-featured-pill">
-                    <i className="fas fa-star" aria-hidden="true" />
-                    Featured Project
+                <span className="project-featured-badge">
+                    <Star weight="fill" size={12} />
+                    Featured
                 </span>
-            </div>
-            <div className="adw-featured-content">
-                <header className="adw-featured-header">
+            </motion.div>
+
+            <motion.div
+                className="project-featured-info"
+                initial={reduced ? false : { x: 30, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+            >
+                <header>
                     <h3 id={`featured-${project.id}-title`}>{project.title}</h3>
-                    <p className="adw-featured-role">
+                    <p className="project-featured-role">
                         <span>{project.role}</span>
                         <span aria-hidden="true">·</span>
                         <span>{project.platform}</span>
                     </p>
                 </header>
 
-                <p className="adw-featured-summary">{project.summary}</p>
+                <p className="project-featured-summary">{project.summary}</p>
 
-                <ProjectBrief project={project} />
-
-                <div className="adw-impact-callout">
-                    <div className="adw-impact-icon">
-                        <i className="fas fa-code-branch" aria-hidden="true" />
-                    </div>
-                    <div className="adw-impact-text">
-                        <span className="adw-impact-label">Proof</span>
-                        <p>Concrete implementation details, not inflated claims.</p>
-                    </div>
-                </div>
-
-                <ul className="adw-proof-list">
+                <ul className="project-proof-list">
                     {project.proofPoints.map(point => (
                         <li key={point}>
-                            <i className="fas fa-check" aria-hidden="true" />
+                            <CheckCircle weight="fill" size={14} className="proof-check" />
                             <span>{point}</span>
                         </li>
                     ))}
                 </ul>
 
-                <div className="adw-tech-stack">
+                <div className="project-tech-row">
                     {project.techStack.map(tech => (
-                        <span key={tech} className="adw-tech-tag">
-                            {tech}
-                        </span>
+                        <TechChip key={tech} tech={tech} />
                     ))}
                 </div>
 
                 <ProjectLinks project={project} />
-            </div>
-        </article>
+            </motion.div>
+        </motion.article>
     );
 }
 
 function ProjectCard({ project }: { project: Project }) {
+    const reduced = useReducedMotion();
+
     return (
-        <article
-            className="adw-project-card"
+        <motion.article
+            className="project-card-v3"
             data-project={project.id}
             aria-labelledby={`card-${project.id}-title`}
+            whileHover={reduced ? undefined : { y: -3 }}
+            transition={{ duration: 0.2 }}
         >
-            <div className="adw-project-card-media">
+            <div className="project-card-v3-media">
                 {project.media ? (
                     <img src={project.media.src} alt={project.media.alt} loading="lazy" />
                 ) : (
-                    <div className="adw-project-card-media-fallback">
+                    <div className="project-card-v3-fallback">
                         <i className={project.icon} aria-hidden="true" />
                     </div>
                 )}
-                <span className="adw-project-card-platform">{project.platform}</span>
+                <span className="project-card-platform">{project.platform}</span>
                 {project.status === 'wip' && (
-                    <span className="adw-wip-badge">
-                        <i className="fas fa-hammer" aria-hidden="true" />
-                        Work in Progress
+                    <span className="project-wip-badge">
+                        <Hammer weight="bold" size={10} />
+                        WIP
                     </span>
                 )}
             </div>
-            <div className="adw-project-card-body">
+            <div className="project-card-v3-body">
                 <h3 id={`card-${project.id}-title`}>{project.title}</h3>
-                <p className="adw-project-card-role">{project.role}</p>
-                <p className="adw-project-card-summary">{project.summary}</p>
-
-                <ProjectBrief project={project} compact />
-
-                <div className="adw-tech-stack adw-tech-stack-compact">
+                <p className="project-card-v3-summary">{project.summary}</p>
+                <div className="project-tech-row project-tech-compact">
                     {project.techStack.slice(0, 4).map(tech => (
-                        <span key={tech} className="adw-tech-tag">
-                            {tech}
-                        </span>
+                        <TechChip key={tech} tech={tech} />
                     ))}
                     {project.techStack.length > 4 && (
-                        <span className="adw-tech-tag adw-tech-tag-more">
+                        <span className="project-tech-chip project-tech-more">
                             +{project.techStack.length - 4}
                         </span>
                     )}
                 </div>
-
                 <ProjectLinks project={project} />
             </div>
-        </article>
+        </motion.article>
     );
 }
 
 export function ProjectsApp() {
     const featured = PROJECTS.find(project => project.featured);
     const supporting = PROJECTS.filter(project => !project.featured);
-    const totalTech = new Set(PROJECTS.flatMap(p => p.techStack)).size;
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const projectId = sessionStorage.getItem('portfolioProjectFocus');
@@ -191,33 +219,17 @@ export function ProjectsApp() {
     }, []);
 
     return (
-        <div className="adw-page projects-page">
-            {/* Status header — Adwaita compact */}
-            <header className="adw-status-header">
-                <div className="adw-status-row">
-                    <div className="adw-status-icon adw-icon-blue">
-                        <i className="fas fa-folder-open" aria-hidden="true" />
-                    </div>
-                    <div className="adw-status-text">
-                        <h2>Projects</h2>
-                        <p>
-                            Problem, solution, stack, and impact for {PROJECTS.length} project
-                            {PROJECTS.length !== 1 ? 's' : ''} · {totalTech} technologies
-                        </p>
-                    </div>
-                </div>
-            </header>
-
+        <div className="projects-redesign">
             {featured && (
-                <section className="adw-section" aria-label="Featured project">
+                <section aria-label="Featured project">
                     <FeaturedProject project={featured} />
                 </section>
             )}
 
             {supporting.length > 0 && (
-                <section className="adw-section">
-                    <h3 className="adw-section-title">More Projects</h3>
-                    <div className="adw-project-grid">
+                <section className="projects-other-section">
+                    <h3 className="projects-section-label">More Projects</h3>
+                    <div className="projects-card-grid" ref={scrollRef}>
                         {supporting.map(project => (
                             <ProjectCard key={project.id} project={project} />
                         ))}

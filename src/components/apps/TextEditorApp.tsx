@@ -1,8 +1,17 @@
 import { useMemo, useState } from 'react';
 import { DEFAULT_FILE_SYSTEM } from '../../config/data';
 import { PROFILE } from '../../config/profile';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+    FolderOpen,
+    FloppyDisk,
+    ArrowCounterClockwise,
+    ArrowSquareOut,
+    DownloadSimple,
+} from '@phosphor-icons/react';
 
 export function TextEditorApp() {
+    const reduced = useReducedMotion();
     const initialContent = useMemo(() => {
         const file = DEFAULT_FILE_SYSTEM['/home/sawyehtet/resume.md'];
         return file?.type === 'file' ? file.content : '';
@@ -22,9 +31,10 @@ export function TextEditorApp() {
                     aria-label="Open resume PDF"
                     title="Open resume PDF"
                 >
-                    <i className="fas fa-folder-open" aria-hidden="true" />
+                    <FolderOpen weight="bold" size={15} />
                 </a>
                 <div className="text-editor-title">
+                    <span className={`text-editor-dot${isModified ? ' modified' : ' saved'}`} />
                     <strong>resume.md</strong>
                     <span>{isModified ? 'Unsaved Changes' : 'Saved'}</span>
                 </div>
@@ -34,7 +44,7 @@ export function TextEditorApp() {
                     onClick={() => setSavedContent(content)}
                     disabled={!isModified}
                 >
-                    <i className="fas fa-floppy-disk" aria-hidden="true" />
+                    <FloppyDisk weight="bold" size={15} />
                 </button>
                 <button
                     type="button"
@@ -42,54 +52,42 @@ export function TextEditorApp() {
                     onClick={() => setContent(savedContent)}
                     disabled={!isModified}
                 >
-                    <i className="fas fa-rotate-left" aria-hidden="true" />
+                    <ArrowCounterClockwise weight="bold" size={15} />
                 </button>
             </div>
-            <section className="resume-file-panel" aria-label="Resume file details">
-                <div className="resume-file-copy">
-                    <span className="resume-file-eyebrow">Resume</span>
+
+            <div className="resume-header-card">
+                <div className="resume-header-gradient" aria-hidden="true" />
+                <div className="resume-header-left">
                     <h3>{PROFILE.role}</h3>
-                    <p>
-                        The PDF is the source of truth. This markdown copy is a readable fallback
-                        for the portfolio desktop and terminal.
-                    </p>
+                    <span>{PROFILE.name}</span>
+                    <span className="resume-header-sub">{PROFILE.education}</span>
                 </div>
-                <div className="resume-file-actions">
-                    <a
-                        className="adw-btn adw-btn-suggested"
+                <div className="resume-header-right">
+                    <motion.a
+                        className="resume-header-btn primary"
                         href={PROFILE.resumePath}
                         target="_blank"
                         rel="noopener noreferrer"
+                        whileHover={reduced ? undefined : { scale: 1.02 }}
+                        whileTap={reduced ? undefined : { scale: 0.97 }}
                     >
-                        <i className="fas fa-arrow-up-right-from-square" aria-hidden="true" />
+                        <ArrowSquareOut weight="bold" size={14} />
                         Open PDF
-                    </a>
-                    <a className="adw-btn" href={PROFILE.resumePath} download>
-                        <i className="fas fa-download" aria-hidden="true" />
+                    </motion.a>
+                    <motion.a
+                        className="resume-header-btn"
+                        href={PROFILE.resumePath}
+                        download
+                        whileHover={reduced ? undefined : { scale: 1.02 }}
+                        whileTap={reduced ? undefined : { scale: 0.97 }}
+                    >
+                        <DownloadSimple weight="bold" size={14} />
                         Download
-                    </a>
+                    </motion.a>
                 </div>
-                <dl className="resume-file-meta">
-                    <div>
-                        <dt>Format</dt>
-                        <dd>PDF + markdown fallback</dd>
-                    </div>
-                    <div>
-                        <dt>Focus</dt>
-                        <dd>{PROFILE.primaryStack.join(', ')}</dd>
-                    </div>
-                    <div>
-                        <dt>Location</dt>
-                        <dd>{PROFILE.location}</dd>
-                    </div>
-                    <div>
-                        <dt>Email</dt>
-                        <dd>
-                            <a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a>
-                        </dd>
-                    </div>
-                </dl>
-            </section>
+            </div>
+
             <div className="text-editor-document">
                 <div className="text-editor-lines" aria-hidden="true">
                     {content.split('\n').map((_, index) => (

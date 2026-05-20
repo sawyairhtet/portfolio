@@ -1,22 +1,36 @@
-import { SOCIAL_LINKS } from '../../config/profile';
+import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+    ArrowLeft,
+    ArrowRight,
+    ArrowClockwise,
+    LockSimple,
+    ArrowSquareOut,
+    GithubLogo,
+    Users,
+    Star,
+    GitBranch,
+} from '@phosphor-icons/react';
 
 const githubLink = SOCIAL_LINKS.find(link => link.label === 'GitHub') ?? SOCIAL_LINKS[0];
 
 export function BrowserApp() {
+    const reduced = useReducedMotion();
+
     return (
         <div className="browser-app">
             <div className="browser-toolbar" aria-label="Firefox toolbar">
                 <button type="button" aria-label="Back" disabled>
-                    <i className="fas fa-arrow-left" aria-hidden="true" />
+                    <ArrowLeft weight="bold" size={15} />
                 </button>
                 <button type="button" aria-label="Forward" disabled>
-                    <i className="fas fa-arrow-right" aria-hidden="true" />
+                    <ArrowRight weight="bold" size={15} />
                 </button>
                 <button type="button" aria-label="Reload">
-                    <i className="fas fa-rotate-right" aria-hidden="true" />
+                    <ArrowClockwise weight="bold" size={15} />
                 </button>
-                <div className="browser-location" role="textbox" aria-label="Address">
-                    <i className="fas fa-lock" aria-hidden="true" />
+                <div className="browser-location-v2" role="textbox" aria-label="Address">
+                    <LockSimple weight="fill" size={13} className="browser-lock-icon" />
                     <span>{githubLink.href}</span>
                 </div>
                 <a
@@ -26,7 +40,7 @@ export function BrowserApp() {
                     rel="noopener noreferrer"
                     aria-label="Open GitHub in a new tab"
                 >
-                    <i className="fas fa-up-right-from-square" aria-hidden="true" />
+                    <ArrowSquareOut weight="bold" size={15} />
                 </a>
             </div>
             <div className="browser-frame-wrap">
@@ -37,13 +51,37 @@ export function BrowserApp() {
                     referrerPolicy="no-referrer"
                     sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
                 />
-                <div className="browser-frame-fallback">
-                    <i className="fab fa-github" aria-hidden="true" />
-                    <strong>{githubLink.handle}</strong>
-                    <span>GitHub may block embedding in some browsers.</span>
-                    <a href={githubLink.href} target="_blank" rel="noopener noreferrer">
-                        Open GitHub
-                    </a>
+                <div className="browser-fallback-v2">
+                    <div className="browser-github-card">
+                        <GithubLogo weight="fill" size={80} className="browser-gh-mark" />
+                        <strong className="browser-gh-username">{githubLink.handle}</strong>
+                        <p className="browser-gh-bio">{PROFILE.headline}</p>
+                        <div className="browser-gh-stats">
+                            <span className="browser-gh-stat">
+                                <GitBranch weight="bold" size={14} />
+                                <strong>12</strong> repos
+                            </span>
+                            <span className="browser-gh-stat">
+                                <Users weight="bold" size={14} />
+                                <strong>5</strong> followers
+                            </span>
+                            <span className="browser-gh-stat">
+                                <Star weight="bold" size={14} />
+                                <strong>8</strong> stars
+                            </span>
+                        </div>
+                        <motion.a
+                            href={githubLink.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="browser-gh-btn"
+                            whileHover={reduced ? undefined : { scale: 1.02 }}
+                            whileTap={reduced ? undefined : { scale: 0.97 }}
+                        >
+                            <GithubLogo weight="bold" size={16} />
+                            Open on GitHub
+                        </motion.a>
+                    </div>
                 </div>
             </div>
         </div>

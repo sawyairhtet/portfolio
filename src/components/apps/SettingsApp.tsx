@@ -4,8 +4,43 @@ import { useSound } from '../../context/SoundContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { WALLPAPERS, ACCENT_COLORS } from '../../config/data';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+    Palette,
+    SpeakerHigh,
+    AppWindow,
+    Info,
+    Moon,
+    SpeakerSimpleHigh,
+    BellSlash,
+    Columns,
+    ArrowsOutSimple,
+    Gauge,
+} from '@phosphor-icons/react';
 
 type SettingsPanel = 'appearance' | 'sound' | 'windows' | 'about';
+
+const NAV_ITEMS: { id: SettingsPanel; label: string; icon: React.ReactNode }[] = [
+    { id: 'appearance', label: 'Appearance', icon: <Palette weight="duotone" size={16} /> },
+    { id: 'sound', label: 'Sound', icon: <SpeakerHigh weight="duotone" size={16} /> },
+    { id: 'windows', label: 'Windows', icon: <AppWindow weight="duotone" size={16} /> },
+    { id: 'about', label: 'About', icon: <Info weight="duotone" size={16} /> },
+];
+
+function ToggleSwitch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
+    return (
+        <button
+            type="button"
+            role="switch"
+            aria-checked={checked}
+            aria-label={label}
+            className={`adw-toggle${checked ? ' on' : ''}`}
+            onClick={() => onChange(!checked)}
+        >
+            <span className="adw-toggle-thumb" />
+        </button>
+    );
+}
 
 export function SettingsApp() {
     const { isDark, toggle, accentColor, setAccentColor } = useTheme();
@@ -13,6 +48,7 @@ export function SettingsApp() {
     const { isDnd, setDnd } = useNotifications();
     const { preferences, updatePreferences } = usePreferences();
     const [activePanel, setActivePanel] = useState<SettingsPanel>('appearance');
+    const reduced = useReducedMotion();
 
     useEffect(() => {
         const handleSettingsPanelRequest = (event: Event) => {
@@ -38,37 +74,26 @@ export function SettingsApp() {
     return (
         <>
             <div className="settings-sidebar">
-                <button
-                    className={`settings-nav-item${activePanel === 'appearance' ? ' active' : ''}`}
-                    aria-pressed={activePanel === 'appearance'}
-                    onClick={() => setActivePanel('appearance')}
-                >
-                    <i className="fas fa-palette" aria-hidden="true" /> Appearance
-                </button>
-                <button
-                    className={`settings-nav-item${activePanel === 'sound' ? ' active' : ''}`}
-                    aria-pressed={activePanel === 'sound'}
-                    onClick={() => setActivePanel('sound')}
-                >
-                    <i className="fas fa-volume-up" aria-hidden="true" /> Sound
-                </button>
-                <button
-                    className={`settings-nav-item${activePanel === 'windows' ? ' active' : ''}`}
-                    aria-pressed={activePanel === 'windows'}
-                    onClick={() => setActivePanel('windows')}
-                >
-                    <i className="fas fa-window-restore" aria-hidden="true" /> Windows
-                </button>
-                <button
-                    className={`settings-nav-item${activePanel === 'about' ? ' active' : ''}`}
-                    aria-pressed={activePanel === 'about'}
-                    onClick={() => setActivePanel('about')}
-                >
-                    <i className="fas fa-info-circle" aria-hidden="true" /> About
-                </button>
+                <div className="settings-sidebar-header">
+                    <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true" className="settings-fedora-logo">
+                        <circle cx="24" cy="24" r="22" fill="var(--accent-bg-color)" opacity="0.2" />
+                        <text x="24" y="30" textAnchor="middle" fontSize="22" fontWeight="800" fill="var(--accent-bg-color)">F</text>
+                    </svg>
+                    <span className="settings-sidebar-label">Settings</span>
+                </div>
+                {NAV_ITEMS.map(item => (
+                    <button
+                        key={item.id}
+                        className={`settings-nav-item${activePanel === item.id ? ' active' : ''}`}
+                        aria-pressed={activePanel === item.id}
+                        onClick={() => setActivePanel(item.id)}
+                    >
+                        {item.icon}
+                        {item.label}
+                    </button>
+                ))}
             </div>
             <div className="settings-content">
-                {/* Appearance Panel */}
                 {activePanel === 'appearance' && (
                     <div className="settings-panel active">
                         <h2>Appearance</h2>
@@ -100,13 +125,15 @@ export function SettingsApp() {
                             <h3>Accent Color</h3>
                             <div className="accent-color-options">
                                 {ACCENT_COLORS.map(ac => (
-                                    <button
+                                    <motion.button
                                         key={ac.color}
                                         className={`accent-swatch${accentColor === ac.color ? ' active' : ''}`}
                                         style={{ background: ac.color }}
                                         aria-label={ac.label}
                                         title={ac.label}
                                         onClick={() => setAccentColor(ac.color)}
+                                        whileHover={reduced ? undefined : { scale: 1.2 }}
+                                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                     />
                                 ))}
                             </div>
@@ -114,43 +141,32 @@ export function SettingsApp() {
                         <div className="settings-card">
                             <h3>Style</h3>
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-moon" aria-hidden="true" /> Dark Mode
+                                <span className="settings-row-label">
+                                    <Moon weight="duotone" size={16} />
+                                    <span>Dark Mode</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
-                                    checked={isDark}
-                                    aria-label="Dark mode"
-                                    onChange={toggle}
-                                />
+                                <ToggleSwitch checked={isDark} onChange={toggle} label="Dark mode" />
                             </div>
                         </div>
                     </div>
                 )}
 
-                {/* Sound Panel */}
                 {activePanel === 'sound' && (
                     <div className="settings-panel active">
                         <h2>Sound</h2>
                         <div className="settings-card">
                             <h3>System Sounds</h3>
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-volume-up" aria-hidden="true" /> Sound
-                                    Effects
+                                <span className="settings-row-label">
+                                    <SpeakerSimpleHigh weight="duotone" size={16} />
+                                    <span>Sound Effects</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
-                                    checked={!isMuted}
-                                    aria-label="Sound effects"
-                                    onChange={toggleMute}
-                                />
+                                <ToggleSwitch checked={!isMuted} onChange={toggleMute} label="Sound effects" />
                             </div>
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-volume-high" aria-hidden="true" /> Volume
+                                <span className="settings-row-label">
+                                    <SpeakerHigh weight="duotone" size={16} />
+                                    <span>Volume</span>
                                 </span>
                                 <input
                                     type="range"
@@ -163,122 +179,100 @@ export function SettingsApp() {
                                 />
                             </div>
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-bell-slash" aria-hidden="true" /> Do Not
-                                    Disturb
+                                <span className="settings-row-label">
+                                    <BellSlash weight="duotone" size={16} />
+                                    <span>Do Not Disturb</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
-                                    checked={isDnd}
-                                    aria-label="Do Not Disturb"
-                                    onChange={event => setDnd(event.target.checked)}
-                                />
+                                <ToggleSwitch checked={isDnd} onChange={v => setDnd(v)} label="Do Not Disturb" />
                             </div>
                         </div>
                     </div>
                 )}
 
-                {/* Windows Panel */}
                 {activePanel === 'windows' && (
                     <div className="settings-panel active">
                         <h2>Windows</h2>
                         <div className="settings-card">
                             <h3>Titlebar</h3>
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-window-minimize" aria-hidden="true" /> Show
-                                    minimize and maximize
+                                <span className="settings-row-label">
+                                    <AppWindow weight="duotone" size={16} />
+                                    <span>Show minimize and maximize</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
+                                <ToggleSwitch
                                     checked={preferences.showWindowButtons}
-                                    aria-label="Show minimize and maximize buttons"
-                                    onChange={event =>
-                                        updatePreferences({
-                                            showWindowButtons: event.target.checked,
-                                        })
-                                    }
+                                    onChange={v => updatePreferences({ showWindowButtons: v })}
+                                    label="Show minimize and maximize buttons"
                                 />
                             </div>
+                            <p className="settings-row-desc">Display window control buttons in the titlebar.</p>
                         </div>
                         <div className="settings-card">
                             <h3>Window Management</h3>
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-table-columns" aria-hidden="true" /> Edge
-                                    snap
+                                <span className="settings-row-label">
+                                    <Columns weight="duotone" size={16} />
+                                    <span>Edge snap</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
+                                <ToggleSwitch
                                     checked={preferences.enableSnap}
-                                    aria-label="Edge snap"
-                                    onChange={event =>
-                                        updatePreferences({ enableSnap: event.target.checked })
-                                    }
+                                    onChange={v => updatePreferences({ enableSnap: v })}
+                                    label="Edge snap"
                                 />
                             </div>
+                            <p className="settings-row-desc">Snap windows to screen edges by dragging.</p>
+
                             <div className="settings-row">
-                                <span>
-                                    <i
-                                        className="fas fa-up-right-and-down-left-from-center"
-                                        aria-hidden="true"
-                                    />{' '}
-                                    Resize handles
+                                <span className="settings-row-label">
+                                    <ArrowsOutSimple weight="duotone" size={16} />
+                                    <span>Resize handles</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
+                                <ToggleSwitch
                                     checked={preferences.enableResize}
-                                    aria-label="Resize handles"
-                                    onChange={event =>
-                                        updatePreferences({ enableResize: event.target.checked })
-                                    }
+                                    onChange={v => updatePreferences({ enableResize: v })}
+                                    label="Resize handles"
                                 />
                             </div>
+                            <p className="settings-row-desc">Allow resizing windows from their edges.</p>
+
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-moon" aria-hidden="true" /> Dim other
-                                    windows during focus
+                                <span className="settings-row-label">
+                                    <Moon weight="duotone" size={16} />
+                                    <span>Dim other windows during focus</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
+                                <ToggleSwitch
                                     checked={preferences.focusDim}
-                                    aria-label="Dim other windows during focus"
-                                    onChange={event =>
-                                        updatePreferences({ focusDim: event.target.checked })
-                                    }
+                                    onChange={v => updatePreferences({ focusDim: v })}
+                                    label="Dim other windows during focus"
                                 />
                             </div>
+                            <p className="settings-row-desc">Reduce distraction by dimming inactive windows.</p>
+
                             <div className="settings-row">
-                                <span>
-                                    <i className="fas fa-gauge-high" aria-hidden="true" /> Fast boot
-                                    after first visit
+                                <span className="settings-row-label">
+                                    <Gauge weight="duotone" size={16} />
+                                    <span>Fast boot after first visit</span>
                                 </span>
-                                <input
-                                    type="checkbox"
-                                    className="toggle-switch"
+                                <ToggleSwitch
                                     checked={preferences.fastBoot}
-                                    aria-label="Fast boot after first visit"
-                                    onChange={event =>
-                                        updatePreferences({ fastBoot: event.target.checked })
-                                    }
+                                    onChange={v => updatePreferences({ fastBoot: v })}
+                                    label="Fast boot after first visit"
                                 />
                             </div>
+                            <p className="settings-row-desc">Skip the boot animation on subsequent visits.</p>
                         </div>
                     </div>
                 )}
 
-                {/* About Panel */}
                 {activePanel === 'about' && (
                     <div className="settings-panel active">
                         <h2>About</h2>
                         <div className="settings-card about-system-card">
                             <div className="about-system-logo">
-                                <i className="fas fa-desktop" aria-hidden="true" />
+                                <svg width="64" height="64" viewBox="0 0 48 48" aria-hidden="true">
+                                    <circle cx="24" cy="24" r="22" fill="var(--accent-bg-color)" opacity="0.15" />
+                                    <text x="24" y="31" textAnchor="middle" fontSize="24" fontWeight="800" fill="var(--accent-bg-color)">F</text>
+                                </svg>
                             </div>
                             <h3>Saw Ye Htet Portfolio Workstation</h3>
                             <div className="about-system-info">

@@ -1,6 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNotifications } from '../../context/NotificationContext';
 import { usePreferences } from '../../context/PreferencesContext';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+    Play,
+    Pause,
+    FastForward,
+    ArrowCounterClockwise,
+} from '@phosphor-icons/react';
 
 type TimerState = 'idle' | 'work' | 'break' | 'paused';
 type ActiveTimerState = 'work' | 'break';
@@ -24,6 +31,7 @@ function formatMinutes(seconds: number): string {
 export function FocusModeApp() {
     const { showToast, addNotification } = useNotifications();
     const { preferences } = usePreferences();
+    const reduced = useReducedMotion();
     const [presetId, setPresetId] = useState(PRESETS[0].id);
     const preset = PRESETS.find(item => item.id === presetId) ?? PRESETS[0];
     const [state, setState] = useState<TimerState>('idle');
@@ -31,6 +39,7 @@ export function FocusModeApp() {
     const [timeLeft, setTimeLeft] = useState(preset.work);
     const [sessions, setSessions] = useState(0);
     const [totalFocusSeconds, setTotalFocusSeconds] = useState(0);
+    const [sessionHistory, setSessionHistory] = useState<number[]>([]);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const clearTimer = useCallback(() => {
@@ -64,6 +73,7 @@ export function FocusModeApp() {
                 if (state === 'work') {
                     setSessions(count => count + 1);
                     setTotalFocusSeconds(total => total + preset.work);
+                    setSessionHistory(h => [...h.slice(-4), preset.work]);
                     setState('break');
                     setPausedFrom('break');
                     showToast('Focus session complete. Break time.', 'fas fa-mug-hot');
@@ -127,6 +137,7 @@ export function FocusModeApp() {
         setTimeLeft(preset.work);
         setSessions(0);
         setTotalFocusSeconds(0);
+        setSessionHistory([]);
     }, [clearTimer, preset.work]);
 
     const changePreset = useCallback(
@@ -158,6 +169,8 @@ export function FocusModeApp() {
                 : 'Ready';
     const rhythmLabel = `${formatMinutes(preset.work)} work / ${formatMinutes(preset.break)} break`;
 
+    const maxSession = Math.max(...sessionHistory, 1);
+
     return (
         <div className={`focus-mode-container focus-state-${state}`}>
             <section className="focus-timer-section" aria-label="Focus timer">
@@ -165,13 +178,14 @@ export function FocusModeApp() {
                 <div className="focus-timer-ring">
                     <svg viewBox="0 0 200 200" className="focus-progress-svg" aria-hidden="true">
                         <circle cx="100" cy="100" r="90" className="focus-progress-bg" />
-                        <circle
+                        <motion.circle
                             cx="100"
                             cy="100"
                             r="90"
                             className="focus-progress-fill"
                             strokeDasharray={circumference}
-                            strokeDashoffset={circumference * (1 - progress)}
+                            animate={{ strokeDashoffset: circumference * (1 - progress) }}
+                            transition={reduced ? { duration: 0 } : { type: 'spring', stiffness: 60, damping: 15 }}
                         />
                     </svg>
                     <div className="focus-timer-display" aria-live="polite">
@@ -212,11 +226,11 @@ export function FocusModeApp() {
                 <div className="focus-controls">
                     {state === 'work' || state === 'break' ? (
                         <button onClick={pause} className="focus-btn focus-btn-secondary">
-                            <i className="fas fa-pause" aria-hidden="true" /> Pause
+                            <Pause weight="fill" size={16} /> Pause
                         </button>
                     ) : (
                         <button onClick={startOrResume} className="focus-btn focus-btn-primary">
-                            <i className="fas fa-play" aria-hidden="true" />{' '}
+                            <Play weight="fill" size={16} />{' '}
                             {state === 'paused' ? 'Resume' : 'Start'}
                         </button>
                     )}
@@ -225,10 +239,10 @@ export function FocusModeApp() {
                         className="focus-btn focus-btn-ghost"
                         disabled={state === 'idle'}
                     >
-                        <i className="fas fa-forward" aria-hidden="true" /> Skip
+                        <FastForward weight="bold" size={16} /> Skip
                     </button>
                     <button onClick={reset} className="focus-btn focus-btn-ghost">
-                        <i className="fas fa-redo" aria-hidden="true" /> Reset
+                        <ArrowCounterClockwise weight="bold" size={16} /> Reset
                     </button>
                 </div>
 
@@ -248,6 +262,19 @@ export function FocusModeApp() {
                         <span className="focus-stat-label">Dim</span>
                     </div>
                 </div>
+
+                {sessionHistory.length > 0 && (
+                    <div className="focus-sparkline" aria-label="Session history">
+                        {sessionHistory.map((s, i) => (
+                            <div
+                                key={i}
+                                className="focus-sparkline-bar"
+                                style={{ height: `${(s / maxSession) * 100}%` }}
+                                title={formatMinutes(s)}
+                            />
+                        ))}
+                    </div>
+                )}
             </section>
         </div>
     );

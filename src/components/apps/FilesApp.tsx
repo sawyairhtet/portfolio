@@ -1,13 +1,37 @@
 import { useMemo, useState } from 'react';
 import { PROJECTS } from '../../config/data';
 import { useWindowManager } from '../../context/WindowManagerContext';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import {
+    FolderSimple,
+    FileText,
+    FileCode,
+    FileCss,
+    Clock,
+    House,
+    Folder,
+    MagnifyingGlass,
+    List,
+    GridFour,
+} from '@phosphor-icons/react';
 
 type FilesView = 'recent' | 'home' | 'projects';
 type LayoutMode = 'list' | 'grid';
 type FilterPill = 'all' | 'folders' | 'documents' | 'dotfiles';
 
+function FileIcon({ type, name, size }: { type: string; name: string; size?: number }) {
+    const s = size || 20;
+    if (type === 'folder') return <FolderSimple weight="duotone" size={s} className="file-icon-folder" />;
+    if (name.endsWith('.md')) return <FileText weight="duotone" size={s} className="file-icon-md" />;
+    if (name.endsWith('.css')) return <FileCss weight="duotone" size={s} className="file-icon-css" />;
+    if (name.endsWith('.case-study')) return <FileText weight="duotone" size={s} className="file-icon-casestudy" />;
+    if (name.startsWith('.')) return <FileCode weight="duotone" size={s} className="file-icon-dotfile" />;
+    return <FileText weight="duotone" size={s} className="file-icon-default" />;
+}
+
 export function FilesApp() {
     const { openWindow } = useWindowManager();
+    const reduced = useReducedMotion();
     const [view, setView] = useState<FilesView>('recent');
     const [layout, setLayout] = useState<LayoutMode>('list');
     const [selectedId, setSelectedId] = useState(PROJECTS[0]?.id ?? '');
@@ -40,7 +64,6 @@ export function FilesApp() {
     const filteredFiles = useMemo(() => {
         let result = files;
 
-        // Apply pill filter
         if (activeFilter === 'folders') {
             result = result.filter(f => f.type === 'folder');
         } else if (activeFilter === 'documents') {
@@ -49,7 +72,6 @@ export function FilesApp() {
             result = result.filter(f => f.dotfile);
         }
 
-        // Apply search
         if (searchQuery.trim()) {
             const q = searchQuery.trim().toLowerCase();
             result = result.filter(f => f.name.toLowerCase().includes(q));
@@ -75,6 +97,8 @@ export function FilesApp() {
         }
     };
 
+    const selectedFile = filteredFiles.find(f => f.id === selectedId);
+
     const FILTER_PILLS: { id: FilterPill; label: string }[] = [
         { id: 'all', label: 'All' },
         { id: 'folders', label: 'Folders' },
@@ -82,27 +106,44 @@ export function FilesApp() {
         { id: 'dotfiles', label: 'Dotfiles' },
     ];
 
+    const SIDEBAR_SECTIONS = [
+        {
+            label: 'Places',
+            items: [
+                { id: 'recent' as FilesView, label: 'Recent', icon: <Clock weight="duotone" size={16} /> },
+                { id: 'home' as FilesView, label: 'Home', icon: <House weight="duotone" size={16} /> },
+            ],
+        },
+        {
+            label: 'Bookmarks',
+            items: [
+                { id: 'projects' as FilesView, label: 'Projects', icon: <Folder weight="duotone" size={16} /> },
+            ],
+        },
+    ];
+
     return (
         <div className="files-app">
             <aside className="files-sidebar" aria-label="Places">
-                {[
-                    ['recent', 'Recent', 'fas fa-clock-rotate-left'],
-                    ['home', 'Home', 'fas fa-house'],
-                    ['projects', 'Projects', 'fas fa-folder'],
-                ].map(([id, label, icon]) => (
-                    <button
-                        key={id}
-                        type="button"
-                        className={`files-sidebar-row${view === id ? ' active' : ''}`}
-                        onClick={() => {
-                            setView(id as FilesView);
-                            setSearchQuery('');
-                            setActiveFilter('all');
-                        }}
-                    >
-                        <i className={icon} aria-hidden="true" />
-                        <span>{label}</span>
-                    </button>
+                {SIDEBAR_SECTIONS.map(section => (
+                    <div key={section.label} className="files-sidebar-section">
+                        <span className="files-sidebar-heading">{section.label}</span>
+                        {section.items.map(item => (
+                            <button
+                                key={item.id}
+                                type="button"
+                                className={`files-sidebar-row${view === item.id ? ' active' : ''}`}
+                                onClick={() => {
+                                    setView(item.id);
+                                    setSearchQuery('');
+                                    setActiveFilter('all');
+                                }}
+                            >
+                                {item.icon}
+                                <span>{item.label}</span>
+                            </button>
+                        ))}
+                    </div>
                 ))}
             </aside>
 
@@ -111,10 +152,10 @@ export function FilesApp() {
                     <div className="files-pathbar" aria-label="Current folder">
                         <button type="button">Home</button>
                         <span>/</span>
-                        <button type="button">{view === 'recent' ? 'Recent' : 'Projects'}</button>
+                        <button type="button">{view === 'recent' ? 'Recent' : view === 'home' ? 'Home' : 'Projects'}</button>
                     </div>
                     <div className="files-search-float">
-                        <i className="fas fa-search" aria-hidden="true" />
+                        <MagnifyingGlass weight="bold" size={13} />
                         <input
                             type="search"
                             placeholder="Search files…"
@@ -130,7 +171,7 @@ export function FilesApp() {
                             aria-label="List View"
                             onClick={() => setLayout('list')}
                         >
-                            <i className="fas fa-list" aria-hidden="true" />
+                            <List weight="bold" size={16} />
                         </button>
                         <button
                             type="button"
@@ -138,12 +179,11 @@ export function FilesApp() {
                             aria-label="Grid View"
                             onClick={() => setLayout('grid')}
                         >
-                            <i className="fas fa-grip" aria-hidden="true" />
+                            <GridFour weight="bold" size={16} />
                         </button>
                     </div>
                 </div>
 
-                {/* Pill filters — Nautilus style */}
                 {searchQuery.trim() && (
                     <div className="files-pill-filters" aria-label="Filter results">
                         {FILTER_PILLS.map(pill => (
@@ -187,13 +227,10 @@ export function FilesApp() {
                             }}
                         >
                             <span className="files-name">
-                                <i
-                                    className={
-                                        file.type === 'folder'
-                                            ? 'fas fa-folder'
-                                            : 'fas fa-file-lines'
-                                    }
-                                    aria-hidden="true"
+                                <FileIcon
+                                    type={file.type}
+                                    name={file.name}
+                                    size={layout === 'grid' ? 48 : 20}
                                 />
                                 <span>{file.name}</span>
                             </span>
@@ -202,6 +239,22 @@ export function FilesApp() {
                         </button>
                     ))}
                 </div>
+
+                <AnimatePresence>
+                    {selectedFile && (
+                        <motion.div
+                            className="files-status-bar"
+                            initial={reduced ? false : { y: 30, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: 30, opacity: 0 }}
+                            transition={{ duration: 0.15 }}
+                        >
+                            <span>1 item selected</span>
+                            <span>{selectedFile.size}</span>
+                            <span>{selectedFile.modified}</span>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </section>
         </div>
     );
