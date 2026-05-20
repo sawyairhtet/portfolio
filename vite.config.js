@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const reactRefreshPreambleHash = "'sha256-Z2/iFzh9VMlVkEOar1f/oSHWwQk3ve1qk/C2WdsC4Xk='";
 
 /**
  * Dev-only CSP meta tag — mirrors the production Netlify headers so CSP
@@ -17,15 +18,14 @@ const devCspPlugin = () => ({
         if (!ctx.server) return html; // production builds use Netlify headers
         const csp = [
             "default-src 'self'",
-            "script-src 'self' https://plausible.io",
+            `script-src 'self' ${reactRefreshPreambleHash} https://plausible.io`,
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' https://fonts.gstatic.com",
             "img-src 'self' data: https:",
-            "connect-src 'self' https://formspree.io https://plausible.io ws://localhost:* http://localhost:*",
+            "connect-src 'self' https://formspree.io https://plausible.io ws://localhost:* http://localhost:* ws://127.0.0.1:* http://127.0.0.1:*",
             "worker-src 'self'",
             "manifest-src 'self'",
             "object-src 'none'",
-            "frame-ancestors 'none'",
             "base-uri 'self'",
             "form-action 'self' https://formspree.io",
         ].join('; ');

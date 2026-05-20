@@ -191,26 +191,27 @@
     --button_radius: 9px;
     --card_radius: 12px;
     --menu_radius: 9px;
-    --popover_radius: 15px;
-    --dialog_radius: 15px;
+    --popover_radius: 24px;
+    --dialog_radius: 24px;
     --window-radius: 12px;
 
     /* Motion */
     --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --ease-in-out-quad: cubic-bezier(0.42, 0, 0.58, 1);
+    --mutter-ease: cubic-bezier(0.25, 1, 0.5, 1);
     --backdrop_transition: 200ms ease-out;
     --focus_transition:
-        outline-color 200ms var(--ease-out-quad), outline-width 200ms var(--ease-out-quad),
-        outline-offset 200ms var(--ease-out-quad);
+        outline-color 250ms var(--mutter-ease), outline-width 250ms var(--mutter-ease),
+        outline-offset 250ms var(--mutter-ease);
     --button_transition:
-        background 200ms var(--ease-out-quad), box-shadow 200ms var(--ease-out-quad);
+        background 250ms var(--mutter-ease), box-shadow 250ms var(--mutter-ease);
     --needs_attention: 150ms ease-in;
     --ADW_EASE: cubic-bezier(0.25, 0.1, 0.25, 1);
     --ADW_EASE_IN: cubic-bezier(0.42, 0, 1, 1);
     --ADW_EASE_OUT: cubic-bezier(0, 0, 0.58, 1);
     --ADW_EASE_IN_OUT: cubic-bezier(0.42, 0, 0.58, 1);
 
-    /* Elevation */
+    /* Elevation — Mutter-authentic multi-layered shadows */
     --headerbar-shade-color: rgb(0 0 6 / 12%);
     --headerbar-darker-shade-color: rgb(0 0 6 / 12%);
     --sidebar-shade-color: rgb(0 0 6 / 7%);
@@ -218,11 +219,18 @@
     --card-shade-color: rgb(0 0 6 / 7%);
     --popover-shade-color: rgb(0 0 6 / 7%);
     --shade-color: rgb(0 0 6 / 7%);
-    --window-shadow-ambient: 0 0 14px 5px rgb(0 0 0 / 15%);
-    --window-shadow-key: 0 0 5px 2px rgb(0 0 0 / 10%);
-    --window-shadow: var(--window-shadow-ambient), var(--window-shadow-key);
-    --window-backdrop-shadow: 0 0 14px 5px transparent, 0 0 10px 5px rgb(0 0 0 / 8%);
+    --window-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.15),
+        0 12px 30px -4px rgba(0, 0, 0, 0.5),
+        0 4px 12px 0 rgba(0, 0, 0, 0.4);
+    --window-backdrop-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.15),
+        0 4px 12px 0 rgba(0, 0, 0, 0.3);
     --window-outline-color: rgb(0 0 0 / 5%);
+
+    /* Fedora 43 brand */
+    --fedora-brand-primary: #3c6eb4;
+    --fedora-brand-dark: #0b284f;
 }
 
 [data-theme='dark'],
@@ -248,38 +256,38 @@
     --error-fg-color: #ffffff;
     --error-color: #ff938c;
 
-    /* Color: surfaces and chrome */
-    --window-bg-color: #222226;
+    /* Color: surfaces and chrome — Fedora 43 spec values */
+    --window-bg-color: #242424;
     --window-fg-color: #ffffff;
-    --view-bg-color: #1d1d20;
+    --view-bg-color: #1e1e1e;
     --view-fg-color: #ffffff;
-    --headerbar-bg-color: #2e2e32;
+    --headerbar-bg-color: #303030;
     --headerbar-fg-color: #ffffff;
     --headerbar-border-color: #ffffff;
-    --headerbar-backdrop-color: #222226;
-    --sidebar-bg-color: #2e2e32;
+    --headerbar-backdrop-color: #242424;
+    --sidebar-bg-color: #303030;
     --sidebar-fg-color: #ffffff;
-    --sidebar-backdrop-color: #28282c;
+    --sidebar-backdrop-color: #282828;
     --sidebar-border-color: rgb(0 0 6 / 36%);
-    --secondary-sidebar-bg-color: #28282c;
+    --secondary-sidebar-bg-color: #282828;
     --secondary-sidebar-fg-color: #ffffff;
-    --secondary-sidebar-backdrop-color: #252529;
+    --secondary-sidebar-backdrop-color: #252525;
     --secondary-sidebar-border-color: rgb(0 0 6 / 36%);
-    --card-bg-color: rgb(255 255 255 / 8%);
+    --card-bg-color: #2d2d2d;
     --card-fg-color: #ffffff;
-    --overview-bg-color: #28282c;
+    --overview-bg-color: #282828;
     --overview-fg-color: #ffffff;
-    --thumbnail-bg-color: #39393d;
+    --thumbnail-bg-color: #393939;
     --thumbnail-fg-color: #ffffff;
     --active-toggle-bg-color: rgb(255 255 255 / 20%);
     --active-toggle-fg-color: #ffffff;
-    --dialog-bg-color: #36363a;
+    --dialog-bg-color: #363636;
     --dialog-fg-color: #ffffff;
-    --popover-bg-color: #36363a;
+    --popover-bg-color: #363636;
     --popover-fg-color: #ffffff;
     --scrollbar-outline-color: rgb(0 0 6 / 50%);
 
-    /* Elevation */
+    /* Elevation — Mutter-authentic multi-layered shadows (dark) */
     --headerbar-shade-color: rgb(0 0 6 / 36%);
     --headerbar-darker-shade-color: rgb(0 0 6 / 90%);
     --sidebar-shade-color: rgb(0 0 6 / 25%);
@@ -287,10 +295,13 @@
     --card-shade-color: rgb(0 0 6 / 36%);
     --popover-shade-color: rgb(0 0 6 / 25%);
     --shade-color: rgb(0 0 6 / 25%);
-    --window-shadow-ambient: 0 0 14px 5px rgb(0 0 0 / 15%);
-    --window-shadow-key: 0 0 5px 2px rgb(0 0 0 / 10%);
-    --window-shadow: var(--window-shadow-ambient), var(--window-shadow-key);
-    --window-backdrop-shadow: 0 0 14px 5px transparent, 0 0 10px 5px rgb(0 0 0 / 8%);
+    --window-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.15),
+        0 12px 30px -4px rgba(0, 0, 0, 0.5),
+        0 4px 12px 0 rgba(0, 0, 0, 0.4);
+    --window-backdrop-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.15),
+        0 4px 12px 0 rgba(0, 0, 0, 0.3);
     --window-outline-color: rgb(0 0 0 / 5%);
 }
 

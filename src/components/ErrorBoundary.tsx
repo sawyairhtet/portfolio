@@ -35,7 +35,7 @@ export class ErrorBoundary extends Component<Props, State> {
                         justifyContent: 'center',
                         background: '#1e1e1e',
                         color: '#fff',
-                        fontFamily: "'Cantarell', system-ui, sans-serif",
+                        fontFamily: "'Adwaita Sans', 'Cantarell', sans-serif",
                     }}
                 >
                     <div
@@ -109,7 +109,7 @@ export class ErrorBoundary extends Component<Props, State> {
                     gap: 12,
                     padding: 24,
                     color: 'var(--window-fg-color, #fff)',
-                    fontFamily: "'Cantarell', system-ui, sans-serif",
+                    fontFamily: "'Adwaita Sans', 'Cantarell', sans-serif",
                 }}
             >
                 <div

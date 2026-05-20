@@ -23,7 +23,7 @@
     background: color-mix(in srgb, var(--dialog-bg-color) 96%, transparent);
     border: 1px solid var(--glass-border);
     border-radius: var(--popover_radius);
-    box-shadow: var(--shadow-elevation-3);
+    box-shadow: var(--shadow-popover);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -33,10 +33,6 @@
         opacity var(--duration-normal) var(--ease-out-quad),
         transform var(--duration-normal) var(--ease-out-quad),
         visibility var(--duration-normal) var(--ease-out-quad);
-}
-
-[data-theme='dark'] .notification-center {
-    box-shadow: var(--shadow-popover);
 }
 
 .notification-center.visible {

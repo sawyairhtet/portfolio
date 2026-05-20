@@ -489,11 +489,12 @@ export function DesktopShell() {
                 }}
             />
 
-            {/* Activities Overlay */}
+            {/* Activities Overlay (with dock on desktop) */}
             <ActivitiesOverlay
                 isOpen={activitiesOpen}
                 onClose={() => setActivitiesOpen(false)}
                 workspaceIndex={workspaceIndex}
+                renderDock
             />
 
             {altTabOpen && (
@@ -626,13 +627,13 @@ export function DesktopShell() {
                 </Window>
             )}
 
-            {/* Dock — always visible on desktop, mobile: always visible */}
+            {/* Dock — always visible (Dash-to-Dock style) */}
             <Dock onShowApps={() => setActivitiesOpen(true)} />
 
             {/* Dock onboarding tooltip for first-time visitors */}
             {showDockTip && !hasVisibleWindows && (
                 <div className="dock-onboarding-tip" aria-live="polite">
-                    <span>Try clicking the dock icons to explore</span>
+                    <span>Click "Activities" or press Super to find apps</span>
                     <button
                         type="button"
                         className="dock-tip-dismiss"

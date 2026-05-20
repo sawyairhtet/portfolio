@@ -258,7 +258,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
 
 .about-system-logo {
     font-size: 64px;
-    color: var(--accent);
+    color: var(--fedora-brand-primary);
     margin-bottom: var(--spacing-md);
 }
 

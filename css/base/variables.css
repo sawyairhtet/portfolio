@@ -67,9 +67,13 @@
     --shell-panel-bg: color-mix(in srgb, var(--view-bg-color) 88%, transparent);
     --shell-panel-border: color-mix(in srgb, var(--view-fg-color) 10%, transparent);
 
-    /* ── Shadows — Simple Adwaita shadows ── */
+    /* ── Shadows — Mutter-authentic window shadows ── */
     --shadow-window: var(--window-shadow);
-    --shadow-popover: 0 2px 8px var(--popover-shade-color);
+    --shadow-window-backdrop: var(--window-backdrop-shadow);
+    --shadow-popover:
+        0 0 0 1px rgba(0, 0, 0, 0.1),
+        0 8px 24px -4px rgba(0, 0, 0, 0.35),
+        0 2px 8px 0 rgba(0, 0, 0, 0.2);
     --shadow-sm: 0 1px 4px var(--shade-color);
     --shadow-md: 0 2px 8px var(--shade-color);
     --shadow-lg: 0 6px 24px var(--shade-color);
@@ -186,18 +190,18 @@
     /* ── Motion ── */
     --duration-instant: 80ms;
     --duration-fast: 160ms;
-    --duration-normal: 200ms;
+    --duration-normal: 250ms;
     --duration-slow: 320ms;
-    --duration-window: 260ms;
+    --duration-window: 250ms;
     --duration-reduced-motion: 1ms;
     --motion-scale-in: 0.96;
     --motion-pop-scale: 1.015;
     --motion-lift: -2px;
 
     /* ── Transitions ── */
-    --transition-fast: 200ms var(--ease-out-quad);
-    --transition-base: 200ms var(--ease-in-out-quad);
-    --transition-slow: 400ms var(--ease-out-quad);
+    --transition-fast: 200ms var(--mutter-ease);
+    --transition-base: 250ms var(--mutter-ease);
+    --transition-slow: 400ms var(--mutter-ease);
 
     /* ── Gradients ── */
     --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
@@ -304,9 +308,13 @@
     --shell-panel-border: color-mix(in srgb, var(--window-fg-color) 10%, transparent);
     --surface-overview: color-mix(in srgb, var(--overview-bg-color) 90%, transparent);
 
-    /* ── Shadows — Softer for light mode ── */
+    /* ── Shadows — Mutter-authentic (light variant) ── */
     --shadow-window: var(--window-shadow);
-    --shadow-popover: 0 2px 8px var(--popover-shade-color);
+    --shadow-window-backdrop: var(--window-backdrop-shadow);
+    --shadow-popover:
+        0 0 0 1px rgba(0, 0, 0, 0.08),
+        0 8px 24px -4px rgba(0, 0, 0, 0.2),
+        0 2px 8px 0 rgba(0, 0, 0, 0.12);
     --shadow-sm: 0 1px 4px var(--shade-color);
     --shadow-md: 0 2px 8px var(--shade-color);
     --shadow-lg: 0 6px 24px var(--shade-color);

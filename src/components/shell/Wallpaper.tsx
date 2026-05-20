@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDevice } from '../../context/DeviceContext';
 import type { WallpaperOption } from '../../types';
 import { WALLPAPERS } from '../../config/data';
@@ -10,21 +10,18 @@ export function Wallpaper() {
     const { preferences } = usePreferences();
     const { isDark } = useTheme();
     const wallpaperRef = useRef<HTMLDivElement>(null);
-    const [timeOfDay, setTimeOfDay] = useState<'day' | 'night'>('day');
     const selectedWallpaper: WallpaperOption =
         WALLPAPERS.find(w => w.id === preferences.wallpaperId) ?? WALLPAPERS[0];
     const customWallpaper = selectedWallpaper.id === 'default' ? null : selectedWallpaper;
 
-    // Time-of-day detection
+    // Sync wallpaper dark/light with theme toggle
     useEffect(() => {
-        const hour = new Date().getHours();
-        setTimeOfDay(hour >= 6 && hour < 18 ? 'day' : 'night');
-    }, []);
-
-    // Set body data-time attribute
-    useEffect(() => {
-        document.body.setAttribute('data-time', timeOfDay);
-    }, [timeOfDay]);
+        if (isDark) {
+            document.body.setAttribute('data-wallpaper-mode', 'dark');
+        } else {
+            document.body.setAttribute('data-wallpaper-mode', 'light');
+        }
+    }, [isDark]);
 
     // Parallax effect (desktop only)
     useEffect(() => {

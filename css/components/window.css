@@ -6,10 +6,9 @@
     position: absolute;
     background: var(--window-bg-color);
     border-radius: var(--window-radius);
-    box-shadow: var(--window-shadow);
+    box-shadow: var(--window-backdrop-shadow);
     border: 0;
-    outline: 1px solid var(--window-outline-color);
-    outline-offset: -1px;
+    outline: none;
     display: none;
     flex-direction: column;
     width: 680px;
@@ -22,8 +21,7 @@
     transform-origin: var(--window-open-origin, 50% 100%);
     transition:
         box-shadow var(--backdrop_transition),
-        transform var(--duration-window) var(--ease-out-quad),
-        outline-color var(--backdrop_transition);
+        transform var(--duration-window) var(--ease-out-quad);
     /* Default position */
     left: 20px;
     top: 15%;
@@ -45,7 +43,7 @@
     display: none;
 }
 
-/* Focused window — Adwaita CSD shadow */
+/* Focused window — Mutter-authentic CSD shadow */
 .window.is-focused,
 .window:focus-within {
     box-shadow: var(--window-shadow);
@@ -54,6 +52,8 @@
 .window:not(.is-focused):not(:focus-within) {
     box-shadow: var(--window-backdrop-shadow);
 }
+
+/* Focused window headerbar gets full opacity; unfocused dims */
 
 /* ============================================
    WINDOW RESIZE HANDLES
@@ -239,12 +239,7 @@
     padding: 6px 7px 7px;
     background: var(--headerbar-bg-color);
     color: var(--headerbar-fg-color);
-    box-shadow:
-        inset 0 -1px var(--headerbar-shade-color),
-        inset 1px 0
-            color-mix(in srgb, var(--headerbar-border-color) var(--border-opacity), transparent),
-        inset -1px 0
-            color-mix(in srgb, var(--headerbar-border-color) var(--border-opacity), transparent);
+    border-bottom: 1px solid var(--headerbar-shade-color);
     cursor: grab;
     user-select: none;
     position: relative;
@@ -366,7 +361,7 @@
     position: absolute;
     inset: 4px;
     border-radius: 100%;
-    background-color: color-mix(in srgb, currentColor 10%, transparent);
+    background-color: transparent;
     transition: var(--button_transition);
 }
 
@@ -389,7 +384,7 @@
 
 @media (hover: hover) {
     .window-control:hover::before {
-        background-color: color-mix(in srgb, currentColor 15%, transparent);
+        background-color: rgba(255, 255, 255, 0.08);
     }
 
     .window-control:hover::after {
@@ -405,8 +400,16 @@
     }
 }
 
+[data-theme='light'] .window-control:hover::before {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
 .window-control:active::before {
-    background-color: color-mix(in srgb, currentColor 30%, transparent);
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme='light'] .window-control:active::before {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .close-btn-mobile {
@@ -416,6 +419,73 @@
 .close-btn-mobile:focus-visible {
     outline: 2px solid var(--accent-bg-color);
     outline-offset: 2px;
+}
+
+/* ============================================
+   HEADERBAR FLAT BUTTONS — Libadwaita pattern
+   ============================================ */
+
+.window-header .headerbar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--control-min-medium);
+    min-height: var(--control-min-medium);
+    padding: 0 var(--adw-spacing-md);
+    border: none;
+    border-radius: var(--button_radius);
+    background: transparent;
+    color: var(--headerbar-fg-color);
+    font-family: var(--document-font-family);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--button_transition);
+}
+
+@media (hover: hover) {
+    .window-header .headerbar-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    [data-theme='light'] .window-header .headerbar-btn:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
+}
+
+.window-header .headerbar-btn:active {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme='light'] .window-header .headerbar-btn:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   LINKED BUTTON GROUP — Libadwaita .linked
+   ============================================ */
+
+.linked {
+    display: inline-flex;
+}
+
+.linked > * {
+    border-radius: 0;
+    margin-left: -1px;
+    border: 1px solid var(--border-color);
+}
+
+.linked > *:first-child {
+    border-radius: var(--button_radius) 0 0 var(--button_radius);
+    margin-left: 0;
+}
+
+.linked > *:last-child {
+    border-radius: 0 var(--button_radius) var(--button_radius) 0;
+}
+
+.linked > *:only-child {
+    border-radius: var(--button_radius);
 }
 
 /* ============================================

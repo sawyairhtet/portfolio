@@ -422,6 +422,11 @@ export function TerminalApp() {
                     addLines([
                         `${PROFILE.name}@portfolio`,
                         '--------------------------------',
+                        `OS: Fedora Linux 43 (Workstation Edition)`,
+                        `Kernel: Linux 6.19`,
+                        `Windowing: Wayland`,
+                        `Shell: GNOME 49`,
+                        `Package Manager: DNF5`,
                         `Role: ${PROFILE.role}`,
                         `Target: ${PROFILE.roleTarget}`,
                         `Education: ${PROFILE.education}`,

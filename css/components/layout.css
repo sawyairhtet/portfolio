@@ -31,8 +31,9 @@
     transition: transform var(--duration-slow) var(--ease-out-quad);
 }
 
-/* Night wallpaper (6pm–5:59am) */
-body[data-time='night'] .wallpaper {
+/* Night/dark wallpaper — swaps with dark mode toggle */
+[data-theme='dark'] .wallpaper,
+body[data-wallpaper-mode='dark'] .wallpaper {
     background: url('/images/wallpapers/fedora-43/f43-night.webp') center/cover no-repeat;
 }
 

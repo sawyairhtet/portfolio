@@ -11,7 +11,7 @@
     background: color-mix(in srgb, var(--dialog-bg-color) 96%, transparent);
     border: 1px solid var(--glass-border);
     border-radius: var(--popover_radius);
-    box-shadow: var(--shadow-elevation-3);
+    box-shadow: var(--shadow-popover);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
@@ -25,14 +25,6 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
-
-[data-theme='dark'] .quick-settings-panel {
-    box-shadow: var(--shadow-popover);
-}
-
-[data-theme='light'] .quick-settings-panel {
-    box-shadow: var(--shadow-popover);
 }
 
 .quick-settings-panel.visible {
@@ -64,7 +56,7 @@
 /* Tiles row */
 .qs-tiles {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
 }
 
@@ -176,7 +168,7 @@
 }
 
 .qs-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+    transform: scale(1.35);
 }
 
 .qs-slider::-moz-range-thumb {

@@ -19,12 +19,12 @@
     opacity: 0;
 }
 
-/* Logo with glow */
+/* Logo with glow — Fedora 43 official brand blue */
 .plymouth-logo {
     font-size: 80px;
-    color: var(--accent);
+    color: var(--fedora-brand-primary);
     transition: opacity 200ms var(--ease-out-quad);
-    filter: drop-shadow(0 0 24px var(--accent-glow));
+    filter: drop-shadow(0 0 24px color-mix(in srgb, var(--fedora-brand-primary) 35%, transparent));
 }
 
 /* Three-dot spinner */

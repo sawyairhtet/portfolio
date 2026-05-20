@@ -14,10 +14,12 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
     const { isDark, toggle } = useTheme();
     const { isDnd, setDnd } = useNotifications();
     const { openWindow } = useWindowManager();
-    const { isMuted, toggleMute, volume, setVolume } = useSound();
+    const { volume, setVolume } = useSound();
     const { preferences, updatePreferences } = usePreferences();
     const [wifiOn, setWifiOn] = useState(true);
     const [btOn, setBtOn] = useState(false);
+    const [powerProfile, setPowerProfile] = useState<'balanced' | 'performance' | 'power-saver'>('balanced');
+    const [nightLight, setNightLight] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
 
     const handleSettings = useCallback(() => {
@@ -113,30 +115,45 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                 </button>
                 <button
                     type="button"
+                    className={`qs-tile${powerProfile !== 'balanced' ? ' active' : ''}`}
+                    aria-pressed={powerProfile !== 'balanced'}
+                    aria-label="Power Profile"
+                    onClick={() => {
+                        const profiles: Array<'balanced' | 'performance' | 'power-saver'> = ['balanced', 'performance', 'power-saver'];
+                        const idx = profiles.indexOf(powerProfile);
+                        setPowerProfile(profiles[(idx + 1) % profiles.length]);
+                    }}
+                >
+                    <div className="qs-tile-icon">
+                        <i className="fas fa-bolt" aria-hidden="true" />
+                    </div>
+                    <div className="qs-tile-label">
+                        {powerProfile === 'balanced' ? 'Balanced' : powerProfile === 'performance' ? 'Performance' : 'Power Saver'}
+                    </div>
+                </button>
+                <button
+                    type="button"
                     className={`qs-tile${isDark ? ' active' : ''}`}
                     aria-pressed={isDark}
-                    aria-label="Dark Mode"
+                    aria-label="Dark Style"
                     onClick={toggle}
                 >
                     <div className="qs-tile-icon">
                         <i className="fas fa-moon" aria-hidden="true" />
                     </div>
-                    <div className="qs-tile-label">Dark Mode</div>
+                    <div className="qs-tile-label">Dark Style</div>
                 </button>
                 <button
                     type="button"
-                    className={`qs-tile${isMuted ? ' active' : ''}`}
-                    aria-pressed={isMuted}
-                    aria-label="Mute"
-                    onClick={toggleMute}
+                    className={`qs-tile${nightLight ? ' active' : ''}`}
+                    aria-pressed={nightLight}
+                    aria-label="Night Light"
+                    onClick={() => setNightLight(p => !p)}
                 >
                     <div className="qs-tile-icon">
-                        <i
-                            className={isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up'}
-                            aria-hidden="true"
-                        />
+                        <i className="fas fa-lightbulb" aria-hidden="true" />
                     </div>
-                    <div className="qs-tile-label">{isMuted ? 'Muted' : 'Sound'}</div>
+                    <div className="qs-tile-label">Night Light</div>
                 </button>
                 <button
                     type="button"
@@ -160,6 +177,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                         className="qs-slider"
                         min={20}
                         max={100}
+                        step={5}
                         value={preferences.brightness}
                         onChange={e => updatePreferences({ brightness: Number(e.target.value) })}
                         aria-label="Brightness"
@@ -172,6 +190,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                         className="qs-slider"
                         min={0}
                         max={100}
+                        step={5}
                         value={volume}
                         onChange={e => setVolume(Number(e.target.value))}
                         aria-label="Volume"

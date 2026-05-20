@@ -104,12 +104,12 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     },
     {
         id: 'text-editor',
-        label: 'Resume',
-        icon: 'fas fa-pen-to-square',
-        dockTooltip: 'Resume',
+        label: 'Papers',
+        icon: 'fas fa-file-pdf',
+        dockTooltip: 'Papers',
         gradient: 'linear-gradient(135deg, var(--blue-1) 0%, var(--accent-blue) 100%)',
-        description: 'Resume PDF actions, file metadata, and a markdown fallback.',
-        aliases: ['resume', 'cv', 'text editor', 'editor', 'gedit', 'nano', 'resume.md'],
+        description: 'Resume document viewer with PDF actions and markdown fallback.',
+        aliases: ['resume', 'cv', 'papers', 'text editor', 'editor', 'gedit', 'nano', 'resume.md'],
         desktopDock: false,
         mobileDock: false,
     },
@@ -273,9 +273,9 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 // ============================================
 
 export const BOOT_LOG_MESSAGES: string[] = [
-    '[    0.000000] Linux version 6.11.4-301.fc43.x86_64 (mockbuild@fedora)',
-    '[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.11.4-301.fc43.x86_64 root=/dev/sda1',
-    '[    0.183421] ACPI: Core revision 20230628',
+    '[    0.000000] Linux version 6.19.0-301.fc43.x86_64 (mockbuild@fedora)',
+    '[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.19.0-301.fc43.x86_64 root=/dev/sda1',
+    '[    0.183421] ACPI: Core revision 20240927',
     '[    0.541209] PCI: Using configuration type 1 for base access',
     '[    0.891234] systemd[1]: Fedora Linux 43 (Workstation Edition)',
     '[    1.021445] systemd[1]: Detected virtualization none.',
@@ -289,7 +289,7 @@ export const BOOT_LOG_MESSAGES: string[] = [
     '[  OK  ] Reached target graphical.target - Graphical Interface',
     '',
     '         Fedora Linux 43 (Workstation Edition)',
-    '         Kernel 6.11.4-301.fc43.x86_64 on Wayland',
+    '         Kernel 6.19.0-301.fc43.x86_64 on Wayland',
     '',
     '  sawyehtet@fedora  Java-focused software developer. This portfolio runs in your browser.',
     '',
@@ -373,7 +373,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/etc/os-release': {
         type: 'file',
         content:
-            'NAME="Fedora Linux"\nVERSION="43 (Workstation Edition)"\nID=fedora\nPRETTY_NAME="Fedora Linux 43 (Workstation Edition)"',
+            'NAME="Fedora Linux"\nVERSION="43 (Workstation Edition)"\nID=fedora\nPRETTY_NAME="Fedora Linux 43 (Workstation Edition)"\nKERNEL="Linux 6.19"\nWINDOWING="Wayland"\nSHELL="GNOME 49"\nPACKAGE_MANAGER="DNF5"',
     },
     '/var': { type: 'dir', children: ['log'] },
     '/var/log': { type: 'dir', children: ['visitor.log'] },
