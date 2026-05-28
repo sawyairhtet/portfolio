@@ -25,20 +25,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sawyehtet.com/app/resume</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://sawyehtet.com/app/contact</loc>
-    <lastmod>2026-05-12</lastmod>
+    <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sawyehtet.com/app/links</loc>
-    <lastmod>2026-05-12</lastmod>
+    <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://sawyehtet.com/app/terminal</loc>
-    <lastmod>2026-05-12</lastmod>
+    <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

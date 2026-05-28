@@ -8,6 +8,7 @@ const VALID_APPS: AppId[] = [
     'about',
     'browser',
     'files',
+    'resume',
     'skills',
     'projects',
     'contact',
@@ -18,45 +19,50 @@ const VALID_APPS: AppId[] = [
     'focus-mode',
 ];
 
-const DEFAULT_TITLE = 'Saw Ye Htet - Java-focused Software Developer';
+const DEFAULT_TITLE = 'Saw Ye Htet - IT Support & Operations Specialist';
 const DEFAULT_DESCRIPTION =
-    'Saw Ye Htet is a Java-focused software developer building Spring Boot, SQL, and React + TypeScript projects. Explore projects, skills, resume, and contact details.';
+    'Saw Ye Htet is an IT support specialist targeting application support, production support, and technical analyst roles in Singapore. Explore projects, skills, resume, and contact details.';
 const SITE_ORIGIN = 'https://sawyehtet.com';
 
 /** Per-route SEO metadata for deep links. */
 const ROUTE_META: Partial<Record<AppId, { title: string; description: string }>> = {
     about: {
-        title: 'About - Saw Ye Htet | Java-focused Software Developer',
+        title: 'About - Saw Ye Htet | IT Support & Operations Specialist',
         description:
-            'Saw Ye Htet - Java-focused software developer and Singapore Polytechnic IT graduate (2026). Recruiter summary, education, skills, and availability.',
+            'Saw Ye Htet - IT support & operations specialist and Singapore Polytechnic IT graduate (2026). Targeting application support, production support, and technical analyst roles.',
     },
     projects: {
-        title: 'Projects - Saw Ye Htet | Java, Spring Boot, React',
+        title: 'Projects - Saw Ye Htet | OpsTrack, Portfolio Desktop',
         description:
-            'Featured projects by Saw Ye Htet: a Fedora-inspired React + TypeScript portfolio desktop and OpsTrack, a Spring Boot and PostgreSQL API project.',
+            'Featured projects by Saw Ye Htet: OpsTrack operations tracking API (Spring Boot) and a Fedora-inspired React + TypeScript portfolio desktop.',
     },
     skills: {
-        title: 'Skills — Saw Ye Htet | Java, Spring Boot, React, SQL',
+        title: 'Skills - Saw Ye Htet | Support, QA, SQL, Java',
         description:
-            'Technical skills: Java + OOP, Spring Boot, SQL, React + TypeScript, Git, and Linux. Practical context and project usage for each.',
+            'Technical skills: incident triage, log analysis, SQL, API testing, Java, React + TypeScript, Git, and Linux.',
     },
     contact: {
-        title: 'Contact - Saw Ye Htet | Java-focused Developer',
+        title: 'Contact - Saw Ye Htet | IT Support Specialist',
         description:
-            'Get in touch with Saw Ye Htet - Java-focused software developer based in Singapore. Email, resume download, and contact form.',
+            'Get in touch with Saw Ye Htet - IT support specialist based in Singapore. Email, resume download, and contact form.',
+    },
+    resume: {
+        title: 'Resume - Saw Ye Htet | IT Support & Operations Specialist',
+        description:
+            'View or download Saw Ye Htet\'s resume PDF. IT support & operations specialist targeting application support and production support roles.',
     },
     terminal: {
-        title: 'Terminal — Saw Ye Htet | Interactive Portfolio Shell',
+        title: 'Terminal - Saw Ye Htet | Interactive Portfolio Shell',
         description:
             'Explore Saw Ye Htet\'s portfolio through an interactive terminal with filesystem navigation, app commands, and easter eggs.',
     },
     'text-editor': {
-        title: 'Resume - Saw Ye Htet | Java-focused Software Developer',
+        title: 'Resume Markdown - Saw Ye Htet | IT Support Specialist',
         description:
-            'Open or download Saw Ye Htet\'s resume PDF, with a readable markdown fallback for the portfolio desktop.',
+            'Open or download Saw Ye Htet\'s resume, with a readable markdown fallback for the portfolio desktop.',
     },
     links: {
-        title: 'Links — Saw Ye Htet | GitHub, LinkedIn, Social',
+        title: 'Links - Saw Ye Htet | GitHub, LinkedIn, Social',
         description:
             'Social profiles and links for Saw Ye Htet — GitHub, LinkedIn, and X (Twitter).',
     },

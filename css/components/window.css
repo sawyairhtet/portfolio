@@ -591,3 +591,7 @@
         opacity: 0;
     }
 }
+
+body.activities-open .window {
+    display: none !important;
+}

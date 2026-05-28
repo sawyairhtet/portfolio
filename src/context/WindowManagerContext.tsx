@@ -31,6 +31,7 @@ const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
     about: { top: '8%', left: 'calc(50% - 360px)' },
     browser: { top: '6%', left: 'calc(50% - 430px)' },
     files: { top: '7%', left: 'calc(50% - 390px)' },
+    resume: { top: '8%', left: 'calc(50% - 350px)' },
     skills: { top: '10%', left: 'calc(50% - 325px)' },
     projects: { top: '8%', left: 'calc(50% - 390px)' },
     contact: { top: '12%', left: 'calc(50% - 275px)' },
@@ -45,6 +46,7 @@ const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
     about: { width: '720px', height: '600px' },
     browser: { width: '860px', height: '620px' },
     files: { width: '780px', height: '560px' },
+    resume: { width: '700px', height: '600px' },
     skills: { width: '650px', height: '550px' },
     projects: { width: '780px', height: '580px' },
     contact: { width: '550px', height: '560px' },
@@ -55,7 +57,29 @@ const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
     'focus-mode': { width: '860px', height: '560px' },
 };
 
-const MAXIMIZED_Z_FLOOR = 1050;
+function normalizeZIndices(windowsMap: Map<AppId, WindowInfo>, activeAppId?: AppId): Map<AppId, WindowInfo> {
+    const next = new Map(windowsMap);
+    const openWindows = Array.from(next.values())
+        .filter(w => w.isOpen)
+        .sort((a, b) => a.zIndex - b.zIndex);
+
+    if (activeAppId) {
+        const activeIdx = openWindows.findIndex(w => w.appId === activeAppId);
+        if (activeIdx !== -1) {
+            const [activeWin] = openWindows.splice(activeIdx, 1);
+            openWindows.push(activeWin);
+        }
+    }
+
+    openWindows.forEach((win, index) => {
+        next.set(win.appId, {
+            ...win,
+            zIndex: 100 + index,
+        });
+    });
+
+    return next;
+}
 
 function createWindowInfo(appId: AppId, zIndex: number, launchOrigin?: LaunchOrigin): WindowInfo {
     return {
@@ -89,24 +113,22 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
 
     const openWindow = useCallback((appId: AppId, launchOrigin?: LaunchOrigin) => {
         setManagerState(prev => {
-            const nextZ = prev.currentZIndex + 1;
             const next = new Map(prev.windows);
             const existing = next.get(appId);
 
             if (existing) {
-                // Already open: bring to front and unminimize.
                 next.set(appId, {
                     ...existing,
                     isOpen: true,
                     isMinimized: false,
-                    zIndex: nextZ,
                     launchOrigin,
                 });
             } else {
-                next.set(appId, createWindowInfo(appId, nextZ, launchOrigin));
+                next.set(appId, createWindowInfo(appId, 9999, launchOrigin));
             }
 
-            return { windows: next, currentZIndex: nextZ };
+            const normalized = normalizeZIndices(next, appId);
+            return { windows: normalized, currentZIndex: 100 + normalized.size };
         });
         setFocusedApp(appId);
     }, []);
@@ -116,7 +138,8 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
             setManagerState(prev => {
                 const next = new Map(prev.windows);
                 next.delete(appId);
-                return { ...prev, windows: next };
+                const normalized = normalizeZIndices(next);
+                return { windows: normalized, currentZIndex: 100 + normalized.size };
             });
             setFocusedApp(current => {
                 if (current !== appId) return current;
@@ -136,7 +159,8 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                 if (win) {
                     next.set(appId, { ...win, isMinimized: true });
                 }
-                return { ...prev, windows: next };
+                const normalized = normalizeZIndices(next);
+                return { windows: normalized, currentZIndex: 100 + normalized.size };
             });
             setFocusedApp(current => {
                 if (current !== appId) return current;
@@ -160,18 +184,15 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
             }
 
             const isMaximizing = !win.isMaximized;
-            const nextZ = isMaximizing
-                ? Math.max(prev.currentZIndex + 1, MAXIMIZED_Z_FLOOR)
-                : prev.currentZIndex;
 
             next.set(appId, {
                 ...win,
                 isMaximized: isMaximizing,
                 snapState: 'none',
-                zIndex: isMaximizing ? nextZ : win.zIndex,
             });
 
-            return { windows: next, currentZIndex: nextZ };
+            const normalized = normalizeZIndices(next, appId);
+            return { windows: normalized, currentZIndex: 100 + normalized.size };
         });
         setFocusedApp(appId);
     }, []);
@@ -184,9 +205,9 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                 return prev;
             }
 
-            const nextZ = prev.currentZIndex + 1;
-            next.set(appId, { ...win, zIndex: nextZ, isMinimized: false });
-            return { windows: next, currentZIndex: nextZ };
+            next.set(appId, { ...win, isMinimized: false });
+            const normalized = normalizeZIndices(next, appId);
+            return { windows: normalized, currentZIndex: 100 + normalized.size };
         });
         setFocusedApp(appId);
     }, []);

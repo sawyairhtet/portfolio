@@ -3,7 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { type ReactNode } from 'react';
 import { describe, expect, it, beforeEach, vi } from 'vitest';
 import { ContactApp } from '../components/apps/ContactApp';
+import { ResumeApp } from '../components/apps/ResumeApp';
 import { BootScreen } from '../components/shell/BootScreen';
+import { PROFILE } from '../config/profile';
 import { DeviceProvider } from '../context/DeviceContext';
 import { ThemeProvider } from '../context/ThemeContext';
 import { PreferencesProvider } from '../context/PreferencesContext';
@@ -39,9 +41,13 @@ describe('ContactApp form validation', () => {
             </Providers>
         );
 
-        expect(screen.getByRole('link', { name: /email/i })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /copy email/i })).toBeInTheDocument();
-        expect(screen.getByRole('link', { name: /resume/i })).toBeInTheDocument();
+        // Verify the email link
+        expect(screen.getByRole('link', { name: PROFILE.email })).toBeInTheDocument();
+        // Verify the copy button
+        expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
+        // Verify social links
+        expect(screen.getByRole('link', { name: 'GitHub' })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'LinkedIn' })).toBeInTheDocument();
     });
 
     it('shows validation errors when submitting empty form', async () => {
@@ -151,5 +157,49 @@ describe('BootScreen skip behavior', () => {
         );
 
         expect(screen.getByText(/press any key or click to skip/i)).toBeInTheDocument();
+    });
+});
+
+describe('ResumeApp rendering', () => {
+    beforeEach(() => {
+        localStorage.clear();
+    });
+
+    it('renders toolbar with filename and download actions on desktop', () => {
+        Object.defineProperty(window, 'innerWidth', {
+            writable: true,
+            configurable: true,
+            value: 1440,
+        });
+
+        render(
+            <Providers>
+                <ResumeApp />
+            </Providers>
+        );
+
+        expect(screen.getByText(/SawYeHtet_ApplicationSupport_Resume\.pdf/i)).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /open resume in new tab/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /download resume pdf/i })).toBeInTheDocument();
+        expect(document.querySelector('.resume-pdf-embed')).toBeInTheDocument();
+    });
+
+    it('renders mobile fallback when viewport is mobile/tablet', () => {
+        Object.defineProperty(window, 'innerWidth', {
+            writable: true,
+            configurable: true,
+            value: 390,
+        });
+
+        render(
+            <Providers>
+                <ResumeApp />
+            </Providers>
+        );
+
+        expect(screen.getByRole('heading', { name: /resume pdf/i })).toBeInTheDocument();
+        expect(screen.getByText(/pdf preview is not available on mobile/i)).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /open in browser/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /download pdf/i })).toBeInTheDocument();
     });
 });

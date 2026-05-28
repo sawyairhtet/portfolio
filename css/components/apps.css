@@ -1525,6 +1525,184 @@
 }
 
 /* ============================================
+   RESUME APP — PDF Viewer
+   ============================================ */
+
+.resume-app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: calc(var(--spacing-lg) * -1);
+}
+
+.resume-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--headerbar-bg-color);
+    border-bottom: 1px solid var(--headerbar-shade-color);
+    min-height: 44px;
+}
+
+.resume-toolbar-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 0;
+}
+
+.resume-toolbar-info > svg {
+    color: var(--destructive-bg-color);
+    flex-shrink: 0;
+}
+
+.resume-toolbar-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.resume-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 200ms var(--ease-in-out-quad), filter 200ms var(--ease-in-out-quad);
+}
+
+.resume-action-btn:hover {
+    background: var(--surface-3);
+}
+
+.resume-action-primary {
+    background: var(--accent-bg-color);
+    border-color: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+}
+
+.resume-action-primary:hover {
+    background: var(--accent-bg-color);
+    filter: brightness(1.08);
+}
+
+.resume-pdf-embed {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: none;
+}
+
+.resume-embed-fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    height: 100%;
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.resume-embed-fallback a {
+    color: var(--accent-bg-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.resume-embed-fallback a:hover {
+    text-decoration: underline;
+}
+
+.resume-mobile-fallback {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+.resume-mobile-icon {
+    color: var(--destructive-bg-color);
+    opacity: 0.7;
+}
+
+.resume-mobile-fallback h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.resume-mobile-fallback > p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.resume-mobile-hint {
+    font-size: 13px !important;
+    color: var(--text-disabled) !important;
+}
+
+.resume-mobile-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--spacing-sm);
+}
+
+.resume-mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 200ms var(--ease-in-out-quad);
+}
+
+.resume-mobile-btn:hover {
+    background: var(--surface-3);
+}
+
+.resume-mobile-btn-primary {
+    background: var(--accent-bg-color);
+    border-color: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+}
+
+.resume-mobile-btn-primary:hover {
+    background: var(--accent-bg-color);
+    filter: brightness(1.08);
+}
+
+/* ============================================
    BROWSER APP
    ============================================ */
 

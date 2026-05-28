@@ -27,7 +27,7 @@ interface TerminalLine {
 const recruiterPathLines = [
     { text: '10-second recruiter path:', className: 'terminal-heading' },
     `  1. Who: ${PROFILE.name} - ${PROFILE.role}`,
-    '  2. Builds: Java, Spring Boot, SQL, REST APIs, and React + TypeScript UI',
+    '  2. Strengths: Incident triage, log analysis, SQL, API testing, Java backend',
     '  3. Best proof: run projects',
     '  4. Stack context: run skills',
     '  5. Resume/contact: run resume or contact',
@@ -345,12 +345,12 @@ export function TerminalApp() {
 
                 case 'resume':
                 case 'cv':
-                    window.open(PROFILE.resumePath, '_blank', 'noopener,noreferrer');
+                    openWindow('resume');
                     addLines([
                         { text: 'Resume:', className: 'terminal-heading' },
                         `  PDF: ${PROFILE.resumePath}`,
                         '  Fallback: run nano resume.md',
-                        { text: 'Opened resume PDF.', className: 'terminal-ok' },
+                        { text: 'Opened Resume.', className: 'terminal-ok' },
                     ]);
                     break;
 
@@ -430,8 +430,8 @@ export function TerminalApp() {
                         `Role: ${PROFILE.role}`,
                         `Target: ${PROFILE.roleTarget}`,
                         `Education: ${PROFILE.education}`,
-                        `Backend path: Java, Spring Boot, SQL, REST APIs`,
-                        `Frontend proof: React 19 + TypeScript desktop portfolio`,
+                        `Primary: Application Support, Production Support, Technical Analyst`,
+                        `Secondary: QA / API Testing · Java Backend (carry-over)`,
                         `Location: ${PROFILE.location}`,
                         `Host: ${navigator.platform}`,
                         `CPU: ${navigator.hardwareConcurrency || 'Browser'} threads`,

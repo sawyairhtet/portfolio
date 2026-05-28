@@ -1,10 +1,9 @@
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
+import { PROFILE } from '../../config/profile';
 import type { AppId } from '../../types';
 import {
     motion,
     useReducedMotion,
-    AnimatePresence,
 } from 'framer-motion';
 import {
     EnvelopeSimple,
@@ -17,7 +16,6 @@ import {
     Wrench,
     PaperPlaneTilt,
     ArrowRight,
-    User,
     Briefcase,
     MapTrifold,
     Lightning,
@@ -44,7 +42,7 @@ const QUICK_FACTS = [
     { icon: <MapPin weight="bold" size={14} />, text: PROFILE.location },
     { icon: <GraduationCap weight="bold" size={14} />, text: 'SP 2026' },
     { icon: <Circle weight="fill" size={8} className="about-available-dot" />, text: 'Available' },
-    { icon: <Coffee weight="bold" size={14} />, text: 'Java & Spring' },
+    { icon: <Coffee weight="bold" size={14} />, text: 'SQL & Linux' },
 ];
 
 const STAT_GRID = [
@@ -153,8 +151,9 @@ export function AboutApp() {
                     <motion.div className="about-bio-card" variants={fadeSlide}>
                         <span className="about-card-label">Who I am</span>
                         <p>
-                            {PROFILE.summary} I am aiming for junior Java/backend roles where I
-                            can keep strengthening fundamentals through practical work.
+                            {PROFILE.summary} I am targeting application support and production
+                            support roles where systematic troubleshooting and technical
+                            curiosity are valued.
                         </p>
                     </motion.div>
 

@@ -26,6 +26,7 @@ export type AppId =
     | 'about'
     | 'browser'
     | 'files'
+    | 'resume'
     | 'skills'
     | 'projects'
     | 'contact'

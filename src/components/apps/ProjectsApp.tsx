@@ -5,11 +5,9 @@ import { motion, useReducedMotion } from 'framer-motion';
 import {
     Star,
     CheckCircle,
-    GitBranch,
     ArrowSquareOut,
     GithubLogo,
     Hammer,
-    Wrench,
 } from '@phosphor-icons/react';
 
 const TECH_BRAND_COLORS: Record<string, string> = {

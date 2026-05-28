@@ -8,25 +8,20 @@ import {
     type KeyboardEvent as ReactKeyboardEvent,
 } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { useDevice } from '../../context/DeviceContext';
 import { APP_DEFINITIONS, PROJECTS } from '../../config/data';
-import { Dock } from '../shell/Dock';
 import type { AppId, Project } from '../../types';
 
 interface ActivitiesOverlayProps {
     isOpen: boolean;
     onClose: () => void;
     workspaceIndex?: number;
-    renderDock?: boolean;
 }
 
-export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0, renderDock = false }: ActivitiesOverlayProps) {
+export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: ActivitiesOverlayProps) {
     const { openWindow, windows } = useWindowManager();
-    const { device } = useDevice();
     const [searchQuery, setSearchQuery] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
-    const shouldRenderDock = renderDock && device === 'desktop';
 
     // Focus search on open, restore previous focus on close
     useEffect(() => {
@@ -330,12 +325,6 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0, renderD
                 </aside>
             </div>
 
-            {/* GNOME dash — only visible inside Activities (clean desktop rule) */}
-            {shouldRenderDock && (
-                <div className="activities-dock-container">
-                    <Dock onShowApps={() => {}} />
-                </div>
-            )}
 
             <div className="activities-results" aria-label="Search results and applications">
                 <section className="activities-section" aria-label="Applications">

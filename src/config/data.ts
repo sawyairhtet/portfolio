@@ -20,7 +20,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         icon: 'fas fa-user-circle',
         dockTooltip: 'About Me',
         gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--accent-blue) 100%)',
-        description: 'Recruiter summary, graduation, Java focus, and personality.',
+        description: 'Recruiter summary, graduation, support focus, and personality.',
         aliases: ['bio', 'profile', 'summary', 'saw'],
         desktopDock: true,
         mobileDock: true,
@@ -114,6 +114,17 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         mobileDock: false,
     },
     {
+        id: 'resume',
+        label: 'Resume',
+        icon: 'fas fa-file-pdf',
+        dockTooltip: 'Resume',
+        gradient: 'linear-gradient(135deg, var(--red-2) 0%, var(--accent-red) 100%)',
+        description: 'View and download resume PDF.',
+        aliases: ['cv', 'pdf', 'curriculum'],
+        desktopDock: true,
+        mobileDock: true,
+    },
+    {
         id: 'settings',
         label: 'Settings',
         icon: 'fas fa-cog',
@@ -159,7 +170,7 @@ export const PROJECTS: Project[] = [
         solution:
             'Built a fast desktop-style shell where About, Projects, Resume, and Contact stay one click away from the dock, Activities search, and terminal.',
         impact:
-            'Shows frontend ability through real interaction design while keeping the recruiter path clear and fast.',
+            'Demonstrates systematic problem-solving, attention to detail, and ability to build production-quality software with monitoring patterns (status indicators, notifications, structured logs).',
         techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers', 'Tailwind v4'],
         platform: 'Responsive web app',
         proofPoints: [
@@ -183,19 +194,19 @@ export const PROJECTS: Project[] = [
         title: 'OpsTrack',
         role: 'Developer',
         summary:
-            'A Spring Boot operations tracking API for practicing REST endpoints, SQL persistence, and layered Java application structure.',
+            'A Spring Boot API for tracking operational incidents, service requests, and resolution workflows — built to learn production support patterns alongside backend development.',
         problem:
-            'I needed a Java backend project that goes beyond isolated coursework snippets and exercises real service boundaries.',
+            'I needed a backend project that exercises real operations tracking workflows, not just isolated CRUD exercises.',
         solution:
-            'Building a layered Spring Boot REST API with controllers, services, repositories, and PostgreSQL persistence.',
+            'Building a layered Spring Boot REST API with incident lifecycle management, status tracking, and PostgreSQL persistence.',
         impact:
-            'Makes my Spring Boot and SQL learning path visible; it is marked as work in progress and kept honest in the UI.',
+            'Makes my production support understanding visible through code — incident states, priority classification, and resolution tracking built into the API design.',
         techStack: ['Java', 'Spring Boot', 'PostgreSQL', 'REST API'],
         platform: 'Backend API',
         proofPoints: [
-            'Defines CRUD endpoints and HTTP status handling for operations tracking workflows.',
-            'Separates Controller, Service, and Repository responsibilities.',
-            'Connects Spring Data JPA to PostgreSQL for relational persistence practice.',
+            'Models incident lifecycle with status transitions (open, investigating, resolved, closed).',
+            'Separates Controller, Service, and Repository responsibilities for clean architecture.',
+            'Connects Spring Data JPA to PostgreSQL for relational persistence and query practice.',
         ],
         links: [
             {
@@ -213,56 +224,185 @@ export const PROJECTS: Project[] = [
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
     {
-        title: 'Java & Backend',
-        icon: 'fab fa-java',
+        title: 'Application & Production Support',
+        icon: 'fas fa-headset',
         skills: [
             {
-                name: 'Java + OOP',
+                name: 'Incident Triage & Escalation',
                 context:
-                    'Object-oriented design, class hierarchies, control flow, and practical problem solving — actively building toward professional Spring Boot development.',
-                usedIn: ['Singapore Polytechnic', 'Self-Study'],
-                level: 'proficient',
-            },
-            {
-                name: 'Spring Boot',
-                context:
-                    'REST API structure, dependency injection, application layers, and building clean backend services — current primary learning focus.',
-                usedIn: ['Java Path'],
+                    'Methodical approach to classifying, prioritizing, and routing production issues to resolution.',
+                usedIn: ['OpsTrack Design', 'Coursework'],
                 level: 'intermediate',
             },
             {
-                name: 'SQL + Data Handling',
+                name: 'Log Analysis & Troubleshooting',
                 context:
-                    'Relational data fundamentals, queries, schema design, and connecting application logic to structured storage.',
-                usedIn: ['Coursework', 'Backend Study'],
+                    'Reading application logs, stack traces, and system output to identify root causes and verify fixes.',
+                usedIn: ['Fedora Portfolio', 'Java Debugging'],
+                level: 'proficient',
+            },
+            {
+                name: 'System Monitoring Awareness',
+                context:
+                    'Understanding of monitoring dashboards, alerts, health checks, and SLA-driven response workflows.',
+                usedIn: ['Self-Study', 'OpsTrack Design'],
+                level: 'learning',
+            },
+        ],
+    },
+    {
+        title: 'QA & Testing',
+        icon: 'fas fa-vial',
+        skills: [
+            {
+                name: 'Manual Testing',
+                context:
+                    'Test case design, execution, defect reporting, and regression testing across web applications.',
+                usedIn: ['Fedora Portfolio', 'Coursework'],
+                level: 'proficient',
+            },
+            {
+                name: 'API Testing',
+                context:
+                    'Endpoint validation with Postman, status codes, response schemas, and edge-case coverage.',
+                usedIn: ['OpsTrack', 'Self-Study'],
+                level: 'intermediate',
+            },
+            {
+                name: 'Unit Testing',
+                context:
+                    'JUnit for Java, Vitest + Testing Library for React — writing and maintaining automated test suites.',
+                usedIn: ['Fedora Portfolio', 'Java Path'],
                 level: 'intermediate',
             },
         ],
     },
     {
-        title: 'Web & Tooling',
+        title: 'Technical & Tooling',
+        icon: 'fas fa-wrench',
+        skills: [
+            {
+                name: 'SQL & Database Querying',
+                context:
+                    'Writing queries to investigate data, verify fixes, and support production debugging across PostgreSQL and MySQL.',
+                usedIn: ['Coursework', 'OpsTrack'],
+                level: 'proficient',
+            },
+            {
+                name: 'Linux & Shell',
+                context:
+                    'Terminal navigation, log tailing, grep/awk, process management, and scripting on Fedora.',
+                usedIn: ['Personal Workflow', 'Fedora Portfolio'],
+                level: 'proficient',
+            },
+            {
+                name: 'Git & Version Control',
+                context:
+                    'Branching, pull requests, commit discipline, and collaborative development workflows.',
+                usedIn: ['Fedora Portfolio', 'OpsTrack'],
+                level: 'proficient',
+            },
+            {
+                name: 'VS Code & Dev Tools',
+                context:
+                    'Primary IDE with debugging, extensions, integrated terminal, and browser DevTools.',
+                usedIn: ['All Projects'],
+                level: 'proficient',
+            },
+        ],
+    },
+    {
+        title: 'Programming',
         icon: 'fas fa-code',
         skills: [
             {
+                name: 'Java + OOP',
+                context:
+                    'Object-oriented design, class hierarchies, control flow, and practical problem solving.',
+                usedIn: ['Singapore Polytechnic', 'OpsTrack'],
+                level: 'proficient',
+            },
+            {
+                name: 'Spring Boot',
+                context:
+                    'REST API structure, dependency injection, application layers, and building clean backend services.',
+                usedIn: ['OpsTrack'],
+                level: 'intermediate',
+            },
+            {
                 name: 'React + TypeScript',
                 context:
-                    'Component architecture, stateful UI, typed config, custom context providers, and responsive app shells.',
+                    'Component architecture, typed state management, context providers — this portfolio is the proof.',
                 usedIn: ['Fedora Portfolio'],
                 level: 'proficient',
             },
             {
                 name: 'JavaScript / Python',
                 context:
-                    'Coursework, tooling, data handling, scripting, and small automation tasks.',
+                    'Scripting, data handling, utility development, and coursework automation.',
                 usedIn: ['Coursework', 'Fedora Portfolio'],
                 level: 'intermediate',
             },
+        ],
+    },
+    {
+        title: 'Databases',
+        icon: 'fas fa-database',
+        skills: [
             {
-                name: 'Git + Linux Workflow',
+                name: 'PostgreSQL',
                 context:
-                    'Source control, shell habits, public repositories, and Fedora/GNOME customization on real hardware.',
-                usedIn: ['Fedora Portfolio', 'Personal Workflow'],
+                    'Schema design, relational queries, joins, and connecting application logic to persistent storage.',
+                usedIn: ['OpsTrack', 'Coursework'],
+                level: 'intermediate',
+            },
+            {
+                name: 'MySQL',
+                context:
+                    'Academic database coursework and structured query practice.',
+                usedIn: ['Coursework'],
+                level: 'intermediate',
+            },
+            {
+                name: 'MongoDB Basics',
+                context:
+                    'Introduction to document-oriented storage and NoSQL patterns.',
+                usedIn: ['Self-Study'],
+                level: 'learning',
+            },
+        ],
+    },
+    {
+        title: 'Concepts & Frameworks',
+        icon: 'fas fa-sitemap',
+        skills: [
+            {
+                name: 'ITIL Fundamentals',
+                context:
+                    'Service management concepts — incident, problem, and change management workflows.',
+                usedIn: ['Self-Study'],
+                level: 'learning',
+            },
+            {
+                name: 'REST API Design',
+                context:
+                    'Endpoint design, HTTP methods, status codes, and API documentation best practices.',
+                usedIn: ['OpsTrack', 'Fedora Portfolio'],
                 level: 'proficient',
+            },
+            {
+                name: 'OOP & Design Patterns',
+                context:
+                    'SOLID principles, inheritance, composition, and practical pattern application.',
+                usedIn: ['Singapore Polytechnic', 'Java Path'],
+                level: 'proficient',
+            },
+            {
+                name: 'Agile / Scrum',
+                context:
+                    'Sprint planning, standups, retrospectives, and iterative delivery from coursework.',
+                usedIn: ['Singapore Polytechnic'],
+                level: 'intermediate',
             },
         ],
     },
@@ -291,7 +431,7 @@ export const BOOT_LOG_MESSAGES: string[] = [
     '         Fedora Linux 43 (Workstation Edition)',
     '         Kernel 6.19.0-301.fc43.x86_64 on Wayland',
     '',
-    '  sawyehtet@fedora  Java-focused software developer. This portfolio runs in your browser.',
+    '  sawyehtet@fedora  IT Support & Operations Specialist. This portfolio runs in your browser.',
     '',
 ];
 
@@ -342,26 +482,26 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
-            '# Projects\n\nRecruiter scan:\n\n- **Fedora-Inspired Portfolio Desktop**: React 19, TypeScript, window management, Activities search, virtual terminal, mobile launcher.\n- **OpsTrack**: Spring Boot and PostgreSQL API practice project for REST, SQL, and layered backend design.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
+            '# Projects\n\nRecruiter scan:\n\n- **Fedora-Inspired Portfolio Desktop**: React 19, TypeScript, window management — shows systematic problem-solving and attention to detail.\n- **OpsTrack**: Spring Boot operations tracking API — incident lifecycle, status tracking, and PostgreSQL persistence.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md'] },
     '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
         content:
-            'TODO:\n- Keep strengthening Java fundamentals\n- Build Spring Boot and SQL practice projects\n- Keep project proof points current\n- Make recruiter paths obvious',
+            'TODO:\n- Strengthen incident triage and log analysis skills\n- Complete OpsTrack API with incident lifecycle\n- Study ITIL fundamentals for support role interviews\n- Keep recruiter paths obvious and up to date',
     },
     '/home/sawyehtet/documents/ideas.md': {
         type: 'file',
         content:
-            '# Future Project Ideas\n\n1. Java backend API with SQL persistence\n2. Spring Boot practice app\n3. Open-source developer tools',
+            '# Future Project Ideas\n\n1. Monitoring dashboard with health checks and alerts\n2. Postman API test collection for OpsTrack\n3. Log analysis shell scripts for production debugging',
     },
     '/home/sawyehtet/resume.txt': {
         type: 'file',
-        content: `SAW YE HTET - RESUME\n\nRole: ${PROFILE.role}\nTarget: ${PROFILE.roleTarget}\nEducation: ${PROFILE.education}\nStack: ${PROFILE.primaryStack.join(', ')}\nFocus: Java, Spring Boot, SQL, REST APIs, and React + TypeScript frontend proof.\n\nContact: ${PROFILE.email}\nResume PDF: ${PROFILE.resumePath}`,
+        content: `SAW YE HTET - RESUME\n\nRole: ${PROFILE.role}\nTarget: ${PROFILE.roleTarget}\nEducation: ${PROFILE.education}\nStack: ${PROFILE.primaryStack.join(', ')}\nFocus: Application support, production support, SQL debugging, API testing, and Java backend.\n\nContact: ${PROFILE.email}\nResume PDF: ${PROFILE.resumePath}`,
     },
     '/home/sawyehtet/resume.md': {
         type: 'file',
-        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate focused on Java, Spring Boot, SQL, REST APIs, and clean application structure. This portfolio is also a React + TypeScript proof point.\n\n## Focus\n\n- Java backend development\n- Spring Boot service structure\n- SQL data modelling and persistence\n- React and TypeScript interfaces\n\n## Best Proof\n\n- Fedora-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n- OpsTrack: Spring Boot and PostgreSQL backend API practice project\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
+        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate targeting application support and production support roles. Hands-on with SQL, Linux, Java, and API testing.\n\n## Focus\n\n- Application support and production support\n- Incident triage, log analysis, and SQL debugging\n- API testing and quality assurance\n- Java backend development (carry-over)\n\n## Best Proof\n\n- Fedora-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n- OpsTrack: Spring Boot and PostgreSQL backend API practice project\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',
@@ -510,14 +650,14 @@ export const DEFAULT_NOTIFICATIONS: Notification[] = [
     {
         id: 'welcome',
         title: 'Welcome to Saw Ye Htet',
-        body: 'Java-focused software developer. Open the resume, projects, or contact app for the quick path.',
+        body: 'IT support & operations specialist. Open the resume, projects, or contact app for the quick path.',
         icon: 'fas fa-desktop',
         iconBg: 'linear-gradient(135deg, var(--accent-color), var(--accent-bg-color))',
         time: 'Just now',
         group: 'System',
         action: {
             label: 'View Resume',
-            appId: 'text-editor',
+            appId: 'resume',
         },
     },
 ];

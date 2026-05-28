@@ -28,6 +28,9 @@ const BrowserApp = lazy(() =>
 const FilesApp = lazy(() =>
     import('../apps/FilesApp').then(module => ({ default: module.FilesApp }))
 );
+const ResumeApp = lazy(() =>
+    import('../apps/ResumeApp').then(module => ({ default: module.ResumeApp }))
+);
 const SkillsApp = lazy(() =>
     import('../apps/SkillsApp').then(module => ({ default: module.SkillsApp }))
 );
@@ -250,6 +253,18 @@ export function DesktopShell() {
         return () => document.body.classList.remove('show-dock');
     }, []);
 
+    // Toggle body class for activities overview
+    useEffect(() => {
+        if (activitiesOpen) {
+            document.body.classList.add('activities-open');
+        } else {
+            document.body.classList.remove('activities-open');
+        }
+        return () => {
+            document.body.classList.remove('activities-open');
+        };
+    }, [activitiesOpen]);
+
     const handleBootComplete = useCallback(() => {
         const isFirstVisit = !localStorage.getItem('hasVisitedBefore');
         setBooted(true);
@@ -430,7 +445,7 @@ export function DesktopShell() {
             {/* Main Content */}
             <main id="main-content" className="main-content">
                 <h1 className="sr-only">
-                    Saw Ye Htet - Java-focused Software Developer portfolio
+                    Saw Ye Htet - IT Support & Operations Specialist portfolio
                 </h1>
                 <Wallpaper />
                 {booted && !hasVisibleWindows && !activitiesOpen && (
@@ -494,7 +509,6 @@ export function DesktopShell() {
                 isOpen={activitiesOpen}
                 onClose={() => setActivitiesOpen(false)}
                 workspaceIndex={workspaceIndex}
-                renderDock
             />
 
             {altTabOpen && (
@@ -608,6 +622,15 @@ export function DesktopShell() {
                     </ErrorBoundary>
                 </Window>
             )}
+            {windows.get('resume')?.isOpen && (
+                <Window appId="resume" title="Resume">
+                    <ErrorBoundary level="window" appId="resume">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <ResumeApp />
+                        </Suspense>
+                    </ErrorBoundary>
+                </Window>
+            )}
             {windows.get('settings')?.isOpen && (
                 <Window appId="settings" title="Settings">
                     <ErrorBoundary level="window" appId="settings">
@@ -628,7 +651,7 @@ export function DesktopShell() {
             )}
 
             {/* Dock — always visible (Dash-to-Dock style) */}
-            <Dock onShowApps={() => setActivitiesOpen(true)} />
+            <Dock onShowApps={() => setActivitiesOpen(p => !p)} />
 
             {/* Dock onboarding tooltip for first-time visitors */}
             {showDockTip && !hasVisibleWindows && (

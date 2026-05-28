@@ -1,17 +1,20 @@
 export const PROFILE = {
     name: 'Saw Ye Htet',
-    role: 'Java-focused Software Developer',
-    roleTarget: 'Junior Java / Backend Developer',
+    role: 'IT Support & Operations Specialist',
+    roleTarget: 'Application Support / Production Support / Technical Analyst',
     headline:
-        'Java-focused software developer building Spring Boot, SQL, and React + TypeScript projects.',
+        'IT support specialist targeting application support, production support, and technical analyst roles in Singapore.',
     summary:
-        'Recent Singapore Polytechnic IT graduate focused on Java, Spring Boot, SQL, REST APIs, and clean application structure. This React + TypeScript desktop portfolio is proof of frontend execution and product polish.',
+        'Recent Singapore Polytechnic IT graduate with hands-on SQL, Linux, and Java skills. Targeting application support and production support roles where systematic troubleshooting, log analysis, and attention to detail matter. Built this React + TypeScript desktop portfolio as technical proof of problem-solving ability.',
+    subtitle: 'Application Support · Production Support · Technical Analyst',
+    secondaryTarget: 'QA / API Testing',
+    carryOverTarget: 'Junior Java / Backend Development',
     education: 'Diploma in Information Technology - Singapore Polytechnic, 2026',
     email: 'minwn2244@gmail.com',
-    resumePath: '/resume/SYH_resume.pdf',
+    resumePath: '/resume/SawYeHtet_ApplicationSupport_Resume.pdf',
     availability: 'Open to opportunities',
     location: 'Singapore / remote-friendly',
-    primaryStack: ['Java', 'Spring Boot', 'SQL', 'React', 'TypeScript'],
+    primaryStack: ['SQL', 'Linux', 'Java', 'API Testing', 'React + TypeScript'],
 };
 
 export const SOCIAL_LINKS = [
