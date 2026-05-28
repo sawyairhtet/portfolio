@@ -20,6 +20,8 @@ import {
     User,
     At,
     ChatText,
+    Phone,
+    TelegramLogo,
 } from '@phosphor-icons/react';
 
 const MESSAGE_MAX = 2000;
@@ -89,6 +91,7 @@ const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
     GitHub: <GithubLogo weight="duotone" size={20} />,
     LinkedIn: <LinkedinLogo weight="duotone" size={20} />,
     X: <XLogo weight="duotone" size={20} />,
+    Telegram: <TelegramLogo weight="duotone" size={20} />,
 };
 
 export function ContactApp() {
@@ -97,6 +100,7 @@ export function ContactApp() {
     const [statusMsg, setStatusMsg] = useState('');
     const [statusType, setStatusType] = useState<'success' | 'error' | ''>('');
     const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle');
+    const [phoneCopyState, setPhoneCopyState] = useState<'idle' | 'copied'>('idle');
     const [isCoolingDown, setIsCoolingDown] = useState(false);
     const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const honeypotRef = useRef<HTMLInputElement>(null);
@@ -221,6 +225,17 @@ export function ContactApp() {
         }
     };
 
+    const copyPhone = async () => {
+        try {
+            await navigator.clipboard.writeText(PROFILE.phone || '');
+            setPhoneCopyState('copied');
+            showToast('Phone number copied', 'fas fa-check-circle');
+            window.setTimeout(() => setPhoneCopyState('idle'), 1800);
+        } catch {
+            showToast('Copy unavailable — long-press to copy', 'fas fa-circle-exclamation');
+        }
+    };
+
     return (
         <div className="contact-redesign">
             {/* Left — Info Panel */}
@@ -251,6 +266,7 @@ export function ContactApp() {
                             </a>
                             <motion.button
                                 type="button"
+                                aria-label="Copy email"
                                 className="contact-ghost-btn"
                                 onClick={copyEmail}
                                 whileTap={reduced ? undefined : { scale: 0.95 }}
@@ -279,6 +295,45 @@ export function ContactApp() {
                                 </AnimatePresence>
                             </motion.button>
                         </div>
+
+                        {PROFILE.phone && (
+                            <div className="contact-method-row">
+                                <Phone weight="duotone" size={18} />
+                                <a href={`tel:${PROFILE.phone}`} className="contact-method-value">
+                                    {PROFILE.phone}
+                                </a>
+                                <motion.button
+                                    type="button"
+                                    aria-label="Copy phone number"
+                                    className="contact-ghost-btn"
+                                    onClick={copyPhone}
+                                    whileTap={reduced ? undefined : { scale: 0.95 }}
+                                >
+                                    <AnimatePresence mode="wait">
+                                        {phoneCopyState === 'copied' ? (
+                                            <motion.span
+                                                key="copied"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                className="contact-copied-flash"
+                                            >
+                                                <Check weight="bold" size={14} /> Copied
+                                            </motion.span>
+                                        ) : (
+                                            <motion.span
+                                                key="copy"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                            >
+                                                <Copy weight="bold" size={14} /> Copy
+                                            </motion.span>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.button>
+                            </div>
+                        )}
 
                         {SOCIAL_LINKS.filter(l => l.label !== 'X').map(link => (
                             <div key={link.label} className="contact-method-row">

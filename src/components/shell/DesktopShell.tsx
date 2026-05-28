@@ -614,7 +614,7 @@ export function DesktopShell() {
                 </Window>
             )}
             {windows.get('text-editor')?.isOpen && (
-                <Window appId="text-editor" title="Resume">
+                <Window appId="text-editor" title="Text Editor">
                     <ErrorBoundary level="window" appId="text-editor">
                         <Suspense fallback={<AdwaitaSkeleton />}>
                             <TextEditorApp />
@@ -623,7 +623,7 @@ export function DesktopShell() {
                 </Window>
             )}
             {windows.get('resume')?.isOpen && (
-                <Window appId="resume" title="Resume">
+                <Window appId="resume" title="Document Viewer">
                     <ErrorBoundary level="window" appId="resume">
                         <Suspense fallback={<AdwaitaSkeleton />}>
                             <ResumeApp />

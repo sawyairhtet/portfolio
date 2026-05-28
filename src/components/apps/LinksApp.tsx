@@ -4,6 +4,7 @@ import {
     GithubLogo,
     LinkedinLogo,
     XLogo,
+    TelegramLogo,
     ArrowSquareOut,
 } from '@phosphor-icons/react';
 
@@ -11,12 +12,14 @@ const BRAND_COLORS: Record<string, string> = {
     GitHub: '#24292e',
     LinkedIn: '#0A66C2',
     X: '#000000',
+    Telegram: '#229ED9',
 };
 
 const ICON_MAP: Record<string, React.ReactNode> = {
     GitHub: <GithubLogo weight="duotone" size={48} />,
     LinkedIn: <LinkedinLogo weight="duotone" size={48} />,
     X: <XLogo weight="duotone" size={48} />,
+    Telegram: <TelegramLogo weight="duotone" size={48} />,
 };
 
 const stagger = {

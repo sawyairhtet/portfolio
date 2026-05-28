@@ -11,6 +11,7 @@ export const PROFILE = {
     carryOverTarget: 'Junior Java / Backend Development',
     education: 'Diploma in Information Technology - Singapore Polytechnic, 2026',
     email: 'minwn2244@gmail.com',
+    phone: '+65 80299573',
     resumePath: '/resume/SawYeHtet_ApplicationSupport_Resume.pdf',
     availability: 'Open to opportunities',
     location: 'Singapore / remote-friendly',
@@ -33,6 +34,14 @@ export const SOCIAL_LINKS = [
         handle: 'Saw Ye Htet',
         domain: 'linkedin.com',
         terminal: 'linkedin.com/in/saw-ye-htet-the-man-who-code',
+    },
+    {
+        href: 'https://t.me/saulyehtet',
+        icon: 'fab fa-telegram',
+        label: 'Telegram',
+        handle: '@saulyehtet',
+        domain: 't.me',
+        terminal: 't.me/saulyehtet',
     },
     {
         href: 'https://x.com/saulyehtet_',
