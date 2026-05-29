@@ -1,4 +1,5 @@
 import { useRef, useCallback, useEffect, useState, type ReactNode } from 'react';
+import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -445,10 +446,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                 >
                     <div className="window-title-group">
                         <span className="window-title-icon" aria-hidden="true">
-                            <i
-                                className={appDefinition?.icon ?? 'fas fa-window-maximize'}
-                                aria-hidden="true"
-                            />
+                            <Icon name={appDefinition?.icon ?? 'window-maximize'} />
                         </span>
                         <div className="window-title" id={`${appId}-window-title`}>
                             {title}
@@ -460,7 +458,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                         aria-label="Close"
                         onClick={requestClose}
                     >
-                        <i className="fas fa-times" aria-hidden="true" />
+                        <Icon name="times" />
                     </button>
                     <div className="window-controls">
                         <button

@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef, type KeyboardEvent } from 'react';
+import { Icon } from './Icon';
 import { useTheme } from '../../context/ThemeContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
@@ -97,7 +98,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     onClick={() => setWifiOn(p => !p)}
                 >
                     <div className="qs-tile-icon">
-                        <i className="fas fa-wifi" aria-hidden="true" />
+                        <Icon name="wifi" />
                     </div>
                     <div className="qs-tile-label">Wi-Fi</div>
                 </button>
@@ -109,7 +110,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     onClick={() => setBtOn(p => !p)}
                 >
                     <div className="qs-tile-icon">
-                        <i className="fab fa-bluetooth-b" aria-hidden="true" />
+                        <Icon name="bluetooth-b" />
                     </div>
                     <div className="qs-tile-label">Bluetooth</div>
                 </button>
@@ -125,7 +126,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     }}
                 >
                     <div className="qs-tile-icon">
-                        <i className="fas fa-bolt" aria-hidden="true" />
+                        <Icon name="bolt" />
                     </div>
                     <div className="qs-tile-label">
                         {powerProfile === 'balanced' ? 'Balanced' : powerProfile === 'performance' ? 'Performance' : 'Power Saver'}
@@ -139,7 +140,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     onClick={toggle}
                 >
                     <div className="qs-tile-icon">
-                        <i className="fas fa-moon" aria-hidden="true" />
+                        <Icon name="moon" />
                     </div>
                     <div className="qs-tile-label">Dark Style</div>
                 </button>
@@ -151,7 +152,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     onClick={() => setNightLight(p => !p)}
                 >
                     <div className="qs-tile-icon">
-                        <i className="fas fa-lightbulb" aria-hidden="true" />
+                        <Icon name="lightbulb" />
                     </div>
                     <div className="qs-tile-label">Night Light</div>
                 </button>
@@ -163,7 +164,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     onClick={() => setDnd(!isDnd)}
                 >
                     <div className="qs-tile-icon">
-                        <i className="fas fa-bell-slash" aria-hidden="true" />
+                        <Icon name="bell-slash" />
                     </div>
                     <div className="qs-tile-label">Do Not Disturb</div>
                 </button>
@@ -171,7 +172,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
 
             <div className="qs-sliders">
                 <div className="qs-slider-row">
-                    <i className="fas fa-sun qs-slider-icon" aria-hidden="true" />
+                    <Icon name="sun" className="qs-slider-icon" />
                     <input
                         type="range"
                         className="qs-slider"
@@ -184,7 +185,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     />
                 </div>
                 <div className="qs-slider-row">
-                    <i className="fas fa-volume-up qs-slider-icon" aria-hidden="true" />
+                    <Icon name="volume-up" className="qs-slider-icon" />
                     <input
                         type="range"
                         className="qs-slider"
@@ -205,7 +206,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     aria-label="Open Settings"
                     onClick={handleSettings}
                 >
-                    <i className="fas fa-cog" aria-hidden="true" />
+                    <Icon name="cog" />
                     <span>Settings</span>
                 </button>
                 <button
@@ -214,7 +215,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     aria-label="Lock Screen"
                     onClick={onClose}
                 >
-                    <i className="fas fa-lock" aria-hidden="true" />
+                    <Icon name="lock" />
                     <span>Lock</span>
                 </button>
                 <button
@@ -223,7 +224,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     aria-label="Power options"
                     onClick={onClose}
                 >
-                    <i className="fas fa-power-off" aria-hidden="true" />
+                    <Icon name="power-off" />
                     <span>Power</span>
                 </button>
             </div>

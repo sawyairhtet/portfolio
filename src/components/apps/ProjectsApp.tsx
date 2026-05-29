@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Icon } from '../ui/Icon';
 import { PROJECTS } from '../../config/data';
 import type { Project } from '../../types';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -97,7 +98,7 @@ function FeaturedProject({ project }: { project: Project }) {
                     />
                 ) : (
                     <div className="project-featured-fallback">
-                        <i className={project.icon} aria-hidden="true" />
+                        <Icon name={project.icon} />
                         <span>{project.platform}</span>
                     </div>
                 )}
@@ -161,7 +162,7 @@ function ProjectCard({ project }: { project: Project }) {
                     <img src={project.media.src} alt={project.media.alt} loading="lazy" />
                 ) : (
                     <div className="project-card-v3-fallback">
-                        <i className={project.icon} aria-hidden="true" />
+                        <Icon name={project.icon} />
                     </div>
                 )}
                 <span className="project-card-platform">{project.platform}</span>

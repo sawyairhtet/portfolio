@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { Icon } from '../ui/Icon';
 import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
 import {
@@ -762,7 +763,7 @@ export function TerminalApp() {
                             setInputValue('');
                         }}
                     >
-                        <i className="fas fa-arrow-right" aria-hidden="true" />
+                        <Icon name="arrow-right" />
                     </button>
                 </div>
             </div>

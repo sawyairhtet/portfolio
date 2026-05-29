@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Icon } from './Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 
 interface MenuPosition {
@@ -94,7 +95,7 @@ export function ContextMenu() {
                     setVisible(false);
                 }}
             >
-                <i className="fas fa-image" aria-hidden="true" /> Change Background
+                <Icon name="image" /> Change Background
             </button>
         </div>
     );

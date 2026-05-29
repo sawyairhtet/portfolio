@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState, useCallback, useEffect, useRef } from 'react';
+import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -58,10 +59,10 @@ type WelcomeAction =
     | { label: string; href: string; icon: string; download?: boolean };
 
 const WELCOME_ACTIONS: WelcomeAction[] = [
-    { label: 'About', appId: 'about', icon: 'fas fa-user-circle', primary: true },
-    { label: 'Projects', appId: 'projects', icon: 'fas fa-folder-open' },
-    { label: 'Resume', href: PROFILE.resumePath, icon: 'fas fa-file-arrow-down', download: true },
-    { label: 'Contact', appId: 'contact', icon: 'fas fa-envelope' },
+    { label: 'About', appId: 'about', icon: 'user-circle', primary: true },
+    { label: 'Projects', appId: 'projects', icon: 'folder-open' },
+    { label: 'Resume', href: PROFILE.resumePath, icon: 'file-arrow-down', download: true },
+    { label: 'Contact', appId: 'contact', icon: 'envelope' },
 ];
 
 function AdwaitaSkeleton() {
@@ -183,7 +184,7 @@ function ShortcutsDialog({ onClose }: { onClose: () => void }) {
             <header>
                 <h2 id="shortcuts-title">Keyboard Shortcuts</h2>
                 <button ref={closeBtnRef} type="button" aria-label="Close" onClick={onClose}>
-                    <i className="fas fa-times" aria-hidden="true" />
+                    <Icon name="times" />
                 </button>
             </header>
             <div>
@@ -272,7 +273,7 @@ export function DesktopShell() {
             setTimeout(() => openWindow('about'), 600);
             setTimeout(
                 () =>
-                    showToast('Welcome to Saw Ye Htet', 'fas fa-desktop', {
+                    showToast('Welcome to Saw Ye Htet', 'desktop', {
                         label: 'View Resume',
                         appId: 'text-editor',
                     }),
@@ -474,7 +475,7 @@ export function DesktopShell() {
                                         className={`desktop-welcome-action${action.primary ? ' primary' : ''}`}
                                         onClick={() => openWindow(action.appId)}
                                     >
-                                        <i className={action.icon} aria-hidden="true" />
+                                        <Icon name={action.icon} />
                                         <span>{action.label}</span>
                                     </button>
                                 ) : (
@@ -484,7 +485,7 @@ export function DesktopShell() {
                                         href={action.href}
                                         download={action.download}
                                     >
-                                        <i className={action.icon} aria-hidden="true" />
+                                        <Icon name={action.icon} />
                                         <span>{action.label}</span>
                                     </a>
                                 )
@@ -519,13 +520,7 @@ export function DesktopShell() {
                                 key={id}
                                 className={`alt-tab-item${index === altTabIndex ? ' active' : ''}`}
                             >
-                                <i
-                                    className={
-                                        DOCK_APPS.find(app => app.id === id)?.icon ||
-                                        'fas fa-window-maximize'
-                                    }
-                                    aria-hidden="true"
-                                />
+                                <Icon name={ DOCK_APPS.find(app => app.id === id)?.icon || 'window-maximize' } />
                                 <span>{DOCK_APPS.find(app => app.id === id)?.label || id}</span>
                             </div>
                         ))}
@@ -652,7 +647,7 @@ export function DesktopShell() {
                         aria-label="Dismiss tip"
                         onClick={() => setShowDockTip(false)}
                     >
-                        <i className="fas fa-times" aria-hidden="true" />
+                        <Icon name="times" />
                     </button>
                 </div>
             )}

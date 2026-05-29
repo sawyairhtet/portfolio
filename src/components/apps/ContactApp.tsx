@@ -169,7 +169,7 @@ export function ContactApp() {
                 reset();
                 startCooldown();
                 recordSubmission();
-                showToast('Message sent successfully!', 'fas fa-check-circle');
+                showToast('Message sent successfully!', 'check-circle');
                 focusBanner();
             } else {
                 let fieldErrors: FormspreeFieldError[] | undefined;
@@ -216,10 +216,10 @@ export function ContactApp() {
         try {
             await navigator.clipboard.writeText(PROFILE.email);
             setCopyState('copied');
-            showToast('Email copied', 'fas fa-check-circle');
+            showToast('Email copied', 'check-circle');
             window.setTimeout(() => setCopyState('idle'), 1800);
         } catch {
-            showToast('Copy unavailable — long-press to copy', 'fas fa-circle-exclamation');
+            showToast('Copy unavailable — long-press to copy', 'circle-exclamation');
         }
     };
 

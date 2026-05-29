@@ -7,6 +7,7 @@ import {
     type MouseEvent,
     type KeyboardEvent as ReactKeyboardEvent,
 } from 'react';
+import { Icon } from './Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { APP_DEFINITIONS, PROJECTS } from '../../config/data';
 import type { AppDefinition, AppId, Project } from '../../types';
@@ -225,7 +226,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
             onKeyDown={handleOverlayKeyDown}
         >
             <div className="activities-search">
-                <i className="fas fa-search activities-search-icon" aria-hidden="true" />
+                <Icon name="search" className="activities-search-icon" />
                 <input
                     ref={inputRef}
                     type="text"
@@ -260,7 +261,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                             inputRef.current?.focus();
                         }}
                     >
-                        <i className="fas fa-times" aria-hidden="true" />
+                        <Icon name="times" />
                     </button>
                 )}
             </div>
@@ -270,14 +271,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                     <div className="activities-windows">
                         {filteredWindows.length === 0 ? (
                             <div className="activities-no-windows">
-                                <i
-                                    className={
-                                        normalizedSearch
-                                            ? 'fas fa-magnifying-glass'
-                                            : 'fas fa-window-maximize'
-                                    }
-                                    aria-hidden="true"
-                                />
+                                <Icon name={ normalizedSearch ? 'magnifying-glass' : 'window-maximize' } />
                                 <strong>
                                     {normalizedSearch
                                         ? 'No matching windows'
@@ -298,7 +292,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                                 data-activities-result="true"
                                                 onClick={() => handleAppClick(app.id)}
                                             >
-                                                <i className={app.icon} aria-hidden="true" />
+                                                <Icon name={app.icon} />
                                                 <span>{app.label}</span>
                                             </button>
                                         ))}
@@ -321,10 +315,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                     <span className="activities-window-preview" aria-hidden="true">
                                         <span className="activities-window-header" />
                                         <span className="activities-window-content">
-                                            <i
-                                                className={app?.icon || 'fas fa-window-maximize'}
-                                                aria-hidden="true"
-                                            />
+                                            <Icon name={app?.icon || 'window-maximize'} />
                                         </span>
                                     </span>
                                     <span className="activities-thumb-title">
@@ -361,7 +352,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                     <div className="activities-app-grid">
                         {filteredApps.length === 0 ? (
                             <div className="activities-empty-search" role="status">
-                                <i className="fas fa-box-open" aria-hidden="true" />
+                                <Icon name="box-open" />
                                 <strong>No matching apps</strong>
                             </div>
                         ) : (
@@ -380,7 +371,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                         className="activities-app-icon"
                                         style={{ background: app.gradient }}
                                     >
-                                        <i className={app.icon} aria-hidden="true" />
+                                        <Icon name={app.icon} />
                                     </div>
                                     <span className="activities-app-label">{app.label}</span>
                                 </button>
@@ -397,7 +388,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                         </div>
                         {filteredProjects.length === 0 ? (
                             <div className="activities-empty-search activities-empty-card">
-                                <i className="fas fa-folder-open" aria-hidden="true" />
+                                <Icon name="folder-open" />
                                 <strong>No matching projects</strong>
                                 <span>Try a technology, platform, or project title.</span>
                             </div>
@@ -413,7 +404,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                         onClick={() => handleProjectClick(project)}
                                     >
                                         <span className="activities-project-icon">
-                                            <i className={project.icon} aria-hidden="true" />
+                                            <Icon name={project.icon} />
                                         </span>
                                         <span className="activities-project-copy">
                                             <strong>{project.title}</strong>

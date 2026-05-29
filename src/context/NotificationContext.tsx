@@ -53,7 +53,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const showToast = useCallback(
-        (message: string, icon = 'fas fa-info-circle', action?: Toast['action']) => {
+        (message: string, icon = 'info-circle', action?: Toast['action']) => {
             if (isDnd) return;
 
             const id = `toast-${toastIdRef.current++}`;

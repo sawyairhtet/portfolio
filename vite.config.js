@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
 import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -19,8 +18,8 @@ const devCspPlugin = () => ({
         const csp = [
             "default-src 'self'",
             `script-src 'self' ${reactRefreshPreambleHash} https://plausible.io`,
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-            "font-src 'self' https://fonts.gstatic.com",
+            "style-src 'self' 'unsafe-inline'",
+            "font-src 'self'",
             "img-src 'self' data: https:",
             "connect-src 'self' https://formspree.io https://plausible.io ws://localhost:* http://localhost:* ws://127.0.0.1:* http://127.0.0.1:*",
             "worker-src 'self'",
@@ -39,7 +38,6 @@ const devCspPlugin = () => ({
 export default defineConfig({
     plugins: [
         react(),
-        tailwindcss(),
         devCspPlugin(),
         {
             name: 'inject-sw-cache-version',
@@ -76,6 +74,10 @@ export default defineConfig({
                     // Routing + data fetching
                     if (id.includes('node_modules/react-router') || id.includes('node_modules/@tanstack/')) {
                         return 'vendor-query';
+                    }
+                    // Phosphor icons — shared by shell + apps, rarely change (long-lived cache)
+                    if (id.includes('node_modules/@phosphor-icons/')) {
+                        return 'vendor-icons';
                     }
                     // Forms + validation (only loaded with ContactApp)
                     if (id.includes('node_modules/zod/') || id.includes('node_modules/react-hook-form/') || id.includes('node_modules/@hookform/')) {
