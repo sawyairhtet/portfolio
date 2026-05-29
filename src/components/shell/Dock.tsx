@@ -7,6 +7,7 @@ import {
     type MouseEvent,
     type KeyboardEvent,
 } from 'react';
+import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { DOCK_APPS, MOBILE_DOCK_APPS, MOBILE_LAUNCHER_APPS } from '../../config/data';
 import { useDevice } from '../../context/DeviceContext';
@@ -133,7 +134,7 @@ export function Dock({ onShowApps }: DockProps) {
                                 aria-describedby={`dock-tip-mobile-${app.id}`}
                                 onClick={event => handleDockClick(app.id, event)}
                             >
-                                <i className={app.icon} aria-hidden="true" />
+                                <Icon name={app.icon} />
                                 <span
                                     className="dock-tooltip"
                                     id={`dock-tip-mobile-${app.id}`}
@@ -156,7 +157,7 @@ export function Dock({ onShowApps }: DockProps) {
                             setMobileSearchQuery('');
                         }}
                     >
-                        <i className="fas fa-grip" aria-hidden="true" />
+                        <Icon name="grip" />
                         <span className="dock-tooltip" id="dock-tip-mobile-apps" role="tooltip">
                             Apps
                         </span>
@@ -180,7 +181,7 @@ export function Dock({ onShowApps }: DockProps) {
                         <small>Fedora mobile launcher</small>
                     </div>
                     <label className="mobile-launcher-search">
-                        <i className="fas fa-search" aria-hidden="true" />
+                        <Icon name="search" />
                         <input
                             ref={mobileSearchRef}
                             type="search"
@@ -193,7 +194,7 @@ export function Dock({ onShowApps }: DockProps) {
                     <div className="mobile-launcher-grid">
                         {filteredMobileLauncherApps.length === 0 ? (
                             <div className="mobile-launcher-empty" role="status">
-                                <i className="fas fa-box-open" aria-hidden="true" />
+                                <Icon name="box-open" />
                                 <span>No matching apps</span>
                             </div>
                         ) : (
@@ -209,7 +210,7 @@ export function Dock({ onShowApps }: DockProps) {
                                         className="mobile-launcher-icon"
                                         style={{ background: app.gradient }}
                                     >
-                                        <i className={app.icon} aria-hidden="true" />
+                                        <Icon name={app.icon} />
                                     </span>
                                     <span>
                                         <strong>{app.label}</strong>
@@ -246,7 +247,7 @@ export function Dock({ onShowApps }: DockProps) {
                         onClick={event => handleDockClick(app.id, event)}
                         onFocus={() => setFocusedIndex(idx)}
                     >
-                        <i className={app.icon} aria-hidden="true" />
+                        <Icon name={app.icon} />
                         <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">
                             {app.dockTooltip}
                         </span>
@@ -268,7 +269,7 @@ export function Dock({ onShowApps }: DockProps) {
                         onClick={event => handleDockClick(app.id, event)}
                         onFocus={() => setFocusedIndex(globalIdx)}
                     >
-                        <i className={app.icon} aria-hidden="true" />
+                        <Icon name={app.icon} />
                         <span className="dock-tooltip" id={`dock-tip-${app.id}`} role="tooltip">
                             {app.dockTooltip}
                         </span>
@@ -283,7 +284,7 @@ export function Dock({ onShowApps }: DockProps) {
                 onClick={onShowApps}
                 onFocus={() => setFocusedIndex(allDockItems.length - 1)}
             >
-                <i className="fas fa-grip" aria-hidden="true" />
+                <Icon name="grip" />
                 <span className="dock-tooltip" id="dock-tip-show-apps" role="tooltip">
                     Show Apps
                 </span>

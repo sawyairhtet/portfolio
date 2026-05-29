@@ -9,13 +9,13 @@
 | Framework | React | 19 | StrictMode enabled |
 | Language | TypeScript | 5 | Strict, `noEmit`, bundler module resolution |
 | Bundler | Vite | 8 | Dev on `:3000`, builds to `dist/` |
-| Styling | CSS Layers + Tailwind v4 | 4.2 | `@layer reset, tokens, base, components, utilities` ordering; Tailwind imported last via `@import 'tailwindcss'` |
+| Styling | CSS Layers (vanilla) | — | `@layer reset, tokens, base, components, utilities` ordering. Predominantly vanilla CSS — no Tailwind |
 | Routing | React Router DOM | 7 | BrowserRouter, two routes: `/` and `/app/:appId` |
 | Data fetching | TanStack Query | 5 | QueryClient with 5-min stale, 1 retry |
 | Forms | React Hook Form + Zod | 7 / 4 | Used by ContactApp; code-split into `vendor-forms` chunk |
 | Terminal | @xterm/xterm | 6 | Real xterm.js instance inside TerminalApp |
-| Icons | Font Awesome Free | 7 | Self-hosted via npm — solid + brands only |
-| Fonts | Adwaita Sans/Mono (self-hosted WOFF2, subsetted) + Cantarell + JetBrains Mono (Google Fonts) | — | Adwaita fonts in `public/fonts/` with SIL license |
+| Icons | @phosphor-icons/react | 2 | Single icon system. String keys → Phosphor components via `src/components/ui/Icon.tsx`. Split into the `vendor-icons` chunk |
+| Fonts | Adwaita Sans/Mono (self-hosted WOFF2, subsetted) | — | Fully self-hosted in `public/fonts/` with SIL license. **No external font requests** (no Google Fonts) |
 | Testing | Vitest + Testing Library + jsdom | 4 / 16 | `vmForks` pool, globals enabled |
 | Linting | ESLint flat config + Prettier | 9 / 3 | 4-space indent, single quotes, trailing comma es5 |
 | Analytics | Plausible | — | Script tag in index.html, domain `sawyehtet.com` |
@@ -105,7 +105,7 @@ src/styles/main.css               ← Entry point, declares layer order, imports
   @layer base       ← css/base/typography.css + css/base/animations.css
   @layer components ← 18 files in css/components/
   @layer utilities  ← css/components/responsive.css
-  (unlayered)       ← Font Awesome, Tailwind v4, then inline React-specific styles
+  (unlayered)       ← inline React-specific styles (incl. `i > svg` icon alignment)
 ```
 
 **Key design tokens:**
@@ -133,7 +133,7 @@ src/styles/main.css               ← Entry point, declares layer order, imports
 
 7. **`head-bootstrap.js`** — Synchronous script that sets `data-theme` before React hydration. Prevents dark→light flash. Must remain synchronous and in `<head>`.
 
-8. **The `tailwindcss` keyword in `package.json` keywords** — Despite Tailwind v4 being present, the project is predominantly vanilla CSS with CSS Layers. Tailwind is used minimally. The CSS Layer architecture is the primary system.
+8. **The `tailwindcss` keyword in `package.json` keywords** — Tailwind has been removed from the build (it generated no CSS — there was no `@import 'tailwindcss'`). The keyword string is left in place intentionally. The CSS Layer architecture is the only styling system.
 
 9. **`instruction.md`** — Claude Code project instructions file for a previous audit. Keep for reference.
 
@@ -204,6 +204,8 @@ npm run generate:og      # Puppeteer script to regenerate OG preview image
 9. **The `docs/` directory** contains a fidelity rubric and gap analysis from a previous GNOME design audit. Reference material, not build artifacts.
 
 10. **No React Router `<Link>` components** — All navigation is via the window manager (`openWindow()`), not URL transitions. The router exists solely for deep-link entry and catch-all.
+
+11. **String-keyed icon system** — Content is declarative: `data.ts`/`profile.ts` and the toast/notification system store icons as short string keys (`'terminal'`, `'github'`). `src/components/ui/Icon.tsx` is the single registry mapping those keys → Phosphor components. It renders the glyph inside an `<i>` wrapper at `size="1em"` with `currentColor`, so the existing CSS rules that target `i` (font-size, color, width) keep working. To add an icon: add the key→component entry to `ICON_MAP`. The static `404.html` (no React) inlines Phosphor SVGs directly, wrapped in `<i class="ph">`.
 
 ## Prettier Config
 

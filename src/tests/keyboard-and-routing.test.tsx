@@ -115,6 +115,22 @@ describe('Deep link routing', () => {
         });
     });
 
+    it('opens Calendar window when navigating to /app/calendar', async () => {
+        render(<RoutedApp initialPath="/app/calendar" />);
+
+        await waitFor(() => {
+            expect(screen.getByRole('dialog', { name: 'Calendar' })).toBeInTheDocument();
+        });
+    });
+
+    it('opens Image Viewer window when navigating to /app/image-viewer', async () => {
+        render(<RoutedApp initialPath="/app/image-viewer" />);
+
+        await waitFor(() => {
+            expect(screen.getByRole('dialog', { name: 'Image Viewer' })).toBeInTheDocument();
+        });
+    });
+
     it('redirects to / for invalid deep links', async () => {
         render(<RoutedApp initialPath="/app/banana" />);
 

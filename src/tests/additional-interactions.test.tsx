@@ -123,7 +123,7 @@ describe('BootScreen skip behavior', () => {
         );
 
         expect(screen.getByRole('status', { name: /system booting/i })).toBeInTheDocument();
-        expect(document.querySelector('.plymouth-logo .fa-fedora')).toBeInTheDocument();
+        expect(document.querySelector('.plymouth-logo svg')).toBeInTheDocument();
 
         await user.keyboard(' ');
 

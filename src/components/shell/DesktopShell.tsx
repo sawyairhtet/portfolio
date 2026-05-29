@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState, useCallback, useEffect, useRef } from 'react';
+import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { usePreferences } from '../../context/PreferencesContext';
@@ -52,16 +53,22 @@ const SettingsApp = lazy(() =>
 const FocusModeApp = lazy(() =>
     import('../apps/FocusModeApp').then(module => ({ default: module.FocusModeApp }))
 );
+const CalendarApp = lazy(() =>
+    import('../apps/CalendarApp').then(module => ({ default: module.CalendarApp }))
+);
+const ImageViewerApp = lazy(() =>
+    import('../apps/ImageViewerApp').then(module => ({ default: module.ImageViewerApp }))
+);
 
 type WelcomeAction =
     | { label: string; appId: AppId; icon: string; primary?: boolean }
     | { label: string; href: string; icon: string; download?: boolean };
 
 const WELCOME_ACTIONS: WelcomeAction[] = [
-    { label: 'About', appId: 'about', icon: 'fas fa-user-circle', primary: true },
-    { label: 'Projects', appId: 'projects', icon: 'fas fa-folder-open' },
-    { label: 'Resume', href: PROFILE.resumePath, icon: 'fas fa-file-arrow-down', download: true },
-    { label: 'Contact', appId: 'contact', icon: 'fas fa-envelope' },
+    { label: 'About', appId: 'about', icon: 'user-circle', primary: true },
+    { label: 'Projects', appId: 'projects', icon: 'folder-open' },
+    { label: 'Resume', href: PROFILE.resumePath, icon: 'file-arrow-down', download: true },
+    { label: 'Contact', appId: 'contact', icon: 'envelope' },
 ];
 
 function AdwaitaSkeleton() {
@@ -183,7 +190,7 @@ function ShortcutsDialog({ onClose }: { onClose: () => void }) {
             <header>
                 <h2 id="shortcuts-title">Keyboard Shortcuts</h2>
                 <button ref={closeBtnRef} type="button" aria-label="Close" onClick={onClose}>
-                    <i className="fas fa-times" aria-hidden="true" />
+                    <Icon name="times" />
                 </button>
             </header>
             <div>
@@ -199,7 +206,7 @@ function ShortcutsDialog({ onClose }: { onClose: () => void }) {
 }
 
 export function DesktopShell() {
-    const { openWindow, closeWindow, bringToFront, windows } = useWindowManager();
+    const { openWindow, closeWindow, bringToFront, windows, activeWorkspace, setActiveWorkspace } = useWindowManager();
     const { playStartupDrum } = useSound();
     const { preferences } = usePreferences();
     const { device } = useDevice();
@@ -213,9 +220,8 @@ export function DesktopShell() {
     const [altTabOpen, setAltTabOpen] = useState(false);
     const [altTabIndex, setAltTabIndex] = useState(0);
     const [shortcutsOpen, setShortcutsOpen] = useState(false);
-    const [workspaceIndex, setWorkspaceIndex] = useState(0);
     const hasVisibleWindows = Array.from(windows.values()).some(
-        win => win.isOpen && !win.isMinimized
+        win => win.isOpen && !win.isMinimized && win.workspaceIndex === activeWorkspace
     );
 
     // Track load time for uptime command
@@ -272,7 +278,7 @@ export function DesktopShell() {
             setTimeout(() => openWindow('about'), 600);
             setTimeout(
                 () =>
-                    showToast('Welcome to Saw Ye Htet', 'fas fa-desktop', {
+                    showToast('Welcome to Saw Ye Htet', 'desktop', {
                         label: 'View Resume',
                         appId: 'text-editor',
                     }),
@@ -337,8 +343,8 @@ export function DesktopShell() {
 
             if (e.ctrlKey && e.altKey && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
                 e.preventDefault();
-                setWorkspaceIndex(current =>
-                    e.key === 'ArrowRight' ? Math.min(2, current + 1) : Math.max(0, current - 1)
+                setActiveWorkspace(
+                    e.key === 'ArrowRight' ? Math.min(2, activeWorkspace + 1) : Math.max(0, activeWorkspace - 1)
                 );
             }
 
@@ -474,7 +480,7 @@ export function DesktopShell() {
                                         className={`desktop-welcome-action${action.primary ? ' primary' : ''}`}
                                         onClick={() => openWindow(action.appId)}
                                     >
-                                        <i className={action.icon} aria-hidden="true" />
+                                        <Icon name={action.icon} />
                                         <span>{action.label}</span>
                                     </button>
                                 ) : (
@@ -484,7 +490,7 @@ export function DesktopShell() {
                                         href={action.href}
                                         download={action.download}
                                     >
-                                        <i className={action.icon} aria-hidden="true" />
+                                        <Icon name={action.icon} />
                                         <span>{action.label}</span>
                                     </a>
                                 )
@@ -506,7 +512,7 @@ export function DesktopShell() {
             <ActivitiesOverlay
                 isOpen={activitiesOpen}
                 onClose={() => setActivitiesOpen(false)}
-                workspaceIndex={workspaceIndex}
+                workspaceIndex={activeWorkspace}
             />
 
             {altTabOpen && (
@@ -519,13 +525,7 @@ export function DesktopShell() {
                                 key={id}
                                 className={`alt-tab-item${index === altTabIndex ? ' active' : ''}`}
                             >
-                                <i
-                                    className={
-                                        DOCK_APPS.find(app => app.id === id)?.icon ||
-                                        'fas fa-window-maximize'
-                                    }
-                                    aria-hidden="true"
-                                />
+                                <Icon name={ DOCK_APPS.find(app => app.id === id)?.icon || 'window-maximize' } />
                                 <span>{DOCK_APPS.find(app => app.id === id)?.label || id}</span>
                             </div>
                         ))}
@@ -535,7 +535,7 @@ export function DesktopShell() {
             {shortcutsOpen && <ShortcutsDialog onClose={() => setShortcutsOpen(false)} />}
 
             <span className="sr-only" aria-live="polite">
-                Workspace {workspaceIndex + 1}
+                Workspace {activeWorkspace + 1}
             </span>
 
             {/* Windows — conditionally rendered to avoid wasted reconciliation */}
@@ -638,6 +638,24 @@ export function DesktopShell() {
                     </ErrorBoundary>
                 </Window>
             )}
+            {windows.get('calendar')?.isOpen && (
+                <Window appId="calendar" title="Calendar">
+                    <ErrorBoundary level="window" appId="calendar">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <CalendarApp />
+                        </Suspense>
+                    </ErrorBoundary>
+                </Window>
+            )}
+            {windows.get('image-viewer')?.isOpen && (
+                <Window appId="image-viewer" title="Image Viewer">
+                    <ErrorBoundary level="window" appId="image-viewer">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <ImageViewerApp />
+                        </Suspense>
+                    </ErrorBoundary>
+                </Window>
+            )}
 
             {/* Dock — always visible (Dash-to-Dock style) */}
             <Dock onShowApps={() => setActivitiesOpen(p => !p)} />
@@ -652,7 +670,7 @@ export function DesktopShell() {
                         aria-label="Dismiss tip"
                         onClick={() => setShowDockTip(false)}
                     >
-                        <i className="fas fa-times" aria-hidden="true" />
+                        <Icon name="times" />
                     </button>
                 </div>
             )}

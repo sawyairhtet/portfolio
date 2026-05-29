@@ -76,11 +76,11 @@ export function FocusModeApp() {
                     setSessionHistory(h => [...h.slice(-4), preset.work]);
                     setState('break');
                     setPausedFrom('break');
-                    showToast('Focus session complete. Break time.', 'fas fa-mug-hot');
+                    showToast('Focus session complete. Break time.', 'mug-hot');
                     addNotification({
                         title: 'Focus Session Complete',
                         body: 'Nice work. Take a short break before the next round.',
-                        icon: 'fas fa-clock',
+                        icon: 'clock',
                         iconBg: 'linear-gradient(135deg, var(--accent-green), var(--accent-teal))',
                         time: 'Just now',
                         group: 'Focus',
@@ -90,7 +90,7 @@ export function FocusModeApp() {
 
                 setState('idle');
                 setPausedFrom('work');
-                showToast('Break complete. Ready when you are.', 'fas fa-check-circle');
+                showToast('Break complete. Ready when you are.', 'check-circle');
                 return preset.work;
             });
         }, 1000);

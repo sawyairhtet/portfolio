@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Icon } from './Icon';
 import { useNotifications } from '../../context/NotificationContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
 
@@ -97,7 +98,7 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                         aria-label={isDnd ? 'Do Not Disturb: on' : 'Do Not Disturb: off'}
                         onClick={() => setDnd(!isDnd)}
                     >
-                        <i className="fas fa-bell-slash" aria-hidden="true" />
+                        <Icon name="bell-slash" />
                         DND
                     </button>
                     <button
@@ -113,10 +114,7 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
             <div className="notification-list">
                 {Object.keys(grouped).length === 0 ? (
                     <div className="notification-empty">
-                        <i
-                            className={isDnd ? 'fas fa-bell-slash' : 'fas fa-bell'}
-                            aria-hidden="true"
-                        />
+                        <Icon name={isDnd ? 'bell-slash' : 'bell'} />
                         <span>{isDnd ? 'Do Not Disturb is on' : 'No notifications'}</span>
                         <small>
                             {isDnd
@@ -137,7 +135,7 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                                         <div
                                             className={`notification-item-icon${item.iconBg.includes('--fedora-green') ? ' notification-item-icon-success' : ' notification-item-icon-info'}`}
                                         >
-                                            <i className={item.icon} aria-hidden="true" />
+                                            <Icon name={item.icon} />
                                         </div>
                                         <div className="notification-item-content">
                                             <div className="notification-item-title">
@@ -177,7 +175,7 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
                                             aria-label="Dismiss notification"
                                             onClick={() => dismissNotification(item.id)}
                                         >
-                                            <i className="fas fa-times" aria-hidden="true" />
+                                            <Icon name="times" />
                                         </button>
                                     </div>
                                 ))}

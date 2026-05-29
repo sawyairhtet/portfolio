@@ -1,6 +1,10 @@
-@import '@fortawesome/fontawesome-free/css/fontawesome.css';
-@import '@fortawesome/fontawesome-free/css/solid.css';
-@import '@fortawesome/fontawesome-free/css/brands.css';
+/* Icons are inline Phosphor SVGs wrapped in <i> (no Font Awesome). */
+i > .ph-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    fill: currentColor;
+}
 @import './adwaita-tokens.css';
 
 :root {

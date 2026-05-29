@@ -1,0 +1,304 @@
+/* ============================================
+   CALENDAR APP — GNOME 49 Style
+   ============================================ */
+
+.calendar-app {
+    display: flex;
+    height: 100%;
+    min-height: 440px;
+    background: var(--window-bg-color);
+    color: var(--window-fg-color);
+}
+
+.calendar-left-pane {
+    flex: 1.3;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border-right: 1px solid var(--border-color);
+    min-width: 0;
+}
+
+.calendar-right-pane {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-1, #1d1d20);
+    padding: var(--spacing-md);
+    min-width: 0;
+    overflow-y: auto;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.calendar-month-title {
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    flex: 1;
+}
+
+.calendar-grid-header-cell {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    text-transform: uppercase;
+}
+
+.calendar-grid-cell {
+    position: relative;
+    aspect-ratio: 1.2;
+    background: var(--card-bg-color, #2e2e32);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md, 8px);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 6px;
+    transition: background 150ms var(--ease-out-quad), border-color 150ms var(--ease-out-quad);
+}
+
+.calendar-grid-cell:hover {
+    background: var(--surface-3, rgba(255, 255, 255, 0.05));
+}
+
+.calendar-grid-cell.out {
+    color: var(--text-disabled);
+    opacity: 0.4;
+}
+
+.calendar-grid-cell.selected {
+    border-color: var(--accent-bg-color);
+    box-shadow: 0 0 0 1px var(--accent-bg-color);
+}
+
+.calendar-grid-cell.today {
+    background: color-mix(in srgb, var(--accent-bg-color) 20%, transparent);
+}
+
+.calendar-grid-cell.today .calendar-cell-day-number {
+    color: var(--accent-bg-color);
+    font-weight: 800;
+}
+
+.calendar-cell-day-number {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
+
+.calendar-cell-event-dot {
+    align-self: center;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-bg-color);
+    border-radius: 50%;
+    margin-bottom: 2px;
+}
+
+.calendar-date-header {
+    font-size: var(--font-size-md);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    margin-top: 0 !important;
+}
+
+.calendar-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex: 1;
+    margin-bottom: var(--spacing-md);
+}
+
+.calendar-no-events {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+}
+
+.calendar-no-events i {
+    font-size: 32px;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+.calendar-no-events p {
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.calendar-event-card {
+    display: flex;
+    gap: 10px;
+    padding: var(--spacing-sm);
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.calendar-event-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.type-milestone .calendar-event-dot { background: var(--accent-bg-color); }
+.type-study .calendar-event-dot { background: var(--success-bg-color, #2ec27e); }
+.type-interview .calendar-event-dot { background: var(--warning-bg-color, #f5c211); }
+.type-custom .calendar-event-dot { background: var(--purple-3, #c061cb); }
+
+.calendar-event-details h4 {
+    margin: 0 0 4px;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.calendar-event-details p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.calendar-add-event-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 38px;
+    background: var(--surface-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: background 150ms var(--ease-out-quad);
+}
+
+.calendar-add-event-btn:hover {
+    background: var(--accent-bg-color);
+    border-color: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+}
+
+.calendar-add-event-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.calendar-add-event-form h4 {
+    margin: 0 0 4px;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.calendar-form-input,
+.calendar-form-textarea {
+    width: 100%;
+    background: var(--surface-1);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: inherit;
+    padding: 8px;
+    font-size: var(--font-size-sm);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.calendar-form-input:focus,
+.calendar-form-textarea:focus {
+    border-color: var(--accent-bg-color);
+}
+
+.calendar-form-textarea {
+    resize: none;
+    height: 60px;
+}
+
+.calendar-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.calendar-btn-cancel,
+.calendar-btn-submit {
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+}
+
+.calendar-btn-cancel {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.calendar-btn-cancel:hover {
+    background: var(--surface-3);
+    color: var(--text-primary);
+}
+
+.calendar-btn-submit {
+    background: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+}
+
+.calendar-btn-submit:hover {
+    filter: brightness(1.08);
+}
+
+@container app-window (max-width: 600px) {
+    .calendar-app {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    
+    .calendar-left-pane {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        flex: none;
+    }
+    
+    .calendar-right-pane {
+        flex: none;
+        background: transparent;
+    }
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Icon } from '../ui/Icon';
 import { BOOT_LOG_MESSAGES, BOOT_LINE_INTERVAL_MS, PLYMOUTH_DURATION_MS } from '../../config/data';
 import { usePreferences } from '../../context/PreferencesContext';
 
@@ -110,7 +111,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
             {phase === 'plymouth' && (
                 <div className="plymouth-splash">
                     <div className="plymouth-logo">
-                        <i className="fab fa-fedora" aria-hidden="true" />
+                        <Icon name="fedora" />
                     </div>
                     <div className="plymouth-spinner">
                         <div className="plymouth-dot" />

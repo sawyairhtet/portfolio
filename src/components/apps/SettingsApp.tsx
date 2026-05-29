@@ -3,6 +3,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useSound } from '../../context/SoundContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { usePreferences } from '../../context/PreferencesContext';
+import { useWindowManager } from '../../context/WindowManagerContext';
 import { WALLPAPERS, ACCENT_COLORS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -17,14 +18,18 @@ import {
     Columns,
     ArrowsOutSimple,
     Gauge,
+    Monitor,
+    Globe,
 } from '@phosphor-icons/react';
 
-type SettingsPanel = 'appearance' | 'sound' | 'windows' | 'about';
+type SettingsPanel = 'appearance' | 'sound' | 'windows' | 'display' | 'network' | 'about';
 
 const NAV_ITEMS: { id: SettingsPanel; label: string; icon: React.ReactNode }[] = [
     { id: 'appearance', label: 'Appearance', icon: <Palette weight="duotone" size={16} /> },
     { id: 'sound', label: 'Sound', icon: <SpeakerHigh weight="duotone" size={16} /> },
     { id: 'windows', label: 'Windows', icon: <AppWindow weight="duotone" size={16} /> },
+    { id: 'display', label: 'Displays', icon: <Monitor weight="duotone" size={16} /> },
+    { id: 'network', label: 'Network', icon: <Globe weight="duotone" size={16} /> },
     { id: 'about', label: 'About', icon: <Info weight="duotone" size={16} /> },
 ];
 
@@ -48,13 +53,42 @@ export function SettingsApp() {
     const { isMuted, toggleMute, volume, setVolume } = useSound();
     const { isDnd, setDnd } = useNotifications();
     const { preferences, updatePreferences } = usePreferences();
+    const { activeWorkspace, setActiveWorkspace } = useWindowManager();
     const [activePanel, setActivePanel] = useState<SettingsPanel>('appearance');
     const reduced = useReducedMotion();
+
+    const [desktopScale, setDesktopScale] = useState(100);
+    const [pingStatus, setPingStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
+    const [pingLogs, setPingLogs] = useState<string[]>([]);
+
+    const testPingConnection = () => {
+        setPingStatus('testing');
+        setPingLogs(['PING sawyehtet.com (192.168.1.42) 56(84) bytes of data.']);
+        let counter = 0;
+        const interval = setInterval(() => {
+            counter++;
+            const time = (Math.random() * 8 + 3).toFixed(1);
+            setPingLogs(prev => [
+                ...prev,
+                `64 bytes from 192.168.1.42: icmp_seq=${counter} ttl=64 time=${time} ms`
+            ]);
+            if (counter >= 3) {
+                clearInterval(interval);
+                setPingLogs(prev => [
+                    ...prev,
+                    '--- sawyehtet.com ping statistics ---',
+                    '3 packets transmitted, 3 received, 0% packet loss, time 2004ms',
+                    'rtt min/avg/max = 3.2/5.4/8.1 ms'
+                ]);
+                setPingStatus('success');
+            }
+        }, 500);
+    };
 
     useEffect(() => {
         const handleSettingsPanelRequest = (event: Event) => {
             const panel = (event as CustomEvent<SettingsPanel>).detail;
-            if (['appearance', 'sound', 'windows', 'about'].includes(panel)) {
+            if (['appearance', 'sound', 'windows', 'display', 'network', 'about'].includes(panel)) {
                 setActivePanel(panel);
             }
         };
@@ -261,6 +295,148 @@ export function SettingsApp() {
                                 />
                             </div>
                             <p className="settings-row-desc">Skip the boot animation on subsequent visits.</p>
+                        </div>
+                    </div>
+                )}
+
+                {activePanel === 'display' && (
+                    <div className="settings-panel active">
+                        <h2>Displays</h2>
+                        <div className="settings-card">
+                            <h3>Scale</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <Monitor weight="duotone" size={16} />
+                                    <span>Scale Options</span>
+                                </span>
+                                <div className="linked">
+                                    {[100, 125, 150].map(s => (
+                                        <button
+                                            key={s}
+                                            type="button"
+                                            className={`headerbar-btn${desktopScale === s ? ' active' : ''}`}
+                                            onClick={() => {
+                                                setDesktopScale(s);
+                                                document.documentElement.style.setProperty('--desktop-scale', `${s / 100}`);
+                                            }}
+                                            style={{
+                                                background: desktopScale === s ? 'var(--active-toggle-bg-color)' : 'transparent',
+                                                color: desktopScale === s ? 'var(--active-toggle-fg-color)' : 'inherit',
+                                                fontWeight: 'bold',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                fontSize: '12px',
+                                            }}
+                                        >
+                                            {s}%
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            <p className="settings-row-desc">Adjust the scale of interface fonts and window elements.</p>
+                        </div>
+                        <div className="settings-card">
+                            <h3>Workspaces</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <Columns weight="duotone" size={16} />
+                                    <span>Current Active Workspace</span>
+                                </span>
+                                <div className="linked">
+                                    {[0, 1, 2].map(idx => (
+                                        <button
+                                            key={idx}
+                                            type="button"
+                                            className={`headerbar-btn${activeWorkspace === idx ? ' active' : ''}`}
+                                            onClick={() => setActiveWorkspace(idx)}
+                                            style={{
+                                                background: activeWorkspace === idx ? 'var(--active-toggle-bg-color)' : 'transparent',
+                                                color: activeWorkspace === idx ? 'var(--active-toggle-fg-color)' : 'inherit',
+                                                fontWeight: 'bold',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                fontSize: '12px',
+                                            }}
+                                        >
+                                            {idx + 1}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                            <p className="settings-row-desc">Quickly toggle between desktop virtual workspaces.</p>
+                        </div>
+                    </div>
+                )}
+
+                {activePanel === 'network' && (
+                    <div className="settings-panel active">
+                        <h2>Network</h2>
+                        <div className="settings-card">
+                            <h3>Connection Status</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <Globe weight="duotone" size={16} />
+                                    <span>Wi-Fi Connection</span>
+                                </span>
+                                <span style={{ fontWeight: 'bold', color: 'var(--success-bg-color)' }}>Connected</span>
+                            </div>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <span>Hardware Speed</span>
+                                </span>
+                                <span>1000 Mbps (Simulated Gigabit Ethernet)</span>
+                            </div>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <span>IPv4 Address</span>
+                                </span>
+                                <span>192.168.1.42</span>
+                            </div>
+                        </div>
+
+                        <div className="settings-card">
+                            <h3>Diagnostics</h3>
+                            <div className="settings-row" style={{ minHeight: 'auto', marginBottom: '8px' }}>
+                                <span className="settings-row-label">
+                                    <span>Network Ping Test</span>
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={testPingConnection}
+                                    disabled={pingStatus === 'testing'}
+                                    className="about-cta-v2 active"
+                                    style={{
+                                        background: 'var(--accent-bg-color)',
+                                        color: 'var(--accent-fg-color)',
+                                        border: 'none',
+                                        borderRadius: 'var(--radius-md)',
+                                        padding: '6px 12px',
+                                        fontSize: '12px',
+                                        fontWeight: 'bold',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    {pingStatus === 'testing' ? 'Testing...' : 'Run Ping Test'}
+                                </button>
+                            </div>
+                            {pingLogs.length > 0 && (
+                                <pre
+                                    style={{
+                                        background: 'var(--surface-1)',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: 'var(--radius-md)',
+                                        padding: '12px',
+                                        fontFamily: 'var(--font-mono)',
+                                        fontSize: '11px',
+                                        lineHeight: '1.4',
+                                        overflowX: 'auto',
+                                        color: 'var(--text-primary)',
+                                        margin: '8px 0 0 0',
+                                    }}
+                                >
+                                    {pingLogs.join('\n')}
+                                </pre>
+                            )}
                         </div>
                     </div>
                 )}

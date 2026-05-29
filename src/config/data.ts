@@ -17,7 +17,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'about',
         label: 'About',
-        icon: 'fas fa-user-circle',
+        icon: 'user-circle',
         dockTooltip: 'About Me',
         gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--accent-blue) 100%)',
         description: 'Recruiter summary, graduation, support focus, and personality.',
@@ -28,7 +28,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'files',
         label: 'Files',
-        icon: 'fas fa-folder',
+        icon: 'folder',
         dockTooltip: 'Files',
         gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%)',
         description: 'Nautilus-style project files, recent work, and case studies.',
@@ -39,7 +39,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'skills',
         label: 'Skills',
-        icon: 'fas fa-tools',
+        icon: 'tools',
         dockTooltip: 'Skills',
         gradient: 'linear-gradient(135deg, var(--green-3) 0%, var(--accent-teal) 100%)',
         description: 'Technical stack with practical context and project usage.',
@@ -50,7 +50,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'projects',
         label: 'Projects',
-        icon: 'fas fa-folder',
+        icon: 'folder',
         dockTooltip: 'Projects',
         gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%)',
         description: 'Featured work, proof points, tech, platforms, and source links.',
@@ -61,7 +61,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'contact',
         label: 'Contact',
-        icon: 'fas fa-envelope',
+        icon: 'envelope',
         dockTooltip: 'Contact',
         gradient: 'linear-gradient(135deg, var(--purple-2) 0%, var(--accent-purple) 100%)',
         description: 'Email, resume, availability, and a contact form.',
@@ -72,7 +72,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'browser',
         label: 'Firefox',
-        icon: 'fab fa-firefox-browser',
+        icon: 'firefox-browser',
         dockTooltip: 'Firefox',
         gradient: 'linear-gradient(135deg, var(--orange-3) 0%, var(--accent-purple) 100%)',
         description: 'A small browser window pointed at GitHub.',
@@ -83,7 +83,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'terminal',
         label: 'Terminal',
-        icon: 'fas fa-terminal',
+        icon: 'terminal',
         dockTooltip: 'Terminal',
         gradient: 'linear-gradient(135deg, var(--green-2) 0%, var(--accent-green) 100%)',
         description: 'A portfolio terminal with filesystem and app commands.',
@@ -94,7 +94,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'text-editor',
         label: 'Text Editor',
-        icon: 'fas fa-file-lines',
+        icon: 'file-lines',
         dockTooltip: 'Text Editor',
         gradient: 'linear-gradient(135deg, var(--blue-1) 0%, var(--accent-blue) 100%)',
         description: 'Edit and preview the resume in markdown format.',
@@ -105,7 +105,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'resume',
         label: 'Resume',
-        icon: 'fas fa-file-pdf',
+        icon: 'file-pdf',
         dockTooltip: 'Resume',
         gradient: 'linear-gradient(135deg, var(--red-2) 0%, var(--accent-red) 100%)',
         description: 'View and download resume PDF.',
@@ -116,7 +116,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'settings',
         label: 'Settings',
-        icon: 'fas fa-cog',
+        icon: 'cog',
         dockTooltip: 'Settings',
         gradient: 'linear-gradient(135deg, var(--light-4) 0%, var(--light-5) 100%)',
         description: 'Appearance, sound, windowing, and system preferences.',
@@ -127,11 +127,33 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'focus-mode',
         label: 'Focus',
-        icon: 'fas fa-clock',
+        icon: 'clock',
         dockTooltip: 'Focus Mode',
         gradient: 'linear-gradient(135deg, var(--orange-3) 0%, var(--orange-4) 100%)',
         description: 'Pomodoro presets, session stats, and optional focus dimming.',
         aliases: ['pomodoro', 'timer', 'deep work', 'productivity'],
+        desktopDock: false,
+        mobileDock: false,
+    },
+    {
+        id: 'calendar',
+        label: 'Calendar',
+        icon: 'calendar',
+        dockTooltip: 'Calendar',
+        gradient: 'linear-gradient(135deg, var(--red-1) 0%, var(--accent-red) 100%)',
+        description: 'View month layouts and program milestones.',
+        aliases: ['calendar', 'events', 'schedule', 'today'],
+        desktopDock: true,
+        mobileDock: true,
+    },
+    {
+        id: 'image-viewer',
+        label: 'Image Viewer',
+        icon: 'image',
+        dockTooltip: 'Image Viewer',
+        gradient: 'linear-gradient(135deg, var(--yellow-2) 0%, var(--accent-yellow) 100%)',
+        description: 'View project screenshots, mockups, or wallpapers.',
+        aliases: ['image-viewer', 'viewer', 'loupe', 'gallery', 'photos'],
         desktopDock: false,
         mobileDock: false,
     },
@@ -171,12 +193,12 @@ export const PROJECTS: Project[] = [
             {
                 label: 'View on GitHub',
                 href: 'https://github.com/sawyairhtet/portfolio',
-                icon: 'fab fa-github',
+                icon: 'github',
                 primary: true,
             },
         ],
         featured: true,
-        icon: 'fas fa-desktop',
+        icon: 'desktop',
     },
     {
         id: 'opstrack',
@@ -201,12 +223,12 @@ export const PROJECTS: Project[] = [
             {
                 label: 'View on GitHub',
                 href: 'https://github.com/sawyairhtet/opstrack',
-                icon: 'fab fa-github',
+                icon: 'github',
                 primary: true,
             },
         ],
         featured: false,
-        icon: 'fas fa-server',
+        icon: 'server',
         status: 'wip',
     },
 ];
@@ -214,7 +236,7 @@ export const PROJECTS: Project[] = [
 export const SKILL_CATEGORIES: SkillCategory[] = [
     {
         title: 'Application & Production Support',
-        icon: 'fas fa-headset',
+        icon: 'headset',
         skills: [
             {
                 name: 'Incident Triage & Escalation',
@@ -241,7 +263,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     },
     {
         title: 'QA & Testing',
-        icon: 'fas fa-vial',
+        icon: 'vial',
         skills: [
             {
                 name: 'Manual Testing',
@@ -268,7 +290,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     },
     {
         title: 'Technical & Tooling',
-        icon: 'fas fa-wrench',
+        icon: 'wrench',
         skills: [
             {
                 name: 'SQL & Database Querying',
@@ -302,7 +324,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     },
     {
         title: 'Programming',
-        icon: 'fas fa-code',
+        icon: 'code',
         skills: [
             {
                 name: 'Java + OOP',
@@ -336,7 +358,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     },
     {
         title: 'Databases',
-        icon: 'fas fa-database',
+        icon: 'database',
         skills: [
             {
                 name: 'PostgreSQL',
@@ -363,7 +385,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     },
     {
         title: 'Concepts & Frameworks',
-        icon: 'fas fa-sitemap',
+        icon: 'sitemap',
         skills: [
             {
                 name: 'ITIL Fundamentals',
@@ -640,7 +662,7 @@ export const DEFAULT_NOTIFICATIONS: Notification[] = [
         id: 'welcome',
         title: 'Welcome to Saw Ye Htet',
         body: 'IT support & operations specialist. Open the resume, projects, or contact app for the quick path.',
-        icon: 'fas fa-desktop',
+        icon: 'desktop',
         iconBg: 'linear-gradient(135deg, var(--accent-color), var(--accent-bg-color))',
         time: 'Just now',
         group: 'System',

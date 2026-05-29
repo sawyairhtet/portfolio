@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, useRef, type ReactNode } from 'react';
 import type { Notification, Toast } from '../types';
 import { DEFAULT_NOTIFICATIONS } from '../config/data';
+import { useSound } from './SoundContext';
 
 interface NotificationContextValue {
     notifications: Notification[];
@@ -34,6 +35,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const [toasts, setToasts] = useState<Toast[]>([]);
     const [isDnd, setIsDnd] = useState(() => localStorage.getItem('portfolioDnd') === 'true');
     const toastIdRef = useRef(0);
+    const { playNotificationSound } = useSound();
 
     const addNotification = useCallback(
         (notification: Omit<Notification, 'id'>) => {
@@ -53,9 +55,10 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const showToast = useCallback(
-        (message: string, icon = 'fas fa-info-circle', action?: Toast['action']) => {
+        (message: string, icon = 'info-circle', action?: Toast['action']) => {
             if (isDnd) return;
 
+            playNotificationSound();
             const id = `toast-${toastIdRef.current++}`;
             const toast: Toast = { id, message, icon, action };
             setToasts(prev => [...prev, toast]);
@@ -65,7 +68,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
                 setToasts(prev => prev.filter(t => t.id !== id));
             }, 3000);
         },
-        [isDnd]
+        [isDnd, playNotificationSound]
     );
 
     const setDnd = useCallback((dnd: boolean) => {

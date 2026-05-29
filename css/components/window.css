@@ -39,8 +39,9 @@
     pointer-events: none;
 }
 
-.window.is-minimized {
-    display: none;
+.window.is-minimized,
+.window.is-on-other-workspace {
+    display: none !important;
 }
 
 /* Focused window — Mutter-authentic CSD shadow */

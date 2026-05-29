@@ -1,4 +1,5 @@
 import { useNotifications } from '../../context/NotificationContext';
+import { Icon } from './Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 
 export function ToastContainer() {
@@ -11,7 +12,7 @@ export function ToastContainer() {
         <div className="toast-container" aria-live="polite">
             {toasts.map(toast => (
                 <div key={toast.id} className="toast-notification show">
-                    <i className={toast.icon} aria-hidden="true" />
+                    <Icon name={toast.icon} />
                     <span>{toast.message}</span>
                     {toast.action && (
                         <button

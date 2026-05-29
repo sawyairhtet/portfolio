@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
 import { APP_DEFINITIONS } from '../../config/data';
@@ -61,7 +62,7 @@ export function TopBar({
                 </button>
                 <span className="focused-app-name" aria-label="Focused application name">
                     {focusedAppDefinition && (
-                        <i className={focusedAppDefinition.icon} aria-hidden="true" />
+                        <Icon name={focusedAppDefinition.icon} />
                     )}
                     {focusedAppName}
                 </span>
@@ -78,9 +79,9 @@ export function TopBar({
                         {statusTime}
                     </div>
                     <div className="status-icons" aria-hidden="true">
-                        <i className="fas fa-signal" aria-hidden="true" />
-                        <i className="fas fa-wifi" aria-hidden="true" />
-                        <i className="fas fa-battery-three-quarters" aria-hidden="true" />
+                        <Icon name="signal" />
+                        <Icon name="wifi" />
+                        <Icon name="battery-three-quarters" />
                     </div>
                 </div>
             )}
@@ -108,9 +109,9 @@ export function TopBar({
                     title="Quick Settings"
                     onClick={onQuickSettingsToggle}
                 >
-                    <i className="fas fa-wifi" aria-hidden="true" />
-                    <i className="fas fa-volume-up" aria-hidden="true" />
-                    <i className="fas fa-battery-three-quarters" aria-hidden="true" />
+                    <Icon name="wifi" />
+                    <Icon name="volume-up" />
+                    <Icon name="battery-three-quarters" />
                 </button>
             </div>
         </div>

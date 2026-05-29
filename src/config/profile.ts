@@ -20,7 +20,7 @@ export const PROFILE = {
 export const SOCIAL_LINKS = [
     {
         href: 'https://github.com/sawyairhtet',
-        icon: 'fab fa-github',
+        icon: 'github',
         label: 'GitHub',
         handle: '@sawyairhtet',
         domain: 'github.com',
@@ -28,7 +28,7 @@ export const SOCIAL_LINKS = [
     },
     {
         href: 'https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/',
-        icon: 'fab fa-linkedin',
+        icon: 'linkedin',
         label: 'LinkedIn',
         handle: 'Saw Ye Htet',
         domain: 'linkedin.com',
@@ -36,7 +36,7 @@ export const SOCIAL_LINKS = [
     },
     {
         href: 'https://t.me/saulyehtet',
-        icon: 'fab fa-telegram',
+        icon: 'telegram',
         label: 'Telegram',
         handle: '@saulyehtet',
         domain: 't.me',
@@ -44,7 +44,7 @@ export const SOCIAL_LINKS = [
     },
     {
         href: 'https://x.com/saulyehtet_',
-        icon: 'fab fa-x-twitter',
+        icon: 'x-twitter',
         label: 'X',
         handle: '@saulyehtet_',
         domain: 'x.com',

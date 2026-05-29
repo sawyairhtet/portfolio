@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { Icon } from '../ui/Icon';
 import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
 import {
@@ -162,6 +163,8 @@ export function TerminalApp() {
                         '  firefox       - Open GitHub',
                         '  shortcuts     - Show desktop shortcuts',
                         '  open <app>    - Open an app by label or alias',
+                        '  calendar      - Open Calendar and see milestones',
+                        '  loupe/gallery - Open Image Viewer to view photos',
                         '  ls/cd/cat/pwd - Browse the portfolio filesystem',
                         '  clear         - Clear the terminal',
                         '  whoami/date/uptime/echo/neofetch/tree',
@@ -376,6 +379,31 @@ export function TerminalApp() {
                 case 'firefox':
                     openWindow('browser');
                     addLine(`Opening ${SOCIAL_LINKS[0].terminal} in Firefox.`, 'terminal-ok');
+                    break;
+
+                case 'calendar':
+                case 'events':
+                case 'schedule':
+                case 'today':
+                    openWindow('calendar');
+                    addLines([
+                        { text: 'Calendar:', className: 'terminal-heading' },
+                        '  Milestones and scheduled events.',
+                        { text: 'Opened Calendar.', className: 'terminal-ok' },
+                    ]);
+                    break;
+
+                case 'image-viewer':
+                case 'loupe':
+                case 'gallery':
+                case 'photos':
+                case 'viewer':
+                    openWindow('image-viewer');
+                    addLines([
+                        { text: 'Image Viewer (Loupe):', className: 'terminal-heading' },
+                        '  View pictures and system wallpapers.',
+                        { text: 'Opened Image Viewer.', className: 'terminal-ok' },
+                    ]);
                     break;
 
                 case 'shortcuts':
@@ -612,11 +640,20 @@ export function TerminalApp() {
                     'whoami',
                     'cat',
                     'ls',
-                'cd',
-                'open',
-                'neofetch',
-                'nano',
-                'firefox',
+                    'cd',
+                    'open',
+                    'neofetch',
+                    'nano',
+                    'firefox',
+                    'calendar',
+                    'today',
+                    'events',
+                    'schedule',
+                    'image-viewer',
+                    'loupe',
+                    'gallery',
+                    'photos',
+                    'viewer',
                     'projects',
                     'skills',
                     'contact',
@@ -762,7 +799,7 @@ export function TerminalApp() {
                             setInputValue('');
                         }}
                     >
-                        <i className="fas fa-arrow-right" aria-hidden="true" />
+                        <Icon name="arrow-right" />
                     </button>
                 </div>
             </div>
