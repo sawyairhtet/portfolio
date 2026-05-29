@@ -19,14 +19,18 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
     DevOps: <Terminal weight="duotone" size={16} />,
 };
 
+const CATEGORY_ICON_MAP = new Map(Object.entries(CATEGORY_ICONS));
+
 const LEVEL_PERCENT: Record<string, number> = {
     proficient: 100,
     intermediate: 66,
     learning: 33,
 };
 
+const LEVEL_PERCENT_MAP = new Map(Object.entries(LEVEL_PERCENT));
+
 function SkillRing({ level }: { level: string }) {
-    const percent = LEVEL_PERCENT[level] ?? 33;
+    const percent = LEVEL_PERCENT_MAP.get(level) ?? 33;
     const r = 18;
     const circumference = 2 * Math.PI * r;
     const offset = circumference * (1 - percent / 100);
@@ -68,7 +72,10 @@ const cardVariants = {
 export function SkillsApp() {
     const [activeIndex, setActiveIndex] = useState(0);
     const reduced = useReducedMotion();
-    const activeCategory = SKILL_CATEGORIES[activeIndex];
+    const [fallbackCategory] = SKILL_CATEGORIES;
+    const activeCategory = SKILL_CATEGORIES.at(activeIndex) ?? fallbackCategory;
+
+    if (!activeCategory) return null;
 
     return (
         <div className="skills-redesign">
@@ -81,7 +88,7 @@ export function SkillsApp() {
                         className={`skills-tab-pill${i === activeIndex ? ' active' : ''}`}
                         onClick={() => setActiveIndex(i)}
                     >
-                        {CATEGORY_ICONS[cat.title] || <Code weight="duotone" size={16} />}
+                        {CATEGORY_ICON_MAP.get(cat.title) || <Code weight="duotone" size={16} />}
                         <span>{cat.title}</span>
                         {i === activeIndex && (
                             <motion.div

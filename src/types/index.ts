@@ -30,7 +30,6 @@ export type AppId =
     | 'skills'
     | 'projects'
     | 'contact'
-    | 'links'
     | 'terminal'
     | 'settings'
     | 'text-editor'

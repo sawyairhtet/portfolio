@@ -75,7 +75,6 @@ index.html                          ← Vite HTML entry, loads /src/main.tsx
 | `ContactApp` | `contact` | Email/resume actions, copy-email button, Formspree-powered contact form (React Hook Form + Zod validation), honeypot spam filter |
 | `FilesApp` | `files` | Nautilus-style file browser showing projects as file entries |
 | `BrowserApp` | `browser` | Simulated Firefox window pointing at GitHub profile |
-| `LinksApp` | `links` | Social profile links (GitHub, LinkedIn, X) |
 | `TerminalApp` | `terminal` | Full xterm.js terminal with custom shell: `ls`, `cd`, `cat`, `open`, `help`, `neofetch`, `fortune`, `joke`, `hello`, `uptime`, `whoami`, `clear`, `history`, `nano`, `exit`. Can open app windows via command. ~28KB, the largest component |
 | `TextEditorApp` | `text-editor` | Displays resume.md content in a read-only editor view |
 | `SettingsApp` | `settings` | Multi-panel settings: Appearance (wallpaper, accent color, dark mode), Sound (volume, mute), Windows (snap, resize, buttons), System (boot, preferences reset) |

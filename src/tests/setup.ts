@@ -45,22 +45,22 @@ Object.defineProperty(window, 'AudioContext', {
 });
 
 // Mock localStorage
-const storage: Record<string, string> = {};
+const storage = new Map<string, string>();
 Object.defineProperty(window, 'localStorage', {
     value: {
-        getItem: (key: string) => storage[key] ?? null,
+        getItem: (key: string) => storage.get(key) ?? null,
         setItem: (key: string, value: string) => {
-            storage[key] = value;
+            storage.set(key, value);
         },
         removeItem: (key: string) => {
-            delete storage[key];
+            storage.delete(key);
         },
         clear: () => {
-            Object.keys(storage).forEach(k => delete storage[k]);
+            storage.clear();
         },
         get length() {
-            return Object.keys(storage).length;
+            return storage.size;
         },
-        key: (i: number) => Object.keys(storage)[i] ?? null,
+        key: (i: number) => Array.from(storage.keys()).at(i) ?? null,
     },
 });

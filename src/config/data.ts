@@ -70,17 +70,6 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         mobileDock: true,
     },
     {
-        id: 'links',
-        label: 'Links',
-        icon: 'fas fa-link',
-        dockTooltip: 'Links',
-        gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--accent-teal) 100%)',
-        description: 'GitHub, LinkedIn, and social profiles.',
-        aliases: ['social', 'github', 'linkedin', 'x'],
-        desktopDock: true,
-        mobileDock: false,
-    },
-    {
         id: 'browser',
         label: 'Firefox',
         icon: 'fab fa-firefox-browser',
@@ -666,8 +655,8 @@ export const DEFAULT_NOTIFICATIONS: Notification[] = [
 // BOOT TIMING CONSTANTS
 // ============================================
 
-export const BOOT_LINE_INTERVAL_MS = 55;
-export const PLYMOUTH_DURATION_MS = 1200;
+export const BOOT_LINE_INTERVAL_MS = 18;
+export const PLYMOUTH_DURATION_MS = 450;
 
 // ============================================
 // GESTURE THRESHOLDS

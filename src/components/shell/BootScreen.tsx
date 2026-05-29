@@ -21,7 +21,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
         setTimeout(() => {
             setPhase('done');
             onBootComplete();
-        }, 300);
+        }, 180);
     }, [onBootComplete]);
 
     // Check if should skip boot
@@ -76,19 +76,19 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
             if (isSkippedRef.current) return;
 
             if (lineIndex < BOOT_LOG_MESSAGES.length) {
-                const line = BOOT_LOG_MESSAGES[lineIndex];
+                const line = BOOT_LOG_MESSAGES.at(lineIndex);
                 if (typeof line === 'string') {
                     setBootLines(prev => [...prev, line]);
                 }
                 lineIndex++;
                 timeout = setTimeout(addLine, BOOT_LINE_INTERVAL_MS);
             } else {
-                timeout = setTimeout(completeBoot, 500);
+                timeout = setTimeout(completeBoot, 180);
             }
         };
 
         // Small delay for fade transition
-        timeout = setTimeout(addLine, 500);
+        timeout = setTimeout(addLine, 120);
         return () => clearTimeout(timeout);
     }, [phase, completeBoot]);
 

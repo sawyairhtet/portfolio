@@ -112,7 +112,7 @@ export function Dock({ onShowApps }: DockProps) {
             const dock = dockRef.current;
             if (dock) {
                 const buttons = Array.from(dock.querySelectorAll<HTMLElement>('button.dock-item'));
-                buttons[nextIndex]?.focus();
+                buttons.at(nextIndex)?.focus();
             }
         },
         [focusedIndex, allDockItems.length]

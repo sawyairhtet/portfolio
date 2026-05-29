@@ -40,9 +40,6 @@ const ProjectsApp = lazy(() =>
 const ContactApp = lazy(() =>
     import('../apps/ContactApp').then(module => ({ default: module.ContactApp }))
 );
-const LinksApp = lazy(() =>
-    import('../apps/LinksApp').then(module => ({ default: module.LinksApp }))
-);
 const TerminalApp = lazy(() =>
     import('../apps/TerminalApp').then(module => ({ default: module.TerminalApp }))
 );
@@ -332,7 +329,8 @@ export function DesktopShell() {
                     const nextIndex = (altTabIndex + 1) % openWindowIds.length;
                     setAltTabIndex(nextIndex);
                     setAltTabOpen(true);
-                    bringToFront(openWindowIds[nextIndex]);
+                    const nextWindowId = openWindowIds.at(nextIndex);
+                    if (nextWindowId) bringToFront(nextWindowId);
                     window.setTimeout(() => setAltTabOpen(false), 900);
                 }
             }
@@ -591,15 +589,6 @@ export function DesktopShell() {
                     <ErrorBoundary level="window" appId="contact">
                         <Suspense fallback={<AdwaitaSkeleton />}>
                             <ContactApp />
-                        </Suspense>
-                    </ErrorBoundary>
-                </Window>
-            )}
-            {windows.get('links')?.isOpen && (
-                <Window appId="links" title="Links">
-                    <ErrorBoundary level="window" appId="links">
-                        <Suspense fallback={<AdwaitaSkeleton />}>
-                            <LinksApp />
                         </Suspense>
                     </ErrorBoundary>
                 </Window>

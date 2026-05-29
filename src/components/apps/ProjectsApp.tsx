@@ -27,8 +27,10 @@ const TECH_BRAND_COLORS: Record<string, string> = {
     Tailwind: '#06B6D4',
 };
 
+const TECH_BRAND_COLOR_MAP = new Map(Object.entries(TECH_BRAND_COLORS));
+
 function TechChip({ tech }: { tech: string }) {
-    const color = TECH_BRAND_COLORS[tech];
+    const color = TECH_BRAND_COLOR_MAP.get(tech);
     const style = color
         ? {
               background: `color-mix(in srgb, ${color} 15%, transparent)`,

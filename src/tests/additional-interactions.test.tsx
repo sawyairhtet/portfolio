@@ -43,9 +43,9 @@ describe('ContactApp form validation', () => {
 
         // Verify the email link
         expect(screen.getByRole('link', { name: PROFILE.email })).toBeInTheDocument();
-        // Verify the copy buttons
+        // Verify the email copy button
         expect(screen.getByRole('button', { name: /copy email/i })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /copy phone/i })).toBeInTheDocument();
+        expect(screen.queryByRole('button', { name: /copy phone/i })).not.toBeInTheDocument();
         // Verify social links
         expect(screen.getByRole('link', { name: 'GitHub' })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: 'LinkedIn' })).toBeInTheDocument();

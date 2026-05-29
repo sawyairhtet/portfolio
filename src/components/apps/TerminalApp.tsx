@@ -12,10 +12,14 @@ import {
 } from '../../config/data';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
-import type { AppId, FileSystem } from '../../types';
+import type { AppId } from '../../types';
 
 function randomPick<T>(arr: T[]): T {
-    return arr[Math.floor(Math.random() * arr.length)];
+    const fallback = arr.at(0);
+    if (fallback === undefined) {
+        throw new Error('randomPick requires a non-empty array');
+    }
+    return arr.at(Math.floor(Math.random() * arr.length)) ?? fallback;
 }
 
 interface TerminalLine {
@@ -32,6 +36,8 @@ const recruiterPathLines = [
     '  4. Stack context: run skills',
     '  5. Resume/contact: run resume or contact',
 ];
+
+const FILE_SYSTEM = new Map(Object.entries(DEFAULT_FILE_SYSTEM));
 
 export function TerminalApp() {
     const { openWindow } = useWindowManager();
@@ -130,7 +136,6 @@ export function TerminalApp() {
 
             const [rawCommand, ...args] = trimmed.split(/\s+/);
             const command = rawCommand.toLowerCase();
-            const fs: FileSystem = DEFAULT_FILE_SYSTEM;
             const findApp = (input: string): AppId | null => {
                 const q = input.toLowerCase();
                 const app = APP_DEFINITIONS.find(
@@ -153,7 +158,6 @@ export function TerminalApp() {
                         '  skills        - Open Skills and summarize the stack',
                         '  resume/cv     - Open the resume PDF',
                         '  contact/hire  - Open Contact and show recruiter details',
-                        '  links         - Open GitHub, LinkedIn, and social profiles',
                         '  nano resume.md - Open the markdown resume fallback',
                         '  firefox       - Open GitHub',
                         '  shortcuts     - Show desktop shortcuts',
@@ -167,7 +171,7 @@ export function TerminalApp() {
 
                 case 'ls': {
                     const target = args[0] ? resolvePath(args[0]) : cwd;
-                    const node = fs[target];
+                    const node = FILE_SYSTEM.get(target);
                     if (!node) {
                         addLine(
                             `ls: cannot access '${args[0] || target}': No such file or directory`,
@@ -189,7 +193,7 @@ export function TerminalApp() {
                         break;
                     }
                     const target = resolvePath(args[0]);
-                    const node = fs[target];
+                    const node = FILE_SYSTEM.get(target);
                     if (!node) {
                         addLine(`cd: no such file or directory: ${args[0]}`, 'terminal-error');
                         break;
@@ -208,7 +212,7 @@ export function TerminalApp() {
                         break;
                     }
                     const target = resolvePath(args[0]);
-                    const node = fs[target];
+                    const node = FILE_SYSTEM.get(target);
                     if (!node) {
                         addLine(`cat: ${args[0]}: No such file or directory`, 'terminal-error');
                         break;
@@ -335,11 +339,12 @@ export function TerminalApp() {
                     break;
 
                 case 'links':
-                    openWindow('links');
+                case 'social':
+                    openWindow('contact');
                     addLines([
-                        { text: 'Links:', className: 'terminal-heading' },
+                        { text: 'Social links:', className: 'terminal-heading' },
                         ...SOCIAL_LINKS.map(link => `  ${link.label}: ${link.terminal}`),
-                        { text: 'Opened Links.', className: 'terminal-ok' },
+                        { text: 'Opened Contact.', className: 'terminal-ok' },
                     ]);
                     break;
 
@@ -445,14 +450,14 @@ export function TerminalApp() {
                     const target = args[0] ? resolvePath(args[0]) : cwd;
                     const treeLines: string[] = [];
                     const renderTree = (path: string, prefix: string) => {
-                        const node = fs[path];
+                        const node = FILE_SYSTEM.get(path);
                         if (!node || node.type !== 'dir') return;
                         const children = node.children;
                         children.forEach((child, i) => {
                             const isLast = i === children.length - 1;
                             const connector = isLast ? '└── ' : '├── ';
                             const childPath = path === '/' ? `/${child}` : `${path}/${child}`;
-                            const childNode = fs[childPath];
+                            const childNode = FILE_SYSTEM.get(childPath);
                             treeLines.push(
                                 `${prefix}${connector}${child}${childNode?.type === 'dir' ? '/' : ''}`
                             );
@@ -505,7 +510,8 @@ export function TerminalApp() {
                     const newIdx =
                         historyIndex === -1 ? history.length - 1 : Math.max(0, historyIndex - 1);
                     setHistoryIndex(newIdx);
-                    setInputValue(history[newIdx]);
+                    const historyItem = history.at(newIdx);
+                    if (historyItem) setInputValue(historyItem);
                 }
             } else if (e.key === 'ArrowDown') {
                 e.preventDefault();
@@ -516,7 +522,8 @@ export function TerminalApp() {
                         setInputValue('');
                     } else {
                         setHistoryIndex(newIdx);
-                        setInputValue(history[newIdx]);
+                        const historyItem = history.at(newIdx);
+                        if (historyItem) setInputValue(historyItem);
                     }
                 }
             } else if (e.key === 'Tab') {
@@ -525,7 +532,7 @@ export function TerminalApp() {
                 const partial = inputValue.split(/\s+/).pop() || '';
                 if (partial) {
                     const target = resolvePath(cwd);
-                    const node = DEFAULT_FILE_SYSTEM[target];
+                    const node = FILE_SYSTEM.get(target);
                     if (node?.type === 'dir') {
                         const match = node.children.find(c => c.startsWith(partial));
                         if (match) {
@@ -614,14 +621,14 @@ export function TerminalApp() {
                     'skills',
                     'contact',
                     'hire',
-                    'links',
+                    'social',
                     'resume',
                     'cv',
                     'shortcuts',
                     'tree',
                     'clear',
                 ].filter(item => item.startsWith(partial));
-            const currentNode = DEFAULT_FILE_SYSTEM[cwdRef.current];
+            const currentNode = FILE_SYSTEM.get(cwdRef.current);
             const fileMatches =
                 currentNode?.type === 'dir'
                     ? currentNode.children.filter(item => item.startsWith(partial))
@@ -673,7 +680,7 @@ export function TerminalApp() {
                 if (nextIndex >= 0) {
                     historyIndexRef.current = nextIndex;
                     setHistoryIndex(nextIndex);
-                    xtermInputRef.current = historyRef.current[nextIndex];
+                    xtermInputRef.current = historyRef.current.at(nextIndex) ?? '';
                     setInputValue(xtermInputRef.current);
                     redrawInput();
                 }
@@ -689,7 +696,7 @@ export function TerminalApp() {
                 } else {
                     historyIndexRef.current = nextIndex;
                     setHistoryIndex(nextIndex);
-                    xtermInputRef.current = historyRef.current[nextIndex];
+                    xtermInputRef.current = historyRef.current.at(nextIndex) ?? '';
                 }
                 setInputValue(xtermInputRef.current);
                 redrawInput();

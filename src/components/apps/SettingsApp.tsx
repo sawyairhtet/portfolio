@@ -4,6 +4,7 @@ import { useSound } from '../../context/SoundContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { WALLPAPERS, ACCENT_COLORS } from '../../config/data';
+import { PROFILE } from '../../config/profile';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
     Palette,
@@ -277,12 +278,13 @@ export function SettingsApp() {
                             <h3>Saw Ye Htet Portfolio Workstation</h3>
                             <div className="about-system-info">
                                 {[
-                                    ['Role', 'Java-focused Software Developer'],
-                                    ['Primary Stack', 'Java, Spring Boot, SQL, React, TypeScript'],
+                                    ['Role', PROFILE.role],
+                                    ['Target', PROFILE.roleTarget],
+                                    ['Primary Stack', PROFILE.primaryStack.join(', ')],
                                     ['Interface', 'Fedora/GNOME-inspired web desktop'],
                                     ['Runtime', 'React 19 + TypeScript + Vite'],
                                     ['Hardware', 'Browser-hosted portfolio'],
-                                    ['Developer', 'Saw Ye Htet'],
+                                    ['Developer', PROFILE.name],
                                 ].map(([label, value]) => (
                                     <div key={label} className="about-info-row">
                                         <span className="about-info-label">{label}</span>

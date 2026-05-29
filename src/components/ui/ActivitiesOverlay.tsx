@@ -9,13 +9,15 @@ import {
 } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { APP_DEFINITIONS, PROJECTS } from '../../config/data';
-import type { AppId, Project } from '../../types';
+import type { AppDefinition, AppId, Project } from '../../types';
 
 interface ActivitiesOverlayProps {
     isOpen: boolean;
     onClose: () => void;
     workspaceIndex?: number;
 }
+
+const QUICK_START_APP_IDS: AppId[] = ['about', 'projects', 'resume', 'contact'];
 
 export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: ActivitiesOverlayProps) {
     const { openWindow, windows } = useWindowManager();
@@ -131,6 +133,12 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
         });
     }, [normalizedSearch]);
 
+    const quickStartApps = useMemo<AppDefinition[]>(() => {
+        return QUICK_START_APP_IDS.map(id => APP_DEFINITIONS.find(app => app.id === id)).filter(
+            (app): app is AppDefinition => Boolean(app)
+        );
+    }, []);
+
     const handleProjectClick = useCallback(
         (project: Project) => {
             sessionStorage.setItem('portfolioProjectFocus', project.id);
@@ -161,7 +169,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
             nextIndex = activeIndex < 0 ? 0 : (activeIndex + 1) % results.length;
         }
 
-        results[nextIndex]?.focus();
+        results.at(nextIndex)?.focus();
     }, []);
 
     const handleOverlayClick = useCallback(
@@ -271,13 +279,31 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                     aria-hidden="true"
                                 />
                                 <strong>
-                                    {normalizedSearch ? 'No matching windows' : 'No open windows'}
+                                    {normalizedSearch
+                                        ? 'No matching windows'
+                                        : 'Choose what to review'}
                                 </strong>
                                 <span>
                                     {normalizedSearch
                                         ? 'Open an app below or refine your search.'
-                                        : 'Launch an app from the grid.'}
+                                        : 'Start with the recruiter path: About, Projects, Resume, or Contact.'}
                                 </span>
+                                {!normalizedSearch && (
+                                    <div className="activities-quick-start">
+                                        {quickStartApps.map(app => (
+                                            <button
+                                                key={app.id}
+                                                type="button"
+                                                className="activities-quick-start-btn"
+                                                data-activities-result="true"
+                                                onClick={() => handleAppClick(app.id)}
+                                            >
+                                                <i className={app.icon} aria-hidden="true" />
+                                                <span>{app.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             filteredWindows.map(({ id, app, windowInfo }) => (

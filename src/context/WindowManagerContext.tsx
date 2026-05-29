@@ -27,35 +27,36 @@ const WindowManagerContext = createContext<WindowManagerContextValue>({
     setSnapState: () => {},
 });
 
-const DEFAULT_POSITIONS: Record<AppId, { top: string; left: string }> = {
-    about: { top: '8%', left: 'calc(50% - 360px)' },
-    browser: { top: '6%', left: 'calc(50% - 430px)' },
-    files: { top: '7%', left: 'calc(50% - 390px)' },
-    resume: { top: '8%', left: 'calc(50% - 350px)' },
-    skills: { top: '10%', left: 'calc(50% - 325px)' },
-    projects: { top: '8%', left: 'calc(50% - 390px)' },
-    contact: { top: '12%', left: 'calc(50% - 275px)' },
-    links: { top: '14%', left: 'calc(50% - 200px)' },
-    terminal: { top: '10%', left: 'calc(50% - 350px)' },
-    settings: { top: '8%', left: 'calc(50% - 375px)' },
-    'text-editor': { top: '9%', left: 'calc(50% - 360px)' },
-    'focus-mode': { top: '10%', left: 'calc(50% - 430px)' },
-};
+const DEFAULT_POSITION = { top: '10%', left: '10%' };
+const DEFAULT_SIZE = { width: '600px', height: '450px' };
 
-const DEFAULT_SIZES: Record<AppId, { width: string; height: string }> = {
-    about: { width: '720px', height: '600px' },
-    browser: { width: '860px', height: '620px' },
-    files: { width: '780px', height: '560px' },
-    resume: { width: '700px', height: '600px' },
-    skills: { width: '650px', height: '550px' },
-    projects: { width: '780px', height: '580px' },
-    contact: { width: '550px', height: '560px' },
-    links: { width: '400px', height: '350px' },
-    terminal: { width: '700px', height: '450px' },
-    settings: { width: '750px', height: '550px' },
-    'text-editor': { width: '720px', height: '560px' },
-    'focus-mode': { width: '860px', height: '560px' },
-};
+const DEFAULT_POSITIONS = new Map<AppId, { top: string; left: string }>([
+    ['about', { top: '8%', left: 'calc(50% - 360px)' }],
+    ['browser', { top: '6%', left: 'calc(50% - 430px)' }],
+    ['files', { top: '7%', left: 'calc(50% - 390px)' }],
+    ['resume', { top: '8%', left: 'calc(50% - 350px)' }],
+    ['skills', { top: '10%', left: 'calc(50% - 325px)' }],
+    ['projects', { top: '8%', left: 'calc(50% - 390px)' }],
+    ['contact', { top: '12%', left: 'calc(50% - 275px)' }],
+    ['terminal', { top: '10%', left: 'calc(50% - 350px)' }],
+    ['settings', { top: '8%', left: 'calc(50% - 375px)' }],
+    ['text-editor', { top: '9%', left: 'calc(50% - 360px)' }],
+    ['focus-mode', { top: '10%', left: 'calc(50% - 430px)' }],
+]);
+
+const DEFAULT_SIZES = new Map<AppId, { width: string; height: string }>([
+    ['about', { width: '720px', height: '600px' }],
+    ['browser', { width: '860px', height: '620px' }],
+    ['files', { width: '780px', height: '560px' }],
+    ['resume', { width: '700px', height: '600px' }],
+    ['skills', { width: '650px', height: '550px' }],
+    ['projects', { width: '780px', height: '580px' }],
+    ['contact', { width: '550px', height: '560px' }],
+    ['terminal', { width: '700px', height: '450px' }],
+    ['settings', { width: '750px', height: '550px' }],
+    ['text-editor', { width: '720px', height: '560px' }],
+    ['focus-mode', { width: '860px', height: '560px' }],
+]);
 
 function normalizeZIndices(windowsMap: Map<AppId, WindowInfo>, activeAppId?: AppId): Map<AppId, WindowInfo> {
     const next = new Map(windowsMap);
@@ -88,8 +89,8 @@ function createWindowInfo(appId: AppId, zIndex: number, launchOrigin?: LaunchOri
         isMinimized: false,
         isMaximized: false,
         zIndex,
-        position: DEFAULT_POSITIONS[appId] || { top: '10%', left: '10%' },
-        size: DEFAULT_SIZES[appId] || { width: '600px', height: '450px' },
+        position: DEFAULT_POSITIONS.get(appId) ?? DEFAULT_POSITION,
+        size: DEFAULT_SIZES.get(appId) ?? DEFAULT_SIZE,
         snapState: 'none',
         launchOrigin,
     };

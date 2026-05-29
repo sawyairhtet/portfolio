@@ -43,9 +43,6 @@
 @import '@fortawesome/fontawesome-free/css/solid.css';
 @import '@fortawesome/fontawesome-free/css/brands.css';
 
-/* Tailwind CSS v4 */
-@import 'tailwindcss';
-
 /* ============================================
    React-specific additions
    ============================================ */
@@ -311,7 +308,7 @@ body,
     color: var(--text-secondary);
 }
 
-/* About / Skills / Projects / Contact / Links app styles moved to css/components/apps.css */
+/* About / Skills / Projects / Contact app styles moved to css/components/apps.css */
 
 /* Activities */
 .activities-app-grid {
@@ -582,14 +579,41 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     .settings-sidebar {
         width: 100%;
         min-width: 0;
-        flex-direction: row;
+        max-height: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        padding: 10px;
         border-right: none;
         border-bottom: 1px solid var(--border-color);
-        overflow-x: auto;
+        overflow: visible;
+    }
+
+    .settings-sidebar-header {
+        grid-column: 1 / -1;
+        padding: 4px 8px 6px;
     }
 
     .settings-nav-item {
-        flex: 0 0 auto;
+        min-width: 0;
+        min-height: 42px;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: var(--radius-md);
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .settings-nav-item.active {
+        border-left: 0;
+        padding-left: 12px;
+        background: color-mix(in srgb, var(--accent-bg-color) 16%, transparent);
+        color: var(--text-primary);
+    }
+
+    .settings-content {
+        padding: var(--spacing-md);
     }
 
     .focus-controls,

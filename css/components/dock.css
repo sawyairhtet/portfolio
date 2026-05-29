@@ -110,10 +110,6 @@
     background: linear-gradient(135deg, var(--green-3) 0%, var(--accent-teal) 100%);
 }
 
-.dock-item[data-app='links'] {
-    background: linear-gradient(135deg, var(--icon-links-start) 0%, var(--icon-links-end) 100%);
-}
-
 .dock-item[data-app='focus-mode'] {
     background: linear-gradient(135deg, var(--icon-focus-start) 0%, var(--icon-focus-end) 100%);
 }

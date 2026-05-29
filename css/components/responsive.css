@@ -274,120 +274,8 @@
         padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px));
     }
 
-    .social-link {
-        min-height: 80px;
-        padding: var(--spacing-md);
-    }
-
-    .project-card {
-        transition:
-            transform 200ms var(--ease-out-quad),
-            box-shadow 200ms var(--ease-out-quad);
-    }
-
-    .project-card:active {
-        transform: scale(0.98);
-    }
-
-    .tech-badge {
-        padding: 6px 12px;
-        font-size: 11px;
-    }
-
-    .about-hero {
-        display: grid;
-        grid-template-columns: 72px minmax(0, 1fr);
-        align-items: center;
-        gap: 4px 12px;
-        padding: 14px;
-        border-radius: var(--radius-md);
-        margin-bottom: 12px;
-        text-align: left;
-    }
-
-    .about-avatar {
-        grid-row: 1 / 4;
-        width: 72px;
-        height: 72px;
-        margin: 0;
-        border-width: 2px;
-    }
-
     .avatar-fallback {
         font-size: 26px;
-    }
-
-    .about-hero h2 {
-        font-size: 22px;
-        line-height: 1.08;
-        margin: 0;
-    }
-
-    .about-tagline {
-        margin: 2px 0 0 !important;
-        font-size: 14px !important;
-    }
-
-    .about-institution {
-        margin: 2px 0 0 !important;
-        font-size: 11px !important;
-        line-height: 1.35;
-    }
-
-    .about-hero-actions {
-        grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-        margin-top: 10px;
-    }
-
-    .about-cta-btn {
-        justify-content: center;
-        min-height: 40px;
-        padding: 8px 10px;
-        font-size: 13px;
-    }
-
-    .about-social-link {
-        display: none;
-    }
-
-    .recruiter-summary {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        margin-bottom: 12px;
-    }
-
-    .summary-row {
-        padding: 11px 12px;
-    }
-
-    .summary-row:last-child {
-        grid-column: 1 / -1;
-    }
-
-    .about-recruiter-path {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 8px;
-        margin: 0 0 12px;
-    }
-
-    .about-recruiter-path button {
-        min-height: 38px;
-        padding: 8px 6px;
-        font-size: 12px;
-    }
-
-    .about-section {
-        padding: var(--spacing-md);
-    }
-
-    .about-section h3 {
-        font-size: 16px;
-    }
-
-    .about-section p {
-        font-size: 14px;
     }
 
     [data-theme='dark'] .dock,
@@ -409,17 +297,9 @@
         font-size: 14px;
     }
 
-    .links-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-sm);
-    }
 }
 
 @media (max-width: 400px) {
-    .links-list {
-        grid-template-columns: 1fr;
-    }
-
     .mobile-dock {
         gap: 10px;
         padding: 8px 10px;
