@@ -73,15 +73,15 @@
         "not dead"
     ],
     "dependencies": {
-        "@hookform/resolvers": "^5.2.2",
+        "@hookform/resolvers": "^5.4.0",
         "@phosphor-icons/react": "^2.1.10",
-        "@tanstack/react-query": "^5.100.1",
+        "@tanstack/react-query": "^5.100.14",
         "@xterm/xterm": "^6.0.0",
-        "framer-motion": "^12.39.0",
+        "framer-motion": "^12.40.0",
         "react": "^19.2.5",
         "react-dom": "^19.2.5",
-        "react-hook-form": "^7.73.1",
-        "react-router-dom": "^7.14.2",
+        "react-hook-form": "^7.76.1",
+        "react-router-dom": "^7.16.0",
         "zod": "^4.3.6"
     }
 }
