@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useRef, type ReactNode } from 'react';
 import type { AppId, LaunchOrigin, WindowInfo } from '../types';
+import { useSound } from './SoundContext';
 
 interface WindowManagerContextValue {
     windows: Map<AppId, WindowInfo>;
@@ -12,6 +13,8 @@ interface WindowManagerContextValue {
     updateWindowPosition: (appId: AppId, top: string, left: string) => void;
     updateWindowSize: (appId: AppId, width: string, height: string) => void;
     setSnapState: (appId: AppId, snap: 'none' | 'left' | 'right') => void;
+    activeWorkspace: number;
+    setActiveWorkspace: (index: number) => void;
 }
 
 const WindowManagerContext = createContext<WindowManagerContextValue>({
@@ -25,6 +28,8 @@ const WindowManagerContext = createContext<WindowManagerContextValue>({
     updateWindowPosition: () => {},
     updateWindowSize: () => {},
     setSnapState: () => {},
+    activeWorkspace: 0,
+    setActiveWorkspace: () => {},
 });
 
 const DEFAULT_POSITION = { top: '10%', left: '10%' };
@@ -42,6 +47,8 @@ const DEFAULT_POSITIONS = new Map<AppId, { top: string; left: string }>([
     ['settings', { top: '8%', left: 'calc(50% - 375px)' }],
     ['text-editor', { top: '9%', left: 'calc(50% - 360px)' }],
     ['focus-mode', { top: '10%', left: 'calc(50% - 430px)' }],
+    ['calendar', { top: '10%', left: 'calc(50% - 325px)' }],
+    ['image-viewer', { top: '8%', left: 'calc(50% - 375px)' }],
 ]);
 
 const DEFAULT_SIZES = new Map<AppId, { width: string; height: string }>([
@@ -56,6 +63,8 @@ const DEFAULT_SIZES = new Map<AppId, { width: string; height: string }>([
     ['settings', { width: '750px', height: '550px' }],
     ['text-editor', { width: '720px', height: '560px' }],
     ['focus-mode', { width: '860px', height: '560px' }],
+    ['calendar', { width: '650px', height: '520px' }],
+    ['image-viewer', { width: '750px', height: '540px' }],
 ]);
 
 function normalizeZIndices(windowsMap: Map<AppId, WindowInfo>, activeAppId?: AppId): Map<AppId, WindowInfo> {
@@ -82,7 +91,7 @@ function normalizeZIndices(windowsMap: Map<AppId, WindowInfo>, activeAppId?: App
     return next;
 }
 
-function createWindowInfo(appId: AppId, zIndex: number, launchOrigin?: LaunchOrigin): WindowInfo {
+function createWindowInfo(appId: AppId, zIndex: number, workspaceIndex: number, launchOrigin?: LaunchOrigin): WindowInfo {
     return {
         appId,
         isOpen: true,
@@ -93,6 +102,7 @@ function createWindowInfo(appId: AppId, zIndex: number, launchOrigin?: LaunchOri
         size: DEFAULT_SIZES.get(appId) ?? DEFAULT_SIZE,
         snapState: 'none',
         launchOrigin,
+        workspaceIndex,
     };
 }
 
@@ -109,10 +119,21 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         windows: new Map<AppId, WindowInfo>(),
         currentZIndex: 100,
     });
+    const [activeWorkspace, setActiveWorkspace] = useState(0);
     const [focusedApp, setFocusedApp] = useState<AppId | null>(null);
     const { windows } = managerState;
+    const { playMinimizeSound, playRestoreSound } = useSound();
+
+    const windowsRef = useRef(windows);
+    windowsRef.current = windows;
 
     const openWindow = useCallback((appId: AppId, launchOrigin?: LaunchOrigin) => {
+        const win = windowsRef.current.get(appId);
+        if (win && win.isMinimized) {
+            playRestoreSound();
+        } else if (!win || !win.isOpen) {
+            playRestoreSound();
+        }
         setManagerState(prev => {
             const next = new Map(prev.windows);
             const existing = next.get(appId);
@@ -123,16 +144,17 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                     isOpen: true,
                     isMinimized: false,
                     launchOrigin,
+                    workspaceIndex: activeWorkspace,
                 });
             } else {
-                next.set(appId, createWindowInfo(appId, 9999, launchOrigin));
+                next.set(appId, createWindowInfo(appId, 9999, activeWorkspace, launchOrigin));
             }
 
             const normalized = normalizeZIndices(next, appId);
             return { windows: normalized, currentZIndex: 100 + normalized.size };
         });
         setFocusedApp(appId);
-    }, []);
+    }, [activeWorkspace, playRestoreSound]);
 
     const closeWindow = useCallback(
         (appId: AppId) => {
@@ -144,16 +166,20 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
             });
             setFocusedApp(current => {
                 if (current !== appId) return current;
-                const next = new Map(windows);
+                const next = new Map(windowsRef.current);
                 next.delete(appId);
                 return getTopVisibleWindowId(next);
             });
         },
-        [windows]
+        []
     );
 
     const minimizeWindow = useCallback(
         (appId: AppId) => {
+            const win = windowsRef.current.get(appId);
+            if (win && !win.isMinimized) {
+                playMinimizeSound();
+            }
             setManagerState(prev => {
                 const next = new Map(prev.windows);
                 const win = next.get(appId);
@@ -165,7 +191,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
             });
             setFocusedApp(current => {
                 if (current !== appId) return current;
-                const next = new Map(windows);
+                const next = new Map(windowsRef.current);
                 const win = next.get(appId);
                 if (win) {
                     next.set(appId, { ...win, isMinimized: true });
@@ -173,7 +199,7 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                 return getTopVisibleWindowId(next);
             });
         },
-        [windows]
+        [playMinimizeSound]
     );
 
     const toggleMaximize = useCallback((appId: AppId) => {
@@ -199,6 +225,10 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const bringToFront = useCallback((appId: AppId) => {
+        const win = windowsRef.current.get(appId);
+        if (win && win.isMinimized) {
+            playRestoreSound();
+        }
         setManagerState(prev => {
             const next = new Map(prev.windows);
             const win = next.get(appId);
@@ -206,12 +236,16 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                 return prev;
             }
 
-            next.set(appId, { ...win, isMinimized: false });
+            next.set(appId, {
+                ...win,
+                isMinimized: false,
+                workspaceIndex: activeWorkspace,
+            });
             const normalized = normalizeZIndices(next, appId);
             return { windows: normalized, currentZIndex: 100 + normalized.size };
         });
         setFocusedApp(appId);
-    }, []);
+    }, [activeWorkspace, playRestoreSound]);
 
     const updateWindowPosition = useCallback((appId: AppId, top: string, left: string) => {
         setManagerState(prev => {
@@ -259,6 +293,8 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                 updateWindowPosition,
                 updateWindowSize,
                 setSnapState,
+                activeWorkspace,
+                setActiveWorkspace,
             }}
         >
             {children}

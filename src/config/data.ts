@@ -135,6 +135,28 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         desktopDock: false,
         mobileDock: false,
     },
+    {
+        id: 'calendar',
+        label: 'Calendar',
+        icon: 'calendar',
+        dockTooltip: 'Calendar',
+        gradient: 'linear-gradient(135deg, var(--red-1) 0%, var(--accent-red) 100%)',
+        description: 'View month layouts and program milestones.',
+        aliases: ['calendar', 'events', 'schedule', 'today'],
+        desktopDock: true,
+        mobileDock: true,
+    },
+    {
+        id: 'image-viewer',
+        label: 'Image Viewer',
+        icon: 'image',
+        dockTooltip: 'Image Viewer',
+        gradient: 'linear-gradient(135deg, var(--yellow-2) 0%, var(--accent-yellow) 100%)',
+        description: 'View project screenshots, mockups, or wallpapers.',
+        aliases: ['image-viewer', 'viewer', 'loupe', 'gallery', 'photos'],
+        desktopDock: false,
+        mobileDock: false,
+    },
 ];
 
 export const DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.desktopDock);

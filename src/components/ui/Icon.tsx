@@ -6,6 +6,7 @@ import {
     BatteryHigh,
     BellSlash,
     Bluetooth,
+    CalendarBlank,
     CellSignalFull,
     CheckCircle,
     Clock,
@@ -38,6 +39,7 @@ import {
     Moon,
     Package,
     Power,
+    Plus,
     SpeakerHigh,
     Sun,
     TelegramLogo,
@@ -95,6 +97,8 @@ export const ICON_MAP: Record<string, ComponentType<PhosphorIconProps>> = {
     'file-arrow-down': FileArrowDown,
     cog: Gear,
     clock: Clock,
+    calendar: CalendarBlank,
+    'calendar-blank': CalendarBlank,
     // Projects & skills
     github: GithubLogo,
     desktop: Desktop,
@@ -133,6 +137,7 @@ export const ICON_MAP: Record<string, ComponentType<PhosphorIconProps>> = {
     fedora: FedoraLogo,
     'window-maximize': AppWindow,
     home: House,
+    plus: Plus,
     // Toasts / notifications
     'check-circle': CheckCircle,
     'circle-exclamation': WarningCircle,

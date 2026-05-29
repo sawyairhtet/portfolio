@@ -1,0 +1,195 @@
+/* ============================================
+   IMAGE VIEWER APP — Loupe Style
+   ============================================ */
+
+.image-viewer-app {
+    display: flex;
+    height: 100%;
+    min-height: 440px;
+    background: var(--window-bg-color);
+    color: var(--window-fg-color);
+}
+
+.image-viewer-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border-color);
+    background: var(--surface-1, #1d1d20);
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-sm);
+    min-width: 0;
+}
+
+.image-viewer-sidebar-title {
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin: 8px 12px;
+}
+
+.image-viewer-gallery-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.image-viewer-gallery-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md, 8px);
+    color: var(--text-secondary);
+    text-align: left;
+    cursor: pointer;
+    transition: background 150ms var(--ease-out-quad), color 150ms var(--ease-out-quad);
+}
+
+.image-viewer-gallery-item:hover {
+    background: var(--surface-2, rgba(255, 255, 255, 0.04));
+    color: var(--text-primary);
+}
+
+.image-viewer-gallery-item.active {
+    background: var(--surface-3, rgba(255, 255, 255, 0.08));
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.image-viewer-gallery-thumb-wrap {
+    width: 48px;
+    height: 32px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #000;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+}
+
+.image-viewer-gallery-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-viewer-gallery-label {
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.image-viewer-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.image-viewer-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--surface-1);
+}
+
+.image-viewer-zoom-group,
+.image-viewer-rotate-group {
+    display: flex;
+    align-items: center;
+}
+
+.zoom-out-icon-adj {
+    display: inline-flex;
+    transform: scale(0.9);
+}
+
+.image-viewer-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d0d0f; /* Pitch dark stage matching image viewers */
+    overflow: hidden;
+    position: relative;
+}
+
+.image-viewer-canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.image-viewer-display-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    background: transparent;
+}
+
+.image-viewer-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    border-top: 1px solid var(--border-color);
+    background: var(--surface-1);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.image-viewer-footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.image-viewer-footer a:hover {
+    text-decoration: underline;
+}
+
+@container app-window (max-width: 600px) {
+    .image-viewer-app {
+        flex-direction: column-reverse;
+    }
+    
+    .image-viewer-sidebar {
+        width: 100%;
+        height: 120px;
+        border-right: none;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .image-viewer-gallery-list {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 4px;
+    }
+    
+    .image-viewer-gallery-item {
+        flex-direction: column;
+        width: 80px;
+        text-align: center;
+        flex-shrink: 0;
+        gap: 4px;
+    }
+    
+    .image-viewer-gallery-label {
+        font-size: var(--font-size-sm);
+        width: 100%;
+    }
+}

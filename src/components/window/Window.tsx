@@ -51,6 +51,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         updateWindowSize,
         setSnapState,
         focusedApp,
+        activeWorkspace,
     } = useWindowManager();
     const { device } = useDevice();
     const { preferences } = usePreferences();
@@ -422,14 +423,17 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
 
     if (!isOpen || !win) return null;
 
+    const isOtherWorkspace = win.workspaceIndex !== undefined && win.workspaceIndex !== activeWorkspace;
+    const workspaceClass = isOtherWorkspace ? ' is-on-other-workspace' : '';
+
     return (
         <>
             <div
                 ref={windowRef}
-                className={`window active${isFocused ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''}${isClosing ? ' closing' : ''} ${className}`}
+                className={`window active${isFocused && !isOtherWorkspace ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''}${isClosing ? ' closing' : ''}${workspaceClass} ${className}`}
                 id={windowId}
                 data-app={appId}
-                data-focused={isFocused ? 'true' : 'false'}
+                data-focused={isFocused && !isOtherWorkspace ? 'true' : 'false'}
                 role="dialog"
                 aria-modal="false"
                 aria-labelledby={`${appId}-window-title`}

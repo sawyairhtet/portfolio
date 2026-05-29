@@ -21,7 +21,7 @@ interface ActivitiesOverlayProps {
 const QUICK_START_APP_IDS: AppId[] = ['about', 'projects', 'resume', 'contact'];
 
 export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: ActivitiesOverlayProps) {
-    const { openWindow, windows } = useWindowManager();
+    const { openWindow, windows, setActiveWorkspace } = useWindowManager();
     const [searchQuery, setSearchQuery] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -88,13 +88,13 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
 
     const openWindowEntries = useMemo(() => {
         return Array.from(windows.entries())
-            .filter(([, w]) => w.isOpen)
+            .filter(([, w]) => w.isOpen && (w.workspaceIndex === undefined || w.workspaceIndex === workspaceIndex))
             .map(([id, windowInfo]) => ({
                 id,
                 windowInfo,
                 app: APP_DEFINITIONS.find(app => app.id === id),
             }));
-    }, [windows]);
+    }, [windows, workspaceIndex]);
 
     const filteredWindows = useMemo(() => {
         if (!normalizedSearch) return openWindowEntries;
@@ -330,14 +330,16 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
 
                 <aside className="activities-workspace-switcher" aria-label="Workspaces">
                     {[0, 1, 2].map(i => (
-                        <div
+                        <button
                             key={i}
+                            type="button"
                             className={`activities-workspace${i === workspaceIndex ? ' active' : ''}`}
-                            aria-hidden="true"
-                            tabIndex={-1}
+                            aria-label={`Switch to Workspace ${i + 1}`}
+                            onClick={() => setActiveWorkspace(i)}
+                            style={{ cursor: 'pointer' }}
                         >
                             <span />
-                        </div>
+                        </button>
                     ))}
                 </aside>
             </div>

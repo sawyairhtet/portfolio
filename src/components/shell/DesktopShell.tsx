@@ -53,6 +53,12 @@ const SettingsApp = lazy(() =>
 const FocusModeApp = lazy(() =>
     import('../apps/FocusModeApp').then(module => ({ default: module.FocusModeApp }))
 );
+const CalendarApp = lazy(() =>
+    import('../apps/CalendarApp').then(module => ({ default: module.CalendarApp }))
+);
+const ImageViewerApp = lazy(() =>
+    import('../apps/ImageViewerApp').then(module => ({ default: module.ImageViewerApp }))
+);
 
 type WelcomeAction =
     | { label: string; appId: AppId; icon: string; primary?: boolean }
@@ -200,7 +206,7 @@ function ShortcutsDialog({ onClose }: { onClose: () => void }) {
 }
 
 export function DesktopShell() {
-    const { openWindow, closeWindow, bringToFront, windows } = useWindowManager();
+    const { openWindow, closeWindow, bringToFront, windows, activeWorkspace, setActiveWorkspace } = useWindowManager();
     const { playStartupDrum } = useSound();
     const { preferences } = usePreferences();
     const { device } = useDevice();
@@ -214,9 +220,8 @@ export function DesktopShell() {
     const [altTabOpen, setAltTabOpen] = useState(false);
     const [altTabIndex, setAltTabIndex] = useState(0);
     const [shortcutsOpen, setShortcutsOpen] = useState(false);
-    const [workspaceIndex, setWorkspaceIndex] = useState(0);
     const hasVisibleWindows = Array.from(windows.values()).some(
-        win => win.isOpen && !win.isMinimized
+        win => win.isOpen && !win.isMinimized && win.workspaceIndex === activeWorkspace
     );
 
     // Track load time for uptime command
@@ -338,8 +343,8 @@ export function DesktopShell() {
 
             if (e.ctrlKey && e.altKey && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
                 e.preventDefault();
-                setWorkspaceIndex(current =>
-                    e.key === 'ArrowRight' ? Math.min(2, current + 1) : Math.max(0, current - 1)
+                setActiveWorkspace(
+                    e.key === 'ArrowRight' ? Math.min(2, activeWorkspace + 1) : Math.max(0, activeWorkspace - 1)
                 );
             }
 
@@ -507,7 +512,7 @@ export function DesktopShell() {
             <ActivitiesOverlay
                 isOpen={activitiesOpen}
                 onClose={() => setActivitiesOpen(false)}
-                workspaceIndex={workspaceIndex}
+                workspaceIndex={activeWorkspace}
             />
 
             {altTabOpen && (
@@ -530,7 +535,7 @@ export function DesktopShell() {
             {shortcutsOpen && <ShortcutsDialog onClose={() => setShortcutsOpen(false)} />}
 
             <span className="sr-only" aria-live="polite">
-                Workspace {workspaceIndex + 1}
+                Workspace {activeWorkspace + 1}
             </span>
 
             {/* Windows — conditionally rendered to avoid wasted reconciliation */}
@@ -629,6 +634,24 @@ export function DesktopShell() {
                     <ErrorBoundary level="window" appId="focus-mode">
                         <Suspense fallback={<AdwaitaSkeleton />}>
                             <FocusModeApp />
+                        </Suspense>
+                    </ErrorBoundary>
+                </Window>
+            )}
+            {windows.get('calendar')?.isOpen && (
+                <Window appId="calendar" title="Calendar">
+                    <ErrorBoundary level="window" appId="calendar">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <CalendarApp />
+                        </Suspense>
+                    </ErrorBoundary>
+                </Window>
+            )}
+            {windows.get('image-viewer')?.isOpen && (
+                <Window appId="image-viewer" title="Image Viewer">
+                    <ErrorBoundary level="window" appId="image-viewer">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <ImageViewerApp />
                         </Suspense>
                     </ErrorBoundary>
                 </Window>

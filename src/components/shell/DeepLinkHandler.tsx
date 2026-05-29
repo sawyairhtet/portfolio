@@ -16,6 +16,8 @@ const VALID_APPS: AppId[] = [
     'settings',
     'text-editor',
     'focus-mode',
+    'calendar',
+    'image-viewer',
 ];
 
 const DEFAULT_TITLE = 'Saw Ye Htet - IT Support & Operations Specialist';
@@ -79,6 +81,22 @@ const ROUTE_META = new Map<AppId, { title: string; description: string }>([
             title: 'Resume Markdown - Saw Ye Htet | IT Support Specialist',
             description:
                 'Open or download Saw Ye Htet\'s resume, with a readable markdown fallback for the portfolio desktop.',
+        },
+    ],
+    [
+        'calendar',
+        {
+            title: 'Calendar - Saw Ye Htet | IT Support Specialist',
+            description:
+                'Explore milestones, education timelines, and schedule simulated events in Saw Ye Htet\'s Calendar application.',
+        },
+    ],
+    [
+        'image-viewer',
+        {
+            title: 'Image Viewer - Saw Ye Htet | IT Support Specialist',
+            description:
+                'Browse wallpapers and screenshots in Saw Ye Htet\'s Image Viewer (Loupe) application.',
         },
     ],
 ]);

@@ -6,6 +6,9 @@ interface SoundContextValue {
     volume: number;
     setVolume: (volume: number) => void;
     playStartupDrum: () => void;
+    playMinimizeSound: () => void;
+    playRestoreSound: () => void;
+    playNotificationSound: () => void;
 }
 
 const SoundContext = createContext<SoundContextValue>({
@@ -14,6 +17,9 @@ const SoundContext = createContext<SoundContextValue>({
     volume: 70,
     setVolume: () => {},
     playStartupDrum: () => {},
+    playMinimizeSound: () => {},
+    playRestoreSound: () => {},
+    playNotificationSound: () => {},
 });
 
 // Web Audio API based sound manager
@@ -92,8 +98,55 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         }
     }, [isMuted, getAudioCtx, volume]);
 
+    const playMinimizeSound = useCallback(() => {
+        if (isMuted) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 400, 0.1, 'sine', 0.08 * gain);
+            setTimeout(() => createOscillatorSound(ctx, 300, 0.15, 'sine', 0.06 * gain), 80);
+        } catch {
+            // Audio not available
+        }
+    }, [isMuted, getAudioCtx, volume]);
+
+    const playRestoreSound = useCallback(() => {
+        if (isMuted) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 300, 0.1, 'sine', 0.06 * gain);
+            setTimeout(() => createOscillatorSound(ctx, 400, 0.15, 'sine', 0.08 * gain), 80);
+        } catch {
+            // Audio not available
+        }
+    }, [isMuted, getAudioCtx, volume]);
+
+    const playNotificationSound = useCallback(() => {
+        if (isMuted) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 600, 0.08, 'sine', 0.07 * gain);
+            setTimeout(() => createOscillatorSound(ctx, 800, 0.12, 'sine', 0.07 * gain), 100);
+        } catch {
+            // Audio not available
+        }
+    }, [isMuted, getAudioCtx, volume]);
+
     return (
-        <SoundContext.Provider value={{ isMuted, toggleMute, volume, setVolume, playStartupDrum }}>
+        <SoundContext.Provider
+            value={{
+                isMuted,
+                toggleMute,
+                volume,
+                setVolume,
+                playStartupDrum,
+                playMinimizeSound,
+                playRestoreSound,
+                playNotificationSound,
+            }}
+        >
             {children}
         </SoundContext.Provider>
     );

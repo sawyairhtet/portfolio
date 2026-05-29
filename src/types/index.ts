@@ -33,7 +33,9 @@ export type AppId =
     | 'terminal'
     | 'settings'
     | 'text-editor'
-    | 'focus-mode';
+    | 'focus-mode'
+    | 'calendar'
+    | 'image-viewer';
 
 export interface LaunchOrigin {
     x: number;
@@ -50,6 +52,7 @@ export interface WindowInfo {
     size: { width: string; height: string };
     snapState: 'none' | 'left' | 'right';
     launchOrigin?: LaunchOrigin;
+    workspaceIndex?: number;
 }
 
 // ============================================
