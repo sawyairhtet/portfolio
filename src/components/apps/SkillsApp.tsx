@@ -1,25 +1,8 @@
 import { useState } from 'react';
 import { SKILL_CATEGORIES } from '../../config/data';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import {
-    Code,
-    Database,
-    GearSix,
-    Globe,
-    Terminal,
-    Atom,
-} from '@phosphor-icons/react';
-
-const CATEGORY_ICONS: Record<string, React.ReactNode> = {
-    'Java & Backend': <Database weight="duotone" size={16} />,
-    'Web & Tooling': <Globe weight="duotone" size={16} />,
-    Languages: <Code weight="duotone" size={16} />,
-    Frameworks: <Atom weight="duotone" size={16} />,
-    Tools: <GearSix weight="duotone" size={16} />,
-    DevOps: <Terminal weight="duotone" size={16} />,
-};
-
-const CATEGORY_ICON_MAP = new Map(Object.entries(CATEGORY_ICONS));
+import { Code } from '@phosphor-icons/react';
+import { ICON_MAP } from '../ui/Icon';
 
 const LEVEL_PERCENT: Record<string, number> = {
     proficient: 100,
@@ -80,25 +63,28 @@ export function SkillsApp() {
     return (
         <div className="skills-redesign">
             <div className="skills-tab-strip" role="tablist" aria-label="Skill categories">
-                {SKILL_CATEGORIES.map((cat, i) => (
-                    <button
-                        key={cat.title}
-                        role="tab"
-                        aria-selected={i === activeIndex}
-                        className={`skills-tab-pill${i === activeIndex ? ' active' : ''}`}
-                        onClick={() => setActiveIndex(i)}
-                    >
-                        {CATEGORY_ICON_MAP.get(cat.title) || <Code weight="duotone" size={16} />}
-                        <span>{cat.title}</span>
-                        {i === activeIndex && (
-                            <motion.div
-                                className="skills-tab-indicator"
-                                layoutId="tab-pill"
-                                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                            />
-                        )}
-                    </button>
-                ))}
+                {SKILL_CATEGORIES.map((cat, i) => {
+                    const Glyph = ICON_MAP[cat.icon] || Code;
+                    return (
+                        <button
+                            key={cat.title}
+                            role="tab"
+                            aria-selected={i === activeIndex}
+                            className={`skills-tab-pill${i === activeIndex ? ' active' : ''}`}
+                            onClick={() => setActiveIndex(i)}
+                        >
+                            <Glyph weight="duotone" size={16} />
+                            <span>{cat.title}</span>
+                            {i === activeIndex && (
+                                <motion.div
+                                    className="skills-tab-indicator"
+                                    layoutId="tab-pill"
+                                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                                />
+                            )}
+                        </button>
+                    );
+                })}
             </div>
 
             <AnimatePresence mode="wait">

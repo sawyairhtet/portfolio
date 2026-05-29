@@ -16,7 +16,7 @@ import { QuickSettingsPanel } from '../ui/QuickSettingsPanel';
 import { NotificationCenter } from '../ui/NotificationCenter';
 import { ToastContainer } from '../ui/ToastContainer';
 import { ContextMenu } from '../ui/ContextMenu';
-import { DOCK_APPS } from '../../config/data';
+import { DOCK_APPS, APP_DEFINITIONS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
 import type { AppId } from '../../types';
 
@@ -525,8 +525,8 @@ export function DesktopShell() {
                                 key={id}
                                 className={`alt-tab-item${index === altTabIndex ? ' active' : ''}`}
                             >
-                                <Icon name={ DOCK_APPS.find(app => app.id === id)?.icon || 'window-maximize' } />
-                                <span>{DOCK_APPS.find(app => app.id === id)?.label || id}</span>
+                                <Icon name={ APP_DEFINITIONS.find(app => app.id === id)?.icon || 'window-maximize' } />
+                                <span>{APP_DEFINITIONS.find(app => app.id === id)?.label || id}</span>
                             </div>
                         ))}
                 </div>

@@ -193,12 +193,15 @@ export function CalendarApp() {
             <div className="calendar-right-pane">
                 <div className="calendar-events-section">
                     <h3 className="calendar-date-header">
-                        {new Date(selectedDateStr).toLocaleDateString('en-US', {
-                            weekday: 'long',
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                        })}
+                        {(() => {
+                            const [y, m, d] = selectedDateStr.split('-').map(Number);
+                            return new Date(y, m - 1, d).toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric',
+                            });
+                        })()}
                     </h3>
 
                     <div className="calendar-events-list">
