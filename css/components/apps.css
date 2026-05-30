@@ -1495,6 +1495,13 @@
     min-width: 0;
 }
 
+.resume-toolbar-info span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .resume-toolbar-info > svg {
     color: var(--destructive-bg-color);
     flex-shrink: 0;
@@ -1639,6 +1646,41 @@
 .resume-mobile-btn-primary:hover {
     background: var(--accent-bg-color);
     filter: brightness(1.08);
+}
+
+@container app-window (max-width: 520px) {
+    .resume-toolbar {
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .resume-toolbar-info {
+        flex: 1 1 100%;
+    }
+
+    .resume-toolbar-actions {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .resume-action-btn,
+    .resume-mobile-btn {
+        justify-content: center;
+        min-width: 0;
+    }
+
+    .resume-mobile-fallback {
+        justify-content: flex-start;
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+
+    .resume-mobile-actions {
+        display: grid;
+        width: 100%;
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 
 /* ============================================

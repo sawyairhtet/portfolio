@@ -42,6 +42,28 @@
     color: var(--text-primary);
 }
 
+.calendar-nav-buttons {
+    flex: 0 0 auto;
+}
+
+.calendar-nav-buttons .headerbar-btn {
+    display: inline-flex;
+    min-width: 34px;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+}
+
+.calendar-nav-buttons .headerbar-btn:hover {
+    background: var(--surface-3);
+}
+
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);

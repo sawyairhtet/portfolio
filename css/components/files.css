@@ -213,9 +213,42 @@
         width: auto;
     }
 
+    .files-toolbar {
+        flex-wrap: wrap;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .files-pathbar {
+        flex: 1 1 100%;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .files-pathbar button {
+        min-width: 0;
+        max-width: 44%;
+        overflow: hidden;
+        padding: 0 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .files-search-float {
+        flex: 1 1 140px;
+        min-width: 0;
+        max-width: none;
+    }
+
+    .files-view-toggle {
+        flex: 0 0 auto;
+    }
+
     .files-list-header,
     .files-row {
-        grid-template-columns: minmax(160px, 1fr) 90px;
+        grid-template-columns: minmax(0, 1fr) max-content;
     }
 
     .files-list-header span:last-child,
@@ -306,4 +339,3 @@
     border-color: var(--accent-bg-color);
     color: var(--accent-fg-color);
 }
-

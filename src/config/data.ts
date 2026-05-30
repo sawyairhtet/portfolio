@@ -34,7 +34,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         description: 'Nautilus-style project files, recent work, and case studies.',
         aliases: ['nautilus', 'folder', 'recent', 'documents'],
         desktopDock: true,
-        mobileDock: true,
+        mobileDock: false,
     },
     {
         id: 'skills',
@@ -144,7 +144,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         description: 'View month layouts and program milestones.',
         aliases: ['calendar', 'events', 'schedule', 'today'],
         desktopDock: true,
-        mobileDock: true,
+        mobileDock: false,
     },
     {
         id: 'image-viewer',
