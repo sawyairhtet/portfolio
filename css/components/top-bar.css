@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     padding: 0 12px;
-    font-size: 13px;
+    font-size: var(--font-size-base);
     font-weight: 500;
     z-index: var(--z-topbar);
     background: var(--topbar-bg);
@@ -64,7 +64,7 @@
     display: flex;
     align-items: center;
     font-weight: 600;
-    font-size: 13px;
+    font-size: var(--font-size-base);
     letter-spacing: 0;
 }
 
@@ -82,7 +82,7 @@
     align-items: center;
     gap: 6px;
     font-weight: 500;
-    font-size: 13px;
+    font-size: var(--font-size-base);
     padding: 0 6px;
     opacity: 0.78;
     max-width: 160px;
@@ -94,7 +94,7 @@
 
 .focused-app-name i {
     color: var(--accent-color);
-    font-size: 12px;
+    font-size: var(--font-size-xs);
 }
 
 .focused-app-name:empty {
@@ -108,7 +108,7 @@
     min-width: 34px;
     height: 24px;
     color: inherit;
-    font-size: 13px;
+    font-size: var(--font-size-base);
     font-weight: 700;
     font-family: var(--font-ui);
     padding: 0 10px 0 38px;
@@ -223,7 +223,7 @@
 
 /* Status menu */
 .status-menu {
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     gap: 8px;
     cursor: pointer;
     border: none;
@@ -264,7 +264,7 @@
 .status-icons {
     display: flex;
     gap: 6px;
-    font-size: 12px;
+    font-size: var(--font-size-xs);
 }
 
 /* Focus-visible for clock and status-menu pills */

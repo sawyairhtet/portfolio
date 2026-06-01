@@ -35,7 +35,7 @@
     background: transparent;
     color: var(--text-secondary);
     font-family: var(--font-ui);
-    font-size: 13px;
+    font-size: var(--font-size-base);
     font-weight: 500;
     cursor: pointer;
     text-align: left;
@@ -58,7 +58,7 @@
 .settings-nav-item i {
     width: 18px;
     text-align: center;
-    font-size: 14px;
+    font-size: var(--font-size-md);
 }
 
 /* Content area */
@@ -105,7 +105,7 @@
 
 .settings-card h3 {
     margin: 0 0 var(--spacing-md) 0;
-    font-size: 11px;
+    font-size: var(--font-size-2xs);
     font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
@@ -122,13 +122,13 @@
 
 .settings-row span {
     min-width: 0;
-    font-size: 14px;
+    font-size: var(--font-size-md);
     color: var(--text-primary);
 }
 
 .settings-row i {
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: var(--font-size-md);
 }
 
 /* Accent color swatches */
@@ -172,7 +172,7 @@
     align-items: center;
     justify-content: center;
     color: var(--text-on-accent);
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     text-shadow: 0 1px 3px var(--shade-color);
 }
 
@@ -264,7 +264,7 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
 
 .about-system-card h3 {
     text-transform: none;
-    font-size: 18px;
+    font-size: var(--font-size-lg);
     color: var(--text-primary);
     margin-bottom: var(--spacing-lg);
 }
@@ -289,12 +289,12 @@ body[data-time='night'] .wallpaper-grid .wallpaper-option[data-wallpaper='defaul
 }
 
 .about-info-label {
-    font-size: 13px;
+    font-size: var(--font-size-base);
     color: var(--text-secondary);
 }
 
 .about-info-value {
-    font-size: 13px;
+    font-size: var(--font-size-base);
     font-weight: 500;
     color: var(--text-primary);
 }

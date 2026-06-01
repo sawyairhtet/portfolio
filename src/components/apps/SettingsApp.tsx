@@ -21,9 +21,11 @@ import {
     Monitor,
     Globe,
     Clock,
+    Keyboard,
+    PersonArmsSpread,
 } from '@phosphor-icons/react';
 
-type SettingsPanel = 'appearance' | 'sound' | 'windows' | 'display' | 'network' | 'about';
+type SettingsPanel = 'appearance' | 'sound' | 'windows' | 'display' | 'network' | 'keyboard' | 'accessibility' | 'about';
 
 const NAV_ITEMS: { id: SettingsPanel; label: string; icon: React.ReactNode }[] = [
     { id: 'appearance', label: 'Appearance', icon: <Palette weight="duotone" size={16} /> },
@@ -31,6 +33,8 @@ const NAV_ITEMS: { id: SettingsPanel; label: string; icon: React.ReactNode }[] =
     { id: 'windows', label: 'Windows', icon: <AppWindow weight="duotone" size={16} /> },
     { id: 'display', label: 'Displays', icon: <Monitor weight="duotone" size={16} /> },
     { id: 'network', label: 'Network', icon: <Globe weight="duotone" size={16} /> },
+    { id: 'keyboard', label: 'Keyboard', icon: <Keyboard weight="duotone" size={16} /> },
+    { id: 'accessibility', label: 'Accessibility', icon: <PersonArmsSpread weight="duotone" size={16} /> },
     { id: 'about', label: 'About', icon: <Info weight="duotone" size={16} /> },
 ];
 
@@ -97,7 +101,7 @@ export const SettingsApp = memo(function SettingsApp() {
     useEffect(() => {
         const handleSettingsPanelRequest = (event: Event) => {
             const panel = (event as CustomEvent<SettingsPanel>).detail;
-            if (['appearance', 'sound', 'windows', 'display', 'network', 'about'].includes(panel)) {
+            if (['appearance', 'sound', 'windows', 'display', 'network', 'keyboard', 'accessibility', 'about'].includes(panel)) {
                 setActivePanel(panel);
             }
         };
@@ -533,6 +537,92 @@ export const SettingsApp = memo(function SettingsApp() {
                                     {pingLogs.join('\n')}
                                 </pre>
                             )}
+                        </div>
+                    </div>
+                )}
+
+                {activePanel === 'keyboard' && (
+                    <div className="settings-panel active">
+                        <h2>Keyboard</h2>
+                        <div className="settings-card">
+                            <h3>Keyboard Shortcuts</h3>
+                            <div style={{ display: 'grid', gap: '8px' }}>
+                                {([
+                                    ['Super', 'Toggle Activities Overview'],
+                                    ['Alt+Tab', 'Switch between windows'],
+                                    ['Super+Left/Right', 'Tile window to side'],
+                                    ['Super+Up', 'Maximize window'],
+                                    ['Super+Down', 'Restore window'],
+                                    ['Super+PageUp/Down', 'Switch workspace'],
+                                    ['Super+1…9', 'Open dock app'],
+                                    ['Ctrl+Alt+←/→', 'Switch workspace'],
+                                    ['Esc', 'Close top window or overlay'],
+                                    ['/', 'Open Settings'],
+                                    ['?', 'Show all shortcuts'],
+                                ] as const).map(([keys, desc]) => (
+                                    <div key={keys} className="settings-row">
+                                        <kbd style={{
+                                            padding: '3px 8px',
+                                            borderRadius: 'var(--radius-sm)',
+                                            background: 'var(--surface-3)',
+                                            border: '1px solid var(--border-color)',
+                                            fontFamily: 'var(--font-mono)',
+                                            fontSize: 'var(--font-size-xs)',
+                                            fontWeight: 700,
+                                        }}>{keys}</kbd>
+                                        <span>{desc}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {activePanel === 'accessibility' && (
+                    <div className="settings-panel active">
+                        <h2>Accessibility</h2>
+                        <div className="settings-card">
+                            <h3>Motion</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <span>Reduce Motion</span>
+                                </span>
+                                <span style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-xs)' }}>
+                                    {window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                                        ? 'Enabled (system preference)'
+                                        : 'Disabled (system preference)'}
+                                </span>
+                            </div>
+                            <p className="settings-row-desc">
+                                This site respects your system reduced-motion setting. Animations
+                                are disabled when your OS requests it.
+                            </p>
+                        </div>
+                        <div className="settings-card">
+                            <h3>Contrast</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <span>High Contrast</span>
+                                </span>
+                                <span style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-xs)' }}>
+                                    {window.matchMedia('(prefers-contrast: more)').matches
+                                        ? 'Enabled (system preference)'
+                                        : 'Disabled (system preference)'}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="settings-card">
+                            <h3>Color Scheme</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <span>Dark Mode Preference</span>
+                                </span>
+                                <span style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-xs)' }}>
+                                    {window.matchMedia('(prefers-color-scheme: dark)').matches
+                                        ? 'Dark'
+                                        : 'Light'}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 )}

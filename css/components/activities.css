@@ -43,7 +43,7 @@
     left: 18px;
     z-index: 1;
     color: color-mix(in srgb, var(--overview-fg-color) var(--dim-opacity), transparent);
-    font-size: 14px;
+    font-size: var(--font-size-md);
     pointer-events: none;
     transform: translateY(-50%);
 }
@@ -340,7 +340,7 @@
     background: color-mix(in srgb, var(--popover-bg-color) 78%, transparent);
     color: var(--overview-fg-color);
     font-family: var(--font-ui);
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     font-weight: 700;
 }
 
@@ -502,7 +502,7 @@
 
 .activities-empty-search i {
     color: var(--accent-color);
-    font-size: 22px;
+    font-size: var(--font-size-xl);
 }
 
 .activities-empty-search strong {
@@ -641,7 +641,7 @@
     .activities-app-icon {
         width: 48px;
         height: 48px;
-        font-size: 20px;
+        font-size: var(--font-size-xl);
     }
 
     .activities-project-results {

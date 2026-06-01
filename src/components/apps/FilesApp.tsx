@@ -1,6 +1,7 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { PROJECTS, WALLPAPERS } from '../../config/data';
 import { useWindowManager } from '../../context/WindowManagerContext';
+import { Icon } from '../ui/Icon';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
     FolderSimple,
@@ -58,6 +59,24 @@ export const FilesApp = memo(function FilesApp() {
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState<FilterPill>('all');
     const [showHiddenFiles, setShowHiddenFiles] = useState(false);
+    const [cutFileId, setCutFileId] = useState<string | null>(null);
+    const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
+    const contextMenuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const hide = () => setContextMenu(null);
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') hide();
+        };
+        if (contextMenu) {
+            document.addEventListener('click', hide);
+            document.addEventListener('keydown', onKey);
+        }
+        return () => {
+            document.removeEventListener('click', hide);
+            document.removeEventListener('keydown', onKey);
+        };
+    }, [contextMenu]);
 
     const files = useMemo(() => {
         if (view === 'home') {
@@ -192,6 +211,22 @@ export const FilesApp = memo(function FilesApp() {
             openWindow('projects');
         }
     };
+
+    const handleFileContextMenu = useCallback((e: React.MouseEvent, fileId: string) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setSelectedId(fileId);
+        setContextMenu({ x: e.clientX, y: e.clientY });
+    }, []);
+
+    const handleCutFile = useCallback(() => {
+        if (selectedId) setCutFileId(selectedId);
+        setContextMenu(null);
+    }, [selectedId]);
+
+    const handleContextRename = useCallback(() => {
+        setContextMenu(null);
+    }, []);
 
     const selectedFile = filteredFiles.find(f => f.id === selectedId);
 
@@ -358,10 +393,11 @@ export const FilesApp = memo(function FilesApp() {
                         <button
                             key={file.id}
                             type="button"
-                            className={`files-row${selectedId === file.id ? ' selected' : ''}${file.dotfile ? ' dotfile' : ''}`}
+                            className={`files-row${selectedId === file.id ? ' selected' : ''}${file.dotfile ? ' dotfile' : ''}${cutFileId === file.id ? ' cut-file' : ''}`}
                             role="option"
                             aria-selected={selectedId === file.id}
                             onClick={() => setSelectedId(file.id)}
+                            onContextMenu={e => handleFileContextMenu(e, file.id)}
                             onDoubleClick={() => openSelected(file.id)}
                             onKeyDown={event => {
                                 if (event.key === 'Enter') {
@@ -399,6 +435,29 @@ export const FilesApp = memo(function FilesApp() {
                     )}
                 </AnimatePresence>
             </section>
+
+            {contextMenu && (
+                <div
+                    ref={contextMenuRef}
+                    className="files-context-menu"
+                    style={{ left: contextMenu.x, top: contextMenu.y }}
+                    role="menu"
+                >
+                    <button type="button" role="menuitem" onClick={() => openSelected(selectedId)}>
+                        Open
+                    </button>
+                    <button type="button" role="menuitem" onClick={handleCutFile}>
+                        Cut
+                    </button>
+                    <button type="button" role="menuitem" onClick={handleContextRename}>
+                        Rename…
+                    </button>
+                    <hr />
+                    <button type="button" role="menuitem" onClick={() => setContextMenu(null)}>
+                        Properties
+                    </button>
+                </div>
+            )}
         </div>
     );
 });

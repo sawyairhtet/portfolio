@@ -17,6 +17,13 @@ interface SoundContextValue {
     playMinimizeSound: () => void;
     playRestoreSound: () => void;
     playNotificationSound: () => void;
+    playCloseSound: () => void;
+    playClickSound: () => void;
+    playToggleSound: () => void;
+    playErrorSound: () => void;
+    playMaximizeSound: () => void;
+    isDnd: boolean;
+    setDnd: (dnd: boolean) => void;
 }
 
 const SoundContext = createContext<SoundContextValue>({
@@ -28,6 +35,13 @@ const SoundContext = createContext<SoundContextValue>({
     playMinimizeSound: () => {},
     playRestoreSound: () => {},
     playNotificationSound: () => {},
+    playCloseSound: () => {},
+    playClickSound: () => {},
+    playToggleSound: () => {},
+    playErrorSound: () => {},
+    playMaximizeSound: () => {},
+    isDnd: false,
+    setDnd: () => {},
 });
 
 // Web Audio API based sound manager
@@ -57,6 +71,9 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     const [volume, setVolumeState] = useState<number>(() => {
         const saved = Number(localStorage.getItem('soundVolume'));
         return Number.isFinite(saved) ? Math.min(100, Math.max(0, saved)) : 70;
+    });
+    const [isDnd, setIsDnd] = useState<boolean>(() => {
+        return localStorage.getItem('portfolioDnd') === 'true';
     });
 
     const audioCtxRef = useRef<AudioContext | null>(null);
@@ -164,7 +181,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     }, [isMuted, getAudioCtx, volume]);
 
     const playNotificationSound = useCallback(() => {
-        if (isMuted || !isUnlockedRef.current) return;
+        if (isMuted || isDnd || !isUnlockedRef.current) return;
         try {
             const ctx = getAudioCtx();
             const gain = volume / 100;
@@ -173,7 +190,70 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         } catch {
             // Audio not available
         }
+    }, [isMuted, isDnd, getAudioCtx, volume]);
+
+    const playCloseSound = useCallback(() => {
+        if (isMuted || !isUnlockedRef.current) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 500, 0.08, 'sine', 0.06 * gain);
+            setTimeout(() => createOscillatorSound(ctx, 350, 0.1, 'sine', 0.05 * gain), 60);
+        } catch {
+            // Audio not available
+        }
     }, [isMuted, getAudioCtx, volume]);
+
+    const playClickSound = useCallback(() => {
+        if (isMuted || !isUnlockedRef.current) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 800, 0.04, 'sine', 0.04 * gain);
+        } catch {
+            // Audio not available
+        }
+    }, [isMuted, getAudioCtx, volume]);
+
+    const playToggleSound = useCallback(() => {
+        if (isMuted || !isUnlockedRef.current) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 1000, 0.04, 'square', 0.03 * gain);
+        } catch {
+            // Audio not available
+        }
+    }, [isMuted, getAudioCtx, volume]);
+
+    const playErrorSound = useCallback(() => {
+        if (isMuted || !isUnlockedRef.current) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 200, 0.12, 'square', 0.05 * gain);
+            setTimeout(() => createOscillatorSound(ctx, 160, 0.18, 'square', 0.04 * gain), 100);
+        } catch {
+            // Audio not available
+        }
+    }, [isMuted, getAudioCtx, volume]);
+
+    const playMaximizeSound = useCallback(() => {
+        if (isMuted || !isUnlockedRef.current) return;
+        try {
+            const ctx = getAudioCtx();
+            const gain = volume / 100;
+            createOscillatorSound(ctx, 500, 0.06, 'sine', 0.05 * gain);
+            setTimeout(() => createOscillatorSound(ctx, 700, 0.1, 'sine', 0.04 * gain), 50);
+        } catch {
+            // Audio not available
+        }
+    }, [isMuted, getAudioCtx, volume]);
+
+    const setDnd = useCallback((dnd: boolean) => {
+        setIsDnd(dnd);
+        localStorage.setItem('portfolioDnd', String(dnd));
+    }, []);
 
     return (
         <SoundContext.Provider
@@ -186,6 +266,13 @@ export function SoundProvider({ children }: { children: ReactNode }) {
                 playMinimizeSound,
                 playRestoreSound,
                 playNotificationSound,
+                playCloseSound,
+                playClickSound,
+                playToggleSound,
+                playErrorSound,
+                playMaximizeSound,
+                isDnd,
+                setDnd,
             }}
         >
             {children}

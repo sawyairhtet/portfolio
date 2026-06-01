@@ -32,7 +32,7 @@
     padding: 8px 14px;
     border: 0;
     cursor: pointer;
-    font-size: 13px;
+    font-size: var(--font-size-base);
     font-family: var(--font-ui);
     text-align: left;
     background: transparent;
@@ -59,7 +59,7 @@
 .context-menu-item i {
     width: 16px;
     text-align: center;
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     color: var(--text-secondary);
     transition: color 200ms var(--ease-in-out-quad);
 }

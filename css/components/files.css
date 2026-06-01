@@ -286,7 +286,7 @@
 }
 
 .files-search-float i {
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     color: color-mix(in srgb, var(--view-fg-color) var(--dim-opacity), transparent);
     flex-shrink: 0;
 }
@@ -299,7 +299,7 @@
     background: transparent;
     color: inherit;
     font: inherit;
-    font-size: 13px;
+    font-size: var(--font-size-base);
 }
 
 .files-search-float input::placeholder {
@@ -322,7 +322,7 @@
     background: transparent;
     color: var(--view-fg-color);
     font: inherit;
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     font-weight: 600;
     cursor: pointer;
     transition:
@@ -338,4 +338,52 @@
     background: var(--accent-bg-color);
     border-color: var(--accent-bg-color);
     color: var(--accent-fg-color);
+}
+
+/* Cut file — dashed border + scissor visual */
+.files-row.cut-file {
+    border: 1px dashed var(--border-color);
+    opacity: 0.6;
+}
+
+.files-row.cut-file:hover {
+    opacity: 0.8;
+}
+
+/* Files right-click context menu */
+.files-context-menu {
+    position: fixed;
+    z-index: var(--z-context-menu);
+    min-width: 160px;
+    padding: 4px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--menu_radius);
+    background: var(--popover-bg-color);
+    box-shadow: var(--shadow-popover);
+    animation: contextMenuIn 120ms var(--ease-out-quad) forwards;
+}
+
+.files-context-menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--popover-fg-color);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-base);
+    text-align: left;
+    cursor: pointer;
+    transition: background 200ms var(--ease-in-out-quad);
+}
+
+.files-context-menu button:hover {
+    background: color-mix(in srgb, var(--popover-fg-color) 8%, transparent);
+}
+
+.files-context-menu hr {
+    margin: 4px 8px;
+    border: none;
+    border-top: 1px solid var(--border-color);
 }

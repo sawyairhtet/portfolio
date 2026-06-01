@@ -79,7 +79,7 @@
     display: block;
     margin-bottom: 4px;
     color: var(--accent);
-    font-size: 11px;
+    font-size: var(--font-size-2xs);
     font-weight: 800;
     text-transform: uppercase;
 }
@@ -87,14 +87,14 @@
 .resume-file-copy h3 {
     margin: 0 0 6px;
     color: var(--view-fg-color);
-    font-size: 18px;
+    font-size: var(--font-size-lg);
     line-height: 1.25;
 }
 
 .resume-file-copy p {
     margin: 0;
     color: var(--window-fg-muted-color);
-    font-size: 13px;
+    font-size: var(--font-size-base);
     line-height: 1.5;
 }
 
@@ -125,7 +125,7 @@
 .resume-file-meta dt {
     margin-bottom: 3px;
     color: var(--window-fg-muted-color);
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     font-weight: 800;
     text-transform: uppercase;
 }
@@ -134,7 +134,7 @@
     margin: 0;
     overflow: hidden;
     color: var(--view-fg-color);
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     font-weight: 600;
     line-height: 1.35;
     text-overflow: ellipsis;

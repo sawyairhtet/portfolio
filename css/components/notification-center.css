@@ -74,7 +74,7 @@
     background: transparent;
     color: var(--text-secondary);
     font-family: var(--font-ui);
-    font-size: 11px;
+    font-size: var(--font-size-2xs);
     cursor: pointer;
     transition:
         background var(--transition-fast),
@@ -99,7 +99,7 @@
     background: transparent;
     color: var(--text-secondary);
     font-family: var(--font-ui);
-    font-size: 11px;
+    font-size: var(--font-size-2xs);
     cursor: pointer;
     transition:
         background var(--transition-fast),
@@ -135,7 +135,7 @@
 }
 
 .notification-empty span {
-    font-size: 13px;
+    font-size: var(--font-size-base);
 }
 
 /* Notification Group */
@@ -152,7 +152,7 @@
 }
 
 .notification-group-name {
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0;
@@ -160,7 +160,7 @@
 }
 
 .notification-group-count {
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     padding: 2px 7px;
     background: var(--surface-3);
     border-radius: 10px;
@@ -204,7 +204,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: var(--font-size-lg);
     color: var(--accent);
     flex-shrink: 0;
     box-shadow: var(--shadow-elevation-1);
@@ -226,7 +226,7 @@
 }
 
 .notification-item-title {
-    font-size: 13px;
+    font-size: var(--font-size-base);
     font-weight: 600;
     color: var(--text-primary);
     white-space: nowrap;
@@ -235,7 +235,7 @@
 }
 
 .notification-item-body {
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     color: var(--text-secondary);
     line-height: 1.4;
     display: -webkit-box;
@@ -246,7 +246,7 @@
 }
 
 .notification-item-time {
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     color: var(--text-disabled);
     margin-top: 2px;
 }
@@ -283,7 +283,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    font-size: 10px;
+    font-size: var(--font-size-2xs);
     opacity: 0;
     transition:
         opacity var(--transition-fast),

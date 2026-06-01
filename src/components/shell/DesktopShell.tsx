@@ -211,7 +211,7 @@ function ShortcutsDialog({ onClose }: { onClose: () => void }) {
 }
 
 export function DesktopShell() {
-    const { openWindow, closeWindow, bringToFront, windows, activeWorkspace, setActiveWorkspace } =
+    const { openWindow, closeWindow, bringToFront, windows, activeWorkspace, setActiveWorkspace, setSnapState, toggleMaximize } =
         useWindowManager();
     const { playStartupDrum } = useSound();
     const { preferences } = usePreferences();
@@ -233,6 +233,7 @@ export function DesktopShell() {
     const [altTabOpen, setAltTabOpen] = useState(false);
     const [altTabIndex, setAltTabIndex] = useState(0);
     const [shortcutsOpen, setShortcutsOpen] = useState(false);
+    const mruStack = useRef<AppId[]>([]);
     const hasVisibleWindows = Array.from(windows.values()).some(
         win => win.isOpen && !win.isMinimized && win.workspaceIndex === activeWorkspace
     );
@@ -344,6 +345,17 @@ export function DesktopShell() {
 
             if (e.altKey && e.key === 'Tab') {
                 e.preventDefault();
+                const openWindowIds = Array.from(windows.entries())
+                    .filter(([, win]) => win.isOpen && !win.isMinimized && (win.workspaceIndex === undefined || win.workspaceIndex === activeWorkspace))
+                    .sort(([, a], [, b]) => b.zIndex - a.zIndex)
+                    .map(([id]) => id);
+
+                // Update MRU: move the last-focused window to the end (most recent)
+                const lastFocused = openWindowIds[0];
+                if (lastFocused) {
+                    mruStack.current = [...mruStack.current.filter(id => id !== lastFocused), lastFocused];
+                }
+
                 if (openWindowIds.length > 0) {
                     const nextIndex = (altTabIndex + 1) % openWindowIds.length;
                     setAltTabIndex(nextIndex);
@@ -351,6 +363,43 @@ export function DesktopShell() {
                     const nextWindowId = openWindowIds.at(nextIndex);
                     if (nextWindowId) bringToFront(nextWindowId);
                     window.setTimeout(() => setAltTabOpen(false), 900);
+                }
+            }
+
+            // Super+Arrow keys for tiling and maximize/restore
+            if (e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey) {
+                const topWindow = Array.from(windows.entries())
+                    .filter(([, win]) => win.isOpen && !win.isMinimized && (win.workspaceIndex === undefined || win.workspaceIndex === activeWorkspace))
+                    .sort(([, a], [, b]) => b.zIndex - a.zIndex)
+                    .map(([id]) => id)[0];
+
+                if (topWindow) {
+                    const win = windows.get(topWindow);
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        setSnapState(topWindow, 'left');
+                    } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        setSnapState(topWindow, 'right');
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (!win?.isMaximized) toggleMaximize(topWindow);
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (win?.isMaximized) toggleMaximize(topWindow);
+                        else if (win?.snapState !== 'none') setSnapState(topWindow, 'none');
+                    }
+                }
+            }
+
+            // Super+PageUp/PageDown for workspace switching
+            if (e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey) {
+                if (e.key === 'PageUp') {
+                    e.preventDefault();
+                    setActiveWorkspace(activeWorkspace - 1);
+                } else if (e.key === 'PageDown') {
+                    e.preventDefault();
+                    setActiveWorkspace(activeWorkspace + 1);
                 }
             }
 
@@ -407,7 +456,7 @@ export function DesktopShell() {
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [activeOverlay, altTabIndex, bringToFront, closeWindow, openWindow, shortcutsOpen, windows]);
+    }, [activeOverlay, altTabIndex, bringToFront, closeWindow, openWindow, shortcutsOpen, windows, activeWorkspace, setActiveWorkspace, setSnapState, toggleMaximize]);
 
     return (
         <>

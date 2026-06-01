@@ -92,8 +92,11 @@
     /* ── Typography — GNOME 49 Adwaita defaults ── */
     --font-ui: var(--document-font-family);
     --font-mono: var(--monospace-font-family);
-    --font-size-base: 11pt;
+    --font-size-2xs: 75%;
+    --font-size-xs: 82%;
     --font-size-sm: 82%;
+    --font-size-base: 11pt;
+    --font-size-md: 11pt;
     --font-size-lg: 118%;
     --font-size-xl: 136%;
     --font-size-2xl: 136%;

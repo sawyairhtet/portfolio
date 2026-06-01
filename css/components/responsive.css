@@ -248,7 +248,7 @@
         border-radius: 50%;
         background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
         color: var(--text-secondary);
-        font-size: 22px;
+        font-size: var(--font-size-xl);
         cursor: pointer;
         transition:
             background 200ms var(--ease-in-out-quad),
@@ -273,7 +273,7 @@
     }
 
     .window-title {
-        font-size: 16px;
+        font-size: var(--font-size-lg);
         font-weight: 600;
     }
 
@@ -297,11 +297,11 @@
 
 @media (max-width: 480px) {
     .terminal-prompt {
-        font-size: 12px;
+        font-size: var(--font-size-xs);
     }
 
     .terminal-input {
-        font-size: 14px;
+        font-size: var(--font-size-md);
     }
 }
 
@@ -329,7 +329,7 @@
     .dock-item {
         width: 40px;
         height: 40px;
-        font-size: 18px;
+        font-size: var(--font-size-lg);
     }
 
     .desktop-welcome h2 {

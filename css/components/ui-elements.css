@@ -24,7 +24,7 @@
 
 .boot-log {
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: var(--font-size-md);
     color: var(--boot-text);
     line-height: 1.6;
     white-space: pre-wrap;

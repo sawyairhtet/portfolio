@@ -269,7 +269,7 @@
     place-items: center;
     flex: 0 0 auto;
     color: color-mix(in srgb, currentColor 70%, transparent);
-    font-size: 13px;
+    font-size: var(--font-size-base);
 }
 
 /* Title — non-interactive so drags pass through to the header */

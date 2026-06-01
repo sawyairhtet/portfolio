@@ -3,8 +3,11 @@ import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
 import { usePreferences } from '../../context/PreferencesContext';
+import { useSound } from '../../context/SoundContext';
 import { APP_DEFINITIONS, SWIPE_CLOSE_MAX_X, SWIPE_CLOSE_THRESHOLD_Y } from '../../config/data';
 import type { AppId } from '../../types';
+
+const APPS_CLOSE_ONLY = new Set<AppId>(['calendar', 'image-viewer', 'software', 'focus-mode']);
 
 interface WindowProps {
     appId: AppId;
@@ -55,6 +58,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     } = useWindowManager();
     const { device } = useDevice();
     const { preferences } = usePreferences();
+    const { playCloseSound, playClickSound, playMaximizeSound } = useSound();
     const windowRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
     const dragOffset = useRef({ x: 0, y: 0 });
@@ -96,6 +100,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     }, []);
 
     const requestClose = useCallback(() => {
+        playCloseSound();
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         if (reduceMotion) {
@@ -107,7 +112,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         closeTimerRef.current = window.setTimeout(() => {
             closeWindow(appId);
         }, 220);
-    }, [appId, closeWindow]);
+    }, [appId, closeWindow, playCloseSound]);
 
     useEffect(() => {
         if (!isOpen || !win) return;
@@ -371,21 +376,25 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     // Double-click to maximize
     const handleDoubleClick = useCallback(() => {
         if (device === 'desktop') {
+            playMaximizeSound();
             toggleMaximize(appId);
         }
-    }, [device, appId, toggleMaximize]);
+    }, [device, appId, toggleMaximize, playMaximizeSound]);
 
     // Click anywhere on window to bring to front
     const handleWindowMouseDown = useCallback(
         (event: React.MouseEvent<HTMLDivElement>) => {
             const target = event.target as HTMLElement;
+            if (focusedApp !== appId) {
+                playClickSound();
+            }
             bringToFront(appId);
 
             if (!target.closest('button, a, input, textarea, select, [role="button"]')) {
                 windowRef.current?.focus({ preventScroll: true });
             }
         },
-        [appId, bringToFront]
+        [appId, bringToFront, focusedApp, playClickSound]
     );
 
     const handleKeyDown = useCallback(
@@ -467,18 +476,25 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                         <Icon name="times" />
                     </button>
                     <div className="window-controls">
-                        <button
-                            type="button"
-                            className="window-control minimize"
-                            aria-label="Minimize"
-                            onClick={() => minimizeWindow(appId)}
-                        />
-                        <button
-                            type="button"
-                            className={`window-control maximize${isMaximized ? ' restore' : ''}`}
-                            aria-label={isMaximized ? 'Restore' : 'Maximize'}
-                            onClick={() => toggleMaximize(appId)}
-                        />
+                        {!APPS_CLOSE_ONLY.has(appId) && (
+                            <>
+                                <button
+                                    type="button"
+                                    className="window-control minimize"
+                                    aria-label="Minimize"
+                                    onClick={() => minimizeWindow(appId)}
+                                />
+                                <button
+                                    type="button"
+                                    className={`window-control maximize${isMaximized ? ' restore' : ''}`}
+                                    aria-label={isMaximized ? 'Restore' : 'Maximize'}
+                                    onClick={() => {
+                                        playMaximizeSound();
+                                        toggleMaximize(appId);
+                                    }}
+                                />
+                            </>
+                        )}
                         <button
                             type="button"
                             className="window-control close"

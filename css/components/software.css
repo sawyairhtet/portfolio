@@ -106,7 +106,7 @@
     background: none;
     cursor: pointer;
     padding: 0;
-    font-size: 16px;
+    font-size: var(--font-size-lg);
     color: var(--light-5);
     line-height: 1;
 }
@@ -338,7 +338,7 @@
     padding: 4px;
     cursor: pointer;
     color: var(--light-5);
-    font-size: 14px;
+    font-size: var(--font-size-md);
 }
 
 .software-expand-toggle:hover {
