@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { Icon } from './Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { APP_DEFINITIONS, PROJECTS, APP_FOLDERS } from '../../config/data';
+import { APP_DEFINITIONS, PROJECTS } from '../../config/data';
 import type { AppDefinition, AppId, Project } from '../../types';
 
 interface ActivitiesOverlayProps {
@@ -414,78 +414,35 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                         <span>Applications</span>
                         <small>{filteredApps.length}</small>
                     </div>
-                    {!normalizedSearch ? (
-                        <div className="activities-app-groups">
-                            {APP_FOLDERS.map(folder => {
-                                const folderApps = folder.appIds
-                                    .map(id => APP_DEFINITIONS.find(app => app.id === id))
-                                    .filter((app): app is AppDefinition => Boolean(app));
-                                if (folderApps.length === 0) return null;
-                                return (
-                                    <div key={folder.id} className="activities-app-group">
-                                        <div className="activities-folder-header">
-                                            <Icon name={folder.icon} />
-                                            <span>{folder.label}</span>
-                                        </div>
-                                        <div className="activities-app-grid">
-                                            {folderApps.map((app, i) => (
-                                                <button
-                                                    key={app.id}
-                                                    type="button"
-                                                    className="activities-app-item"
-                                                    style={{ '--i': i } as React.CSSProperties}
-                                                    data-app={app.id}
-                                                    data-activities-result="true"
-                                                    aria-label={`Open ${app.label}`}
-                                                    onClick={() => handleAppClick(app.id)}
-                                                >
-                                                    <div
-                                                        className="activities-app-icon"
-                                                        style={{ background: app.gradient }}
-                                                    >
-                                                        <Icon name={app.icon} />
-                                                    </div>
-                                                    <span className="activities-app-label">
-                                                        {app.label}
-                                                    </span>
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                        <div className="activities-app-grid">
-                            {filteredApps.length === 0 ? (
-                                <div className="activities-empty-search" role="status">
-                                    <Icon name="box-open" />
-                                    <strong>No matching apps</strong>
-                                </div>
-                            ) : (
-                                filteredApps.map((app, i) => (
-                                    <button
-                                        key={app.id}
-                                        type="button"
-                                        className="activities-app-item"
-                                        style={{ '--i': i } as React.CSSProperties}
-                                        data-app={app.id}
-                                        data-activities-result="true"
-                                        aria-label={`Open ${app.label}`}
-                                        onClick={() => handleAppClick(app.id)}
+                    <div className="activities-app-grid">
+                        {filteredApps.length === 0 ? (
+                            <div className="activities-empty-search" role="status">
+                                <Icon name="box-open" />
+                                <strong>No matching apps</strong>
+                            </div>
+                        ) : (
+                            filteredApps.map((app, i) => (
+                                <button
+                                    key={app.id}
+                                    type="button"
+                                    className="activities-app-item"
+                                    style={{ '--i': i } as React.CSSProperties}
+                                    data-app={app.id}
+                                    data-activities-result="true"
+                                    aria-label={`Open ${app.label}`}
+                                    onClick={() => handleAppClick(app.id)}
+                                >
+                                    <div
+                                        className="activities-app-icon"
+                                        style={{ background: app.gradient }}
                                     >
-                                        <div
-                                            className="activities-app-icon"
-                                            style={{ background: app.gradient }}
-                                        >
-                                            <Icon name={app.icon} />
-                                        </div>
-                                        <span className="activities-app-label">{app.label}</span>
-                                    </button>
-                                ))
-                            )}
-                        </div>
-                    )}
+                                        <Icon name={app.icon} />
+                                    </div>
+                                    <span className="activities-app-label">{app.label}</span>
+                                </button>
+                            ))
+                        )}
+                    </div>
                 </section>
 
                 {normalizedSearch && (

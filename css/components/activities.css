@@ -267,28 +267,6 @@
     background: color-mix(in srgb, var(--accent-color) 12%, transparent);
 }
 
-.activities-app-groups {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.activities-app-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.activities-folder-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    color: var(--text-secondary);
-    padding: 0 4px;
-}
-
 .activities-no-windows {
     display: grid;
     width: min(360px, 100%);
