@@ -55,13 +55,15 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        <!-- Preload Critical Asset (Profile Picture) -->
+        <!-- Profile photo: shown when the About/Contact apps open, not on the
+             initial desktop. Prefetch (not preload) warms the cache at low
+             priority so it's instant on open, without a wasted-preload warning
+             or competing with the critical font/JS for initial paint. -->
         <link
-            rel="preload"
+            rel="prefetch"
             href="/images/profile-picture.webp"
             as="image"
             type="image/webp"
-            fetchpriority="high"
         />
         <link
             rel="preload"

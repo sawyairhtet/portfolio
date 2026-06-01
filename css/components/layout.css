@@ -24,21 +24,49 @@
     left: 0;
     right: 0;
     bottom: 0;
-    /* Day wallpaper (default, 6am–5:59pm) */
     background: url('/images/wallpapers/fedora-43/f43-day.webp') center/cover no-repeat;
     z-index: var(--z-wallpaper);
     transform: translate3d(var(--wallpaper-shift-x, 0), var(--wallpaper-shift-y, 0), 0) scale(1.02);
     transition: transform var(--duration-slow) var(--ease-out-quad);
+    overflow: hidden;
 }
 
-/* Night/dark wallpaper — swaps with dark mode toggle */
+.wallpaper-night-layer {
+    position: absolute;
+    inset: 0;
+    background: center/cover no-repeat;
+    z-index: 1;
+    transition: opacity 120s linear;
+}
+
+.wallpaper-night-layer.theme-driven {
+    transition: opacity var(--duration-normal) var(--ease-out-quad);
+    opacity: 0;
+}
+
+[data-theme='dark'] .wallpaper-night-layer.theme-driven,
+body[data-wallpaper-mode='dark'] .wallpaper-night-layer.theme-driven {
+    opacity: 1;
+}
+
+.wallpaper.time-based .wallpaper-night-layer {
+    transition: opacity 120s linear;
+}
+
+.wallpaper.time-based .wallpaper-night-layer.theme-driven {
+    display: none;
+}
+
 [data-theme='dark'] .wallpaper,
 body[data-wallpaper-mode='dark'] .wallpaper {
     background: url('/images/wallpapers/fedora-43/f43-night.webp') center/cover no-repeat;
 }
 
-/* Custom wallpaper override */
 body .wallpaper.custom-wallpaper {
+    background: var(--custom-wallpaper-bg);
+}
+
+.wallpaper.custom-wallpaper.time-based {
     background: var(--custom-wallpaper-bg);
 }
 

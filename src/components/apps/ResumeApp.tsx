@@ -71,23 +71,19 @@ export function ResumeApp() {
                     </div>
                 </div>
             ) : (
-                <object
-                    data={PROFILE.resumePath}
-                    type="application/pdf"
+                /*
+                 * Render the PDF via a same-origin <iframe>, not <object>.
+                 * The site's CSP sets `object-src 'none'` (which blocks <object>/<embed>
+                 * plugin documents), but an <iframe> navigation is governed by
+                 * `frame-src` → falls back to `default-src 'self'`, so a same-origin
+                 * PDF loads fine without loosening the policy. Browsers render it with
+                 * their built-in PDF viewer. Toolbar Open/Download act as the fallback.
+                 */
+                <iframe
+                    src={PROFILE.resumePath}
                     className="resume-pdf-embed"
-                    aria-label="Resume PDF viewer"
-                >
-                    <div className="resume-embed-fallback">
-                        <p>PDF preview unavailable in this browser.</p>
-                        <a
-                            href={PROFILE.resumePath}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Open resume PDF →
-                        </a>
-                    </div>
-                </object>
+                    title="Resume PDF preview"
+                />
             )}
         </div>
     );

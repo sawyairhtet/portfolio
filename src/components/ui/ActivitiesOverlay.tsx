@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { Icon } from './Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { APP_DEFINITIONS, PROJECTS } from '../../config/data';
+import { APP_DEFINITIONS, PROJECTS, APP_FOLDERS } from '../../config/data';
 import type { AppDefinition, AppId, Project } from '../../types';
 
 interface ActivitiesOverlayProps {
@@ -21,7 +21,7 @@ interface ActivitiesOverlayProps {
 const QUICK_START_APP_IDS: AppId[] = ['about', 'projects', 'resume', 'contact'];
 
 export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: ActivitiesOverlayProps) {
-    const { openWindow, windows, setActiveWorkspace } = useWindowManager();
+    const { openWindow, windows, setActiveWorkspace, totalWorkspaces, moveWindowToWorkspace } = useWindowManager();
     const [searchQuery, setSearchQuery] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -306,14 +306,38 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                     type="button"
                                     className="activities-window-thumb"
                                     data-activities-result="true"
+                                    draggable
+                                    onDragStart={e => {
+                                        e.dataTransfer.setData('text/plain', id);
+                                        e.dataTransfer.effectAllowed = 'move';
+                                    }}
                                     onClick={() => {
                                         openWindow(id);
                                         onClose();
                                     }}
                                     aria-label={`Switch to ${app?.label || id}`}
                                 >
-                                    <span className="activities-window-preview" aria-hidden="true">
-                                        <span className="activities-window-header" />
+                                    <span
+                                        className="activities-window-preview"
+                                        aria-hidden="true"
+                                        style={{
+                                            background: app?.gradient || 'var(--surface-2)',
+                                        }}
+                                    >
+                                        <span className="activities-window-header">
+                                            <span className="activities-preview-title">
+                                                {app?.label || id}
+                                            </span>
+                                            {windowInfo.isMaximized && (
+                                                <span className="activities-preview-badge">Maximized</span>
+                                            )}
+                                            {windowInfo.isMinimized && (
+                                                <span className="activities-preview-badge">Minimized</span>
+                                            )}
+                                            {windowInfo.snapState !== 'none' && (
+                                                <span className="activities-preview-badge">Tiled</span>
+                                            )}
+                                        </span>
                                         <span className="activities-window-content">
                                             <Icon name={app?.icon || 'window-maximize'} />
                                         </span>
@@ -321,7 +345,7 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                     <span className="activities-thumb-title">
                                         {app?.label || id}
                                     </span>
-                                    <small>{windowInfo.isMinimized ? 'Minimized' : 'Open'}</small>
+                                    <small>{windowInfo.isMinimized ? 'Minimized' : windowInfo.isMaximized ? 'Maximized' : windowInfo.snapState !== 'none' ? 'Tiled' : 'Open'}</small>
                                 </button>
                             ))
                         )}
@@ -329,18 +353,35 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                 </div>
 
                 <aside className="activities-workspace-switcher" aria-label="Workspaces">
-                    {[0, 1, 2].map(i => (
-                        <button
-                            key={i}
-                            type="button"
-                            className={`activities-workspace${i === workspaceIndex ? ' active' : ''}`}
-                            aria-label={`Switch to Workspace ${i + 1}`}
-                            onClick={() => setActiveWorkspace(i)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <span />
-                        </button>
-                    ))}
+                    {Array.from({ length: totalWorkspaces }, (_, i) => {
+                        const wsCount = Array.from(windows.values()).filter(
+                            w => w.isOpen && !w.isMinimized && w.workspaceIndex === i
+                        ).length;
+                        return (
+                            <button
+                                key={i}
+                                type="button"
+                                className={`activities-workspace${i === workspaceIndex ? ' active' : ''}`}
+                                aria-label={`Workspace ${i + 1}${wsCount > 0 ? `, ${wsCount} window${wsCount > 1 ? 's' : ''}` : ', empty'}`}
+                                onClick={() => setActiveWorkspace(i)}
+                                style={{ cursor: 'pointer' }}
+                                onDragOver={e => {
+                                    e.preventDefault();
+                                    e.dataTransfer.dropEffect = 'move';
+                                }}
+                                onDrop={e => {
+                                    e.preventDefault();
+                                    const appId = e.dataTransfer.getData('text/plain') as AppId;
+                                    if (appId) {
+                                        moveWindowToWorkspace(appId, i);
+                                    }
+                                }}
+                            >
+                                <span className={`activities-workspace-preview${wsCount > 0 ? ' has-windows' : ''}`} />
+                                <span className="activities-workspace-label">{i + 1}</span>
+                            </button>
+                        );
+                    })}
                 </aside>
             </div>
 
@@ -351,35 +392,76 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                         <span>Applications</span>
                         <small>{filteredApps.length}</small>
                     </div>
-                    <div className="activities-app-grid">
-                        {filteredApps.length === 0 ? (
-                            <div className="activities-empty-search" role="status">
-                                <Icon name="box-open" />
-                                <strong>No matching apps</strong>
-                            </div>
-                        ) : (
-                            filteredApps.map((app, i) => (
-                                <button
-                                    key={app.id}
-                                    type="button"
-                                    className="activities-app-item"
-                                    style={{ '--i': i } as React.CSSProperties}
-                                    data-app={app.id}
-                                    data-activities-result="true"
-                                    aria-label={`Open ${app.label}`}
-                                    onClick={() => handleAppClick(app.id)}
-                                >
-                                    <div
-                                        className="activities-app-icon"
-                                        style={{ background: app.gradient }}
-                                    >
-                                        <Icon name={app.icon} />
+                    {!normalizedSearch ? (
+                        <div className="activities-app-groups">
+                            {APP_FOLDERS.map(folder => {
+                                const folderApps = folder.appIds
+                                    .map(id => APP_DEFINITIONS.find(app => app.id === id))
+                                    .filter((app): app is AppDefinition => Boolean(app));
+                                if (folderApps.length === 0) return null;
+                                return (
+                                    <div key={folder.id} className="activities-app-group">
+                                        <div className="activities-folder-header">
+                                            <Icon name={folder.icon} />
+                                            <span>{folder.label}</span>
+                                        </div>
+                                        <div className="activities-app-grid">
+                                            {folderApps.map((app, i) => (
+                                                <button
+                                                    key={app.id}
+                                                    type="button"
+                                                    className="activities-app-item"
+                                                    style={{ '--i': i } as React.CSSProperties}
+                                                    data-app={app.id}
+                                                    data-activities-result="true"
+                                                    aria-label={`Open ${app.label}`}
+                                                    onClick={() => handleAppClick(app.id)}
+                                                >
+                                                    <div
+                                                        className="activities-app-icon"
+                                                        style={{ background: app.gradient }}
+                                                    >
+                                                        <Icon name={app.icon} />
+                                                    </div>
+                                                    <span className="activities-app-label">{app.label}</span>
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <span className="activities-app-label">{app.label}</span>
-                                </button>
-                            ))
-                        )}
-                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="activities-app-grid">
+                            {filteredApps.length === 0 ? (
+                                <div className="activities-empty-search" role="status">
+                                    <Icon name="box-open" />
+                                    <strong>No matching apps</strong>
+                                </div>
+                            ) : (
+                                filteredApps.map((app, i) => (
+                                    <button
+                                        key={app.id}
+                                        type="button"
+                                        className="activities-app-item"
+                                        style={{ '--i': i } as React.CSSProperties}
+                                        data-app={app.id}
+                                        data-activities-result="true"
+                                        aria-label={`Open ${app.label}`}
+                                        onClick={() => handleAppClick(app.id)}
+                                    >
+                                        <div
+                                            className="activities-app-icon"
+                                            style={{ background: app.gradient }}
+                                        >
+                                            <Icon name={app.icon} />
+                                        </div>
+                                        <span className="activities-app-label">{app.label}</span>
+                                    </button>
+                                ))
+                            )}
+                        </div>
+                    )}
                 </section>
 
                 {normalizedSearch && (

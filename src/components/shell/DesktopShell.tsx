@@ -9,6 +9,7 @@ import { TopBar } from './TopBar';
 import { Dock } from './Dock';
 import { Wallpaper } from './Wallpaper';
 import { BootScreen } from './BootScreen';
+import { GdmLogin } from './GdmLogin';
 import { Window } from '../window/Window';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { ActivitiesOverlay } from '../ui/ActivitiesOverlay';
@@ -16,6 +17,7 @@ import { QuickSettingsPanel } from '../ui/QuickSettingsPanel';
 import { NotificationCenter } from '../ui/NotificationCenter';
 import { ToastContainer } from '../ui/ToastContainer';
 import { ContextMenu } from '../ui/ContextMenu';
+import { CalendarPopover } from '../ui/CalendarPopover';
 import { DOCK_APPS, APP_DEFINITIONS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
 import type { AppId } from '../../types';
@@ -58,6 +60,9 @@ const CalendarApp = lazy(() =>
 );
 const ImageViewerApp = lazy(() =>
     import('../apps/ImageViewerApp').then(module => ({ default: module.ImageViewerApp }))
+);
+const SoftwareApp = lazy(() =>
+    import('../apps/SoftwareApp').then(module => ({ default: module.SoftwareApp }))
 );
 
 type WelcomeAction =
@@ -213,9 +218,14 @@ export function DesktopShell() {
     const { showToast } = useNotifications();
 
     const [booted, setBooted] = useState(false);
+    const [gdmDone, setGdmDone] = useState(() => {
+        if (preferences.fastBoot) return true;
+        return false;
+    });
     const [activitiesOpen, setActivitiesOpen] = useState(false);
     const [quickSettingsOpen, setQuickSettingsOpen] = useState(false);
     const [notifCenterOpen, setNotifCenterOpen] = useState(false);
+    const [calendarPopoverOpen, setCalendarPopoverOpen] = useState(false);
     const [showDockTip, setShowDockTip] = useState(false);
     const [altTabOpen, setAltTabOpen] = useState(false);
     const [altTabIndex, setAltTabIndex] = useState(0);
@@ -344,17 +354,18 @@ export function DesktopShell() {
             if (e.ctrlKey && e.altKey && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
                 e.preventDefault();
                 setActiveWorkspace(
-                    e.key === 'ArrowRight' ? Math.min(2, activeWorkspace + 1) : Math.max(0, activeWorkspace - 1)
+                    e.key === 'ArrowRight' ? activeWorkspace + 1 : activeWorkspace - 1
                 );
             }
 
             // Escape → close overlays
             if (e.key === 'Escape') {
-                if (shortcutsOpen || activitiesOpen || quickSettingsOpen || notifCenterOpen) {
+                if (shortcutsOpen || activitiesOpen || quickSettingsOpen || notifCenterOpen || calendarPopoverOpen) {
                     setShortcutsOpen(false);
                     setActivitiesOpen(false);
                     setQuickSettingsOpen(false);
                     setNotifCenterOpen(false);
+                    setCalendarPopoverOpen(false);
                     e.stopPropagation();
                     return;
                 }
@@ -401,6 +412,7 @@ export function DesktopShell() {
         altTabIndex,
         bringToFront,
         closeWindow,
+        calendarPopoverOpen,
         notifCenterOpen,
         openWindow,
         quickSettingsOpen,
@@ -416,7 +428,8 @@ export function DesktopShell() {
             </a>
 
             {/* Boot Screen */}
-            {!booted && <BootScreen onBootComplete={handleBootComplete} />}
+            {!gdmDone && <GdmLogin onLogin={() => setGdmDone(true)} />}
+            {gdmDone && !booted && <BootScreen onBootComplete={handleBootComplete} />}
 
             {/* Top Bar */}
             <TopBar
@@ -426,8 +439,9 @@ export function DesktopShell() {
                     setNotifCenterOpen(false);
                 }}
                 onClockClick={() => {
-                    setNotifCenterOpen(p => !p);
+                    setCalendarPopoverOpen(p => !p);
                     setQuickSettingsOpen(false);
+                    setNotifCenterOpen(false);
                 }}
                 isActivitiesOpen={activitiesOpen}
                 isQuickSettingsOpen={quickSettingsOpen}
@@ -444,6 +458,12 @@ export function DesktopShell() {
             <NotificationCenter
                 isOpen={notifCenterOpen}
                 onClose={() => setNotifCenterOpen(false)}
+            />
+
+            {/* Calendar Popover */}
+            <CalendarPopover
+                isOpen={calendarPopoverOpen}
+                onClose={() => setCalendarPopoverOpen(false)}
             />
 
             {/* Main Content */}
@@ -652,6 +672,15 @@ export function DesktopShell() {
                     <ErrorBoundary level="window" appId="image-viewer">
                         <Suspense fallback={<AdwaitaSkeleton />}>
                             <ImageViewerApp />
+                        </Suspense>
+                    </ErrorBoundary>
+                </Window>
+            )}
+            {windows.get('software')?.isOpen && (
+                <Window appId="software" title="Software">
+                    <ErrorBoundary level="window" appId="software">
+                        <Suspense fallback={<AdwaitaSkeleton />}>
+                            <SoftwareApp />
                         </Suspense>
                     </ErrorBoundary>
                 </Window>

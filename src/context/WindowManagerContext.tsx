@@ -15,6 +15,8 @@ interface WindowManagerContextValue {
     setSnapState: (appId: AppId, snap: 'none' | 'left' | 'right') => void;
     activeWorkspace: number;
     setActiveWorkspace: (index: number) => void;
+    totalWorkspaces: number;
+    moveWindowToWorkspace: (appId: AppId, workspaceIndex: number) => void;
 }
 
 const WindowManagerContext = createContext<WindowManagerContextValue>({
@@ -30,10 +32,13 @@ const WindowManagerContext = createContext<WindowManagerContextValue>({
     setSnapState: () => {},
     activeWorkspace: 0,
     setActiveWorkspace: () => {},
+    totalWorkspaces: 1,
+    moveWindowToWorkspace: () => {},
 });
 
 const DEFAULT_POSITION = { top: '10%', left: '10%' };
 const DEFAULT_SIZE = { width: '600px', height: '450px' };
+const MIN_WORKSPACES = 1;
 
 const DEFAULT_POSITIONS = new Map<AppId, { top: string; left: string }>([
     ['about', { top: '8%', left: 'calc(50% - 360px)' }],
@@ -49,6 +54,7 @@ const DEFAULT_POSITIONS = new Map<AppId, { top: string; left: string }>([
     ['focus-mode', { top: '10%', left: 'calc(50% - 430px)' }],
     ['calendar', { top: '10%', left: 'calc(50% - 325px)' }],
     ['image-viewer', { top: '8%', left: 'calc(50% - 375px)' }],
+    ['software', { top: '6%', left: 'calc(50% - 410px)' }],
 ]);
 
 const DEFAULT_SIZES = new Map<AppId, { width: string; height: string }>([
@@ -65,6 +71,7 @@ const DEFAULT_SIZES = new Map<AppId, { width: string; height: string }>([
     ['focus-mode', { width: '860px', height: '560px' }],
     ['calendar', { width: '650px', height: '520px' }],
     ['image-viewer', { width: '750px', height: '540px' }],
+    ['software', { width: '820px', height: '600px' }],
 ]);
 
 function normalizeZIndices(windowsMap: Map<AppId, WindowInfo>, activeAppId?: AppId): Map<AppId, WindowInfo> {
@@ -119,13 +126,20 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         windows: new Map<AppId, WindowInfo>(),
         currentZIndex: 100,
     });
-    const [activeWorkspace, setActiveWorkspace] = useState(0);
+    const [activeWorkspace, setActiveWorkspaceState] = useState(0);
+    const [totalWorkspaces, setTotalWorkspaces] = useState(1);
     const [focusedApp, setFocusedApp] = useState<AppId | null>(null);
     const { windows } = managerState;
     const { playMinimizeSound, playRestoreSound } = useSound();
 
     const windowsRef = useRef(windows);
     windowsRef.current = windows;
+
+    const setActiveWorkspace = useCallback((index: number) => {
+        const clamped = Math.max(0, index);
+        setActiveWorkspaceState(clamped);
+        setTotalWorkspaces(prev => Math.max(prev, clamped + 2, MIN_WORKSPACES));
+    }, []);
 
     const openWindow = useCallback((appId: AppId, launchOrigin?: LaunchOrigin) => {
         const win = windowsRef.current.get(appId);
@@ -144,7 +158,6 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                     isOpen: true,
                     isMinimized: false,
                     launchOrigin,
-                    workspaceIndex: activeWorkspace,
                 });
             } else {
                 next.set(appId, createWindowInfo(appId, 9999, activeWorkspace, launchOrigin));
@@ -154,6 +167,18 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
             return { windows: normalized, currentZIndex: 100 + normalized.size };
         });
         setFocusedApp(appId);
+
+        setTotalWorkspaces(prev => {
+            const maxWs = Math.max(
+                MIN_WORKSPACES,
+                activeWorkspace + 2,
+                prev,
+                ...Array.from(windowsRef.current.values())
+                    .filter(w => w.isOpen && w.workspaceIndex !== undefined)
+                    .map(w => (w.workspaceIndex ?? 0) + 2)
+            );
+            return maxWs;
+        });
     }, [activeWorkspace, playRestoreSound]);
 
     const closeWindow = useCallback(
@@ -247,6 +272,19 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         setFocusedApp(appId);
     }, [activeWorkspace, playRestoreSound]);
 
+    const moveWindowToWorkspace = useCallback((appId: AppId, workspaceIndex: number) => {
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
+            const win = next.get(appId);
+            if (win) {
+                next.set(appId, { ...win, workspaceIndex });
+            }
+            return { ...prev, windows: next };
+        });
+
+        setTotalWorkspaces(prev => Math.max(prev, workspaceIndex + 2, MIN_WORKSPACES));
+    }, []);
+
     const updateWindowPosition = useCallback((appId: AppId, top: string, left: string) => {
         setManagerState(prev => {
             const next = new Map(prev.windows);
@@ -295,6 +333,8 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
                 setSnapState,
                 activeWorkspace,
                 setActiveWorkspace,
+                totalWorkspaces,
+                moveWindowToWorkspace,
             }}
         >
             {children}

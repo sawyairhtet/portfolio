@@ -1,29 +1,33 @@
 import { useEffect, useRef } from 'react';
 import { useDevice } from '../../context/DeviceContext';
+import { usePreferences } from '../../context/PreferencesContext';
+import { useTimeOfDay } from '../../lib/useTimeOfDay';
 import type { WallpaperOption } from '../../types';
 import { WALLPAPERS } from '../../config/data';
-import { usePreferences } from '../../context/PreferencesContext';
-import { useTheme } from '../../context/ThemeContext';
 
 export function Wallpaper() {
     const { device } = useDevice();
     const { preferences } = usePreferences();
-    const { isDark } = useTheme();
     const wallpaperRef = useRef<HTMLDivElement>(null);
+    const { timeOfDay, crossfadeProgress } = useTimeOfDay();
     const selectedWallpaper: WallpaperOption =
         WALLPAPERS.find(w => w.id === preferences.wallpaperId) ?? WALLPAPERS[0];
-    const customWallpaper = selectedWallpaper.id === 'default' ? null : selectedWallpaper;
+    const isDefaultWallpaper = selectedWallpaper.id === 'default';
+    const useTimeBased = preferences.wallpaperTimeOfDay && isDefaultWallpaper;
 
-    // Sync wallpaper dark/light with theme toggle
     useEffect(() => {
-        if (isDark) {
-            document.body.setAttribute('data-wallpaper-mode', 'dark');
-        } else {
-            document.body.setAttribute('data-wallpaper-mode', 'light');
-        }
-    }, [isDark]);
+        const mode = timeOfDay === 'day' || timeOfDay === 'dawn' ? 'light' : 'dark';
+        document.body.setAttribute('data-wallpaper-mode', mode);
+    }, [timeOfDay]);
 
-    // Parallax effect (desktop only)
+    useEffect(() => {
+        if (!useTimeBased) return;
+        document.documentElement.style.setProperty(
+            '--wallpaper-crossfade',
+            String(crossfadeProgress)
+        );
+    }, [crossfadeProgress, useTimeBased]);
+
     useEffect(() => {
         if (device !== 'desktop') return;
 
@@ -65,24 +69,41 @@ export function Wallpaper() {
         };
     }, [device]);
 
-    const style: Record<string, string> = {};
-    const customWallpaperImage =
-        customWallpaper && isDark && customWallpaper.darkImage
-            ? customWallpaper.darkImage
-            : customWallpaper?.image;
-    const customWallpaperBackground =
-        customWallpaper?.gradient ??
-        (customWallpaperImage ? `url("${customWallpaperImage}") center / cover no-repeat` : null);
-
-    if (customWallpaperBackground) {
-        style['--custom-wallpaper-bg'] = customWallpaperBackground;
-    }
+    const imageSrc = selectedWallpaper.image;
+    const darkImageSrc = selectedWallpaper.darkImage;
+    const isCustomWallpaper = !isDefaultWallpaper;
 
     return (
         <div
             ref={wallpaperRef}
-            className={`wallpaper${customWallpaperBackground ? ' custom-wallpaper' : ''}`}
-            style={style}
-        />
+            className={`wallpaper${isCustomWallpaper ? ' custom-wallpaper' : ''}${useTimeBased ? ' time-based' : ''}`}
+            style={
+                isCustomWallpaper && imageSrc
+                    ? {
+                          '--custom-wallpaper-bg': `url("${imageSrc}") center / cover no-repeat`,
+                      } as React.CSSProperties
+                    : {}
+            }
+        >
+            {useTimeBased && darkImageSrc && (
+                <div
+                    className="wallpaper-night-layer"
+                    style={{
+                        backgroundImage: `url("${darkImageSrc}")`,
+                        opacity: timeOfDay === 'night' ? 1 : crossfadeProgress,
+                    }}
+                    aria-hidden="true"
+                />
+            )}
+            {isCustomWallpaper && darkImageSrc && (
+                <div
+                    className="wallpaper-night-layer theme-driven"
+                    style={{
+                        backgroundImage: `url("${darkImageSrc}")`,
+                    }}
+                    aria-hidden="true"
+                />
+            )}
+        </div>
     );
 }

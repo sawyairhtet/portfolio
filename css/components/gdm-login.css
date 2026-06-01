@@ -1,0 +1,208 @@
+/* ============================================
+   GDM Login Screen — Premium
+   ============================================ */
+
+.gdm-login {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-context-menu) + 100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.6s var(--ease-out-quad),
+        visibility 0.6s;
+}
+
+.gdm-login.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.gdm-login.fade-out {
+    opacity: 0;
+    transition:
+        opacity 0.4s var(--ease-out-quad),
+        visibility 0s 0.4s;
+}
+
+.gdm-background {
+    position: absolute;
+    inset: 0;
+    background: var(--dark-5);
+}
+
+.gdm-wallpaper-blur {
+    position: absolute;
+    inset: 0;
+    background: center/cover no-repeat;
+    filter: blur(28px) brightness(0.3);
+}
+
+.gdm-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+}
+
+.gdm-clock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--light-1);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.gdm-time {
+    font-size: 64px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-family: var(--font-ui);
+}
+
+.gdm-date {
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+.gdm-login-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px 40px;
+    background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid color-mix(in srgb, var(--light-1) 10%, transparent);
+    border-radius: 16px;
+    min-width: 320px;
+}
+
+.gdm-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gdm-avatar-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent-bg-color) 30%, var(--surface-3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-1);
+}
+
+.gdm-avatar-circle i {
+    font-size: 40px;
+}
+
+.gdm-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.gdm-user-info strong {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--light-1);
+}
+
+.gdm-user-info span {
+    font-size: var(--font-size-sm);
+    color: color-mix(in srgb, var(--light-1) 60%, transparent);
+}
+
+.gdm-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.gdm-password-group {
+    display: flex;
+    align-items: center;
+}
+
+.gdm-password-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid color-mix(in srgb, var(--light-1) 20%, transparent);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--surface-2) 50%, transparent);
+    color: var(--light-1);
+    font-size: var(--font-size-base);
+    outline: none;
+    transition: border-color var(--duration-fast);
+}
+
+.gdm-password-input:focus {
+    border-color: var(--accent-color);
+}
+
+.gdm-password-input::placeholder {
+    color: color-mix(in srgb, var(--light-1) 30%, transparent);
+}
+
+.gdm-login-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--duration-fast);
+}
+
+.gdm-login-btn:hover {
+    opacity: 0.9;
+}
+
+.gdm-hint {
+    font-size: var(--font-size-xs);
+    color: color-mix(in srgb, var(--light-1) 30%, transparent);
+}
+
+.gdm-skip-btn {
+    border: none;
+    background: none;
+    padding: 6px 12px;
+    color: color-mix(in srgb, var(--light-1) 40%, transparent);
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+.gdm-skip-btn:hover {
+    color: color-mix(in srgb, var(--light-1) 70%, transparent);
+    background: color-mix(in srgb, var(--light-1) 6%, transparent);
+}
+
+@media (max-width: 400px) {
+    .gdm-time {
+        font-size: 42px;
+    }
+
+    .gdm-login-card {
+        min-width: auto;
+        width: calc(100vw - 48px);
+        padding: 24px 20px;
+    }
+}

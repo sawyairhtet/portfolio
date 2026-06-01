@@ -20,6 +20,7 @@ import {
     Gauge,
     Monitor,
     Globe,
+    Clock,
 } from '@phosphor-icons/react';
 
 type SettingsPanel = 'appearance' | 'sound' | 'windows' | 'display' | 'network' | 'about';
@@ -157,9 +158,23 @@ export function SettingsApp() {
                             </div>
                         </div>
                         <div className="settings-card">
+                            <h3>Time of Day</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <Clock weight="duotone" size={16} />
+                                    <span>Automatic wallpaper</span>
+                                </span>
+                                <ToggleSwitch
+                                    checked={preferences.wallpaperTimeOfDay}
+                                    onChange={v => updatePreferences({ wallpaperTimeOfDay: v })}
+                                    label="Use time-of-day wallpaper"
+                                />
+                            </div>
+                            <p className="settings-row-desc">Crossfade between day and night wallpapers based on your local clock.</p>
+                        </div>
+                        <div className="settings-card">
                             <h3>Accent Color</h3>
-                            <div className="accent-color-options">
-                                {ACCENT_COLORS.map(ac => (
+                            <div className="accent-color-options">{ACCENT_COLORS.map(ac => (
                                     <motion.button
                                         key={ac.color}
                                         className={`accent-swatch${accentColor === ac.color ? ' active' : ''}`}

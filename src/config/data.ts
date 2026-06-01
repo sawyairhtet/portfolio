@@ -6,6 +6,7 @@ import type {
     Notification,
     Project,
     SkillCategory,
+    AppId,
 } from '../types';
 import { PROFILE } from './profile';
 
@@ -157,6 +158,17 @@ export const APP_DEFINITIONS: AppDefinition[] = [
         desktopDock: false,
         mobileDock: false,
     },
+    {
+        id: 'software',
+        label: 'Software',
+        icon: 'package',
+        dockTooltip: 'Software',
+        gradient: 'linear-gradient(135deg, var(--blue-3) 0%, var(--accent-blue) 100%)',
+        description: 'Browse and install portfolio projects as software packages.',
+        aliases: ['software', 'apps', 'store', 'gnome-software', 'discover', 'packages'],
+        desktopDock: false,
+        mobileDock: false,
+    },
 ];
 
 export const DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.desktopDock);
@@ -164,6 +176,40 @@ export const DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.desk
 export const MOBILE_DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.mobileDock);
 
 export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => !app.mobileDock);
+
+export const APP_FOLDERS: { id: string; label: string; icon: string; appIds: AppId[] }[] = [
+    {
+        id: 'overview',
+        label: 'Overview',
+        icon: 'desktop',
+        appIds: ['about', 'skills', 'projects', 'resume'],
+    },
+    {
+        id: 'communication',
+        label: 'Communication',
+        icon: 'envelope',
+        appIds: ['contact'],
+    },
+    {
+        id: 'utilities',
+        label: 'Utilities',
+        icon: 'gear-six',
+        appIds: ['terminal', 'files', 'browser', 'text-editor'],
+    },
+    {
+        id: 'tools',
+        label: 'Tools',
+        icon: 'toolbox',
+        appIds: ['settings', 'focus-mode', 'calendar', 'image-viewer', 'software'],
+    },
+];
+
+export const UNGROUPED_APP_IDS: AppId[] = APP_DEFINITIONS
+    .map(app => app.id)
+    .filter(
+        id =>
+            !APP_FOLDERS.some(folder => folder.appIds.includes(id))
+    );
 
 // ============================================
 // PORTFOLIO CONTENT DATA
@@ -495,7 +541,11 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
         content:
             '# Projects\n\nRecruiter scan:\n\n- **Fedora-Inspired Portfolio Desktop**: React 19, TypeScript, window management — shows systematic problem-solving and attention to detail.\n- **OpsTrack**: Spring Boot operations tracking API — incident lifecycle, status tracking, and PostgreSQL persistence.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
     },
-    '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md'] },
+    '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md', 'about.md'] },
+    '/home/sawyehtet/documents/about.md': {
+        type: 'file',
+        content: `# About Me\n\n${PROFILE.name}\n${PROFILE.role}\n\n## Summary\n\n${PROFILE.summary}\n\n## Education\n\n${PROFILE.education}\n\n## Focus Areas\n\n- Application Support & Production Support\n- SQL Debugging & Database Querying\n- Log Analysis & Incident Triage\n- API Testing & Quality Assurance\n- Java Backend Development\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}\n\n## Links\n\n- [GitHub](https://github.com/sawyairhtet)\n- [LinkedIn](https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/)\n- [Resume](${PROFILE.resumePath})`,
+    },
     '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
         content:

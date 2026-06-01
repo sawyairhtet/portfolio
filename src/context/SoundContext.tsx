@@ -1,4 +1,12 @@
-import { createContext, useContext, useState, useCallback, useRef, type ReactNode } from 'react';
+import {
+    createContext,
+    useContext,
+    useState,
+    useCallback,
+    useEffect,
+    useRef,
+    type ReactNode,
+} from 'react';
 
 interface SoundContextValue {
     isMuted: boolean;
@@ -52,13 +60,46 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     });
 
     const audioCtxRef = useRef<AudioContext | null>(null);
+    // Browsers block audio until the user interacts with the page. We must not
+    // even *create* an AudioContext before then, or Chrome logs a noisy
+    // "AudioContext was not allowed to start" warning on every sound attempt.
+    const isUnlockedRef = useRef(false);
 
     const getAudioCtx = useCallback(() => {
         if (!audioCtxRef.current) {
             audioCtxRef.current = new AudioContext();
         }
-        return audioCtxRef.current;
+        const ctx = audioCtxRef.current;
+        if (ctx.state === 'suspended') {
+            void ctx.resume();
+        }
+        return ctx;
     }, []);
+
+    // Create + resume the AudioContext on the first real user gesture, then
+    // stop listening. Until this fires, every play* call is a no-op, so no
+    // audio is attempted (and no autoplay warning is produced) pre-interaction.
+    useEffect(() => {
+        if (isUnlockedRef.current) return;
+        const unlock = () => {
+            isUnlockedRef.current = true;
+            try {
+                getAudioCtx();
+            } catch {
+                // AudioContext unavailable (e.g. very old browser) — stay silent.
+            }
+            teardown();
+        };
+        const teardown = () => {
+            window.removeEventListener('pointerdown', unlock, true);
+            window.removeEventListener('keydown', unlock, true);
+            window.removeEventListener('touchstart', unlock, true);
+        };
+        window.addEventListener('pointerdown', unlock, true);
+        window.addEventListener('keydown', unlock, true);
+        window.addEventListener('touchstart', unlock, true);
+        return teardown;
+    }, [getAudioCtx]);
 
     const setMutedState = useCallback((muted: boolean) => {
         setIsMuted(muted);
@@ -86,7 +127,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     );
 
     const playStartupDrum = useCallback(() => {
-        if (isMuted) return;
+        if (isMuted || !isUnlockedRef.current) return;
         try {
             const ctx = getAudioCtx();
             const gain = volume / 100;
@@ -99,7 +140,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     }, [isMuted, getAudioCtx, volume]);
 
     const playMinimizeSound = useCallback(() => {
-        if (isMuted) return;
+        if (isMuted || !isUnlockedRef.current) return;
         try {
             const ctx = getAudioCtx();
             const gain = volume / 100;
@@ -111,7 +152,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     }, [isMuted, getAudioCtx, volume]);
 
     const playRestoreSound = useCallback(() => {
-        if (isMuted) return;
+        if (isMuted || !isUnlockedRef.current) return;
         try {
             const ctx = getAudioCtx();
             const gain = volume / 100;
@@ -123,7 +164,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     }, [isMuted, getAudioCtx, volume]);
 
     const playNotificationSound = useCallback(() => {
-        if (isMuted) return;
+        if (isMuted || !isUnlockedRef.current) return;
         try {
             const ctx = getAudioCtx();
             const gain = volume / 100;

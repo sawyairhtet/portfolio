@@ -97,6 +97,40 @@ export function ContextMenu() {
             >
                 <Icon name="image" /> Change Background
             </button>
+            <button
+                type="button"
+                className="context-menu-item"
+                role="menuitem"
+                onClick={() => {
+                    openWindow('terminal');
+                    setVisible(false);
+                }}
+            >
+                <Icon name="terminal" /> Open Terminal
+            </button>
+            <button
+                type="button"
+                className="context-menu-item"
+                role="menuitem"
+                onClick={() => {
+                    openWindow('files');
+                    setVisible(false);
+                }}
+            >
+                <Icon name="folder" /> Open Files
+            </button>
+            <div className="context-menu-separator" role="separator" />
+            <button
+                type="button"
+                className="context-menu-item"
+                role="menuitem"
+                onClick={() => {
+                    openWindow('settings');
+                    setVisible(false);
+                }}
+            >
+                <Icon name="cog" /> Settings
+            </button>
         </div>
     );
 }

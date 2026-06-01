@@ -35,7 +35,8 @@ export type AppId =
     | 'text-editor'
     | 'focus-mode'
     | 'calendar'
-    | 'image-viewer';
+    | 'image-viewer'
+    | 'software';
 
 export interface LaunchOrigin {
     x: number;
@@ -179,4 +180,5 @@ export interface PortfolioPreferences {
     enableResize: boolean;
     focusDim: boolean;
     fastBoot: boolean;
+    wallpaperTimeOfDay: boolean;
 }

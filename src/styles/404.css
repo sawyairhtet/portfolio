@@ -1,3 +1,7 @@
+/* Adwaita tokens must be imported first — @import has to precede all other
+   rules or browsers ignore it (and the build emits a PostCSS warning). */
+@import './adwaita-tokens.css';
+
 /* Icons are inline Phosphor SVGs wrapped in <i> (no Font Awesome). */
 i > .ph-icon {
     width: 1em;
@@ -5,7 +9,6 @@ i > .ph-icon {
     vertical-align: -0.125em;
     fill: currentColor;
 }
-@import './adwaita-tokens.css';
 
 :root {
     --topbar-height: 32px;

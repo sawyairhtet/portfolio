@@ -19,6 +19,7 @@ const DEFAULT_PREFERENCES: PortfolioPreferences = {
     enableResize: true,
     focusDim: true,
     fastBoot: true,
+    wallpaperTimeOfDay: true,
 };
 
 interface PreferencesContextValue {

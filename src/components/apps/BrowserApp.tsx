@@ -1,10 +1,7 @@
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import { motion, useReducedMotion } from 'framer-motion';
+import { Icon } from '../ui/Icon';
 import {
-    ArrowLeft,
-    ArrowRight,
-    ArrowClockwise,
-    LockSimple,
     ArrowSquareOut,
     GithubLogo,
     Users,
@@ -19,18 +16,18 @@ export function BrowserApp() {
 
     return (
         <div className="browser-app">
-            <div className="browser-toolbar" aria-label="Firefox toolbar">
+            <div className="browser-toolbar" aria-label="Web toolbar">
                 <button type="button" aria-label="Back" disabled>
-                    <ArrowLeft weight="bold" size={15} />
+                    <Icon name="arrow-left" />
                 </button>
                 <button type="button" aria-label="Forward" disabled>
-                    <ArrowRight weight="bold" size={15} />
+                    <Icon name="arrow-right" />
                 </button>
                 <button type="button" aria-label="Reload">
-                    <ArrowClockwise weight="bold" size={15} />
+                    <Icon name="arrow-clockwise" />
                 </button>
                 <div className="browser-location-v2" role="textbox" aria-label="Address">
-                    <LockSimple weight="fill" size={13} className="browser-lock-icon" />
+                    <Icon name="lock-simple" />
                     <span>{githubLink.href}</span>
                 </div>
                 <a
@@ -44,13 +41,6 @@ export function BrowserApp() {
                 </a>
             </div>
             <div className="browser-frame-wrap">
-                <iframe
-                    title="Saw Ye Htet GitHub"
-                    src={githubLink.href}
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
-                />
                 <div className="browser-fallback-v2">
                     <div className="browser-github-card">
                         <GithubLogo weight="fill" size={80} className="browser-gh-mark" />
@@ -70,6 +60,20 @@ export function BrowserApp() {
                                 <strong>8</strong> stars
                             </span>
                         </div>
+                        {SOCIAL_LINKS.filter(l => l.label !== 'GitHub').slice(0, 3).map(link => (
+                            <motion.a
+                                key={link.label}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="browser-gh-btn secondary"
+                                whileHover={reduced ? undefined : { scale: 1.02 }}
+                                whileTap={reduced ? undefined : { scale: 0.97 }}
+                            >
+                                <Icon name={link.icon} />
+                                {link.label}
+                            </motion.a>
+                        ))}
                         <motion.a
                             href={githubLink.href}
                             target="_blank"
