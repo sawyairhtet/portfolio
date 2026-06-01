@@ -181,4 +181,5 @@ export interface PortfolioPreferences {
     focusDim: boolean;
     fastBoot: boolean;
     wallpaperTimeOfDay: boolean;
+    dockHidden: boolean;
 }

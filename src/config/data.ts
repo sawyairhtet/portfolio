@@ -215,10 +215,10 @@ export const UNGROUPED_APP_IDS: AppId[] = APP_DEFINITIONS.map(app => app.id).fil
 export const PROJECTS: Project[] = [
     {
         id: 'fedora-portfolio',
-        title: 'Fedora-Inspired Portfolio Desktop',
+        title: 'GNOME-Inspired Portfolio Desktop',
         role: 'Developer & Designer',
         summary:
-            'The site you are using right now - a React and TypeScript portfolio presented through a Fedora/GNOME-inspired desktop shell with windows, app search, terminal commands, and mobile launcher cards.',
+            'The site you are using right now - a React and TypeScript portfolio presented through a GNOME-inspired desktop shell with windows, app search, terminal commands, and mobile launcher cards.',
         problem:
             'A static portfolio can hide the strongest proof behind navigation and make recruiters work too hard for the basics.',
         solution:
@@ -532,7 +532,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
-            '# Projects\n\nRecruiter scan:\n\n- **Fedora-Inspired Portfolio Desktop**: React 19, TypeScript, window management — shows systematic problem-solving and attention to detail.\n- **OpsTrack**: Spring Boot operations tracking API — incident lifecycle, status tracking, and PostgreSQL persistence.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
+            '# Projects\n\nRecruiter scan:\n\n- **GNOME-Inspired Portfolio Desktop**: React 19, TypeScript, window management — shows systematic problem-solving and attention to detail.\n- **OpsTrack**: Spring Boot operations tracking API — incident lifecycle, status tracking, and PostgreSQL persistence.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md', 'about.md'] },
     '/home/sawyehtet/documents/about.md': {
@@ -555,7 +555,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     },
     '/home/sawyehtet/resume.md': {
         type: 'file',
-        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate targeting application support and production support roles. Hands-on with SQL, Linux, Java, and API testing.\n\n## Focus\n\n- Application support and production support\n- Incident triage, log analysis, and SQL debugging\n- API testing and quality assurance\n- Java backend development (carry-over)\n\n## Best Proof\n\n- Fedora-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n- OpsTrack: Spring Boot and PostgreSQL backend API practice project\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
+        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate targeting application support and production support roles. Hands-on with SQL, Linux, Java, and API testing.\n\n## Focus\n\n- Application support and production support\n- Incident triage, log analysis, and SQL debugging\n- API testing and quality assurance\n- Java backend development (carry-over)\n\n## Best Proof\n\n- GNOME-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n- OpsTrack: Spring Boot and PostgreSQL backend API practice project\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',

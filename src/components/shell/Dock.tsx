@@ -178,7 +178,7 @@ export function Dock({ onShowApps }: DockProps) {
                 >
                     <div className="mobile-launcher-header">
                         <span>Applications</span>
-                        <small>Fedora mobile launcher</small>
+                        <small>App launcher</small>
                     </div>
                     <label className="mobile-launcher-search">
                         <Icon name="search" />

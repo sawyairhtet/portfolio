@@ -17,28 +17,6 @@
     background: var(--topbar-bg);
     color: var(--text-primary);
     border-bottom: 1px solid var(--shell-panel-border);
-    -webkit-backdrop-filter: var(--topbar-blur) saturate(120%);
-    backdrop-filter: var(--topbar-blur) saturate(120%);
-    box-shadow: var(--shadow-elevation-1);
-    transition:
-        background var(--duration-normal) var(--ease-in-out-quad),
-        color var(--duration-normal) var(--ease-in-out-quad);
-}
-
-/* Subtle bottom shadow for depth separation from desktop */
-.top-bar::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    height: 1px;
-    background: var(--shell-panel-border);
-    pointer-events: none;
-}
-
-[data-theme='light'] .top-bar::after {
-    background: var(--border-subtle);
 }
 
 /* Dark mode: same look — dark first design */
@@ -103,122 +81,44 @@
 
 /* Activities button — GNOME pill */
 .activities-btn {
-    position: relative;
-    width: auto;
-    min-width: 34px;
-    height: 24px;
     color: inherit;
     font-size: var(--font-size-base);
-    font-weight: 700;
+    font-weight: 500;
     font-family: var(--font-ui);
     padding: 0 10px 0 38px;
     border: none;
     border-radius: 999px;
     background: transparent;
     cursor: pointer;
-    transition:
-        background var(--duration-fast) var(--ease-out-quad),
-        transform var(--duration-fast) var(--ease-out-quad);
-}
-
-.activities-btn::before,
-.activities-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: currentColor;
-    opacity: 0.7;
-    transition: opacity var(--transition-fast);
-}
-
-.activities-btn::before {
-    left: 10px;
-    width: 12px;
-    height: 4px;
-    border-radius: 999px;
-}
-
-.activities-btn::after {
-    left: 25px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-}
-
-.activities-btn:focus-visible {
-    outline: 2px solid var(--accent-bg-color);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
 }
 
 .activities-btn.active {
     background: color-mix(in srgb, var(--accent-bg-color) 18%, transparent);
 }
 
-.activities-btn.active::before,
-.activities-btn.active::after {
-    opacity: 1;
-}
-
 @media (hover: hover) {
     .activities-btn:hover {
         background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
     }
-    .activities-btn:hover::before,
-    .activities-btn:hover::after {
-        opacity: 1;
-    }
-
-    [data-theme='light'] .activities-btn:hover {
-        background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
-    }
-}
-
-[data-theme='dark'] .activities-btn.active {
-    background: color-mix(in srgb, var(--accent-bg-color) 20%, transparent);
-}
-
-[data-theme='dark'] .activities-btn:hover {
-    background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
-}
-
-[data-theme='light'] .activities-btn.active {
-    background: color-mix(in srgb, var(--accent-bg-color) 14%, transparent);
 }
 
 /* Pill Styling for Top Bar Items */
 .pill {
     background: transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--button_radius);
     padding: 4px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     transition:
-        background var(--duration-fast) var(--ease-out-quad),
-        transform var(--duration-fast) var(--ease-out-quad);
+        background var(--duration-fast) var(--mutter-ease);
 }
 
 .activities-btn.pill {
     padding: 0 10px 0 38px;
     border-radius: 999px;
     justify-content: flex-start;
-}
-
-@media (hover: hover) {
-    .pill:hover {
-        background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
-    }
-
-    [data-theme='dark'] .pill:hover {
-        background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
-    }
-
-    [data-theme='light'] .pill:hover {
-        background: color-mix(in srgb, var(--view-fg-color) 5%, transparent);
-    }
 }
 
 /* Status menu */
@@ -235,22 +135,11 @@
 }
 
 .status-menu:hover {
-    opacity: 0.8;
+    background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
 }
 
-.status-menu:active,
-.pill:active {
-    transform: scale(0.97);
-    opacity: 0.9;
-}
-
-/* Clock */
 .menu-clock[aria-expanded='true'] {
-    background: color-mix(in srgb, var(--accent-bg-color) 12%, transparent) !important;
-}
-
-[data-theme='dark'] .menu-clock[aria-expanded='true'] {
-    background: color-mix(in srgb, var(--accent-bg-color) 16%, transparent) !important;
+    background: color-mix(in srgb, var(--accent-bg-color) 14%, transparent);
 }
 
 /* Status Bar (Mobile/Tablet) - Hidden by default */

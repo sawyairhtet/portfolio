@@ -6,12 +6,10 @@
     position: fixed;
     left: 50%;
     bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%);
     width: auto;
     max-width: min(calc(100vw - 32px), 720px);
     background: var(--dock-bg);
-    -webkit-backdrop-filter: var(--dock-blur) var(--glass-saturation);
-    backdrop-filter: var(--dock-blur) var(--glass-saturation);
     border-radius: var(--dock-border-radius);
     padding: 8px 14px;
     display: flex;
@@ -20,22 +18,7 @@
     gap: var(--dock-gap);
     border: var(--dock-border);
     z-index: var(--z-dock);
-    box-shadow: var(--shadow-elevation-3);
-    opacity: 0.94;
     pointer-events: auto;
-    transition:
-        opacity var(--duration-normal) var(--ease-out-quad),
-        transform var(--duration-normal) var(--ease-out-quad),
-        box-shadow var(--duration-normal) var(--ease-out-quad);
-}
-
-.dock:hover,
-.dock:focus-within,
-.dock.visible,
-.mobile-dock {
-    opacity: 1;
-    transform: translateX(-50%) translateY(var(--motion-lift));
-    box-shadow: var(--shadow-elevation-4);
 }
 
 .dock-item {
@@ -49,11 +32,10 @@
     cursor: pointer;
     position: relative;
     color: var(--text-on-accent);
-    transition:
-        filter var(--duration-normal) var(--ease-in-out-quad),
-        transform var(--duration-normal) var(--ease-out-quad);
-    box-shadow: 0 1px 3px 1px var(--shade-color);
+    background: color-mix(in srgb, var(--view-fg-color) 12%, transparent);
     outline: none;
+    border: none;
+    transition: filter var(--duration-fast);
 }
 
 .dock-item:focus-visible {
@@ -63,60 +45,8 @@
 
 @media (hover: hover) {
     .dock-item:hover {
-        filter: brightness(1.08);
-        transform: translateY(-4px) scale(1.08);
+        filter: brightness(1.1);
     }
-}
-
-.dock-item:active {
-    transform: scale(0.94);
-    filter: brightness(0.95);
-}
-
-.dock-item.launching {
-    animation: appLaunchPulse 360ms var(--ease-out-quad);
-}
-
-/* Adwaita-style dock icon backgrounds */
-.dock-item[data-app='about'] {
-    background: linear-gradient(135deg, var(--blue-2) 0%, var(--accent-blue) 100%);
-}
-
-.dock-item[data-app='files'] {
-    background: linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%);
-}
-
-.dock-item[data-app='projects'] {
-    background: linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%);
-}
-
-.dock-item[data-app='contact'] {
-    background: linear-gradient(135deg, var(--purple-2) 0%, var(--accent-purple) 100%);
-}
-
-.dock-item[data-app='terminal'] {
-    background: linear-gradient(135deg, var(--green-2) 0%, var(--accent-green) 100%);
-}
-
-.dock-item[data-app='settings'] {
-    background: linear-gradient(
-        135deg,
-        var(--icon-settings-start) 0%,
-        var(--icon-settings-end) 100%
-    );
-}
-
-.dock-item[data-app='skills'] {
-    background: linear-gradient(135deg, var(--green-3) 0%, var(--accent-teal) 100%);
-}
-
-.dock-item[data-app='focus-mode'] {
-    background: linear-gradient(135deg, var(--icon-focus-start) 0%, var(--icon-focus-end) 100%);
-}
-
-.dock-item[data-app='apps'] {
-    background: color-mix(in srgb, var(--dock-bg) 82%, var(--dock-active-dot));
-    color: var(--text-primary);
 }
 
 /* Active bar indicator (GNOME dash style) */
@@ -267,18 +197,6 @@
     to {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
-    }
-}
-
-@keyframes appLaunchPulse {
-    0% {
-        transform: translateY(0) scale(1);
-    }
-    45% {
-        transform: translateY(-7px) scale(1.08);
-    }
-    100% {
-        transform: translateY(0) scale(1);
     }
 }
 

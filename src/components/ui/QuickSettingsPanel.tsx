@@ -89,7 +89,7 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
         >
             <div className="qs-header">
                 <span>Quick Settings</span>
-                <small>Fedora Workstation</small>
+                <small>Workstation</small>
             </div>
             <div className="qs-tiles">
                 <button

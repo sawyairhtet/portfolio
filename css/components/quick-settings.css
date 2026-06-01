@@ -8,29 +8,25 @@
     right: 8px;
     width: 330px;
     z-index: var(--z-popover);
-    background: color-mix(in srgb, var(--dialog-bg-color) 96%, transparent);
-    border: 1px solid var(--glass-border);
+    background: var(--dialog-bg-color);
+    border: 1px solid var(--border-color);
     border-radius: var(--popover_radius);
     box-shadow: var(--shadow-popover);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transform: scale(var(--motion-scale-in)) translateY(-8px);
-    transform-origin: top right;
     transition:
-        opacity var(--duration-normal) var(--ease-out-quad),
-        transform var(--duration-normal) var(--ease-out-quad),
-        visibility var(--duration-normal) var(--ease-out-quad);
+        opacity var(--duration-normal),
+        visibility var(--duration-normal);
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
 }
 
 .quick-settings-panel.visible {
     opacity: 1;
     visibility: visible;
-    transform: scale(1) translateY(0);
 }
 
 .qs-header {
@@ -73,29 +69,14 @@
     font-family: var(--font-ui);
     cursor: pointer;
     transition:
-        background var(--duration-normal) var(--ease-in-out-quad),
-        border-color var(--duration-normal) var(--ease-in-out-quad),
-        transform var(--duration-normal) var(--ease-out-quad),
-        box-shadow var(--duration-normal) var(--ease-out-quad);
-}
-
-.qs-tile:hover {
-    background: color-mix(in srgb, var(--popover-fg-color) 7%, transparent);
-    border-color: var(--glass-border);
-}
-
-.qs-tile:active {
-    transform: scale(0.97);
+        background var(--duration-fast) var(--mutter-ease),
+        border-color var(--duration-fast) var(--mutter-ease);
 }
 
 .qs-tile[aria-pressed='true'] {
     background: color-mix(in srgb, var(--accent-bg-color) 16%, transparent);
     border-color: color-mix(in srgb, var(--accent-bg-color) 25%, transparent);
     color: var(--accent-on-surface);
-}
-
-[data-theme='dark'] .qs-tile[aria-pressed='true'] {
-    background: color-mix(in srgb, var(--accent-bg-color) 14%, transparent);
 }
 
 .qs-tile-icon {
@@ -107,9 +88,6 @@
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-md);
-    transition:
-        background var(--duration-normal) var(--ease-in-out-quad),
-        box-shadow var(--duration-normal) var(--ease-out-quad);
 }
 
 .qs-tile[aria-pressed='true'] .qs-tile-icon {
@@ -203,19 +181,7 @@
     font-size: var(--font-size-2xs);
     font-weight: 500;
     cursor: pointer;
-    transition:
-        background 200ms var(--ease-in-out-quad),
-        color 200ms var(--ease-in-out-quad),
-        transform 200ms var(--ease-out-quad);
-}
-
-.qs-footer-btn:hover {
-    background: var(--surface-3);
-    color: var(--text-primary);
-}
-
-.qs-footer-btn:active {
-    transform: scale(0.95);
+    transition: background var(--duration-fast);
 }
 
 .qs-footer-btn i {

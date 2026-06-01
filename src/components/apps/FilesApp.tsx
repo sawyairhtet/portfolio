@@ -1,7 +1,6 @@
 import { memo, useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { PROJECTS, WALLPAPERS } from '../../config/data';
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { Icon } from '../ui/Icon';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
     FolderSimple,

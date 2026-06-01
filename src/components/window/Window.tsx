@@ -65,8 +65,6 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     // Ref for synchronous reads in mousemove/mouseup closures; state drives rendering.
     const snapPreviewRef = useRef<SnapPreview>(null);
     const [snapPreview, setSnapPreview] = useState<SnapPreview>(null);
-    const [isClosing, setIsClosing] = useState(false);
-    const closeTimerRef = useRef<number | null>(null);
 
     const win = windows.get(appId);
     const isOpen = Boolean(win?.isOpen);
@@ -91,27 +89,9 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         setSnapPreview(next);
     }, []);
 
-    useEffect(() => {
-        return () => {
-            if (closeTimerRef.current !== null) {
-                window.clearTimeout(closeTimerRef.current);
-            }
-        };
-    }, []);
-
     const requestClose = useCallback(() => {
         playCloseSound();
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        if (reduceMotion) {
-            closeWindow(appId);
-            return;
-        }
-
-        setIsClosing(true);
-        closeTimerRef.current = window.setTimeout(() => {
-            closeWindow(appId);
-        }, 220);
+        closeWindow(appId);
     }, [appId, closeWindow, playCloseSound]);
 
     useEffect(() => {
@@ -120,29 +100,6 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         if (!element) return;
 
         element.style.zIndex = String(zIndex);
-
-        const syncLaunchOrigin = () => {
-            const origin = win.launchOrigin ?? {
-                x: window.innerWidth / 2,
-                y: window.innerHeight - 64,
-            };
-            const rect = element.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            element.style.setProperty(
-                '--window-open-dx',
-                `${Math.round((origin.x - centerX) * 0.22)}px`
-            );
-            element.style.setProperty(
-                '--window-open-dy',
-                `${Math.round((origin.y - centerY) * 0.22)}px`
-            );
-            element.style.setProperty(
-                '--window-open-origin',
-                `${Math.round(origin.x - rect.left)}px ${Math.round(origin.y - rect.top)}px`
-            );
-        };
 
         if (
             device === 'desktop' &&
@@ -157,7 +114,6 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
             element.style.left = positionLeft;
             element.style.width = sizeWidth;
             element.style.height = sizeHeight;
-            syncLaunchOrigin();
             return;
         }
 
@@ -165,7 +121,6 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         element.style.removeProperty('left');
         element.style.removeProperty('width');
         element.style.removeProperty('height');
-        syncLaunchOrigin();
     }, [
         device,
         isMaximized,
@@ -441,7 +396,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         <>
             <div
                 ref={windowRef}
-                className={`window active${isFocused && !isOtherWorkspace ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''}${isClosing ? ' closing' : ''}${workspaceClass} ${className}`}
+                className={`window active${isFocused && !isOtherWorkspace ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''}${workspaceClass} ${className}`}
                 id={windowId}
                 data-app={appId}
                 data-focused={isFocused && !isOtherWorkspace ? 'true' : 'false'}

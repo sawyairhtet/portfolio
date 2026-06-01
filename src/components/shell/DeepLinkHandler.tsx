@@ -40,7 +40,7 @@ const ROUTE_META = new Map<AppId, { title: string; description: string }>([
         {
             title: 'Projects - Saw Ye Htet | OpsTrack, Portfolio Desktop',
             description:
-                'Featured projects by Saw Ye Htet: OpsTrack operations tracking API (Spring Boot) and a Fedora-inspired React + TypeScript portfolio desktop.',
+                'Featured projects by Saw Ye Htet: OpsTrack operations tracking API (Spring Boot) and a GNOME-inspired React + TypeScript portfolio desktop.',
         },
     ],
     [

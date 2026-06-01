@@ -72,10 +72,8 @@ i > svg {
 }
 
 .toast-notification {
-    background: var(--glass-bg-heavy);
-    backdrop-filter: var(--glass-blur) saturate(180%);
-    -webkit-backdrop-filter: var(--glass-blur) saturate(180%);
-    color: var(--text-primary);
+    background: var(--popover-bg-color);
+    color: var(--popover-fg-color);
     padding: 12px 20px;
     border-radius: var(--radius-md);
     border: 1px solid var(--glass-border);
@@ -674,4 +672,95 @@ body.focus-dim-active .window[data-app='focus-mode'] {
         height: 44px;
         font-size: 21px;
     }
+}
+
+/* ============================================
+   RECRUITER TOUR — First-run onboarding
+   ============================================ */
+
+.recruiter-tour-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--dark-5) 55%, transparent);
+    animation: fadeInUp 250ms var(--ease-out-quad);
+}
+
+.recruiter-tour-dialog {
+    width: min(360px, calc(100vw - 32px));
+    padding: var(--adw-spacing-3xl);
+    border: 1px solid var(--border-color);
+    border-radius: var(--dialog_radius);
+    background: var(--dialog-bg-color);
+    color: var(--dialog-fg-color);
+    box-shadow: var(--shadow-popover);
+    text-align: center;
+}
+
+.recruiter-tour-dialog h2 {
+    margin: 0 0 var(--adw-spacing-sm);
+}
+
+.recruiter-tour-dialog p {
+    margin: 0 0 var(--adw-spacing-xl);
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+}
+
+.recruiter-tour-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--adw-spacing-sm);
+    margin-bottom: var(--adw-spacing-lg);
+}
+
+.recruiter-tour-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--adw-spacing-sm);
+    min-height: var(--control-min-medium);
+    padding: 0 var(--adw-spacing-xl);
+    border: 1px solid var(--border-color);
+    border-radius: var(--button_radius);
+    background: var(--view-bg-color);
+    color: var(--view-fg-color);
+    font-family: var(--document-font-family);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--mutter-ease);
+}
+
+.recruiter-tour-btn:hover {
+    background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
+}
+
+.recruiter-tour-btn.primary {
+    background: var(--accent-bg-color);
+    border-color: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+}
+
+.recruiter-tour-btn.primary:hover {
+    filter: brightness(1.08);
+}
+
+.recruiter-tour-skip {
+    display: inline-block;
+    padding: var(--adw-spacing-sm) var(--adw-spacing-md);
+    border: none;
+    border-radius: var(--button_radius);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--document-font-family);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: color var(--duration-fast);
+}
+
+.recruiter-tour-skip:hover {
+    color: var(--text-primary);
 }

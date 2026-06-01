@@ -20,6 +20,7 @@ const DEFAULT_PREFERENCES: PortfolioPreferences = {
     focusDim: true,
     fastBoot: true,
     wallpaperTimeOfDay: true,
+    dockHidden: true,
 };
 
 interface PreferencesContextValue {

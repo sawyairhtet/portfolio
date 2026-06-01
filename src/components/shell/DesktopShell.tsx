@@ -233,6 +233,7 @@ export function DesktopShell() {
     const [altTabOpen, setAltTabOpen] = useState(false);
     const [altTabIndex, setAltTabIndex] = useState(0);
     const [shortcutsOpen, setShortcutsOpen] = useState(false);
+    const [recruiterTourOpen, setRecruiterTourOpen] = useState(false);
     const mruStack = useRef<AppId[]>([]);
     const hasVisibleWindows = Array.from(windows.values()).some(
         win => win.isOpen && !win.isMinimized && win.workspaceIndex === activeWorkspace
@@ -287,22 +288,20 @@ export function DesktopShell() {
         setBooted(true);
         localStorage.setItem('hasVisitedBefore', 'true');
 
-        // Auto-open About window on first visit so visitors immediately know who this is
         if (isFirstVisit) {
-            setTimeout(() => openWindow('about'), 600);
+            setTimeout(() => setRecruiterTourOpen(true), 800);
             setTimeout(
                 () =>
                     showToast('Welcome to Saw Ye Htet', 'desktop', {
                         label: 'View Resume',
                         appId: 'text-editor',
                     }),
-                1000
+                1500
             );
-            setTimeout(() => setShowDockTip(true), 1800);
+            setTimeout(() => setShowDockTip(true), 2500);
             setTimeout(() => setShowDockTip(false), 8000);
         }
 
-        // Startup sound on first interaction
         const playOnce = () => {
             playStartupDrum();
             document.removeEventListener('click', playOnce);
@@ -591,6 +590,58 @@ export function DesktopShell() {
 
             {shortcutsOpen && <ShortcutsDialog onClose={() => setShortcutsOpen(false)} />}
 
+            {recruiterTourOpen && (
+                <div
+                    className="recruiter-tour-overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="recruiter-tour-title"
+                    onClick={e => {
+                        if ((e.target as HTMLElement).classList.contains('recruiter-tour-overlay')) {
+                            setRecruiterTourOpen(false);
+                        }
+                    }}
+                    onKeyDown={e => {
+                        if (e.key === 'Escape') setRecruiterTourOpen(false);
+                    }}
+                >
+                    <div className="recruiter-tour-dialog">
+                        <h2 id="recruiter-tour-title" className="title-3">Quick Tour</h2>
+                        <p>Find everything you need in seconds:</p>
+                        <div className="recruiter-tour-actions">
+                            <button
+                                type="button"
+                                className="recruiter-tour-btn primary"
+                                onClick={() => { openWindow('resume'); setRecruiterTourOpen(false); }}
+                            >
+                                <Icon name="file-pdf" /> View Resume
+                            </button>
+                            <button
+                                type="button"
+                                className="recruiter-tour-btn"
+                                onClick={() => { openWindow('projects'); setRecruiterTourOpen(false); }}
+                            >
+                                <Icon name="folder-open" /> View Projects
+                            </button>
+                            <button
+                                type="button"
+                                className="recruiter-tour-btn"
+                                onClick={() => { openWindow('contact'); setRecruiterTourOpen(false); }}
+                            >
+                                <Icon name="envelope" /> Contact
+                            </button>
+                        </div>
+                        <button
+                            type="button"
+                            className="recruiter-tour-skip"
+                            onClick={() => setRecruiterTourOpen(false)}
+                        >
+                            Skip tour
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <span className="sr-only" aria-live="polite">
                 Workspace {activeWorkspace + 1}
             </span>
@@ -723,12 +774,14 @@ export function DesktopShell() {
                 </Window>
             )}
 
-            {/* Dock — always visible (Dash-to-Dock style) */}
-            <Dock
-                onShowApps={() =>
-                    setActiveOverlay(p => (p === 'activities' ? 'none' : 'activities'))
-                }
-            />
+            {/* Dock — visible in Activities or when Recruiter Mode is on */}
+            {(activitiesOpen || !preferences.dockHidden) && (
+                <Dock
+                    onShowApps={() =>
+                        setActiveOverlay(p => (p === 'activities' ? 'none' : 'activities'))
+                    }
+                />
+            )}
 
             {/* Dock onboarding tooltip for first-time visitors */}
             {showDockTip && !hasVisibleWindows && (

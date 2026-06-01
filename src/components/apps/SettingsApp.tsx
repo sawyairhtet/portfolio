@@ -123,32 +123,7 @@ export const SettingsApp = memo(function SettingsApp() {
         <>
             <div className="settings-sidebar">
                 <div className="settings-sidebar-header">
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 48 48"
-                        aria-hidden="true"
-                        className="settings-fedora-logo"
-                    >
-                        <circle
-                            cx="24"
-                            cy="24"
-                            r="22"
-                            fill="var(--accent-bg-color)"
-                            opacity="0.2"
-                        />
-                        <text
-                            x="24"
-                            y="30"
-                            textAnchor="middle"
-                            fontSize="22"
-                            fontWeight="800"
-                            fill="var(--accent-bg-color)"
-                        >
-                            F
-                        </text>
-                    </svg>
-                    <span className="settings-sidebar-label">Settings</span>
+                        <span className="settings-sidebar-label">Settings</span>
                 </div>
                 {NAV_ITEMS.map(item => (
                     <button
@@ -368,6 +343,24 @@ export const SettingsApp = memo(function SettingsApp() {
                             </div>
                             <p className="settings-row-desc">
                                 Skip the boot animation on subsequent visits.
+                            </p>
+                        </div>
+                        <div className="settings-card">
+                            <h3>Dock (Activities Dash)</h3>
+                            <div className="settings-row">
+                                <span className="settings-row-label">
+                                    <Moon weight="duotone" size={16} />
+                                    <span>Hide dock on desktop</span>
+                                </span>
+                                <ToggleSwitch
+                                    checked={preferences.dockHidden}
+                                    onChange={v => updatePreferences({ dockHidden: v })}
+                                    label="Hide dock on desktop"
+                                />
+                            </div>
+                            <p className="settings-row-desc">
+                                Stock GNOME behavior: dock only appears in Activities Overview.
+                                Disable for persistent recruiter-friendly navigation.
                             </p>
                         </div>
                     </div>
@@ -631,34 +624,13 @@ export const SettingsApp = memo(function SettingsApp() {
                     <div className="settings-panel active">
                         <h2>About</h2>
                         <div className="settings-card about-system-card">
-                            <div className="about-system-logo">
-                                <svg width="64" height="64" viewBox="0 0 48 48" aria-hidden="true">
-                                    <circle
-                                        cx="24"
-                                        cy="24"
-                                        r="22"
-                                        fill="var(--accent-bg-color)"
-                                        opacity="0.15"
-                                    />
-                                    <text
-                                        x="24"
-                                        y="31"
-                                        textAnchor="middle"
-                                        fontSize="24"
-                                        fontWeight="800"
-                                        fill="var(--accent-bg-color)"
-                                    >
-                                        F
-                                    </text>
-                                </svg>
-                            </div>
-                            <h3>Saw Ye Htet Portfolio Workstation</h3>
+                            <h3>Saw Ye Htet Portfolio</h3>
                             <div className="about-system-info">
                                 {[
                                     ['Role', PROFILE.role],
                                     ['Target', PROFILE.roleTarget],
                                     ['Primary Stack', PROFILE.primaryStack.join(', ')],
-                                    ['Interface', 'Fedora/GNOME-inspired web desktop'],
+                                    ['Interface', 'GNOME-inspired web desktop'],
                                     ['Runtime', 'React 19 + TypeScript + Vite'],
                                     ['Hardware', 'Browser-hosted portfolio'],
                                     ['Developer', PROFILE.name],

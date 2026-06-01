@@ -14,15 +14,10 @@
     width: 680px;
     min-width: min(320px, calc(100vw - 24px));
     max-width: min(960px, calc(100vw - 24px));
-    max-height: calc(100dvh - var(--topbar-height) - 112px);
+    max-height: calc(100dvh - var(--topbar-height) - 32px);
     z-index: var(--z-window);
     overflow: hidden;
     container: app-window / inline-size;
-    transform-origin: var(--window-open-origin, 50% 100%);
-    transition:
-        box-shadow var(--backdrop_transition),
-        transform var(--duration-window) var(--ease-out-quad);
-    /* Default position */
     left: 20px;
     top: 15%;
 }
@@ -30,12 +25,12 @@
 /* Active window */
 .window.active {
     display: flex;
-    animation: windowOpen var(--window-open-duration) var(--ease-out-quad) forwards;
+    opacity: 1;
 }
 
 /* Window closing state */
 .window.closing {
-    animation: windowClose var(--window-close-duration) var(--ease-out-quad) forwards;
+    opacity: 0;
     pointer-events: none;
 }
 
@@ -144,12 +139,6 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition:
-        top 200ms var(--ease-in-out-quad),
-        left 200ms var(--ease-in-out-quad),
-        width 200ms var(--ease-in-out-quad),
-        height 200ms var(--ease-in-out-quad),
-        border-radius 200ms var(--ease-in-out-quad);
 }
 
 .window.snapped-right {
@@ -161,12 +150,6 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition:
-        top 200ms var(--ease-in-out-quad),
-        left 200ms var(--ease-in-out-quad),
-        width 200ms var(--ease-in-out-quad),
-        height 200ms var(--ease-in-out-quad),
-        border-radius 200ms var(--ease-in-out-quad);
 }
 
 .window.snapped-maximized {
@@ -180,14 +163,6 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
-    transition:
-        top 200ms var(--ease-in-out-quad),
-        left 200ms var(--ease-in-out-quad),
-        right 200ms var(--ease-in-out-quad),
-        bottom 200ms var(--ease-in-out-quad),
-        width 200ms var(--ease-in-out-quad),
-        height 200ms var(--ease-in-out-quad),
-        border-radius 200ms var(--ease-in-out-quad);
 }
 
 /* Snap Preview Overlay */
@@ -241,13 +216,7 @@
     background: var(--headerbar-bg-color);
     color: var(--headerbar-fg-color);
     border-bottom: 1px solid var(--headerbar-shade-color);
-    cursor: grab;
     user-select: none;
-    position: relative;
-}
-
-.window-header:active {
-    cursor: grabbing;
 }
 
 .window-title-group {
@@ -307,7 +276,7 @@
     width: 24px;
     min-width: 24px;
     height: 24px;
-    padding: 5px;
+    padding: 4px;
     border-radius: var(--button_radius);
     border: none;
     background: transparent;
@@ -316,10 +285,7 @@
     justify-content: center;
     color: currentColor;
     cursor: pointer;
-    transition:
-        background var(--button_transition),
-        box-shadow var(--button_transition),
-        transform var(--duration-fast) var(--ease-out-quad);
+    transition: background var(--button_transition);
     outline: none;
 }
 
@@ -328,13 +294,24 @@
     outline-offset: 2px;
 }
 
-.window-control:active {
-    transform: scale(0.9);
-}
-
-/* Hide FA icons */
 .window-control i {
     display: none;
+}
+
+.window-control::after {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: currentColor;
+    opacity: 0.65;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 16px 16px;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: 16px 16px;
+    transition: opacity 200ms var(--ease-out-quad);
 }
 
 .window-control.close::after {
@@ -357,60 +334,27 @@
     -webkit-mask-image: url('/icons/adwaita/window/window-restore-symbolic.svg');
 }
 
-.window-control::before {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border-radius: 100%;
-    background-color: transparent;
-    transition: var(--button_transition);
-}
-
-.window-control::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background-color: currentColor;
-    opacity: 0.75;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: 16px 16px;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    -webkit-mask-size: 16px 16px;
-    pointer-events: none;
-    transition: opacity 200ms var(--ease-out-quad);
-}
-
 @media (hover: hover) {
-    .window-control:hover::before {
-        background-color: rgba(255, 255, 255, 0.08);
+    .window-control:hover {
+        background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
     }
 
     .window-control:hover::after {
-        opacity: 1;
+        opacity: 0.85;
     }
 
-    .window-control.close:hover::before {
-        background-color: color-mix(in srgb, var(--destructive-bg-color) 18%, transparent);
+    .window-control.close:hover {
+        background: var(--destructive-bg-color);
     }
 
     .window-control.close:hover::after {
-        background-color: var(--destructive-color);
+        background-color: var(--destructive-fg-color);
+        opacity: 1;
     }
 }
 
-[data-theme='light'] .window-control:hover::before {
-    background-color: rgba(0, 0, 0, 0.06);
-}
-
-.window-control:active::before {
-    background-color: rgba(255, 255, 255, 0.14);
-}
-
-[data-theme='light'] .window-control:active::before {
-    background-color: rgba(0, 0, 0, 0.1);
+[data-theme='light'] .window-control:hover {
+    background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
 }
 
 .close-btn-mobile {
@@ -446,20 +390,12 @@
 
 @media (hover: hover) {
     .window-header .headerbar-btn:hover {
-        background: rgba(255, 255, 255, 0.08);
-    }
-
-    [data-theme='light'] .window-header .headerbar-btn:hover {
-        background: rgba(0, 0, 0, 0.06);
+        background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
     }
 }
 
 .window-header .headerbar-btn:active {
-    background: rgba(255, 255, 255, 0.14);
-}
-
-[data-theme='light'] .window-header .headerbar-btn:active {
-    background: rgba(0, 0, 0, 0.1);
+    background: color-mix(in srgb, var(--view-fg-color) 12%, transparent);
 }
 
 /* ============================================

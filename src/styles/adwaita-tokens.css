@@ -219,9 +219,9 @@
     --popover-shade-color: rgb(0 0 6 / 7%);
     --shade-color: rgb(0 0 6 / 7%);
     --window-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.15), 0 12px 30px -4px rgba(0, 0, 0, 0.5),
-        0 4px 12px 0 rgba(0, 0, 0, 0.4);
-    --window-backdrop-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 4px 12px 0 rgba(0, 0, 0, 0.3);
+        0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 18px -4px rgba(0, 0, 0, 0.28),
+        0 2px 8px 0 rgba(0, 0, 0, 0.18);
+    --window-backdrop-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 6px 0 rgba(0, 0, 0, 0.15);
     --window-outline-color: rgb(0 0 0 / 5%);
 
     /* Fedora 43 brand */
@@ -292,9 +292,9 @@
     --popover-shade-color: rgb(0 0 6 / 25%);
     --shade-color: rgb(0 0 6 / 25%);
     --window-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.15), 0 12px 30px -4px rgba(0, 0, 0, 0.5),
-        0 4px 12px 0 rgba(0, 0, 0, 0.4);
-    --window-backdrop-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 4px 12px 0 rgba(0, 0, 0, 0.3);
+        0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 18px -4px rgba(0, 0, 0, 0.28),
+        0 2px 8px 0 rgba(0, 0, 0, 0.18);
+    --window-backdrop-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 6px 0 rgba(0, 0, 0, 0.15);
     --window-outline-color: rgb(0 0 0 / 5%);
 }
 
