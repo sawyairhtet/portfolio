@@ -19,8 +19,6 @@ interface SoundContextValue {
     playNotificationSound: () => void;
     playCloseSound: () => void;
     playClickSound: () => void;
-    playToggleSound: () => void;
-    playErrorSound: () => void;
     playMaximizeSound: () => void;
     isDnd: boolean;
     setDnd: (dnd: boolean) => void;
@@ -37,8 +35,6 @@ const SoundContext = createContext<SoundContextValue>({
     playNotificationSound: () => {},
     playCloseSound: () => {},
     playClickSound: () => {},
-    playToggleSound: () => {},
-    playErrorSound: () => {},
     playMaximizeSound: () => {},
     isDnd: false,
     setDnd: () => {},
@@ -215,29 +211,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         }
     }, [isMuted, getAudioCtx, volume]);
 
-    const playToggleSound = useCallback(() => {
-        if (isMuted || !isUnlockedRef.current) return;
-        try {
-            const ctx = getAudioCtx();
-            const gain = volume / 100;
-            createOscillatorSound(ctx, 1000, 0.04, 'square', 0.03 * gain);
-        } catch {
-            // Audio not available
-        }
-    }, [isMuted, getAudioCtx, volume]);
-
-    const playErrorSound = useCallback(() => {
-        if (isMuted || !isUnlockedRef.current) return;
-        try {
-            const ctx = getAudioCtx();
-            const gain = volume / 100;
-            createOscillatorSound(ctx, 200, 0.12, 'square', 0.05 * gain);
-            setTimeout(() => createOscillatorSound(ctx, 160, 0.18, 'square', 0.04 * gain), 100);
-        } catch {
-            // Audio not available
-        }
-    }, [isMuted, getAudioCtx, volume]);
-
     const playMaximizeSound = useCallback(() => {
         if (isMuted || !isUnlockedRef.current) return;
         try {
@@ -268,8 +241,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
                 playNotificationSound,
                 playCloseSound,
                 playClickSound,
-                playToggleSound,
-                playErrorSound,
                 playMaximizeSound,
                 isDnd,
                 setDnd,

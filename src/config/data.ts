@@ -204,10 +204,6 @@ export const APP_FOLDERS: { id: string; label: string; icon: string; appIds: App
     },
 ];
 
-export const UNGROUPED_APP_IDS: AppId[] = APP_DEFINITIONS.map(app => app.id).filter(
-    id => !APP_FOLDERS.some(folder => folder.appIds.includes(id))
-);
-
 // ============================================
 // PORTFOLIO CONTENT DATA
 // ============================================
@@ -224,7 +220,7 @@ export const PROJECTS: Project[] = [
         solution:
             'Built a fast desktop-style shell where About, Projects, Resume, and Contact stay one click away from the dock, Activities search, and terminal.',
         impact: 'Demonstrates systematic problem-solving, attention to detail, and ability to build production-quality software with monitoring patterns (status indicators, notifications, structured logs).',
-        techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers', 'Tailwind v4'],
+        techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers'],
         platform: 'Responsive web app',
         proofPoints: [
             'Implemented draggable windows with snap zones, resize handles, minimise/maximise, and z-index stacking.',

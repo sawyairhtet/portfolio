@@ -234,7 +234,6 @@ export function DesktopShell() {
     const [altTabIndex, setAltTabIndex] = useState(0);
     const [shortcutsOpen, setShortcutsOpen] = useState(false);
     const [recruiterTourOpen, setRecruiterTourOpen] = useState(false);
-    const mruStack = useRef<AppId[]>([]);
     const hasVisibleWindows = Array.from(windows.values()).some(
         win => win.isOpen && !win.isMinimized && win.workspaceIndex === activeWorkspace
     );
@@ -348,12 +347,6 @@ export function DesktopShell() {
                     .filter(([, win]) => win.isOpen && !win.isMinimized && (win.workspaceIndex === undefined || win.workspaceIndex === activeWorkspace))
                     .sort(([, a], [, b]) => b.zIndex - a.zIndex)
                     .map(([id]) => id);
-
-                // Update MRU: move the last-focused window to the end (most recent)
-                const lastFocused = openWindowIds[0];
-                if (lastFocused) {
-                    mruStack.current = [...mruStack.current.filter(id => id !== lastFocused), lastFocused];
-                }
 
                 if (openWindowIds.length > 0) {
                     const nextIndex = (altTabIndex + 1) % openWindowIds.length;
