@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { memo, useState, useMemo } from 'react';
 import { Icon } from '../ui/Icon';
 
 interface CalendarEvent {
@@ -13,41 +13,46 @@ const DEFAULT_EVENTS: CalendarEvent[] = [
     {
         id: '1',
         title: 'Graduated from Singapore Polytechnic',
-        description: 'Diploma in Information Technology, GPA 3.55. Specializing in Systems, Java, Backend development.',
+        description:
+            'Diploma in Information Technology, GPA 3.55. Specializing in Systems, Java, Backend development.',
         date: '2026-05-04',
         type: 'milestone',
     },
     {
         id: '2',
         title: 'LTVP & Job Hunt Commenced',
-        description: 'MOE Tuition Grant active. Target S-Pass, minimum SGD 3,300/month as Junior Java Backend Developer.',
+        description:
+            'MOE Tuition Grant active. Target S-Pass, minimum SGD 3,300/month as Junior Java Backend Developer.',
         date: '2026-05-15',
         type: 'milestone',
     },
     {
         id: '3',
         title: 'Spring Boot Incident Tracker API (OpsTrack)',
-        description: 'Practice incident management API. Implemented incident triage workflows, PostgreSQL models.',
+        description:
+            'Practice incident management API. Implemented incident triage workflows, PostgreSQL models.',
         date: '2026-05-20',
         type: 'study',
     },
     {
         id: '4',
         title: 'System Support & ITIL Self-Study',
-        description: 'Reviewed ITIL foundation principles, SLA management, and logging analysis with Fedora CLI.',
+        description:
+            'Reviewed ITIL foundation principles, SLA management, and logging analysis with Fedora CLI.',
         date: '2026-05-27',
         type: 'study',
     },
     {
         id: '5',
         title: 'Today - Portfolio Audited',
-        description: 'Fidelity check for GNOME 49 / Fedora 43 UI simulation. Reviewing accessibility, performance, and apps.',
+        description:
+            'Fidelity check for GNOME 49 / Fedora 43 UI simulation. Reviewing accessibility, performance, and apps.',
         date: '2026-05-29',
         type: 'interview',
     },
 ];
 
-export function CalendarApp() {
+export const CalendarApp = memo(function CalendarApp() {
     const [currentDate, setCurrentDate] = useState(() => new Date(2026, 4, 29)); // Default to May 29, 2026
     const [selectedDateStr, setSelectedDateStr] = useState('2026-05-29');
     const [events, setEvents] = useState<CalendarEvent[]>(DEFAULT_EVENTS);
@@ -59,8 +64,18 @@ export function CalendarApp() {
     const month = currentDate.getMonth();
 
     const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
     ];
 
     const handlePrevMonth = () => {
@@ -151,15 +166,27 @@ export function CalendarApp() {
             <div className="calendar-left-pane">
                 <header className="calendar-header">
                     {/* eslint-disable-next-line security/detect-object-injection */}
-                    <span className="calendar-month-title">{monthNames[month]} {year}</span>
+                    <span className="calendar-month-title">
+                        {monthNames[month]} {year}
+                    </span>
                     <div className="calendar-nav-buttons linked">
-                        <button type="button" className="headerbar-btn" onClick={handlePrevMonth} aria-label="Previous Month">
+                        <button
+                            type="button"
+                            className="headerbar-btn"
+                            onClick={handlePrevMonth}
+                            aria-label="Previous Month"
+                        >
                             <Icon name="arrow-left" />
                         </button>
                         <button type="button" className="headerbar-btn" onClick={handleToday}>
                             Today
                         </button>
-                        <button type="button" className="headerbar-btn" onClick={handleNextMonth} aria-label="Next Month">
+                        <button
+                            type="button"
+                            className="headerbar-btn"
+                            onClick={handleNextMonth}
+                            aria-label="Next Month"
+                        >
                             <Icon name="arrow-right" />
                         </button>
                     </div>
@@ -167,7 +194,9 @@ export function CalendarApp() {
 
                 <div className="calendar-grid">
                     {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((w, idx) => (
-                        <div key={idx} className="calendar-grid-header-cell">{w}</div>
+                        <div key={idx} className="calendar-grid-header-cell">
+                            {w}
+                        </div>
                     ))}
                     {calendarCells.map((cell, idx) => {
                         const cellDateStr = formatDateStr(cell.year, cell.month, cell.day);
@@ -268,4 +297,4 @@ export function CalendarApp() {
             </div>
         </div>
     );
-}
+});

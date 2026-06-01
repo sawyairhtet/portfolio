@@ -61,9 +61,7 @@ export function TopBar({
                     Activities
                 </button>
                 <span className="focused-app-name" aria-label="Focused application name">
-                    {focusedAppDefinition && (
-                        <Icon name={focusedAppDefinition.icon} />
-                    )}
+                    {focusedAppDefinition && <Icon name={focusedAppDefinition.icon} />}
                     {focusedAppName}
                 </span>
             </div>

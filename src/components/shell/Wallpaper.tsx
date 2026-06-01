@@ -79,9 +79,9 @@ export function Wallpaper() {
             className={`wallpaper${isCustomWallpaper ? ' custom-wallpaper' : ''}${useTimeBased ? ' time-based' : ''}`}
             style={
                 isCustomWallpaper && imageSrc
-                    ? {
+                    ? ({
                           '--custom-wallpaper-bg': `url("${imageSrc}") center / cover no-repeat`,
-                      } as React.CSSProperties
+                      } as React.CSSProperties)
                     : {}
             }
         >

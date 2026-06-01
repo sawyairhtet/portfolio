@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Icon } from '../ui/Icon';
 import { WALLPAPERS } from '../../config/data';
 
-export function ImageViewerApp() {
+export const ImageViewerApp = memo(function ImageViewerApp() {
     const [activeImageIdx, setActiveImageIdx] = useState(0);
     const [zoom, setZoom] = useState(1);
     const [rotate, setRotate] = useState(0);
@@ -38,7 +38,11 @@ export function ImageViewerApp() {
                                 }}
                             >
                                 <div className="image-viewer-gallery-thumb-wrap">
-                                    <img src={thumbSrc} alt={wp.label} className="image-viewer-gallery-thumb" />
+                                    <img
+                                        src={thumbSrc}
+                                        alt={wp.label}
+                                        className="image-viewer-gallery-thumb"
+                                    />
                                 </div>
                                 <span className="image-viewer-gallery-label">{wp.label}</span>
                             </button>
@@ -50,22 +54,51 @@ export function ImageViewerApp() {
             <div className="image-viewer-main">
                 <header className="image-viewer-toolbar">
                     <div className="image-viewer-zoom-group linked">
-                        <button type="button" className="headerbar-btn" onClick={handleZoomOut} title="Zoom Out" aria-label="Zoom Out">
+                        <button
+                            type="button"
+                            className="headerbar-btn"
+                            onClick={handleZoomOut}
+                            title="Zoom Out"
+                            aria-label="Zoom Out"
+                        >
                             <Icon name="search" className="zoom-out-icon-adj" /> -
                         </button>
-                        <button type="button" className="headerbar-btn" onClick={handleReset} title="Reset zoom/rotation">
+                        <button
+                            type="button"
+                            className="headerbar-btn"
+                            onClick={handleReset}
+                            title="Reset zoom/rotation"
+                        >
                             {Math.round(zoom * 100)}%
                         </button>
-                        <button type="button" className="headerbar-btn" onClick={handleZoomIn} title="Zoom In" aria-label="Zoom In">
+                        <button
+                            type="button"
+                            className="headerbar-btn"
+                            onClick={handleZoomIn}
+                            title="Zoom In"
+                            aria-label="Zoom In"
+                        >
                             <Icon name="search" /> +
                         </button>
                     </div>
 
                     <div className="image-viewer-rotate-group linked">
-                        <button type="button" className="headerbar-btn" onClick={handleRotateLeft} title="Rotate Left" aria-label="Rotate Counter-Clockwise">
+                        <button
+                            type="button"
+                            className="headerbar-btn"
+                            onClick={handleRotateLeft}
+                            title="Rotate Left"
+                            aria-label="Rotate Counter-Clockwise"
+                        >
                             <Icon name="arrow-left" /> Rotate
                         </button>
-                        <button type="button" className="headerbar-btn" onClick={handleRotateRight} title="Rotate Right" aria-label="Rotate Clockwise">
+                        <button
+                            type="button"
+                            className="headerbar-btn"
+                            onClick={handleRotateRight}
+                            title="Rotate Right"
+                            aria-label="Rotate Clockwise"
+                        >
                             Rotate <Icon name="arrow-right" />
                         </button>
                     </div>
@@ -99,4 +132,4 @@ export function ImageViewerApp() {
             </div>
         </div>
     );
-}
+});

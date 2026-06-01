@@ -21,7 +21,8 @@ interface ActivitiesOverlayProps {
 const QUICK_START_APP_IDS: AppId[] = ['about', 'projects', 'resume', 'contact'];
 
 export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: ActivitiesOverlayProps) {
-    const { openWindow, windows, setActiveWorkspace, totalWorkspaces, moveWindowToWorkspace } = useWindowManager();
+    const { openWindow, windows, setActiveWorkspace, totalWorkspaces, moveWindowToWorkspace } =
+        useWindowManager();
     const [searchQuery, setSearchQuery] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -88,7 +89,11 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
 
     const openWindowEntries = useMemo(() => {
         return Array.from(windows.entries())
-            .filter(([, w]) => w.isOpen && (w.workspaceIndex === undefined || w.workspaceIndex === workspaceIndex))
+            .filter(
+                ([, w]) =>
+                    w.isOpen &&
+                    (w.workspaceIndex === undefined || w.workspaceIndex === workspaceIndex)
+            )
             .map(([id, windowInfo]) => ({
                 id,
                 windowInfo,
@@ -271,7 +276,9 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                     <div className="activities-windows">
                         {filteredWindows.length === 0 ? (
                             <div className="activities-no-windows">
-                                <Icon name={ normalizedSearch ? 'magnifying-glass' : 'window-maximize' } />
+                                <Icon
+                                    name={normalizedSearch ? 'magnifying-glass' : 'window-maximize'}
+                                />
                                 <strong>
                                     {normalizedSearch
                                         ? 'No matching windows'
@@ -329,13 +336,19 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                                 {app?.label || id}
                                             </span>
                                             {windowInfo.isMaximized && (
-                                                <span className="activities-preview-badge">Maximized</span>
+                                                <span className="activities-preview-badge">
+                                                    Maximized
+                                                </span>
                                             )}
                                             {windowInfo.isMinimized && (
-                                                <span className="activities-preview-badge">Minimized</span>
+                                                <span className="activities-preview-badge">
+                                                    Minimized
+                                                </span>
                                             )}
                                             {windowInfo.snapState !== 'none' && (
-                                                <span className="activities-preview-badge">Tiled</span>
+                                                <span className="activities-preview-badge">
+                                                    Tiled
+                                                </span>
                                             )}
                                         </span>
                                         <span className="activities-window-content">
@@ -345,7 +358,15 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                     <span className="activities-thumb-title">
                                         {app?.label || id}
                                     </span>
-                                    <small>{windowInfo.isMinimized ? 'Minimized' : windowInfo.isMaximized ? 'Maximized' : windowInfo.snapState !== 'none' ? 'Tiled' : 'Open'}</small>
+                                    <small>
+                                        {windowInfo.isMinimized
+                                            ? 'Minimized'
+                                            : windowInfo.isMaximized
+                                              ? 'Maximized'
+                                              : windowInfo.snapState !== 'none'
+                                                ? 'Tiled'
+                                                : 'Open'}
+                                    </small>
                                 </button>
                             ))
                         )}
@@ -377,14 +398,15 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                     }
                                 }}
                             >
-                                <span className={`activities-workspace-preview${wsCount > 0 ? ' has-windows' : ''}`} />
+                                <span
+                                    className={`activities-workspace-preview${wsCount > 0 ? ' has-windows' : ''}`}
+                                />
                                 <span className="activities-workspace-label">{i + 1}</span>
                             </button>
                         );
                     })}
                 </aside>
             </div>
-
 
             <div className="activities-results" aria-label="Search results and applications">
                 <section className="activities-section" aria-label="Applications">
@@ -423,7 +445,9 @@ export function ActivitiesOverlay({ isOpen, onClose, workspaceIndex = 0 }: Activ
                                                     >
                                                         <Icon name={app.icon} />
                                                     </div>
-                                                    <span className="activities-app-label">{app.label}</span>
+                                                    <span className="activities-app-label">
+                                                        {app.label}
+                                                    </span>
                                                 </button>
                                             ))}
                                         </div>

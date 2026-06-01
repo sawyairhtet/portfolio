@@ -112,8 +112,7 @@ body {
 .wallpaper {
     position: absolute;
     inset: -20px;
-    background: url('/images/wallpapers/fedora-43/f43-day.webp') center/cover
-        no-repeat;
+    background: url('/images/wallpapers/fedora-43/f43-day.webp') center/cover no-repeat;
 }
 
 body[data-time='night'] .wallpaper {

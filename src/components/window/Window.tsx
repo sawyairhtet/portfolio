@@ -424,7 +424,8 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
 
     if (!isOpen || !win) return null;
 
-    const isOtherWorkspace = win.workspaceIndex !== undefined && win.workspaceIndex !== activeWorkspace;
+    const isOtherWorkspace =
+        win.workspaceIndex !== undefined && win.workspaceIndex !== activeWorkspace;
     const workspaceClass = isOtherWorkspace ? ' is-on-other-workspace' : '';
 
     return (

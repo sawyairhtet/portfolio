@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { DEFAULT_FILE_SYSTEM } from '../../config/data';
 import { PROFILE } from '../../config/profile';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -18,16 +18,18 @@ const TABS: { id: Tab; label: string; icon: typeof FileText }[] = [
     { id: 'about.md', label: 'about.md', icon: FileText },
 ];
 
-export function TextEditorApp() {
+export const TextEditorApp = memo(function TextEditorApp() {
     const reduced = useReducedMotion();
     const [activeTab, setActiveTab] = useState<Tab>('resume.md');
 
     const fileContents = useMemo(() => {
         const resumeFile = DEFAULT_FILE_SYSTEM['/home/sawyehtet/resume.md'];
-        const aboutFile = DEFAULT_FILE_SYSTEM['/home/sawyehtet/documents/about.md'] ?? {
-            type: 'file',
-            content: `# About Me\n\n${PROFILE.name}\n${PROFILE.role}\n\n## Summary\n\n${PROFILE.summary}\n\n## Education\n\n${PROFILE.education}\n\n## Focus Areas\n\n- Application Support & Production Support\n- SQL Debugging & Database Querying\n- Log Analysis & Incident Triage\n- API Testing & Quality Assurance\n- Java Backend Development\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}\n\n## Links\n\n- [GitHub](https://github.com/sawyairhtet)\n- [LinkedIn](https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/)\n- [Resume](${PROFILE.resumePath})`,
-        } as const;
+        const aboutFile =
+            DEFAULT_FILE_SYSTEM['/home/sawyehtet/documents/about.md'] ??
+            ({
+                type: 'file',
+                content: `# About Me\n\n${PROFILE.name}\n${PROFILE.role}\n\n## Summary\n\n${PROFILE.summary}\n\n## Education\n\n${PROFILE.education}\n\n## Focus Areas\n\n- Application Support & Production Support\n- SQL Debugging & Database Querying\n- Log Analysis & Incident Triage\n- API Testing & Quality Assurance\n- Java Backend Development\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}\n\n## Links\n\n- [GitHub](https://github.com/sawyairhtet)\n- [LinkedIn](https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/)\n- [Resume](${PROFILE.resumePath})`,
+            } as const);
         return {
             'resume.md': resumeFile?.type === 'file' ? resumeFile.content : '',
             'about.md': aboutFile?.type === 'file' ? aboutFile.content : '',
@@ -153,4 +155,4 @@ export function TextEditorApp() {
             </div>
         </div>
     );
-}
+});

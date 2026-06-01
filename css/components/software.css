@@ -32,7 +32,11 @@
     width: 180px;
     height: 180px;
     border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent-bg-color) 18%, transparent), transparent);
+    background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--accent-bg-color) 18%, transparent),
+        transparent
+    );
     pointer-events: none;
 }
 
@@ -123,7 +127,9 @@
     color: var(--window-fg-color);
     font-size: var(--font-size-xs);
     cursor: pointer;
-    transition: background var(--duration-fast), color var(--duration-fast);
+    transition:
+        background var(--duration-fast),
+        color var(--duration-fast);
 }
 
 .software-category:hover {

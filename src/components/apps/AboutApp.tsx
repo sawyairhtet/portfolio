@@ -1,10 +1,8 @@
+import { memo } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { PROFILE } from '../../config/profile';
 import type { AppId } from '../../types';
-import {
-    motion,
-    useReducedMotion,
-} from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
     EnvelopeSimple,
     FileArrowDown,
@@ -46,9 +44,17 @@ const QUICK_FACTS = [
 ];
 
 const STAT_GRID = [
-    { label: 'Stack', value: PROFILE.primaryStack.slice(0, 3).join(' · '), icon: <Stack weight="duotone" size={20} /> },
+    {
+        label: 'Stack',
+        value: PROFILE.primaryStack.slice(0, 3).join(' · '),
+        icon: <Stack weight="duotone" size={20} />,
+    },
     { label: 'Location', value: PROFILE.location, icon: <MapTrifold weight="duotone" size={20} /> },
-    { label: 'Availability', value: PROFILE.availability, icon: <Lightning weight="duotone" size={20} /> },
+    {
+        label: 'Availability',
+        value: PROFILE.availability,
+        icon: <Lightning weight="duotone" size={20} />,
+    },
     { label: 'Focus', value: PROFILE.roleTarget, icon: <Briefcase weight="duotone" size={20} /> },
 ];
 
@@ -66,12 +72,11 @@ const fadeLeft = {
     animate: { opacity: 1, x: 0, transition: { duration: 0.4 } },
 };
 
-export function AboutApp() {
+export const AboutApp = memo(function AboutApp() {
     const { openWindow } = useWindowManager();
     const reduced = useReducedMotion();
 
-    const motionProps = (variants: Record<string, unknown>) =>
-        reduced ? {} : variants;
+    const motionProps = (variants: Record<string, unknown>) => (reduced ? {} : variants);
 
     return (
         <motion.div
@@ -152,15 +157,12 @@ export function AboutApp() {
                         <span className="about-card-label">Who I am</span>
                         <p>
                             {PROFILE.summary} I am targeting application support and production
-                            support roles where systematic troubleshooting and technical
-                            curiosity are valued.
+                            support roles where systematic troubleshooting and technical curiosity
+                            are valued.
                         </p>
                     </motion.div>
 
-                    <motion.div
-                        className="about-timeline"
-                        {...motionProps(fadeLeft)}
-                    >
+                    <motion.div className="about-timeline" {...motionProps(fadeLeft)}>
                         <span className="about-card-label">Education</span>
                         <div className="about-timeline-entry">
                             <div className="about-timeline-dot" />
@@ -176,10 +178,7 @@ export function AboutApp() {
 
                 {/* Right Column */}
                 <div className="about-col-right">
-                    <motion.div
-                        className="about-stat-grid"
-                        variants={stagger}
-                    >
+                    <motion.div className="about-stat-grid" variants={stagger}>
                         {STAT_GRID.map(stat => (
                             <motion.div
                                 key={stat.label}
@@ -201,7 +200,11 @@ export function AboutApp() {
                         <span className="about-card-label">What to explore next</span>
                         <div className="about-recruiter-steps">
                             {RECRUITER_PATH.map((action, i) => (
-                                <motion.div key={'label' in action ? action.label : ''} className="about-step-wrap" variants={fadeSlide}>
+                                <motion.div
+                                    key={'label' in action ? action.label : ''}
+                                    className="about-step-wrap"
+                                    variants={fadeSlide}
+                                >
                                     {'appId' in action ? (
                                         <button
                                             type="button"
@@ -236,4 +239,4 @@ export function AboutApp() {
             </div>
         </motion.div>
     );
-}
+});

@@ -74,7 +74,10 @@ const DEFAULT_SIZES = new Map<AppId, { width: string; height: string }>([
     ['software', { width: '820px', height: '600px' }],
 ]);
 
-function normalizeZIndices(windowsMap: Map<AppId, WindowInfo>, activeAppId?: AppId): Map<AppId, WindowInfo> {
+function normalizeZIndices(
+    windowsMap: Map<AppId, WindowInfo>,
+    activeAppId?: AppId
+): Map<AppId, WindowInfo> {
     const next = new Map(windowsMap);
     const openWindows = Array.from(next.values())
         .filter(w => w.isOpen)
@@ -98,7 +101,12 @@ function normalizeZIndices(windowsMap: Map<AppId, WindowInfo>, activeAppId?: App
     return next;
 }
 
-function createWindowInfo(appId: AppId, zIndex: number, workspaceIndex: number, launchOrigin?: LaunchOrigin): WindowInfo {
+function createWindowInfo(
+    appId: AppId,
+    zIndex: number,
+    workspaceIndex: number,
+    launchOrigin?: LaunchOrigin
+): WindowInfo {
     return {
         appId,
         isOpen: true,
@@ -141,63 +149,63 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         setTotalWorkspaces(prev => Math.max(prev, clamped + 2, MIN_WORKSPACES));
     }, []);
 
-    const openWindow = useCallback((appId: AppId, launchOrigin?: LaunchOrigin) => {
-        const win = windowsRef.current.get(appId);
-        if (win && win.isMinimized) {
-            playRestoreSound();
-        } else if (!win || !win.isOpen) {
-            playRestoreSound();
-        }
-        setManagerState(prev => {
-            const next = new Map(prev.windows);
-            const existing = next.get(appId);
-
-            if (existing) {
-                next.set(appId, {
-                    ...existing,
-                    isOpen: true,
-                    isMinimized: false,
-                    launchOrigin,
-                });
-            } else {
-                next.set(appId, createWindowInfo(appId, 9999, activeWorkspace, launchOrigin));
+    const openWindow = useCallback(
+        (appId: AppId, launchOrigin?: LaunchOrigin) => {
+            const win = windowsRef.current.get(appId);
+            if (win && win.isMinimized) {
+                playRestoreSound();
+            } else if (!win || !win.isOpen) {
+                playRestoreSound();
             }
-
-            const normalized = normalizeZIndices(next, appId);
-            return { windows: normalized, currentZIndex: 100 + normalized.size };
-        });
-        setFocusedApp(appId);
-
-        setTotalWorkspaces(prev => {
-            const maxWs = Math.max(
-                MIN_WORKSPACES,
-                activeWorkspace + 2,
-                prev,
-                ...Array.from(windowsRef.current.values())
-                    .filter(w => w.isOpen && w.workspaceIndex !== undefined)
-                    .map(w => (w.workspaceIndex ?? 0) + 2)
-            );
-            return maxWs;
-        });
-    }, [activeWorkspace, playRestoreSound]);
-
-    const closeWindow = useCallback(
-        (appId: AppId) => {
             setManagerState(prev => {
                 const next = new Map(prev.windows);
-                next.delete(appId);
-                const normalized = normalizeZIndices(next);
+                const existing = next.get(appId);
+
+                if (existing) {
+                    next.set(appId, {
+                        ...existing,
+                        isOpen: true,
+                        isMinimized: false,
+                        launchOrigin,
+                    });
+                } else {
+                    next.set(appId, createWindowInfo(appId, 9999, activeWorkspace, launchOrigin));
+                }
+
+                const normalized = normalizeZIndices(next, appId);
                 return { windows: normalized, currentZIndex: 100 + normalized.size };
             });
-            setFocusedApp(current => {
-                if (current !== appId) return current;
-                const next = new Map(windowsRef.current);
-                next.delete(appId);
-                return getTopVisibleWindowId(next);
+            setFocusedApp(appId);
+
+            setTotalWorkspaces(prev => {
+                const maxWs = Math.max(
+                    MIN_WORKSPACES,
+                    activeWorkspace + 2,
+                    prev,
+                    ...Array.from(windowsRef.current.values())
+                        .filter(w => w.isOpen && w.workspaceIndex !== undefined)
+                        .map(w => (w.workspaceIndex ?? 0) + 2)
+                );
+                return maxWs;
             });
         },
-        []
+        [activeWorkspace, playRestoreSound]
     );
+
+    const closeWindow = useCallback((appId: AppId) => {
+        setManagerState(prev => {
+            const next = new Map(prev.windows);
+            next.delete(appId);
+            const normalized = normalizeZIndices(next);
+            return { windows: normalized, currentZIndex: 100 + normalized.size };
+        });
+        setFocusedApp(current => {
+            if (current !== appId) return current;
+            const next = new Map(windowsRef.current);
+            next.delete(appId);
+            return getTopVisibleWindowId(next);
+        });
+    }, []);
 
     const minimizeWindow = useCallback(
         (appId: AppId) => {
@@ -249,28 +257,31 @@ export function WindowManagerProvider({ children }: { children: ReactNode }) {
         setFocusedApp(appId);
     }, []);
 
-    const bringToFront = useCallback((appId: AppId) => {
-        const win = windowsRef.current.get(appId);
-        if (win && win.isMinimized) {
-            playRestoreSound();
-        }
-        setManagerState(prev => {
-            const next = new Map(prev.windows);
-            const win = next.get(appId);
-            if (!win) {
-                return prev;
+    const bringToFront = useCallback(
+        (appId: AppId) => {
+            const win = windowsRef.current.get(appId);
+            if (win && win.isMinimized) {
+                playRestoreSound();
             }
+            setManagerState(prev => {
+                const next = new Map(prev.windows);
+                const win = next.get(appId);
+                if (!win) {
+                    return prev;
+                }
 
-            next.set(appId, {
-                ...win,
-                isMinimized: false,
-                workspaceIndex: activeWorkspace,
+                next.set(appId, {
+                    ...win,
+                    isMinimized: false,
+                    workspaceIndex: activeWorkspace,
+                });
+                const normalized = normalizeZIndices(next, appId);
+                return { windows: normalized, currentZIndex: 100 + normalized.size };
             });
-            const normalized = normalizeZIndices(next, appId);
-            return { windows: normalized, currentZIndex: 100 + normalized.size };
-        });
-        setFocusedApp(appId);
-    }, [activeWorkspace, playRestoreSound]);
+            setFocusedApp(appId);
+        },
+        [activeWorkspace, playRestoreSound]
+    );
 
     const moveWindowToWorkspace = useCallback((appId: AppId, workspaceIndex: number) => {
         setManagerState(prev => {

@@ -48,7 +48,9 @@
     color: var(--text-secondary);
     text-align: left;
     cursor: pointer;
-    transition: background 150ms var(--ease-out-quad), color 150ms var(--ease-out-quad);
+    transition:
+        background 150ms var(--ease-out-quad),
+        color 150ms var(--ease-out-quad);
 }
 
 .image-viewer-gallery-item:hover {
@@ -165,21 +167,21 @@
     .image-viewer-app {
         flex-direction: column-reverse;
     }
-    
+
     .image-viewer-sidebar {
         width: 100%;
         height: 120px;
         border-right: none;
         border-top: 1px solid var(--border-color);
     }
-    
+
     .image-viewer-gallery-list {
         flex-direction: row;
         overflow-x: auto;
         overflow-y: hidden;
         padding-bottom: 4px;
     }
-    
+
     .image-viewer-gallery-item {
         flex-direction: column;
         width: 80px;
@@ -187,7 +189,7 @@
         flex-shrink: 0;
         gap: 4px;
     }
-    
+
     .image-viewer-gallery-label {
         font-size: var(--font-size-sm);
         width: 100%;

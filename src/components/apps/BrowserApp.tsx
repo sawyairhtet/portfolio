@@ -1,17 +1,12 @@
+import { memo } from 'react';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Icon } from '../ui/Icon';
-import {
-    ArrowSquareOut,
-    GithubLogo,
-    Users,
-    Star,
-    GitBranch,
-} from '@phosphor-icons/react';
+import { ArrowSquareOut, GithubLogo, Users, Star, GitBranch } from '@phosphor-icons/react';
 
 const githubLink = SOCIAL_LINKS.find(link => link.label === 'GitHub') ?? SOCIAL_LINKS[0];
 
-export function BrowserApp() {
+export const BrowserApp = memo(function BrowserApp() {
     const reduced = useReducedMotion();
 
     return (
@@ -60,20 +55,22 @@ export function BrowserApp() {
                                 <strong>8</strong> stars
                             </span>
                         </div>
-                        {SOCIAL_LINKS.filter(l => l.label !== 'GitHub').slice(0, 3).map(link => (
-                            <motion.a
-                                key={link.label}
-                                href={link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="browser-gh-btn secondary"
-                                whileHover={reduced ? undefined : { scale: 1.02 }}
-                                whileTap={reduced ? undefined : { scale: 0.97 }}
-                            >
-                                <Icon name={link.icon} />
-                                {link.label}
-                            </motion.a>
-                        ))}
+                        {SOCIAL_LINKS.filter(l => l.label !== 'GitHub')
+                            .slice(0, 3)
+                            .map(link => (
+                                <motion.a
+                                    key={link.label}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="browser-gh-btn secondary"
+                                    whileHover={reduced ? undefined : { scale: 1.02 }}
+                                    whileTap={reduced ? undefined : { scale: 0.97 }}
+                                >
+                                    <Icon name={link.icon} />
+                                    {link.label}
+                                </motion.a>
+                            ))}
                         <motion.a
                             href={githubLink.href}
                             target="_blank"
@@ -90,4 +87,4 @@ export function BrowserApp() {
             </div>
         </div>
     );
-}
+});

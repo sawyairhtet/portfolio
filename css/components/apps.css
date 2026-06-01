@@ -25,9 +25,21 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--blue-2) 20%, transparent), transparent 50%),
-        radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--accent-bg-color) 18%, transparent), transparent 50%),
-        radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--blue-4) 10%, transparent), transparent 60%),
+        radial-gradient(
+            circle at 20% 30%,
+            color-mix(in srgb, var(--blue-2) 20%, transparent),
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            color-mix(in srgb, var(--accent-bg-color) 18%, transparent),
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 50% 50%,
+            color-mix(in srgb, var(--blue-4) 10%, transparent),
+            transparent 60%
+        ),
         var(--window-bg-color);
     pointer-events: none;
 }
@@ -45,7 +57,9 @@
     margin: 0 auto var(--spacing-md);
     border-radius: 50%;
     overflow: hidden;
-    transition: transform 200ms var(--ease-out-quad), box-shadow 200ms var(--ease-out-quad);
+    transition:
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .about-avatar-ring {
@@ -71,14 +85,20 @@
         color-mix(in srgb, var(--accent-bg-color) 40%, transparent),
         var(--accent-bg-color)
     );
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+    -webkit-mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 3px),
+        #000 calc(100% - 3px)
+    );
     mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
     border: none;
     animation: ringRotate 4s linear infinite;
 }
 
 @keyframes ringRotate {
-    to { --ring-angle: 360deg; }
+    to {
+        --ring-angle: 360deg;
+    }
 }
 
 .about-avatar-v2 picture {
@@ -353,7 +373,9 @@
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: background 200ms var(--ease-in-out-quad), border-color 200ms var(--ease-in-out-quad);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad);
 }
 
 .about-step-card:hover {
@@ -471,7 +493,9 @@
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    transition: border-color 200ms var(--ease-in-out-quad), box-shadow 200ms var(--ease-out-quad);
+    transition:
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .skill-card-v2:hover {
@@ -530,9 +554,15 @@
     transform-origin: center;
 }
 
-.skill-ring-proficient .skill-ring-fill { stroke: var(--accent-bg-color); }
-.skill-ring-intermediate .skill-ring-fill { stroke: var(--warning-bg-color); }
-.skill-ring-learning .skill-ring-fill { stroke: var(--text-secondary); }
+.skill-ring-proficient .skill-ring-fill {
+    stroke: var(--accent-bg-color);
+}
+.skill-ring-intermediate .skill-ring-fill {
+    stroke: var(--warning-bg-color);
+}
+.skill-ring-learning .skill-ring-fill {
+    stroke: var(--text-secondary);
+}
 
 .skill-ring-text {
     font-size: 9px;
@@ -600,7 +630,11 @@
     position: relative;
     overflow: hidden;
     background:
-        radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--blue-2) 22%, transparent), transparent 34%),
+        radial-gradient(
+            circle at 20% 20%,
+            color-mix(in srgb, var(--blue-2) 22%, transparent),
+            transparent 34%
+        ),
         linear-gradient(135deg, var(--blue-5) 0%, var(--dark-4) 45%, var(--green-5) 100%);
     min-height: 280px;
 }
@@ -751,7 +785,9 @@
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
-    transition: background 200ms var(--ease-in-out-quad), border-color 200ms var(--ease-in-out-quad);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad);
 }
 
 .project-link-btn:hover {
@@ -797,7 +833,9 @@
     background: var(--glass-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    transition: box-shadow 200ms var(--ease-out-quad), border-color 200ms var(--ease-in-out-quad);
+    transition:
+        box-shadow 200ms var(--ease-out-quad),
+        border-color 200ms var(--ease-in-out-quad);
 }
 
 .project-card-v3.project-search-focus {
@@ -815,7 +853,11 @@
     height: 150px;
     overflow: hidden;
     background:
-        radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--blue-2) 22%, transparent), transparent 34%),
+        radial-gradient(
+            circle at 20% 20%,
+            color-mix(in srgb, var(--blue-2) 22%, transparent),
+            transparent 34%
+        ),
         linear-gradient(135deg, var(--blue-5) 0%, var(--dark-4) 45%, var(--green-5) 100%);
 }
 
@@ -991,8 +1033,13 @@
 }
 
 @keyframes contactPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
 }
 
 .contact-method-rows {
@@ -1041,7 +1088,9 @@
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: background 200ms var(--ease-in-out-quad), color 200ms var(--ease-in-out-quad);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad);
     white-space: nowrap;
 }
 
@@ -1072,7 +1121,10 @@
     border-radius: 50%;
     color: var(--text-secondary);
     text-decoration: none;
-    transition: border-color 200ms var(--ease-in-out-quad), background 200ms var(--ease-in-out-quad), color 200ms var(--ease-in-out-quad);
+    transition:
+        border-color 200ms var(--ease-in-out-quad),
+        background 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad);
 }
 
 .contact-social-circle:hover {
@@ -1153,7 +1205,9 @@
     font: inherit;
     font-size: 14px;
     outline: none;
-    transition: border-color 200ms var(--ease-in-out-quad), box-shadow 200ms var(--ease-out-quad);
+    transition:
+        border-color 200ms var(--ease-in-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
 }
 
 .contact-textarea-wrap textarea {
@@ -1235,7 +1289,9 @@
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .contact-honeypot {
@@ -1292,7 +1348,9 @@
     color: var(--text-secondary);
     text-decoration: none;
     cursor: pointer;
-    transition: background 200ms var(--ease-in-out-quad), color 200ms var(--ease-in-out-quad);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        color 200ms var(--ease-in-out-quad);
 }
 
 .text-editor-toolbar-button:hover,
@@ -1393,8 +1451,16 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--blue-2) 18%, transparent), transparent 50%),
-        radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--accent-bg-color) 14%, transparent), transparent 50%),
+        radial-gradient(
+            circle at 20% 30%,
+            color-mix(in srgb, var(--blue-2) 18%, transparent),
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            color-mix(in srgb, var(--accent-bg-color) 14%, transparent),
+            transparent 50%
+        ),
         var(--window-bg-color);
     pointer-events: none;
 }
@@ -1566,7 +1632,9 @@
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: background 200ms var(--ease-in-out-quad), filter 200ms var(--ease-in-out-quad);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        filter 200ms var(--ease-in-out-quad);
 }
 
 .resume-action-btn:hover {
@@ -2001,12 +2069,24 @@
     color: var(--text-secondary);
 }
 
-.file-icon-folder { color: var(--blue-3); }
-.file-icon-md { color: var(--purple-3); }
-.file-icon-css { color: var(--blue-4); }
-.file-icon-casestudy { color: var(--accent-bg-color); }
-.file-icon-dotfile { color: var(--text-secondary); }
-.file-icon-default { color: var(--text-secondary); }
+.file-icon-folder {
+    color: var(--blue-3);
+}
+.file-icon-md {
+    color: var(--purple-3);
+}
+.file-icon-css {
+    color: var(--blue-4);
+}
+.file-icon-casestudy {
+    color: var(--accent-bg-color);
+}
+.file-icon-dotfile {
+    color: var(--text-secondary);
+}
+.file-icon-default {
+    color: var(--text-secondary);
+}
 
 /* ============================================
    GLOBAL — Focus states
@@ -2072,7 +2152,6 @@
     .about-stat-grid {
         grid-template-columns: minmax(0, 1fr);
     }
-
 }
 
 /* Reduced motion */

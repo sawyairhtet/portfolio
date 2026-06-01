@@ -203,8 +203,7 @@
     --focus_transition:
         outline-color 250ms var(--mutter-ease), outline-width 250ms var(--mutter-ease),
         outline-offset 250ms var(--mutter-ease);
-    --button_transition:
-        background 250ms var(--mutter-ease), box-shadow 250ms var(--mutter-ease);
+    --button_transition: background 250ms var(--mutter-ease), box-shadow 250ms var(--mutter-ease);
     --needs_attention: 150ms ease-in;
     --ADW_EASE: cubic-bezier(0.25, 0.1, 0.25, 1);
     --ADW_EASE_IN: cubic-bezier(0.42, 0, 1, 1);
@@ -220,12 +219,9 @@
     --popover-shade-color: rgb(0 0 6 / 7%);
     --shade-color: rgb(0 0 6 / 7%);
     --window-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.15),
-        0 12px 30px -4px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 0, 0, 0.15), 0 12px 30px -4px rgba(0, 0, 0, 0.5),
         0 4px 12px 0 rgba(0, 0, 0, 0.4);
-    --window-backdrop-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.15),
-        0 4px 12px 0 rgba(0, 0, 0, 0.3);
+    --window-backdrop-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 4px 12px 0 rgba(0, 0, 0, 0.3);
     --window-outline-color: rgb(0 0 0 / 5%);
 
     /* Fedora 43 brand */
@@ -296,12 +292,9 @@
     --popover-shade-color: rgb(0 0 6 / 25%);
     --shade-color: rgb(0 0 6 / 25%);
     --window-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.15),
-        0 12px 30px -4px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 0, 0, 0.15), 0 12px 30px -4px rgba(0, 0, 0, 0.5),
         0 4px 12px 0 rgba(0, 0, 0, 0.4);
-    --window-backdrop-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.15),
-        0 4px 12px 0 rgba(0, 0, 0, 0.3);
+    --window-backdrop-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 4px 12px 0 rgba(0, 0, 0, 0.3);
     --window-outline-color: rgb(0 0 0 / 5%);
 }
 

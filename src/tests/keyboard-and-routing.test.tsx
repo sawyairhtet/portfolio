@@ -58,16 +58,10 @@ function WindowLifecycleHarness() {
             <Window appId="about" title="About">
                 <p>About content</p>
             </Window>
-            <button
-                type="button"
-                data-testid="close-about"
-                onClick={() => closeWindow('about')}
-            >
+            <button type="button" data-testid="close-about" onClick={() => closeWindow('about')}>
                 Close
             </button>
-            <div data-testid="about-state">
-                {windows.get('about')?.isOpen ? 'open' : 'closed'}
-            </div>
+            <div data-testid="about-state">{windows.get('about')?.isOpen ? 'open' : 'closed'}</div>
         </>
     );
 }
@@ -91,9 +85,7 @@ function TwoWindowHarness() {
             <Window appId="skills" title="Skills">
                 <p>Skills content</p>
             </Window>
-            <div data-testid="about-state">
-                {windows.get('about')?.isOpen ? 'open' : 'closed'}
-            </div>
+            <div data-testid="about-state">{windows.get('about')?.isOpen ? 'open' : 'closed'}</div>
             <div data-testid="skills-state">
                 {windows.get('skills')?.isOpen ? 'open' : 'closed'}
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,8 +26,7 @@ import {
 const MESSAGE_MAX = 2000;
 const COOLDOWN_MS = 8000;
 
-const FORMSPREE_URL =
-    import.meta.env.VITE_FORMSPREE_URL || 'https://formspree.io/f/mqewakad';
+const FORMSPREE_URL = import.meta.env.VITE_FORMSPREE_URL || 'https://formspree.io/f/mqewakad';
 
 const INJECTION_PATTERN = /<\s*\/?\s*(script|img|iframe|object|embed|link|style|svg|math)\b/i;
 
@@ -38,11 +37,7 @@ const contactSchema = z.object({
         .min(1, 'Name is required')
         .max(100, 'Name is too long')
         .refine(v => !INJECTION_PATTERN.test(v), 'Invalid characters in name'),
-    email: z
-        .string()
-        .trim()
-        .min(1, 'Email is required')
-        .email('Please enter a valid email'),
+    email: z.string().trim().min(1, 'Email is required').email('Please enter a valid email'),
     message: z
         .string()
         .trim()
@@ -93,7 +88,7 @@ const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
     Telegram: <TelegramLogo weight="duotone" size={20} />,
 };
 
-export function ContactApp() {
+export const ContactApp = memo(function ContactApp() {
     const { showToast } = useNotifications();
     const reduced = useReducedMotion();
     const [statusMsg, setStatusMsg] = useState('');
@@ -183,11 +178,7 @@ export function ContactApp() {
                 let mappedAny = false;
                 if (Array.isArray(fieldErrors)) {
                     for (const fe of fieldErrors) {
-                        if (
-                            fe.field === 'name' ||
-                            fe.field === 'email' ||
-                            fe.field === 'message'
-                        ) {
+                        if (fe.field === 'name' || fe.field === 'email' || fe.field === 'message') {
                             setError(fe.field, {
                                 type: 'server',
                                 message: fe.message ?? 'Invalid value',
@@ -231,12 +222,7 @@ export function ContactApp() {
                 <div className="contact-info-inner">
                     <div className="contact-micro-card">
                         <div className="contact-micro-avatar">
-                            <img
-                                src="/images/profile-picture.webp"
-                                alt=""
-                                width={64}
-                                height={64}
-                            />
+                            <img src="/images/profile-picture.webp" alt="" width={64} height={64} />
                         </div>
                         <strong>{PROFILE.name}</strong>
                         <span className="contact-avail-pill">
@@ -285,7 +271,9 @@ export function ContactApp() {
 
                         {SOCIAL_LINKS.filter(l => l.label !== 'X').map(link => (
                             <div key={link.label} className="contact-method-row">
-                                {SOCIAL_ICON_MAP[link.label] || <ArrowSquareOut weight="duotone" size={18} />}
+                                {SOCIAL_ICON_MAP[link.label] || (
+                                    <ArrowSquareOut weight="duotone" size={18} />
+                                )}
                                 <span className="contact-method-value">{link.handle}</span>
                                 <a
                                     href={link.href}
@@ -311,7 +299,9 @@ export function ContactApp() {
                                 whileHover={reduced ? undefined : { scale: 1.08 }}
                                 whileTap={reduced ? undefined : { scale: 0.95 }}
                             >
-                                {SOCIAL_ICON_MAP[link.label] || <ArrowSquareOut weight="bold" size={18} />}
+                                {SOCIAL_ICON_MAP[link.label] || (
+                                    <ArrowSquareOut weight="bold" size={18} />
+                                )}
                             </motion.a>
                         ))}
                     </div>
@@ -351,7 +341,11 @@ export function ContactApp() {
                             />
                         </div>
                         {errors.name && (
-                            <span className="contact-field-error" id="contact-name-error" aria-live="polite">
+                            <span
+                                className="contact-field-error"
+                                id="contact-name-error"
+                                aria-live="polite"
+                            >
                                 {errors.name.message}
                             </span>
                         )}
@@ -373,7 +367,11 @@ export function ContactApp() {
                             />
                         </div>
                         {errors.email && (
-                            <span className="contact-field-error" id="contact-email-error" aria-live="polite">
+                            <span
+                                className="contact-field-error"
+                                id="contact-email-error"
+                                aria-live="polite"
+                            >
                                 {errors.email.message}
                             </span>
                         )}
@@ -387,7 +385,11 @@ export function ContactApp() {
                             </span>
                         </div>
                         <div className="contact-input-wrap contact-textarea-wrap">
-                            <ChatText weight="bold" size={16} className="contact-input-icon contact-textarea-icon" />
+                            <ChatText
+                                weight="bold"
+                                size={16}
+                                className="contact-input-icon contact-textarea-icon"
+                            />
                             <textarea
                                 id="contact-message"
                                 placeholder="Role, timeline, useful links, and what you would like me to review."
@@ -395,12 +397,18 @@ export function ContactApp() {
                                 maxLength={MESSAGE_MAX}
                                 disabled={submitDisabled}
                                 aria-invalid={errors.message ? 'true' : 'false'}
-                                aria-describedby={errors.message ? 'contact-message-error' : undefined}
+                                aria-describedby={
+                                    errors.message ? 'contact-message-error' : undefined
+                                }
                                 {...register('message')}
                             />
                         </div>
                         {errors.message && (
-                            <span className="contact-field-error" id="contact-message-error" aria-live="polite">
+                            <span
+                                className="contact-field-error"
+                                id="contact-message-error"
+                                aria-live="polite"
+                            >
                                 {errors.message.message}
                             </span>
                         )}
@@ -458,4 +466,4 @@ export function ContactApp() {
             </div>
         </div>
     );
-}
+});

@@ -93,7 +93,9 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 6px;
-    transition: background 150ms var(--ease-out-quad), border-color 150ms var(--ease-out-quad);
+    transition:
+        background 150ms var(--ease-out-quad),
+        border-color 150ms var(--ease-out-quad);
 }
 
 .calendar-grid-cell:hover {
@@ -187,10 +189,18 @@
     flex-shrink: 0;
 }
 
-.type-milestone .calendar-event-dot { background: var(--accent-bg-color); }
-.type-study .calendar-event-dot { background: var(--success-bg-color, #2ec27e); }
-.type-interview .calendar-event-dot { background: var(--warning-bg-color, #f5c211); }
-.type-custom .calendar-event-dot { background: var(--purple-3, #c061cb); }
+.type-milestone .calendar-event-dot {
+    background: var(--accent-bg-color);
+}
+.type-study .calendar-event-dot {
+    background: var(--success-bg-color, #2ec27e);
+}
+.type-interview .calendar-event-dot {
+    background: var(--warning-bg-color, #f5c211);
+}
+.type-custom .calendar-event-dot {
+    background: var(--purple-3, #c061cb);
+}
 
 .calendar-event-details h4 {
     margin: 0 0 4px;
@@ -312,13 +322,13 @@
         flex-direction: column;
         overflow-y: auto;
     }
-    
+
     .calendar-left-pane {
         border-right: none;
         border-bottom: 1px solid var(--border-color);
         flex: none;
     }
-    
+
     .calendar-right-pane {
         flex: none;
         background: transparent;

@@ -71,8 +71,7 @@
     --shadow-window: var(--window-shadow);
     --shadow-window-backdrop: var(--window-backdrop-shadow);
     --shadow-popover:
-        0 0 0 1px rgba(0, 0, 0, 0.1),
-        0 8px 24px -4px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(0, 0, 0, 0.1), 0 8px 24px -4px rgba(0, 0, 0, 0.35),
         0 2px 8px 0 rgba(0, 0, 0, 0.2);
     --shadow-sm: 0 1px 4px var(--shade-color);
     --shadow-md: 0 2px 8px var(--shade-color);
@@ -310,8 +309,7 @@
     --shadow-window: var(--window-shadow);
     --shadow-window-backdrop: var(--window-backdrop-shadow);
     --shadow-popover:
-        0 0 0 1px rgba(0, 0, 0, 0.08),
-        0 8px 24px -4px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(0, 0, 0, 0.08), 0 8px 24px -4px rgba(0, 0, 0, 0.2),
         0 2px 8px 0 rgba(0, 0, 0, 0.12);
     --shadow-sm: 0 1px 4px var(--shade-color);
     --shadow-md: 0 2px 8px var(--shade-color);

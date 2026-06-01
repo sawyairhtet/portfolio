@@ -1,12 +1,9 @@
+import { memo } from 'react';
 import { PROFILE } from '../../config/profile';
 import { useDevice } from '../../context/DeviceContext';
-import {
-    FileArrowDown,
-    ArrowSquareOut,
-    FilePdf,
-} from '@phosphor-icons/react';
+import { FileArrowDown, ArrowSquareOut, FilePdf } from '@phosphor-icons/react';
 
-export function ResumeApp() {
+export const ResumeApp = memo(function ResumeApp() {
     const { device } = useDevice();
     const isMobile = device === 'mobile' || device === 'tablet';
 
@@ -46,9 +43,12 @@ export function ResumeApp() {
                 <div className="resume-mobile-fallback">
                     <FilePdf weight="duotone" size={64} className="resume-mobile-icon" />
                     <h3>Resume PDF</h3>
-                    <p>{PROFILE.name} — {PROFILE.role}</p>
+                    <p>
+                        {PROFILE.name} — {PROFILE.role}
+                    </p>
                     <p className="resume-mobile-hint">
-                        PDF preview is not available on mobile. Use the buttons above to open or download.
+                        PDF preview is not available on mobile. Use the buttons above to open or
+                        download.
                     </p>
                     <div className="resume-mobile-actions">
                         <a
@@ -87,4 +87,4 @@ export function ResumeApp() {
             )}
         </div>
     );
-}
+});

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { memo, useState, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { PROJECTS, APP_DEFINITIONS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
@@ -26,7 +26,7 @@ const CATEGORIES = [
     { id: 'wip' as const, label: 'In Progress', icon: Wrench },
 ];
 
-export function SoftwareApp() {
+export const SoftwareApp = memo(function SoftwareApp() {
     const reduced = useReducedMotion();
     const { openWindow } = useWindowManager();
     const [activeCategory, setActiveCategory] = useState<ProjectStatus>('all');
@@ -54,7 +54,8 @@ export function SoftwareApp() {
 
     const filteredProjects = PROJECTS.filter(project => {
         const matchesCategory = activeCategory === 'all' || project.status === activeCategory;
-        const matchesSearch = !searchQuery ||
+        const matchesSearch =
+            !searchQuery ||
             [project.title, project.summary, project.platform, ...project.techStack]
                 .join(' ')
                 .toLowerCase()
@@ -70,7 +71,10 @@ export function SoftwareApp() {
                     <Package weight="duotone" size={28} />
                     <div className="software-banner-text">
                         <h2>Explore Software</h2>
-                        <p>Browse projects as installable applications. Each one is a real codebase you can explore, clone, and contribute to.</p>
+                        <p>
+                            Browse projects as installable applications. Each one is a real codebase
+                            you can explore, clone, and contribute to.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -95,7 +99,11 @@ export function SoftwareApp() {
                         </button>
                     )}
                 </div>
-                <div className="software-categories" role="radiogroup" aria-label="Filter by status">
+                <div
+                    className="software-categories"
+                    role="radiogroup"
+                    aria-label="Filter by status"
+                >
                     {CATEGORIES.map(cat => (
                         <button
                             key={cat.id}
@@ -123,8 +131,8 @@ export function SoftwareApp() {
                     filteredProjects.map((project, i) => {
                         const isExpanded = expandedId === project.id;
                         const isInstalled = installedIds.has(project.id);
-                        const projectApp = APP_DEFINITIONS.find(app =>
-                            app.aliases.includes(project.id) || app.id === 'projects'
+                        const projectApp = APP_DEFINITIONS.find(
+                            app => app.aliases.includes(project.id) || app.id === 'projects'
                         );
 
                         return (
@@ -140,12 +148,25 @@ export function SoftwareApp() {
                                 <div className="software-card-main">
                                     <div
                                         className="software-card-icon"
-                                        style={{ background: projectApp?.gradient || 'linear-gradient(135deg, var(--blue-3), var(--accent-blue))' }}
+                                        style={{
+                                            background:
+                                                projectApp?.gradient ||
+                                                'linear-gradient(135deg, var(--blue-3), var(--accent-blue))',
+                                        }}
                                     >
-                                        {isInstalled && <Check weight="fill" size={12} className="software-installed-badge" />}
+                                        {isInstalled && (
+                                            <Check
+                                                weight="fill"
+                                                size={12}
+                                                className="software-installed-badge"
+                                            />
+                                        )}
                                         <FolderOpen weight="duotone" size={28} />
                                     </div>
-                                    <div className="software-card-content" onClick={() => toggleExpanded(project.id)}>
+                                    <div
+                                        className="software-card-content"
+                                        onClick={() => toggleExpanded(project.id)}
+                                    >
                                         <div className="software-card-header">
                                             <div className="software-card-title-row">
                                                 <h3>{project.title}</h3>
@@ -161,7 +182,9 @@ export function SoftwareApp() {
                                         <p className="software-card-summary">{project.summary}</p>
                                         <div className="software-card-tech">
                                             {project.techStack.map(tech => (
-                                                <span key={tech} className="software-tech-chip">{tech}</span>
+                                                <span key={tech} className="software-tech-chip">
+                                                    {tech}
+                                                </span>
                                             ))}
                                         </div>
                                     </div>
@@ -186,7 +209,11 @@ export function SoftwareApp() {
                                             onClick={() => toggleInstall(project.id)}
                                             whileHover={reduced ? undefined : { scale: 1.04 }}
                                             whileTap={reduced ? undefined : { scale: 0.96 }}
-                                            aria-label={isInstalled ? `Uninstall ${project.title}` : `Install ${project.title}`}
+                                            aria-label={
+                                                isInstalled
+                                                    ? `Uninstall ${project.title}`
+                                                    : `Install ${project.title}`
+                                            }
                                         >
                                             {isInstalled ? (
                                                 <>
@@ -208,7 +235,11 @@ export function SoftwareApp() {
                                         aria-expanded={isExpanded}
                                         aria-label={isExpanded ? 'Show less' : 'Show more'}
                                     >
-                                        {isExpanded ? <CaretUp weight="bold" size={14} /> : <CaretDown weight="bold" size={14} />}
+                                        {isExpanded ? (
+                                            <CaretUp weight="bold" size={14} />
+                                        ) : (
+                                            <CaretDown weight="bold" size={14} />
+                                        )}
                                     </button>
                                 </div>
 
@@ -251,7 +282,9 @@ export function SoftwareApp() {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className={`software-link-btn ${link.primary ? 'primary' : ''}`}
-                                                    whileHover={reduced ? undefined : { scale: 1.02 }}
+                                                    whileHover={
+                                                        reduced ? undefined : { scale: 1.02 }
+                                                    }
                                                     whileTap={reduced ? undefined : { scale: 0.97 }}
                                                 >
                                                     <ArrowSquareOut weight="bold" size={14} />
@@ -297,4 +330,4 @@ export function SoftwareApp() {
             </div>
         </div>
     );
-}
+});

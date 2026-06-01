@@ -47,7 +47,9 @@ export default defineConfig({
                     const content = readFileSync(swPath, 'utf-8');
                     const hash = Date.now().toString(36);
                     writeFileSync(swPath, content.replace('__BUILD_HASH__', hash));
-                } catch { /* dev mode — sw.js not in dist */ }
+                } catch {
+                    /* dev mode — sw.js not in dist */
+                }
             },
         },
     ],
@@ -67,7 +69,11 @@ export default defineConfig({
             },
             output: {
                 manualChunks(id) {
-                    if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) {
+                    if (
+                        id.includes('node_modules/react/') ||
+                        id.includes('node_modules/react-dom/') ||
+                        id.includes('node_modules/scheduler/')
+                    ) {
                         return 'vendor-react';
                     }
                     if (id.includes('node_modules/react-router')) {
@@ -79,7 +85,11 @@ export default defineConfig({
                     if (id.includes('node_modules/framer-motion/')) {
                         return 'vendor-motion';
                     }
-                    if (id.includes('node_modules/zod/') || id.includes('node_modules/react-hook-form/') || id.includes('node_modules/@hookform/')) {
+                    if (
+                        id.includes('node_modules/zod/') ||
+                        id.includes('node_modules/react-hook-form/') ||
+                        id.includes('node_modules/@hookform/')
+                    ) {
                         return 'vendor-forms';
                     }
                 },

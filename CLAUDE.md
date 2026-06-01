@@ -4,23 +4,22 @@
 
 ## Stack & Key Dependencies
 
-| Layer | Technology | Version | Notes |
-|-------|-----------|---------|-------|
-| Framework | React | 19 | StrictMode enabled |
-| Language | TypeScript | 5 | Strict, `noEmit`, bundler module resolution |
-| Bundler | Vite | 8 | Dev on `:3000`, builds to `dist/` |
-| Styling | CSS Layers (vanilla) | — | `@layer reset, tokens, base, components, utilities` ordering. Predominantly vanilla CSS — no Tailwind |
-| Routing | React Router DOM | 7 | BrowserRouter, two routes: `/` and `/app/:appId` |
-| Data fetching | TanStack Query | 5 | QueryClient with 5-min stale, 1 retry |
-| Forms | React Hook Form + Zod | 7 / 4 | Used by ContactApp; code-split into `vendor-forms` chunk |
-| Terminal | @xterm/xterm | 6 | Real xterm.js instance inside TerminalApp |
-| Icons | @phosphor-icons/react | 2 | Single icon system. String keys → Phosphor components via `src/components/ui/Icon.tsx`. Split into the `vendor-icons` chunk |
-| Fonts | Adwaita Sans/Mono (self-hosted WOFF2, subsetted) | — | Fully self-hosted in `public/fonts/` with SIL license. **No external font requests** (no Google Fonts) |
-| Testing | Vitest + Testing Library + jsdom | 4 / 16 | `vmForks` pool, globals enabled |
-| Linting | ESLint flat config + Prettier | 9 / 3 | 4-space indent, single quotes, trailing comma es5 |
-| Analytics | Plausible | — | Script tag in index.html, domain `sawyehtet.com` |
-| Deploy | Netlify | — | Build: `npm run build`, publish: `dist/`, SPA rewrite for `/app/*` |
-| PWA | Service worker (`public/sw.js`) + manifest.json | — | Caches static assets, offline fallback page |
+| Layer     | Technology                                       | Version | Notes                                                                                                                       |
+| --------- | ------------------------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Framework | React                                            | 19      | StrictMode enabled                                                                                                          |
+| Language  | TypeScript                                       | 5       | Strict, `noEmit`, bundler module resolution                                                                                 |
+| Bundler   | Vite                                             | 8       | Dev on `:3000`, builds to `dist/`                                                                                           |
+| Styling   | CSS Layers (vanilla)                             | —       | `@layer reset, tokens, base, components, utilities` ordering. Predominantly vanilla CSS — no Tailwind                       |
+| Routing   | React Router DOM                                 | 7       | BrowserRouter, two routes: `/` and `/app/:appId`                                                                            |
+| Forms     | React Hook Form + Zod                            | 7 / 4   | Used by ContactApp; code-split into `vendor-forms` chunk                                                                    |
+| Terminal  | @xterm/xterm                                     | 6       | Real xterm.js instance inside TerminalApp                                                                                   |
+| Icons     | @phosphor-icons/react                            | 2       | Single icon system. String keys → Phosphor components via `src/components/ui/Icon.tsx`. Split into the `vendor-icons` chunk |
+| Fonts     | Adwaita Sans/Mono (self-hosted WOFF2, subsetted) | —       | Fully self-hosted in `public/fonts/` with SIL license. **No external font requests** (no Google Fonts)                      |
+| Testing   | Vitest + Testing Library + jsdom                 | 4 / 16  | `vmForks` pool, globals enabled                                                                                             |
+| Linting   | ESLint flat config + Prettier                    | 9 / 3   | 4-space indent, single quotes, trailing comma es5                                                                           |
+| Analytics | Plausible                                        | —       | Script tag in index.html, domain `sawyehtet.com`                                                                            |
+| Deploy    | Netlify                                          | —       | Build: `npm run build`, publish: `dist/`, SPA rewrite for `/app/*`                                                          |
+| PWA       | Service worker (`public/sw.js`) + manifest.json  | —       | Caches static assets, offline fallback page                                                                                 |
 
 ## Entry Point & Routing
 
@@ -50,45 +49,45 @@ index.html                          ← Vite HTML entry, loads /src/main.tsx
 
 ### Shell (`src/components/shell/`)
 
-| Component | What it does |
-|-----------|-------------|
-| `DesktopShell` | **The god component.** Renders TopBar, Dock, Wallpaper, BootScreen, conditionally-rendered Window instances (lazy-loaded), Activities overlay, QuickSettings, NotificationCenter, ContextMenu, ToastContainer, keyboard shortcuts, alt-tab switcher, welcome hero. |
-| `TopBar` | GNOME-style panel: Activities button, live clock, status indicators (wifi/volume/battery). Click zones toggle overlays |
-| `Dock` | Desktop dock (filtered by `desktopDock`) + mobile dock (filtered by `mobileDock`). Mobile has an "Apps" launcher drawer |
-| `Wallpaper` | Renders the selected wallpaper (image or gradient). Supports light/dark image variants. Uses `<img>` with `object-fit: cover` |
-| `BootScreen` | Plymouth-style boot: log lines → spinner → Fedora logo. First-time visitors see full boot; returning visitors with `fastBoot` skip instantly. Skippable on any key/click |
-| `DeepLinkHandler` | Reads `:appId` from URL, opens the matching window, renders `DesktopShell` |
+| Component         | What it does                                                                                                                                                                                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `DesktopShell`    | **The god component.** Renders TopBar, Dock, Wallpaper, BootScreen, conditionally-rendered Window instances (lazy-loaded), Activities overlay, QuickSettings, NotificationCenter, ContextMenu, ToastContainer, keyboard shortcuts, alt-tab switcher, welcome hero. |
+| `TopBar`          | GNOME-style panel: Activities button, live clock, status indicators (wifi/volume/battery). Click zones toggle overlays                                                                                                                                             |
+| `Dock`            | Desktop dock (filtered by `desktopDock`) + mobile dock (filtered by `mobileDock`). Mobile has an "Apps" launcher drawer                                                                                                                                            |
+| `Wallpaper`       | Renders the selected wallpaper (image or gradient). Supports light/dark image variants. Uses `<img>` with `object-fit: cover`                                                                                                                                      |
+| `BootScreen`      | Plymouth-style boot: log lines → spinner → Fedora logo. First-time visitors see full boot; returning visitors with `fastBoot` skip instantly. Skippable on any key/click                                                                                           |
+| `DeepLinkHandler` | Reads `:appId` from URL, opens the matching window, renders `DesktopShell`                                                                                                                                                                                         |
 
 ### Window (`src/components/window/`)
 
-| Component | What it does |
-|-----------|-------------|
-| `Window` | Generic draggable/resizable window container. Header bar with close/minimize/maximize. Snap zones (left/right half). Mobile: full-viewport sheet with swipe-to-close. Container queries via `container-name: app-window`. Escape closes via `onKeyDown` on the dialog element |
+| Component | What it does                                                                                                                                                                                                                                                                  |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Window`  | Generic draggable/resizable window container. Header bar with close/minimize/maximize. Snap zones (left/right half). Mobile: full-viewport sheet with swipe-to-close. Container queries via `container-name: app-window`. Escape closes via `onKeyDown` on the dialog element |
 
 ### Apps (`src/components/apps/`) — all lazy-loaded
 
-| App | AppId | Description |
-|-----|-------|-------------|
-| `AboutApp` | `about` | Recruiter summary — profile pic, bio, education, CTA buttons, social links, recruiter path (About → Skills → Projects → Resume → Contact) |
-| `SkillsApp` | `skills` | Skill categories with proficiency dots (3-dot system: proficient/intermediate/learning) |
-| `ProjectsApp` | `projects` | Featured project cards with tech stack badges, proof points, links, expand/collapse, WIP status badge |
-| `ContactApp` | `contact` | Email/resume actions, copy-email button, Formspree-powered contact form (React Hook Form + Zod validation), honeypot spam filter |
-| `FilesApp` | `files` | Nautilus-style file browser showing projects as file entries |
-| `BrowserApp` | `browser` | Simulated Firefox window pointing at GitHub profile |
-| `TerminalApp` | `terminal` | Full xterm.js terminal with custom shell: `ls`, `cd`, `cat`, `open`, `help`, `neofetch`, `fortune`, `joke`, `hello`, `uptime`, `whoami`, `clear`, `history`, `nano`, `exit`. Can open app windows via command. ~28KB, the largest component |
-| `TextEditorApp` | `text-editor` | Displays resume.md content in a read-only editor view |
-| `SettingsApp` | `settings` | Multi-panel settings: Appearance (wallpaper, accent color, dark mode), Sound (volume, mute), Windows (snap, resize, buttons), System (boot, preferences reset) |
-| `FocusModeApp` | `focus-mode` | Pomodoro timer with presets, pause/resume, session stats, optional focus dimming of other windows |
+| App             | AppId         | Description                                                                                                                                                                                                                                 |
+| --------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AboutApp`      | `about`       | Recruiter summary — profile pic, bio, education, CTA buttons, social links, recruiter path (About → Skills → Projects → Resume → Contact)                                                                                                   |
+| `SkillsApp`     | `skills`      | Skill categories with proficiency dots (3-dot system: proficient/intermediate/learning)                                                                                                                                                     |
+| `ProjectsApp`   | `projects`    | Featured project cards with tech stack badges, proof points, links, expand/collapse, WIP status badge                                                                                                                                       |
+| `ContactApp`    | `contact`     | Email/resume actions, copy-email button, Formspree-powered contact form (React Hook Form + Zod validation), honeypot spam filter                                                                                                            |
+| `FilesApp`      | `files`       | Nautilus-style file browser showing projects as file entries                                                                                                                                                                                |
+| `BrowserApp`    | `browser`     | Simulated Firefox window pointing at GitHub profile                                                                                                                                                                                         |
+| `TerminalApp`   | `terminal`    | Full xterm.js terminal with custom shell: `ls`, `cd`, `cat`, `open`, `help`, `neofetch`, `fortune`, `joke`, `hello`, `uptime`, `whoami`, `clear`, `history`, `nano`, `exit`. Can open app windows via command. ~28KB, the largest component |
+| `TextEditorApp` | `text-editor` | Displays resume.md content in a read-only editor view                                                                                                                                                                                       |
+| `SettingsApp`   | `settings`    | Multi-panel settings: Appearance (wallpaper, accent color, dark mode), Sound (volume, mute), Windows (snap, resize, buttons), System (boot, preferences reset)                                                                              |
+| `FocusModeApp`  | `focus-mode`  | Pomodoro timer with presets, pause/resume, session stats, optional focus dimming of other windows                                                                                                                                           |
 
 ### UI (`src/components/ui/`)
 
-| Component | What it does |
-|-----------|-------------|
-| `ActivitiesOverlay` | GNOME Activities overview — open window thumbnails + app grid. Click to focus/open |
+| Component            | What it does                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| `ActivitiesOverlay`  | GNOME Activities overview — open window thumbnails + app grid. Click to focus/open         |
 | `QuickSettingsPanel` | Slide-down panel from top bar — Wi-Fi, Bluetooth, DND, dark mode, volume, brightness tiles |
-| `NotificationCenter` | Slide-down from clock area — grouped notifications with dismiss/clear-all |
-| `ToastContainer` | Fixed position toast stack (top-right), auto-dismiss 3s |
-| `ContextMenu` | Right-click desktop context menu |
+| `NotificationCenter` | Slide-down from clock area — grouped notifications with dismiss/clear-all                  |
+| `ToastContainer`     | Fixed position toast stack (top-right), auto-dismiss 3s                                    |
+| `ContextMenu`        | Right-click desktop context menu                                                           |
 
 ## Data & Config
 
@@ -109,6 +108,7 @@ src/styles/main.css               ← Entry point, declares layer order, imports
 ```
 
 **Key design tokens:**
+
 - `src/styles/adwaita-tokens.css` — Faithful reproduction of GNOME 49 / libadwaita tokens (colors, typography, spacing, radius, motion, elevation) with full light/dark variants
 - `css/base/variables.css` — Portfolio-specific tokens (glass effects, shadows, z-index scale, font stacks)
 
@@ -166,9 +166,11 @@ npm run generate:og      # Puppeteer script to regenerate OG preview image
 ## Build & Deploy
 
 - **Build:** `npm run build` → typechecks then produces `dist/` with manual chunks:
-  - `vendor-react` (react, react-dom, scheduler)
-  - `vendor-query` (react-router, tanstack-query)
-  - `vendor-forms` (zod, react-hook-form) — only loaded with ContactApp
+    - `vendor-react` (react, react-dom, scheduler)
+    - `vendor-router` (react-router)
+    - `vendor-motion` (framer-motion)
+    - `vendor-icons` (@phosphor-icons/react)
+    - `vendor-forms` (zod, react-hook-form) — only loaded with ContactApp
 - **Multi-page:** Vite builds `index.html`, `offline.html`, and `404.html` as separate entries
 - **Deploy target:** Netlify (config in `netlify.toml`). Build command: `npm run build`, publish: `dist/`
 - **SPA rewrite:** `/app/*` → `/index.html` (status 200) for deep-link support
@@ -176,9 +178,12 @@ npm run generate:og      # Puppeteer script to regenerate OG preview image
 
 ## Tests
 
-- **2 test files** in `src/tests/`:
-  - `portfolio-interactions.test.tsx` — 8 tests: Activities overlay visibility, dock click behavior, openWindow callback stability, mobile dock rendering, QuickSettings accessibility, Settings panel switching + wallpaper update, accent color live update, Escape to close window, Focus Mode pause/resume, Terminal `projects` command
-  - `additional-interactions.test.tsx` — 5 tests: ContactApp form rendering, empty form validation errors, invalid email validation, `aria-invalid` on error fields, BootScreen skip behavior, fastBoot for returning visitors, skip hint display
+- **4 test files** in `src/tests/`:
+  - `portfolio-interactions.test.tsx` — 12 tests: activities overlay, dock interactions, window lifecycle, settings panel switching, accent color update, Escape key, focus mode pause/resume, terminal commands
+  - `additional-interactions.test.tsx` — 7 tests: ContactApp form rendering, validation, `aria-invalid`, BootScreen skip behavior, fastBoot, ResumeApp rendering
+  - `keyboard-and-routing.test.tsx` — 6 tests: deep link routing (valid/invalid), window lifecycle, Escape on multi-window
+  - `deep-coverage.test.tsx` — 19 tests: terminal command parsing (help, whoami, neofetch, uptime, ls, cd, cat, pwd, clear, fortune, joke, echo, date, shortcuts), contact form rate limiting, ErrorBoundary resilience (persistent failures, app-level crash)
+  - `error-boundary.test.tsx` — 4 tests: window-level error UI, app-level crash screen, retry recovery, normal rendering
 - **Test setup** (`src/tests/setup.ts`): mocks `matchMedia`, `AudioContext`, and `localStorage`
 - **Environment:** jsdom with `vmForks` pool
 - **All tests wrap components in a `Providers` harness** that mirrors the App.tsx provider nesting

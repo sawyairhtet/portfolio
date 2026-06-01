@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { memo, useState, useCallback, useEffect } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useSound } from '../../context/SoundContext';
 import { useNotifications } from '../../context/NotificationContext';
@@ -34,7 +34,15 @@ const NAV_ITEMS: { id: SettingsPanel; label: string; icon: React.ReactNode }[] =
     { id: 'about', label: 'About', icon: <Info weight="duotone" size={16} /> },
 ];
 
-function ToggleSwitch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
+function ToggleSwitch({
+    checked,
+    onChange,
+    label,
+}: {
+    checked: boolean;
+    onChange: (v: boolean) => void;
+    label: string;
+}) {
     return (
         <button
             type="button"
@@ -49,7 +57,7 @@ function ToggleSwitch({ checked, onChange, label }: { checked: boolean; onChange
     );
 }
 
-export function SettingsApp() {
+export const SettingsApp = memo(function SettingsApp() {
     const { isDark, toggle, accentColor, setAccentColor } = useTheme();
     const { isMuted, toggleMute, volume, setVolume } = useSound();
     const { isDnd, setDnd } = useNotifications();
@@ -71,7 +79,7 @@ export function SettingsApp() {
             const time = (Math.random() * 8 + 3).toFixed(1);
             setPingLogs(prev => [
                 ...prev,
-                `64 bytes from 192.168.1.42: icmp_seq=${counter} ttl=64 time=${time} ms`
+                `64 bytes from 192.168.1.42: icmp_seq=${counter} ttl=64 time=${time} ms`,
             ]);
             if (counter >= 3) {
                 clearInterval(interval);
@@ -79,7 +87,7 @@ export function SettingsApp() {
                     ...prev,
                     '--- sawyehtet.com ping statistics ---',
                     '3 packets transmitted, 3 received, 0% packet loss, time 2004ms',
-                    'rtt min/avg/max = 3.2/5.4/8.1 ms'
+                    'rtt min/avg/max = 3.2/5.4/8.1 ms',
                 ]);
                 setPingStatus('success');
             }
@@ -111,9 +119,30 @@ export function SettingsApp() {
         <>
             <div className="settings-sidebar">
                 <div className="settings-sidebar-header">
-                    <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true" className="settings-fedora-logo">
-                        <circle cx="24" cy="24" r="22" fill="var(--accent-bg-color)" opacity="0.2" />
-                        <text x="24" y="30" textAnchor="middle" fontSize="22" fontWeight="800" fill="var(--accent-bg-color)">F</text>
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                        className="settings-fedora-logo"
+                    >
+                        <circle
+                            cx="24"
+                            cy="24"
+                            r="22"
+                            fill="var(--accent-bg-color)"
+                            opacity="0.2"
+                        />
+                        <text
+                            x="24"
+                            y="30"
+                            textAnchor="middle"
+                            fontSize="22"
+                            fontWeight="800"
+                            fill="var(--accent-bg-color)"
+                        >
+                            F
+                        </text>
                     </svg>
                     <span className="settings-sidebar-label">Settings</span>
                 </div>
@@ -170,11 +199,15 @@ export function SettingsApp() {
                                     label="Use time-of-day wallpaper"
                                 />
                             </div>
-                            <p className="settings-row-desc">Crossfade between day and night wallpapers based on your local clock.</p>
+                            <p className="settings-row-desc">
+                                Crossfade between day and night wallpapers based on your local
+                                clock.
+                            </p>
                         </div>
                         <div className="settings-card">
                             <h3>Accent Color</h3>
-                            <div className="accent-color-options">{ACCENT_COLORS.map(ac => (
+                            <div className="accent-color-options">
+                                {ACCENT_COLORS.map(ac => (
                                     <motion.button
                                         key={ac.color}
                                         className={`accent-swatch${accentColor === ac.color ? ' active' : ''}`}
@@ -195,7 +228,11 @@ export function SettingsApp() {
                                     <Moon weight="duotone" size={16} />
                                     <span>Dark Mode</span>
                                 </span>
-                                <ToggleSwitch checked={isDark} onChange={toggle} label="Dark mode" />
+                                <ToggleSwitch
+                                    checked={isDark}
+                                    onChange={toggle}
+                                    label="Dark mode"
+                                />
                             </div>
                         </div>
                     </div>
@@ -211,7 +248,11 @@ export function SettingsApp() {
                                     <SpeakerSimpleHigh weight="duotone" size={16} />
                                     <span>Sound Effects</span>
                                 </span>
-                                <ToggleSwitch checked={!isMuted} onChange={toggleMute} label="Sound effects" />
+                                <ToggleSwitch
+                                    checked={!isMuted}
+                                    onChange={toggleMute}
+                                    label="Sound effects"
+                                />
                             </div>
                             <div className="settings-row">
                                 <span className="settings-row-label">
@@ -233,7 +274,11 @@ export function SettingsApp() {
                                     <BellSlash weight="duotone" size={16} />
                                     <span>Do Not Disturb</span>
                                 </span>
-                                <ToggleSwitch checked={isDnd} onChange={v => setDnd(v)} label="Do Not Disturb" />
+                                <ToggleSwitch
+                                    checked={isDnd}
+                                    onChange={v => setDnd(v)}
+                                    label="Do Not Disturb"
+                                />
                             </div>
                         </div>
                     </div>
@@ -255,7 +300,9 @@ export function SettingsApp() {
                                     label="Show minimize and maximize buttons"
                                 />
                             </div>
-                            <p className="settings-row-desc">Display window control buttons in the titlebar.</p>
+                            <p className="settings-row-desc">
+                                Display window control buttons in the titlebar.
+                            </p>
                         </div>
                         <div className="settings-card">
                             <h3>Window Management</h3>
@@ -270,7 +317,9 @@ export function SettingsApp() {
                                     label="Edge snap"
                                 />
                             </div>
-                            <p className="settings-row-desc">Snap windows to screen edges by dragging.</p>
+                            <p className="settings-row-desc">
+                                Snap windows to screen edges by dragging.
+                            </p>
 
                             <div className="settings-row">
                                 <span className="settings-row-label">
@@ -283,7 +332,9 @@ export function SettingsApp() {
                                     label="Resize handles"
                                 />
                             </div>
-                            <p className="settings-row-desc">Allow resizing windows from their edges.</p>
+                            <p className="settings-row-desc">
+                                Allow resizing windows from their edges.
+                            </p>
 
                             <div className="settings-row">
                                 <span className="settings-row-label">
@@ -296,7 +347,9 @@ export function SettingsApp() {
                                     label="Dim other windows during focus"
                                 />
                             </div>
-                            <p className="settings-row-desc">Reduce distraction by dimming inactive windows.</p>
+                            <p className="settings-row-desc">
+                                Reduce distraction by dimming inactive windows.
+                            </p>
 
                             <div className="settings-row">
                                 <span className="settings-row-label">
@@ -309,7 +362,9 @@ export function SettingsApp() {
                                     label="Fast boot after first visit"
                                 />
                             </div>
-                            <p className="settings-row-desc">Skip the boot animation on subsequent visits.</p>
+                            <p className="settings-row-desc">
+                                Skip the boot animation on subsequent visits.
+                            </p>
                         </div>
                     </div>
                 )}
@@ -332,11 +387,20 @@ export function SettingsApp() {
                                             className={`headerbar-btn${desktopScale === s ? ' active' : ''}`}
                                             onClick={() => {
                                                 setDesktopScale(s);
-                                                document.documentElement.style.setProperty('--desktop-scale', `${s / 100}`);
+                                                document.documentElement.style.setProperty(
+                                                    '--desktop-scale',
+                                                    `${s / 100}`
+                                                );
                                             }}
                                             style={{
-                                                background: desktopScale === s ? 'var(--active-toggle-bg-color)' : 'transparent',
-                                                color: desktopScale === s ? 'var(--active-toggle-fg-color)' : 'inherit',
+                                                background:
+                                                    desktopScale === s
+                                                        ? 'var(--active-toggle-bg-color)'
+                                                        : 'transparent',
+                                                color:
+                                                    desktopScale === s
+                                                        ? 'var(--active-toggle-fg-color)'
+                                                        : 'inherit',
                                                 fontWeight: 'bold',
                                                 border: 'none',
                                                 cursor: 'pointer',
@@ -348,7 +412,9 @@ export function SettingsApp() {
                                     ))}
                                 </div>
                             </div>
-                            <p className="settings-row-desc">Adjust the scale of interface fonts and window elements.</p>
+                            <p className="settings-row-desc">
+                                Adjust the scale of interface fonts and window elements.
+                            </p>
                         </div>
                         <div className="settings-card">
                             <h3>Workspaces</h3>
@@ -365,8 +431,14 @@ export function SettingsApp() {
                                             className={`headerbar-btn${activeWorkspace === idx ? ' active' : ''}`}
                                             onClick={() => setActiveWorkspace(idx)}
                                             style={{
-                                                background: activeWorkspace === idx ? 'var(--active-toggle-bg-color)' : 'transparent',
-                                                color: activeWorkspace === idx ? 'var(--active-toggle-fg-color)' : 'inherit',
+                                                background:
+                                                    activeWorkspace === idx
+                                                        ? 'var(--active-toggle-bg-color)'
+                                                        : 'transparent',
+                                                color:
+                                                    activeWorkspace === idx
+                                                        ? 'var(--active-toggle-fg-color)'
+                                                        : 'inherit',
                                                 fontWeight: 'bold',
                                                 border: 'none',
                                                 cursor: 'pointer',
@@ -378,7 +450,9 @@ export function SettingsApp() {
                                     ))}
                                 </div>
                             </div>
-                            <p className="settings-row-desc">Quickly toggle between desktop virtual workspaces.</p>
+                            <p className="settings-row-desc">
+                                Quickly toggle between desktop virtual workspaces.
+                            </p>
                         </div>
                     </div>
                 )}
@@ -393,7 +467,11 @@ export function SettingsApp() {
                                     <Globe weight="duotone" size={16} />
                                     <span>Wi-Fi Connection</span>
                                 </span>
-                                <span style={{ fontWeight: 'bold', color: 'var(--success-bg-color)' }}>Connected</span>
+                                <span
+                                    style={{ fontWeight: 'bold', color: 'var(--success-bg-color)' }}
+                                >
+                                    Connected
+                                </span>
                             </div>
                             <div className="settings-row">
                                 <span className="settings-row-label">
@@ -411,7 +489,10 @@ export function SettingsApp() {
 
                         <div className="settings-card">
                             <h3>Diagnostics</h3>
-                            <div className="settings-row" style={{ minHeight: 'auto', marginBottom: '8px' }}>
+                            <div
+                                className="settings-row"
+                                style={{ minHeight: 'auto', marginBottom: '8px' }}
+                            >
                                 <span className="settings-row-label">
                                     <span>Network Ping Test</span>
                                 </span>
@@ -462,8 +543,23 @@ export function SettingsApp() {
                         <div className="settings-card about-system-card">
                             <div className="about-system-logo">
                                 <svg width="64" height="64" viewBox="0 0 48 48" aria-hidden="true">
-                                    <circle cx="24" cy="24" r="22" fill="var(--accent-bg-color)" opacity="0.15" />
-                                    <text x="24" y="31" textAnchor="middle" fontSize="24" fontWeight="800" fill="var(--accent-bg-color)">F</text>
+                                    <circle
+                                        cx="24"
+                                        cy="24"
+                                        r="22"
+                                        fill="var(--accent-bg-color)"
+                                        opacity="0.15"
+                                    />
+                                    <text
+                                        x="24"
+                                        y="31"
+                                        textAnchor="middle"
+                                        fontSize="24"
+                                        fontWeight="800"
+                                        fill="var(--accent-bg-color)"
+                                    >
+                                        F
+                                    </text>
                                 </svg>
                             </div>
                             <h3>Saw Ye Htet Portfolio Workstation</h3>
@@ -489,4 +585,4 @@ export function SettingsApp() {
             </div>
         </>
     );
-}
+});

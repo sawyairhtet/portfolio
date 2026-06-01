@@ -204,12 +204,9 @@ export const APP_FOLDERS: { id: string; label: string; icon: string; appIds: App
     },
 ];
 
-export const UNGROUPED_APP_IDS: AppId[] = APP_DEFINITIONS
-    .map(app => app.id)
-    .filter(
-        id =>
-            !APP_FOLDERS.some(folder => folder.appIds.includes(id))
-    );
+export const UNGROUPED_APP_IDS: AppId[] = APP_DEFINITIONS.map(app => app.id).filter(
+    id => !APP_FOLDERS.some(folder => folder.appIds.includes(id))
+);
 
 // ============================================
 // PORTFOLIO CONTENT DATA
@@ -226,8 +223,7 @@ export const PROJECTS: Project[] = [
             'A static portfolio can hide the strongest proof behind navigation and make recruiters work too hard for the basics.',
         solution:
             'Built a fast desktop-style shell where About, Projects, Resume, and Contact stay one click away from the dock, Activities search, and terminal.',
-        impact:
-            'Demonstrates systematic problem-solving, attention to detail, and ability to build production-quality software with monitoring patterns (status indicators, notifications, structured logs).',
+        impact: 'Demonstrates systematic problem-solving, attention to detail, and ability to build production-quality software with monitoring patterns (status indicators, notifications, structured logs).',
         techStack: ['React 19', 'TypeScript', 'Vite', 'CSS Layers', 'Tailwind v4'],
         platform: 'Responsive web app',
         proofPoints: [
@@ -256,8 +252,7 @@ export const PROJECTS: Project[] = [
             'I needed a backend project that exercises real operations tracking workflows, not just isolated CRUD exercises.',
         solution:
             'Building a layered Spring Boot REST API with incident lifecycle management, status tracking, and PostgreSQL persistence.',
-        impact:
-            'Makes my production support understanding visible through code — incident states, priority classification, and resolution tracking built into the API design.',
+        impact: 'Makes my production support understanding visible through code — incident states, priority classification, and resolution tracking built into the API design.',
         techStack: ['Java', 'Spring Boot', 'PostgreSQL', 'REST API'],
         platform: 'Backend API',
         proofPoints: [
@@ -415,15 +410,13 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
             },
             {
                 name: 'MySQL',
-                context:
-                    'Academic database coursework and structured query practice.',
+                context: 'Academic database coursework and structured query practice.',
                 usedIn: ['Coursework'],
                 level: 'intermediate',
             },
             {
                 name: 'MongoDB Basics',
-                context:
-                    'Introduction to document-oriented storage and NoSQL patterns.',
+                context: 'Introduction to document-oriented storage and NoSQL patterns.',
                 usedIn: ['Self-Study'],
                 level: 'learning',
             },

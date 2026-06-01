@@ -64,7 +64,7 @@ const ROUTE_META = new Map<AppId, { title: string; description: string }>([
         {
             title: 'Resume - Saw Ye Htet | IT Support & Operations Specialist',
             description:
-                'View or download Saw Ye Htet\'s resume PDF. IT support & operations specialist targeting application support and production support roles.',
+                "View or download Saw Ye Htet's resume PDF. IT support & operations specialist targeting application support and production support roles.",
         },
     ],
     [
@@ -72,7 +72,7 @@ const ROUTE_META = new Map<AppId, { title: string; description: string }>([
         {
             title: 'Terminal - Saw Ye Htet | Interactive Portfolio Shell',
             description:
-                'Explore Saw Ye Htet\'s portfolio through an interactive terminal with filesystem navigation, app commands, and easter eggs.',
+                "Explore Saw Ye Htet's portfolio through an interactive terminal with filesystem navigation, app commands, and easter eggs.",
         },
     ],
     [
@@ -80,7 +80,7 @@ const ROUTE_META = new Map<AppId, { title: string; description: string }>([
         {
             title: 'Resume Markdown - Saw Ye Htet | IT Support Specialist',
             description:
-                'Open or download Saw Ye Htet\'s resume, with a readable markdown fallback for the portfolio desktop.',
+                "Open or download Saw Ye Htet's resume, with a readable markdown fallback for the portfolio desktop.",
         },
     ],
     [
@@ -88,7 +88,7 @@ const ROUTE_META = new Map<AppId, { title: string; description: string }>([
         {
             title: 'Calendar - Saw Ye Htet | IT Support Specialist',
             description:
-                'Explore milestones, education timelines, and schedule simulated events in Saw Ye Htet\'s Calendar application.',
+                "Explore milestones, education timelines, and schedule simulated events in Saw Ye Htet's Calendar application.",
         },
     ],
     [
@@ -96,7 +96,7 @@ const ROUTE_META = new Map<AppId, { title: string; description: string }>([
         {
             title: 'Image Viewer - Saw Ye Htet | IT Support Specialist',
             description:
-                'Browse wallpapers and screenshots in Saw Ye Htet\'s Image Viewer (Loupe) application.',
+                "Browse wallpapers and screenshots in Saw Ye Htet's Image Viewer (Loupe) application.",
         },
     ],
 ]);

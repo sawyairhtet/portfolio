@@ -1,16 +1,21 @@
 import { useMemo, useRef, useEffect, useState } from 'react';
 import { Icon } from './Icon';
 import { useNotifications } from '../../context/NotificationContext';
-import {
-    Calculator,
-    BellSlash,
-    CaretLeft,
-    CaretRight,
-} from '@phosphor-icons/react';
+import { Calculator, BellSlash, CaretLeft, CaretRight } from '@phosphor-icons/react';
 
 const MONTHS = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
 ];
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -21,7 +26,8 @@ interface CalendarPopoverProps {
 }
 
 export function CalendarPopover({ isOpen, onClose }: CalendarPopoverProps) {
-    const { notifications, isDnd, setDnd, dismissNotification, clearAllNotifications } = useNotifications();
+    const { notifications, isDnd, setDnd, dismissNotification, clearAllNotifications } =
+        useNotifications();
     const popoverRef = useRef<HTMLDivElement>(null);
     const [viewDate, setViewDate] = useState(() => new Date());
 
@@ -97,21 +103,18 @@ export function CalendarPopover({ isOpen, onClose }: CalendarPopoverProps) {
                 </div>
                 <div className="calendar-popover-dow">
                     {DAYS.map(d => (
-                        <span key={d} className="calendar-dow">{d}</span>
+                        <span key={d} className="calendar-dow">
+                            {d}
+                        </span>
                     ))}
                 </div>
                 <div className="calendar-popover-grid">
                     {calendarDays.map((day, i) => {
                         if (day === null) return <span key={`e-${i}`} />;
                         const isToday =
-                            day === today.day &&
-                            month === today.month &&
-                            year === today.year;
+                            day === today.day && month === today.month && year === today.year;
                         return (
-                            <span
-                                key={day}
-                                className={`calendar-day ${isToday ? 'today' : ''}`}
-                            >
+                            <span key={day} className={`calendar-day ${isToday ? 'today' : ''}`}>
                                 {day}
                             </span>
                         );
@@ -126,7 +129,9 @@ export function CalendarPopover({ isOpen, onClose }: CalendarPopoverProps) {
                         <button
                             type="button"
                             className={`calendar-dnd-toggle ${isDnd ? 'active' : ''}`}
-                            aria-label={isDnd ? 'Turn off Do Not Disturb' : 'Turn on Do Not Disturb'}
+                            aria-label={
+                                isDnd ? 'Turn off Do Not Disturb' : 'Turn on Do Not Disturb'
+                            }
                             aria-pressed={isDnd}
                             onClick={() => setDnd(!isDnd)}
                         >

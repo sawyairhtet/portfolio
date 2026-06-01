@@ -19,7 +19,9 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
     const { preferences, updatePreferences } = usePreferences();
     const [wifiOn, setWifiOn] = useState(true);
     const [btOn, setBtOn] = useState(false);
-    const [powerProfile, setPowerProfile] = useState<'balanced' | 'performance' | 'power-saver'>('balanced');
+    const [powerProfile, setPowerProfile] = useState<'balanced' | 'performance' | 'power-saver'>(
+        'balanced'
+    );
     const [nightLight, setNightLight] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
 
@@ -120,7 +122,11 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                     aria-pressed={powerProfile !== 'balanced'}
                     aria-label="Power Profile"
                     onClick={() => {
-                        const profiles: Array<'balanced' | 'performance' | 'power-saver'> = ['balanced', 'performance', 'power-saver'];
+                        const profiles: Array<'balanced' | 'performance' | 'power-saver'> = [
+                            'balanced',
+                            'performance',
+                            'power-saver',
+                        ];
                         const idx = profiles.indexOf(powerProfile);
                         setPowerProfile(profiles[(idx + 1) % profiles.length]);
                     }}
@@ -129,7 +135,11 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
                         <Icon name="bolt" />
                     </div>
                     <div className="qs-tile-label">
-                        {powerProfile === 'balanced' ? 'Balanced' : powerProfile === 'performance' ? 'Performance' : 'Power Saver'}
+                        {powerProfile === 'balanced'
+                            ? 'Balanced'
+                            : powerProfile === 'performance'
+                              ? 'Performance'
+                              : 'Power Saver'}
                     </div>
                 </button>
                 <button

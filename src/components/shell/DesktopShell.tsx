@@ -211,7 +211,8 @@ function ShortcutsDialog({ onClose }: { onClose: () => void }) {
 }
 
 export function DesktopShell() {
-    const { openWindow, closeWindow, bringToFront, windows, activeWorkspace, setActiveWorkspace } = useWindowManager();
+    const { openWindow, closeWindow, bringToFront, windows, activeWorkspace, setActiveWorkspace } =
+        useWindowManager();
     const { playStartupDrum } = useSound();
     const { preferences } = usePreferences();
     const { device } = useDevice();
@@ -328,7 +329,7 @@ export function DesktopShell() {
             // Super key → Activities
             if (e.key === 'Super' || (e.key === 'Meta' && !e.ctrlKey && !e.altKey && !e.shiftKey)) {
                 e.preventDefault();
-                setActiveOverlay(prev => prev === 'activities' ? 'none' : 'activities');
+                setActiveOverlay(prev => (prev === 'activities' ? 'none' : 'activities'));
             }
 
             if (e.metaKey && /^[1-9]$/.test(e.key)) {
@@ -406,15 +407,7 @@ export function DesktopShell() {
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [
-        activeOverlay,
-        altTabIndex,
-        bringToFront,
-        closeWindow,
-        openWindow,
-        shortcutsOpen,
-        windows,
-    ]);
+    }, [activeOverlay, altTabIndex, bringToFront, closeWindow, openWindow, shortcutsOpen, windows]);
 
     return (
         <>
@@ -429,9 +422,13 @@ export function DesktopShell() {
 
             {/* Top Bar */}
             <TopBar
-                onActivitiesToggle={() => setActiveOverlay(p => p === 'activities' ? 'none' : 'activities')}
-                onQuickSettingsToggle={() => setActiveOverlay(p => p === 'quickSettings' ? 'none' : 'quickSettings')}
-                onClockClick={() => setActiveOverlay(p => p === 'calendar' ? 'none' : 'calendar')}
+                onActivitiesToggle={() =>
+                    setActiveOverlay(p => (p === 'activities' ? 'none' : 'activities'))
+                }
+                onQuickSettingsToggle={() =>
+                    setActiveOverlay(p => (p === 'quickSettings' ? 'none' : 'quickSettings'))
+                }
+                onClockClick={() => setActiveOverlay(p => (p === 'calendar' ? 'none' : 'calendar'))}
                 isActivitiesOpen={activitiesOpen}
                 isQuickSettingsOpen={quickSettingsOpen}
                 isNotificationCenterOpen={notifCenterOpen}
@@ -444,10 +441,7 @@ export function DesktopShell() {
             />
 
             {/* Notification Center */}
-            <NotificationCenter
-                isOpen={notifCenterOpen}
-                onClose={() => setActiveOverlay('none')}
-            />
+            <NotificationCenter isOpen={notifCenterOpen} onClose={() => setActiveOverlay('none')} />
 
             {/* Calendar Popover */}
             <CalendarPopover
@@ -468,9 +462,7 @@ export function DesktopShell() {
                         </span>
                         <h2>{PROFILE.name}</h2>
                         <p>{PROFILE.role}</p>
-                        <p className="desktop-welcome-stack">
-                            {PROFILE.primaryStack.join(' · ')}
-                        </p>
+                        <p className="desktop-welcome-stack">{PROFILE.primaryStack.join(' · ')}</p>
                         <button
                             className="desktop-welcome-hint"
                             onClick={() => openWindow('about')}
@@ -534,8 +526,15 @@ export function DesktopShell() {
                                 key={id}
                                 className={`alt-tab-item${index === altTabIndex ? ' active' : ''}`}
                             >
-                                <Icon name={ APP_DEFINITIONS.find(app => app.id === id)?.icon || 'window-maximize' } />
-                                <span>{APP_DEFINITIONS.find(app => app.id === id)?.label || id}</span>
+                                <Icon
+                                    name={
+                                        APP_DEFINITIONS.find(app => app.id === id)?.icon ||
+                                        'window-maximize'
+                                    }
+                                />
+                                <span>
+                                    {APP_DEFINITIONS.find(app => app.id === id)?.label || id}
+                                </span>
                             </div>
                         ))}
                 </div>
@@ -676,7 +675,11 @@ export function DesktopShell() {
             )}
 
             {/* Dock — always visible (Dash-to-Dock style) */}
-            <Dock onShowApps={() => setActiveOverlay(p => p === 'activities' ? 'none' : 'activities')} />
+            <Dock
+                onShowApps={() =>
+                    setActiveOverlay(p => (p === 'activities' ? 'none' : 'activities'))
+                }
+            />
 
             {/* Dock onboarding tooltip for first-time visitors */}
             {showDockTip && !hasVisibleWindows && (

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { memo, useState, useRef, useCallback, useEffect } from 'react';
 import { Icon } from '../ui/Icon';
 import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
@@ -40,7 +40,7 @@ const recruiterPathLines = [
 
 const FILE_SYSTEM = new Map(Object.entries(DEFAULT_FILE_SYSTEM));
 
-export function TerminalApp() {
+export const TerminalApp = memo(function TerminalApp() {
     const { openWindow } = useWindowManager();
     const [lines, setLines] = useState<TerminalLine[]>([
         {
@@ -50,7 +50,7 @@ export function TerminalApp() {
         },
         {
             id: 1,
-            content: "Recruiter shortcuts: path, projects, skills, resume, contact",
+            content: 'Recruiter shortcuts: path, projects, skills, resume, contact',
             className: 'terminal-info',
         },
         {
@@ -275,7 +275,10 @@ export function TerminalApp() {
                 case 'path':
                 case 'start':
                     openWindow('about');
-                    addLines([...recruiterPathLines, { text: 'Opened About.', className: 'terminal-ok' }]);
+                    addLines([
+                        ...recruiterPathLines,
+                        { text: 'Opened About.', className: 'terminal-ok' },
+                    ]);
                     break;
                 case 'about':
                     openWindow('about');
@@ -632,39 +635,39 @@ export function TerminalApp() {
             const partial = parts[parts.length - 1] || '';
             if (!partial) return;
 
-                const commandMatches = [
-                    'help',
-                    'path',
-                    'start',
-                    'about',
-                    'whoami',
-                    'cat',
-                    'ls',
-                    'cd',
-                    'open',
-                    'neofetch',
-                    'nano',
-                    'firefox',
-                    'calendar',
-                    'today',
-                    'events',
-                    'schedule',
-                    'image-viewer',
-                    'loupe',
-                    'gallery',
-                    'photos',
-                    'viewer',
-                    'projects',
-                    'skills',
-                    'contact',
-                    'hire',
-                    'social',
-                    'resume',
-                    'cv',
-                    'shortcuts',
-                    'tree',
-                    'clear',
-                ].filter(item => item.startsWith(partial));
+            const commandMatches = [
+                'help',
+                'path',
+                'start',
+                'about',
+                'whoami',
+                'cat',
+                'ls',
+                'cd',
+                'open',
+                'neofetch',
+                'nano',
+                'firefox',
+                'calendar',
+                'today',
+                'events',
+                'schedule',
+                'image-viewer',
+                'loupe',
+                'gallery',
+                'photos',
+                'viewer',
+                'projects',
+                'skills',
+                'contact',
+                'hire',
+                'social',
+                'resume',
+                'cv',
+                'shortcuts',
+                'tree',
+                'clear',
+            ].filter(item => item.startsWith(partial));
             const currentNode = FILE_SYSTEM.get(cwdRef.current);
             const fileMatches =
                 currentNode?.type === 'dir'
@@ -805,4 +808,4 @@ export function TerminalApp() {
             </div>
         </div>
     );
-}
+});

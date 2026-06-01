@@ -1,15 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { Icon } from '../ui/Icon';
 import { PROJECTS } from '../../config/data';
 import type { Project } from '../../types';
 import { motion, useReducedMotion } from 'framer-motion';
-import {
-    Star,
-    CheckCircle,
-    ArrowSquareOut,
-    GithubLogo,
-    Hammer,
-} from '@phosphor-icons/react';
+import { Star, CheckCircle, ArrowSquareOut, GithubLogo, Hammer } from '@phosphor-icons/react';
 
 const TECH_BRAND_COLORS: Record<string, string> = {
     Java: '#ED8B00',
@@ -192,7 +186,7 @@ function ProjectCard({ project }: { project: Project }) {
     );
 }
 
-export function ProjectsApp() {
+export const ProjectsApp = memo(function ProjectsApp() {
     const featured = PROJECTS.find(project => project.featured);
     const supporting = PROJECTS.filter(project => !project.featured);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -239,4 +233,4 @@ export function ProjectsApp() {
             )}
         </div>
     );
-}
+});

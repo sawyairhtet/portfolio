@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { PROJECTS, WALLPAPERS } from '../../config/data';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
@@ -21,18 +21,35 @@ type FilterPill = 'all' | 'folders' | 'documents' | 'dotfiles';
 
 function FileIcon({ type, name, size }: { type: string; name: string; size?: number }) {
     const s = size || 20;
-    if (type === 'folder') return <FolderSimple weight="duotone" size={s} className="file-icon-folder" />;
-    if (name.endsWith('.md')) return <FileText weight="duotone" size={s} className="file-icon-md" />;
-    if (name.endsWith('.css')) return <FileCss weight="duotone" size={s} className="file-icon-css" />;
-    if (name.endsWith('.webp') || name.endsWith('.png') || name.endsWith('.jpg') || name.endsWith('.svg')) {
-        return <FolderSimple weight="duotone" size={s} className="file-icon-image" style={{ color: 'var(--accent-yellow)' }} />;
+    if (type === 'folder')
+        return <FolderSimple weight="duotone" size={s} className="file-icon-folder" />;
+    if (name.endsWith('.md'))
+        return <FileText weight="duotone" size={s} className="file-icon-md" />;
+    if (name.endsWith('.css'))
+        return <FileCss weight="duotone" size={s} className="file-icon-css" />;
+    if (
+        name.endsWith('.webp') ||
+        name.endsWith('.png') ||
+        name.endsWith('.jpg') ||
+        name.endsWith('.svg')
+    ) {
+        return (
+            <FolderSimple
+                weight="duotone"
+                size={s}
+                className="file-icon-image"
+                style={{ color: 'var(--accent-yellow)' }}
+            />
+        );
     }
-    if (name.endsWith('.case-study')) return <FileText weight="duotone" size={s} className="file-icon-casestudy" />;
-    if (name.startsWith('.')) return <FileCode weight="duotone" size={s} className="file-icon-dotfile" />;
+    if (name.endsWith('.case-study'))
+        return <FileText weight="duotone" size={s} className="file-icon-casestudy" />;
+    if (name.startsWith('.'))
+        return <FileCode weight="duotone" size={s} className="file-icon-dotfile" />;
     return <FileText weight="duotone" size={s} className="file-icon-default" />;
 }
 
-export function FilesApp() {
+export const FilesApp = memo(function FilesApp() {
     const { openWindow } = useWindowManager();
     const reduced = useReducedMotion();
     const [view, setView] = useState<FilesView>('recent');
@@ -45,13 +62,62 @@ export function FilesApp() {
     const files = useMemo(() => {
         if (view === 'home') {
             return [
-                { id: 'projects', name: 'Projects', type: 'folder', modified: 'Today', size: '—', dotfile: false },
-                { id: 'documents', name: 'Documents', type: 'folder', modified: 'Today', size: '—', dotfile: false },
-                { id: 'pictures', name: 'Pictures', type: 'folder', modified: 'Today', size: '—', dotfile: false },
-                { id: 'resume', name: 'resume.md', type: 'text', modified: 'Today', size: '8 KB', dotfile: false },
-                { id: '.bashrc', name: '.bashrc', type: 'text', modified: 'Yesterday', size: '312 B', dotfile: true },
-                { id: '.config', name: '.config', type: 'folder', modified: 'Yesterday', size: '—', dotfile: true },
-                { id: '.local', name: '.local', type: 'folder', modified: '3 days ago', size: '—', dotfile: true },
+                {
+                    id: 'projects',
+                    name: 'Projects',
+                    type: 'folder',
+                    modified: 'Today',
+                    size: '—',
+                    dotfile: false,
+                },
+                {
+                    id: 'documents',
+                    name: 'Documents',
+                    type: 'folder',
+                    modified: 'Today',
+                    size: '—',
+                    dotfile: false,
+                },
+                {
+                    id: 'pictures',
+                    name: 'Pictures',
+                    type: 'folder',
+                    modified: 'Today',
+                    size: '—',
+                    dotfile: false,
+                },
+                {
+                    id: 'resume',
+                    name: 'resume.md',
+                    type: 'text',
+                    modified: 'Today',
+                    size: '8 KB',
+                    dotfile: false,
+                },
+                {
+                    id: '.bashrc',
+                    name: '.bashrc',
+                    type: 'text',
+                    modified: 'Yesterday',
+                    size: '312 B',
+                    dotfile: true,
+                },
+                {
+                    id: '.config',
+                    name: '.config',
+                    type: 'folder',
+                    modified: 'Yesterday',
+                    size: '—',
+                    dotfile: true,
+                },
+                {
+                    id: '.local',
+                    name: '.local',
+                    type: 'folder',
+                    modified: '3 days ago',
+                    size: '—',
+                    dotfile: true,
+                },
             ];
         }
 
@@ -140,15 +206,31 @@ export function FilesApp() {
         {
             label: 'Places',
             items: [
-                { id: 'recent' as FilesView, label: 'Recent', icon: <Clock weight="duotone" size={16} /> },
-                { id: 'home' as FilesView, label: 'Home', icon: <House weight="duotone" size={16} /> },
+                {
+                    id: 'recent' as FilesView,
+                    label: 'Recent',
+                    icon: <Clock weight="duotone" size={16} />,
+                },
+                {
+                    id: 'home' as FilesView,
+                    label: 'Home',
+                    icon: <House weight="duotone" size={16} />,
+                },
             ],
         },
         {
             label: 'Bookmarks',
             items: [
-                { id: 'projects' as FilesView, label: 'Projects', icon: <Folder weight="duotone" size={16} /> },
-                { id: 'pictures' as FilesView, label: 'Pictures', icon: <FolderSimple weight="duotone" size={16} /> },
+                {
+                    id: 'projects' as FilesView,
+                    label: 'Projects',
+                    icon: <Folder weight="duotone" size={16} />,
+                },
+                {
+                    id: 'pictures' as FilesView,
+                    label: 'Pictures',
+                    icon: <FolderSimple weight="duotone" size={16} />,
+                },
             ],
         },
     ];
@@ -181,9 +263,19 @@ export function FilesApp() {
             <section className="files-view" aria-label="Files">
                 <div className="files-toolbar">
                     <div className="files-pathbar" aria-label="Current folder">
-                        <button type="button" onClick={() => setView('home')}>Home</button>
+                        <button type="button" onClick={() => setView('home')}>
+                            Home
+                        </button>
                         <span>/</span>
-                        <button type="button">{view === 'recent' ? 'Recent' : view === 'home' ? 'Home' : view === 'projects' ? 'Projects' : 'Pictures'}</button>
+                        <button type="button">
+                            {view === 'recent'
+                                ? 'Recent'
+                                : view === 'home'
+                                  ? 'Home'
+                                  : view === 'projects'
+                                    ? 'Projects'
+                                    : 'Pictures'}
+                        </button>
                     </div>
                     <div className="files-search-float">
                         <MagnifyingGlass weight="bold" size={13} />
@@ -206,7 +298,9 @@ export function FilesApp() {
                             minHeight: '34px',
                             padding: '0 10px',
                             borderRadius: 'var(--button_radius)',
-                            background: showHiddenFiles ? 'var(--active-toggle-bg-color)' : 'transparent',
+                            background: showHiddenFiles
+                                ? 'var(--active-toggle-bg-color)'
+                                : 'transparent',
                             color: showHiddenFiles ? 'var(--active-toggle-fg-color)' : 'inherit',
                             fontWeight: 'bold',
                             border: 'none',
@@ -252,11 +346,7 @@ export function FilesApp() {
                     </div>
                 )}
 
-                <div
-                    className={`files-list ${layout}`}
-                    role="listbox"
-                    aria-label="Project files"
-                >
+                <div className={`files-list ${layout}`} role="listbox" aria-label="Project files">
                     {layout === 'list' && (
                         <div className="files-list-header" aria-hidden="true">
                             <span>Name</span>
@@ -311,4 +401,4 @@ export function FilesApp() {
             </section>
         </div>
     );
-}
+});

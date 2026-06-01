@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { SKILL_CATEGORIES } from '../../config/data';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Code } from '@phosphor-icons/react';
@@ -35,7 +35,9 @@ function SkillRing({ level }: { level: string }) {
                 r={r}
                 className="skill-ring-fill"
                 strokeDasharray={circumference}
-                initial={reduced ? { strokeDashoffset: offset } : { strokeDashoffset: circumference }}
+                initial={
+                    reduced ? { strokeDashoffset: offset } : { strokeDashoffset: circumference }
+                }
                 animate={{ strokeDashoffset: offset }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
             />
@@ -52,7 +54,7 @@ const cardVariants = {
     exit: { opacity: 0, y: -8 },
 };
 
-export function SkillsApp() {
+export const SkillsApp = memo(function SkillsApp() {
     const [activeIndex, setActiveIndex] = useState(0);
     const reduced = useReducedMotion();
     const [fallbackCategory] = SKILL_CATEGORIES;
@@ -125,4 +127,4 @@ export function SkillsApp() {
             </AnimatePresence>
         </div>
     );
-}
+});

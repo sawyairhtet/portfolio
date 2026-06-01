@@ -56,7 +56,10 @@ export function GdmLogin({ onLogin }: GdmLoginProps) {
                     className="gdm-wallpaper-blur"
                     style={
                         preferences.wallpaperId === 'default' && !isDark
-                            ? { backgroundImage: "url('/images/wallpapers/fedora-43/f43-day.webp')" }
+                            ? {
+                                  backgroundImage:
+                                      "url('/images/wallpapers/fedora-43/f43-day.webp')",
+                              }
                             : undefined
                     }
                 />
@@ -111,14 +114,8 @@ export function GdmLogin({ onLogin }: GdmLoginProps) {
                             Sign In
                         </motion.button>
                     </div>
-                    <span className="gdm-hint">
-                        Press Enter or click Sign In to continue
-                    </span>
-                    <button
-                        type="button"
-                        className="gdm-skip-btn"
-                        onClick={handleLogin}
-                    >
+                    <span className="gdm-hint">Press Enter or click Sign In to continue</span>
+                    <button type="button" className="gdm-skip-btn" onClick={handleLogin}>
                         Skip to Desktop
                     </button>
                 </motion.div>

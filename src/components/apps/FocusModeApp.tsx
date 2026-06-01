@@ -1,13 +1,8 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { memo, useState, useEffect, useCallback, useRef } from 'react';
 import { useNotifications } from '../../context/NotificationContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { motion, useReducedMotion } from 'framer-motion';
-import {
-    Play,
-    Pause,
-    FastForward,
-    ArrowCounterClockwise,
-} from '@phosphor-icons/react';
+import { Play, Pause, FastForward, ArrowCounterClockwise } from '@phosphor-icons/react';
 
 type TimerState = 'idle' | 'work' | 'break' | 'paused';
 type ActiveTimerState = 'work' | 'break';
@@ -28,7 +23,7 @@ function formatMinutes(seconds: number): string {
     return `${Math.round(seconds / 60)}m`;
 }
 
-export function FocusModeApp() {
+export const FocusModeApp = memo(function FocusModeApp() {
     const { showToast, addNotification } = useNotifications();
     const { preferences } = usePreferences();
     const reduced = useReducedMotion();
@@ -185,7 +180,11 @@ export function FocusModeApp() {
                             className="focus-progress-fill"
                             strokeDasharray={circumference}
                             animate={{ strokeDashoffset: circumference * (1 - progress) }}
-                            transition={reduced ? { duration: 0 } : { type: 'spring', stiffness: 60, damping: 15 }}
+                            transition={
+                                reduced
+                                    ? { duration: 0 }
+                                    : { type: 'spring', stiffness: 60, damping: 15 }
+                            }
                         />
                     </svg>
                     <div className="focus-timer-display" aria-live="polite">
@@ -278,4 +277,4 @@ export function FocusModeApp() {
             </section>
         </div>
     );
-}
+});
