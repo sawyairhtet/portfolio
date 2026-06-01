@@ -43,6 +43,9 @@
 /* Responsive / Utilities */
 @import '../../css/components/responsive.css' layer(utilities);
 
+/* Print */
+@import '../../css/base/print.css';
+
 /* ============================================
    React-specific additions
    ============================================ */

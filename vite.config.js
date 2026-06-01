@@ -67,19 +67,18 @@ export default defineConfig({
             },
             output: {
                 manualChunks(id) {
-                    // React core — long-lived cache
                     if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) {
                         return 'vendor-react';
                     }
-                    // Routing + data fetching
-                    if (id.includes('node_modules/react-router') || id.includes('node_modules/@tanstack/')) {
-                        return 'vendor-query';
+                    if (id.includes('node_modules/react-router')) {
+                        return 'vendor-router';
                     }
-                    // Phosphor icons — shared by shell + apps, rarely change (long-lived cache)
                     if (id.includes('node_modules/@phosphor-icons/')) {
                         return 'vendor-icons';
                     }
-                    // Forms + validation (only loaded with ContactApp)
+                    if (id.includes('node_modules/framer-motion/')) {
+                        return 'vendor-motion';
+                    }
                     if (id.includes('node_modules/zod/') || id.includes('node_modules/react-hook-form/') || id.includes('node_modules/@hookform/')) {
                         return 'vendor-forms';
                     }

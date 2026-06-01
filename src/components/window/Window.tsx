@@ -58,6 +58,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
     const windowRef = useRef<HTMLDivElement>(null);
     const isDragging = useRef(false);
     const dragOffset = useRef({ x: 0, y: 0 });
+    // Ref for synchronous reads in mousemove/mouseup closures; state drives rendering.
     const snapPreviewRef = useRef<SnapPreview>(null);
     const [snapPreview, setSnapPreview] = useState<SnapPreview>(null);
     const [isClosing, setIsClosing] = useState(false);

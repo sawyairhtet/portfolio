@@ -1,5 +1,10 @@
 const CACHE_NAME = 'syh-portfolio-__BUILD_HASH__';
-const PRECACHE = ['/offline.html'];
+const PRECACHE = [
+    '/offline.html',
+    '/fonts/AdwaitaSans-Regular.woff2',
+    '/fonts/AdwaitaSans-Italic.woff2',
+    '/fonts/AdwaitaMono-Regular.woff2',
+];
 
 function cacheResponse(request, response) {
     if (!response || response.status !== 200) return Promise.resolve();

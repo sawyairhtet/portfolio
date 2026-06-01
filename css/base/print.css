@@ -1,0 +1,76 @@
+@media print {
+    .top-bar,
+    .dock,
+    .mobile-dock,
+    .wallpaper,
+    .desktop-welcome,
+    .context-menu,
+    .toast-container,
+    .alt-tab-switcher,
+    .shortcuts-cheatsheet,
+    .activities-overlay,
+    .quick-settings-panel,
+    .notification-center,
+    .calendar-popover,
+    .desktop-dim-effect,
+    .dock-onboarding-tip,
+    .skip-link,
+    .snap-preview,
+    .resize-handle,
+    .window-controls,
+    .close-btn-mobile,
+    .boot-screen,
+    .gdm-login {
+        display: none !important;
+    }
+
+    html,
+    body,
+    #root {
+        background: #fff !important;
+        color: #000 !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+
+    .window {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+        z-index: auto !important;
+    }
+
+    .window-header {
+        background: none !important;
+        border-bottom: 1px solid #ccc !important;
+        color: #000 !important;
+    }
+
+    .window-body {
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    .main-content {
+        overflow: visible !important;
+    }
+
+    a[href]::after {
+        content: ' (' attr(href) ')';
+        font-size: 0.85em;
+        color: #555;
+    }
+
+    a[href^='#']::after,
+    a[href^='javascript:']::after {
+        content: '';
+    }
+}

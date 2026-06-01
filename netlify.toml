@@ -9,8 +9,8 @@
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 
     # --- Content Security Policy ---
-    # Allows: self, Google Fonts, Plausible analytics, Formspree contact form,
-    #         service worker, PWA manifest, and inline styles (Tailwind/CSS-in-JS).
+    # Allows: self, Plausible analytics, Formspree contact form,
+    #         service worker, PWA manifest, and inline styles.
     Content-Security-Policy = """
       default-src 'self'; \
       script-src 'self' https://plausible.io; \

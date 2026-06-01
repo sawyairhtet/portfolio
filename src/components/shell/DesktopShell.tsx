@@ -222,10 +222,12 @@ export function DesktopShell() {
         if (preferences.fastBoot) return true;
         return false;
     });
-    const [activitiesOpen, setActivitiesOpen] = useState(false);
-    const [quickSettingsOpen, setQuickSettingsOpen] = useState(false);
-    const [notifCenterOpen, setNotifCenterOpen] = useState(false);
-    const [calendarPopoverOpen, setCalendarPopoverOpen] = useState(false);
+    type ActiveOverlay = 'none' | 'activities' | 'quickSettings' | 'notifications' | 'calendar';
+    const [activeOverlay, setActiveOverlay] = useState<ActiveOverlay>('none');
+    const activitiesOpen = activeOverlay === 'activities';
+    const quickSettingsOpen = activeOverlay === 'quickSettings';
+    const notifCenterOpen = activeOverlay === 'notifications';
+    const calendarPopoverOpen = activeOverlay === 'calendar';
     const [showDockTip, setShowDockTip] = useState(false);
     const [altTabOpen, setAltTabOpen] = useState(false);
     const [altTabIndex, setAltTabIndex] = useState(0);
@@ -326,7 +328,7 @@ export function DesktopShell() {
             // Super key → Activities
             if (e.key === 'Super' || (e.key === 'Meta' && !e.ctrlKey && !e.altKey && !e.shiftKey)) {
                 e.preventDefault();
-                setActivitiesOpen(prev => !prev);
+                setActiveOverlay(prev => prev === 'activities' ? 'none' : 'activities');
             }
 
             if (e.metaKey && /^[1-9]$/.test(e.key)) {
@@ -360,12 +362,9 @@ export function DesktopShell() {
 
             // Escape → close overlays
             if (e.key === 'Escape') {
-                if (shortcutsOpen || activitiesOpen || quickSettingsOpen || notifCenterOpen || calendarPopoverOpen) {
+                if (shortcutsOpen || activeOverlay !== 'none') {
                     setShortcutsOpen(false);
-                    setActivitiesOpen(false);
-                    setQuickSettingsOpen(false);
-                    setNotifCenterOpen(false);
-                    setCalendarPopoverOpen(false);
+                    setActiveOverlay('none');
                     e.stopPropagation();
                     return;
                 }
@@ -408,14 +407,11 @@ export function DesktopShell() {
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [
-        activitiesOpen,
+        activeOverlay,
         altTabIndex,
         bringToFront,
         closeWindow,
-        calendarPopoverOpen,
-        notifCenterOpen,
         openWindow,
-        quickSettingsOpen,
         shortcutsOpen,
         windows,
     ]);
@@ -433,16 +429,9 @@ export function DesktopShell() {
 
             {/* Top Bar */}
             <TopBar
-                onActivitiesToggle={() => setActivitiesOpen(p => !p)}
-                onQuickSettingsToggle={() => {
-                    setQuickSettingsOpen(p => !p);
-                    setNotifCenterOpen(false);
-                }}
-                onClockClick={() => {
-                    setCalendarPopoverOpen(p => !p);
-                    setQuickSettingsOpen(false);
-                    setNotifCenterOpen(false);
-                }}
+                onActivitiesToggle={() => setActiveOverlay(p => p === 'activities' ? 'none' : 'activities')}
+                onQuickSettingsToggle={() => setActiveOverlay(p => p === 'quickSettings' ? 'none' : 'quickSettings')}
+                onClockClick={() => setActiveOverlay(p => p === 'calendar' ? 'none' : 'calendar')}
                 isActivitiesOpen={activitiesOpen}
                 isQuickSettingsOpen={quickSettingsOpen}
                 isNotificationCenterOpen={notifCenterOpen}
@@ -451,19 +440,19 @@ export function DesktopShell() {
             {/* Quick Settings Panel */}
             <QuickSettingsPanel
                 isOpen={quickSettingsOpen}
-                onClose={() => setQuickSettingsOpen(false)}
+                onClose={() => setActiveOverlay('none')}
             />
 
             {/* Notification Center */}
             <NotificationCenter
                 isOpen={notifCenterOpen}
-                onClose={() => setNotifCenterOpen(false)}
+                onClose={() => setActiveOverlay('none')}
             />
 
             {/* Calendar Popover */}
             <CalendarPopover
                 isOpen={calendarPopoverOpen}
-                onClose={() => setCalendarPopoverOpen(false)}
+                onClose={() => setActiveOverlay('none')}
             />
 
             {/* Main Content */}
@@ -531,7 +520,7 @@ export function DesktopShell() {
             {/* Activities Overlay (with dock on desktop) */}
             <ActivitiesOverlay
                 isOpen={activitiesOpen}
-                onClose={() => setActivitiesOpen(false)}
+                onClose={() => setActiveOverlay('none')}
                 workspaceIndex={activeWorkspace}
             />
 
@@ -687,7 +676,7 @@ export function DesktopShell() {
             )}
 
             {/* Dock — always visible (Dash-to-Dock style) */}
-            <Dock onShowApps={() => setActivitiesOpen(p => !p)} />
+            <Dock onShowApps={() => setActiveOverlay(p => p === 'activities' ? 'none' : 'activities')} />
 
             {/* Dock onboarding tooltip for first-time visitors */}
             {showDockTip && !hasVisibleWindows && (
