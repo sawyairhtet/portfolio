@@ -133,6 +133,7 @@ export const ICON_MAP: Record<string, ComponentType<PhosphorIconProps>> = {
     search: MagnifyingGlass,
     'magnifying-glass': MagnifyingGlass,
     'box-open': Package,
+    package: Package,
     grip: DotsNine,
     fedora: FedoraLogo,
     'window-maximize': AppWindow,

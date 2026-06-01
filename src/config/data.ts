@@ -51,7 +51,7 @@ export const APP_DEFINITIONS: AppDefinition[] = [
     {
         id: 'projects',
         label: 'Projects',
-        icon: 'folder',
+        icon: 'folder-open',
         dockTooltip: 'Projects',
         gradient: 'linear-gradient(135deg, var(--blue-2) 0%, var(--blue-4) 100%)',
         description: 'Featured work, proof points, tech, platforms, and source links.',

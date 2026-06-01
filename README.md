@@ -12,9 +12,6 @@ The current site is a React and TypeScript application built with Vite. It prese
 - TypeScript
 - Vite
 - React Router
-- TanStack Query
-- Axios
-- Tailwind CSS v4
 - React Hook Form + Zod
 - Vitest
 - ESLint flat config

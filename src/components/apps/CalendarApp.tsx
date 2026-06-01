@@ -165,9 +165,8 @@ export const CalendarApp = memo(function CalendarApp() {
         <div className="calendar-app">
             <div className="calendar-left-pane">
                 <header className="calendar-header">
-                    {/* eslint-disable-next-line security/detect-object-injection */}
                     <span className="calendar-month-title">
-                        {monthNames[month]} {year}
+                        {monthNames.at(month) ?? ''} {year}
                     </span>
                     <div className="calendar-nav-buttons linked">
                         <button
