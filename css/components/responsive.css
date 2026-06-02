@@ -39,7 +39,9 @@
 
     .dock-item {
         width: 56px;
+        min-width: 56px;
         height: 56px;
+        min-height: 56px;
         font-size: 26px;
     }
 
@@ -149,6 +151,7 @@
     .main-content,
     body.show-dock .main-content {
         padding-top: var(--topbar-height);
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
         padding-left: env(safe-area-inset-left, 0px);
         padding-right: env(safe-area-inset-right, 0px);
     }
@@ -164,11 +167,11 @@
         height: auto;
         min-height: 0;
         transform: translateX(-50%) !important;
-        gap: 10px;
+        gap: 0;
         justify-content: center;
         border: 1px solid var(--glass-border);
-        border-radius: 22px;
-        padding: 10px 14px;
+        border-radius: 28px;
+        padding: 6px 10px;
         background: var(--glass-bg-heavy);
         backdrop-filter: var(--dock-blur) saturate(180%);
         -webkit-backdrop-filter: var(--dock-blur) saturate(180%);
@@ -178,10 +181,31 @@
         animation: none;
     }
 
+    .dock-scroll-area {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        padding: 1px;
+    }
+
+    .dock-scroll-area::-webkit-scrollbar {
+        display: none;
+    }
+
     .dock-item {
-        flex: 0 0 50px;
+        flex: 0 0 auto;
         width: 50px;
+        min-width: 50px;
         height: 50px;
+        min-height: 50px;
         font-size: 24px;
         border-radius: 13px;
     }
@@ -213,24 +237,29 @@
         display: none;
     }
 
-    /* Mobile windows: full-width sheet. Window.tsx skips inline positioning
-       on non-desktop devices, and utilities @layer beats components @layer,
-       so these rules win without !important. */
+    /* Mobile windows: full-viewport sheet, opaque background.
+       Windows skip JS positioning on non-desktop, and these
+       utility-layer rules override component-layer defaults. */
     .window {
         position: fixed;
-        top: calc(var(--topbar-height) + 8px);
-        left: 8px;
-        right: 8px;
-        bottom: var(--mobile-window-bottom);
-        width: auto;
+        inset: var(--topbar-height) 0 0 0;
+        width: 100%;
         max-width: 100%;
         min-width: 0;
         height: auto;
         max-height: none;
-        margin-top: 0;
-        transform: none;
-        border-radius: 20px;
-        box-shadow: var(--shadow-elevation-4);
+        border-radius: 0;
+        background: var(--window-bg-color);
+        box-shadow: none;
+    }
+
+    [data-theme='dark'] .window[data-device='mobile'] {
+        background: var(--dark-5);
+    }
+
+    .window.is-focused,
+    .window:focus-within {
+        box-shadow: none;
     }
 
     .window-controls {
@@ -241,8 +270,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
         margin-left: auto;
         border: none;
         border-radius: 50%;
@@ -312,9 +342,11 @@
     }
 
     .mobile-dock .dock-item {
-        flex-basis: 44px;
-        width: 44px;
-        height: 44px;
+        flex-basis: 48px;
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
+        min-height: 48px;
         font-size: 21px;
     }
 }
@@ -327,8 +359,10 @@
     }
 
     .dock-item {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
+        min-height: 48px;
         font-size: var(--font-size-lg);
     }
 
@@ -356,5 +390,49 @@
         .dock {
             padding-bottom: calc(10px + env(safe-area-inset-bottom));
         }
+    }
+}
+
+/* ============================================
+   TOUCH DEVICE OPTIMIZATIONS
+   Strip hover-dependent scaling/magnification
+   since touch devices have no :hover state.
+   ============================================ */
+@media (hover: none) {
+    .dock-item:hover {
+        transform: none !important;
+        filter: none !important;
+    }
+
+    .dock-item:hover .dock-tooltip {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-50%) translateY(4px);
+    }
+
+    .dock-item:has(+ .dock-item:hover),
+    .dock-item:hover + .dock-item {
+        transform: none !important;
+    }
+
+    .window-header .headerbar-btn:hover {
+        background: transparent;
+    }
+
+    .window-control:hover {
+        background: transparent;
+    }
+
+    .window-control:hover::after {
+        opacity: 0.65;
+    }
+
+    .window-control.close:hover {
+        background: transparent;
+    }
+
+    .window-control.close:hover::after {
+        background-color: currentColor;
+        opacity: 0.65;
     }
 }

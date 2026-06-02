@@ -328,13 +328,25 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
         ]
     );
 
-    // Double-click to maximize
+    // Double-click to maximize (desktop only)
     const handleDoubleClick = useCallback(() => {
         if (device === 'desktop') {
             playMaximizeSound();
             toggleMaximize(appId);
         }
     }, [device, appId, toggleMaximize, playMaximizeSound]);
+
+    // Single tap on header toggles maximize on mobile (replaces double-click)
+    const handleHeaderSingleTap = useCallback(
+        (e: React.MouseEvent) => {
+            if (device === 'desktop') return;
+            if ((e.target as HTMLElement).closest('.window-control, .close-btn-mobile')) return;
+            e.stopPropagation();
+            playMaximizeSound();
+            toggleMaximize(appId);
+        },
+        [device, appId, toggleMaximize, playMaximizeSound]
+    );
 
     // Click anywhere on window to bring to front
     const handleWindowMouseDown = useCallback(
@@ -399,6 +411,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                 className={`window active${isFocused && !isOtherWorkspace ? ' is-focused' : ''}${snapClass}${maximizedClass}${isMinimized ? ' is-minimized' : ''}${workspaceClass} ${className}`}
                 id={windowId}
                 data-app={appId}
+                data-device={device}
                 data-focused={isFocused && !isOtherWorkspace ? 'true' : 'false'}
                 role="dialog"
                 aria-modal="false"
@@ -411,6 +424,7 @@ export function Window({ appId, title, children, className = '' }: WindowProps) 
                     className="window-header"
                     onMouseDown={handleMouseDown}
                     onDoubleClick={handleDoubleClick}
+                    onClick={device !== 'desktop' ? handleHeaderSingleTap : undefined}
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                 >

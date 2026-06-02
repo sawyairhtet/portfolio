@@ -668,8 +668,10 @@ body.focus-dim-active .window[data-app='focus-mode'] {
     }
 
     .mobile-dock .dock-item {
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
+        min-height: 48px;
         font-size: 21px;
     }
 }

@@ -122,10 +122,16 @@ export function Dock({ onShowApps }: DockProps) {
     if (isMobileShell) {
         return (
             <>
-                <div className="dock visible mobile-dock" id="dock" aria-label="Mobile app dock">
-                    {MOBILE_DOCK_APPS.map(app => {
-                        const isActive = windows.get(app.id)?.isOpen ?? false;
-                        return (
+                <div
+                    className="dock visible mobile-dock"
+                    id="dock"
+                    data-device={device}
+                    aria-label="Mobile app dock"
+                >
+                    <div className="dock-scroll-area">
+                        {MOBILE_DOCK_APPS.map(app => {
+                            const isActive = windows.get(app.id)?.isOpen ?? false;
+                            return (
                             <button
                                 key={app.id}
                                 className={`dock-item${launchingApp === app.id ? ' launching' : ''}${isActive ? ' active' : ''}`}
@@ -162,6 +168,7 @@ export function Dock({ onShowApps }: DockProps) {
                             Apps
                         </span>
                     </button>
+                    </div>
                 </div>
                 <div
                     id="mobile-app-launcher"
@@ -230,6 +237,7 @@ export function Dock({ onShowApps }: DockProps) {
             ref={dockRef}
             className="dock"
             id="dock"
+            data-device={device}
             role="toolbar"
             aria-label="App launcher dash"
             onKeyDown={handleDockKeyDown}

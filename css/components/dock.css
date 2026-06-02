@@ -49,6 +49,13 @@
     }
 }
 
+@media (hover: none) {
+    .dock-item:hover {
+        filter: none;
+        transform: none;
+    }
+}
+
 /* Active bar indicator (GNOME dash style) */
 .dock-item.active::after {
     content: '';
@@ -103,6 +110,14 @@
         visibility: visible;
         transform: translateX(-50%) translateY(0);
         transition-delay: 0.3s;
+    }
+}
+
+@media (hover: none) {
+    .dock-item:hover .dock-tooltip {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-50%) translateY(4px);
     }
 }
 

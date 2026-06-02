@@ -353,6 +353,25 @@
     }
 }
 
+@media (hover: none) {
+    .window-control:hover {
+        background: transparent;
+    }
+
+    .window-control:hover::after {
+        opacity: 0.65;
+    }
+
+    .window-control.close:hover {
+        background: transparent;
+    }
+
+    .window-control.close:hover::after {
+        background-color: currentColor;
+        opacity: 0.65;
+    }
+}
+
 [data-theme='light'] .window-control:hover {
     background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
 }
@@ -391,6 +410,12 @@
 @media (hover: hover) {
     .window-header .headerbar-btn:hover {
         background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
+    }
+}
+
+@media (hover: none) {
+    .window-header .headerbar-btn:hover {
+        background: transparent;
     }
 }
 
