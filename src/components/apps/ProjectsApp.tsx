@@ -108,7 +108,7 @@ function FeaturedProject({ project }: { project: Project }) {
                 transition={{ duration: 0.5 }}
             >
                 <header>
-                    <h3 id={`featured-${project.id}-title`}>{project.title}</h3>
+                    <h2 id={`featured-${project.id}-title`}>{project.title}</h2>
                     <p className="project-featured-role">
                         <span>{project.role}</span>
                         <span aria-hidden="true">·</span>
@@ -214,6 +214,7 @@ export const ProjectsApp = memo(function ProjectsApp() {
 
     return (
         <div className="projects-redesign">
+            <h1 className="sr-only">Projects</h1>
             {featured && (
                 <section aria-label="Featured project">
                     <FeaturedProject project={featured} />
@@ -222,7 +223,7 @@ export const ProjectsApp = memo(function ProjectsApp() {
 
             {supporting.length > 0 && (
                 <section className="projects-other-section">
-                    <h3 className="projects-section-label">More Projects</h3>
+                    <h2 className="projects-section-label">More Projects</h2>
                     <div className="projects-card-grid" ref={scrollRef}>
                         {supporting.map(project => (
                             <ProjectCard key={project.id} project={project} />

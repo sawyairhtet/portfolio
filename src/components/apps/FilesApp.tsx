@@ -271,10 +271,11 @@ export const FilesApp = memo(function FilesApp() {
 
     return (
         <div className="files-app">
+            <h1 className="sr-only">Files</h1>
             <aside className="files-sidebar" aria-label="Places">
                 {SIDEBAR_SECTIONS.map(section => (
                     <div key={section.label} className="files-sidebar-section">
-                        <span className="files-sidebar-heading">{section.label}</span>
+                        <h2 className="files-sidebar-heading">{section.label}</h2>
                         {section.items.map(item => (
                             <button
                                 key={item.id}

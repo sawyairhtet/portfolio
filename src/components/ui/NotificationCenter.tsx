@@ -27,16 +27,22 @@ export function NotificationCenter({ isOpen, onClose }: NotificationCenterProps)
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isOpen, onClose]);
 
-    // Auto-focus first focusable element on open
+    // Auto-focus first focusable element on open, save/restore previous focus
     useEffect(() => {
         if (!isOpen) return;
         const panel = panelRef.current;
         if (!panel) return;
 
+        const previousFocus = document.activeElement as HTMLElement | null;
+
         const firstFocusable = panel.querySelector<HTMLElement>(
             'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
         );
         setTimeout(() => firstFocusable?.focus(), 50);
+
+        return () => {
+            previousFocus?.focus();
+        };
     }, [isOpen]);
 
     // Focus trap while panel is open

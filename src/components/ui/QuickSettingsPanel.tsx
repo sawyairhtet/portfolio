@@ -43,6 +43,8 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
     useEffect(() => {
         if (!isOpen) return;
 
+        const previousFocus = document.activeElement as HTMLElement | null;
+
         const firstFocusable = panelRef.current?.querySelector<HTMLElement>(
             'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
         );
@@ -73,7 +75,10 @@ export function QuickSettingsPanel({ isOpen, onClose }: QuickSettingsPanelProps)
         };
 
         document.addEventListener('keydown', handleTabTrap);
-        return () => document.removeEventListener('keydown', handleTabTrap);
+        return () => {
+            document.removeEventListener('keydown', handleTabTrap);
+            previousFocus?.focus();
+        };
     }, [isOpen]);
 
     return (
