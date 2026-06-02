@@ -3,7 +3,6 @@ import { useDevice } from '../../context/DeviceContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { useTimeOfDay } from '../../lib/useTimeOfDay';
 import type { WallpaperOption } from '../../types';
-import '../shell/Layout.module.css';
 import { WALLPAPERS } from '../../config/data';
 
 export function Wallpaper() {

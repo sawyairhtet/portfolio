@@ -3,7 +3,6 @@ import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
 import { APP_DEFINITIONS } from '../../config/data';
-import './TopBar.module.css';
 
 type BatteryIcon = 'battery-empty' | 'battery-quarter' | 'battery-half' | 'battery-three-quarters' | 'battery-full' | 'battery-charging';
 

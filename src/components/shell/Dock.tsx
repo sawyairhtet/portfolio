@@ -12,7 +12,6 @@ import { useWindowManager } from '../../context/WindowManagerContext';
 import { DOCK_APPS, MOBILE_DOCK_APPS, MOBILE_LAUNCHER_APPS } from '../../config/data';
 import { useDevice } from '../../context/DeviceContext';
 import type { AppId } from '../../types';
-import './Dock.module.css';
 
 interface DockProps {
     onShowApps?: () => void;
