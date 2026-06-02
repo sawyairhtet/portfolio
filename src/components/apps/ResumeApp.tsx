@@ -13,7 +13,7 @@ export const ResumeApp = memo(function ResumeApp() {
             <div className="resume-toolbar">
                 <div className="resume-toolbar-info">
                     <FilePdf weight="duotone" size={20} />
-                    <span>SawYeHtet_ApplicationSupport_Resume.pdf</span>
+                    <span>SawYeHtet_Resume.pdf</span>
                 </div>
                 <div className="resume-toolbar-actions">
                     <a

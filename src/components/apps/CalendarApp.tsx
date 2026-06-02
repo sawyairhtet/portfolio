@@ -28,14 +28,6 @@ const DEFAULT_EVENTS: CalendarEvent[] = [
     },
     {
         id: '3',
-        title: 'Spring Boot Incident Tracker API (OpsTrack)',
-        description:
-            'Practice incident management API. Implemented incident triage workflows, PostgreSQL models.',
-        date: '2026-05-20',
-        type: 'study',
-    },
-    {
-        id: '4',
         title: 'System Support & ITIL Self-Study',
         description:
             'Reviewed ITIL foundation principles, SLA management, and logging analysis with Fedora CLI.',

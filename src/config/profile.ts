@@ -11,7 +11,7 @@ export const PROFILE = {
     carryOverTarget: 'Junior Java / Backend Development',
     education: 'Diploma in Information Technology - Singapore Polytechnic, 2026',
     email: 'minwn2244@gmail.com',
-    resumePath: '/resume/SawYeHtet_ApplicationSupport_Resume.pdf',
+    resumePath: '/resume/SawYeHtet_Resume.pdf',
     availability: 'Open to opportunities',
     location: 'Singapore / remote-friendly',
     primaryStack: ['SQL', 'Linux', 'Java', 'API Testing', 'React + TypeScript'],

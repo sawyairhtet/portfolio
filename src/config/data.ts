@@ -238,36 +238,6 @@ export const PROJECTS: Project[] = [
         featured: true,
         icon: 'desktop',
     },
-    {
-        id: 'opstrack',
-        title: 'OpsTrack',
-        role: 'Developer',
-        summary:
-            'A Spring Boot API for tracking operational incidents, service requests, and resolution workflows — built to learn production support patterns alongside backend development.',
-        problem:
-            'I needed a backend project that exercises real operations tracking workflows, not just isolated CRUD exercises.',
-        solution:
-            'Building a layered Spring Boot REST API with incident lifecycle management, status tracking, and PostgreSQL persistence.',
-        impact: 'Makes my production support understanding visible through code — incident states, priority classification, and resolution tracking built into the API design.',
-        techStack: ['Java', 'Spring Boot', 'PostgreSQL', 'REST API'],
-        platform: 'Backend API',
-        proofPoints: [
-            'Models incident lifecycle with status transitions (open, investigating, resolved, closed).',
-            'Separates Controller, Service, and Repository responsibilities for clean architecture.',
-            'Connects Spring Data JPA to PostgreSQL for relational persistence and query practice.',
-        ],
-        links: [
-            {
-                label: 'View on GitHub',
-                href: 'https://github.com/sawyairhtet/opstrack',
-                icon: 'github',
-                primary: true,
-            },
-        ],
-        featured: false,
-        icon: 'server',
-        status: 'wip',
-    },
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
@@ -279,7 +249,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'Incident Triage & Escalation',
                 context:
                     'Methodical approach to classifying, prioritizing, and routing production issues to resolution.',
-                usedIn: ['OpsTrack Design', 'Coursework'],
+                usedIn: ['Coursework'],
                 level: 'intermediate',
             },
             {
@@ -293,7 +263,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'System Monitoring Awareness',
                 context:
                     'Understanding of monitoring dashboards, alerts, health checks, and SLA-driven response workflows.',
-                usedIn: ['Self-Study', 'OpsTrack Design'],
+                usedIn: ['Self-Study'],
                 level: 'learning',
             },
         ],
@@ -313,7 +283,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'API Testing',
                 context:
                     'Endpoint validation with Postman, status codes, response schemas, and edge-case coverage.',
-                usedIn: ['OpsTrack', 'Self-Study'],
+                usedIn: ['Self-Study'],
                 level: 'intermediate',
             },
             {
@@ -333,7 +303,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'SQL & Database Querying',
                 context:
                     'Writing queries to investigate data, verify fixes, and support production debugging across PostgreSQL and MySQL.',
-                usedIn: ['Coursework', 'OpsTrack'],
+                usedIn: ['Coursework'],
                 level: 'proficient',
             },
             {
@@ -347,7 +317,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'Git & Version Control',
                 context:
                     'Branching, pull requests, commit discipline, and collaborative development workflows.',
-                usedIn: ['Fedora Portfolio', 'OpsTrack'],
+                usedIn: ['Fedora Portfolio'],
                 level: 'proficient',
             },
             {
@@ -367,14 +337,14 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'Java + OOP',
                 context:
                     'Object-oriented design, class hierarchies, control flow, and practical problem solving.',
-                usedIn: ['Singapore Polytechnic', 'OpsTrack'],
+                usedIn: ['Singapore Polytechnic'],
                 level: 'proficient',
             },
             {
                 name: 'Spring Boot',
                 context:
                     'REST API structure, dependency injection, application layers, and building clean backend services.',
-                usedIn: ['OpsTrack'],
+                usedIn: ['Self-Study'],
                 level: 'intermediate',
             },
             {
@@ -401,7 +371,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'PostgreSQL',
                 context:
                     'Schema design, relational queries, joins, and connecting application logic to persistent storage.',
-                usedIn: ['OpsTrack', 'Coursework'],
+                usedIn: ['Coursework'],
                 level: 'intermediate',
             },
             {
@@ -433,7 +403,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 name: 'REST API Design',
                 context:
                     'Endpoint design, HTTP methods, status codes, and API documentation best practices.',
-                usedIn: ['OpsTrack', 'Fedora Portfolio'],
+                usedIn: ['Fedora Portfolio'],
                 level: 'proficient',
             },
             {
@@ -528,7 +498,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/projects/README.md': {
         type: 'file',
         content:
-            '# Projects\n\nRecruiter scan:\n\n- **GNOME-Inspired Portfolio Desktop**: React 19, TypeScript, window management — shows systematic problem-solving and attention to detail.\n- **OpsTrack**: Spring Boot operations tracking API — incident lifecycle, status tracking, and PostgreSQL persistence.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
+            '# Projects\n\nRecruiter scan:\n\n- **GNOME-Inspired Portfolio Desktop**: React 19, TypeScript, window management — shows systematic problem-solving and attention to detail.\n\nRun `projects`, `skills`, `resume`, or `contact` for the fastest path.',
     },
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md', 'about.md'] },
     '/home/sawyehtet/documents/about.md': {
@@ -538,12 +508,12 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
         content:
-            'TODO:\n- Strengthen incident triage and log analysis skills\n- Complete OpsTrack API with incident lifecycle\n- Study ITIL fundamentals for support role interviews\n- Keep recruiter paths obvious and up to date',
+            'TODO:\n- Strengthen incident triage and log analysis skills\n- Study ITIL fundamentals for support role interviews\n- Keep recruiter paths obvious and up to date',
     },
     '/home/sawyehtet/documents/ideas.md': {
         type: 'file',
         content:
-            '# Future Project Ideas\n\n1. Monitoring dashboard with health checks and alerts\n2. Postman API test collection for OpsTrack\n3. Log analysis shell scripts for production debugging',
+            '# Future Project Ideas\n\n1. Monitoring dashboard with health checks and alerts\n2. Log analysis shell scripts for production debugging',
     },
     '/home/sawyehtet/resume.txt': {
         type: 'file',
@@ -551,7 +521,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     },
     '/home/sawyehtet/resume.md': {
         type: 'file',
-        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate targeting application support and production support roles. Hands-on with SQL, Linux, Java, and API testing.\n\n## Focus\n\n- Application support and production support\n- Incident triage, log analysis, and SQL debugging\n- API testing and quality assurance\n- Java backend development (carry-over)\n\n## Best Proof\n\n- GNOME-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n- OpsTrack: Spring Boot and PostgreSQL backend API practice project\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
+        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate targeting application support and production support roles. Hands-on with SQL, Linux, Java, and API testing.\n\n## Focus\n\n- Application support and production support\n- Incident triage, log analysis, and SQL debugging\n- API testing and quality assurance\n- Java backend development (carry-over)\n\n## Best Proof\n\n- GNOME-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',

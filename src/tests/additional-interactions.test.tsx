@@ -191,7 +191,7 @@ describe('ResumeApp rendering', () => {
             </Providers>
         );
 
-        expect(screen.getByText(/SawYeHtet_ApplicationSupport_Resume\.pdf/i)).toBeInTheDocument();
+        expect(screen.getByText(/SawYeHtet_Resume\.pdf/i)).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /open resume in new tab/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /download resume pdf/i })).toBeInTheDocument();
         expect(document.querySelector('.resume-pdf-embed')).toBeInTheDocument();
