@@ -1,7 +1,10 @@
 import { memo, useState, useRef, useCallback, useEffect } from 'react';
-import { Icon } from '../ui/Icon';
+import { Icon, registerIcons } from '../ui/Icon';
 import { Terminal } from '@xterm/xterm';
 import '@xterm/xterm/css/xterm.css';
+import { ArrowRight } from '@phosphor-icons/react';
+
+registerIcons({ 'arrow-right': ArrowRight });
 import {
     APP_DEFINITIONS,
     DEFAULT_FILE_SYSTEM,
@@ -32,7 +35,7 @@ interface TerminalLine {
 const recruiterPathLines = [
     { text: '10-second recruiter path:', className: 'terminal-heading' },
     `  1. Who: ${PROFILE.name} - ${PROFILE.role}`,
-    '  2. Strengths: Incident triage, log analysis, SQL, API testing, Java backend',
+    '  2. Strengths: Incident triage, log analysis, SQL, API testing, Java + OOP',
     '  3. Best proof: run projects',
     '  4. Stack context: run skills',
     '  5. Resume/contact: run resume or contact',
@@ -467,7 +470,7 @@ export const TerminalApp = memo(function TerminalApp() {
                         `Target: ${PROFILE.roleTarget}`,
                         `Education: ${PROFILE.education}`,
                         `Primary: Application Support, Production Support, Technical Analyst`,
-                        `Secondary: QA / API Testing · Java Backend (carry-over)`,
+                        `Secondary: ${PROFILE.secondaryTarget} · ${PROFILE.carryOverTarget} (carry-over)`,
                         `Location: ${PROFILE.location}`,
                         `Host: ${navigator.platform}`,
                         `CPU: ${navigator.hardwareConcurrency || 'Browser'} threads`,

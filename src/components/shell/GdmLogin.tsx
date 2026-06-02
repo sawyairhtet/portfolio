@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
 import { Icon } from '../ui/Icon';
 import { PROFILE } from '../../config/profile';
 import { useTheme } from '../../context/ThemeContext';
@@ -10,7 +9,6 @@ interface GdmLoginProps {
 }
 
 export function GdmLogin({ onLogin }: GdmLoginProps) {
-    const reduced = useReducedMotion();
     const { isDark } = useTheme();
     const { preferences } = usePreferences();
     const [visible, setVisible] = useState(false);
@@ -75,12 +73,7 @@ export function GdmLogin({ onLogin }: GdmLoginProps) {
                         })}
                     </span>
                 </div>
-                <motion.div
-                    className="gdm-login-card"
-                    initial={reduced ? undefined : { opacity: 0, y: 20 }}
-                    animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ delay: 0.3, duration: 0.5, ease: [0.2, 0, 0, 1] }}
-                >
+                <div className="gdm-login-card">
                     <div className="gdm-avatar">
                         <div className="gdm-avatar-circle">
                             <Icon name="user-circle" />
@@ -103,22 +96,20 @@ export function GdmLogin({ onLogin }: GdmLoginProps) {
                                 }}
                             />
                         </div>
-                        <motion.button
+                        <button
                             ref={loginBtnRef}
                             type="button"
                             className="gdm-login-btn"
                             onClick={handleLogin}
-                            whileHover={reduced ? undefined : { scale: 1.02 }}
-                            whileTap={reduced ? undefined : { scale: 0.97 }}
                         >
                             Sign In
-                        </motion.button>
+                        </button>
                     </div>
                     <span className="gdm-hint">Press Enter or click Sign In to continue</span>
                     <button type="button" className="gdm-skip-btn" onClick={handleLogin}>
                         Skip to Desktop
                     </button>
-                </motion.div>
+                </div>
             </div>
         </div>
     );

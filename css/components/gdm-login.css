@@ -85,6 +85,16 @@
     border: 1px solid color-mix(in srgb, var(--light-1) 10%, transparent);
     border-radius: 16px;
     min-width: 320px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.5s cubic-bezier(0.2, 0, 0, 1) 0.3s,
+        transform 0.5s cubic-bezier(0.2, 0, 0, 1) 0.3s;
+}
+
+.gdm-login.visible .gdm-login-card {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .gdm-avatar {
@@ -168,11 +178,19 @@
     font-size: var(--font-size-base);
     font-weight: 600;
     cursor: pointer;
-    transition: opacity var(--duration-fast);
+    transition:
+        opacity var(--duration-fast),
+        transform 0.15s ease;
 }
 
 .gdm-login-btn:hover {
     opacity: 0.9;
+    transform: scale(1.02);
+}
+
+.gdm-login-btn:active {
+    opacity: 0.9;
+    transform: scale(0.97);
 }
 
 .gdm-hint {
@@ -204,5 +222,22 @@
         min-width: auto;
         width: calc(100vw - 48px);
         padding: 24px 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gdm-login-card {
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .gdm-login-btn {
+        transition: opacity var(--duration-fast);
+    }
+
+    .gdm-login-btn:hover,
+    .gdm-login-btn:active {
+        transform: none;
     }
 }

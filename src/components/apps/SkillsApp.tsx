@@ -1,6 +1,23 @@
 import { memo, useState } from 'react';
 import { SKILL_CATEGORIES } from '../../config/data';
-import { ICON_MAP } from '../ui/Icon';
+import { ICON_MAP, registerIcons } from '../ui/Icon';
+import {
+    Code,
+    Database,
+    Headset,
+    TestTube,
+    TreeStructure,
+    Wrench,
+} from '@phosphor-icons/react';
+
+registerIcons({
+    headset: Headset,
+    vial: TestTube,
+    wrench: Wrench,
+    code: Code,
+    database: Database,
+    sitemap: TreeStructure,
+});
 
 function skillLevelLabel(level: string): string {
     return level.charAt(0).toUpperCase() + level.slice(1);

@@ -8,7 +8,7 @@ export const PROFILE = {
         'Recent Singapore Polytechnic IT graduate with hands-on SQL, Linux, and Java skills. Targeting application support and production support roles where systematic troubleshooting, log analysis, and attention to detail matter. Built this React + TypeScript desktop portfolio as technical proof of problem-solving ability.',
     subtitle: 'Application Support · Production Support · Technical Analyst',
     secondaryTarget: 'QA / API Testing',
-    carryOverTarget: 'Junior Java / Backend Development',
+    carryOverTarget: 'IT Service Management / ITIL',
     education: 'Diploma in Information Technology - Singapore Polytechnic, 2026',
     email: 'minwn2244@gmail.com',
     resumePath: '/resume/SawYeHtet_Resume.pdf',

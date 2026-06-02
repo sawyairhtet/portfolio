@@ -2,7 +2,22 @@ import { memo, useState, useEffect, useCallback, useRef } from 'react';
 import { useNotifications } from '../../context/NotificationContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Play, Pause, FastForward, ArrowCounterClockwise } from '@phosphor-icons/react';
+import { registerIcons } from '../ui/Icon';
+import {
+    Play,
+    Pause,
+    FastForward,
+    ArrowCounterClockwise,
+    CheckCircle,
+    WarningCircle,
+    Coffee,
+} from '@phosphor-icons/react';
+
+registerIcons({
+    'check-circle': CheckCircle,
+    'circle-exclamation': WarningCircle,
+    'mug-hot': Coffee,
+});
 
 type TimerState = 'idle' | 'work' | 'break' | 'paused';
 type ActiveTimerState = 'work' | 'break';

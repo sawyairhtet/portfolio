@@ -1,8 +1,31 @@
 import { memo } from 'react';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Icon } from '../ui/Icon';
-import { ArrowSquareOut, GithubLogo, Users, Star, GitBranch } from '@phosphor-icons/react';
+import { Icon, registerIcons } from '../ui/Icon';
+import {
+    ArrowSquareOut,
+    GithubLogo,
+    Users,
+    Star,
+    GitBranch,
+    ArrowLeft,
+    ArrowRight,
+    ArrowClockwise,
+    LockSimple,
+    LinkedinLogo,
+    TelegramLogo,
+    XLogo,
+} from '@phosphor-icons/react';
+
+registerIcons({
+    'arrow-left': ArrowLeft,
+    'arrow-right': ArrowRight,
+    'arrow-clockwise': ArrowClockwise,
+    'lock-simple': LockSimple,
+    linkedin: LinkedinLogo,
+    telegram: TelegramLogo,
+    'x-twitter': XLogo,
+});
 
 const githubLink = SOCIAL_LINKS.find(link => link.label === 'GitHub') ?? SOCIAL_LINKS[0];
 

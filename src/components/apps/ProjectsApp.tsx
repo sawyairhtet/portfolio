@@ -7,7 +7,6 @@ import { Star, CheckCircle, ArrowSquareOut, GithubLogo, Hammer } from '@phosphor
 
 const TECH_BRAND_COLORS: Record<string, string> = {
     Java: '#ED8B00',
-    'Spring Boot': '#6DB33F',
     React: '#61DAFB',
     TypeScript: '#3178C6',
     JavaScript: '#F7DF1E',

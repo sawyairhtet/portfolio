@@ -1,9 +1,6 @@
 import type { ComponentType } from 'react';
 import {
     AppWindow,
-    ArrowClockwise,
-    ArrowLeft,
-    ArrowRight,
     BatteryCharging,
     BatteryHigh,
     BatteryLow,
@@ -13,12 +10,8 @@ import {
     Bluetooth,
     CalendarBlank,
     CellSignalFull,
-    CheckCircle,
     Clock,
-    Code,
-    Coffee,
     Compass,
-    Database,
     Desktop,
     DotsNine,
     Envelope,
@@ -30,45 +23,28 @@ import {
     Gear,
     GearSix,
     GithubLogo,
-    HardDrives,
-    Headset,
-    House,
-    type IconProps as PhosphorIconProps,
-    type IconWeight,
     Image,
     Info,
     Lightbulb,
     Lightning,
-    LinkedinLogo,
     Lock,
-    LockSimple,
     MagnifyingGlass,
     Moon,
     Package,
     Power,
-    Plus,
     SpeakerHigh,
     Sun,
-    TelegramLogo,
     Terminal,
-    TestTube,
     Toolbox,
-    TreeStructure,
     UserCircle,
-    WarningCircle,
     WifiHigh,
-    Wrench,
     X,
-    XLogo,
 } from '@phosphor-icons/react';
+import type { IconWeight } from '@phosphor-icons/react';
 
-/**
- * Faithful-but-tiny reproduction of the Fedora "f" infinity logo for the boot
- * screen. Phosphor has no Fedora brand glyph, and we no longer ship Font Awesome
- * brands. Kept monochrome (currentColor) so it inherits theming like every other
- * icon. See the Do-Not-Touch note in CLAUDE.md about the boot sequence.
- */
-function FedoraLogo({ size = '1em', color = 'currentColor', ...rest }: PhosphorIconProps) {
+type PhosphorIconComponent = ComponentType<{ size?: string | number; weight?: IconWeight; [key: string]: unknown }>;
+
+function FedoraLogo({ size = '1em', color = 'currentColor', ...rest }: { size?: string | number; color?: string; [key: string]: unknown }) {
     return (
         <svg
             width={size}
@@ -83,19 +59,12 @@ function FedoraLogo({ size = '1em', color = 'currentColor', ...rest }: PhosphorI
     );
 }
 
-/**
- * Single source of truth mapping the project's string-based icon keys (used
- * declaratively in data.ts / profile.ts and passed through the toast /
- * notification system) to Phosphor icon components. Keys are the old Font
- * Awesome names with the `fa-`/`fas`/`fab` prefixes stripped, so existing data
- * shapes stay readable.
- */
-export const ICON_MAP: Record<string, ComponentType<PhosphorIconProps>> = {
-    // App definitions
+export const ICON_MAP: Record<string, PhosphorIconComponent> = {
     'user-circle': UserCircle,
     folder: Folder,
     'folder-open': FolderOpen,
     tools: Toolbox,
+    toolbox: Toolbox,
     envelope: Envelope,
     'firefox-browser': Compass,
     terminal: Terminal,
@@ -103,24 +72,12 @@ export const ICON_MAP: Record<string, ComponentType<PhosphorIconProps>> = {
     'file-pdf': FilePdf,
     'file-arrow-down': FileArrowDown,
     cog: Gear,
+    'gear-six': GearSix,
     clock: Clock,
     calendar: CalendarBlank,
     'calendar-blank': CalendarBlank,
-    // Projects & skills
     github: GithubLogo,
     desktop: Desktop,
-    server: HardDrives,
-    headset: Headset,
-    vial: TestTube,
-    wrench: Wrench,
-    code: Code,
-    database: Database,
-    sitemap: TreeStructure,
-    // Social
-    linkedin: LinkedinLogo,
-    telegram: TelegramLogo,
-    'x-twitter': XLogo,
-    // Status / chrome
     signal: CellSignalFull,
     wifi: WifiHigh,
     'battery-three-quarters': BatteryHigh,
@@ -133,52 +90,35 @@ export const ICON_MAP: Record<string, ComponentType<PhosphorIconProps>> = {
     image: Image,
     'bell-slash': BellSlash,
     times: X,
-    'arrow-right': ArrowRight,
-    'arrow-left': ArrowLeft,
     'bluetooth-b': Bluetooth,
     bolt: Lightning,
     moon: Moon,
     lightbulb: Lightbulb,
     sun: Sun,
     lock: Lock,
-    'lock-simple': LockSimple,
     'power-off': Power,
     search: MagnifyingGlass,
     'magnifying-glass': MagnifyingGlass,
-    'arrow-clockwise': ArrowClockwise,
     'box-open': Package,
     package: Package,
     grip: DotsNine,
     fedora: FedoraLogo,
     'window-maximize': AppWindow,
-    home: House,
-    plus: Plus,
-    'gear-six': GearSix,
-    toolbox: Toolbox,
-    // Toasts / notifications
-    'check-circle': CheckCircle,
-    'circle-exclamation': WarningCircle,
     'info-circle': Info,
-    'mug-hot': Coffee,
 };
+
+export function registerIcons(icons: Record<string, PhosphorIconComponent>) {
+    Object.assign(ICON_MAP, icons);
+}
 
 export type IconName = keyof typeof ICON_MAP;
 
 interface IconProps {
-    /** Icon key (see ICON_MAP). Typed loosely because data.ts passes strings. */
     name: string;
-    /** Extra class names placed on the wrapping <i> (so existing CSS keeps working). */
     className?: string;
-    /** Phosphor weight. Defaults to regular for a clean, GNOME-symbolic look. */
     weight?: IconWeight;
 }
 
-/**
- * Renders a Phosphor glyph inside an <i> wrapper that carries the original
- * className. The glyph is sized at 1em and uses currentColor, exactly like the
- * Font Awesome font icons it replaced — so every existing CSS rule targeting
- * these `i` elements (font-size, color, width, display) keeps working unchanged.
- */
 export function Icon({ name, className, weight = 'regular' }: IconProps) {
     // eslint-disable-next-line security/detect-object-injection -- name is a static icon key, not user input
     const Glyph = Object.prototype.hasOwnProperty.call(ICON_MAP, name) ? ICON_MAP[name] : undefined;

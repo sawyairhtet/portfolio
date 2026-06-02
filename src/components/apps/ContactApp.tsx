@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotifications } from '../../context/NotificationContext';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { registerIcons } from '../ui/Icon';
 import {
     EnvelopeSimple,
     LinkedinLogo,
@@ -22,6 +23,11 @@ import {
     ChatText,
     TelegramLogo,
 } from '@phosphor-icons/react';
+
+registerIcons({
+    'check-circle': CheckCircle,
+    'circle-exclamation': WarningCircle,
+});
 
 const MESSAGE_MAX = 2000;
 const COOLDOWN_MS = 8000;

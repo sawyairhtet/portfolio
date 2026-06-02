@@ -1,6 +1,12 @@
 import { memo, useState } from 'react';
-import { Icon } from '../ui/Icon';
+import { Icon, registerIcons } from '../ui/Icon';
 import { WALLPAPERS } from '../../config/data';
+import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
+
+registerIcons({
+    'arrow-left': ArrowLeft,
+    'arrow-right': ArrowRight,
+});
 
 export const ImageViewerApp = memo(function ImageViewerApp() {
     const [activeImageIdx, setActiveImageIdx] = useState(0);

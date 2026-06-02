@@ -341,13 +341,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                 level: 'proficient',
             },
             {
-                name: 'Spring Boot',
-                context:
-                    'REST API structure, dependency injection, application layers, and building clean backend services.',
-                usedIn: ['Self-Study'],
-                level: 'intermediate',
-            },
-            {
                 name: 'React + TypeScript',
                 context:
                     'Component architecture, typed state management, context providers — this portfolio is the proof.',
@@ -360,31 +353,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
                     'Scripting, data handling, utility development, and coursework automation.',
                 usedIn: ['Coursework', 'Fedora Portfolio'],
                 level: 'intermediate',
-            },
-        ],
-    },
-    {
-        title: 'Databases',
-        icon: 'database',
-        skills: [
-            {
-                name: 'PostgreSQL',
-                context:
-                    'Schema design, relational queries, joins, and connecting application logic to persistent storage.',
-                usedIn: ['Coursework'],
-                level: 'intermediate',
-            },
-            {
-                name: 'MySQL',
-                context: 'Academic database coursework and structured query practice.',
-                usedIn: ['Coursework'],
-                level: 'intermediate',
-            },
-            {
-                name: 'MongoDB Basics',
-                context: 'Introduction to document-oriented storage and NoSQL patterns.',
-                usedIn: ['Self-Study'],
-                level: 'learning',
             },
         ],
     },
@@ -503,7 +471,7 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     '/home/sawyehtet/documents': { type: 'dir', children: ['notes.txt', 'ideas.md', 'about.md'] },
     '/home/sawyehtet/documents/about.md': {
         type: 'file',
-        content: `# About Me\n\n${PROFILE.name}\n${PROFILE.role}\n\n## Summary\n\n${PROFILE.summary}\n\n## Education\n\n${PROFILE.education}\n\n## Focus Areas\n\n- Application Support & Production Support\n- SQL Debugging & Database Querying\n- Log Analysis & Incident Triage\n- API Testing & Quality Assurance\n- Java Backend Development\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}\n\n## Links\n\n- [GitHub](https://github.com/sawyairhtet)\n- [LinkedIn](https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/)\n- [Resume](${PROFILE.resumePath})`,
+        content: `# About Me\n\n${PROFILE.name}\n${PROFILE.role}\n\n## Summary\n\n${PROFILE.summary}\n\n## Education\n\n${PROFILE.education}\n\n## Focus Areas\n\n- Application Support & Production Support\n- SQL Debugging & Database Querying\n- Log Analysis & Incident Triage\n- API Testing & Quality Assurance\n- IT Service Management & ITIL\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}\n\n## Links\n\n- [GitHub](https://github.com/sawyairhtet)\n- [LinkedIn](https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/)\n- [Resume](${PROFILE.resumePath})`,
     },
     '/home/sawyehtet/documents/notes.txt': {
         type: 'file',
@@ -517,11 +485,11 @@ export const DEFAULT_FILE_SYSTEM: FileSystem = {
     },
     '/home/sawyehtet/resume.txt': {
         type: 'file',
-        content: `SAW YE HTET - RESUME\n\nRole: ${PROFILE.role}\nTarget: ${PROFILE.roleTarget}\nEducation: ${PROFILE.education}\nStack: ${PROFILE.primaryStack.join(', ')}\nFocus: Application support, production support, SQL debugging, API testing, and Java backend.\n\nContact: ${PROFILE.email}\nResume PDF: ${PROFILE.resumePath}`,
+        content: `SAW YE HTET - RESUME\n\nRole: ${PROFILE.role}\nTarget: ${PROFILE.roleTarget}\nEducation: ${PROFILE.education}\nStack: ${PROFILE.primaryStack.join(', ')}\nFocus: Application support, production support, SQL debugging, API testing, and IT operations.\n\nContact: ${PROFILE.email}\nResume PDF: ${PROFILE.resumePath}`,
     },
     '/home/sawyehtet/resume.md': {
         type: 'file',
-        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate targeting application support and production support roles. Hands-on with SQL, Linux, Java, and API testing.\n\n## Focus\n\n- Application support and production support\n- Incident triage, log analysis, and SQL debugging\n- API testing and quality assurance\n- Java backend development (carry-over)\n\n## Best Proof\n\n- GNOME-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
+        content: `# Saw Ye Htet\n\n${PROFILE.role}\n\n## Positioning\n\nRecent Singapore Polytechnic IT graduate targeting application support and production support roles. Hands-on with SQL, Linux, Java, and API testing.\n\n## Focus\n\n- Application support and production support\n- Incident triage, log analysis, and SQL debugging\n- API testing and quality assurance\n- IT service management (carry-over)\n\n## Best Proof\n\n- GNOME-inspired desktop portfolio: React 19, TypeScript, Vite, window management, search, terminal, mobile launcher\n\n## Recruiter Path\n\n1. About - who I am\n2. Projects - what I build\n3. Skills - technologies and learning path\n4. Resume - PDF source of truth\n5. Contact - email and form\n\n## Contact\n\n${PROFILE.email}\n${PROFILE.location}\n${PROFILE.availability}`,
     },
     '/home/sawyehtet/.bashrc': {
         type: 'file',

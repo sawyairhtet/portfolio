@@ -1,5 +1,12 @@
 import { memo, useState, useMemo } from 'react';
-import { Icon } from '../ui/Icon';
+import { Icon, registerIcons } from '../ui/Icon';
+import { ArrowLeft, ArrowRight, Plus } from '@phosphor-icons/react';
+
+registerIcons({
+    'arrow-left': ArrowLeft,
+    'arrow-right': ArrowRight,
+    plus: Plus,
+});
 
 interface CalendarEvent {
     id: string;
@@ -14,7 +21,7 @@ const DEFAULT_EVENTS: CalendarEvent[] = [
         id: '1',
         title: 'Graduated from Singapore Polytechnic',
         description:
-            'Diploma in Information Technology, GPA 3.55. Specializing in Systems, Java, Backend development.',
+            'Diploma in Information Technology, GPA 3.55. Specializing in Systems, Java, and IT operations.',
         date: '2026-05-04',
         type: 'milestone',
     },
@@ -22,7 +29,7 @@ const DEFAULT_EVENTS: CalendarEvent[] = [
         id: '2',
         title: 'LTVP & Job Hunt Commenced',
         description:
-            'MOE Tuition Grant active. Target S-Pass, minimum SGD 3,300/month as Junior Java Backend Developer.',
+            'MOE Tuition Grant active. Target S-Pass, minimum SGD 3,300/month as IT Support & Operations Specialist.',
         date: '2026-05-15',
         type: 'milestone',
     },
