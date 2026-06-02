@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Icon } from './Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
+import './ContextMenu.module.css';
 
 interface MenuPosition {
     x: number;

@@ -3,6 +3,7 @@ import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useDevice } from '../../context/DeviceContext';
 import { usePreferences } from '../../context/PreferencesContext';
+import './Window.module.css';
 import { useSound } from '../../context/SoundContext';
 import { APP_DEFINITIONS, SWIPE_CLOSE_MAX_X, SWIPE_CLOSE_THRESHOLD_Y } from '../../config/data';
 import type { AppId } from '../../types';

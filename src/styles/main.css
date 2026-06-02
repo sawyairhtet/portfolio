@@ -17,11 +17,6 @@
 @import '../../css/base/animations.css' layer(base);
 
 /* Components */
-@import '../../css/components/layout.css' layer(components);
-@import '../../css/components/top-bar.css' layer(components);
-@import '../../css/components/dock.css' layer(components);
-@import '../../css/components/window.css' layer(components);
-@import '../../css/components/context-menu.css' layer(components);
 @import '../../css/components/terminal.css' layer(components);
 @import '../../css/components/files.css' layer(components);
 @import '../../css/components/easter-eggs.css' layer(components);

@@ -3,6 +3,7 @@ import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';
 import { usePreferences } from '../../context/PreferencesContext';
+import './Layout.module.css';
 import { useDevice } from '../../context/DeviceContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { TopBar } from './TopBar';

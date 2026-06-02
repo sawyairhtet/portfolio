@@ -1,0 +1,379 @@
+:global {
+/* ============================================
+   MAIN CONTENT AREA & LAYOUT — Premium
+   ============================================ */
+
+.main-content {
+    position: relative;
+    height: 100dvh;
+    padding-top: var(--topbar-height);
+    padding-left: 0;
+}
+
+.main-content::before {
+    display: none;
+}
+
+[data-theme='light'] .main-content::before {
+    display: none;
+}
+
+/* Wallpaper — Fedora-inspired image with restrained shell readability overlay */
+.wallpaper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/images/wallpapers/fedora-43/f43-day.webp') center/cover no-repeat;
+    z-index: var(--z-wallpaper);
+    transform: translate3d(var(--wallpaper-shift-x, 0), var(--wallpaper-shift-y, 0), 0) scale(1.02);
+    transition: transform var(--duration-slow) var(--ease-out-quad);
+    overflow: hidden;
+}
+
+.wallpaper-night-layer {
+    position: absolute;
+    inset: 0;
+    background: center/cover no-repeat;
+    z-index: 1;
+    transition: opacity 120s linear;
+}
+
+.wallpaper-night-layer.theme-driven {
+    transition: opacity var(--duration-normal) var(--ease-out-quad);
+    opacity: 0;
+}
+
+[data-theme='dark'] .wallpaper-night-layer.theme-driven,
+body[data-wallpaper-mode='dark'] .wallpaper-night-layer.theme-driven {
+    opacity: 1;
+}
+
+.wallpaper.time-based .wallpaper-night-layer {
+    transition: opacity 120s linear;
+}
+
+.wallpaper.time-based .wallpaper-night-layer.theme-driven {
+    display: none;
+}
+
+[data-theme='dark'] .wallpaper,
+body[data-wallpaper-mode='dark'] .wallpaper {
+    background: url('/images/wallpapers/fedora-43/f43-night.webp') center/cover no-repeat;
+}
+
+body .wallpaper.custom-wallpaper {
+    background: var(--custom-wallpaper-bg);
+}
+
+.wallpaper.custom-wallpaper.time-based {
+    background: var(--custom-wallpaper-bg);
+}
+
+.desktop-welcome {
+    position: absolute;
+    left: clamp(24px, 6vw, 84px);
+    bottom: clamp(116px, 17vh, 176px);
+    z-index: 9;
+    max-width: min(460px, calc(100vw - 48px));
+    color: var(--text-on-accent);
+    pointer-events: none;
+    text-shadow:
+        0 2px 20px color-mix(in srgb, var(--dark-5) 55%, transparent),
+        0 0 42px color-mix(in srgb, var(--dark-5) 35%, transparent);
+}
+
+.desktop-welcome-kicker {
+    display: block;
+    margin-bottom: 8px;
+    color: color-mix(in srgb, var(--light-1) 72%, transparent);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 100ms forwards;
+}
+
+.desktop-welcome h2 {
+    margin: 0;
+    color: inherit;
+    font-size: var(--font-size-display);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: 0;
+    opacity: 0;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 200ms forwards;
+}
+
+.desktop-welcome p {
+    margin: 10px 0 0;
+    color: color-mix(in srgb, var(--light-1) 82%, transparent);
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    line-height: 1.35;
+    opacity: 0;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 300ms forwards;
+}
+
+.desktop-welcome-stack {
+    margin: 6px 0 0 !important;
+    font-size: var(--font-size-sm) !important;
+    font-weight: 600 !important;
+    color: color-mix(in srgb, var(--light-1) 52%, transparent) !important;
+    letter-spacing: 0 !important;
+    animation-delay: 0.38s !important;
+}
+
+.desktop-welcome-hint {
+    display: inline-flex;
+    margin-top: 18px;
+    padding: 8px 13px;
+    border: 1px solid color-mix(in srgb, var(--light-1) 32%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--dark-5) 68%, transparent);
+    color: var(--light-1);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    line-height: 1.3;
+    cursor: pointer;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--dark-5) 25%, transparent);
+    pointer-events: auto;
+    opacity: 0;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 450ms forwards;
+}
+
+.desktop-welcome-hint:hover {
+    background: color-mix(in srgb, var(--dark-5) 76%, transparent);
+    border-color: color-mix(in srgb, var(--light-1) 42%, transparent);
+}
+
+.desktop-welcome-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    pointer-events: auto;
+    opacity: 0;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 520ms forwards;
+}
+
+.desktop-welcome-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 10px 18px;
+    border: 1px solid color-mix(in srgb, var(--light-1) 30%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--dark-5) 66%, transparent);
+    color: var(--light-1);
+    font-family: var(--font-ui);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--dark-5) 28%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        border-color 200ms var(--ease-in-out-quad),
+        transform 200ms var(--ease-out-quad),
+        box-shadow 200ms var(--ease-out-quad);
+}
+
+.desktop-welcome-action.primary {
+    border-color: color-mix(in srgb, var(--accent-bg-color) 50%, transparent);
+    background: var(--accent-bg-color);
+    color: var(--text-on-accent);
+    box-shadow:
+        0 2px 12px color-mix(in srgb, var(--dark-5) 28%, transparent),
+        0 0 20px color-mix(in srgb, var(--accent-bg-color) 25%, transparent);
+}
+
+.desktop-welcome-action:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--light-1) 45%, transparent);
+    background: color-mix(in srgb, var(--dark-5) 78%, transparent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--dark-5) 35%, transparent);
+}
+
+.desktop-welcome-action.primary:hover {
+    background: var(--accent-bg-color);
+    filter: brightness(1.1);
+    box-shadow:
+        0 4px 16px color-mix(in srgb, var(--dark-5) 35%, transparent),
+        0 0 28px color-mix(in srgb, var(--accent-bg-color) 35%, transparent);
+}
+
+[data-theme='light'] .desktop-welcome {
+    color: color-mix(in srgb, var(--window-fg-color) 94%, transparent);
+    text-shadow:
+        0 2px 24px color-mix(in srgb, var(--view-bg-color) 78%, transparent),
+        0 0 2px color-mix(in srgb, var(--view-bg-color) 90%, transparent);
+}
+
+[data-theme='light'] .desktop-welcome-kicker {
+    color: color-mix(in srgb, var(--window-fg-color) 68%, transparent);
+}
+
+[data-theme='light'] .desktop-welcome p {
+    color: color-mix(in srgb, var(--window-fg-color) 76%, transparent);
+}
+
+[data-theme='light'] .desktop-welcome-stack {
+    color: color-mix(in srgb, var(--window-fg-color) 55%, transparent) !important;
+}
+
+[data-theme='light'] .desktop-welcome-hint,
+[data-theme='light'] .desktop-welcome-action,
+[data-theme='light'] .shortcut-pill {
+    border-color: color-mix(in srgb, var(--window-fg-color) 18%, transparent);
+    background: color-mix(in srgb, var(--view-bg-color) 94%, transparent);
+    color: color-mix(in srgb, var(--window-fg-color) 90%, transparent);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--window-fg-color) 10%, transparent);
+}
+
+[data-theme='light'] .desktop-welcome-action.primary {
+    color: var(--text-on-accent);
+    background: var(--accent);
+}
+
+[data-theme='light'] .shortcut-pill kbd {
+    border-color: color-mix(in srgb, var(--window-fg-color) 14%, transparent);
+    background: color-mix(in srgb, var(--window-fg-color) 6%, transparent);
+    color: color-mix(in srgb, var(--window-fg-color) 82%, transparent);
+}
+
+/* Keyboard shortcut hints */
+.desktop-welcome-shortcuts {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    pointer-events: auto;
+    opacity: 0;
+    animation: welcomeSlideUp 400ms var(--ease-out-quad) 600ms forwards;
+}
+
+.shortcut-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid color-mix(in srgb, var(--light-1) 12%, transparent);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--view-bg-color) 60%, transparent);
+    color: color-mix(in srgb, var(--light-1) 65%, transparent);
+    font-size: var(--font-size-2xs);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.shortcut-pill kbd {
+    display: inline-block;
+    padding: 1px 5px;
+    border: 1px solid color-mix(in srgb, var(--light-1) 15%, transparent);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--light-1) 8%, transparent);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-2xs);
+    font-weight: 700;
+    color: color-mix(in srgb, var(--light-1) 85%, transparent);
+}
+
+.wallpaper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    display: block;
+    background:
+        linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--dark-5) 24%, transparent) 0%,
+            transparent 24%,
+            transparent 58%,
+            color-mix(in srgb, var(--dark-5) 26%, transparent) 100%
+        ),
+        linear-gradient(
+            to right,
+            color-mix(in srgb, var(--dark-5) 12%, transparent) 0%,
+            transparent 24%,
+            transparent 76%,
+            color-mix(in srgb, var(--dark-5) 10%, transparent) 100%
+        );
+    pointer-events: none;
+}
+
+[data-theme='light'] .wallpaper::before {
+    background:
+        linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--view-bg-color) 28%, transparent) 0%,
+            transparent 28%,
+            transparent 64%,
+            color-mix(in srgb, var(--view-bg-color) 22%, transparent) 100%
+        ),
+        linear-gradient(
+            to right,
+            color-mix(in srgb, var(--view-bg-color) 10%, transparent) 0%,
+            transparent 28%,
+            transparent 76%,
+            color-mix(in srgb, var(--view-bg-color) 10%, transparent) 100%
+        );
+}
+
+/* Noise grain — removed for Adwaita accuracy */
+.wallpaper::after {
+    display: none;
+}
+
+/* Desktop shell uses a centered bottom dock, so content keeps full width */
+body.show-dock .main-content {
+    padding-left: 0;
+}
+
+@media (max-width: 767px) {
+    .desktop-welcome {
+        left: 20px;
+        right: 20px;
+        bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+        max-width: none;
+    }
+
+    .desktop-welcome-kicker {
+        font-size: var(--font-size-2xs);
+    }
+
+    .desktop-welcome h2 {
+        font-size: 30px;
+        line-height: 1;
+    }
+
+    .desktop-welcome p {
+        max-width: 280px;
+        font-size: 15px;
+    }
+
+    .desktop-welcome-hint {
+        max-width: 100%;
+        font-size: var(--font-size-xs);
+    }
+
+    .desktop-welcome-shortcuts {
+        display: none;
+    }
+
+    .desktop-welcome-actions {
+        max-width: 300px;
+    }
+
+    .desktop-welcome-action {
+        flex: 1 1 auto;
+        justify-content: center;
+        min-width: 88px;
+    }
+}
+}

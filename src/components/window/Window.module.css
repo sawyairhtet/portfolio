@@ -1,0 +1,561 @@
+:global {
+/* ============================================
+   WINDOWS - Adwaita CSD
+   ============================================ */
+
+.window {
+    position: absolute;
+    background: var(--window-bg-color);
+    border-radius: var(--window-radius);
+    box-shadow: var(--window-backdrop-shadow);
+    border: 0;
+    outline: none;
+    display: none;
+    flex-direction: column;
+    width: 680px;
+    min-width: min(320px, calc(100vw - 24px));
+    max-width: min(960px, calc(100vw - 24px));
+    max-height: calc(100dvh - var(--topbar-height) - 32px);
+    z-index: var(--z-window);
+    overflow: hidden;
+    container: app-window / inline-size;
+    left: 20px;
+    top: 15%;
+}
+
+/* Active window */
+.window.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Window closing state */
+.window.closing {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.window.is-minimized,
+.window.is-on-other-workspace {
+    display: none !important;
+}
+
+/* Focused window — Mutter-authentic CSD shadow */
+.window.is-focused,
+.window:focus-within {
+    box-shadow: var(--window-shadow);
+}
+
+.window:not(.is-focused):not(:focus-within) {
+    box-shadow: var(--window-backdrop-shadow);
+}
+
+/* Focused window headerbar gets full opacity; unfocused dims */
+
+/* ============================================
+   WINDOW RESIZE HANDLES
+   ============================================ */
+
+.window .resize-handle {
+    position: absolute;
+    z-index: 10;
+}
+
+/* Edge handles */
+.window .resize-handle.top {
+    top: -4px;
+    left: 8px;
+    right: 8px;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.window .resize-handle.bottom {
+    bottom: -4px;
+    left: 8px;
+    right: 8px;
+    height: 8px;
+    cursor: ns-resize;
+}
+
+.window .resize-handle.left {
+    left: -4px;
+    top: 8px;
+    bottom: 8px;
+    width: 8px;
+    cursor: ew-resize;
+}
+
+.window .resize-handle.right {
+    right: -4px;
+    top: 8px;
+    bottom: 8px;
+    width: 8px;
+    cursor: ew-resize;
+}
+
+/* Corner handles */
+.window .resize-handle.top-left {
+    top: -4px;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nwse-resize;
+}
+
+.window .resize-handle.top-right {
+    top: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nesw-resize;
+}
+
+.window .resize-handle.bottom-left {
+    bottom: -4px;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nesw-resize;
+}
+
+.window .resize-handle.bottom-right {
+    bottom: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    cursor: nwse-resize;
+}
+
+/* ============================================
+   WINDOW SNAP STATES
+   ============================================ */
+
+.window.snapped-left {
+    top: var(--topbar-height);
+    left: 0;
+    width: 50vw;
+    height: calc(100dvh - var(--topbar-height));
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+}
+
+.window.snapped-right {
+    top: var(--topbar-height);
+    left: 50vw;
+    width: 50vw;
+    height: calc(100dvh - var(--topbar-height));
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+}
+
+.window.snapped-maximized {
+    top: var(--topbar-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: calc(100dvh - var(--topbar-height));
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+}
+
+/* Snap Preview Overlay */
+.snap-preview {
+    position: fixed;
+    top: var(--topbar-height);
+    background: color-mix(in srgb, var(--accent-bg-color) 12%, transparent);
+    border: 2px dashed var(--accent-bg-color);
+    border-radius: var(--radius-md);
+    z-index: var(--z-snap-preview);
+    pointer-events: none;
+    opacity: 0;
+    transition:
+        opacity var(--duration-normal) var(--ease-out-quad),
+        transform var(--duration-normal) var(--ease-out-quad);
+}
+
+.snap-preview.visible {
+    opacity: 1;
+}
+
+.snap-preview.snap-left {
+    left: 0;
+    width: 50vw;
+    height: calc(100dvh - var(--topbar-height));
+}
+
+.snap-preview.snap-right {
+    left: 50vw;
+    width: 50vw;
+    height: calc(100dvh - var(--topbar-height));
+}
+
+.snap-preview.snap-maximize {
+    left: 0;
+    width: 100vw;
+    height: calc(100dvh - var(--topbar-height));
+}
+
+/* ============================================
+   WINDOW HEADER — Flat Adwaita headerbar
+   ============================================ */
+
+.window-header {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: var(--headerbar-min-height);
+    min-height: var(--headerbar-min-height);
+    padding: 6px 7px 7px;
+    background: var(--headerbar-bg-color);
+    color: var(--headerbar-fg-color);
+    border-bottom: 1px solid var(--headerbar-shade-color);
+    user-select: none;
+}
+
+.window-title-group {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    max-width: calc(100% - 148px);
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+
+.window-title-icon {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    flex: 0 0 auto;
+    color: color-mix(in srgb, currentColor 70%, transparent);
+    font-size: var(--font-size-base);
+}
+
+/* Title — non-interactive so drags pass through to the header */
+.window-title {
+    min-width: 0;
+    overflow: hidden;
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: inherit;
+    letter-spacing: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 200ms var(--ease-out-quad);
+}
+
+.window:not(.is-focused):not(:focus-within) .window-header {
+    background: var(--headerbar-backdrop-color);
+}
+
+.window:not(.is-focused):not(:focus-within) .window-header > * {
+    filter: opacity(0.5);
+    transition: filter var(--backdrop_transition);
+}
+
+/* Window Controls — RIGHT side */
+.window-controls {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+}
+
+.window-control {
+    position: relative;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    padding: 4px;
+    border-radius: var(--button_radius);
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    cursor: pointer;
+    transition: background var(--button_transition);
+    outline: none;
+}
+
+.window-control:focus-visible {
+    outline: 2px solid var(--accent-bg-color);
+    outline-offset: 2px;
+}
+
+.window-control i {
+    display: none;
+}
+
+.window-control::after {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: currentColor;
+    opacity: 0.65;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 16px 16px;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: 16px 16px;
+    transition: opacity 200ms var(--ease-out-quad);
+}
+
+.window-control.close::after {
+    mask-image: url('/icons/adwaita/window/window-close-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-close-symbolic.svg');
+}
+
+.window-control.minimize::after {
+    mask-image: url('/icons/adwaita/window/window-minimize-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-minimize-symbolic.svg');
+}
+
+.window-control.maximize::after {
+    mask-image: url('/icons/adwaita/window/window-maximize-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-maximize-symbolic.svg');
+}
+
+.window-control.maximize.restore::after {
+    mask-image: url('/icons/adwaita/window/window-restore-symbolic.svg');
+    -webkit-mask-image: url('/icons/adwaita/window/window-restore-symbolic.svg');
+}
+
+@media (hover: hover) {
+    .window-control:hover {
+        background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
+    }
+
+    .window-control:hover::after {
+        opacity: 0.85;
+    }
+
+    .window-control.close:hover {
+        background: var(--destructive-bg-color);
+    }
+
+    .window-control.close:hover::after {
+        background-color: var(--destructive-fg-color);
+        opacity: 1;
+    }
+}
+
+@media (hover: none) {
+    .window-control:hover {
+        background: transparent;
+    }
+
+    .window-control:hover::after {
+        opacity: 0.65;
+    }
+
+    .window-control.close:hover {
+        background: transparent;
+    }
+
+    .window-control.close:hover::after {
+        background-color: currentColor;
+        opacity: 0.65;
+    }
+}
+
+[data-theme='light'] .window-control:hover {
+    background: color-mix(in srgb, var(--view-fg-color) 6%, transparent);
+}
+
+.close-btn-mobile {
+    display: none;
+}
+
+.close-btn-mobile:focus-visible {
+    outline: 2px solid var(--accent-bg-color);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   HEADERBAR FLAT BUTTONS — Libadwaita pattern
+   ============================================ */
+
+.window-header .headerbar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--control-min-medium);
+    min-height: var(--control-min-medium);
+    padding: 0 var(--adw-spacing-md);
+    border: none;
+    border-radius: var(--button_radius);
+    background: transparent;
+    color: var(--headerbar-fg-color);
+    font-family: var(--document-font-family);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--button_transition);
+}
+
+@media (hover: hover) {
+    .window-header .headerbar-btn:hover {
+        background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
+    }
+}
+
+@media (hover: none) {
+    .window-header .headerbar-btn:hover {
+        background: transparent;
+    }
+}
+
+.window-header .headerbar-btn:active {
+    background: color-mix(in srgb, var(--view-fg-color) 12%, transparent);
+}
+
+/* ============================================
+   LINKED BUTTON GROUP — Libadwaita .linked
+   ============================================ */
+
+.linked {
+    display: inline-flex;
+}
+
+.linked > * {
+    border-radius: 0;
+    margin-left: -1px;
+    border: 1px solid var(--border-color);
+}
+
+.linked > *:first-child {
+    border-radius: var(--button_radius) 0 0 var(--button_radius);
+    margin-left: 0;
+}
+
+.linked > *:last-child {
+    border-radius: 0 var(--button_radius) var(--button_radius) 0;
+}
+
+.linked > *:only-child {
+    border-radius: var(--button_radius);
+}
+
+/* ============================================
+   WINDOW BODY
+   ============================================ */
+
+.window-body {
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    background: var(--window-bg-color);
+    color: var(--window-fg-color);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* GNOME-style slim scrollbars */
+.window-body::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+}
+
+.window-body::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.window-body::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+    transition: background 200ms var(--ADW_EASE_IN_OUT);
+}
+
+.window-body::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Firefox scrollbar */
+.window-body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.window-body h2 {
+    font-size: var(--font-size-2xl);
+    letter-spacing: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+.window-body h3 {
+    font-size: var(--font-size-xl);
+    letter-spacing: 0;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.window-body p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+}
+
+.window-body a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 200ms var(--ease-out-quad);
+}
+
+.window-body a:hover {
+    color: var(--accent-bg-color);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent-bg-color) 40%, transparent);
+    text-underline-offset: 3px;
+}
+
+/* ============================================
+   WINDOW CONTROLS - MINIMIZE & MAXIMIZE
+   ============================================ */
+
+.window-control.minimize {
+    background: transparent;
+}
+
+.window-control.maximize {
+    background: transparent;
+}
+
+/* ============================================
+   REDUCED MOTION — disable window animations
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .window {
+        transition: none;
+    }
+
+    .window.active {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .window.closing {
+        animation: none;
+        opacity: 0;
+    }
+}
+
+body.activities-open .window {
+    display: none !important;
+}
+}
