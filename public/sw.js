@@ -1,34 +1,22 @@
-const CACHE_NAME = 'syh-portfolio-__BUILD_HASH__';
-const PRECACHE = [
-    '/offline.html',
-    '/fonts/AdwaitaSans-Regular.woff2',
-    '/fonts/AdwaitaSans-Italic.woff2',
-    '/fonts/AdwaitaMono-Regular.woff2',
-];
+const CACHE = 'portfolio-v3';
 
-function cacheResponse(request, response) {
-    if (!response || response.status !== 200) return Promise.resolve();
-
-    return caches
-        .open(CACHE_NAME)
-        .then(cache => cache.put(request, response.clone()))
-        .catch(() => undefined);
-}
-
-function fetchAndCache(event) {
-    return fetch(event.request).then(response => {
-        event.waitUntil(cacheResponse(event.request, response));
-        return response;
-    });
-}
+const STATIC_EXTENSIONS = /\.(?:woff2?|ttf|otf|png|jpg|jpeg|webp|svg|ico|css|js)$/i;
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches
-            .open(CACHE_NAME)
-            .then(cache => cache.addAll(PRECACHE))
-            .then(() => self.skipWaiting())
+        caches.open(CACHE).then(cache =>
+            cache.addAll([
+                '/',
+                '/offline.html',
+                '/index.html',
+                '/404.html',
+                '/fonts/AdwaitaSans-Regular.woff2',
+                '/fonts/AdwaitaSans-Italic.woff2',
+                '/fonts/AdwaitaMono-Regular.woff2',
+            ])
+        )
     );
+    self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
@@ -36,7 +24,9 @@ self.addEventListener('activate', event => {
         caches
             .keys()
             .then(names =>
-                Promise.all(names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n)))
+                Promise.all(
+                    names.filter(n => n.startsWith('portfolio-') && n !== CACHE).map(n => caches.delete(n))
+                )
             )
             .then(() => self.clients.claim())
     );
@@ -44,23 +34,43 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
-    if (!event.request.url.startsWith(self.location.origin)) return;
 
-    const accept = event.request.headers.get('accept');
+    const url = new URL(event.request.url);
+    if (url.origin !== self.location.origin) return;
 
-    if (event.request.mode === 'navigate' || (accept && accept.includes('text/html'))) {
-        event.respondWith(fetchAndCache(event).catch(() => caches.match('/offline.html')));
+    const isNavigation =
+        event.request.mode === 'navigate' ||
+        (event.request.headers.get('accept') || '').includes('text/html');
+
+    if (isNavigation) {
+        event.respondWith(
+            fetch(event.request)
+                .then(response => {
+                    const cloned = response.clone();
+                    caches.open(CACHE).then(cache => cache.put(event.request, cloned));
+                    return response;
+                })
+                .catch(() => caches.match('/offline.html'))
+        );
         return;
     }
 
-    event.respondWith(
-        caches.match(event.request).then(cached => {
-            if (cached) {
-                event.waitUntil(fetchAndCache(event).catch(() => undefined));
-                return cached;
-            }
+    if (STATIC_EXTENSIONS.test(url.pathname)) {
+        event.respondWith(
+            caches.match(event.request).then(cached => {
+                if (cached) return cached;
 
-            return fetchAndCache(event);
-        })
-    );
+                return fetch(event.request).then(response => {
+                    if (response.ok) {
+                        const cloned = response.clone();
+                        caches.open(CACHE).then(cache => cache.put(event.request, cloned));
+                    }
+                    return response;
+                });
+            })
+        );
+        return;
+    }
+
+    event.respondWith(fetch(event.request));
 });
