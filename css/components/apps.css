@@ -1499,6 +1499,20 @@
     color: #e6edf3;
 }
 
+.browser-gh-stat-skeleton {
+    display: inline-block;
+    width: 28px;
+    height: 16px;
+    border-radius: 4px;
+    background: #30363d;
+    animation: gh-skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes gh-skeleton-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
 .browser-gh-btn {
     display: inline-flex;
     align-items: center;

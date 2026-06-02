@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Icon, registerIcons } from '../ui/Icon';
@@ -27,10 +27,89 @@ registerIcons({
     'x-twitter': XLogo,
 });
 
+interface GitHubStats {
+    repos: number;
+    followers: number;
+    stars: number;
+}
+
+const CACHE_KEY = 'gh_stats_cache';
+const CACHE_TTL = 30 * 60 * 1000;
+
+function readCache(): GitHubStats | null {
+    try {
+        const raw = sessionStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const { data, ts } = JSON.parse(raw);
+        if (Date.now() - ts > CACHE_TTL) return null;
+        return data;
+    } catch {
+        return null;
+    }
+}
+
+function writeCache(stats: GitHubStats) {
+    try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: stats, ts: Date.now() }));
+    } catch {
+        // private browsing or quota exceeded — ignore
+    }
+}
+
 const githubLink = SOCIAL_LINKS.find(link => link.label === 'GitHub') ?? SOCIAL_LINKS[0];
 
 export const BrowserApp = memo(function BrowserApp() {
     const reduced = useReducedMotion();
+    const [stats, setStats] = useState<GitHubStats | null>(readCache);
+    const [loading, setLoading] = useState(!stats);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        if (stats) return;
+
+        let cancelled = false;
+        setLoading(true);
+
+        async function fetchStats() {
+            try {
+                const [userRes, reposRes] = await Promise.all([
+                    fetch('https://api.github.com/users/sawyairhtet'),
+                    fetch('https://api.github.com/users/sawyairhtet/repos?per_page=100'),
+                ]);
+
+                if (!userRes.ok || !reposRes.ok) throw new Error('API error');
+
+                const user = await userRes.json();
+                const repos = await reposRes.json();
+
+                const result: GitHubStats = {
+                    repos: user.public_repos ?? 0,
+                    followers: user.followers ?? 0,
+                    stars: Array.isArray(repos)
+                        ? repos.reduce((sum: number, r: { stargazers_count?: number }) => sum + (r.stargazers_count ?? 0), 0)
+                        : 0,
+                };
+
+                writeCache(result);
+
+                if (!cancelled) {
+                    setStats(result);
+                    setLoading(false);
+                }
+            } catch {
+                if (!cancelled) {
+                    setError(true);
+                    setLoading(false);
+                }
+            }
+        }
+
+        fetchStats();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [stats]);
 
     return (
         <div className="browser-app">
@@ -67,15 +146,30 @@ export const BrowserApp = memo(function BrowserApp() {
                         <div className="browser-gh-stats">
                             <span className="browser-gh-stat">
                                 <GitBranch weight="bold" size={14} />
-                                <strong>12</strong> repos
+                                {loading ? (
+                                    <span className="browser-gh-stat-skeleton" aria-busy="true" />
+                                ) : stats ? (
+                                    <strong>{stats.repos}</strong>
+                                ) : null}
+                                {error ? 'Repos' : !loading && stats ? ' repos' : null}
                             </span>
                             <span className="browser-gh-stat">
                                 <Users weight="bold" size={14} />
-                                <strong>5</strong> followers
+                                {loading ? (
+                                    <span className="browser-gh-stat-skeleton" aria-busy="true" />
+                                ) : stats ? (
+                                    <strong>{stats.followers}</strong>
+                                ) : null}
+                                {error ? 'Followers' : !loading && stats ? ' followers' : null}
                             </span>
                             <span className="browser-gh-stat">
                                 <Star weight="bold" size={14} />
-                                <strong>8</strong> stars
+                                {loading ? (
+                                    <span className="browser-gh-stat-skeleton" aria-busy="true" />
+                                ) : stats ? (
+                                    <strong>{stats.stars}</strong>
+                                ) : null}
+                                {error ? 'Stars' : !loading && stats ? ' stars' : null}
                             </span>
                         </div>
                         {SOCIAL_LINKS.filter(l => l.label !== 'GitHub')
