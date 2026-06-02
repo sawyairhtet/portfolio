@@ -18,13 +18,11 @@ import { NotificationCenter } from '../ui/NotificationCenter';
 import { ToastContainer } from '../ui/ToastContainer';
 import { ContextMenu } from '../ui/ContextMenu';
 import { CalendarPopover } from '../ui/CalendarPopover';
+import { AboutApp } from '../apps/AboutApp';
 import { DOCK_APPS, APP_DEFINITIONS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
 import type { AppId } from '../../types';
 
-const AboutApp = lazy(() =>
-    import('../apps/AboutApp').then(module => ({ default: module.AboutApp }))
-);
 const BrowserApp = lazy(() =>
     import('../apps/BrowserApp').then(module => ({ default: module.BrowserApp }))
 );
@@ -452,12 +450,7 @@ export function DesktopShell() {
 
     return (
         <>
-            {/* Skip Link */}
-            <a href="#main-content" className="skip-link">
-                Skip to main content
-            </a>
-
-            {/* Boot Screen */}
+            {/* Main Content */}
             {!gdmDone && <GdmLogin onLogin={() => setGdmDone(true)} />}
             {gdmDone && !booted && <BootScreen onBootComplete={handleBootComplete} />}
 
@@ -643,9 +636,7 @@ export function DesktopShell() {
             {windows.get('about')?.isOpen && (
                 <Window appId="about" title="About">
                     <ErrorBoundary level="window" appId="about">
-                        <Suspense fallback={<AdwaitaSkeleton />}>
-                            <AboutApp />
-                        </Suspense>
+                        <AboutApp />
                     </ErrorBoundary>
                 </Window>
             )}
