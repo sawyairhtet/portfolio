@@ -6,7 +6,6 @@ import { usePreferences } from '../../context/PreferencesContext';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { WALLPAPERS, ACCENT_COLORS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
-import { motion, useReducedMotion } from 'framer-motion';
 import {
     Palette,
     SpeakerHigh,
@@ -68,7 +67,6 @@ export const SettingsApp = memo(function SettingsApp() {
     const { preferences, updatePreferences } = usePreferences();
     const { activeWorkspace, setActiveWorkspace } = useWindowManager();
     const [activePanel, setActivePanel] = useState<SettingsPanel>('appearance');
-    const reduced = useReducedMotion();
 
     const [desktopScale, setDesktopScale] = useState(100);
     const [pingStatus, setPingStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
@@ -187,15 +185,13 @@ export const SettingsApp = memo(function SettingsApp() {
                             <h3>Accent Color</h3>
                             <div className="accent-color-options">
                                 {ACCENT_COLORS.map(ac => (
-                                    <motion.button
+                                    <button
                                         key={ac.color}
                                         className={`accent-swatch${accentColor === ac.color ? ' active' : ''}`}
                                         style={{ background: ac.color }}
                                         aria-label={ac.label}
                                         title={ac.label}
                                         onClick={() => setAccentColor(ac.color)}
-                                        whileHover={reduced ? undefined : { scale: 1.2 }}
-                                        transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                     />
                                 ))}
                             </div>

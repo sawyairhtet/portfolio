@@ -1,6 +1,5 @@
 import { memo, useState, useEffect } from 'react';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
-import { motion, useReducedMotion } from 'framer-motion';
 import { Icon, registerIcons } from '../ui/Icon';
 import {
     ArrowSquareOut,
@@ -59,7 +58,6 @@ function writeCache(stats: GitHubStats) {
 const githubLink = SOCIAL_LINKS.find(link => link.label === 'GitHub') ?? SOCIAL_LINKS[0];
 
 export const BrowserApp = memo(function BrowserApp() {
-    const reduced = useReducedMotion();
     const [stats, setStats] = useState<GitHubStats | null>(readCache);
     const [loading, setLoading] = useState(!stats);
     const [error, setError] = useState(false);
@@ -176,30 +174,26 @@ export const BrowserApp = memo(function BrowserApp() {
                         {SOCIAL_LINKS.filter(l => l.label !== 'GitHub')
                             .slice(0, 3)
                             .map(link => (
-                                <motion.a
+                                <a
                                     key={link.label}
                                     href={link.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="browser-gh-btn secondary"
-                                    whileHover={reduced ? undefined : { scale: 1.02 }}
-                                    whileTap={reduced ? undefined : { scale: 0.97 }}
                                 >
                                     <Icon name={link.icon} />
                                     {link.label}
-                                </motion.a>
+                                </a>
                             ))}
-                        <motion.a
+                        <a
                             href={githubLink.href}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="browser-gh-btn"
-                            whileHover={reduced ? undefined : { scale: 1.02 }}
-                            whileTap={reduced ? undefined : { scale: 0.97 }}
                         >
                             <GithubLogo weight="bold" size={16} />
                             Open on GitHub
-                        </motion.a>
+                        </a>
                     </div>
                 </div>
             </div>

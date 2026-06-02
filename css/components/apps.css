@@ -1102,7 +1102,7 @@
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: background 200ms var(--ease-in-out-quad);
+    transition: background 200ms var(--ease-in-out-quad), transform 0.15s ease;
 }
 
 .resume-header-btn.primary {
@@ -1113,6 +1113,11 @@
 
 .resume-header-btn:hover {
     filter: brightness(1.06);
+    transform: scale(1.02);
+}
+
+.resume-header-btn:active {
+    transform: scale(0.97);
 }
 
 .text-editor-document {
@@ -1526,10 +1531,35 @@
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
 }
 
 .browser-gh-btn:hover {
     filter: brightness(1.1);
+    transform: scale(1.02);
+}
+
+.browser-gh-btn:active {
+    transform: scale(0.97);
+}
+
+.browser-gh-btn.secondary {
+    background: var(--surface-3);
+    color: var(--text-primary);
+}
+
+.browser-gh-btn.secondary:hover {
+    filter: brightness(1.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .browser-gh-btn {
+        transition: none;
+    }
+    .browser-gh-btn:hover,
+    .browser-gh-btn:active {
+        transform: none;
+    }
 }
 
 /* ============================================

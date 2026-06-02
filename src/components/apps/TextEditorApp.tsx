@@ -1,7 +1,6 @@
 import { memo, useMemo, useState } from 'react';
 import { DEFAULT_FILE_SYSTEM } from '../../config/data';
 import { PROFILE } from '../../config/profile';
-import { motion, useReducedMotion } from 'framer-motion';
 import {
     FolderOpen,
     FloppyDisk,
@@ -19,7 +18,6 @@ const TABS: { id: Tab; label: string; icon: typeof FileText }[] = [
 ];
 
 export const TextEditorApp = memo(function TextEditorApp() {
-    const reduced = useReducedMotion();
     const [activeTab, setActiveTab] = useState<Tab>('resume.md');
 
     const fileContents = useMemo(() => {
@@ -115,27 +113,23 @@ export const TextEditorApp = memo(function TextEditorApp() {
                         <span className="resume-header-sub">{PROFILE.education}</span>
                     </div>
                     <div className="resume-header-right">
-                        <motion.a
+                        <a
                             className="resume-header-btn primary"
                             href={PROFILE.resumePath}
                             target="_blank"
                             rel="noopener noreferrer"
-                            whileHover={reduced ? undefined : { scale: 1.02 }}
-                            whileTap={reduced ? undefined : { scale: 0.97 }}
                         >
                             <ArrowSquareOut weight="bold" size={14} />
                             Open PDF
-                        </motion.a>
-                        <motion.a
+                        </a>
+                        <a
                             className="resume-header-btn"
                             href={PROFILE.resumePath}
                             download
-                            whileHover={reduced ? undefined : { scale: 1.02 }}
-                            whileTap={reduced ? undefined : { scale: 0.97 }}
                         >
                             <DownloadSimple weight="bold" size={14} />
                             Download
-                        </motion.a>
+                        </a>
                     </div>
                 </div>
             )}

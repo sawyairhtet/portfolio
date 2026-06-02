@@ -1,7 +1,6 @@
 import { memo, useState, useEffect, useCallback, useRef } from 'react';
 import { useNotifications } from '../../context/NotificationContext';
 import { usePreferences } from '../../context/PreferencesContext';
-import { motion, useReducedMotion } from 'framer-motion';
 import { registerIcons } from '../ui/Icon';
 import {
     Play,
@@ -41,7 +40,6 @@ function formatMinutes(seconds: number): string {
 export const FocusModeApp = memo(function FocusModeApp() {
     const { showToast, addNotification } = useNotifications();
     const { preferences } = usePreferences();
-    const reduced = useReducedMotion();
     const [presetId, setPresetId] = useState(PRESETS[0].id);
     const preset = PRESETS.find(item => item.id === presetId) ?? PRESETS[0];
     const [state, setState] = useState<TimerState>('idle');
@@ -188,18 +186,13 @@ export const FocusModeApp = memo(function FocusModeApp() {
                 <div className="focus-timer-ring">
                     <svg viewBox="0 0 200 200" className="focus-progress-svg" aria-hidden="true">
                         <circle cx="100" cy="100" r="90" className="focus-progress-bg" />
-                        <motion.circle
+                        <circle
                             cx="100"
                             cy="100"
                             r="90"
                             className="focus-progress-fill"
                             strokeDasharray={circumference}
-                            animate={{ strokeDashoffset: circumference * (1 - progress) }}
-                            transition={
-                                reduced
-                                    ? { duration: 0 }
-                                    : { type: 'spring', stiffness: 60, damping: 15 }
-                            }
+                            style={{ strokeDashoffset: circumference * (1 - progress) }}
                         />
                     </svg>
                     <div className="focus-timer-display" aria-live="polite">
