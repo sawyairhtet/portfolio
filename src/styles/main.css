@@ -34,6 +34,7 @@
 @import '../../css/components/plymouth.css' layer(components);
 @import '../../css/components/gdm-login.css' layer(components);
 @import '../../css/components/quick-settings.css' layer(components);
+@import '../../css/components/mobile-shell.css' layer(components);
 
 /* Responsive / Utilities */
 @import '../../css/components/responsive.css' layer(utilities);

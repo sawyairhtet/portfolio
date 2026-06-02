@@ -22,6 +22,7 @@ import { CalendarPopover } from '../ui/CalendarPopover';
 import { AboutApp } from '../apps/AboutApp';
 import { DOCK_APPS, APP_DEFINITIONS } from '../../config/data';
 import { PROFILE } from '../../config/profile';
+import { MobileShell } from './MobileShell';
 import type { AppId } from '../../types';
 
 const BrowserApp = lazy(() =>
@@ -448,6 +449,10 @@ export function DesktopShell() {
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [activeOverlay, altTabIndex, bringToFront, closeWindow, openWindow, shortcutsOpen, windows, activeWorkspace, setActiveWorkspace, setSnapState, toggleMaximize]);
+
+    if (device === 'mobile' && !localStorage.getItem('forceDesktop')) {
+        return <MobileShell />;
+    }
 
     return (
         <>

@@ -3,9 +3,10 @@ import type { DeviceType } from '../types';
 
 interface DeviceContextValue {
     device: DeviceType;
+    isTouch: boolean;
 }
 
-const DeviceContext = createContext<DeviceContextValue>({ device: 'desktop' });
+const DeviceContext = createContext<DeviceContextValue>({ device: 'desktop', isTouch: false });
 
 function detectDevice(): DeviceType {
     const width = window.innerWidth;
@@ -14,8 +15,13 @@ function detectDevice(): DeviceType {
     return 'desktop';
 }
 
+function detectTouch(): boolean {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
 export function DeviceProvider({ children }: { children: ReactNode }) {
     const [device, setDevice] = useState<DeviceType>(detectDevice);
+    const [isTouch] = useState(detectTouch);
 
     const handleResize = useCallback(() => {
         setDevice(detectDevice());
@@ -36,7 +42,7 @@ export function DeviceProvider({ children }: { children: ReactNode }) {
         };
     }, [handleResize]);
 
-    return <DeviceContext.Provider value={{ device }}>{children}</DeviceContext.Provider>;
+    return <DeviceContext.Provider value={{ device, isTouch }}>{children}</DeviceContext.Provider>;
 }
 
 export function useDevice(): DeviceContextValue {
