@@ -77,6 +77,8 @@ export const TerminalApp = memo(function TerminalApp() {
     const historyRef = useRef(history);
     const historyIndexRef = useRef(historyIndex);
     const cwdRef = useRef(cwd);
+    const konamiRef = useRef(0);
+    const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 
     // Auto-scroll & auto-focus
     useEffect(() => {
@@ -84,6 +86,36 @@ export const TerminalApp = memo(function TerminalApp() {
             outputRef.current.scrollTop = outputRef.current.scrollHeight;
         }
     }, [lines]);
+
+    useEffect(() => {
+        const handleKonami = (e: KeyboardEvent) => {
+            if (e.key === KONAMI[konamiRef.current]) {
+                konamiRef.current++;
+                if (konamiRef.current === KONAMI.length) {
+                    konamiRef.current = 0;
+                    addLines([
+                        { text: '╔══════════════════════════╗', className: 'terminal-heading' },
+                        { text: '║  🎮 KONAMI CODE ACTIVATED  ║', className: 'terminal-heading' },
+                        { text: '╚══════════════════════════╝', className: 'terminal-heading' },
+                        '',
+                        'You found the hidden easter egg!',
+                        'Here is a secret: this portfolio was built with React 19,',
+                        'TypeScript 5, and way too much attention to detail.',
+                        'Thanks for exploring! \u{1F389}',
+                        '',
+                        "Fun fact: The Konami Code originated in Gradius (1985)",
+                        "but became famous through Contra on the NES.",
+                        '',
+                        'Tip: Try `neofetch` for a system summary.',
+                    ]);
+                }
+            } else {
+                konamiRef.current = e.key === KONAMI[0] ? 1 : 0;
+            }
+        };
+        document.addEventListener('keydown', handleKonami);
+        return () => document.removeEventListener('keydown', handleKonami);
+    }, []);
 
     const addLine = useCallback((content: string, className?: string) => {
         setLines(prev => [...prev, { id: lineIdRef.current++, content, className }]);
@@ -161,6 +193,7 @@ export const TerminalApp = memo(function TerminalApp() {
                         '  projects      - Open Projects with problem/solution/stack/impact',
                         '  skills        - Open Skills and summarize the stack',
                         '  resume/cv     - Open the resume PDF',
+                        '  stack         - Print the full tech stack',
                         '  contact/hire  - Open Contact and show recruiter details',
                         '  nano resume.md - Open the markdown resume fallback',
                         '  firefox       - Open GitHub',
@@ -322,6 +355,29 @@ export const TerminalApp = memo(function TerminalApp() {
                     ]);
                     break;
 
+                case 'stack':
+                    addLines([
+                        { text: 'Tech Stack:', className: 'terminal-heading' },
+                        '  Support & Operations:',
+                        '    Incident Triage & Escalation',
+                        '    Log Analysis & Troubleshooting',
+                        '    SQL & Database Querying',
+                        '    System Monitoring Awareness',
+                        '  Testing:',
+                        '    Manual Testing · API Testing · Unit Testing',
+                        '  Languages & Frameworks:',
+                        '    Java + OOP · React + TypeScript · JavaScript / Python',
+                        '  Infrastructure:',
+                        '    Linux & Shell · Git & Version Control · VS Code',
+                        ...Object.entries(
+                            SKILL_CATEGORIES.reduce<Record<string, string[]>>((acc, cat) => {
+                                acc[cat.title] = cat.skills.map(s => `${s.name} (${s.level})`);
+                                return acc;
+                            }, {})
+                        ).map(([title, skills]) => `  ${title}: ${skills.join(' | ')}`),
+                    ]);
+                    break;
+
                 case 'contact':
                     openWindow('contact');
                     addLines([
@@ -459,23 +515,34 @@ export const TerminalApp = memo(function TerminalApp() {
                             ? `${(navigator as Navigator & { deviceMemory?: number }).deviceMemory} GB`
                             : 'Browser reported';
                     addLines([
-                        `${PROFILE.name}@portfolio`,
-                        '--------------------------------',
-                        `OS: Fedora Linux 43 (Workstation Edition)`,
-                        `Kernel: Linux 6.19`,
-                        `Windowing: Wayland`,
-                        `Shell: GNOME 49`,
-                        `Package Manager: DNF5`,
-                        `Role: ${PROFILE.role}`,
-                        `Target: ${PROFILE.roleTarget}`,
-                        `Education: ${PROFILE.education}`,
-                        `Primary: Application Support, Production Support, Technical Analyst`,
-                        `Secondary: ${PROFILE.secondaryTarget} · ${PROFILE.carryOverTarget} (carry-over)`,
-                        `Location: ${PROFILE.location}`,
-                        `Host: ${navigator.platform}`,
-                        `CPU: ${navigator.hardwareConcurrency || 'Browser'} threads`,
-                        `Memory: ${deviceMemory}`,
-                        `Display: ${window.screen.width}x${window.screen.height}`,
+                        '         .;,.             ',
+                        '       .:okO0K0Oxl,.      ',
+                        "      'k0XN0k0XNXOo'     ",
+                        '      .0WWXl,lXWW0,      ',
+                        '       .,;,. .,;,.       ',
+                        '  sawyehtet@portfolio    ',
+                        '  ─────────────────────  ',
+                        `  OS: Fedora Linux 43 (Workstation Edition)`,
+                        `  Kernel: Linux 6.19`,
+                        `  Windowing: Wayland`,
+                        `  Shell: GNOME 49`,
+                        `  Package Manager: DNF5`,
+                        `  Uptime: ${(() => {
+                            const loadTime = window.__portfolioLoadTime;
+                            if (typeof loadTime === 'number') {
+                                const seconds = Math.floor((Date.now() - loadTime) / 1000);
+                                const mins = Math.floor(seconds / 60);
+                                const secs = seconds % 60;
+                                return `${mins}m ${secs}s`;
+                            }
+                            return '0m 0s';
+                        })()}`,
+                        `  Host: ${navigator.platform}`,
+                        `  CPU: ${navigator.hardwareConcurrency || 'Browser'} threads`,
+                        `  Memory: ${deviceMemory}`,
+                        `  Display: ${window.screen.width}x${window.screen.height}`,
+                        `  Theme: ${PROFILE.role}`,
+                        `  Stack: ${PROFILE.primaryStack.join(', ')}`,
                     ]);
                     break;
                 }

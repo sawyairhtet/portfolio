@@ -101,6 +101,7 @@ export const ContactApp = memo(function ContactApp() {
     const [statusType, setStatusType] = useState<'success' | 'error' | ''>('');
     const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle');
     const [isCoolingDown, setIsCoolingDown] = useState(false);
+    const [csrfToken] = useState(() => crypto.randomUUID());
     const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const honeypotRef = useRef<HTMLInputElement>(null);
     const bannerRef = useRef<HTMLDivElement>(null);
@@ -322,6 +323,11 @@ export const ContactApp = memo(function ContactApp() {
                     noValidate
                 >
                     <input
+                        type="hidden"
+                        name="_csrf"
+                        value={csrfToken}
+                    />
+                    <input
                         ref={honeypotRef}
                         type="text"
                         name="website_url"
@@ -343,6 +349,7 @@ export const ContactApp = memo(function ContactApp() {
                                 disabled={submitDisabled}
                                 aria-invalid={errors.name ? 'true' : 'false'}
                                 aria-describedby={errors.name ? 'contact-name-error' : undefined}
+                                aria-required="true"
                                 {...register('name')}
                             />
                         </div>
@@ -369,6 +376,7 @@ export const ContactApp = memo(function ContactApp() {
                                 disabled={submitDisabled}
                                 aria-invalid={errors.email ? 'true' : 'false'}
                                 aria-describedby={errors.email ? 'contact-email-error' : undefined}
+                                aria-required="true"
                                 {...register('email')}
                             />
                         </div>
@@ -406,6 +414,7 @@ export const ContactApp = memo(function ContactApp() {
                                 aria-describedby={
                                     errors.message ? 'contact-message-error' : undefined
                                 }
+                                aria-required="true"
                                 {...register('message')}
                             />
                         </div>
