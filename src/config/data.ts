@@ -237,6 +237,11 @@ export const PROJECTS: Project[] = [
         ],
         featured: true,
         icon: 'desktop',
+        media: {
+            type: 'image',
+            src: '/images/portfolio-screenshot.webp',
+            alt: 'Screenshot of the GNOME-inspired portfolio desktop showing the shell, dock, and wallpaper',
+        },
     },
 ];
 
