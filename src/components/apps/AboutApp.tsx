@@ -1,17 +1,8 @@
 import { memo } from 'react';
 import { useWindowManager } from '../../context/WindowManagerContext';
-import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
+import { PROFILE } from '../../config/profile';
 import type { AppId } from '../../types';
-import {
-    EnvelopeSimple,
-    FileArrowDown,
-    GithubLogo,
-    LinkedinLogo,
-    TelegramLogo,
-    XLogo,
-    ArrowSquareOut,
-    ArrowRight,
-} from '@phosphor-icons/react';
+import { EnvelopeSimple, FileArrowDown, ArrowRight } from '@phosphor-icons/react';
 
 type RecruiterStep =
     | { label: string; appId: AppId }
@@ -30,13 +21,6 @@ const DETAIL_ROWS: [string, string][] = [
     ['Education', PROFILE.education],
     ['Availability', PROFILE.availability],
 ];
-
-const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
-    GitHub: <GithubLogo weight="fill" size={20} />,
-    LinkedIn: <LinkedinLogo weight="fill" size={20} />,
-    X: <XLogo weight="fill" size={20} />,
-    Telegram: <TelegramLogo weight="fill" size={20} />,
-};
 
 export const AboutApp = memo(function AboutApp() {
     const { openWindow } = useWindowManager();
@@ -140,27 +124,6 @@ export const AboutApp = memo(function AboutApp() {
                         );
                     })}
                 </nav>
-            </section>
-
-            <section className="about-section">
-                <span className="adw-section-label">Connect</span>
-                <div className="about-social-row">
-                    {SOCIAL_LINKS.map(link => (
-                        <a
-                            key={link.label}
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="about-social-link"
-                            aria-label={link.label}
-                            title={link.label}
-                        >
-                            {SOCIAL_ICON_MAP[link.label] || (
-                                <ArrowSquareOut weight="bold" size={20} />
-                            )}
-                        </a>
-                    ))}
-                </div>
             </section>
         </div>
     );

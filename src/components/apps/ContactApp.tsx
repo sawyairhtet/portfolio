@@ -21,7 +21,6 @@ import {
     User,
     At,
     ChatText,
-    TelegramLogo,
 } from '@phosphor-icons/react';
 
 registerIcons({
@@ -88,11 +87,12 @@ function recordSubmission(): void {
 }
 
 const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
-    GitHub: <GithubLogo weight="duotone" size={20} />,
-    LinkedIn: <LinkedinLogo weight="duotone" size={20} />,
-    X: <XLogo weight="duotone" size={20} />,
-    Telegram: <TelegramLogo weight="duotone" size={20} />,
+    GitHub: <GithubLogo weight="fill" size={18} />,
+    LinkedIn: <LinkedinLogo weight="fill" size={18} />,
+    X: <XLogo weight="fill" size={18} />,
 };
+
+const CONTACT_SOCIALS = SOCIAL_LINKS.filter(link => link.label !== 'Telegram');
 
 export const ContactApp = memo(function ContactApp() {
     const { showToast } = useNotifications();
@@ -227,90 +227,76 @@ export const ContactApp = memo(function ContactApp() {
             <div className="contact-info-panel">
                 <div className="contact-info-ambient" aria-hidden="true" />
                 <div className="contact-info-inner">
-                    <div className="contact-micro-card">
-                        <div className="contact-micro-avatar">
-                            <img src="/images/profile-picture.webp" alt="" width={64} height={64} />
-                        </div>
-                        <strong>{PROFILE.name}</strong>
-                        <span className="contact-avail-pill">
-                            <span className="contact-pulse-dot" />
-                            Available for opportunities
-                        </span>
+                    <div className="contact-intro">
+                        <h2 className="contact-intro-title">Let&apos;s work together</h2>
+                        <p className="contact-intro-text">
+                            Open to application and production support roles. Send a message and
+                            I&apos;ll get back to you — usually within a day.
+                        </p>
                     </div>
 
-                    <div className="contact-method-rows">
-                        <div className="contact-method-row">
-                            <EnvelopeSimple weight="duotone" size={18} />
-                            <a href={`mailto:${PROFILE.email}`} className="contact-method-value">
+                    <div className="contact-email-card">
+                        <span className="contact-email-icon" aria-hidden="true">
+                            <EnvelopeSimple weight="bold" size={18} />
+                        </span>
+                        <div className="contact-email-body">
+                            <span className="contact-email-label">Email</span>
+                            <a href={`mailto:${PROFILE.email}`} className="contact-email-addr">
                                 {PROFILE.email}
                             </a>
-                            <motion.button
-                                type="button"
-                                aria-label="Copy email"
-                                className="contact-ghost-btn"
-                                onClick={copyEmail}
-                                whileTap={reduced ? undefined : { scale: 0.95 }}
-                            >
-                                <AnimatePresence mode="wait">
-                                    {copyState === 'copied' ? (
-                                        <motion.span
-                                            key="copied"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                            className="contact-copied-flash"
-                                        >
-                                            <Check weight="bold" size={14} /> Copied
-                                        </motion.span>
-                                    ) : (
-                                        <motion.span
-                                            key="copy"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                        >
-                                            <Copy weight="bold" size={14} /> Copy
-                                        </motion.span>
-                                    )}
-                                </AnimatePresence>
-                            </motion.button>
                         </div>
-
-                        {SOCIAL_LINKS.filter(l => l.label !== 'X').map(link => (
-                            <div key={link.label} className="contact-method-row">
-                                {SOCIAL_ICON_MAP[link.label] || (
-                                    <ArrowSquareOut weight="duotone" size={18} />
+                        <motion.button
+                            type="button"
+                            aria-label="Copy email"
+                            className="contact-ghost-btn"
+                            onClick={copyEmail}
+                            whileTap={reduced ? undefined : { scale: 0.95 }}
+                        >
+                            <AnimatePresence mode="wait">
+                                {copyState === 'copied' ? (
+                                    <motion.span
+                                        key="copied"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        className="contact-copied-flash"
+                                    >
+                                        <Check weight="bold" size={14} /> Copied
+                                    </motion.span>
+                                ) : (
+                                    <motion.span
+                                        key="copy"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                    >
+                                        <Copy weight="bold" size={14} /> Copy
+                                    </motion.span>
                                 )}
-                                <span className="contact-method-value">{link.handle}</span>
-                                <a
+                            </AnimatePresence>
+                        </motion.button>
+                    </div>
+
+                    <div className="contact-socials">
+                        <span className="contact-socials-label">Find me on</span>
+                        <div className="contact-social-pills">
+                            {CONTACT_SOCIALS.map(link => (
+                                <motion.a
+                                    key={link.label}
                                     href={link.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="contact-ghost-btn"
+                                    className="contact-social-pill"
+                                    whileHover={reduced ? undefined : { y: -2 }}
+                                    whileTap={reduced ? undefined : { scale: 0.96 }}
                                 >
-                                    <ArrowSquareOut weight="bold" size={14} /> Open
-                                </a>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="contact-social-icons">
-                        {SOCIAL_LINKS.map(link => (
-                            <motion.a
-                                key={link.label}
-                                href={link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="contact-social-circle"
-                                aria-label={link.label}
-                                whileHover={reduced ? undefined : { scale: 1.08 }}
-                                whileTap={reduced ? undefined : { scale: 0.95 }}
-                            >
-                                {SOCIAL_ICON_MAP[link.label] || (
-                                    <ArrowSquareOut weight="bold" size={18} />
-                                )}
-                            </motion.a>
-                        ))}
+                                    {SOCIAL_ICON_MAP[link.label] || (
+                                        <ArrowSquareOut weight="bold" size={18} />
+                                    )}
+                                    <span>{link.label}</span>
+                                </motion.a>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -322,11 +308,7 @@ export const ContactApp = memo(function ContactApp() {
                     onSubmit={handleSubmit(onSubmit)}
                     noValidate
                 >
-                    <input
-                        type="hidden"
-                        name="_csrf"
-                        value={csrfToken}
-                    />
+                    <input type="hidden" name="_csrf" value={csrfToken} />
                     <input
                         ref={honeypotRef}
                         type="text"
