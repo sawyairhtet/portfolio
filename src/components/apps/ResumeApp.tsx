@@ -12,8 +12,15 @@ export const ResumeApp = memo(function ResumeApp() {
             {/* Header bar with actions */}
             <div className="resume-toolbar">
                 <div className="resume-toolbar-info">
-                    <FilePdf weight="duotone" size={20} />
-                    <span>SawYeHtet_Resume.pdf</span>
+                    <span className="resume-file-icon">
+                        <FilePdf weight="fill" size={20} />
+                    </span>
+                    <span className="resume-file-meta">
+                        <strong>SawYeHtet_Resume.pdf</strong>
+                        <span>
+                            {PROFILE.name} · {PROFILE.role}
+                        </span>
+                    </span>
                 </div>
                 <div className="resume-toolbar-actions">
                     <a
@@ -79,11 +86,13 @@ export const ResumeApp = memo(function ResumeApp() {
                  * PDF loads fine without loosening the policy. Browsers render it with
                  * their built-in PDF viewer. Toolbar Open/Download act as the fallback.
                  */
-                <iframe
-                    src={PROFILE.resumePath}
-                    className="resume-pdf-embed"
-                    title="Resume PDF preview"
-                />
+                <div className="resume-canvas">
+                    <iframe
+                        src={`${PROFILE.resumePath}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                        className="resume-pdf-embed"
+                        title="Resume PDF preview"
+                    />
+                </div>
             )}
         </div>
     );

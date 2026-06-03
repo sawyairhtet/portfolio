@@ -1697,33 +1697,53 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    padding: 8px 14px;
+    gap: 12px;
+    padding: 8px 12px;
     background: var(--headerbar-bg-color);
     border-bottom: 1px solid var(--headerbar-shade-color);
-    min-height: 44px;
+    min-height: 52px;
 }
 
 .resume-toolbar-info {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    color: var(--text-primary);
+    gap: 10px;
     min-width: 0;
 }
 
-.resume-toolbar-info span {
+.resume-file-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--destructive-bg-color) 14%, transparent);
+    color: var(--destructive-bg-color);
+}
+
+.resume-file-meta {
+    display: flex;
+    flex-direction: column;
     min-width: 0;
+    line-height: 1.3;
+}
+
+.resume-file-meta strong {
     overflow: hidden;
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--text-primary);
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.resume-toolbar-info > svg {
-    color: var(--destructive-bg-color);
-    flex-shrink: 0;
+.resume-file-meta > span {
+    overflow: hidden;
+    font-size: var(--font-size-2xs);
+    color: var(--text-secondary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .resume-toolbar-actions {
@@ -1766,11 +1786,19 @@
     filter: brightness(1.08);
 }
 
+.resume-canvas {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    background: var(--surface-2);
+}
+
 .resume-pdf-embed {
     flex: 1;
     width: 100%;
     min-height: 0;
     border: none;
+    background: var(--surface-2);
 }
 
 .resume-mobile-fallback {
