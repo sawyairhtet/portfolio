@@ -1,6 +1,7 @@
 import { memo, useState, useRef, useCallback, useEffect } from 'react';
 import { Icon, registerIcons } from '../ui/Icon';
-import { Terminal } from '@xterm/xterm';
+import { Terminal, type ITheme } from '@xterm/xterm';
+import { FitAddon } from '@xterm/addon-fit';
 import '@xterm/xterm/css/xterm.css';
 import { ArrowRight } from '@phosphor-icons/react';
 
@@ -15,6 +16,7 @@ import {
     terminalGreetings,
 } from '../../config/data';
 import { useWindowManager } from '../../context/WindowManagerContext';
+import { useTheme } from '../../context/ThemeContext';
 import { PROFILE, SOCIAL_LINKS } from '../../config/profile';
 import type { AppId } from '../../types';
 
@@ -24,6 +26,76 @@ function randomPick<T>(arr: T[]): T {
         throw new Error('randomPick requires a non-empty array');
     }
     return arr.at(Math.floor(Math.random() * arr.length)) ?? fallback;
+}
+
+/* ANSI escape codes — xterm renders these against the resolved theme palette below */
+const ANSI = {
+    reset: '\x1b[0m',
+    bold: '\x1b[1m',
+    dim: '\x1b[2m',
+    red: '\x1b[31m',
+    green: '\x1b[32m',
+    yellow: '\x1b[33m',
+    blue: '\x1b[34m',
+    cyan: '\x1b[36m',
+};
+
+/* Map a fallback-DOM line className to ANSI so xterm output is colored to match. */
+function ansiWrap(text: string, className?: string): string {
+    switch (className) {
+        case 'terminal-heading':
+            return `${ANSI.bold}${text}${ANSI.reset}`;
+        case 'terminal-welcome':
+            return `${ANSI.cyan}${text}${ANSI.reset}`;
+        case 'terminal-info':
+            return `${ANSI.blue}${text}${ANSI.reset}`;
+        case 'terminal-ok':
+            return `${ANSI.green}${text}${ANSI.reset}`;
+        case 'terminal-error':
+            return `${ANSI.red}${text}${ANSI.reset}`;
+        case 'terminal-path':
+            return `${ANSI.cyan}${text}${ANSI.reset}`;
+        case 'terminal-divider':
+        case 'terminal-cmd-echo':
+            return `${ANSI.dim}${text}${ANSI.reset}`;
+        default:
+            return text;
+    }
+}
+
+/* xterm renders to <canvas>, so it cannot read CSS custom properties. Resolve any
+   CSS color expression (var(), color-mix(), …) to a concrete rgb()/rgba() string. */
+function resolveColor(expr: string): string {
+    const probe = document.createElement('span');
+    probe.style.cssText =
+        'position:absolute;opacity:0;pointer-events:none;width:0;height:0;overflow:hidden';
+    probe.style.color = expr;
+    document.body.appendChild(probe);
+    const resolved = getComputedStyle(probe).color;
+    probe.remove();
+    return resolved || expr;
+}
+
+function buildXtermTheme(): ITheme {
+    return {
+        background: resolveColor('var(--view-bg-color)'),
+        foreground: resolveColor('var(--view-fg-color)'),
+        cursor: resolveColor('var(--accent-bg-color)'),
+        cursorAccent: resolveColor('var(--view-bg-color)'),
+        selectionBackground: resolveColor(
+            'color-mix(in srgb, var(--accent-bg-color) 32%, transparent)'
+        ),
+        // Theme-aware semantic tokens so colors stay legible in both light and dark.
+        black: resolveColor('var(--dark-4)'),
+        red: resolveColor('var(--error-color)'),
+        green: resolveColor('var(--success-color)'),
+        yellow: resolveColor('var(--warning-color)'),
+        blue: resolveColor('var(--accent-blue)'),
+        magenta: resolveColor('var(--accent-purple)'),
+        cyan: resolveColor('var(--accent-teal)'),
+        white: resolveColor('var(--view-fg-color)'),
+        brightBlack: resolveColor('color-mix(in srgb, var(--view-fg-color) 45%, transparent)'),
+    };
 }
 
 interface TerminalLine {
@@ -45,6 +117,7 @@ const FILE_SYSTEM = new Map(Object.entries(DEFAULT_FILE_SYSTEM));
 
 export const TerminalApp = memo(function TerminalApp() {
     const { openWindow } = useWindowManager();
+    const { isDark, accentColor } = useTheme();
     const [lines, setLines] = useState<TerminalLine[]>([
         {
             id: 0,
@@ -78,7 +151,18 @@ export const TerminalApp = memo(function TerminalApp() {
     const historyIndexRef = useRef(historyIndex);
     const cwdRef = useRef(cwd);
     const konamiRef = useRef(0);
-    const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    const KONAMI = [
+        'ArrowUp',
+        'ArrowUp',
+        'ArrowDown',
+        'ArrowDown',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowLeft',
+        'ArrowRight',
+        'b',
+        'a',
+    ];
 
     // Auto-scroll & auto-focus
     useEffect(() => {
@@ -103,8 +187,8 @@ export const TerminalApp = memo(function TerminalApp() {
                         'TypeScript 5, and way too much attention to detail.',
                         'Thanks for exploring! \u{1F389}',
                         '',
-                        "Fun fact: The Konami Code originated in Gradius (1985)",
-                        "but became famous through Contra on the NES.",
+                        'Fun fact: The Konami Code originated in Gradius (1985)',
+                        'but became famous through Contra on the NES.',
                         '',
                         'Tip: Try `neofetch` for a system summary.',
                     ]);
@@ -119,7 +203,7 @@ export const TerminalApp = memo(function TerminalApp() {
 
     const addLine = useCallback((content: string, className?: string) => {
         setLines(prev => [...prev, { id: lineIdRef.current++, content, className }]);
-        xtermRef.current?.writeln(content);
+        xtermRef.current?.writeln(ansiWrap(content, className));
     }, []);
 
     const addLines = useCallback((contents: (string | { text: string; className?: string })[]) => {
@@ -135,7 +219,7 @@ export const TerminalApp = memo(function TerminalApp() {
         const term = xtermRef.current;
         if (term) {
             contents.forEach(c => {
-                term.writeln(typeof c === 'string' ? c : c.text);
+                term.writeln(typeof c === 'string' ? c : ansiWrap(c.text, c.className));
             });
         }
     }, []);
@@ -661,12 +745,21 @@ export const TerminalApp = memo(function TerminalApp() {
         inputRef.current?.focus();
     }, []);
 
-    const prompt = `[sawyehtet@fedora ${cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop()}]$`;
+    const promptDir = cwd === '/home/sawyehtet' ? '~' : cwd.split('/').pop();
+    const prompt = `[sawyehtet@fedora ${promptDir}]$`;
     const promptRef = useRef(prompt);
+
+    // ANSI-colored prompt for xterm: green user@host, cyan path, bold brackets.
+    const coloredPrompt =
+        `${ANSI.bold}${ANSI.green}[sawyehtet@fedora${ANSI.reset} ` +
+        `${ANSI.bold}${ANSI.cyan}${promptDir}${ANSI.reset}` +
+        `${ANSI.bold}]$${ANSI.reset}`;
+    const coloredPromptRef = useRef(coloredPrompt);
 
     useEffect(() => {
         promptRef.current = prompt;
-    }, [prompt]);
+        coloredPromptRef.current = coloredPrompt;
+    }, [prompt, coloredPrompt]);
 
     useEffect(() => {
         if (!xtermHostRef.current || xtermRef.current) return;
@@ -674,29 +767,28 @@ export const TerminalApp = memo(function TerminalApp() {
 
         const term = new Terminal({
             cursorBlink: true,
+            cursorStyle: 'bar',
             convertEol: true,
-            fontFamily: 'Adwaita Mono',
-            fontSize: 14,
-            lineHeight: 1.35,
+            // Bold text keeps its themed color (don't swap to the unthemed bright palette).
+            drawBoldTextInBrightColors: false,
+            fontFamily: '"Adwaita Mono", "Cascadia Mono", ui-monospace, monospace',
+            fontSize: 13,
+            lineHeight: 1.4,
             scrollback: 1200,
-            theme: {
-                background: 'var(--view-bg-color)',
-                foreground: 'var(--view-fg-color)',
-                cursor: 'var(--accent-bg-color)',
-                selectionBackground: 'color-mix(in srgb, var(--accent-bg-color) 30%, transparent)',
-                black: 'var(--dark-4)',
-                red: 'var(--red-3)',
-                green: 'var(--green-4)',
-                yellow: 'var(--yellow-5)',
-                blue: 'var(--accent-blue)',
-                magenta: 'var(--accent-purple)',
-                cyan: 'var(--accent-teal)',
-                white: 'var(--light-2)',
-            },
+            theme: buildXtermTheme(),
         });
+        const fitAddon = new FitAddon();
+        term.loadAddon(fitAddon);
+        const safeFit = () => {
+            try {
+                fitAddon.fit();
+            } catch {
+                /* container not measurable yet */
+            }
+        };
 
         const redrawInput = () => {
-            term.write(`\x1b[2K\r${promptRef.current} ${xtermInputRef.current}`);
+            term.write(`\x1b[2K\r${coloredPromptRef.current} ${xtermInputRef.current}`);
         };
 
         const completeInput = () => {
@@ -754,9 +846,16 @@ export const TerminalApp = memo(function TerminalApp() {
 
         term.open(xtermHostRef.current);
         xtermRef.current = term;
-        lines.forEach(line => term.writeln(line.content));
-        term.write(`${promptRef.current} `);
+        safeFit();
+        lines.forEach(line => term.writeln(ansiWrap(line.content, line.className)));
+        term.write(`${coloredPromptRef.current} `);
         setXtermReady(true);
+
+        // Keep the grid fitted to the window as it resizes, and again once the
+        // monospace webfont loads (cell metrics change when Adwaita Mono swaps in).
+        const resizeObserver = new ResizeObserver(safeFit);
+        resizeObserver.observe(xtermHostRef.current);
+        document.fonts?.ready?.then(safeFit).catch(() => {});
 
         const disposable = term.onData(data => {
             if (data === '\r') {
@@ -765,7 +864,7 @@ export const TerminalApp = memo(function TerminalApp() {
                 xtermInputRef.current = '';
                 setInputValue('');
                 executeCommandRef.current(command, false);
-                window.setTimeout(() => term.write(`${promptRef.current} `), 0);
+                window.setTimeout(() => term.write(`${coloredPromptRef.current} `), 0);
                 return;
             }
 
@@ -823,11 +922,22 @@ export const TerminalApp = memo(function TerminalApp() {
         term.focus();
 
         return () => {
+            resizeObserver.disconnect();
             disposable.dispose();
             term.dispose();
             xtermRef.current = null;
         };
     }, []);
+
+    // Re-apply the resolved palette when the theme or accent color changes.
+    // rAF defers the read until after the ThemeProvider has updated the DOM.
+    useEffect(() => {
+        if (!xtermRef.current) return;
+        const id = requestAnimationFrame(() => {
+            if (xtermRef.current) xtermRef.current.options.theme = buildXtermTheme();
+        });
+        return () => cancelAnimationFrame(id);
+    }, [isDark, accentColor]);
 
     return (
         <div onClick={handleBodyClick} className="terminal-shell">

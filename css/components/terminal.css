@@ -2,22 +2,17 @@
    TERMINAL STYLING — GNOME Console
    ============================================ */
 
-.terminal-body {
-    background: color-mix(in srgb, var(--view-bg-color) 92%, transparent);
-    color: var(--view-fg-color);
-    font-family: var(--monospace-font-family);
-    padding: var(--spacing-md);
-    min-height: 400px;
-    position: relative;
-    -webkit-backdrop-filter: blur(18px) saturate(110%);
-    backdrop-filter: blur(18px) saturate(110%);
-}
-
 .terminal-shell {
-    height: 100%;
     display: flex;
     flex-direction: column;
+    height: 100%;
     min-height: 0;
+    margin: calc(var(--spacing-lg) * -1);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
+    overflow: hidden;
+    background: var(--view-bg-color);
+    color: var(--view-fg-color);
+    font-family: var(--monospace-font-family);
 }
 
 .terminal-xterm {
@@ -32,6 +27,24 @@
 
 .terminal-xterm .xterm-viewport {
     background: transparent !important;
+}
+
+/* GNOME-style slim scrollbar inside the terminal viewport */
+.terminal-xterm .xterm-viewport::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+}
+
+.terminal-xterm .xterm-viewport::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal-xterm .xterm-viewport::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+}
+
+.terminal-xterm .xterm-viewport::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
 }
 
 .terminal-fallback {
@@ -140,8 +153,8 @@
     font-weight: 500;
 }
 
-/* Selection styling */
-.terminal-body ::selection {
+/* Selection styling (fallback DOM renderer) */
+.terminal-shell ::selection {
     background: var(--terminal-selection);
     color: var(--view-fg-color);
 }
