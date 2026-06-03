@@ -118,14 +118,335 @@
     filter: brightness(1.08);
 }
 
-.about-recruiter-links {
+/* ============================================
+   ABOUT APP — GNOME "About" style profile panel
+   ============================================ */
+
+.about-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--adw-spacing-3xl);
+    padding: var(--adw-spacing-3xl);
+    min-width: 0;
+}
+
+/* Hero --------------------------------------- */
+
+.about-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--adw-spacing-md);
+    padding: var(--adw-spacing-3xl) var(--adw-spacing-2xl);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card_radius);
+    background:
+        radial-gradient(
+            120% 140% at 50% -10%,
+            color-mix(in srgb, var(--accent-bg-color) 14%, transparent),
+            transparent 60%
+        ),
+        var(--view-bg-color);
+}
+
+.about-avatar-ring {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(
+        135deg,
+        var(--accent-bg-color),
+        color-mix(in srgb, var(--accent-bg-color) 40%, #ffffff)
+    );
+    box-shadow: var(--shadow-popover, 0 8px 24px rgba(0, 0, 0, 0.18));
+}
+
+.about-avatar {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--view-bg-color);
+    background: var(--view-bg-color);
+    display: block;
+}
+
+.about-name {
+    margin: var(--adw-spacing-sm) 0 0;
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    line-height: var(--line-height-tight);
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.about-role {
+    margin: 0;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.about-subtitle {
+    margin: 0;
+    max-width: 42ch;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: var(--line-height-base);
+}
+
+.about-availability {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--adw-spacing-sm);
+    margin-top: var(--adw-spacing-xs);
+    padding: 4px var(--adw-spacing-lg);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--green-3, #2ec27e) 16%, transparent);
+    color: color-mix(in srgb, var(--green-5, #26a269) 80%, var(--text-primary));
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+}
+
+.about-availability-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-4, #2ec27e);
+}
+
+.about-availability-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--green-4, #2ec27e);
+    animation: about-pulse 2.4s ease-out infinite;
+}
+
+@keyframes about-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.55;
+    }
+    70%,
+    100% {
+        transform: scale(2.6);
+        opacity: 0;
+    }
+}
+
+.about-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--adw-spacing-sm);
+    margin-top: var(--adw-spacing-md);
+}
+
+.about-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--adw-spacing-xs);
+    min-height: var(--control-min-medium);
+    padding: 0 var(--adw-spacing-2xl);
+    border: 1px solid var(--border-color);
+    border-radius: var(--button_radius);
+    background: var(--view-bg-color);
+    color: var(--view-fg-color);
+    font-family: var(--document-font-family);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background var(--duration-fast) var(--mutter-ease),
+        transform var(--duration-fast) var(--mutter-ease);
+}
+
+.about-cta:hover {
+    background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
+}
+
+.about-cta:active {
+    transform: scale(0.97);
+}
+
+.about-cta-primary {
+    border-color: transparent;
+    background: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+}
+
+.about-cta-primary:hover {
+    background: var(--accent-bg-color);
+    filter: brightness(1.08);
+}
+
+/* Sections ----------------------------------- */
+
+.about-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--adw-spacing-md);
+}
+
+.about-bio {
+    margin: 0;
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    line-height: var(--line-height-relaxed);
+}
+
+/* Core stack chips --------------------------- */
+
+.about-stack {
     display: flex;
     flex-wrap: wrap;
     gap: var(--adw-spacing-sm);
 }
 
-.about-recruiter-links .adw-link-btn {
-    padding: var(--adw-spacing-sm) var(--adw-spacing-lg);
+.about-stack-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px var(--adw-spacing-lg);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: var(--view-bg-color);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Recruiter path ----------------------------- */
+
+.about-path {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--adw-spacing-sm);
+}
+
+.about-step-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--adw-spacing-sm);
+    min-height: var(--control-min-medium);
+    padding: 0 var(--adw-spacing-lg) 0 6px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: var(--view-bg-color);
+    color: var(--text-primary);
+    font-family: var(--document-font-family);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background var(--duration-fast) var(--mutter-ease),
+        border-color var(--duration-fast) var(--mutter-ease),
+        transform var(--duration-fast) var(--mutter-ease);
+}
+
+.about-step-index {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent-bg-color) 16%, transparent);
+    color: var(--accent-bg-color);
+    font-size: var(--font-size-2xs);
+    font-weight: 800;
+}
+
+.about-step-arrow {
+    color: var(--text-secondary);
+    transition: transform var(--duration-fast) var(--mutter-ease);
+}
+
+.about-step-btn:hover {
+    background: color-mix(in srgb, var(--accent-bg-color) 8%, var(--view-bg-color));
+    border-color: color-mix(in srgb, var(--accent-bg-color) 45%, var(--border-color));
+}
+
+.about-step-btn:hover .about-step-arrow {
+    transform: translateX(2px);
+    color: var(--accent-bg-color);
+}
+
+.about-step-btn:active {
+    transform: scale(0.97);
+}
+
+/* Social links ------------------------------- */
+
+.about-social-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--adw-spacing-sm);
+}
+
+.about-social-link {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--view-bg-color);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition:
+        background var(--duration-fast) var(--mutter-ease),
+        color var(--duration-fast) var(--mutter-ease),
+        border-color var(--duration-fast) var(--mutter-ease),
+        transform var(--duration-fast) var(--mutter-ease);
+}
+
+.about-social-link:hover {
+    background: var(--accent-bg-color);
+    border-color: transparent;
+    color: var(--accent-fg-color);
+    transform: translateY(-2px);
+}
+
+.about-social-link:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* `.window-body a` paints every in-window anchor accent + underline-on-hover.
+   Re-assert About's own colors for its <a> buttons (higher specificity). */
+.about-page a.about-cta {
+    color: var(--view-fg-color);
+}
+
+.about-page a.about-cta-primary {
+    color: var(--accent-fg-color);
+}
+
+.about-page a.about-step-btn {
+    color: var(--text-primary);
+}
+
+.about-page a.about-social-link {
+    color: var(--text-secondary);
+}
+
+.about-page a.about-social-link:hover {
+    color: var(--accent-fg-color);
+}
+
+.about-page a.about-cta:hover,
+.about-page a.about-step-btn:hover,
+.about-page a.about-social-link:hover {
+    text-decoration: none;
 }
 
 /* ============================================
@@ -1134,7 +1455,9 @@
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: background 200ms var(--ease-in-out-quad), transform 0.15s ease;
+    transition:
+        background 200ms var(--ease-in-out-quad),
+        transform 0.15s ease;
 }
 
 .resume-header-btn.primary {
@@ -1547,8 +1870,13 @@
 }
 
 @keyframes gh-skeleton-pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.8;
+    }
 }
 
 .browser-gh-btn {
@@ -1564,7 +1892,9 @@
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: transform 0.15s ease, filter 0.15s ease;
+    transition:
+        transform 0.15s ease,
+        filter 0.15s ease;
 }
 
 .browser-gh-btn:hover {
@@ -1759,8 +2089,9 @@
    GLOBAL — Focus states
    ============================================ */
 
-.about-cta-v2:focus-visible,
-.about-step-card:focus-visible,
+.about-cta:focus-visible,
+.about-step-btn:focus-visible,
+.about-social-link:focus-visible,
 .skills-tab-pill:focus-visible,
 .skill-card-v2:focus-visible,
 .project-link-btn:focus-visible,
@@ -1778,7 +2109,6 @@
    GLOBAL — Scrollbar
    ============================================ */
 
-.about-recruiter-steps,
 .skills-tab-strip,
 .projects-card-grid {
     scrollbar-width: thin;
@@ -1810,16 +2140,9 @@
     }
 }
 
-@container app-window (max-width: 400px) {
-    .about-content-grid,
-    .about-stat-grid {
-        grid-template-columns: minmax(0, 1fr);
-    }
-}
-
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .about-avatar-ring {
+    .about-availability-dot::after {
         animation: none;
     }
 
