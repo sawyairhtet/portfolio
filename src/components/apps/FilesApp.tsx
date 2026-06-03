@@ -13,6 +13,8 @@ import {
     MagnifyingGlass,
     List,
     GridFour,
+    Eye,
+    EyeSlash,
 } from '@phosphor-icons/react';
 
 type FilesView = 'recent' | 'home' | 'projects' | 'pictures';
@@ -229,6 +231,16 @@ export const FilesApp = memo(function FilesApp() {
 
     const selectedFile = filteredFiles.find(f => f.id === selectedId);
 
+    const viewLabel =
+        view === 'recent'
+            ? 'Recent'
+            : view === 'home'
+              ? 'Home'
+              : view === 'projects'
+                ? 'Projects'
+                : 'Pictures';
+    const isRootView = view === 'recent' || view === 'home';
+
     const FILTER_PILLS: { id: FilterPill; label: string }[] = [
         { id: 'all', label: 'All' },
         { id: 'folders', label: 'Folders' },
@@ -297,21 +309,37 @@ export const FilesApp = memo(function FilesApp() {
 
             <section className="files-view" aria-label="Files">
                 <div className="files-toolbar">
-                    <div className="files-pathbar" aria-label="Current folder">
-                        <button type="button" onClick={() => setView('home')}>
-                            Home
-                        </button>
-                        <span>/</span>
-                        <button type="button">
-                            {view === 'recent'
-                                ? 'Recent'
-                                : view === 'home'
-                                  ? 'Home'
-                                  : view === 'projects'
-                                    ? 'Projects'
-                                    : 'Pictures'}
-                        </button>
-                    </div>
+                    <nav className="files-pathbar" aria-label="Current folder">
+                        {isRootView ? (
+                            <button
+                                type="button"
+                                className="files-crumb current"
+                                aria-current="page"
+                            >
+                                {viewLabel}
+                            </button>
+                        ) : (
+                            <>
+                                <button
+                                    type="button"
+                                    className="files-crumb"
+                                    onClick={() => setView('home')}
+                                >
+                                    Home
+                                </button>
+                                <span className="files-crumb-sep" aria-hidden="true">
+                                    ›
+                                </span>
+                                <button
+                                    type="button"
+                                    className="files-crumb current"
+                                    aria-current="page"
+                                >
+                                    {viewLabel}
+                                </button>
+                            </>
+                        )}
+                    </nav>
                     <div className="files-search-float">
                         <MagnifyingGlass weight="bold" size={13} />
                         <input
@@ -324,27 +352,17 @@ export const FilesApp = memo(function FilesApp() {
                     </div>
                     <button
                         type="button"
-                        className={`headerbar-btn${showHiddenFiles ? ' active' : ''}`}
+                        className={`files-icon-btn${showHiddenFiles ? ' active' : ''}`}
                         title="Show Hidden Files"
                         aria-label="Show Hidden Files"
+                        aria-pressed={showHiddenFiles}
                         onClick={() => setShowHiddenFiles(p => !p)}
-                        style={{
-                            minWidth: '34px',
-                            minHeight: '34px',
-                            padding: '0 10px',
-                            borderRadius: 'var(--button_radius)',
-                            background: showHiddenFiles
-                                ? 'var(--active-toggle-bg-color)'
-                                : 'transparent',
-                            color: showHiddenFiles ? 'var(--active-toggle-fg-color)' : 'inherit',
-                            fontWeight: 'bold',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '12px',
-                            marginRight: '6px',
-                        }}
                     >
-                        .*
+                        {showHiddenFiles ? (
+                            <Eye weight="bold" size={16} />
+                        ) : (
+                            <EyeSlash weight="bold" size={16} />
+                        )}
                     </button>
                     <div className="files-view-toggle linked" aria-label="View mode">
                         <button
@@ -381,43 +399,63 @@ export const FilesApp = memo(function FilesApp() {
                     </div>
                 )}
 
-                <div className={`files-list ${layout}`} role="listbox" aria-label="Project files">
-                    {layout === 'list' && (
-                        <div className="files-list-header" aria-hidden="true">
-                            <span>Name</span>
-                            <span>Modified</span>
-                            <span>Size</span>
-                        </div>
-                    )}
-                    {filteredFiles.map(file => (
-                        <button
-                            key={file.id}
-                            type="button"
-                            className={`files-row${selectedId === file.id ? ' selected' : ''}${file.dotfile ? ' dotfile' : ''}${cutFileId === file.id ? ' cut-file' : ''}`}
-                            role="option"
-                            aria-selected={selectedId === file.id}
-                            onClick={() => setSelectedId(file.id)}
-                            onContextMenu={e => handleFileContextMenu(e, file.id)}
-                            onDoubleClick={() => openSelected(file.id)}
-                            onKeyDown={event => {
-                                if (event.key === 'Enter') {
-                                    openSelected(file.id);
-                                }
-                            }}
-                        >
-                            <span className="files-name">
-                                <FileIcon
-                                    type={file.type}
-                                    name={file.name}
-                                    size={layout === 'grid' ? 48 : 20}
-                                />
-                                <span>{file.name}</span>
-                            </span>
-                            <span>{file.modified}</span>
-                            <span>{file.size}</span>
-                        </button>
-                    ))}
-                </div>
+                {filteredFiles.length === 0 ? (
+                    <div className="files-empty" role="status">
+                        {searchQuery.trim() ? (
+                            <MagnifyingGlass weight="duotone" size={56} />
+                        ) : (
+                            <FolderSimple weight="duotone" size={56} />
+                        )}
+                        <p>{searchQuery.trim() ? 'No matching files' : 'This folder is empty'}</p>
+                        <span>
+                            {searchQuery.trim()
+                                ? 'Try a different search term or filter.'
+                                : 'There is nothing to show here yet.'}
+                        </span>
+                    </div>
+                ) : (
+                    <div
+                        className={`files-list ${layout}`}
+                        role="listbox"
+                        aria-label="Project files"
+                    >
+                        {layout === 'list' && (
+                            <div className="files-list-header" aria-hidden="true">
+                                <span>Name</span>
+                                <span>Modified</span>
+                                <span>Size</span>
+                            </div>
+                        )}
+                        {filteredFiles.map(file => (
+                            <button
+                                key={file.id}
+                                type="button"
+                                className={`files-row${selectedId === file.id ? ' selected' : ''}${file.dotfile ? ' dotfile' : ''}${cutFileId === file.id ? ' cut-file' : ''}`}
+                                role="option"
+                                aria-selected={selectedId === file.id}
+                                onClick={() => setSelectedId(file.id)}
+                                onContextMenu={e => handleFileContextMenu(e, file.id)}
+                                onDoubleClick={() => openSelected(file.id)}
+                                onKeyDown={event => {
+                                    if (event.key === 'Enter') {
+                                        openSelected(file.id);
+                                    }
+                                }}
+                            >
+                                <span className="files-name">
+                                    <FileIcon
+                                        type={file.type}
+                                        name={file.name}
+                                        size={layout === 'grid' ? 44 : 18}
+                                    />
+                                    <span>{file.name}</span>
+                                </span>
+                                <span className="files-meta">{file.modified}</span>
+                                <span className="files-meta">{file.size}</span>
+                            </button>
+                        ))}
+                    </div>
+                )}
 
                 <AnimatePresence>
                     {selectedFile && (
