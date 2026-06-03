@@ -20,8 +20,6 @@ interface SoundContextValue {
     playCloseSound: () => void;
     playClickSound: () => void;
     playMaximizeSound: () => void;
-    isDnd: boolean;
-    setDnd: (dnd: boolean) => void;
 }
 
 const SoundContext = createContext<SoundContextValue>({
@@ -36,8 +34,6 @@ const SoundContext = createContext<SoundContextValue>({
     playCloseSound: () => {},
     playClickSound: () => {},
     playMaximizeSound: () => {},
-    isDnd: false,
-    setDnd: () => {},
 });
 
 // Web Audio API based sound manager
@@ -67,9 +63,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     const [volume, setVolumeState] = useState<number>(() => {
         const saved = Number(localStorage.getItem('soundVolume'));
         return Number.isFinite(saved) ? Math.min(100, Math.max(0, saved)) : 70;
-    });
-    const [isDnd, setIsDnd] = useState<boolean>(() => {
-        return localStorage.getItem('portfolioDnd') === 'true';
     });
 
     const audioCtxRef = useRef<AudioContext | null>(null);
@@ -177,7 +170,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     }, [isMuted, getAudioCtx, volume]);
 
     const playNotificationSound = useCallback(() => {
-        if (isMuted || isDnd || !isUnlockedRef.current) return;
+        if (isMuted || !isUnlockedRef.current) return;
         try {
             const ctx = getAudioCtx();
             const gain = volume / 100;
@@ -186,7 +179,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         } catch {
             // Audio not available
         }
-    }, [isMuted, isDnd, getAudioCtx, volume]);
+    }, [isMuted, getAudioCtx, volume]);
 
     const playCloseSound = useCallback(() => {
         if (isMuted || !isUnlockedRef.current) return;
@@ -223,11 +216,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         }
     }, [isMuted, getAudioCtx, volume]);
 
-    const setDnd = useCallback((dnd: boolean) => {
-        setIsDnd(dnd);
-        localStorage.setItem('portfolioDnd', String(dnd));
-    }, []);
-
     return (
         <SoundContext.Provider
             value={{
@@ -242,8 +230,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
                 playCloseSound,
                 playClickSound,
                 playMaximizeSound,
-                isDnd,
-                setDnd,
             }}
         >
             {children}

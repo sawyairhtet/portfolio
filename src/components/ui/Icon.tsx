@@ -64,7 +64,7 @@ export const ICON_MAP: Record<string, PhosphorIconComponent> = {
     folder: Folder,
     'folder-open': FolderOpen,
     tools: Toolbox,
-    toolbox: Toolbox,
+
     envelope: Envelope,
     'firefox-browser': Compass,
     terminal: Terminal,
@@ -111,7 +111,6 @@ export function registerIcons(icons: Record<string, PhosphorIconComponent>) {
     Object.assign(ICON_MAP, icons);
 }
 
-export type IconName = keyof typeof ICON_MAP;
 
 interface IconProps {
     name: string;

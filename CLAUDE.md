@@ -135,9 +135,7 @@ src/styles/main.css               ← Entry point, declares layer order, imports
 
 8. **The `tailwindcss` keyword in `package.json` keywords** — Tailwind has been removed from the build (it generated no CSS — there was no `@import 'tailwindcss'`). The keyword string is left in place intentionally. The CSS Layer architecture is the only styling system.
 
-9. **`instruction.md`** — Claude Code project instructions file for a previous audit. Keep for reference.
-
-10. **Service worker unregistration in dev** — `DesktopShell` intentionally unregisters all SWs in dev mode to prevent stale cache issues.
+9. **Service worker unregistration in dev** — `DesktopShell` intentionally unregisters all SWs in dev mode to prevent stale cache issues.
 
 ## Scripts Reference
 

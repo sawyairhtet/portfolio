@@ -23,7 +23,6 @@ export const SOCIAL_LINKS = [
         icon: 'github',
         label: 'GitHub',
         handle: '@sawyairhtet',
-        domain: 'github.com',
         terminal: 'github.com/sawyairhtet',
     },
     {
@@ -31,7 +30,6 @@ export const SOCIAL_LINKS = [
         icon: 'linkedin',
         label: 'LinkedIn',
         handle: 'Saw Ye Htet',
-        domain: 'linkedin.com',
         terminal: 'linkedin.com/in/saw-ye-htet-the-man-who-code',
     },
     {
@@ -39,7 +37,6 @@ export const SOCIAL_LINKS = [
         icon: 'telegram',
         label: 'Telegram',
         handle: '@saulyehtet',
-        domain: 't.me',
         terminal: 't.me/saulyehtet',
     },
     {
@@ -47,7 +44,6 @@ export const SOCIAL_LINKS = [
         icon: 'x-twitter',
         label: 'X',
         handle: '@saulyehtet_',
-        domain: 'x.com',
         terminal: 'x.com/saulyehtet_',
     },
 ] as const;

@@ -6,7 +6,6 @@ import type {
     Notification,
     Project,
     SkillCategory,
-    AppId,
 } from '../types';
 import { PROFILE } from './profile';
 
@@ -176,33 +175,6 @@ export const DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.desk
 export const MOBILE_DOCK_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => app.mobileDock);
 
 export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app => !app.mobileDock);
-
-export const APP_FOLDERS: { id: string; label: string; icon: string; appIds: AppId[] }[] = [
-    {
-        id: 'overview',
-        label: 'Overview',
-        icon: 'desktop',
-        appIds: ['about', 'skills', 'projects', 'resume'],
-    },
-    {
-        id: 'communication',
-        label: 'Communication',
-        icon: 'envelope',
-        appIds: ['contact'],
-    },
-    {
-        id: 'utilities',
-        label: 'Utilities',
-        icon: 'gear-six',
-        appIds: ['terminal', 'files', 'browser', 'text-editor'],
-    },
-    {
-        id: 'tools',
-        label: 'Tools',
-        icon: 'toolbox',
-        appIds: ['settings', 'focus-mode', 'calendar', 'image-viewer', 'software'],
-    },
-];
 
 // ============================================
 // PORTFOLIO CONTENT DATA
