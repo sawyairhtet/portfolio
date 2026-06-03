@@ -215,12 +215,13 @@
 }
 
 .project-featured-v2 {
-    display: grid;
-    grid-template-columns: minmax(200px, 0.6fr) minmax(0, 0.4fr);
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     background: var(--surface-1);
+    box-shadow: var(--shadow-popover);
 }
 
 .project-featured-v2.project-search-focus {
@@ -230,15 +231,31 @@
 
 .project-featured-media {
     position: relative;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
-    background: var(--surface-1);
-    min-height: 280px;
+    background: radial-gradient(120% 140% at 50% 0%, var(--surface-2), var(--surface-1));
+    border-bottom: 1px solid var(--border-color);
 }
 
 .project-featured-media img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
+}
+
+/* Subtle top sheen so the screenshot reads as a framed showcase */
+.project-featured-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--light-1) 10%, transparent) 0%,
+        transparent 14%
+    );
 }
 
 .project-featured-fallback {
@@ -274,31 +291,46 @@
     color: #000;
     font-size: var(--font-size-2xs);
     font-weight: 800;
+    box-shadow: 0 2px 10px color-mix(in srgb, var(--dark-5) 35%, transparent);
 }
 
 .project-featured-info {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 20px;
+    gap: 16px;
+    padding: var(--spacing-lg);
 }
 
-.project-featured-info h3 {
+.project-featured-info header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.project-featured-info h2 {
     margin: 0;
-    font-size: var(--font-size-xl);
-    font-weight: 700;
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
-    line-height: 1.2;
+    line-height: 1.15;
 }
 
 .project-featured-role {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 6px;
-    margin: 4px 0 0;
+    margin: 0;
     color: var(--text-secondary);
     font-size: var(--font-size-xs);
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.project-featured-role > span[aria-hidden] {
+    opacity: 0.5;
 }
 
 .project-featured-summary {
@@ -524,12 +556,12 @@
 }
 
 @container app-window (max-width: 560px) {
-    .project-featured-v2 {
-        grid-template-columns: 1fr;
+    .project-featured-info {
+        padding: var(--spacing-md);
     }
 
-    .project-featured-media {
-        min-height: 160px;
+    .project-featured-info h2 {
+        font-size: var(--font-size-xl);
     }
 
     .project-links-v2 {
@@ -1766,10 +1798,6 @@
     .contact-info-panel {
         border-right: none;
         border-bottom: 1px solid var(--border-color);
-    }
-
-    .project-featured-v2 {
-        grid-template-columns: 1fr;
     }
 
     .resume-header-card {

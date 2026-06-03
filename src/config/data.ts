@@ -239,7 +239,7 @@ export const PROJECTS: Project[] = [
         icon: 'desktop',
         media: {
             type: 'image',
-            src: '/images/portfolio-screenshot.webp',
+            src: '/images/portfolio_project.webp',
             alt: 'Screenshot of the GNOME-inspired portfolio desktop showing the shell, dock, and wallpaper',
         },
     },

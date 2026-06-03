@@ -77,8 +77,8 @@ function FeaturedProject({ project }: { project: Project }) {
         >
             <motion.div
                 className="project-featured-media"
-                initial={reduced ? false : { x: -30, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
+                initial={reduced ? false : { opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
             >
                 {project.media ? (
@@ -103,9 +103,9 @@ function FeaturedProject({ project }: { project: Project }) {
 
             <motion.div
                 className="project-featured-info"
-                initial={reduced ? false : { x: 30, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5 }}
+                initial={reduced ? false : { y: 14, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.45, delay: 0.08 }}
             >
                 <header>
                     <h2 id={`featured-${project.id}-title`}>{project.title}</h2>
