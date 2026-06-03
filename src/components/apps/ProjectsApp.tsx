@@ -3,7 +3,17 @@ import { Icon } from '../ui/Icon';
 import { PROJECTS } from '../../config/data';
 import type { Project } from '../../types';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Star, CheckCircle, ArrowSquareOut, GithubLogo, Hammer } from '@phosphor-icons/react';
+import {
+    Star,
+    CheckCircle,
+    ArrowSquareOut,
+    GithubLogo,
+    Hammer,
+    GlobeSimple,
+} from '@phosphor-icons/react';
+
+// The featured project is this live site; analytics domain doubles as the canonical URL.
+const LIVE_SITE_URL = 'sawyehtet.com';
 
 const TECH_BRAND_COLORS: Record<string, string> = {
     Java: '#ED8B00',
@@ -71,44 +81,43 @@ function FeaturedProject({ project }: { project: Project }) {
             className="project-featured-v2"
             data-project={project.id}
             aria-labelledby={`featured-${project.id}-title`}
-            initial={reduced ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
+            initial={reduced ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
         >
-            <motion.div
-                className="project-featured-media"
-                initial={reduced ? false : { opacity: 0, scale: 1.02 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-            >
-                {project.media ? (
-                    <motion.img
-                        src={project.media.src}
-                        alt={project.media.alt}
-                        loading="lazy"
-                        whileHover={reduced ? undefined : { scale: 1.03 }}
-                        transition={{ duration: 0.3 }}
-                    />
-                ) : (
-                    <div className="project-featured-fallback">
-                        <Icon name={project.icon} />
-                        <span>{project.platform}</span>
-                    </div>
-                )}
-                <span className="project-featured-badge">
-                    <Star weight="fill" size={12} />
-                    Featured
-                </span>
-            </motion.div>
+            <div className="project-browser">
+                <div className="project-browser-bar">
+                    <span className="project-browser-dots" aria-hidden="true">
+                        <i />
+                        <i />
+                        <i />
+                    </span>
+                    <span className="project-browser-url">
+                        <GlobeSimple weight="bold" size={12} />
+                        {LIVE_SITE_URL}
+                    </span>
+                </div>
+                <div className="project-browser-screen">
+                    {project.media ? (
+                        <img src={project.media.src} alt={project.media.alt} loading="lazy" />
+                    ) : (
+                        <div className="project-featured-fallback">
+                            <Icon name={project.icon} />
+                            <span>{project.platform}</span>
+                        </div>
+                    )}
+                </div>
+            </div>
 
-            <motion.div
-                className="project-featured-info"
-                initial={reduced ? false : { y: 14, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.45, delay: 0.08 }}
-            >
+            <div className="project-featured-info">
                 <header>
-                    <h2 id={`featured-${project.id}-title`}>{project.title}</h2>
+                    <div className="project-title-row">
+                        <h2 id={`featured-${project.id}-title`}>{project.title}</h2>
+                        <span className="project-featured-chip">
+                            <Star weight="fill" size={11} />
+                            Featured
+                        </span>
+                    </div>
                     <p className="project-featured-role">
                         <span>{project.role}</span>
                         <span aria-hidden="true">·</span>
@@ -118,23 +127,29 @@ function FeaturedProject({ project }: { project: Project }) {
 
                 <p className="project-featured-summary">{project.summary}</p>
 
-                <ul className="project-proof-list">
-                    {project.proofPoints.map(point => (
-                        <li key={point}>
-                            <CheckCircle weight="fill" size={14} className="proof-check" />
-                            <span>{point}</span>
-                        </li>
-                    ))}
-                </ul>
+                <div className="project-featured-block">
+                    <h3 className="project-subsection-label">Highlights</h3>
+                    <ul className="project-proof-list">
+                        {project.proofPoints.map(point => (
+                            <li key={point}>
+                                <CheckCircle weight="fill" size={14} className="proof-check" />
+                                <span>{point}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-                <div className="project-tech-row">
-                    {project.techStack.map(tech => (
-                        <TechChip key={tech} tech={tech} />
-                    ))}
+                <div className="project-featured-block">
+                    <h3 className="project-subsection-label">Built with</h3>
+                    <div className="project-tech-row">
+                        {project.techStack.map(tech => (
+                            <TechChip key={tech} tech={tech} />
+                        ))}
+                    </div>
                 </div>
 
                 <ProjectLinks project={project} />
-            </motion.div>
+            </div>
         </motion.article>
     );
 }
