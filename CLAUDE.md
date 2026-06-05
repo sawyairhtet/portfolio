@@ -2,6 +2,24 @@
 
 > Quick-reference for any AI assistant or new contributor working on this codebase.
 
+## ⚡ Current architecture (read first)
+
+The **front door (`/`) is an Editorial / Swiss single-page site** in `src/site/` —
+big display type, strict grid, hairline structure, one signal-red accent, warm
+"paper" light theme, self-hosted Adwaita Sans/Mono. Sections: Hero · About · Work ·
+Skills · Résumé · Contact · Footer. Styles live in `src/site/editorial.css` (scoped
+under `.ed`, independent of the GNOME token system). Content still comes from
+`src/config/data.ts` + `src/config/profile.ts`.
+
+The **GNOME/Fedora desktop simulation is preserved as a showcased artifact at
+`/desktop`** (and `/app/:appId` deep links). It is **lazy-loaded**, so it is not
+shipped on the editorial homepage. Everything under `src/components/` (shell,
+window, apps) belongs to that desktop artifact. The "Do-Not-Touch Zones" below
+still apply **to the `/desktop` experience** — they are no longer the main site.
+
+When the task is about the primary portfolio, work in `src/site/`. When it is about
+the interactive desktop demo, work in `src/components/`.
+
 ## Stack & Key Dependencies
 
 | Layer     | Technology                                       | Version | Notes                                                                                                                       |
@@ -27,12 +45,17 @@
 index.html                          ← Vite HTML entry, loads /src/main.tsx
   └─ src/main.tsx                   ← ReactDOM.createRoot, imports main.css
        └─ src/App.tsx               ← BrowserRouter + 6 context providers
-            ├─ /                    → DesktopShell
-            ├─ /app/:appId          → DeepLinkHandler (opens window, renders DesktopShell)
-            └─ *                    → DesktopShell (catch-all)
+            ├─ /                    → EditorialSite        (src/site/, primary portfolio)
+            ├─ /desktop             → DesktopShell         (lazy, the desktop artifact)
+            ├─ /app/:appId          → DeepLinkHandler      (lazy, opens a desktop window)
+            └─ *                    → EditorialSite        (catch-all → primary site)
 ```
 
-**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` → `/index.html` (status 200) to support SPA refresh.
+`DesktopShell` and `DeepLinkHandler` are `React.lazy`-loaded inside a `Suspense`
+boundary, so the editorial homepage does not ship the desktop bundle
+(`vendor-icons`, `TerminalApp`, `DesktopShell`, framer-motion are all desktop-only).
+
+**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` and a catch-all `/*` → `/index.html` (status 200) to support SPA refresh of `/desktop` and deep links.
 
 **Head bootstrap:** `public/head-bootstrap.js` runs synchronously before React to read `localStorage('theme')` and set `data-theme` on `<html>`, preventing a dark→light flash.
 
@@ -114,12 +137,15 @@ src/styles/main.css               ← Entry point, declares layer order, imports
 
 **Theme switching:** `data-theme="dark|light"` attribute on `<html>`. CSS uses `[data-theme='dark']` / `[data-theme='light']` selectors.
 
-## ⛔ Do-Not-Touch Zones
+## ⛔ Do-Not-Touch Zones (the `/desktop` artifact)
 
 > [!CAUTION]
-> The following are **deliberate design decisions**, not oversights. Do not "fix" or "modernize" them.
+> The following are **deliberate design decisions** for the desktop simulation at
+> `/desktop`, not oversights. Do not "fix" or "modernize" them. (The primary `/`
+> site is the editorial redesign in `src/site/` — that is where new portfolio work
+> goes; these constraints do not apply to it.)
 
-1. **Fedora 43 / GNOME 49 retro styling** — The entire visual language is an intentional Fedora desktop simulation. The Adwaita tokens, Cantarell font, window chrome, top bar, dock, Activities overlay, Plymouth boot, terminal styling — all deliberate. Do not replace with generic modern web aesthetics.
+1. **Fedora 43 / GNOME 49 retro styling** — The desktop artifact's visual language is an intentional Fedora desktop simulation. The Adwaita tokens, Cantarell font, window chrome, top bar, dock, Activities overlay, Plymouth boot, terminal styling — all deliberate. Do not replace with generic modern web aesthetics.
 
 2. **Persistent dock** — GNOME 49 only shows the dash in Activities. This site intentionally keeps the dock always-visible (Dash-to-Dock style) for portfolio UX so recruiters can navigate without learning gestures.
 

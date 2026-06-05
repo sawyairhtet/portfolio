@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState, useCallback, useEffect, useRef } from 'react';
+import '../../styles/main.css'; // GNOME desktop styles — scoped to the /desktop artifact, loaded with this lazy chunk
 import { Icon } from '../ui/Icon';
 import { useWindowManager } from '../../context/WindowManagerContext';
 import { useSound } from '../../context/SoundContext';

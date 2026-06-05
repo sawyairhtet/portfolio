@@ -72,3 +72,10 @@
   from = "/app/*"
   to = "/index.html"
   status = 200
+
+# SPA catch-all: deep links like /desktop and client routes resolve to the app.
+# Static files (offline.html, 404.html, assets) are served before this applies.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

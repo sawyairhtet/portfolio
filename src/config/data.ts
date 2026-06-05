@@ -201,10 +201,15 @@ export const PROJECTS: Project[] = [
         ],
         links: [
             {
+                label: 'Launch live',
+                href: '/desktop',
+                icon: 'globe',
+                primary: true,
+            },
+            {
                 label: 'View on GitHub',
                 href: 'https://github.com/sawyairhtet/portfolio',
                 icon: 'github',
-                primary: true,
             },
         ],
         featured: true,

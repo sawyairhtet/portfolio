@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './styles/main.css';
+// NOTE: the desktop's main.css is imported inside DesktopShell (lazy), so the
+// editorial homepage ships only src/site/editorial.css. Do not re-add it here.
 
 document.getElementById('static-shell')?.remove();
 
