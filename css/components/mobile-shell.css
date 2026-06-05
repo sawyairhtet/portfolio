@@ -1,55 +1,136 @@
+/* ============================================
+   Mobile shell — single-column portfolio
+   Shown to phone-width visitors instead of the
+   desktop window manager. Designed to feel like a
+   polished, GNOME-flavoured mobile profile.
+   ============================================ */
+
 .mobile-shell {
+    width: 100%;
     min-height: 100dvh;
-    background: var(--view-bg-color, #1e1e1e);
-    color: var(--text-primary, rgba(255, 255, 255, 0.87));
-    font-family: system-ui, sans-serif;
-    padding: 20px 20px 60px;
-    max-width: 600px;
-    margin: 0 auto;
+    box-sizing: border-box;
+    font-family: var(--font-ui);
+    color: var(--text-primary);
+    background:
+        radial-gradient(
+            120% 60% at 50% -10%,
+            color-mix(in srgb, var(--accent-bg-color) 16%, transparent),
+            transparent 60%
+        ),
+        var(--view-bg-color);
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(18px, env(safe-area-inset-left, 0px), calc((100% - 600px) / 2));
+    padding-right: max(18px, env(safe-area-inset-right, 0px), calc((100% - 600px) / 2));
+    -webkit-text-size-adjust: 100%;
+}
+
+/* ---- Sticky top bar ---- */
+.mobile-topbar {
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) - 12px);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: -4px -8px 8px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--window-bg-color) 78%, transparent);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+.mobile-topbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.mobile-topbar-brand i {
+    color: var(--accent-color);
+    font-size: 18px;
 }
 
 .mobile-theme-toggle {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 100;
-    width: 40px;
-    height: 40px;
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     border: 1px solid var(--border-color);
     background: var(--surface-2);
     color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
     font-size: 18px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
 }
 
+.mobile-theme-toggle:active {
+    transform: scale(0.92);
+    background: var(--surface-3);
+}
+
+/* ---- Hero ---- */
 .mobile-hero {
-    padding: 40px 0 24px;
     text-align: center;
+    padding: 26px 12px 30px;
+}
+
+.mobile-avatar-ring {
+    width: 104px;
+    height: 104px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(
+        140deg,
+        var(--accent-bg-color),
+        color-mix(in srgb, var(--accent-bg-color) 40%, transparent)
+    );
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--accent-bg-color) 30%, transparent);
+}
+
+.mobile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 3px solid var(--view-bg-color);
+    background: var(--surface-2);
 }
 
 .mobile-hero h1 {
-    font-size: 28px;
+    font-size: 27px;
     font-weight: 800;
+    letter-spacing: -0.02em;
     margin: 0 0 4px;
 }
 
 .mobile-role {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
-    opacity: 0.85;
+    color: var(--accent-color);
     margin: 0 0 12px;
 }
 
-.mobile-bio {
+.mobile-tagline {
     font-size: 14px;
-    opacity: 0.7;
-    line-height: 1.6;
-    margin: 0 0 20px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 38ch;
+    margin: 0 auto 20px;
 }
 
 .mobile-actions {
@@ -59,12 +140,60 @@
     justify-content: center;
 }
 
-.mobile-btn {
+.mobile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.mobile-meta-chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.mobile-meta-chip.available {
+    color: var(--accent-green, #2ec27e);
+    background: color-mix(in srgb, var(--accent-green, #2ec27e) 12%, transparent);
+    border-color: color-mix(in srgb, var(--accent-green, #2ec27e) 30%, transparent);
+}
+
+.mobile-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-green, #2ec27e);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-green, #2ec27e) 60%, transparent);
+    animation: mobileStatusPulse 2.4s ease-out infinite;
+}
+
+@keyframes mobileStatusPulse {
+    0% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-green, #2ec27e) 55%, transparent);
+    }
+    70%,
+    100% {
+        box-shadow: 0 0 0 7px transparent;
+    }
+}
+
+/* ---- Buttons ---- */
+.mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 11px 18px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
     background: var(--surface-2);
     color: var(--text-primary);
@@ -73,160 +202,425 @@
     text-decoration: none;
     cursor: pointer;
     font-family: inherit;
-    transition: background 0.15s ease;
+    transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        transform 0.16s ease;
 }
 
-.mobile-btn:hover {
-    background: var(--surface-3);
+.mobile-btn i {
+    font-size: 16px;
 }
 
 .mobile-btn:active {
     transform: scale(0.97);
+    background: var(--surface-3);
 }
 
 .mobile-btn.primary {
-    background: var(--accent-bg-color, #3584e4);
-    border-color: var(--accent-bg-color, #3584e4);
-    color: var(--accent-fg-color, #fff);
+    background: var(--accent-bg-color);
+    border-color: var(--accent-bg-color);
+    color: var(--accent-fg-color);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-bg-color) 28%, transparent);
 }
 
-.mobile-section {
-    padding: 28px 0;
-    border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+.mobile-btn.primary:active {
+    background: color-mix(in srgb, var(--accent-bg-color) 88%, black);
 }
 
-.mobile-section h2 {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 14px;
+/* ---- Section cards ---- */
+.mobile-card {
+    margin-top: 16px;
+    padding: 20px;
+    border-radius: var(--radius-xl);
+    background: var(--card-bg-color);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-sm);
 }
 
-.mobile-section h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 12px 0 6px;
-}
-
-.mobile-section p {
-    font-size: 14px;
-    opacity: 0.8;
-    line-height: 1.6;
-    margin: 0 0 8px;
-}
-
-.mobile-section ul {
-    margin: 0;
-    padding-left: 20px;
-}
-
-.mobile-section li {
-    font-size: 14px;
-    line-height: 1.6;
-    opacity: 0.85;
-    margin-bottom: 8px;
-}
-
-.mobile-section li strong {
-    color: var(--text-primary);
-}
-
-.mobile-section li small {
-    display: block;
-    opacity: 0.65;
-    font-size: 12px;
-    margin-top: 2px;
-}
-
-.mobile-skill-level {
-    display: inline-block;
-    margin-left: 8px;
-    padding: 1px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: capitalize;
-}
-
-.mobile-skill-level.level-proficient {
-    background: color-mix(in srgb, var(--accent-green, #33d17a) 20%, transparent);
-    color: var(--accent-green, #33d17a);
-}
-
-.mobile-skill-level.level-intermediate {
-    background: color-mix(in srgb, var(--accent-blue, #3584e4) 20%, transparent);
-    color: var(--accent-blue, #3584e4);
-}
-
-.mobile-skill-level.level-learning {
-    background: color-mix(in srgb, var(--accent-yellow, #f5c211) 20%, transparent);
-    color: var(--accent-yellow, #f5c211);
-}
-
-.mobile-skill-category {
+.mobile-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     margin-bottom: 16px;
 }
 
-.mobile-project-card {
-    background: var(--surface-2);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
+.mobile-card-icon {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--accent-subtle, color-mix(in srgb, var(--accent-bg-color) 14%, transparent));
+    color: var(--accent-color);
+    font-size: 19px;
 }
 
-.mobile-project-card h3 {
+.mobile-card-head h2 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.mobile-lead {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin: 0 0 18px;
+}
+
+/* ---- About info grid ---- */
+.mobile-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+    margin: 0;
+}
+
+.mobile-info-grid > div {
+    min-width: 0;
+}
+
+.mobile-info-grid dt {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    opacity: 0.75;
+    margin-bottom: 3px;
+}
+
+.mobile-info-grid dd {
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* ---- Skills ---- */
+.mobile-skill-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.mobile-skill-category h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+    margin: 0 0 10px;
+}
+
+.mobile-skill-category h3 i {
+    color: var(--accent-color);
+    font-size: 15px;
+}
+
+.mobile-skill-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mobile-skill-row {
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+}
+
+.mobile-skill-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.mobile-skill-name {
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--text-primary);
+}
+
+.mobile-skill-context {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 5px 0 0;
+}
+
+/* Proficiency dot meter */
+.mobile-skill-meter {
+    flex: 0 0 auto;
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.mobile-skill-meter .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--text-primary) 16%, transparent);
+}
+
+.mobile-skill-meter.level-proficient .dot.filled {
+    background: var(--accent-green, #2ec27e);
+}
+
+.mobile-skill-meter.level-intermediate .dot.filled {
+    background: var(--accent-blue, #3584e4);
+}
+
+.mobile-skill-meter.level-learning .dot.filled {
+    background: var(--accent-yellow, #e5a50a);
+}
+
+/* ---- Projects ---- */
+.mobile-projects {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mobile-project-card {
+    border-radius: var(--radius-lg);
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+}
+
+.mobile-project-media {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.mobile-project-body {
+    padding: 16px;
+}
+
+.mobile-project-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.mobile-project-title-row h3 {
     font-size: 16px;
-    margin: 0 0 4px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.mobile-badge {
+    flex: 0 0 auto;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.mobile-badge.wip {
+    color: var(--accent-yellow, #e5a50a);
+    background: color-mix(in srgb, var(--accent-yellow, #e5a50a) 16%, transparent);
 }
 
 .mobile-project-role {
-    font-size: 13px;
-    opacity: 0.6;
-    margin: 0 0 8px !important;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin: 4px 0 8px;
+}
+
+.mobile-project-summary {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 0 12px;
 }
 
 .mobile-tech-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin: 10px 0;
+    margin-bottom: 14px;
 }
 
 .mobile-tech-chip {
     display: inline-block;
     padding: 3px 10px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--view-fg-color) 8%, transparent);
-    border: 1px solid var(--border-color);
-    font-size: 12px;
-    font-weight: 500;
+    background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+    border: 1px solid var(--border-subtle);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
 }
 
-.mobile-social {
+.mobile-project-links {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
-    margin-top: 12px;
+    gap: 8px;
 }
 
+.mobile-project-links .mobile-btn {
+    flex: 1 1 auto;
+}
+
+/* ---- Contact ---- */
+.mobile-contact-email {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 14px;
+    border-radius: var(--radius-md);
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    word-break: break-all;
+    margin-bottom: 14px;
+}
+
+.mobile-contact-email i {
+    flex: 0 0 auto;
+    color: var(--accent-color);
+    font-size: 18px;
+}
+
+.mobile-contact-email:active {
+    background: var(--surface-2);
+}
+
+.mobile-social-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.mobile-social-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 13px 14px;
+    border-radius: var(--radius-md);
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition:
+        background 0.16s ease,
+        transform 0.16s ease;
+}
+
+.mobile-social-btn i {
+    font-size: 20px;
+    color: var(--accent-color);
+    margin-bottom: 4px;
+}
+
+.mobile-social-label {
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+.mobile-social-handle {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mobile-social-btn:active {
+    transform: scale(0.98);
+    background: var(--surface-2);
+}
+
+/* ---- Footer ---- */
 .mobile-footer {
     text-align: center;
-    padding: 32px 0 8px;
-    border-top: 1px solid var(--border-subtle);
+    padding: 28px 0 8px;
+    margin-top: 8px;
+}
+
+.mobile-footer .desktop-toggle {
+    width: 100%;
+    background: var(--surface-1);
 }
 
 .mobile-footer p {
     font-size: 12px;
-    opacity: 0.5;
-    margin: 12px 0 0;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    margin: 16px 0 0;
 }
 
-.desktop-toggle {
-    background: var(--surface-3) !important;
-    margin-bottom: 8px;
+/* ---- Entrance polish ---- */
+.mobile-hero,
+.mobile-card,
+.mobile-footer {
+    animation: mobileFadeUp 0.5s var(--ease-out-quad, ease) both;
+}
+
+.mobile-card:nth-of-type(1) {
+    animation-delay: 0.04s;
+}
+.mobile-card:nth-of-type(2) {
+    animation-delay: 0.08s;
+}
+.mobile-card:nth-of-type(3) {
+    animation-delay: 0.12s;
+}
+.mobile-card:nth-of-type(4) {
+    animation-delay: 0.16s;
+}
+
+@keyframes mobileFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .mobile-btn:active {
+    .mobile-hero,
+    .mobile-card,
+    .mobile-footer {
+        animation: none;
+    }
+
+    .mobile-status-dot {
+        animation: none;
+    }
+
+    .mobile-btn:active,
+    .mobile-social-btn:active,
+    .mobile-theme-toggle:active {
         transform: none;
     }
 }
