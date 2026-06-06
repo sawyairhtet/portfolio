@@ -28,7 +28,7 @@ export function BlogPost() {
                         <p className="ed-blog-empty">
                             That post doesn&apos;t exist or hasn&apos;t been published yet.
                         </p>
-                        <Link className="ed-blog-back" to="/blog">
+                        <Link className="ed-blog-back" to="/">
                             ← Back to writing
                         </Link>
                     </section>
@@ -45,11 +45,20 @@ export function BlogPost() {
             <Nav />
             <main id="main-content">
                 <article className="ed-section ed-container ed-post">
-                    <header className="ed-post-head ed-reveal">
+                    <header className="ed-post-head ed-reveal" id="top">
                         <span className="ed-post-meta">{formatPostDate(post.meta.date)}</span>
                         <h1 className="ed-post-title">{post.meta.title}</h1>
                         {post.meta.summary && (
                             <p className="ed-post-summary">{post.meta.summary}</p>
+                        )}
+                        {post.meta.tags.length > 0 && (
+                            <ul className="ed-tags ed-post-tags">
+                                {post.meta.tags.map(tag => (
+                                    <li className="ed-tag" key={tag}>
+                                        {tag}
+                                    </li>
+                                ))}
+                            </ul>
                         )}
                     </header>
 
@@ -78,7 +87,7 @@ export function BlogPost() {
                         </ReactMarkdown>
                     </div>
 
-                    <Link className="ed-blog-back" to="/blog">
+                    <Link className="ed-blog-back" to="/">
                         ← Back to writing
                     </Link>
                 </article>

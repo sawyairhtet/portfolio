@@ -5,7 +5,6 @@ import { Experience } from './sections/Experience';
 import { Work } from './sections/Work';
 import { Skills } from './sections/Skills';
 import { Resume } from './sections/Resume';
-import { BlogTeaser } from './sections/BlogTeaser';
 import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
 
@@ -144,9 +143,17 @@ function About() {
     );
 }
 
-export function EditorialSite() {
+// The portfolio, moved off the front door to its own /work route. This is the
+// former single-page homepage (Hero → About → Experience → Projects → Skills →
+// Résumé → Contact); the homepage is now the writing feed (see Home.tsx).
+export function WorkPage() {
     return (
         <div className="ed">
+            <title>Work — Saw Ye Htet</title>
+            <meta
+                name="description"
+                content="The work of Saw Ye Htet — experience, projects, skills, and résumé. IT support & operations."
+            />
             <Nav />
             <main id="main-content">
                 <Hero />
@@ -155,7 +162,6 @@ export function EditorialSite() {
                 <Work />
                 <Skills />
                 <Resume />
-                <BlogTeaser />
                 <Contact />
             </main>
             <Footer />

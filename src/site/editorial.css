@@ -363,43 +363,78 @@ body:has(.ed) {
 
 /* ============================================================
    SECTION SHELL
+   Each section is a clearly bounded block: a loud display title
+   over a mono "NN / DESCRIPTOR" eyebrow, and every other section
+   sits on a full-bleed paper-2 tone band for spatial rhythm.
    ============================================================ */
 .ed-section {
+    position: relative;
+    isolation: isolate; /* contains the tint band's -1 z-index */
     padding-top: clamp(56px, 9vh, 128px);
     padding-bottom: clamp(8px, 2vh, 24px);
     scroll-margin-top: 80px;
 }
 
+/* alternating full-bleed tone band (applied to every other section) */
+.ed-section--tint {
+    padding-bottom: clamp(48px, 8vh, 104px);
+}
+.ed-section--tint::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: 50%;
+    width: 100vw; /* safe: html/body/.ed all clip overflow-x */
+    transform: translateX(-50%);
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    z-index: -1;
+}
+
 .ed-section-head {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+        'num   meta'
+        'title title';
+    column-gap: 14px;
+    row-gap: clamp(12px, 2vh, 20px);
     align-items: baseline;
-    gap: 18px;
-    padding-bottom: 22px;
-    border-bottom: 1px solid var(--ink);
-    margin-bottom: clamp(32px, 5vh, 64px);
+    padding-bottom: clamp(18px, 2.4vh, 28px);
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: clamp(28px, 4.5vh, 56px);
 }
 .ed-section-num {
+    grid-area: num;
     font-family: var(--mono);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     letter-spacing: 0.1em;
     color: var(--accent);
 }
-.ed-section-title {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 0.82rem;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink);
-}
 .ed-section-meta {
-    margin-left: auto;
+    grid-area: meta;
     font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--ink-3);
+}
+.ed-section-meta::before {
+    content: '/';
+    margin-right: 10px;
+    color: var(--line-2);
+}
+.ed-section-title {
+    grid-area: title;
+    margin: 0;
+    font-family: var(--sans);
+    font-size: clamp(2.1rem, 5.5vw, 4rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    text-transform: none;
+    color: var(--ink);
 }
 
 /* ============================================================
@@ -1443,4 +1478,134 @@ body:has(.ed) {
     .ed-blog-arrow {
         display: none;
     }
+}
+
+/* ============================================================
+   HOMEPAGE — writing-first masthead + feed
+   The front door: a compact masthead (name, tagline, intro, a
+   can't-miss link to /work) over the newest-first post feed.
+   ============================================================ */
+.ed-masthead {
+    padding-top: clamp(44px, 7.5vh, 96px);
+    padding-bottom: clamp(30px, 5vh, 52px);
+    border-bottom: 1px solid var(--line);
+}
+.ed-masthead .ed-eyebrow {
+    display: block;
+    margin-bottom: clamp(16px, 3vh, 28px);
+}
+.ed-masthead-name {
+    margin: 0;
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+}
+.ed-masthead-name .dot {
+    color: var(--accent);
+}
+.ed-masthead-tagline {
+    margin: clamp(14px, 2vh, 20px) 0 0;
+    font-family: var(--mono);
+    font-size: clamp(0.78rem, 1vw, 0.92rem);
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+}
+.ed-masthead-intro {
+    margin: clamp(18px, 3vh, 26px) 0 0;
+    max-width: 52ch;
+    font-size: clamp(1.08rem, 1.6vw, 1.38rem);
+    line-height: 1.45;
+    color: var(--ink-2);
+    text-wrap: balance;
+}
+.ed-home-cta {
+    display: block;
+    margin-top: clamp(22px, 3.5vh, 32px);
+    max-width: 56ch;
+    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    line-height: 1.5;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color 0.18s ease;
+}
+.ed-home-cta strong {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 1px solid var(--ink);
+    transition:
+        color 0.18s ease,
+        border-color 0.18s ease;
+}
+.ed-home-cta .a {
+    display: inline-block;
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+}
+.ed-home-cta:hover {
+    color: var(--ink);
+}
+.ed-home-cta:hover strong {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+.ed-home-cta:hover .a {
+    transform: translateX(3px);
+}
+
+.ed-feed {
+    padding-top: clamp(34px, 6vh, 72px);
+    padding-bottom: clamp(40px, 7vh, 96px);
+}
+.ed-feed-label {
+    margin: 0 0 clamp(6px, 1.5vh, 14px);
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+}
+.ed-feed-empty {
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+}
+.ed-feed-empty p {
+    margin: 0 0 16px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--ink-3);
+}
+
+/* ---- featured cluster (homepage; renders only at >= 3 published posts) ---- */
+.ed-featured {
+    margin-bottom: clamp(36px, 6vh, 64px);
+    padding-bottom: clamp(28px, 4vh, 44px);
+    border-bottom: 1px solid var(--ink);
+}
+
+/* ---- tag labels (feed items + post header) ---- */
+.ed-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+    list-style: none;
+    padding: 0;
+}
+.ed-tag {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+}
+.ed-tag::before {
+    content: '#';
+    color: var(--line-2);
+    margin-right: 1px;
+}
+.ed-post-tags {
+    margin-top: 16px;
 }

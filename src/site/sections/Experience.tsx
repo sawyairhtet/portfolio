@@ -2,7 +2,7 @@ import { EXPERIENCE } from '../../config/data';
 
 export function Experience() {
     return (
-        <section className="ed-section ed-container" id="experience">
+        <section className="ed-section ed-section--tint ed-container" id="experience">
             <div className="ed-section-head">
                 <span className="ed-section-num">02</span>
                 <h2 className="ed-section-title">Experience</h2>

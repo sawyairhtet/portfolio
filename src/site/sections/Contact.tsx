@@ -118,7 +118,7 @@ export function Contact() {
     };
 
     return (
-        <section className="ed-section ed-container" id="contact">
+        <section className="ed-section ed-section--tint ed-container" id="contact">
             <div className="ed-section-head">
                 <span className="ed-section-num">06</span>
                 <h2 className="ed-section-title">Contact</h2>

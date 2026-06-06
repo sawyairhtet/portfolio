@@ -1,6 +1,9 @@
 export const PROFILE = {
     name: 'Saw Ye Htet',
     role: 'IT Support & Operations Specialist',
+    // Writing-first homepage tagline (sits under the name in the masthead).
+    // Placeholder — Saw to rewrite in his own voice.
+    tagline: 'IT support & operations — and notes on building things.',
     roleTarget: 'Application Support / Production Support / Technical Analyst',
     headline:
         'IT support specialist targeting application support, production support, and technical analyst roles in Singapore.',

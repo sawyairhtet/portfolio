@@ -73,12 +73,18 @@
   to = "/index.html"
   status = 200
 
-# Blog routes (/blog, /blog/:slug) resolve to the SPA on direct load/refresh.
-# Redundant with the catch-all below, but explicit for parity with /app/*.
+# Legacy blog URLs → new shapes: /blog → the writing feed at /, and
+# /blog/:slug → the clean root slug /:slug. 301 so old links and search
+# results migrate cleanly. Must precede the SPA catch-all below.
+[[redirects]]
+  from = "/blog"
+  to = "/"
+  status = 301
+
 [[redirects]]
   from = "/blog/*"
-  to = "/index.html"
-  status = 200
+  to = "/:splat"
+  status = 301
 
 # SPA catch-all: deep links like /desktop and client routes resolve to the app.
 # Static files (offline.html, 404.html, assets) are served before this applies.

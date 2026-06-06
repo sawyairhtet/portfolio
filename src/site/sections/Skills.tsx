@@ -2,7 +2,7 @@ import { EDITORIAL_SKILLS, LEARNING_NOW } from '../../config/data';
 
 export function Skills() {
     return (
-        <section className="ed-section ed-container" id="skills">
+        <section className="ed-section ed-section--tint ed-container" id="skills">
             <div className="ed-section-head">
                 <span className="ed-section-num">04</span>
                 <h2 className="ed-section-title">Skills</h2>

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { DeviceProvider } from './context/DeviceContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { SoundProvider } from './context/SoundContext';
@@ -7,10 +7,14 @@ import { WindowManagerProvider } from './context/WindowManagerContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { PreferencesProvider } from './context/PreferencesContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { EditorialSite } from './site/EditorialSite';
+import { Home } from './site/Home';
 
-// The interactive desktop simulation is now a showcased artifact at /desktop,
-// not the front door. Lazy-load it so the editorial homepage ships lean.
+// The writing feed is the front door (eager). The portfolio moved to /work, and
+// the interactive desktop simulation is a showcased artifact at /desktop — both
+// lazy-loaded so the homepage feed ships lean (no react-hook-form/zod, no
+// desktop bundle, no react-markdown).
+const WorkPage = lazy(() => import('./site/WorkPage').then(m => ({ default: m.WorkPage })));
+const NotFound = lazy(() => import('./site/NotFound').then(m => ({ default: m.NotFound })));
 const DesktopShell = lazy(() =>
     import('./components/shell/DesktopShell').then(m => ({ default: m.DesktopShell }))
 );
@@ -18,10 +22,16 @@ const DeepLinkHandler = lazy(() =>
     import('./components/shell/DeepLinkHandler').then(m => ({ default: m.DeepLinkHandler }))
 );
 
-// Blog pages live inside the editorial chrome. BlogPost carries react-markdown,
-// so both are lazy-loaded to keep that weight off the homepage bundle.
-const Blog = lazy(() => import('./site/Blog').then(m => ({ default: m.Blog })));
+// Posts render at clean root slugs (/<slug>). BlogPost carries react-markdown, so
+// it stays lazy to keep that weight off the homepage bundle.
 const BlogPost = lazy(() => import('./site/BlogPost').then(m => ({ default: m.BlogPost })));
+
+// Legacy /blog/:slug → /:slug, preserving the slug (paired with a netlify 301 for
+// direct hits). The old /blog index redirects to the feed at /.
+function BlogRedirect() {
+    const { slug } = useParams<{ slug: string }>();
+    return <Navigate to={`/${slug ?? ''}`} replace />;
+}
 
 function App() {
     return (
@@ -35,12 +45,10 @@ function App() {
                                     <NotificationProvider>
                                         <Suspense fallback={null}>
                                             <Routes>
-                                                <Route path="/" element={<EditorialSite />} />
-                                                <Route path="/blog" element={<Blog />} />
-                                                <Route
-                                                    path="/blog/:slug"
-                                                    element={<BlogPost />}
-                                                />
+                                                {/* Explicit routes first, then the
+                                                    dynamic post slug, then the 404. */}
+                                                <Route path="/" element={<Home />} />
+                                                <Route path="/work" element={<WorkPage />} />
                                                 <Route
                                                     path="/desktop"
                                                     element={<DesktopShell />}
@@ -49,7 +57,16 @@ function App() {
                                                     path="/app/:appId"
                                                     element={<DeepLinkHandler />}
                                                 />
-                                                <Route path="*" element={<EditorialSite />} />
+                                                <Route
+                                                    path="/blog"
+                                                    element={<Navigate to="/" replace />}
+                                                />
+                                                <Route
+                                                    path="/blog/:slug"
+                                                    element={<BlogRedirect />}
+                                                />
+                                                <Route path="/:slug" element={<BlogPost />} />
+                                                <Route path="*" element={<NotFound />} />
                                             </Routes>
                                         </Suspense>
                                     </NotificationProvider>
