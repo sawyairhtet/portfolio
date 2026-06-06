@@ -1369,9 +1369,22 @@ body:has(.ed) {
     text-decoration: none;
     transition: color 0.18s ease;
 }
+.ed-blog-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
 .ed-blog-date {
     font-family: var(--mono);
     font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+}
+.ed-blog-readtime {
+    font-family: var(--mono);
+    font-size: 0.66rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ink-3);

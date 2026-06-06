@@ -28,8 +28,7 @@ function Masthead() {
                 otherwise.
             </p>
             <Link className="ed-home-cta" to="/work">
-                Here to see the work, not the words? My experience and projects live on the{' '}
-                <strong>work page</strong>
+                My experience and projects are on the <strong>work page</strong>
                 <span className="a">→</span>
             </Link>
         </header>
@@ -42,7 +41,10 @@ function PostList({ posts }: { posts: BlogPost[] }) {
             {posts.map(({ meta }) => (
                 <li className="ed-blog-item" key={meta.slug}>
                     <Link className="ed-blog-link" to={`/${meta.slug}`}>
-                        <span className="ed-blog-date">{formatPostDate(meta.date)}</span>
+                        <span className="ed-blog-meta">
+                            <span className="ed-blog-date">{formatPostDate(meta.date)}</span>
+                            <span className="ed-blog-readtime">{meta.readingMinutes} min read</span>
+                        </span>
                         <span className="ed-blog-titlewrap">
                             <span className="ed-blog-title">{meta.title}</span>
                             {meta.summary && (

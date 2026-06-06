@@ -46,7 +46,9 @@ export function BlogPost() {
             <main id="main-content">
                 <article className="ed-section ed-container ed-post">
                     <header className="ed-post-head ed-reveal" id="top">
-                        <span className="ed-post-meta">{formatPostDate(post.meta.date)}</span>
+                        <span className="ed-post-meta">
+                            {formatPostDate(post.meta.date)} · {post.meta.readingMinutes} min read
+                        </span>
                         <h1 className="ed-post-title">{post.meta.title}</h1>
                         {post.meta.summary && (
                             <p className="ed-post-summary">{post.meta.summary}</p>

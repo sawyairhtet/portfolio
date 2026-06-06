@@ -4,21 +4,27 @@
 
 ## ⚡ Current architecture (read first)
 
-The **front door (`/`) is an Editorial / Swiss single-page site** in `src/site/` —
-big display type, strict grid, hairline structure, one signal-red accent, warm
-"paper" light theme, self-hosted Adwaita Sans/Mono. Sections: Hero · About · Work ·
-Skills · Résumé · Contact · Footer. Styles live in `src/site/editorial.css` (scoped
-under `.ed`, independent of the GNOME token system). Content still comes from
-`src/config/data.ts` + `src/config/profile.ts`.
+The site is **writing-first**. The **front door (`/`) is a writing feed**
+(`src/site/Home.tsx`): a compact masthead (name · tagline · intro · a link to
+`/work`) over the newest-first list of published posts. The **portfolio lives at
+`/work`** (`src/site/WorkPage.tsx`) — the single-page Editorial / Swiss layout: Hero ·
+About · Experience · Projects · Skills · Résumé · Contact. Individual posts render at
+**clean root slugs** (`/<slug>`, e.g. `/the-plain-door`). It all shares one Editorial /
+Swiss language: big display type, strict grid, hairline structure, one signal-red
+accent, warm "paper" light theme, self-hosted Adwaita Sans/Mono. Styles live in
+`src/site/editorial.css` (scoped under `.ed`, independent of the GNOME token system).
+Portfolio content comes from `src/config/data.ts` + `src/config/profile.ts`; posts are
+Markdown in `src/site/blog/posts/*.md` (loader: `src/site/blog/posts.ts`).
 
 The **GNOME/Fedora desktop simulation is preserved as a showcased artifact at
 `/desktop`** (and `/app/:appId` deep links). It is **lazy-loaded**, so it is not
-shipped on the editorial homepage. Everything under `src/components/` (shell,
-window, apps) belongs to that desktop artifact. The "Do-Not-Touch Zones" below
-still apply **to the `/desktop` experience** — they are no longer the main site.
+shipped on the homepage. Everything under `src/components/` (shell, window, apps)
+belongs to that desktop artifact. The "Do-Not-Touch Zones" below still apply **to the
+`/desktop` experience** — it is not the main site.
 
-When the task is about the primary portfolio, work in `src/site/`. When it is about
-the interactive desktop demo, work in `src/components/`.
+When the task is about the primary site (feed, posts, or the `/work` portfolio), work
+in `src/site/`. When it is about the interactive desktop demo, work in
+`src/components/`.
 
 ## Stack & Key Dependencies
 
@@ -28,7 +34,7 @@ the interactive desktop demo, work in `src/components/`.
 | Language  | TypeScript                                       | 5       | Strict, `noEmit`, bundler module resolution                                                                                 |
 | Bundler   | Vite                                             | 8       | Dev on `:3000`, builds to `dist/`                                                                                           |
 | Styling   | CSS Layers (vanilla)                             | —       | `@layer reset, tokens, base, components, utilities` ordering. Predominantly vanilla CSS — no Tailwind                       |
-| Routing   | React Router DOM                                 | 7       | BrowserRouter, two routes: `/` and `/app/:appId`                                                                            |
+| Routing   | React Router DOM                                 | 7       | BrowserRouter. Routes: `/` (feed), `/work`, `/:slug` (posts), `/desktop`, `/app/:appId`; legacy `/blog*` → 301; `*` → 404   |
 | Forms     | React Hook Form + Zod                            | 7 / 4   | Used by ContactApp; code-split into `vendor-forms` chunk                                                                    |
 | Terminal  | @xterm/xterm                                     | 6       | Real xterm.js instance inside TerminalApp                                                                                   |
 | Icons     | @phosphor-icons/react                            | 2       | Single icon system. String keys → Phosphor components via `src/components/ui/Icon.tsx`. Split into the `vendor-icons` chunk |
@@ -36,7 +42,7 @@ the interactive desktop demo, work in `src/components/`.
 | Testing   | Vitest + Testing Library + jsdom                 | 4 / 16  | `vmForks` pool, globals enabled                                                                                             |
 | Linting   | ESLint flat config + Prettier                    | 9 / 3   | 4-space indent, single quotes, trailing comma es5                                                                           |
 | Analytics | Plausible                                        | —       | Script tag in index.html, domain `sawyehtet.com`                                                                            |
-| Deploy    | Netlify                                          | —       | Build: `npm run build`, publish: `dist/`, SPA rewrite for `/app/*`                                                          |
+| Deploy    | Netlify                                          | —       | Build: `npm run build`, publish: `dist/`; SPA rewrite `/app/*`, 301s for legacy `/blog*`, RSS at `/rss.xml`                 |
 | PWA       | Service worker (`public/sw.js`) + manifest.json  | —       | Caches static assets, offline fallback page                                                                                 |
 
 ## Entry Point & Routing
@@ -45,17 +51,23 @@ the interactive desktop demo, work in `src/components/`.
 index.html                          ← Vite HTML entry, loads /src/main.tsx
   └─ src/main.tsx                   ← ReactDOM.createRoot, imports main.css
        └─ src/App.tsx               ← BrowserRouter + 6 context providers
-            ├─ /                    → EditorialSite        (src/site/, primary portfolio)
-            ├─ /desktop             → DesktopShell         (lazy, the desktop artifact)
-            ├─ /app/:appId          → DeepLinkHandler      (lazy, opens a desktop window)
-            └─ *                    → EditorialSite        (catch-all → primary site)
+            ├─ /                    → Home            (src/site/, the writing feed — eager)
+            ├─ /work                → WorkPage        (lazy, the portfolio)
+            ├─ /desktop             → DesktopShell    (lazy, the desktop artifact)
+            ├─ /app/:appId          → DeepLinkHandler (lazy, opens a desktop window)
+            ├─ /blog                → Navigate → /          (legacy redirect)
+            ├─ /blog/:slug          → Navigate → /:slug     (legacy redirect)
+            ├─ /:slug               → BlogPost        (lazy, a published post; unknown/draft → not-found)
+            └─ *                    → NotFound        (editorial 404)
 ```
 
-`DesktopShell` and `DeepLinkHandler` are `React.lazy`-loaded inside a `Suspense`
-boundary, so the editorial homepage does not ship the desktop bundle
-(`vendor-icons`, `TerminalApp`, `DesktopShell`, framer-motion are all desktop-only).
+`Home` is eager (the landing feed); `WorkPage`, `BlogPost`, `NotFound`, `DesktopShell`,
+and `DeepLinkHandler` are `React.lazy`-loaded inside a `Suspense` boundary, so the
+homepage feed ships lean — `vendor-forms` (react-hook-form/zod, via the Contact
+section) rides with `/work`, `react-markdown` rides with `BlogPost`, and the desktop
+bundle (`vendor-icons`, `TerminalApp`, framer-motion) stays on `/desktop`.
 
-**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` and a catch-all `/*` → `/index.html` (status 200) to support SPA refresh of `/desktop` and deep links.
+**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` and a catch-all `/*` → `/index.html` (status 200) for SPA refresh; legacy `/blog` → `/` and `/blog/*` → `/:splat` are **301 redirects** (`netlify.toml`). The RSS feed at `/rss.xml` is generated into `dist/` at build time by `scripts/generate-rss.mjs` (chained into `npm run build`).
 
 **Head bootstrap:** `public/head-bootstrap.js` runs synchronously before React to read `localStorage('theme')` and set `data-theme` on `<html>`, preventing a dark→light flash.
 
@@ -180,24 +192,26 @@ npm run format           # Prettier write
 npm run format:check     # Prettier check
 
 # Build
-npm run build            # typecheck → vite build → dist/
+npm run build            # typecheck → vite build → generate:rss → dist/
 npm run preview          # Serve dist/ locally
 
 # Utilities
 npm run generate:og      # Puppeteer script to regenerate OG preview image
+npm run generate:rss     # Generate dist/rss.xml from published posts (also runs in build)
 ```
 
 ## Build & Deploy
 
-- **Build:** `npm run build` → typechecks then produces `dist/` with manual chunks:
+- **Build:** `npm run build` → typechecks, runs `vite build`, then `scripts/generate-rss.mjs` (writes `dist/rss.xml`). Manual chunks:
     - `vendor-react` (react, react-dom, scheduler)
     - `vendor-router` (react-router)
     - `vendor-motion` (framer-motion)
     - `vendor-icons` (@phosphor-icons/react)
-    - `vendor-forms` (zod, react-hook-form) — only loaded with ContactApp
+    - `vendor-forms` (zod, react-hook-form) — only loaded with `/work`'s Contact section + the desktop ContactApp
 - **Multi-page:** Vite builds `index.html`, `offline.html`, and `404.html` as separate entries
+- **RSS:** `scripts/generate-rss.mjs` re-reads `src/site/blog/posts/*.md` (a standalone Node script can't use the Vite `import.meta.glob` loader — keep its frontmatter parser in sync with `posts.ts`) and emits `dist/rss.xml`. Generated at build time, so `/rss.xml` 404s under `npm run dev` but serves on the built/preview/live site.
 - **Deploy target:** Netlify (config in `netlify.toml`). Build command: `npm run build`, publish: `dist/`
-- **SPA rewrite:** `/app/*` → `/index.html` (status 200) for deep-link support
+- **SPA rewrite:** `/app/*` and catch-all `/*` → `/index.html` (status 200); legacy `/blog` → `/` and `/blog/*` → `/:splat` are **301 redirects**
 - **CI:** GitHub Actions (`.github/workflows/ci.yml`) on push/PR to `main`: checkout → Node 22 → `npm ci` → typecheck → lint → test → build
 
 ## Tests

@@ -1,11 +1,15 @@
 /**
  * RSS Generator
- * Builds dist/rss.xml from the published Markdown posts in
+ * Builds public/rss.xml from the published Markdown posts in
  * src/site/blog/posts/*.md, newest first. This is a standalone Node script — the
  * app's loader (src/site/blog/posts.ts) uses Vite's import.meta.glob, which isn't
  * available outside the bundler — so it re-reads and parses the same frontmatter.
- * Keep this parser in sync with posts.ts. Runs as the last step of the build:
- *   npm run build  →  tsc --noEmit && vite build && node scripts/generate-rss.mjs
+ * Keep this parser in sync with posts.ts. Output goes to public/ so /rss.xml works
+ * in local dev (Vite serves public/ at root) AND in the build (Vite copies it to
+ * dist/). Runs before vite build:
+ *   npm run build  →  tsc --noEmit && node scripts/generate-rss.mjs && vite build
+ * Channel/item dates derive from post dates only (no run timestamp), so the
+ * committed file is deterministic and doesn't churn between builds.
  */
 
 import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
@@ -17,7 +21,7 @@ const __dirname = dirname(__filename);
 
 const SITE_URL = 'https://sawyehtet.com'; // matches package.json "homepage"
 const POSTS_DIR = join(__dirname, '../src/site/blog/posts');
-const OUT_DIR = join(__dirname, '../dist');
+const OUT_DIR = join(__dirname, '../public');
 const OUT_FILE = join(OUT_DIR, 'rss.xml');
 
 // --- frontmatter parsing (mirror of src/site/blog/posts.ts) ---
@@ -88,14 +92,12 @@ const posts = readdirSync(POSTS_DIR)
     .filter(post => !post.draft)
     .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
-const now = new Date().toUTCString();
+const toRfc822 = date => (Number.isNaN(Date.parse(date)) ? null : new Date(date).toUTCString());
 
 const items = posts
     .map(post => {
         const link = `${SITE_URL}/${post.slug}`;
-        const pubDate = Number.isNaN(Date.parse(post.date))
-            ? now
-            : new Date(post.date).toUTCString();
+        const pubDate = toRfc822(post.date);
         const categories = post.tags
             .map(tag => `    <category>${escapeXml(tag)}</category>`)
             .join('\n');
@@ -103,11 +105,13 @@ const items = posts
     <title>${escapeXml(post.title)}</title>
     <link>${escapeXml(link)}</link>
     <guid isPermaLink="true">${escapeXml(link)}</guid>
-    <description>${escapeXml(post.summary)}</description>
-    <pubDate>${pubDate}</pubDate>${categories ? '\n' + categories : ''}
+    <description>${escapeXml(post.summary)}</description>${pubDate ? `\n    <pubDate>${pubDate}</pubDate>` : ''}${categories ? '\n' + categories : ''}
   </item>`;
     })
     .join('\n');
+
+// Deterministic channel date (newest post) so the committed file doesn't churn.
+const lastBuild = posts.length ? toRfc822(posts[0].date) : null;
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -116,8 +120,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
   <link>${SITE_URL}/</link>
   <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
   <description>Notes on IT support, troubleshooting, and building software.</description>
-  <language>en</language>
-  <lastBuildDate>${now}</lastBuildDate>
+  <language>en</language>${lastBuild ? `\n  <lastBuildDate>${lastBuild}</lastBuildDate>` : ''}
 ${items}
 </channel>
 </rss>
@@ -125,4 +128,4 @@ ${items}
 
 if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(OUT_FILE, xml, 'utf8');
-console.log(`RSS: wrote ${posts.length} item(s) → dist/rss.xml`);
+console.log(`RSS: wrote ${posts.length} item(s) → public/rss.xml`);

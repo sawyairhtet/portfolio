@@ -13,6 +13,7 @@ export interface BlogPostMeta {
     draft: boolean;
     featured: boolean;
     tags: string[];
+    readingMinutes: number; // estimated, from body word count
 }
 
 export interface BlogPost {
@@ -70,6 +71,12 @@ function deriveSlug(path: string): string {
     return file.replace(/\.md$/, '');
 }
 
+// Rough reading-time estimate at ~200 words/min, floored at 1 minute.
+function estimateReadingMinutes(body: string): number {
+    const words = body.trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.round(words / 200));
+}
+
 // Parse an optional `tags` frontmatter value into a string array. Accepts both
 // `tags: [meta, design]` and `tags: meta, design`, with optional quotes per item.
 // Written with array methods only (no bracket-indexing) so eslint-plugin-security
@@ -110,6 +117,7 @@ function buildPosts(): BlogPost[] {
                 draft: data.get('draft') === 'true',
                 featured: data.get('featured') === 'true',
                 tags: parseTags(data.get('tags')),
+                readingMinutes: estimateReadingMinutes(body),
             },
             body,
         });

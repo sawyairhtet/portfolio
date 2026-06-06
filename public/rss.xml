@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Saw Ye Htet — Writing</title>
+  <link>https://sawyehtet.com/</link>
+  <atom:link href="https://sawyehtet.com/rss.xml" rel="self" type="application/rss+xml" />
+  <description>Notes on IT support, troubleshooting, and building software.</description>
+  <language>en</language>
+  <lastBuildDate>Sat, 06 Jun 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>The Long Way to a Plain Door</title>
+    <link>https://sawyehtet.com/the-plain-door</link>
+    <guid isPermaLink="true">https://sawyehtet.com/the-plain-door</guid>
+    <description>The first version of this site was a working desktop you could click around inside. I was proud of it. Then I hid it behind a door and put a plain page in front, and I think that was the better decision. This is the reasoning.</description>
+    <pubDate>Sat, 06 Jun 2026 00:00:00 GMT</pubDate>
+    <category>meta</category>
+    <category>design</category>
+  </item>
+</channel>
+</rss>

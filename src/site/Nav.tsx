@@ -17,7 +17,11 @@ export function Nav() {
                         Work
                     </Link>
                     {hasPublishedPosts && (
-                        <a className="ed-nav-link" href="/rss.xml">
+                        <a
+                            className="ed-nav-link"
+                            href="/rss.xml"
+                            title="RSS feed — paste this URL into a reader app to follow new posts"
+                        >
                             RSS
                         </a>
                     )}
