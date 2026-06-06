@@ -18,6 +18,11 @@ const DeepLinkHandler = lazy(() =>
     import('./components/shell/DeepLinkHandler').then(m => ({ default: m.DeepLinkHandler }))
 );
 
+// Blog pages live inside the editorial chrome. BlogPost carries react-markdown,
+// so both are lazy-loaded to keep that weight off the homepage bundle.
+const Blog = lazy(() => import('./site/Blog').then(m => ({ default: m.Blog })));
+const BlogPost = lazy(() => import('./site/BlogPost').then(m => ({ default: m.BlogPost })));
+
 function App() {
     return (
         <ErrorBoundary level="app">
@@ -31,6 +36,11 @@ function App() {
                                         <Suspense fallback={null}>
                                             <Routes>
                                                 <Route path="/" element={<EditorialSite />} />
+                                                <Route path="/blog" element={<Blog />} />
+                                                <Route
+                                                    path="/blog/:slug"
+                                                    element={<BlogPost />}
+                                                />
                                                 <Route
                                                     path="/desktop"
                                                     element={<DesktopShell />}

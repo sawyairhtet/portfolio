@@ -73,6 +73,13 @@
   to = "/index.html"
   status = 200
 
+# Blog routes (/blog, /blog/:slug) resolve to the SPA on direct load/refresh.
+# Redundant with the catch-all below, but explicit for parity with /app/*.
+[[redirects]]
+  from = "/blog/*"
+  to = "/index.html"
+  status = 200
+
 # SPA catch-all: deep links like /desktop and client routes resolve to the app.
 # Static files (offline.html, 404.html, assets) are served before this applies.
 [[redirects]]

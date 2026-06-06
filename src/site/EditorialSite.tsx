@@ -1,9 +1,11 @@
 import './editorial.css';
 import { PROFILE } from '../config/profile';
+import { Nav } from './Nav';
 import { Experience } from './sections/Experience';
 import { Work } from './sections/Work';
 import { Skills } from './sections/Skills';
 import { Resume } from './sections/Resume';
+import { BlogTeaser } from './sections/BlogTeaser';
 import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
 
@@ -15,39 +17,6 @@ const FOCUS_AREAS = [
     'API Testing & QA',
     'IT Service Management (ITIL)',
 ];
-
-function Nav() {
-    return (
-        <header className="ed-nav">
-            <div className="ed-nav-inner ed-container">
-                <a className="ed-wordmark" href="#top">
-                    Saw Ye Htet<span className="dot">.</span>
-                </a>
-                <nav className="ed-nav-links" aria-label="Primary">
-                    <a className="ed-nav-link" href="#about">
-                        About
-                    </a>
-                    <a className="ed-nav-link" href="#experience">
-                        Experience
-                    </a>
-                    <a className="ed-nav-link" href="#projects">
-                        Projects
-                    </a>
-                    <a className="ed-nav-link" href="#skills">
-                        Skills
-                    </a>
-                    <a className="ed-nav-link" href="#contact">
-                        Contact
-                    </a>
-                </nav>
-                <span className="ed-nav-status">
-                    <span className="ed-status-dot" />
-                    Open to work
-                </span>
-            </div>
-        </header>
-    );
-}
 
 function Hero() {
     return (
@@ -186,6 +155,7 @@ export function EditorialSite() {
                 <Work />
                 <Skills />
                 <Resume />
+                <BlogTeaser />
                 <Contact />
             </main>
             <Footer />
