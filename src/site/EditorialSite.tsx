@@ -1,5 +1,6 @@
 import './editorial.css';
 import { PROFILE } from '../config/profile';
+import { Experience } from './sections/Experience';
 import { Work } from './sections/Work';
 import { Skills } from './sections/Skills';
 import { Resume } from './sections/Resume';
@@ -26,8 +27,11 @@ function Nav() {
                     <a className="ed-nav-link" href="#about">
                         About
                     </a>
-                    <a className="ed-nav-link" href="#work">
-                        Work
+                    <a className="ed-nav-link" href="#experience">
+                        Experience
+                    </a>
+                    <a className="ed-nav-link" href="#projects">
+                        Projects
                     </a>
                     <a className="ed-nav-link" href="#skills">
                         Skills
@@ -91,7 +95,7 @@ function Hero() {
                     </div>
                     <div className="ed-spec-row">
                         <dt className="ed-spec-key">Stack</dt>
-                        <dd className="ed-spec-val">SQL · Linux · Java · React</dd>
+                        <dd className="ed-spec-val">SQL · Linux · Python · React</dd>
                     </div>
                     <div className="ed-spec-row">
                         <dt className="ed-spec-key">Status</dt>
@@ -139,12 +143,11 @@ function About() {
                 <div>
                     <p className="ed-lead">
                         I turn rough problems into{' '}
-                        <span className="accent">documented, repeatable fixes</span> — and I built
-                        this site to prove it.
+                        <span className="accent">documented, repeatable fixes</span>.
                     </p>
                     <div className="ed-prose">
                         <p>
-                            I'm comfortable in SQL, Linux, and Java, and I gravitate toward the work
+                            I'm comfortable in SQL, Linux, and Python, and I gravitate toward the work
                             most people avoid: reading stack traces, tailing logs, and chasing a bug
                             to its actual root cause instead of patching the symptom.
                         </p>
@@ -179,6 +182,7 @@ export function EditorialSite() {
             <main id="main-content">
                 <Hero />
                 <About />
+                <Experience />
                 <Work />
                 <Skills />
                 <Resume />

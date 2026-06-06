@@ -5,7 +5,7 @@ export const PROFILE = {
     headline:
         'IT support specialist targeting application support, production support, and technical analyst roles in Singapore.',
     summary:
-        'Recent Singapore Polytechnic IT graduate with hands-on SQL, Linux, and Java skills. Targeting application support and production support roles where systematic troubleshooting, log analysis, and attention to detail matter. Built this React + TypeScript desktop portfolio as technical proof of problem-solving ability.',
+        'Recent Singapore Polytechnic IT graduate with hands-on SQL, Linux, and Python skills. Targeting application support and production support roles where systematic troubleshooting, log analysis, and attention to detail matter.',
     subtitle: 'Application Support · Production Support · Technical Analyst',
     secondaryTarget: 'QA / API Testing',
     carryOverTarget: 'IT Service Management / ITIL',
@@ -14,7 +14,7 @@ export const PROFILE = {
     resumePath: '/resume/SawYeHtet_Resume.pdf',
     availability: 'Open to opportunities',
     location: 'Singapore / remote-friendly',
-    primaryStack: ['SQL', 'Linux', 'Java', 'API Testing', 'React + TypeScript'],
+    primaryStack: ['SQL', 'Linux', 'Python', 'API Testing', 'React + TypeScript'],
 };
 
 export const SOCIAL_LINKS = [
@@ -26,11 +26,11 @@ export const SOCIAL_LINKS = [
         terminal: 'github.com/sawyairhtet',
     },
     {
-        href: 'https://www.linkedin.com/in/saw-ye-htet-the-man-who-code/',
+        href: 'https://www.linkedin.com/in/sawyehtet/',
         icon: 'linkedin',
         label: 'LinkedIn',
         handle: 'Saw Ye Htet',
-        terminal: 'linkedin.com/in/saw-ye-htet-the-man-who-code',
+        terminal: 'linkedin.com/in/sawyehtet',
     },
     {
         href: 'https://t.me/saulyehtet',

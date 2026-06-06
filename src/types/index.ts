@@ -107,6 +107,15 @@ export interface Project {
     status?: 'completed' | 'wip';
 }
 
+export interface ExperienceItem {
+    org: string;
+    role: string;
+    period: string;
+    location?: string;
+    bullets: string[];
+    stack?: string[];
+}
+
 export interface SkillItem {
     name: string;
     context: string;

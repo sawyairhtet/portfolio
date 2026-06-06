@@ -6,6 +6,7 @@ import type {
     Notification,
     Project,
     SkillCategory,
+    ExperienceItem,
 } from '../types';
 import { PROFILE } from './profile';
 
@@ -180,6 +181,21 @@ export const MOBILE_LAUNCHER_APPS: AppDefinition[] = APP_DEFINITIONS.filter(app 
 // PORTFOLIO CONTENT DATA
 // ============================================
 
+export const EXPERIENCE: ExperienceItem[] = [
+    {
+        org: 'Centre of Excellence in Maritime Safety (CEMS)',
+        role: 'Research Assistant & Software Developer',
+        period: 'Apr 2025 – Feb 2026',
+        location: 'Singapore',
+        bullets: [
+            'Profiled and resolved performance bottlenecks in a Unity VR application, reaching a stable 72 FPS through systematic frame analysis and targeted optimization.',
+            'Gathered requirements from maritime subject-matter experts, translated operational procedures into technical specifications, and validated each feature through structured user testing.',
+            'Owned end-to-end QA and documentation across multiple hardware configurations (Meta Quest 3, bHaptics gloves), logging reproduction steps and verifying consistent behavior for full coverage.',
+        ],
+        stack: ['Unity', 'C#', 'Profiling', 'QA', 'Technical Writing'],
+    },
+];
+
 export const PROJECTS: Project[] = [
     {
         id: 'fedora-portfolio',
@@ -219,6 +235,40 @@ export const PROJECTS: Project[] = [
             src: '/images/portfolio_project.webp',
             alt: 'Screenshot of the GNOME-inspired portfolio desktop showing the shell, dock, and wallpaper',
         },
+    },
+    {
+        id: 'tiny-promise',
+        title: 'Tiny Promise',
+        role: 'Developer & Designer',
+        summary:
+            'A minimalist daily-commitment web app for keeping the small promises you make to yourself, where each kept promise blooms as a unique, procedurally generated flower in a calm digital garden.',
+        problem:
+            'Habit trackers reduce progress to streak counters and guilt, and the moment a streak breaks the signal is lost.',
+        solution:
+            'Built a calm digital garden where each kept promise renders a unique, deterministically generated SVG flower, so progress is something you watch grow rather than a number you can break.',
+        impact: 'A complete, deployed product built solo end to end — the promise data model, the generative renderer, and client-side persistence.',
+        techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'SVG'],
+        platform: 'Web app',
+        proofPoints: [
+            'Designed a deterministic generative system: each promise hashes to a reproducible SVG flower across six plant families, so no two are alike yet every garden rebuilds from storage alone.',
+            'Persisted promises and garden growth entirely in localStorage — offline-capable, with zero signup friction.',
+            'Built the whole interaction loop solo, from the data model to the rendered garden.',
+        ],
+        links: [
+            {
+                label: 'Launch live',
+                href: 'https://tiny-promise.vercel.app',
+                icon: 'globe',
+                primary: true,
+            },
+            {
+                label: 'View on GitHub',
+                href: 'https://github.com/sawyairhtet/Tiny-Promise',
+                icon: 'github',
+            },
+        ],
+        featured: false,
+        icon: 'package',
     },
 ];
 
@@ -373,6 +423,33 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
         ],
     },
 ];
+
+// Editorial homepage only. The desktop SkillsApp still uses SKILL_CATEGORIES.
+export const EDITORIAL_SKILLS = [
+    {
+        title: 'Support & QA',
+        skills: [
+            'Log analysis & troubleshooting',
+            'Incident triage & escalation',
+            'Manual & API testing (Postman)',
+        ],
+    },
+    {
+        title: 'Technical',
+        skills: [
+            'SQL querying & debugging',
+            'Linux & shell',
+            'Git & version control',
+            'REST / HTTP debugging',
+        ],
+    },
+    {
+        title: 'Languages',
+        skills: ['Python', 'JavaScript / TypeScript'],
+    },
+] as const;
+
+export const LEARNING_NOW = ['ITIL 4 Foundation', 'System monitoring & alerting'];
 
 // ============================================
 // BOOT LOG MESSAGES

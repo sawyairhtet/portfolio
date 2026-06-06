@@ -4,7 +4,7 @@ export function Resume() {
     return (
         <section className="ed-section ed-container" id="resume">
             <div className="ed-section-head">
-                <span className="ed-section-num">04</span>
+                <span className="ed-section-num">05</span>
                 <h2 className="ed-section-title">Résumé</h2>
                 <span className="ed-section-meta">PDF · source of truth</span>
             </div>
