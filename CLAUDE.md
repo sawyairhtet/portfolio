@@ -4,26 +4,28 @@
 
 ## ⚡ Current architecture (read first)
 
-The site is **writing-first**. The **front door (`/`) is a writing feed**
-(`src/site/Home.tsx`): a compact masthead (name · tagline · intro · a link to
-`/work`) over the newest-first list of published posts. The **portfolio lives at
-`/work`** (`src/site/WorkPage.tsx`) — the single-page Editorial / Swiss layout: Hero ·
-About · Experience · Projects · Skills · Résumé · Contact. Individual posts render at
-**clean root slugs** (`/<slug>`, e.g. `/the-plain-door`). It all shares one Editorial /
-Swiss language: big display type, strict grid, hairline structure, one signal-red
-accent, warm "paper" light theme, self-hosted Adwaita Sans/Mono. Styles live in
-`src/site/editorial.css` (scoped under `.ed`, independent of the GNOME token system).
-Portfolio content comes from `src/config/data.ts` + `src/config/profile.ts`; posts are
-Markdown in `src/site/blog/posts/*.md` (loader: `src/site/blog/posts.ts`).
+The site is **portfolio-first**. The **front door (`/`) is the portfolio**
+(`src/site/WorkPage.tsx`) — the single-page Editorial / Swiss layout: Hero · About ·
+Experience · Projects · Skills · Résumé · Contact, closing with a **Writing** section
+(`src/site/sections/Writing.tsx`) that surfaces the three newest posts and links out to
+the feed. The **writing feed lives at `/writing`** (`src/site/Home.tsx`): a compact
+masthead (name · tagline · intro · a link back to the portfolio) over the newest-first
+list of published posts. Individual posts render at **clean root slugs** (`/<slug>`,
+e.g. `/the-plain-door`). It all shares one Editorial / Swiss language: big display type,
+strict grid, hairline structure, one signal-red accent, warm "paper" light theme,
+self-hosted Adwaita Sans/Mono. Styles live in `src/site/editorial.css` (scoped under
+`.ed`, independent of the GNOME token system). Portfolio content comes from
+`src/config/data.ts` + `src/config/profile.ts`; posts are Markdown in
+`src/site/blog/posts/*.md` (loader: `src/site/blog/posts.ts`).
 
 The **GNOME/Fedora desktop simulation is preserved as a showcased artifact at
 `/desktop`** (and `/app/:appId` deep links). It is **lazy-loaded**, so it is not
-shipped on the homepage. Everything under `src/components/` (shell, window, apps)
+shipped on the front door. Everything under `src/components/` (shell, window, apps)
 belongs to that desktop artifact. The "Do-Not-Touch Zones" below still apply **to the
 `/desktop` experience** — it is not the main site.
 
-When the task is about the primary site (feed, posts, or the `/work` portfolio), work
-in `src/site/`. When it is about the interactive desktop demo, work in
+When the task is about the primary site (the `/` portfolio, the `/writing` feed, or
+posts), work in `src/site/`. When it is about the interactive desktop demo, work in
 `src/components/`.
 
 ## Stack & Key Dependencies
@@ -34,15 +36,15 @@ in `src/site/`. When it is about the interactive desktop demo, work in
 | Language  | TypeScript                                       | 5       | Strict, `noEmit`, bundler module resolution                                                                                 |
 | Bundler   | Vite                                             | 8       | Dev on `:3000`, builds to `dist/`                                                                                           |
 | Styling   | CSS Layers (vanilla)                             | —       | `@layer reset, tokens, base, components, utilities` ordering. Predominantly vanilla CSS — no Tailwind                       |
-| Routing   | React Router DOM                                 | 7       | BrowserRouter. Routes: `/` (feed), `/work`, `/:slug` (posts), `/desktop`, `/app/:appId`; legacy `/blog*` → 301; `*` → 404   |
-| Forms     | React Hook Form + Zod                            | 7 / 4   | Used by ContactApp; code-split into `vendor-forms` chunk                                                                    |
+| Routing   | React Router DOM                                 | 7       | BrowserRouter. Routes: `/` (portfolio), `/writing` (feed), `/:slug` (posts), `/desktop`, `/app/:appId`; `/work`→`/`, `/blog`→`/writing`, `/blog/:slug`→`/:slug` (301); `*` → 404 |
+| Forms     | React Hook Form + Zod                            | 7 / 4   | Used by the `/` Contact section (lazy) + desktop ContactApp; code-split into `vendor-forms` chunk                           |
 | Terminal  | @xterm/xterm                                     | 6       | Real xterm.js instance inside TerminalApp                                                                                   |
 | Icons     | @phosphor-icons/react                            | 2       | Single icon system. String keys → Phosphor components via `src/components/ui/Icon.tsx`. Split into the `vendor-icons` chunk |
 | Fonts     | Adwaita Sans/Mono (self-hosted WOFF2, subsetted) | —       | Fully self-hosted in `public/fonts/` with SIL license. **No external font requests** (no Google Fonts)                      |
 | Testing   | Vitest + Testing Library + jsdom                 | 4 / 16  | `vmForks` pool, globals enabled                                                                                             |
 | Linting   | ESLint flat config + Prettier                    | 9 / 3   | 4-space indent, single quotes, trailing comma es5                                                                           |
 | Analytics | Plausible                                        | —       | Script tag in index.html, domain `sawyehtet.com`                                                                            |
-| Deploy    | Netlify                                          | —       | Build: `npm run build`, publish: `dist/`; SPA rewrite `/app/*`, 301s for legacy `/blog*`, RSS at `/rss.xml`                 |
+| Deploy    | Netlify                                          | —       | Build: `npm run build`, publish: `dist/`; SPA rewrite `/app/*`, 301s for `/work`→`/` and legacy `/blog*`, RSS at `/rss.xml` |
 | PWA       | Service worker (`public/sw.js`) + manifest.json  | —       | Caches static assets, offline fallback page                                                                                 |
 
 ## Entry Point & Routing
@@ -51,23 +53,25 @@ in `src/site/`. When it is about the interactive desktop demo, work in
 index.html                          ← Vite HTML entry, loads /src/main.tsx
   └─ src/main.tsx                   ← ReactDOM.createRoot, imports main.css
        └─ src/App.tsx               ← BrowserRouter + 6 context providers
-            ├─ /                    → Home            (src/site/, the writing feed — eager)
-            ├─ /work                → WorkPage        (lazy, the portfolio)
+            ├─ /                    → WorkPage        (src/site/, the portfolio — eager)
+            ├─ /writing             → Home            (lazy, the writing feed)
+            ├─ /work                → Navigate → /          (redirect — old portfolio route)
             ├─ /desktop             → DesktopShell    (lazy, the desktop artifact)
             ├─ /app/:appId          → DeepLinkHandler (lazy, opens a desktop window)
-            ├─ /blog                → Navigate → /          (legacy redirect)
+            ├─ /blog                → Navigate → /writing   (legacy redirect)
             ├─ /blog/:slug          → Navigate → /:slug     (legacy redirect)
             ├─ /:slug               → BlogPost        (lazy, a published post; unknown/draft → not-found)
             └─ *                    → NotFound        (editorial 404)
 ```
 
-`Home` is eager (the landing feed); `WorkPage`, `BlogPost`, `NotFound`, `DesktopShell`,
-and `DeepLinkHandler` are `React.lazy`-loaded inside a `Suspense` boundary, so the
-homepage feed ships lean — `vendor-forms` (react-hook-form/zod, via the Contact
-section) rides with `/work`, `react-markdown` rides with `BlogPost`, and the desktop
+`WorkPage` is eager (the front-door portfolio); `Home`, `BlogPost`, `NotFound`,
+`DesktopShell`, and `DeepLinkHandler` are `React.lazy`-loaded inside a `Suspense`
+boundary. The portfolio's `Contact` section is *itself* lazy (a local `Suspense` inside
+`WorkPage`) so the `vendor-forms` (react-hook-form/zod) runtime is code-split out of the
+front door's executed bundle; `react-markdown` rides with `BlogPost`, and the desktop
 bundle (`vendor-icons`, `TerminalApp`, framer-motion) stays on `/desktop`.
 
-**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` and a catch-all `/*` → `/index.html` (status 200) for SPA refresh; legacy `/blog` → `/` and `/blog/*` → `/:splat` are **301 redirects** (`netlify.toml`). The RSS feed at `/rss.xml` is generated into `dist/` at build time by `scripts/generate-rss.mjs` (chained into `npm run build`).
+**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` and a catch-all `/*` → `/index.html` (status 200) for SPA refresh; `/work` → `/`, legacy `/blog` → `/writing` and `/blog/*` → `/:splat` are **301 redirects** (`netlify.toml`). The RSS feed at `/rss.xml` is generated into `dist/` at build time by `scripts/generate-rss.mjs` (chained into `npm run build`).
 
 **Head bootstrap:** `public/head-bootstrap.js` runs synchronously before React to read `localStorage('theme')` and set `data-theme` on `<html>`, preventing a dark→light flash.
 
@@ -207,19 +211,20 @@ npm run generate:rss     # Generate dist/rss.xml from published posts (also runs
     - `vendor-router` (react-router)
     - `vendor-motion` (framer-motion)
     - `vendor-icons` (@phosphor-icons/react)
-    - `vendor-forms` (zod, react-hook-form) — only loaded with `/work`'s Contact section + the desktop ContactApp
+    - `vendor-forms` (zod, react-hook-form) — only loaded with the `/` Contact section (lazy) + the desktop ContactApp
 - **Multi-page:** Vite builds `index.html`, `offline.html`, and `404.html` as separate entries
 - **RSS:** `scripts/generate-rss.mjs` re-reads `src/site/blog/posts/*.md` (a standalone Node script can't use the Vite `import.meta.glob` loader — keep its frontmatter parser in sync with `posts.ts`) and emits `dist/rss.xml`. Generated at build time, so `/rss.xml` 404s under `npm run dev` but serves on the built/preview/live site.
 - **Deploy target:** Netlify (config in `netlify.toml`). Build command: `npm run build`, publish: `dist/`
-- **SPA rewrite:** `/app/*` and catch-all `/*` → `/index.html` (status 200); legacy `/blog` → `/` and `/blog/*` → `/:splat` are **301 redirects**
+- **SPA rewrite:** `/app/*` and catch-all `/*` → `/index.html` (status 200); `/work` → `/`, legacy `/blog` → `/writing` and `/blog/*` → `/:splat` are **301 redirects**
 - **CI:** GitHub Actions (`.github/workflows/ci.yml`) on push/PR to `main`: checkout → Node 22 → `npm ci` → typecheck → lint → test → build
 
 ## Tests
 
-- **4 test files** in `src/tests/`:
+- **6 test files** in `src/tests/`:
   - `portfolio-interactions.test.tsx` — 12 tests: activities overlay, dock interactions, window lifecycle, settings panel switching, accent color update, Escape key, focus mode pause/resume, terminal commands
   - `additional-interactions.test.tsx` — 7 tests: ContactApp form rendering, validation, `aria-invalid`, BootScreen skip behavior, fastBoot, ResumeApp rendering
-  - `keyboard-and-routing.test.tsx` — 6 tests: deep link routing (valid/invalid), window lifecycle, Escape on multi-window
+  - `keyboard-and-routing.test.tsx` — 6 tests: deep link routing (valid/invalid), window lifecycle, Escape on multi-window (mounts DesktopShell against its OWN local route table — does not exercise App.tsx's real routes)
+  - `front-door-routing.test.tsx` — 2 tests: renders the real `<App>` (its BrowserRouter + route table) and asserts the portfolio hero at `/` and the writing-feed masthead at `/writing` — guards the front-door swap
   - `deep-coverage.test.tsx` — 19 tests: terminal command parsing (help, whoami, neofetch, uptime, ls, cd, cat, pwd, clear, fortune, joke, echo, date, shortcuts), contact form rate limiting, ErrorBoundary resilience (persistent failures, app-level crash)
   - `error-boundary.test.tsx` — 4 tests: window-level error UI, app-level crash screen, retry recovery, normal rendering
 - **Test setup** (`src/tests/setup.ts`): mocks `matchMedia`, `AudioContext`, and `localStorage`

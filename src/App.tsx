@@ -7,13 +7,15 @@ import { WindowManagerProvider } from './context/WindowManagerContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { PreferencesProvider } from './context/PreferencesContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { Home } from './site/Home';
+import { WorkPage } from './site/WorkPage';
 
-// The writing feed is the front door (eager). The portfolio moved to /work, and
-// the interactive desktop simulation is a showcased artifact at /desktop — both
-// lazy-loaded so the homepage feed ships lean (no react-hook-form/zod, no
-// desktop bundle, no react-markdown).
-const WorkPage = lazy(() => import('./site/WorkPage').then(m => ({ default: m.WorkPage })));
+// The portfolio is the front door (eager) at /. The writing feed moved to
+// /writing, and the interactive desktop simulation is a showcased artifact at
+// /desktop — both lazy-loaded so the front door ships lean. WorkPage's Contact
+// form is itself lazy (see WorkPage.tsx) so react-hook-form/zod stay off the
+// initial bundle; react-markdown rides with BlogPost, the desktop bundle stays
+// on /desktop.
+const Home = lazy(() => import('./site/Home').then(m => ({ default: m.Home })));
 const NotFound = lazy(() => import('./site/NotFound').then(m => ({ default: m.NotFound })));
 const DesktopShell = lazy(() =>
     import('./components/shell/DesktopShell').then(m => ({ default: m.DesktopShell }))
@@ -23,11 +25,11 @@ const DeepLinkHandler = lazy(() =>
 );
 
 // Posts render at clean root slugs (/<slug>). BlogPost carries react-markdown, so
-// it stays lazy to keep that weight off the homepage bundle.
+// it stays lazy to keep that weight off the front-door bundle.
 const BlogPost = lazy(() => import('./site/BlogPost').then(m => ({ default: m.BlogPost })));
 
 // Legacy /blog/:slug → /:slug, preserving the slug (paired with a netlify 301 for
-// direct hits). The old /blog index redirects to the feed at /.
+// direct hits). The old /blog index redirects to the writing feed at /writing.
 function BlogRedirect() {
     const { slug } = useParams<{ slug: string }>();
     return <Navigate to={`/${slug ?? ''}`} replace />;
@@ -47,8 +49,12 @@ function App() {
                                             <Routes>
                                                 {/* Explicit routes first, then the
                                                     dynamic post slug, then the 404. */}
-                                                <Route path="/" element={<Home />} />
-                                                <Route path="/work" element={<WorkPage />} />
+                                                <Route path="/" element={<WorkPage />} />
+                                                <Route path="/writing" element={<Home />} />
+                                                <Route
+                                                    path="/work"
+                                                    element={<Navigate to="/" replace />}
+                                                />
                                                 <Route
                                                     path="/desktop"
                                                     element={<DesktopShell />}
@@ -59,7 +65,7 @@ function App() {
                                                 />
                                                 <Route
                                                     path="/blog"
-                                                    element={<Navigate to="/" replace />}
+                                                    element={<Navigate to="/writing" replace />}
                                                 />
                                                 <Route
                                                     path="/blog/:slug"

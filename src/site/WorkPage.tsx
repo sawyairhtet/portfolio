@@ -1,12 +1,19 @@
 import './editorial.css';
+import { lazy, Suspense } from 'react';
 import { PROFILE } from '../config/profile';
 import { Nav } from './Nav';
 import { Experience } from './sections/Experience';
 import { Work } from './sections/Work';
 import { Skills } from './sections/Skills';
 import { Resume } from './sections/Resume';
-import { Contact } from './sections/Contact';
+import { Writing } from './sections/Writing';
 import { Footer } from './sections/Footer';
+
+// Contact carries react-hook-form + zod (the vendor-forms chunk). The portfolio
+// is now the eager front door, so Contact is lazy-loaded behind a *local* Suspense
+// boundary (below) to keep that weight off the initial bundle — local so only the
+// Contact slot waits while the rest of the page renders.
+const Contact = lazy(() => import('./sections/Contact').then(m => ({ default: m.Contact })));
 
 const FOCUS_AREAS = [
     'Application & Production Support',
@@ -143,16 +150,17 @@ function About() {
     );
 }
 
-// The portfolio, moved off the front door to its own /work route. This is the
-// former single-page homepage (Hero → About → Experience → Projects → Skills →
-// Résumé → Contact); the homepage is now the writing feed (see Home.tsx).
+// The portfolio — now the front door at /. Single page: Hero → About →
+// Experience → Projects → Skills → Résumé → Contact → Writing. The Writing
+// section surfaces the three newest posts and links out to the full feed at
+// /writing (see Home.tsx, which renders that feed).
 export function WorkPage() {
     return (
         <div className="ed">
-            <title>Work — Saw Ye Htet</title>
+            <title>Saw Ye Htet — IT Support &amp; Operations</title>
             <meta
                 name="description"
-                content="The work of Saw Ye Htet — experience, projects, skills, and résumé. IT support & operations."
+                content="Saw Ye Htet — IT support & operations. Experience, projects, skills, résumé, and recent writing."
             />
             <Nav />
             <main id="main-content">
@@ -162,7 +170,20 @@ export function WorkPage() {
                 <Work />
                 <Skills />
                 <Resume />
-                <Contact />
+                <Suspense
+                    fallback={
+                        <div
+                            className="ed-section ed-container"
+                            aria-hidden="true"
+                            style={{ minHeight: '60vh' }}
+                        />
+                    }
+                >
+                    <Contact />
+                </Suspense>
+                {/* Writing is the only section that can be absent (no published
+                    posts), so it sits last — keeping the numbered run gap-free. */}
+                <Writing />
             </main>
             <Footer />
         </div>

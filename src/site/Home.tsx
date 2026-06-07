@@ -5,9 +5,9 @@ import { Nav } from './Nav';
 import { Footer } from './sections/Footer';
 import { PUBLISHED_POSTS, FEATURED_POSTS, formatPostDate, type BlogPost } from './blog/posts';
 
-// The front door is now a writing feed: a compact masthead over the newest-first
-// list of published posts. The portfolio (About/Experience/Projects/Skills/
-// Résumé/Contact) lives at /work. Posts link to clean root slugs (/<slug>).
+// The writing feed at /writing: a compact masthead over the newest-first list of
+// published posts. The portfolio (About/Experience/Projects/Skills/Résumé/
+// Contact) is the front door at /. Posts link to clean root slugs (/<slug>).
 
 // Featured cluster only appears once the archive is deep enough that pinning a
 // post adds signal — below 3 published posts it would just echo the feed.
@@ -27,8 +27,8 @@ function Masthead() {
                 I build software and write here about what I&apos;m working through, technical and
                 otherwise.
             </p>
-            <Link className="ed-home-cta" to="/work">
-                My experience and projects are on the <strong>work page</strong>
+            <Link className="ed-home-cta" to="/">
+                My experience and projects are on the <strong>home page</strong>
                 <span className="a">→</span>
             </Link>
         </header>
@@ -77,7 +77,7 @@ export function Home() {
             <title>Saw Ye Htet — Writing</title>
             <meta
                 name="description"
-                content="Writing by Saw Ye Htet — notes on IT support, troubleshooting, and building software. Portfolio at /work."
+                content="Writing by Saw Ye Htet — notes on IT support, troubleshooting, and building software. The portfolio lives on the home page."
             />
             <Nav />
             <main id="main-content">
@@ -100,7 +100,7 @@ export function Home() {
                     ) : (
                         <div className="ed-feed-empty">
                             <p>No posts published yet — writing in progress.</p>
-                            <Link className="ed-home-cta" to="/work">
+                            <Link className="ed-home-cta" to="/">
                                 Meanwhile, see the work
                                 <span className="a">→</span>
                             </Link>

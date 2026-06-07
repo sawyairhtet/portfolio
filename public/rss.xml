@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
   <title>Saw Ye Htet — Writing</title>
-  <link>https://sawyehtet.com/</link>
+  <link>https://sawyehtet.com/writing</link>
   <atom:link href="https://sawyehtet.com/rss.xml" rel="self" type="application/rss+xml" />
   <description>Notes on IT support, troubleshooting, and building software.</description>
   <language>en</language>

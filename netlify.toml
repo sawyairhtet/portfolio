@@ -73,12 +73,18 @@
   to = "/index.html"
   status = 200
 
-# Legacy blog URLs → new shapes: /blog → the writing feed at /, and
-# /blog/:slug → the clean root slug /:slug. 301 so old links and search
-# results migrate cleanly. Must precede the SPA catch-all below.
+# Moved/legacy URLs → new shapes. The portfolio is now the front door at /, and
+# the writing feed moved to /writing: /work → / (old portfolio route), /blog →
+# /writing, and /blog/:slug → the clean root slug /:slug. 301 so old links and
+# search results migrate cleanly. Must precede the SPA catch-all below.
+[[redirects]]
+  from = "/work"
+  to = "/"
+  status = 301
+
 [[redirects]]
   from = "/blog"
-  to = "/"
+  to = "/writing"
   status = 301
 
 [[redirects]]

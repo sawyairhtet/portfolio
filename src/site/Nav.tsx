@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { hasPublishedPosts } from './blog/posts';
 
-// Shared editorial chrome for the writing-first site. Minimal by design: the
-// wordmark returns to the feed (/), and the only links are the portfolio (/work)
-// and the RSS feed (shown once a post is published). Section navigation lives on
-// the /work page itself.
+// Shared editorial chrome. Minimal by design: the wordmark returns to the front
+// door (/, the portfolio), and the only links are the writing feed (/writing) and
+// the RSS feed (shown once a post is published). Section navigation lives on the
+// portfolio page itself.
 export function Nav() {
     return (
         <header className="ed-nav">
@@ -13,8 +13,8 @@ export function Nav() {
                     Saw Ye Htet<span className="dot">.</span>
                 </Link>
                 <nav className="ed-nav-links" aria-label="Primary">
-                    <Link className="ed-nav-link" to="/work">
-                        Work
+                    <Link className="ed-nav-link" to="/writing">
+                        Writing
                     </Link>
                     {hasPublishedPosts && (
                         <a

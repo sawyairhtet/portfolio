@@ -18,9 +18,9 @@ export function NotFound() {
                         <span className="ed-section-meta">No such page</span>
                     </div>
                     <p className="ed-blog-empty">
-                        That page doesn&apos;t exist. Try the writing on the{' '}
-                        <Link to="/">home page</Link> or head to the{' '}
-                        <Link to="/work">work page</Link>.
+                        That page doesn&apos;t exist. Head to the{' '}
+                        <Link to="/">home page</Link> or browse the{' '}
+                        <Link to="/writing">writing</Link>.
                     </p>
                     <Link className="ed-blog-back" to="/">
                         ← Back home

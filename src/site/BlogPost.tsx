@@ -5,10 +5,10 @@ import { Nav } from './Nav';
 import { Footer } from './sections/Footer';
 import { getPublishedPost, formatPostDate } from './blog/posts';
 
-// Single post at /blog/:slug. Only *published* posts resolve — a draft (or
-// unknown) slug shows the not-found state, never the draft content. This file
-// carries react-markdown, so it is lazy-loaded from App.tsx to keep it off the
-// homepage bundle.
+// Single post at a clean root slug (/<slug>). Only *published* posts resolve — a
+// draft (or unknown) slug shows the not-found state, never the draft content.
+// This file carries react-markdown, so it is lazy-loaded from App.tsx to keep it
+// off the front-door bundle.
 export function BlogPost() {
     const { slug } = useParams<{ slug: string }>();
     const post = getPublishedPost(slug);
@@ -28,7 +28,7 @@ export function BlogPost() {
                         <p className="ed-blog-empty">
                             That post doesn&apos;t exist or hasn&apos;t been published yet.
                         </p>
-                        <Link className="ed-blog-back" to="/">
+                        <Link className="ed-blog-back" to="/writing">
                             ← Back to writing
                         </Link>
                     </section>
@@ -89,7 +89,7 @@ export function BlogPost() {
                         </ReactMarkdown>
                     </div>
 
-                    <Link className="ed-blog-back" to="/">
+                    <Link className="ed-blog-back" to="/writing">
                         ← Back to writing
                     </Link>
                 </article>
