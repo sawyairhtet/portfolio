@@ -55,7 +55,7 @@ const html = /* html */ `<!DOCTYPE html>
   .role b { color: var(--ink); font-weight: 600; }
 
   .portrait { position: relative; width: 268px; height: 336px; flex-shrink: 0; border: 1px solid var(--line-2); overflow: hidden; background: #ece8df; }
-  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 16%; filter: grayscale(1) contrast(1.02); }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 16%; }
   .portrait .tag { position: absolute; left: 0; bottom: 0; padding: 7px 12px; background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
 
   .bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; }
@@ -94,7 +94,7 @@ const html = /* html */ `<!DOCTYPE html>
     <div class="rule"></div>
     <div class="bottom">
       <div class="specs">
-        <span><b>Stack</b>SQL · Linux · Java · React</span>
+        <span><b>Stack</b>SQL · Linux · Python · React</span>
         <span><b>Status</b>Open to work</span>
       </div>
       <div class="url">sawyehtet.com</div>
