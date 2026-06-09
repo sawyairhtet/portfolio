@@ -236,40 +236,6 @@ export const PROJECTS: Project[] = [
             alt: 'Screenshot of the GNOME-inspired portfolio desktop showing the shell, dock, and wallpaper',
         },
     },
-    {
-        id: 'tiny-promise',
-        title: 'Tiny Promise',
-        role: 'Developer & Designer',
-        summary:
-            'A minimalist daily-commitment web app for keeping the small promises you make to yourself, where each kept promise blooms as a unique, procedurally generated flower in a calm digital garden.',
-        problem:
-            'Habit trackers reduce progress to streak counters and guilt, and the moment a streak breaks the signal is lost.',
-        solution:
-            'Built a calm digital garden where each kept promise renders a unique, deterministically generated SVG flower, so progress is something you watch grow rather than a number you can break.',
-        impact: 'A complete, deployed product built solo end to end — the promise data model, the generative renderer, and client-side persistence.',
-        techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'SVG'],
-        platform: 'Web app',
-        proofPoints: [
-            'Designed a deterministic generative system: each promise hashes to a reproducible SVG flower across six plant families, so no two are alike yet every garden rebuilds from storage alone.',
-            'Persisted promises and garden growth entirely in localStorage — offline-capable, with zero signup friction.',
-            'Built the whole interaction loop solo, from the data model to the rendered garden.',
-        ],
-        links: [
-            {
-                label: 'Launch live',
-                href: 'https://tiny-promise.vercel.app',
-                icon: 'globe',
-                primary: true,
-            },
-            {
-                label: 'View on GitHub',
-                href: 'https://github.com/sawyairhtet/Tiny-Promise',
-                icon: 'github',
-            },
-        ],
-        featured: false,
-        icon: 'package',
-    },
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
