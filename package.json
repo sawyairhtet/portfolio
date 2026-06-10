@@ -1,7 +1,7 @@
 {
-    "name": "clean-portfolio-website",
+    "name": "sawyehtet-com",
     "version": "1.0.0",
-    "description": "A clean, modern, and responsive portfolio website built with React, TypeScript, and Vite — simulating a Fedora 43 GNOME 49 desktop",
+    "description": "Personal site of Saw Ye Htet: an editorial portfolio and writing feed built with React, TypeScript, and Vite, with the earlier GNOME desktop simulation preserved at /desktop",
     "type": "module",
     "main": "index.html",
     "scripts": {
@@ -21,18 +21,18 @@
     },
     "keywords": [
         "portfolio",
-        "clean-design",
-        "minimalist",
-        "responsive",
+        "personal-site",
+        "writing",
+        "blog",
+        "rss",
+        "editorial-design",
+        "typography",
         "react",
         "typescript",
         "vite",
-        "web-portfolio",
         "tailwindcss",
         "react-router",
-        "modern-css",
-        "typography",
-        "professional"
+        "modern-css"
     ],
     "author": "Saw Ye Htet <minwn2244@gmail.com>",
     "license": "MIT",
