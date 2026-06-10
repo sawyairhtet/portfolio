@@ -1,6 +1,6 @@
 {
     "name": "sawyehtet-com",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "description": "Personal site of Saw Ye Htet: an editorial portfolio and writing feed built with React, TypeScript, and Vite, with the earlier GNOME desktop simulation preserved at /desktop",
     "type": "module",
     "main": "index.html",
