@@ -6,8 +6,9 @@
     "main": "index.html",
     "scripts": {
         "dev": "vite",
-        "build": "npm run typecheck && npm run generate:rss && vite build",
-        "generate:rss": "node scripts/generate-rss.mjs",
+        "build": "npm run typecheck && npm run generate:feeds && vite build && npm run generate:meta",
+        "generate:feeds": "node scripts/generate-feeds.mjs",
+        "generate:meta": "node scripts/generate-meta.mjs",
         "preview": "vite preview",
         "lint": "eslint \"src/**/*.{ts,tsx}\"",
         "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",

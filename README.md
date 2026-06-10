@@ -49,7 +49,7 @@ portfolio/
 │   ├── styles/                 # CSS entry point and design tokens
 │   └── tests/                  # Vitest suites
 ├── css/                        # Layered CSS for the desktop artifact
-├── scripts/                    # Build-time generators (RSS, OG image)
+├── scripts/                    # Build-time generators (feeds, head shells, OG image)
 ├── public/                     # Static assets, fonts, resume PDF
 └── netlify.toml                # Headers, redirects, build config
 ```
@@ -71,9 +71,11 @@ draft: false
 
 A post with `draft: true` is hidden everywhere, including its own URL. Publishing is
 flipping `draft` to `false` (or adding a new file) and rebuilding. The feed, the
-homepage writing section, reading time, and the RSS feed all update automatically.
-`scripts/generate-rss.mjs` parses the same frontmatter, so keep it in sync with
-`src/site/blog/posts.ts` if the format ever changes.
+homepage writing section, reading time, the RSS feed, the sitemap, and the post's
+static head shell (correct title, OG tags, and canonical for social sharing) all
+update automatically at build. `scripts/lib/posts.mjs` parses the same frontmatter
+for the generators, so keep it in sync with `src/site/blog/posts.ts` if the format
+ever changes.
 
 ## Development
 
@@ -82,14 +84,14 @@ npm install
 npm run dev        # Vite dev server on :3000
 ```
 
-Note: `/rss.xml` is generated at build time, so it 404s in dev but serves on the
-built and live site.
+`rss.xml` and `sitemap.xml` are generated into `public/` (and committed), so they
+serve in dev too; `npm run build` regenerates them from the published posts.
 
 ## Validation
 
 ```bash
 npm run validate   # lint, typecheck, tests
-npm run build      # typecheck, RSS generation, production build
+npm run build      # typecheck, feeds, production build, per-route head shells
 ```
 
 CI runs the same chain (plus build) on every push and PR to `main`.
@@ -100,6 +102,10 @@ Netlify builds with `npm run build` and publishes `dist/`. Routing in `netlify.t
 
 - `/app/*` and the catch-all `/*` rewrite to the SPA entry (status 200)
 - `/work` 301s to `/`; legacy `/blog` 301s to `/writing` and `/blog/*` to `/:splat`
+- `/writing`, `/desktop`, and each post get a static `dist/<route>/index.html` head
+  shell (built by `scripts/generate-meta.mjs`) with the route's own title, OG tags,
+  and canonical, so shared links unfurl correctly; Netlify serves static files
+  before the catch-all
 
 ### Post-deploy checklist
 

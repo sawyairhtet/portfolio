@@ -16,7 +16,7 @@
       script-src 'self' https://plausible.io; \
       style-src 'self' 'unsafe-inline'; \
       font-src 'self'; \
-      img-src 'self' data: https:; \
+      img-src 'self' data:; \
       connect-src 'self' https://formspree.io https://plausible.io; \
       worker-src 'self'; \
       manifest-src 'self'; \

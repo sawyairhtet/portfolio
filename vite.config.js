@@ -20,7 +20,7 @@ const devCspPlugin = () => ({
             `script-src 'self' ${reactRefreshPreambleHash} https://plausible.io`,
             "style-src 'self' 'unsafe-inline'",
             "font-src 'self'",
-            "img-src 'self' data: https:",
+            "img-src 'self' data:",
             "connect-src 'self' https://formspree.io https://plausible.io ws://localhost:* http://localhost:* ws://127.0.0.1:* http://127.0.0.1:*",
             "worker-src 'self'",
             "manifest-src 'self'",
@@ -79,19 +79,13 @@ export default defineConfig({
                     if (id.includes('node_modules/react-router')) {
                         return 'vendor-router';
                     }
-                    if (id.includes('node_modules/@phosphor-icons/')) {
-                        return 'vendor-icons';
-                    }
-                    if (id.includes('node_modules/framer-motion/')) {
-                        return 'vendor-motion';
-                    }
-                    if (
-                        id.includes('node_modules/zod/') ||
-                        id.includes('node_modules/react-hook-form/') ||
-                        id.includes('node_modules/@hookform/')
-                    ) {
-                        return 'vendor-forms';
-                    }
+                    // Only EAGER vendors (react, router above) get manual chunks.
+                    // Rolldown hoists manual chunks into the entry's static
+                    // imports, so naming lazy-only vendors here (phosphor icons,
+                    // framer-motion, zod/react-hook-form) made the front door
+                    // modulepreload code that only /desktop or the lazy Contact
+                    // section needs. Left to natural code splitting, they ride
+                    // with their lazy importers.
                 },
             },
         },

@@ -30,22 +30,22 @@ posts), work in `src/site/`. When it is about the interactive desktop demo, work
 
 ## Stack & Key Dependencies
 
-| Layer     | Technology                                       | Version | Notes                                                                                                                       |
-| --------- | ------------------------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Framework | React                                            | 19      | StrictMode enabled                                                                                                          |
-| Language  | TypeScript                                       | 5       | Strict, `noEmit`, bundler module resolution                                                                                 |
-| Bundler   | Vite                                             | 8       | Dev on `:3000`, builds to `dist/`                                                                                           |
-| Styling   | CSS Layers (vanilla)                             | —       | `@layer reset, tokens, base, components, utilities` ordering. Predominantly vanilla CSS — no Tailwind                       |
-| Routing   | React Router DOM                                 | 7       | BrowserRouter. Routes: `/` (portfolio), `/writing` (feed), `/:slug` (posts), `/desktop`, `/app/:appId`; `/work`→`/`, `/blog`→`/writing`, `/blog/:slug`→`/:slug` (301); `*` → 404 |
-| Forms     | React Hook Form + Zod                            | 7 / 4   | Used by the `/` Contact section (lazy) + desktop ContactApp; code-split into `vendor-forms` chunk                           |
-| Terminal  | @xterm/xterm                                     | 6       | Real xterm.js instance inside TerminalApp                                                                                   |
-| Icons     | @phosphor-icons/react                            | 2       | Single icon system. String keys → Phosphor components via `src/components/ui/Icon.tsx`. Split into the `vendor-icons` chunk |
-| Fonts     | Adwaita Sans/Mono (self-hosted WOFF2, subsetted) | —       | Fully self-hosted in `public/fonts/` with SIL license. **No external font requests** (no Google Fonts)                      |
-| Testing   | Vitest + Testing Library + jsdom                 | 4 / 16  | `vmForks` pool, globals enabled                                                                                             |
-| Linting   | ESLint flat config + Prettier                    | 9 / 3   | 4-space indent, single quotes, trailing comma es5                                                                           |
-| Analytics | Plausible                                        | —       | Script tag in index.html, domain `sawyehtet.com`                                                                            |
-| Deploy    | Netlify                                          | —       | Build: `npm run build`, publish: `dist/`; SPA rewrite `/app/*`, 301s for `/work`→`/` and legacy `/blog*`, RSS at `/rss.xml` |
-| PWA       | Service worker (`public/sw.js`) + manifest.json  | —       | Caches static assets, offline fallback page                                                                                 |
+| Layer     | Technology                                       | Version | Notes                                                                                                                                                                                             |
+| --------- | ------------------------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework | React                                            | 19      | StrictMode enabled                                                                                                                                                                                |
+| Language  | TypeScript                                       | 5       | Strict, `noEmit`, bundler module resolution                                                                                                                                                       |
+| Bundler   | Vite                                             | 8       | Dev on `:3000`, builds to `dist/`                                                                                                                                                                 |
+| Styling   | CSS Layers (vanilla)                             | —       | `@layer reset, tokens, base, components, utilities` ordering. Predominantly vanilla CSS — no Tailwind                                                                                             |
+| Routing   | React Router DOM                                 | 7       | BrowserRouter. Routes: `/` (portfolio), `/writing` (feed), `/:slug` (posts), `/desktop`, `/app/:appId`; `/work`→`/`, `/blog`→`/writing`, `/blog/:slug`→`/:slug` (301); `*` → 404                  |
+| Forms     | React Hook Form + Zod                            | 7 / 4   | Used by the `/` Contact section (lazy) + desktop ContactApp; rides in shared lazy chunks (deliberately NOT a manual chunk)                                                                        |
+| Terminal  | @xterm/xterm                                     | 6       | Real xterm.js instance inside TerminalApp                                                                                                                                                         |
+| Icons     | @phosphor-icons/react                            | 2       | Single icon system. String keys → Phosphor components via `src/components/ui/Icon.tsx`. Rides with the lazy desktop chunks                                                                        |
+| Fonts     | Adwaita Sans/Mono (self-hosted WOFF2, subsetted) | —       | Fully self-hosted in `public/fonts/` with SIL license. **No external font requests** (no Google Fonts)                                                                                            |
+| Testing   | Vitest + Testing Library + jsdom                 | 4 / 16  | `vmForks` pool, globals enabled                                                                                                                                                                   |
+| Linting   | ESLint flat config + Prettier                    | 9 / 3   | 4-space indent, single quotes, trailing comma es5                                                                                                                                                 |
+| Analytics | Plausible                                        | —       | Script tag in index.html, domain `sawyehtet.com`                                                                                                                                                  |
+| Deploy    | Netlify                                          | —       | Build: `npm run build`, publish: `dist/`; SPA rewrite `/app/*`, 301s for `/work`→`/` and legacy `/blog*`; RSS + sitemap + per-route head shells generated at build                                |
+| PWA       | Service worker (`public/sw.js`) + manifest.json  | —       | Per-build cache version (`__BUILD_HASH__` injected by vite.config.js); cache-first for `/assets/` + `/fonts/`, stale-while-revalidate for other statics, network-first HTML with offline fallback |
 
 ## Entry Point & Routing
 
@@ -66,12 +66,14 @@ index.html                          ← Vite HTML entry, loads /src/main.tsx
 
 `WorkPage` is eager (the front-door portfolio); `Home`, `BlogPost`, `NotFound`,
 `DesktopShell`, and `DeepLinkHandler` are `React.lazy`-loaded inside a `Suspense`
-boundary. The portfolio's `Contact` section is *itself* lazy (a local `Suspense` inside
-`WorkPage`) so the `vendor-forms` (react-hook-form/zod) runtime is code-split out of the
-front door's executed bundle; `react-markdown` rides with `BlogPost`, and the desktop
-bundle (`vendor-icons`, `TerminalApp`, framer-motion) stays on `/desktop`.
+boundary. The portfolio's `Contact` section is _itself_ lazy (a local `Suspense` inside
+`WorkPage`) so the react-hook-form/zod runtime is code-split out of the front door's
+bundle; `react-markdown` rides with `BlogPost`, and the desktop bundle (Phosphor icons,
+`TerminalApp`, framer-motion) stays on `/desktop`. Lazy-only vendors are deliberately
+NOT listed in `manualChunks` (vite.config.js): Rolldown hoists manual chunks into the
+entry's static imports, which made the front door modulepreload desktop/Contact code.
 
-**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` and a catch-all `/*` → `/index.html` (status 200) for SPA refresh; `/work` → `/`, legacy `/blog` → `/writing` and `/blog/*` → `/:splat` are **301 redirects** (`netlify.toml`). The RSS feed at `/rss.xml` is generated into `dist/` at build time by `scripts/generate-rss.mjs` (chained into `npm run build`).
+**Deep linking:** `/app/about`, `/app/projects`, etc. The `DeepLinkHandler` validates the `appId` against the `AppId` union type and calls `openWindow()`. Netlify rewrites `/app/*` and a catch-all `/*` → `/index.html` (status 200) for SPA refresh; `/work` → `/`, legacy `/blog` → `/writing` and `/blog/*` → `/:splat` are **301 redirects** (`netlify.toml`). `scripts/generate-feeds.mjs` (chained into `npm run build`, before `vite build`) writes `public/rss.xml` + `public/sitemap.xml` (committed, deterministic, served in dev too); `scripts/generate-meta.mjs` (after `vite build`) writes static head shells `dist/<route>/index.html` (per-post/`/writing`/`/desktop` title, OG, canonical) so social crawlers — which don't run JS — see the right card. Netlify serves static files before redirects, so shells win over the SPA catch-all.
 
 **Head bootstrap:** `public/head-bootstrap.js` runs synchronously before React to read `localStorage('theme')` and set `data-theme` on `<html>`, preventing a dark→light flash.
 
@@ -196,24 +198,24 @@ npm run format           # Prettier write
 npm run format:check     # Prettier check
 
 # Build
-npm run build            # typecheck → vite build → generate:rss → dist/
+npm run build            # typecheck → generate:feeds → vite build → generate:meta → dist/
 npm run preview          # Serve dist/ locally
 
 # Utilities
 npm run generate:og      # Puppeteer script to regenerate OG preview image
-npm run generate:rss     # Generate dist/rss.xml from published posts (also runs in build)
+npm run generate:feeds   # public/rss.xml + public/sitemap.xml from published posts (runs in build)
+npm run generate:meta    # dist/<route>/index.html head shells (runs in build, needs dist/)
 ```
 
 ## Build & Deploy
 
-- **Build:** `npm run build` → typechecks, runs `vite build`, then `scripts/generate-rss.mjs` (writes `dist/rss.xml`). Manual chunks:
+- **Build:** `npm run build` → typecheck → `scripts/generate-feeds.mjs` → `vite build` → `scripts/generate-meta.mjs`. Manual chunks (eager vendors ONLY — see the Rolldown hoisting note above):
     - `vendor-react` (react, react-dom, scheduler)
     - `vendor-router` (react-router)
-    - `vendor-motion` (framer-motion)
-    - `vendor-icons` (@phosphor-icons/react)
-    - `vendor-forms` (zod, react-hook-form) — only loaded with the `/` Contact section (lazy) + the desktop ContactApp
+    - framer-motion, @phosphor-icons, zod/react-hook-form are intentionally unlisted; they ride with their lazy importers
 - **Multi-page:** Vite builds `index.html`, `offline.html`, and `404.html` as separate entries
-- **RSS:** `scripts/generate-rss.mjs` re-reads `src/site/blog/posts/*.md` (a standalone Node script can't use the Vite `import.meta.glob` loader — keep its frontmatter parser in sync with `posts.ts`) and emits `dist/rss.xml`. Generated at build time, so `/rss.xml` 404s under `npm run dev` but serves on the built/preview/live site.
+- **Feeds:** `scripts/generate-feeds.mjs` re-reads `src/site/blog/posts/*.md` via `scripts/lib/posts.mjs` (a standalone Node mirror of the Vite loader — keep its frontmatter parser in sync with `posts.ts`) and writes `public/rss.xml` + `public/sitemap.xml`. Both are committed and deterministic (dates derive from posts), served in dev and copied to `dist/` on build.
+- **Head shells:** `scripts/generate-meta.mjs` (post-build) copies `dist/index.html` to `dist/<route>/index.html` for `/writing`, `/desktop`, and every published post, rewriting `<title>`, meta description, OG/Twitter tags, and canonical per route. Shell titles must match what the React components set at runtime. It throws if `index.html`'s head shape drifts.
 - **Deploy target:** Netlify (config in `netlify.toml`). Build command: `npm run build`, publish: `dist/`
 - **SPA rewrite:** `/app/*` and catch-all `/*` → `/index.html` (status 200); `/work` → `/`, legacy `/blog` → `/writing` and `/blog/*` → `/:splat` are **301 redirects**
 - **CI:** GitHub Actions (`.github/workflows/ci.yml`) on push/PR to `main`: checkout → Node 22 → `npm ci` → typecheck → lint → test → build
@@ -221,12 +223,12 @@ npm run generate:rss     # Generate dist/rss.xml from published posts (also runs
 ## Tests
 
 - **6 test files** in `src/tests/`:
-  - `portfolio-interactions.test.tsx` — 12 tests: activities overlay, dock interactions, window lifecycle, settings panel switching, accent color update, Escape key, focus mode pause/resume, terminal commands
-  - `additional-interactions.test.tsx` — 7 tests: ContactApp form rendering, validation, `aria-invalid`, BootScreen skip behavior, fastBoot, ResumeApp rendering
-  - `keyboard-and-routing.test.tsx` — 6 tests: deep link routing (valid/invalid), window lifecycle, Escape on multi-window (mounts DesktopShell against its OWN local route table — does not exercise App.tsx's real routes)
-  - `front-door-routing.test.tsx` — 2 tests: renders the real `<App>` (its BrowserRouter + route table) and asserts the portfolio hero at `/` and the writing-feed masthead at `/writing` — guards the front-door swap
-  - `deep-coverage.test.tsx` — 19 tests: terminal command parsing (help, whoami, neofetch, uptime, ls, cd, cat, pwd, clear, fortune, joke, echo, date, shortcuts), contact form rate limiting, ErrorBoundary resilience (persistent failures, app-level crash)
-  - `error-boundary.test.tsx` — 4 tests: window-level error UI, app-level crash screen, retry recovery, normal rendering
+    - `portfolio-interactions.test.tsx` — 12 tests: activities overlay, dock interactions, window lifecycle, settings panel switching, accent color update, Escape key, focus mode pause/resume, terminal commands
+    - `additional-interactions.test.tsx` — 7 tests: ContactApp form rendering, validation, `aria-invalid`, BootScreen skip behavior, fastBoot, ResumeApp rendering
+    - `keyboard-and-routing.test.tsx` — 6 tests: deep link routing (valid/invalid), window lifecycle, Escape on multi-window (mounts DesktopShell against its OWN local route table — does not exercise App.tsx's real routes)
+    - `front-door-routing.test.tsx` — 2 tests: renders the real `<App>` (its BrowserRouter + route table) and asserts the portfolio hero at `/` and the writing-feed masthead at `/writing` — guards the front-door swap
+    - `deep-coverage.test.tsx` — 19 tests: terminal command parsing (help, whoami, neofetch, uptime, ls, cd, cat, pwd, clear, fortune, joke, echo, date, shortcuts), contact form rate limiting, ErrorBoundary resilience (persistent failures, app-level crash)
+    - `error-boundary.test.tsx` — 4 tests: window-level error UI, app-level crash screen, retry recovery, normal rendering
 - **Test setup** (`src/tests/setup.ts`): mocks `matchMedia`, `AudioContext`, and `localStorage`
 - **Environment:** jsdom with `vmForks` pool
 - **All tests wrap components in a `Providers` harness** that mirrors the App.tsx provider nesting

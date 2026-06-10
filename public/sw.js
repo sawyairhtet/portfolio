@@ -1,20 +1,33 @@
-const CACHE = 'portfolio-v3';
+// Cache name is versioned per build: the inject-sw-cache-version plugin in
+// vite.config.js fills in the build hash below (in dist/sw.js), so every
+// deploy activates a fresh cache and the activate handler purges the old one.
+// The placeholder must appear EXACTLY once in this file (the plugin replaces
+// the first occurrence). In dev it stays literal, which is fine: DesktopShell
+// unregisters all service workers in dev mode.
+const CACHE = 'portfolio-__BUILD_HASH__';
 
+// Hashed build output and self-hosted fonts never change at a given URL, so
+// cache-first is safe for them. Everything else static (unhashed images,
+// icons, root-level scripts like head-bootstrap.js) is served from cache for
+// speed but refreshed in the background, so an edit reaches returning
+// visitors on their next view instead of never.
+const IMMUTABLE_PATHS = /^\/(assets|fonts)\//;
 const STATIC_EXTENSIONS = /\.(?:woff2?|ttf|otf|png|jpg|jpeg|webp|svg|ico|css|js)$/i;
 
 self.addEventListener('install', event => {
+    // Only what the offline fallback needs. HTML pages are deliberately not
+    // precached: navigations are network-first and fall back to offline.html.
     event.waitUntil(
-        caches.open(CACHE).then(cache =>
-            cache.addAll([
-                '/',
-                '/offline.html',
-                '/index.html',
-                '/404.html',
-                '/fonts/AdwaitaSans-Regular.woff2',
-                '/fonts/AdwaitaSans-Italic.woff2',
-                '/fonts/AdwaitaMono-Regular.woff2',
-            ])
-        )
+        caches
+            .open(CACHE)
+            .then(cache =>
+                cache.addAll([
+                    '/offline.html',
+                    '/fonts/AdwaitaSans-Regular.woff2',
+                    '/fonts/AdwaitaSans-Italic.woff2',
+                    '/fonts/AdwaitaMono-Regular.woff2',
+                ])
+            )
     );
     self.skipWaiting();
 });
@@ -25,7 +38,9 @@ self.addEventListener('activate', event => {
             .keys()
             .then(names =>
                 Promise.all(
-                    names.filter(n => n.startsWith('portfolio-') && n !== CACHE).map(n => caches.delete(n))
+                    names
+                        .filter(n => n.startsWith('portfolio-') && n !== CACHE)
+                        .map(n => caches.delete(n))
                 )
             )
             .then(() => self.clients.claim())
@@ -42,24 +57,18 @@ self.addEventListener('fetch', event => {
         event.request.mode === 'navigate' ||
         (event.request.headers.get('accept') || '').includes('text/html');
 
+    // Navigations: network only, offline fallback. HTML is never cached, so a
+    // deploy is visible on the next load.
     if (isNavigation) {
-        event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    const cloned = response.clone();
-                    caches.open(CACHE).then(cache => cache.put(event.request, cloned));
-                    return response;
-                })
-                .catch(() => caches.match('/offline.html'))
-        );
+        event.respondWith(fetch(event.request).catch(() => caches.match('/offline.html')));
         return;
     }
 
-    if (STATIC_EXTENSIONS.test(url.pathname)) {
+    // Hashed assets and fonts: cache-first.
+    if (IMMUTABLE_PATHS.test(url.pathname)) {
         event.respondWith(
             caches.match(event.request).then(cached => {
                 if (cached) return cached;
-
                 return fetch(event.request).then(response => {
                     if (response.ok) {
                         const cloned = response.clone();
@@ -68,6 +77,27 @@ self.addEventListener('fetch', event => {
                     return response;
                 });
             })
+        );
+        return;
+    }
+
+    // Other static files: stale-while-revalidate.
+    if (STATIC_EXTENSIONS.test(url.pathname)) {
+        event.respondWith(
+            (async () => {
+                const cache = await caches.open(CACHE);
+                const cached = await cache.match(event.request);
+                const refresh = fetch(event.request)
+                    .then(response => {
+                        if (response.ok) cache.put(event.request, response.clone());
+                        return response;
+                    })
+                    .catch(() => undefined);
+                event.waitUntil(refresh.then(() => undefined));
+                if (cached) return cached;
+                const fresh = await refresh;
+                return fresh || Response.error();
+            })()
         );
         return;
     }
