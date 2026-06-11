@@ -236,6 +236,35 @@ export const PROJECTS: Project[] = [
             alt: 'Screenshot of the GNOME-inspired portfolio desktop showing the shell, dock, and wallpaper',
         },
     },
+    {
+        id: 'tokey',
+        title: 'Tokey',
+        role: 'Developer & Maintainer',
+        summary:
+            'Real-time per-prompt token cost panel for Claude Code. Live IN / OUT / CACHE figures in a Rich panel as you work.',
+        problem:
+            'Claude Code surfaces no per-prompt token cost while you work, so the real spend of a prompt is only visible after the fact, if you reconcile it at all.',
+        solution:
+            'Built a zero-config Rich panel that discovers session data directly and renders live IN / OUT / CACHE figures the moment a prompt lands.',
+        impact: 'Demonstrates the discipline to ship a small tool to a real, tested release and the engineering judgment to simplify a design even when it means deleting working code.',
+        techStack: ['Python', 'Rich', 'Standard library', 'MIT'],
+        platform: 'Command-line tool',
+        proofPoints: [
+            'Cut a fragile transcript-tracking dependency mid-project in favour of direct discovery, deleting roughly half the original code while keeping the token-accounting core untouched.',
+            'Renders live IN / OUT / CACHE figures in a Rich panel the moment a prompt lands, so cost is visible while you work rather than reconciled afterward.',
+            'Zero-config install-and-run, cross-platform on Windows and Linux, covered by 89 passing tests.',
+        ],
+        links: [
+            {
+                label: 'View on GitHub',
+                href: 'https://github.com/sawyairhtet/tokey',
+                icon: 'github',
+            },
+        ],
+        featured: false,
+        icon: 'terminal',
+        status: 'completed',
+    },
 ];
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
