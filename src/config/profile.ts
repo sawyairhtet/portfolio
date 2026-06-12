@@ -13,7 +13,7 @@ export const PROFILE = {
     secondaryTarget: 'QA / API Testing',
     carryOverTarget: 'IT Service Management / ITIL',
     education: 'Diploma in Information Technology - Singapore Polytechnic, 2026',
-    email: 'minwn2244@gmail.com',
+    email: 'sawyehtet.dev@gmail.com',
     resumePath: '/resume/SawYeHtet_Resume.pdf',
     availability: 'Open to opportunities',
     location: 'Singapore / remote-friendly',
