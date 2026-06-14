@@ -1,4 +1,4 @@
-import { PROJECTS } from '../../config/data';
+import { PROJECTS } from '../../config/editorial-data';
 
 const isExternal = (href: string) => href.startsWith('http');
 

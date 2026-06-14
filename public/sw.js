@@ -23,9 +23,11 @@ self.addEventListener('install', event => {
             .then(cache =>
                 cache.addAll([
                     '/offline.html',
-                    '/fonts/AdwaitaSans-Regular.woff2',
-                    '/fonts/AdwaitaSans-Italic.woff2',
-                    '/fonts/AdwaitaMono-Regular.woff2',
+                    // Front-door (editorial) fonts. The full Adwaita fonts used by
+                    // /desktop are runtime-cached (cache-first) on first visit, so
+                    // they are intentionally not precached here.
+                    '/fonts/AdwaitaSans-Regular.subset.woff2',
+                    '/fonts/AdwaitaMono-Regular.subset.woff2',
                 ])
             )
     );

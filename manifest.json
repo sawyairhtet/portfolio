@@ -4,8 +4,8 @@
     "description": "Recruiter-friendly portfolio for IT support & operations specialist Saw Ye Htet, built with React and TypeScript",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#1e1e1e",
-    "theme_color": "#3584e4",
+    "background_color": "#f7f5ef",
+    "theme_color": "#f7f5ef",
     "orientation": "any",
     "icons": [
         {

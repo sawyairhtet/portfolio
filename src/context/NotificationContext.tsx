@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, useRef, type ReactNode } from 'react';
 import type { Notification, Toast } from '../types';
-import { DEFAULT_NOTIFICATIONS } from '../config/data';
+import { DEFAULT_NOTIFICATIONS } from '../config/notifications';
 import { useSound } from './SoundContext';
 
 interface NotificationContextValue {

@@ -1,4 +1,4 @@
-import { EXPERIENCE } from '../../config/data';
+import { EXPERIENCE } from '../../config/editorial-data';
 
 export function Experience() {
     return (

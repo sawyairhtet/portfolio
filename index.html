@@ -62,13 +62,16 @@
         <link rel="prefetch" href="/images/profile-picture.webp" as="image" type="image/webp" />
         <link
             rel="preload"
-            as="image"
-            href="/images/wallpapers/fedora-43/f43-day.webp"
-            fetchpriority="high"
+            href="/fonts/AdwaitaSans-Regular.subset.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
         />
+        <!-- Adwaita Mono is above the fold too (nav links, eyebrows, spec keys),
+             so preload it alongside Sans to avoid a late swap. -->
         <link
             rel="preload"
-            href="/fonts/AdwaitaSans-Regular.woff2"
+            href="/fonts/AdwaitaMono-Regular.subset.woff2"
             as="font"
             type="font/woff2"
             crossorigin

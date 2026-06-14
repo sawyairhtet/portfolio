@@ -24,14 +24,18 @@ body:has(.ed) {
 
 @font-face {
     font-family: 'Adwaita Sans';
-    src: url('/fonts/AdwaitaSans-Regular.woff2') format('woff2');
+    /* Subset: Latin-1 + Latin Ext-A + punctuation/arrows/currency, opsz axis
+       pinned to 14, wght instanced to the 400–800 the editorial site uses.
+       The full font (all glyphs, opsz + wght 100–900) is kept for /desktop. */
+    src: url('/fonts/AdwaitaSans-Regular.subset.woff2') format('woff2');
     font-display: swap;
-    font-weight: 100 900;
+    font-weight: 400 800;
     font-style: normal;
 }
 @font-face {
     font-family: 'Adwaita Mono';
-    src: url('/fonts/AdwaitaMono-Regular.woff2') format('woff2');
+    /* Subset: same glyph range; static 400 weight. Full font kept for /desktop. */
+    src: url('/fonts/AdwaitaMono-Regular.subset.woff2') format('woff2');
     font-display: swap;
     font-weight: 400;
     font-style: normal;
@@ -651,6 +655,7 @@ body:has(.ed) {
 .ed-link {
     display: inline-flex;
     align-items: center;
+    min-height: 24px; /* WCAG 2.5.8: 24px hit area (border-box per .ed reset) */
     gap: 6px;
     font-family: var(--mono);
     font-size: 0.74rem;
@@ -983,6 +988,11 @@ body:has(.ed) {
 }
 .ed-copy-btn {
     margin-left: 12px;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    min-height: 24px; /* WCAG 2.5.8: 24px hit area; padding-inline is invisible (no bg/border) */
+    padding-inline: 4px;
     font-family: var(--mono);
     font-size: 0.66rem;
     letter-spacing: 0.1em;
@@ -1197,6 +1207,12 @@ body:has(.ed) {
 .ed-footer-link:hover {
     color: var(--accent);
 }
+/* WCAG 2.5.8: pad the stacked "Elsewhere" column links to a 24px hit area.
+   Scoped to the column so the inline "Launch it ↗" link in the tagline
+   (display:inline — exempt as an inline target) stays untouched. */
+.ed-footer-col .ed-footer-link {
+    min-height: 24px;
+}
 .ed-footer-bar {
     display: flex;
     align-items: center;
@@ -1215,6 +1231,7 @@ body:has(.ed) {
 .ed-totop {
     display: inline-flex;
     align-items: center;
+    min-height: 24px; /* WCAG 2.5.8: 24px hit area */
     gap: 7px;
     color: var(--ink-3);
     text-decoration: none;
@@ -1434,6 +1451,7 @@ body:has(.ed) {
 .ed-blog-back {
     display: inline-flex;
     align-items: center;
+    min-height: 24px; /* WCAG 2.5.8: 24px hit area */
     gap: 6px;
     margin-top: clamp(40px, 6vh, 72px);
     padding-bottom: 3px;

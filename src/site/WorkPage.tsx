@@ -66,7 +66,9 @@ function Hero() {
                 <dl className="ed-spec">
                     <div className="ed-spec-row">
                         <dt className="ed-spec-key">Focus</dt>
-                        <dd className="ed-spec-val">Application &amp; Production Support</dd>
+                        <dd className="ed-spec-val">
+                            Application &amp; Production Support · QA / Test Documentation
+                        </dd>
                     </div>
                     <div className="ed-spec-row">
                         <dt className="ed-spec-key">Stack</dt>
@@ -157,7 +159,7 @@ function About() {
 export function WorkPage() {
     return (
         <div className="ed">
-            <title>Saw Ye Htet — IT Support &amp; Operations</title>
+            <title>Saw Ye Htet - IT Support &amp; Operations Specialist</title>
             <meta
                 name="description"
                 content="Saw Ye Htet — IT support & operations. Experience, projects, skills, résumé, and recent writing."

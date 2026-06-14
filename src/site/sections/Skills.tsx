@@ -1,4 +1,4 @@
-import { EDITORIAL_SKILLS, LEARNING_NOW } from '../../config/data';
+import { EDITORIAL_SKILLS, LEARNING_NOW } from '../../config/editorial-data';
 
 export function Skills() {
     return (

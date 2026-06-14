@@ -34,7 +34,27 @@ function setHead(html, pattern, label, replacement) {
 
 const attr = (kind, name) => new RegExp(`(<meta\\s+${kind}="${name}"\\s+content=")[^"]*(")`);
 
-function renderShell({ title, description, url, type }) {
+// Post routes get a BlogPosting schema sourced from frontmatter. The author is
+// the same person the homepage's Person schema describes, nested here so the post
+// route carries exactly one schema (the Person block is replaced, not appended).
+// Every "<" in the JSON is escaped to a unicode entity so post content can
+// never break out of the surrounding script tag.
+function blogPostingLd(post) {
+    const pageUrl = `${SITE_URL}/${post.slug}`;
+    const obj = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        datePublished: post.date,
+        author: { '@type': 'Person', name: 'Saw Ye Htet', url: SITE_URL },
+        url: pageUrl,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+    };
+    const json = JSON.stringify(obj, null, 4).replace(/</g, '\\u003c');
+    return `<script type="application/ld+json">\n${json}\n        </script>`;
+}
+
+function renderShell({ title, description, url, type, jsonLd }) {
     const t = escapeXml(title);
     const d = escapeXml(description);
     const u = escapeXml(url);
@@ -64,6 +84,16 @@ function renderShell({ title, description, url, type }) {
         'canonical',
         (m, a, b) => a + u + b
     );
+    // Post routes only: swap the homepage's Person JSON-LD for a BlogPosting one.
+    // Non-post routes have no jsonLd, so they keep the inherited Person schema.
+    if (jsonLd) {
+        html = setHead(
+            html,
+            /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
+            'JSON-LD block',
+            () => jsonLd
+        );
+    }
     return html;
 }
 
@@ -92,6 +122,7 @@ const pages = [
         description: post.summary || `${post.title} — a post by Saw Ye Htet.`,
         url: `${SITE_URL}/${post.slug}`,
         type: 'article',
+        jsonLd: blogPostingLd(post),
     })),
 ];
 
